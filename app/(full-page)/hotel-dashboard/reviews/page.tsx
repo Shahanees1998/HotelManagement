@@ -12,7 +12,7 @@ export default async function ReviewsPage() {
   }
 
   // Fetch reviews for the hotel
-  const reviews = await prisma.review.findMany({
+  const reviewsData = await prisma.review.findMany({
     where: { hotelId: session.user.hotelId },
     include: {
       form: {
@@ -23,6 +23,19 @@ export default async function ReviewsPage() {
     },
     orderBy: { createdAt: 'desc' }
   })
+
+  // Transform data to match expected types (convert null to undefined)
+  const reviews = reviewsData.map(review => ({
+    ...review,
+    guestName: review.guestName ?? undefined,
+    guestEmail: review.guestEmail ?? undefined,
+    guestPhone: review.guestPhone ?? undefined,
+    overallRating: review.overallRating ?? undefined,
+    adminNotes: review.adminNotes ?? undefined,
+    adminId: review.adminId ?? undefined,
+    createdAt: review.createdAt.toISOString(),
+    updatedAt: review.updatedAt.toISOString()
+  }))
 
   return (
     <div className="space-y-6">

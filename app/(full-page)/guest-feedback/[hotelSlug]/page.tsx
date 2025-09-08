@@ -137,6 +137,7 @@ export default function GuestFeedbackPage() {
       const data = await response.json()
       
       if (response.ok) {
+        const reviewData = data
         // Upload files if any
         const fileFields = form?.fields.filter(f => f.type === 'FILE_UPLOAD') || []
         for (const field of fileFields) {
@@ -157,17 +158,9 @@ export default function GuestFeedbackPage() {
         
         // Check if this is a high rating review (4-5 stars)
         const overallRating = formData[form?.fields.find(f => f.type === 'RATING')?.id || '']
-        if (overallRating && overallRating >= 4) {
-          // Show external sharing options
-          setTimeout(() => {
-            window.location.href = `/guest-feedback/${hotelSlug}/share?reviewId=${data.reviewId}`
-          }, 2000)
-        } else {
-          // Redirect to thank you page
-          setTimeout(() => {
-            window.location.href = `/guest-feedback/${hotelSlug}/thank-you`
-          }, 2000)
-        }
+        // Redirect to thank you page with rating information
+        const thankYouUrl = `/guest-feedback/${hotelSlug}/thank-you?rating=${reviewData.overallRating || 'none'}&status=${reviewData.status}`
+        window.location.href = thankYouUrl
       } else {
         toast.error(data.error || 'Error submitting feedback')
       }

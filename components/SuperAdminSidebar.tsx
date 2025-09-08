@@ -17,6 +17,11 @@ const menuItems = [
     href: '/super-admin/hotels'
   },
   {
+    label: 'Forms',
+    icon: 'pi pi-file-edit',
+    href: '/super-admin/forms'
+  },
+  {
     label: 'Users',
     icon: 'pi pi-users',
     href: '/super-admin/users'
@@ -35,6 +40,21 @@ const menuItems = [
     label: 'Analytics',
     icon: 'pi pi-chart-line',
     href: '/super-admin/analytics'
+  },
+  {
+    label: 'Refunds',
+    icon: 'pi pi-money-bill',
+    href: '/super-admin/refunds'
+  },
+  {
+    label: 'Suspensions',
+    icon: 'pi pi-ban',
+    href: '/super-admin/suspensions'
+  },
+  {
+    label: 'Contact Forms',
+    icon: 'pi pi-envelope',
+    href: '/super-admin/contact-forms'
   },
   {
     label: 'System Settings',

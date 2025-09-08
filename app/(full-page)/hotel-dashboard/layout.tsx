@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import HotelSidebar from '@/components/HotelSidebar'
 import HotelHeader from '@/components/HotelHeader'
+import RealTimeNotifications from '@/components/RealTimeNotifications'
 
 export default async function HotelDashboardLayout({
   children,
@@ -16,6 +17,7 @@ export default async function HotelDashboardLayout({
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <RealTimeNotifications />
       <HotelHeader />
       <div className="flex">
         <HotelSidebar />

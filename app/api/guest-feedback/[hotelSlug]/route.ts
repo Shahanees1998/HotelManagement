@@ -19,6 +19,7 @@ export async function GET(
         primaryColor: true,
         secondaryColor: true,
         logo: true,
+        googleReviewUrl: true,
         isActive: true
       }
     })

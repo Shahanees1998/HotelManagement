@@ -8,6 +8,8 @@ interface Stats {
   inactiveHotels: number
   totalUsers: number
   totalReviews: number
+  totalRevenue: number
+  monthlyRevenue: number
 }
 
 interface SuperAdminStatsProps {
@@ -31,18 +33,18 @@ export default function SuperAdminStats({ stats }: SuperAdminStatsProps) {
       bgColor: 'bg-green-50'
     },
     {
-      title: 'Inactive Hotels',
-      value: stats.inactiveHotels,
-      icon: 'pi pi-times-circle',
-      color: 'text-red-600',
-      bgColor: 'bg-red-50'
+      title: 'Total Revenue',
+      value: `$${stats.totalRevenue.toLocaleString()}`,
+      icon: 'pi pi-dollar',
+      color: 'text-green-600',
+      bgColor: 'bg-green-50'
     },
     {
-      title: 'Total Users',
-      value: stats.totalUsers,
-      icon: 'pi pi-users',
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50'
+      title: 'Monthly Revenue',
+      value: `$${stats.monthlyRevenue.toLocaleString()}`,
+      icon: 'pi pi-chart-line',
+      color: 'text-blue-600',
+      bgColor: 'bg-blue-50'
     },
     {
       title: 'Total Reviews',
@@ -62,7 +64,7 @@ export default function SuperAdminStats({ stats }: SuperAdminStatsProps) {
               <i className={`${stat.icon} ${stat.color} text-xl`}></i>
             </div>
             <div className={`text-3xl font-bold ${stat.color} mb-2`}>
-              {stat.value.toLocaleString()}
+              {typeof stat.value === 'string' ? stat.value : stat.value.toLocaleString()}
             </div>
             <div className="text-sm text-gray-600">
               {stat.title}

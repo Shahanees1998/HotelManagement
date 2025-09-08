@@ -42,6 +42,11 @@ const menuItems = [
     href: '/hotel-dashboard/subscription'
   },
   {
+    label: 'Contact Support',
+    icon: 'pi pi-envelope',
+    href: '/hotel-dashboard/contact'
+  },
+  {
     label: 'Settings',
     icon: 'pi pi-cog',
     href: '/hotel-dashboard/settings'

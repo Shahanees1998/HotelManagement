@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import SuperAdminSidebar from '@/components/SuperAdminSidebar'
 import SuperAdminHeader from '@/components/SuperAdminHeader'
+import RealTimeNotifications from '@/components/RealTimeNotifications'
 
 export default async function SuperAdminLayout({
   children,
@@ -16,6 +17,7 @@ export default async function SuperAdminLayout({
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <RealTimeNotifications />
       <SuperAdminHeader />
       <div className="flex">
         <SuperAdminSidebar />

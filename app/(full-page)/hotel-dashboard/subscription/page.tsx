@@ -12,7 +12,7 @@ export default async function SubscriptionPage() {
   }
 
   // Fetch hotel subscription data
-  const hotel = await prisma.hotel.findUnique({
+  const hotelData = await prisma.hotel.findUnique({
     where: { id: session.user.hotelId },
     select: {
       id: true,
@@ -36,8 +36,23 @@ export default async function SubscriptionPage() {
     }
   })
 
-  if (!hotel) {
+  if (!hotelData) {
     return <div>Hotel not found</div>
+  }
+
+  // Transform data to match expected types (convert null to undefined)
+  const hotel = {
+    ...hotelData,
+    subscriptionPlan: hotelData.subscriptionPlan ?? undefined,
+    subscriptionId: hotelData.subscriptionId ?? undefined,
+    subscriptionStart: hotelData.subscriptionStart?.toISOString(),
+    subscriptionEnd: hotelData.subscriptionEnd?.toISOString(),
+    subscription: hotelData.subscription ? {
+      ...hotelData.subscription,
+      stripeSubscriptionId: hotelData.subscription.stripeSubscriptionId ?? '',
+      currentPeriodStart: hotelData.subscription.currentPeriodStart.toISOString(),
+      currentPeriodEnd: hotelData.subscription.currentPeriodEnd.toISOString()
+    } : undefined
   }
 
   return (

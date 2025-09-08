@@ -19,8 +19,12 @@ export const STRIPE_CONFIG = {
         'Up to 100 reviews/month',
         'QR code generation',
         'Basic analytics',
+        'Simple form layouts',
         'Email support'
-      ]
+      ],
+      formLayout: 'simple',
+      maxFields: 5,
+      allowedFieldTypes: ['TEXT', 'TEXTAREA', 'RATING', 'EMAIL']
     },
     premium: {
       name: 'Premium',
@@ -31,8 +35,12 @@ export const STRIPE_CONFIG = {
         'Custom forms',
         'Advanced analytics',
         'External sharing',
+        'Better form layouts',
         'Priority support'
-      ]
+      ],
+      formLayout: 'better',
+      maxFields: 15,
+      allowedFieldTypes: ['TEXT', 'TEXTAREA', 'RATING', 'SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'EMAIL', 'PHONE']
     },
     enterprise: {
       name: 'Enterprise',
@@ -42,9 +50,13 @@ export const STRIPE_CONFIG = {
         'Unlimited reviews',
         'White-label options',
         'Custom integrations',
+        'Excellent form layouts',
         'Dedicated support',
         'API access'
-      ]
+      ],
+      formLayout: 'excellent',
+      maxFields: 50,
+      allowedFieldTypes: ['TEXT', 'TEXTAREA', 'RATING', 'SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'EMAIL', 'PHONE', 'FILE_UPLOAD']
     }
   }
 }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { PrismaClient } from '@prisma/client'
 import { z } from 'zod'
+import { STRIPE_CONFIG } from '@/lib/stripe'
 
 const prisma = new PrismaClient()
 
@@ -31,6 +32,42 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
     const validatedData = createFormSchema.parse(body)
+    
+    // Get hotel subscription plan to enforce restrictions
+    const hotel = await prisma.hotel.findUnique({
+      where: { id: session.user.hotelId },
+      select: { subscriptionPlan: true }
+    })
+    
+    if (!hotel) {
+      return NextResponse.json(
+        { error: 'Hotel not found' },
+        { status: 404 }
+      )
+    }
+    
+    // Enforce plan-based restrictions
+    const planConfig = STRIPE_CONFIG.plans[hotel.subscriptionPlan as keyof typeof STRIPE_CONFIG.plans] || STRIPE_CONFIG.plans.basic
+    
+    // Check field count limit
+    if (validatedData.fields.length > planConfig.maxFields) {
+      return NextResponse.json(
+        { error: `Your plan allows maximum ${planConfig.maxFields} fields. You have ${validatedData.fields.length} fields.` },
+        { status: 400 }
+      )
+    }
+    
+    // Check allowed field types
+    const invalidFieldTypes = validatedData.fields.filter(field => 
+      !planConfig.allowedFieldTypes.includes(field.type)
+    )
+    
+    if (invalidFieldTypes.length > 0) {
+      return NextResponse.json(
+        { error: `Your plan doesn't support these field types: ${invalidFieldTypes.map(f => f.type).join(', ')}` },
+        { status: 400 }
+      )
+    }
     
     // Create form with fields in a transaction
     const form = await prisma.$transaction(async (tx) => {

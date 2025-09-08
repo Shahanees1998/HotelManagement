@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 
     // Generate unique URL for the QR code
     const baseUrl = process.env.APP_URL || 'http://localhost:3000'
-    const qrUrl = `${baseUrl}/feedback/${session.user.hotel?.slug}`
+    const qrUrl = `${baseUrl}/guest-feedback/${session.user.hotel?.slug}`
     
     // Generate QR code image
     const qrCodeImage = await QRCode.toDataURL(qrUrl, {

@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client'
 import SuperAdminStats from '@/components/SuperAdminStats'
 import RecentHotels from '@/components/RecentHotels'
 import SystemOverview from '@/components/SystemOverview'
+import HotelsWithReviews from '@/components/HotelsWithReviews'
 
 const prisma = new PrismaClient()
 
@@ -20,7 +21,10 @@ export default async function SuperAdminDashboard() {
     totalUsers,
     totalReviews,
     recentHotels,
-    subscriptionStats
+    subscriptionStats,
+    totalRevenue,
+    hotelsWithReviewCounts,
+    monthlyRevenue
   ] = await Promise.all([
     prisma.hotel.count(),
     prisma.hotel.count({ where: { isActive: true } }),
@@ -44,15 +48,72 @@ export default async function SuperAdminDashboard() {
       _count: {
         subscriptionStatus: true
       }
+    }),
+    // Calculate total revenue from active subscriptions
+    prisma.subscription.aggregate({
+      where: { status: 'ACTIVE' },
+      _sum: {
+        // We'll need to calculate based on plan prices
+      }
+    }),
+    // Get hotels with their review counts
+    prisma.hotel.findMany({
+      include: {
+        _count: {
+          select: {
+            reviews: true,
+            users: true
+          }
+        },
+        subscription: {
+          select: {
+            plan: true,
+            status: true
+          }
+        }
+      },
+      orderBy: { createdAt: 'desc' }
+    }),
+    // Calculate monthly revenue
+    prisma.subscription.findMany({
+      where: { status: 'ACTIVE' },
+      select: {
+        plan: true,
+        currentPeriodStart: true,
+        currentPeriodEnd: true
+      }
     })
   ])
+
+  // Calculate total revenue based on subscription plans
+  const planPrices = {
+    basic: 29,
+    premium: 79,
+    enterprise: 199
+  }
+
+  const totalRevenueAmount = hotelsWithReviewCounts.reduce((total, hotel) => {
+    if (hotel.subscription && hotel.subscription.status === 'ACTIVE') {
+      const planPrice = planPrices[hotel.subscription.plan as keyof typeof planPrices] || 0
+      return total + planPrice
+    }
+    return total
+  }, 0)
+
+  // Calculate monthly revenue
+  const currentMonthRevenue = monthlyRevenue.reduce((total, sub) => {
+    const planPrice = planPrices[sub.plan as keyof typeof planPrices] || 0
+    return total + planPrice
+  }, 0)
 
   const stats = {
     totalHotels,
     activeHotels,
     totalUsers,
     totalReviews,
-    inactiveHotels: totalHotels - activeHotels
+    inactiveHotels: totalHotels - activeHotels,
+    totalRevenue: totalRevenueAmount,
+    monthlyRevenue: currentMonthRevenue
   }
 
   return (
@@ -73,6 +134,9 @@ export default async function SuperAdminDashboard() {
 
       {/* Recent Hotels */}
       <RecentHotels hotels={recentHotels} />
+
+      {/* Hotels with Review Counts */}
+      <HotelsWithReviews hotels={hotelsWithReviewCounts} />
     </div>
   )
 }

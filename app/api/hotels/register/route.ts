@@ -156,19 +156,77 @@ export async function POST(request: NextRequest) {
       return { hotel, user }
     })
     
-    // Send welcome email
+    // Send welcome emails
     try {
       const { sendEmail, emailTemplates } = await import('@/lib/email')
-      const emailTemplate = emailTemplates.welcome(
+      
+      // Send welcome email to hotel admin
+      const adminEmailTemplate = emailTemplates.hotelRegistration(
         result.hotel.name,
-        `${result.user.firstName} ${result.user.lastName}`
+        `${result.user.firstName} ${result.user.lastName}`,
+        result.user.email
       )
       
       await sendEmail({
         to: result.user.email,
-        subject: emailTemplate.subject,
-        html: emailTemplate.html
+        subject: adminEmailTemplate.subject,
+        html: adminEmailTemplate.html
       })
+
+      // Send notification to super admin
+      const superAdminEmailTemplate = emailTemplates.hotelRegistration(
+        result.hotel.name,
+        `${result.user.firstName} ${result.user.lastName}`,
+        result.user.email
+      )
+      
+      await sendEmail({
+        to: process.env.SUPER_ADMIN_EMAIL || 'admin@hotelfeedback.com',
+        subject: `New Hotel Registration: ${result.hotel.name}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: linear-gradient(135deg, #10B981, #059669); color: white; padding: 2rem; text-align: center;">
+              <h1 style="margin: 0; font-size: 2rem;">New Hotel Registration</h1>
+            </div>
+            <div style="padding: 2rem; background: white;">
+              <h2 style="color: #1F2937;">New Hotel Registered</h2>
+              <p style="color: #6B7280; line-height: 1.6;">
+                A new hotel has been registered on the platform.
+              </p>
+              <div style="background: #F3F4F6; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+                <p style="color: #1F2937; margin: 0; font-weight: bold;">Hotel Details:</p>
+                <p style="color: #6B7280; margin: 0.5rem 0 0 0;">
+                  <strong>Hotel:</strong> ${result.hotel.name}<br>
+                  <strong>Admin:</strong> ${result.user.firstName} ${result.user.lastName}<br>
+                  <strong>Email:</strong> ${result.user.email}<br>
+                  <strong>Location:</strong> ${result.hotel.city}, ${result.hotel.state}
+                </p>
+              </div>
+              <div style="text-align: center; margin: 2rem 0;">
+                <a href="${process.env.APP_URL}/super-admin/hotels" 
+                   style="background: #10B981; color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 0.5rem; display: inline-block;">
+                  View Hotel Details
+                </a>
+              </div>
+            </div>
+          </div>
+        `
+      })
+
+      // Trigger real-time notification for super admin
+      const { triggerNotification, CHANNELS, EVENTS } = await import('@/lib/pusher')
+      await triggerNotification(
+        CHANNELS.SUPER_ADMIN_NOTIFICATIONS,
+        EVENTS.NEW_HOTEL_REGISTRATION,
+        {
+          hotelId: result.hotel.id,
+          hotelName: result.hotel.name,
+          adminName: `${result.user.firstName} ${result.user.lastName}`,
+          adminEmail: result.user.email,
+          location: `${result.hotel.city}, ${result.hotel.state}`,
+          timestamp: new Date().toISOString()
+        }
+      )
     } catch (emailError) {
       console.error('Failed to send welcome email:', emailError)
       // Don't fail registration if email fails

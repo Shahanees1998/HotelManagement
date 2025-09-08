@@ -125,6 +125,35 @@ export async function POST(
             }
           }
         })
+
+        // Trigger real-time notification
+        const { triggerNotification, CHANNELS, EVENTS } = await import('@/lib/pusher')
+        await triggerNotification(
+          CHANNELS.HOTEL_NOTIFICATIONS(hotel.id),
+          EVENTS.NEW_REVIEW,
+          {
+            reviewId: review.id,
+            hotelName: hotel.name,
+            guestName: guestName || 'Anonymous Guest',
+            rating: overallRating,
+            timestamp: new Date().toISOString()
+          }
+        )
+      }
+
+      // Send thank you email to customer (if email provided)
+      if (guestEmail) {
+        const customerEmailTemplate = emailTemplates.feedbackReceived(
+          hotel.name,
+          guestName || 'Valued Guest',
+          overallRating || 0
+        )
+
+        await sendEmail({
+          to: guestEmail,
+          subject: customerEmailTemplate.subject,
+          html: customerEmailTemplate.html
+        })
       }
     } catch (emailError) {
       console.error('Failed to send review notification email:', emailError)

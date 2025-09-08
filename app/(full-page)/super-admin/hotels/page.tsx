@@ -12,7 +12,7 @@ export default async function HotelsPage() {
   }
 
   // Fetch all hotels with their users
-  const hotels = await prisma.hotel.findMany({
+  const hotelsData = await prisma.hotel.findMany({
     include: {
       users: {
         select: {
@@ -31,6 +31,18 @@ export default async function HotelsPage() {
     },
     orderBy: { createdAt: 'desc' }
   })
+
+  // Transform data to match expected types (convert null to undefined)
+  const hotels = hotelsData.map(hotel => ({
+    ...hotel,
+    phone: hotel.phone ?? undefined,
+    subscriptionPlan: hotel.subscriptionPlan ?? undefined,
+    createdAt: hotel.createdAt.toISOString(),
+    users: hotel.users.map(user => ({
+      ...user,
+      createdAt: user.createdAt.toISOString()
+    }))
+  }))
 
   return (
     <div className="space-y-6">

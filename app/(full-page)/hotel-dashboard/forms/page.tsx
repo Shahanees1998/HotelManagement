@@ -12,7 +12,7 @@ export default async function FormsPage() {
   }
 
   // Fetch forms for the hotel
-  const forms = await prisma.form.findMany({
+  const formsData = await prisma.form.findMany({
     where: { hotelId: session.user.hotelId },
     include: {
       fields: {
@@ -24,6 +24,20 @@ export default async function FormsPage() {
     },
     orderBy: { createdAt: 'desc' }
   })
+
+  // Transform data to match expected types (convert null to undefined)
+  const forms = formsData.map(form => ({
+    ...form,
+    description: form.description ?? undefined,
+    createdAt: form.createdAt.toISOString(),
+    updatedAt: form.updatedAt.toISOString(),
+    fields: form.fields.map(field => ({
+      ...field,
+      placeholder: field.placeholder ?? undefined,
+      createdAt: field.createdAt.toISOString(),
+      updatedAt: field.updatedAt.toISOString()
+    }))
+  }))
 
   return (
     <div className="space-y-6">

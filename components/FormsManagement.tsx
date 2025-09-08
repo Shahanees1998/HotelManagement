@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card } from 'primereact/card'
 import { Button } from 'primereact/button'
 import { DataTable } from 'primereact/datatable'
@@ -13,6 +13,7 @@ import { Dropdown } from 'primereact/dropdown'
 import { Checkbox } from 'primereact/checkbox'
 import { InputText as PrimeInputText } from 'primereact/inputtext'
 import toast from 'react-hot-toast'
+import { STRIPE_CONFIG } from '@/lib/stripe'
 
 interface FormField {
   id: string
@@ -53,22 +54,53 @@ export default function FormsManagement({ forms, hotelId }: FormsManagementProps
     fields: [] as any[]
   })
 
-  const fieldTypes = [
-    { label: 'Text Input', value: 'TEXT' },
-    { label: 'Text Area', value: 'TEXTAREA' },
-    { label: 'Rating (1-5 stars)', value: 'RATING' },
-    { label: 'Single Choice', value: 'SINGLE_CHOICE' },
-    { label: 'Multiple Choice', value: 'MULTIPLE_CHOICE' },
-    { label: 'Email', value: 'EMAIL' },
-    { label: 'Phone', value: 'PHONE' },
-    { label: 'File Upload (Images/Videos)', value: 'FILE_UPLOAD' }
-  ]
+  const [hotelPlan, setHotelPlan] = useState<string>('basic')
+
+  // Get hotel plan to show available field types
+  useEffect(() => {
+    const fetchHotelPlan = async () => {
+      try {
+        const response = await fetch('/api/hotels/current')
+        const data = await response.json()
+        if (data.hotel) {
+          setHotelPlan(data.hotel.subscriptionPlan || 'basic')
+        }
+      } catch (error) {
+        console.error('Error fetching hotel plan:', error)
+      }
+    }
+    fetchHotelPlan()
+  }, [])
+
+  const getAvailableFieldTypes = () => {
+    const planConfig = STRIPE_CONFIG.plans[hotelPlan as keyof typeof STRIPE_CONFIG.plans] || STRIPE_CONFIG.plans.basic
+    return [
+      { label: 'Text Input', value: 'TEXT' },
+      { label: 'Text Area', value: 'TEXTAREA' },
+      { label: 'Rating (1-5 stars)', value: 'RATING' },
+      { label: 'Single Choice', value: 'SINGLE_CHOICE' },
+      { label: 'Multiple Choice', value: 'MULTIPLE_CHOICE' },
+      { label: 'Email', value: 'EMAIL' },
+      { label: 'Phone', value: 'PHONE' },
+      { label: 'File Upload (Images/Videos)', value: 'FILE_UPLOAD' }
+    ].filter(field => planConfig.allowedFieldTypes.includes(field.value))
+  }
+
+  const fieldTypes = getAvailableFieldTypes()
 
   const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
   const addField = () => {
+    const planConfig = STRIPE_CONFIG.plans[hotelPlan as keyof typeof STRIPE_CONFIG.plans] || STRIPE_CONFIG.plans.basic
+    
+    // Check field count limit
+    if (formData.fields.length >= planConfig.maxFields) {
+      toast.error(`Your plan allows maximum ${planConfig.maxFields} fields. Please upgrade to add more fields.`)
+      return
+    }
+    
     const newField = {
       label: '',
       type: 'TEXT',

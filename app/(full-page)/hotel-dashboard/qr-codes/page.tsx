@@ -12,10 +12,19 @@ export default async function QRCodesPage() {
   }
 
   // Fetch QR codes for the hotel
-  const qrCodes = await prisma.qrCode.findMany({
+  const qrCodesData = await prisma.qRCode.findMany({
     where: { hotelId: session.user.hotelId },
     orderBy: { createdAt: 'desc' }
   })
+
+  // Transform data to match expected types (convert null to undefined)
+  const qrCodes = qrCodesData.map(qrCode => ({
+    ...qrCode,
+    description: qrCode.description ?? undefined,
+    imageUrl: qrCode.imageUrl ?? undefined,
+    createdAt: qrCode.createdAt.toISOString(),
+    updatedAt: qrCode.updatedAt.toISOString()
+  }))
 
   return (
     <div className="space-y-6">

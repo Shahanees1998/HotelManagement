@@ -50,6 +50,10 @@ model User {
   hotelId   String?  @db.ObjectId
   hotel     Hotel?   @relation(fields: [hotelId], references: [id])
   
+  // Password reset
+  resetToken         String?
+  resetTokenExpiry   DateTime?
+  
   // Relations
   notifications Notification[]
   
@@ -71,6 +75,7 @@ model Hotel {
   country           String
   zipCode           String?
   website           String?
+  googleReviewUrl   String?  // Google Reviews URL for the hotel
   description       String?
   logo              String?
   primaryColor      String             @default("#3B82F6")
@@ -94,6 +99,9 @@ model Hotel {
   forms             Form[]
   qrCodes           QRCode[]
   subscription      Subscription?
+  supportMessages   SupportMessage[]
+  refunds           Refund[]
+  suspensions       HotelSuspension[]
   
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
@@ -199,6 +207,9 @@ model Subscription {
   currentPeriodEnd   DateTime
   cancelAtPeriodEnd Boolean            @default(false)
   
+  // Relations
+  refunds           Refund[]
+  
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
 
@@ -233,6 +244,81 @@ model MediaFile {
   createdAt DateTime @default(now())
 
   @@map("media_files")
+}
+
+model SupportMessage {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  hotelId     String   @db.ObjectId
+  hotel       Hotel    @relation(fields: [hotelId], references: [id])
+  subject     String
+  category    String   // general, technical, billing, feature, bug, account, other
+  message     String
+  priority    String   // low, medium, high, urgent
+  status      String   // pending, in_progress, resolved, closed
+  hotelName   String
+  hotelEmail  String
+  hotelPhone  String?
+  
+  // Admin response
+  adminResponse String?
+  adminId       String? @db.ObjectId
+  respondedAt   DateTime?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("support_messages")
+}
+
+model Refund {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  hotelId         String   @db.ObjectId
+  hotel           Hotel    @relation(fields: [hotelId], references: [id])
+  subscriptionId  String?  @db.ObjectId
+  subscription    Subscription? @relation(fields: [subscriptionId], references: [id])
+  
+  // Refund details
+  amount          Float    // Amount to refund in dollars
+  reason          String   // Reason for refund
+  status          String   // pending, processing, completed, failed, cancelled
+  stripeRefundId  String?  // Stripe refund ID
+  
+  // Admin details
+  processedBy     String?  @db.ObjectId // Super admin who processed
+  processedAt     DateTime?
+  notes           String?  // Additional notes
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("refunds")
+}
+
+model HotelSuspension {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  hotelId     String   @db.ObjectId
+  hotel       Hotel    @relation(fields: [hotelId], references: [id])
+  
+  // Suspension details
+  reason      String   // Reason for suspension
+  type        String   // temporary, permanent, payment_issue, violation, etc.
+  status      String   // active, lifted, expired
+  duration    Int?     // Duration in days (for temporary suspensions)
+  
+  // Dates
+  suspendedAt DateTime @default(now())
+  expiresAt   DateTime?
+  liftedAt    DateTime?
+  
+  // Admin details
+  suspendedBy String   @db.ObjectId // Super admin who suspended
+  liftedBy    String?  @db.ObjectId // Super admin who lifted suspension
+  notes       String?  // Additional notes
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("hotel_suspensions")
 }
 
 model SystemSettings {

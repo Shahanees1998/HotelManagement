@@ -171,5 +171,210 @@ export const emailTemplates = {
         </div>
       </div>
     `
+  }),
+
+  // New email templates for additional functionality
+  feedbackReceived: (hotelName: string, guestName: string, rating: number) => ({
+    subject: `Thank you for your feedback - ${hotelName}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background: linear-gradient(135deg, #10B981, #059669); color: white; padding: 2rem; text-align: center;">
+          <h1 style="margin: 0; font-size: 2rem;">Thank You!</h1>
+        </div>
+        <div style="padding: 2rem; background: white;">
+          <h2 style="color: #1F2937;">Dear ${guestName || 'Valued Guest'},</h2>
+          <p style="color: #6B7280; line-height: 1.6;">
+            Thank you for taking the time to share your feedback about your stay at <strong>${hotelName}</strong>.
+          </p>
+          ${rating ? `
+            <div style="background: #F3F4F6; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+              <p style="color: #1F2937; margin: 0; font-weight: bold;">Your Rating: ${rating}/5 stars</p>
+            </div>
+          ` : ''}
+          <p style="color: #6B7280; line-height: 1.6;">
+            Your feedback is invaluable to us and helps us improve our services for future guests.
+          </p>
+          <p style="color: #6B7280; line-height: 1.6;">
+            We hope to welcome you back to ${hotelName} soon!
+          </p>
+          <p style="color: #6B7280; line-height: 1.6;">
+            Best regards,<br>
+            The ${hotelName} Team
+          </p>
+        </div>
+      </div>
+    `
+  }),
+
+  hotelRegistration: (hotelName: string, adminName: string, adminEmail: string) => ({
+    subject: `Welcome to Hotel Feedback SaaS - ${hotelName}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background: linear-gradient(135deg, #3B82F6, #1E40AF); color: white; padding: 2rem; text-align: center;">
+          <h1 style="margin: 0; font-size: 2rem;">Welcome to Hotel Feedback SaaS!</h1>
+        </div>
+        <div style="padding: 2rem; background: white;">
+          <h2 style="color: #1F2937;">Hello ${adminName},</h2>
+          <p style="color: #6B7280; line-height: 1.6;">
+            Welcome to Hotel Feedback SaaS! Your hotel <strong>${hotelName}</strong> has been successfully registered.
+          </p>
+          <p style="color: #6B7280; line-height: 1.6;">
+            Your account details:
+          </p>
+          <ul style="color: #6B7280; line-height: 1.6;">
+            <li><strong>Hotel:</strong> ${hotelName}</li>
+            <li><strong>Admin:</strong> ${adminName}</li>
+            <li><strong>Email:</strong> ${adminEmail}</li>
+          </ul>
+          <p style="color: #6B7280; line-height: 1.6;">
+            You can now start collecting guest feedback and managing reviews. Here's what you can do:
+          </p>
+          <ul style="color: #6B7280; line-height: 1.6;">
+            <li>Create custom feedback forms</li>
+            <li>Generate QR codes for easy guest access</li>
+            <li>Manage and respond to guest reviews</li>
+            <li>View analytics and insights</li>
+            <li>Configure your hotel settings</li>
+          </ul>
+          <div style="text-align: center; margin: 2rem 0;">
+            <a href="${process.env.APP_URL}/hotel-dashboard" 
+               style="background: #3B82F6; color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 0.5rem; display: inline-block;">
+              Access Your Dashboard
+            </a>
+          </div>
+          <p style="color: #6B7280; line-height: 1.6;">
+            If you have any questions, feel free to contact our support team.
+          </p>
+          <p style="color: #6B7280; line-height: 1.6;">
+            Best regards,<br>
+            The Hotel Feedback SaaS Team
+          </p>
+        </div>
+      </div>
+    `
+  }),
+
+  forgotPassword: (userName: string, resetLink: string) => ({
+    subject: 'Password Reset Request - Hotel Feedback SaaS',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background: linear-gradient(135deg, #F59E0B, #D97706); color: white; padding: 2rem; text-align: center;">
+          <h1 style="margin: 0; font-size: 2rem;">Password Reset</h1>
+        </div>
+        <div style="padding: 2rem; background: white;">
+          <h2 style="color: #1F2937;">Hello ${userName},</h2>
+          <p style="color: #6B7280; line-height: 1.6;">
+            We received a request to reset your password for your Hotel Feedback SaaS account.
+          </p>
+          <p style="color: #6B7280; line-height: 1.6;">
+            Click the button below to reset your password:
+          </p>
+          <div style="text-align: center; margin: 2rem 0;">
+            <a href="${resetLink}" 
+               style="background: #F59E0B; color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 0.5rem; display: inline-block;">
+              Reset Password
+            </a>
+          </div>
+          <p style="color: #6B7280; line-height: 1.6;">
+            This link will expire in 1 hour for security reasons.
+          </p>
+          <p style="color: #6B7280; line-height: 1.6;">
+            If you didn't request this password reset, please ignore this email.
+          </p>
+          <p style="color: #6B7280; line-height: 1.6;">
+            Best regards,<br>
+            The Hotel Feedback SaaS Team
+          </p>
+        </div>
+      </div>
+    `
+  }),
+
+  contactFormSubmission: (hotelName: string, subject: string, message: string, guestEmail: string) => ({
+    subject: `New Contact Form Submission - ${hotelName}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background: linear-gradient(135deg, #8B5CF6, #7C3AED); color: white; padding: 2rem; text-align: center;">
+          <h1 style="margin: 0; font-size: 2rem;">New Contact Form</h1>
+        </div>
+        <div style="padding: 2rem; background: white;">
+          <h2 style="color: #1F2937;">New Contact Form Submission</h2>
+          <p style="color: #6B7280; line-height: 1.6;">
+            You have received a new contact form submission from a guest at <strong>${hotelName}</strong>.
+          </p>
+          <div style="background: #F3F4F6; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+            <p style="color: #1F2937; margin: 0; font-weight: bold;">Subject:</p>
+            <p style="color: #6B7280; margin: 0.5rem 0 0 0;">${subject}</p>
+          </div>
+          <div style="background: #F3F4F6; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+            <p style="color: #1F2937; margin: 0; font-weight: bold;">Message:</p>
+            <p style="color: #6B7280; margin: 0.5rem 0 0 0; white-space: pre-wrap;">${message}</p>
+          </div>
+          <div style="background: #F3F4F6; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+            <p style="color: #1F2937; margin: 0; font-weight: bold;">Guest Email:</p>
+            <p style="color: #6B7280; margin: 0.5rem 0 0 0;">${guestEmail}</p>
+          </div>
+          <div style="text-align: center; margin: 2rem 0;">
+            <a href="${process.env.APP_URL}/hotel-dashboard/contact" 
+               style="background: #8B5CF6; color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 0.5rem; display: inline-block;">
+              View Contact Forms
+            </a>
+          </div>
+          <p style="color: #6B7280; line-height: 1.6;">
+            Please respond to this inquiry as soon as possible.
+          </p>
+          <p style="color: #6B7280; line-height: 1.6;">
+            Best regards,<br>
+            The Hotel Feedback SaaS Team
+          </p>
+        </div>
+      </div>
+    `
+  }),
+
+  superAdminContactForm: (hotelName: string, subject: string, message: string, guestEmail: string, hotelEmail: string) => ({
+    subject: `New Contact Form from ${hotelName}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background: linear-gradient(135deg, #EF4444, #DC2626); color: white; padding: 2rem; text-align: center;">
+          <h1 style="margin: 0; font-size: 2rem;">New Contact Form</h1>
+        </div>
+        <div style="padding: 2rem; background: white;">
+          <h2 style="color: #1F2937;">New Contact Form Submission</h2>
+          <p style="color: #6B7280; line-height: 1.6;">
+            A guest from <strong>${hotelName}</strong> has submitted a contact form.
+          </p>
+          <div style="background: #F3F4F6; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+            <p style="color: #1F2937; margin: 0; font-weight: bold;">Hotel:</p>
+            <p style="color: #6B7280; margin: 0.5rem 0 0 0;">${hotelName} (${hotelEmail})</p>
+          </div>
+          <div style="background: #F3F4F6; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+            <p style="color: #1F2937; margin: 0; font-weight: bold;">Subject:</p>
+            <p style="color: #6B7280; margin: 0.5rem 0 0 0;">${subject}</p>
+          </div>
+          <div style="background: #F3F4F6; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+            <p style="color: #1F2937; margin: 0; font-weight: bold;">Message:</p>
+            <p style="color: #6B7280; margin: 0.5rem 0 0 0; white-space: pre-wrap;">${message}</p>
+          </div>
+          <div style="background: #F3F4F6; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+            <p style="color: #1F2937; margin: 0; font-weight: bold;">Guest Email:</p>
+            <p style="color: #6B7280; margin: 0.5rem 0 0 0;">${guestEmail}</p>
+          </div>
+          <div style="text-align: center; margin: 2rem 0;">
+            <a href="${process.env.APP_URL}/super-admin/contact-forms" 
+               style="background: #EF4444; color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 0.5rem; display: inline-block;">
+              View Contact Forms
+            </a>
+          </div>
+          <p style="color: #6B7280; line-height: 1.6;">
+            Please review this inquiry and provide appropriate support.
+          </p>
+          <p style="color: #6B7280; line-height: 1.6;">
+            Best regards,<br>
+            The Hotel Feedback SaaS System
+          </p>
+        </div>
+      </div>
+    `
   })
 }
