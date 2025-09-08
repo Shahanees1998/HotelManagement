@@ -1,0 +1,36 @@
+import { getServerSession } from 'next-auth'
+import { PrismaClient } from '@prisma/client'
+import QRCodeManagement from '@/components/QRCodeManagement'
+
+const prisma = new PrismaClient()
+
+export default async function QRCodesPage() {
+  const session = await getServerSession()
+  
+  if (!session || session.user?.role !== 'HOTEL_ADMIN' || !session.user?.hotelId) {
+    return <div>Unauthorized</div>
+  }
+
+  // Fetch QR codes for the hotel
+  const qrCodes = await prisma.qrCode.findMany({
+    where: { hotelId: session.user.hotelId },
+    orderBy: { createdAt: 'desc' }
+  })
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">QR Code Management</h1>
+          <p className="text-gray-600 mt-1">
+            Generate and manage QR codes for guest feedback collection
+          </p>
+        </div>
+      </div>
+
+      {/* QR Code Management Component */}
+      <QRCodeManagement qrCodes={qrCodes} hotelId={session.user.hotelId} />
+    </div>
+  )
+}

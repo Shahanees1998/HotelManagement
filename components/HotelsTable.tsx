@@ -18,7 +18,7 @@ interface User {
   createdAt: string
 }
 
-export interface Hotel {
+interface Hotel {
   id: string
   name: string
   email: string

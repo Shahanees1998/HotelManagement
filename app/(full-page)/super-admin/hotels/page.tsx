@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth'
 import { PrismaClient } from '@prisma/client'
 import HotelsTable from '@/components/HotelsTable'
-import { Hotel } from '@/components/HotelsTable'
+
 const prisma = new PrismaClient()
 
 export default async function HotelsPage() {
@@ -45,7 +45,7 @@ export default async function HotelsPage() {
       </div>
 
       {/* Hotels Table */}
-      <HotelsTable hotels={hotels as Hotel[]} />
+      <HotelsTable hotels={hotels} />
     </div>
   )
 }
