@@ -1,6 +1,9 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,324 +13,355 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id                   String     @id @default(auto()) @map("_id") @db.ObjectId
+  email                String     @unique
+  password             String
+  firstName            String
+  lastName             String
+  phone                String?
+  role                 UserRole   @default(HOTEL)
+  status               UserStatus @default(PENDING)
+  isDeleted            Boolean    @default(false)
+  profileImage         String?
+  profileImagePublicId String? // Cloudinary public_id for profile image
+  lastLogin            DateTime?
+  resetToken           String?
+  resetTokenExpiry     DateTime?
+  isPasswordChanged    Boolean    @default(false)
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+
+  // Relations
+  notifications        Notification[]
+  supportRequests      SupportRequest[]
+  announcements        Announcement[]
+  hotel                Hotel?     // If user is a hotel owner
+  adminEscalations     AdminEscalation[] // Escalations from this user
+
+  @@map("users")
+}
+
+model Hotel {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  slug              String   @unique // Unique slug for hotel access
+  description       String?
+  address           String?
+  city              String?
+  country           String?
+  phone             String?
+  email             String?
+  website           String?
+  logo              String?
+  logoPublicId      String? // Cloudinary public_id
+  isActive          Boolean  @default(true)
+  subscriptionId    String? // Stripe subscription ID
+  subscriptionStatus SubscriptionStatus @default(TRIAL)
+  trialEndsAt       DateTime?
+  subscriptionEndsAt DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  ownerId           String   @unique @db.ObjectId
+  owner             User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  feedbackForms     FeedbackForm[]
+  reviews           Review[]
+  qrCodes           QRCode[]
+  analytics         HotelAnalytics[]
+
+  @@map("hotels")
+}
+
+model FeedbackForm {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  isActive    Boolean  @default(true)
+  isPublic    Boolean  @default(true)
+  layout      String   @default("basic") // basic, good, excellent
+  hotelId     String   @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  hotel       Hotel           @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  questions   FormQuestion[]
+  reviews     Review[]
+  qrCodes     QRCode[]
+
+  @@map("feedback_forms")
+}
+
+model FormQuestion {
+  id            String           @id @default(auto()) @map("_id") @db.ObjectId
+  formId        String           @db.ObjectId
+  question      String
+  type          QuestionType
+  isRequired    Boolean          @default(true)
+  order         Int
+  options       String[]         @default([]) // For multiple choice questions
+  validation    String?          // JSON string for validation rules
+  isDefault     Boolean          @default(false) // Mark default questions that can't be edited/deleted
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  // Relations
+  form          FeedbackForm     @relation(fields: [formId], references: [id], onDelete: Cascade)
+  answers       QuestionAnswer[]
+
+  @@map("form_questions")
+}
+
+model Review {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  hotelId       String   @db.ObjectId
+  formId        String   @db.ObjectId
+  guestName     String?
+  guestEmail    String?
+  guestPhone    String?
+  overallRating Int      // 1-5 stars
+  isPublic      Boolean  @default(false) // 4-5 stars can be made public
+  isShared      Boolean  @default(false) // Whether shared on Google/TripAdvisor
+  status        ReviewStatus @default(PENDING)
+  submittedAt   DateTime @default(now())
+  publishedAt   DateTime?
+
+  // Relations
+  hotel         Hotel            @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  form          FeedbackForm     @relation(fields: [formId], references: [id], onDelete: Cascade)
+  answers       QuestionAnswer[]
+
+  @@map("reviews")
+}
+
+model QuestionAnswer {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  reviewId   String   @db.ObjectId
+  questionId String   @db.ObjectId
+  answer     String   // JSON string for different answer types
+  createdAt  DateTime @default(now())
+
+  // Relations
+  review     Review       @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  question   FormQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@map("question_answers")
+}
+
+model QRCode {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  hotelId     String   @db.ObjectId
+  formId      String?  @db.ObjectId
+  code        String   @unique // QR code identifier
+  url         String   // Full URL for the QR code
+  isActive    Boolean  @default(true)
+  scanCount   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  hotel       Hotel         @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  form        FeedbackForm? @relation(fields: [formId], references: [id], onDelete: SetNull)
+
+  @@map("qr_codes")
+}
+
+model HotelAnalytics {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  hotelId         String   @db.ObjectId
+  date            DateTime
+  totalReviews    Int      @default(0)
+  averageRating   Float    @default(0)
+  positiveReviews Int      @default(0) // 4-5 stars
+  negativeReviews Int      @default(0) // 1-3 stars
+  responseRate    Float    @default(0)
+  createdAt       DateTime @default(now())
+
+  // Relations
+  hotel           Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@map("hotel_analytics")
+}
+
+model AdminEscalation {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
+  hotelId     String?  @db.ObjectId
+  subject     String
+  message     String
+  status      EscalationStatus @default(OPEN)
+  priority    Priority @default(MEDIUM)
+  adminResponse String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("admin_escalations")
+}
+
+model Notification {
+  id         String           @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String           @db.ObjectId
+  title      String
+  message    String
+  type       NotificationType
+  isRead     Boolean          @default(false)
+  isArchived Boolean          @default(false)
+  relatedId  String?          // ID of related entity (message, event, etc.)
+  relatedType String?         // Type of related entity
+  metadata   String?          // JSON string for additional data
+  createdAt  DateTime         @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model SupportRequest {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String        @db.ObjectId
+  subject       String
+  message       String
+  status        SupportStatus @default(OPEN)
+  priority      Priority      @default(MEDIUM)
+  adminResponse String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("support_requests")
+}
+
+model Announcement {
+  id          String             @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  content     String
+  type        AnnouncementType
+  status      AnnouncementStatus @default(PUBLISHED)
+  createdById String             @db.ObjectId
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  // Relations
+  createdBy User @relation(fields: [createdById], references: [id], onDelete: Cascade)
+
+  @@map("announcements")
+}
+
+model SystemSettings {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  siteName            String
+  siteDescription     String?
+  contactEmail        String
+  enableNotifications Boolean  @default(true)
+  stripePublicKey     String?
+  stripeSecretKey     String?
+  sendgridApiKey      String?
+  pusherAppId         String?
+  pusherKey           String?
+  pusherSecret        String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("system_settings")
+}
+
+// Enums
 enum UserRole {
-  SUPER_ADMIN
-  HOTEL_ADMIN
+  ADMIN
+  HOTEL
+}
+
+enum UserStatus {
+  PENDING
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  DEACTIVATED
 }
 
 enum SubscriptionStatus {
+  TRIAL
   ACTIVE
-  INACTIVE
   CANCELLED
+  EXPIRED
   PAST_DUE
+}
+
+enum QuestionType {
+  SHORT_TEXT
+  LONG_TEXT
+  STAR_RATING
+  MULTIPLE_CHOICE_SINGLE
+  MULTIPLE_CHOICE_MULTIPLE
+  YES_NO
+  FILE_UPLOAD
 }
 
 enum ReviewStatus {
   PENDING
   APPROVED
   REJECTED
-  SHARED_EXTERNALLY
+  PUBLISHED
 }
 
-enum FormFieldType {
-  TEXT
-  TEXTAREA
-  RATING
-  MULTIPLE_CHOICE
-  SINGLE_CHOICE
-  EMAIL
-  PHONE
-  FILE_UPLOAD
+enum EscalationStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
 }
 
-model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
-  password  String
-  firstName String
-  lastName  String
-  role      UserRole
-  hotelId   String?  @db.ObjectId
-  hotel     Hotel?   @relation(fields: [hotelId], references: [id])
-  
-  // Password reset
-  resetToken         String?
-  resetTokenExpiry   DateTime?
-  
-  // Relations
-  notifications Notification[]
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("users")
+enum NotificationType {
+  NEW_REVIEW
+  REVIEW_APPROVED
+  REVIEW_REJECTED
+  SUBSCRIPTION_EXPIRING
+  SUBSCRIPTION_CANCELLED
+  ESCALATION_RECEIVED
+  ESCALATION_RESPONDED
+  SYSTEM_ALERT
+  NEW_HOTEL_REGISTRATION
 }
 
-model Hotel {
-  id                String             @id @default(auto()) @map("_id") @db.ObjectId
-  name              String
-  slug              String             @unique
-  email             String             @unique
-  phone             String?
-  address           String
-  city              String
-  state             String
-  country           String
-  zipCode           String?
-  website           String?
-  googleReviewUrl   String?  // Google Reviews URL for the hotel
-  description       String?
-  logo              String?
-  primaryColor      String             @default("#3B82F6")
-  secondaryColor    String             @default("#1E40AF")
-  
-  // Subscription
-  subscriptionId    String?            @unique
-  subscriptionStatus SubscriptionStatus @default(INACTIVE)
-  subscriptionPlan  String?           // basic, premium, enterprise
-  subscriptionStart DateTime?
-  subscriptionEnd   DateTime?
-  
-  // Settings
-  isActive          Boolean            @default(true)
-  allowExternalSharing Boolean         @default(true)
-  autoApproveReviews Boolean          @default(false)
-  
-  // Relations
-  users             User[]
-  reviews           Review[]
-  forms             Form[]
-  qrCodes           QRCode[]
-  subscription      Subscription?
-  supportMessages   SupportMessage[]
-  refunds           Refund[]
-  suspensions       HotelSuspension[]
-  
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
-
-  @@map("hotels")
+enum SupportStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
 }
 
-model Form {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  hotelId     String       @db.ObjectId
-  hotel       Hotel        @relation(fields: [hotelId], references: [id])
-  name        String
-  description String?
-  isActive    Boolean      @default(true)
-  isDefault   Boolean      @default(false)
-  fields      FormField[]
-  reviews     Review[]
-  
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-
-  @@map("forms")
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
 }
 
-model FormField {
-  id          String         @id @default(auto()) @map("_id") @db.ObjectId
-  formId      String         @db.ObjectId
-  form        Form           @relation(fields: [formId], references: [id])
-  label       String
-  type        FormFieldType
-  required    Boolean        @default(false)
-  placeholder String?
-  options     String[]       // For multiple choice fields
-  order       Int            @default(0)
-  
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-
-  @@map("form_fields")
+enum AnnouncementType {
+  GENERAL
+  IMPORTANT
+  URGENT
+  EVENT
+  UPDATE
 }
 
-model Review {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  hotelId     String       @db.ObjectId
-  hotel       Hotel        @relation(fields: [hotelId], references: [id])
-  formId      String       @db.ObjectId
-  form        Form         @relation(fields: [formId], references: [id])
-  
-  // Guest info
-  guestName   String?
-  guestEmail  String?
-  guestPhone  String?
-  
-  // Review content
-  responses   Json         // Store form responses as JSON
-  overallRating Int?       // Overall rating if applicable
-  status      ReviewStatus @default(PENDING)
-  
-  // External sharing
-  sharedOnGoogle Boolean   @default(false)
-  sharedOnTripAdvisor Boolean @default(false)
-  externalUrls Json?       // Store external review URLs
-  
-  // Admin actions
-  adminNotes  String?
-  adminId     String?      @db.ObjectId
-  
-  // Media files
-  mediaFiles  MediaFile[]
-  
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-
-  @@map("reviews")
+enum AnnouncementStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }
 
-model QRCode {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  hotelId     String   @db.ObjectId
-  hotel       Hotel    @relation(fields: [hotelId], references: [id])
-  name        String
-  description String?
-  url         String   @unique
-  imageUrl    String?  // Generated QR code image
-  isActive    Boolean  @default(true)
-  scanCount   Int      @default(0)
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@map("qr_codes")
-}
-
-model Subscription {
-  id                String             @id @default(auto()) @map("_id") @db.ObjectId
-  hotelId           String             @unique @db.ObjectId
-  hotel             Hotel              @relation(fields: [hotelId], references: [id])
-  stripeCustomerId  String             @unique
-  stripeSubscriptionId String?        @unique
-  plan              String             // basic, premium, enterprise
-  status            SubscriptionStatus
-  currentPeriodStart DateTime
-  currentPeriodEnd   DateTime
-  cancelAtPeriodEnd Boolean            @default(false)
-  
-  // Relations
-  refunds           Refund[]
-  
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
-
-  @@map("subscriptions")
-}
-
-model Notification {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
-  title     String
-  message   String
-  type      String   // info, warning, success, error
-  isRead    Boolean  @default(false)
-  data      Json?    // Additional data
-  
-  createdAt DateTime @default(now())
-
-  @@map("notifications")
-}
-
-model MediaFile {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  reviewId  String   @db.ObjectId
-  review    Review   @relation(fields: [reviewId], references: [id])
-  fileName  String
-  fileUrl   String
-  fileType  String   // image, video
-  fileSize  Int      // in bytes
-  mimeType  String
-  
-  createdAt DateTime @default(now())
-
-  @@map("media_files")
-}
-
-model SupportMessage {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  hotelId     String   @db.ObjectId
-  hotel       Hotel    @relation(fields: [hotelId], references: [id])
-  subject     String
-  category    String   // general, technical, billing, feature, bug, account, other
-  message     String
-  priority    String   // low, medium, high, urgent
-  status      String   // pending, in_progress, resolved, closed
-  hotelName   String
-  hotelEmail  String
-  hotelPhone  String?
-  
-  // Admin response
-  adminResponse String?
-  adminId       String? @db.ObjectId
-  respondedAt   DateTime?
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@map("support_messages")
-}
-
-model Refund {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  hotelId         String   @db.ObjectId
-  hotel           Hotel    @relation(fields: [hotelId], references: [id])
-  subscriptionId  String?  @db.ObjectId
-  subscription    Subscription? @relation(fields: [subscriptionId], references: [id])
-  
-  // Refund details
-  amount          Float    // Amount to refund in dollars
-  reason          String   // Reason for refund
-  status          String   // pending, processing, completed, failed, cancelled
-  stripeRefundId  String?  // Stripe refund ID
-  
-  // Admin details
-  processedBy     String?  @db.ObjectId // Super admin who processed
-  processedAt     DateTime?
-  notes           String?  // Additional notes
-  
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  @@map("refunds")
-}
-
-model HotelSuspension {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  hotelId     String   @db.ObjectId
-  hotel       Hotel    @relation(fields: [hotelId], references: [id])
-  
-  // Suspension details
-  reason      String   // Reason for suspension
-  type        String   // temporary, permanent, payment_issue, violation, etc.
-  status      String   // active, lifted, expired
-  duration    Int?     // Duration in days (for temporary suspensions)
-  
-  // Dates
-  suspendedAt DateTime @default(now())
-  expiresAt   DateTime?
-  liftedAt    DateTime?
-  
-  // Admin details
-  suspendedBy String   @db.ObjectId // Super admin who suspended
-  liftedBy    String?  @db.ObjectId // Super admin who lifted suspension
-  notes       String?  // Additional notes
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@map("hotel_suspensions")
-}
-
-model SystemSettings {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  key   String @unique
-  value Json
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("system_settings")
+enum TargetAudience {
+  ALL
+  HOTELS
+  ADMINS
+  NEW_HOTELS
 }

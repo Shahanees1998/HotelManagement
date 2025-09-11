@@ -1,307 +1,218 @@
-'use client'
+"use client";
+import type { Page } from "@/types/index";
+import { useRouter } from "next/navigation";
+import { Button } from "primereact/button";
+import { Checkbox } from "primereact/checkbox";
+import { InputText } from "primereact/inputtext";
+import { Password } from "primereact/password";
+import { Toast } from "primereact/toast";
+import { useContext, useState, useRef } from "react";
+import { LayoutContext } from "../../../../layout/context/layoutcontext";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Button } from 'primereact/button'
-import { InputText } from 'primereact/inputtext'
-import { Password } from 'primereact/password'
-import { Card } from 'primereact/card'
-import { Message } from 'primereact/message'
-import { Dropdown } from 'primereact/dropdown'
-import Link from 'next/link'
-import toast from 'react-hot-toast'
+const Register: Page = () => {
+    const [confirmed, setConfirmed] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        phone: ''
+    });
+    const router = useRouter();
+    const toast = useRef<Toast>(null);
+    const { layoutConfig } = useContext(LayoutContext);
+    const dark = layoutConfig.colorScheme !== "light";
 
-const subscriptionPlans = [
-  { label: 'Basic - $29/month', value: 'basic' },
-  { label: 'Premium - $79/month', value: 'premium' },
-  { label: 'Enterprise - $199/month', value: 'enterprise' }
-]
+    const handleInputChange = (field: string, value: string) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: value
+        }));
+    };
 
-export default function RegisterPage() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    hotelName: '',
-    hotelEmail: '',
-    hotelPhone: '',
-    hotelAddress: '',
-    hotelCity: '',
-    hotelState: '',
-    hotelCountry: '',
-    hotelZipCode: '',
-    subscriptionPlan: 'premium'
-  })
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const router = useRouter()
+    const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+        toast.current?.show({ severity, summary, detail, life: 3000 });
+    };
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
+    const handleRegister = async () => {
+        if (!confirmed) {
+            showToast("warn", "Warning", "Please accept the terms and conditions");
+            return;
+        }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+        if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
+            showToast("error", "Error", "Please fill in all required fields");
+            return;
+        }
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
-      setLoading(false)
-      return
-    }
+        setLoading(true);
+        try {
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
 
-    try {
-      const response = await fetch('/api/hotels/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
+            const data = await response.json();
 
-      const data = await response.json()
+            if (response.ok) {
+                showToast("success", "Success", data.message);
+                setTimeout(() => {
+                    router.push('/auth/login');
+                }, 2000);
+            } else {
+                showToast("error", "Error", data.error);
+            }
+        } catch (error) {
+            showToast("error", "Error", "Registration failed. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
-      if (response.ok) {
-        toast.success('Registration successful! Please check your email for verification.')
-        router.push('/auth/login')
-      } else {
-        setError(data.error || 'Registration failed')
-        toast.error(data.error || 'Registration failed')
-      }
-    } catch (error) {
-      setError('An error occurred. Please try again.')
-      toast.error('An error occurred. Please try again.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  return (
-    <div className="min-h-screen py-12 bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="max-w-2xl mx-auto px-4">
-        <Card className="p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-blue-600 mb-2">HotelFeedback Pro</h1>
-            <h2 className="text-2xl font-semibold text-gray-900">Create Your Account</h2>
-            <p className="text-gray-600 mt-2">Start your free trial today</p>
-          </div>
-
-          {error && (
-            <Message severity="error" text={error} className="mb-6" />
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Personal Information */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    First Name
-                  </label>
-                  <InputText
-                    value={formData.firstName}
-                    onChange={(e) => handleInputChange('firstName', e.target.value)}
-                    className="w-full"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Last Name
-                  </label>
-                  <InputText
-                    value={formData.lastName}
-                    onChange={(e) => handleInputChange('lastName', e.target.value)}
-                    className="w-full"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Account Information */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Information</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address
-                  </label>
-                  <InputText
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="w-full"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Password
-                  </label>
-                  <Password
-                    value={formData.password}
-                    onChange={(e) => handleInputChange('password', e.target.value)}
-                    className="w-full"
-                    toggleMask
-                    feedback={false}
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Confirm Password
-                  </label>
-                  <Password
-                    value={formData.confirmPassword}
-                    onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                    className="w-full"
-                    toggleMask
-                    feedback={false}
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Hotel Information */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Hotel Information</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Hotel Name
-                  </label>
-                  <InputText
-                    value={formData.hotelName}
-                    onChange={(e) => handleInputChange('hotelName', e.target.value)}
-                    className="w-full"
-                    required
-                  />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Hotel Email
-                    </label>
-                    <InputText
-                      type="email"
-                      value={formData.hotelEmail}
-                      onChange={(e) => handleInputChange('hotelEmail', e.target.value)}
-                      className="w-full"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Hotel Phone
-                    </label>
-                    <InputText
-                      value={formData.hotelPhone}
-                      onChange={(e) => handleInputChange('hotelPhone', e.target.value)}
-                      className="w-full"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Address
-                  </label>
-                  <InputText
-                    value={formData.hotelAddress}
-                    onChange={(e) => handleInputChange('hotelAddress', e.target.value)}
-                    className="w-full"
-                    required
-                  />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      City
-                    </label>
-                    <InputText
-                      value={formData.hotelCity}
-                      onChange={(e) => handleInputChange('hotelCity', e.target.value)}
-                      className="w-full"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      State
-                    </label>
-                    <InputText
-                      value={formData.hotelState}
-                      onChange={(e) => handleInputChange('hotelState', e.target.value)}
-                      className="w-full"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Zip Code
-                    </label>
-                    <InputText
-                      value={formData.hotelZipCode}
-                      onChange={(e) => handleInputChange('hotelZipCode', e.target.value)}
-                      className="w-full"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Country
-                  </label>
-                  <InputText
-                    value={formData.hotelCountry}
-                    onChange={(e) => handleInputChange('hotelCountry', e.target.value)}
-                    className="w-full"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Subscription Plan */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Subscription Plan</h3>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Choose Your Plan
-                </label>
-                <Dropdown
-                  value={formData.subscriptionPlan}
-                  onChange={(e) => handleInputChange('subscriptionPlan', e.value)}
-                  options={subscriptionPlans}
-                  className="w-full"
+    return (
+        <>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1600 800"
+                className="fixed left-0 top-0 min-h-screen min-w-screen"
+                preserveAspectRatio="none"
+            >
+                <rect
+                    fill={dark ? "var(--primary-900)" : "var(--primary-500)"}
+                    width="1600"
+                    height="800"
                 />
-              </div>
+                <path
+                    fill={dark ? "var(--primary-800)" : "var(--primary-400)"}
+                    d="M478.4 581c3.2 0.8 6.4 1.7 9.5 2.5c196.2 52.5 388.7 133.5 593.5 176.6c174.2 36.6 349.5 29.2 518.6-10.2V0H0v574.9c52.3-17.6 106.5-27.7 161.1-30.9C268.4 537.4 375.7 554.2 478.4 581z"
+                />
+                <path
+                    fill={dark ? "var(--primary-700)" : "var(--primary-300)"}
+                    d="M181.8 259.4c98.2 6 191.9 35.2 281.3 72.1c2.8 1.1 5.5 2.3 8.3 3.4c171 71.6 342.7 158.5 531.3 207.7c198.8 51.8 403.4 40.8 597.3-14.8V0H0v283.2C59 263.6 120.6 255.7 181.8 259.4z"
+                />
+                <path
+                    fill={dark ? "var(--primary-600)" : "var(--primary-200)"}
+                    d="M454.9 86.3C600.7 177 751.6 269.3 924.1 325c208.6 67.4 431.3 60.8 637.9-5.3c12.8-4.1 25.4-8.4 38.1-12.9V0H288.1c56 21.3 108.7 50.6 159.7 82C450.2 83.4 452.5 84.9 454.9 86.3z"
+                />
+                <path
+                    fill={dark ? "var(--primary-500)" : "var(--primary-100)"}
+                    d="M1397.5 154.8c47.2-10.6 93.6-25.3 138.6-43.8c21.7-8.9 43-18.8 63.9-29.5V0H643.4c62.9 41.7 129.7 78.2 202.1 107.4C1020.4 178.1 1214.2 196.1 1397.5 154.8z"
+                />
+            </svg>
+            <div className="px-5 min-h-screen flex justify-content-center align-items-center">
+                <div className="border-1 surface-border surface-card border-round py-7 px-4 md:px-7 z-1">
+                    <div className="mb-4">
+                        <div className="text-900 text-xl font-bold mb-2">
+                            Register
+                        </div>
+                        <span className="text-600 font-medium">
+                            Let&lsquo;s get started
+                        </span>
+                    </div>
+                    <div className="flex flex-column">
+                        <span className="p-input-icon-left w-full mb-4">
+                            <i className="pi pi-user"></i>
+                            <InputText
+                                id="firstName"
+                                type="text"
+                                className="w-full md:w-25rem"
+                                placeholder="First Name"
+                                value={formData.firstName}
+                                onChange={(e) => handleInputChange('firstName', e.target.value)}
+                            />
+                        </span>
+                        <span className="p-input-icon-left w-full mb-4">
+                            <i className="pi pi-user"></i>
+                            <InputText
+                                id="lastName"
+                                type="text"
+                                className="w-full md:w-25rem"
+                                placeholder="Last Name"
+                                value={formData.lastName}
+                                onChange={(e) => handleInputChange('lastName', e.target.value)}
+                            />
+                        </span>
+                        <span className="p-input-icon-left w-full mb-4">
+                            <i className="pi pi-envelope"></i>
+                            <InputText
+                                id="email"
+                                type="email"
+                                className="w-full md:w-25rem"
+                                placeholder="Email"
+                                value={formData.email}
+                                onChange={(e) => handleInputChange('email', e.target.value)}
+                            />
+                        </span>
+                        <span className="p-input-icon-left w-full mb-4">
+                            <i className="pi pi-phone"></i>
+                            <InputText
+                                id="phone"
+                                type="tel"
+                                className="w-full md:w-25rem"
+                                placeholder="Phone (Optional)"
+                                value={formData.phone}
+                                onChange={(e) => handleInputChange('phone', e.target.value)}
+                            />
+                        </span>
+                        <span className="p-input-icon-left w-full mb-4">
+                            <i className="pi pi-lock z-2"></i>
+                            <Password
+                                id="password"
+                                type="password"
+                                className="w-full"
+                                inputClassName="w-full md:w-25rem"
+                                placeholder="Password"
+                                toggleMask
+                                inputStyle={{ paddingLeft: "2.5rem" }}
+                                value={formData.password}
+                                onChange={(e) => handleInputChange('password', e.target.value)}
+                            />
+                        </span>
+                        <div className="mb-4 flex flex-wrap">
+                            <Checkbox
+                                name="checkbox"
+                                checked={confirmed}
+                                onChange={(e) =>
+                                    setConfirmed(e.checked ?? false)
+                                }
+                                className="mr-2"
+                            ></Checkbox>
+                            <label
+                                htmlFor="checkbox"
+                                className="text-900 font-medium mr-2"
+                            >
+                                I have read the
+                            </label>
+                            <a className="text-600 cursor-pointer hover:text-primary cursor-pointer">
+                                Terms and Conditions
+                            </a>
+                        </div>
+                        <Button
+                            label="Sign Up"
+                            className="w-full mb-4"
+                            onClick={handleRegister}
+                            loading={loading}
+                            disabled={loading}
+                        ></Button>
+                        <span className="font-medium text-600">
+                            Already have an account?{" "}
+                            <a 
+                                className="font-semibold cursor-pointer text-900 hover:text-primary transition-colors transition-duration-300"
+                                onClick={() => router.push('/auth/login')}
+                            >
+                                Login
+                            </a>
+                        </span>
+                    </div>
+                </div>
             </div>
+            <Toast ref={toast} />
+        </>
+    );
+};
 
-            <Button
-              type="submit"
-              label="Create Account & Start Free Trial"
-              className="w-full"
-              size="large"
-              loading={loading}
-              disabled={loading}
-            />
-          </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-              Already have an account?{' '}
-              <Link href="/auth/login" className="text-blue-600 hover:text-blue-500 font-medium">
-                Sign in
-              </Link>
-            </p>
-          </div>
-        </Card>
-      </div>
-    </div>
-  )
-}
+export default Register;
