@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
       const days = parseInt(timeRange);
 
       // Get hotel data
-      const hotel = await prisma.hotel.findFirst({
+      const hotel = await prisma.hotels.findFirst({
         where: {
           ownerId: user.userId,
         },
@@ -130,7 +130,7 @@ export async function GET(request: NextRequest) {
       };
 
       // Monthly data for charts
-      const monthlyData = {};
+      const monthlyData: Record<string, { reviews: number; averageRating: number; positiveReviews: number }> = {};
       const currentDate = new Date();
       
       for (let i = days - 1; i >= 0; i--) {

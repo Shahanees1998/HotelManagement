@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
       }
 
       // Get hotel data
-      const hotel = await prisma.hotel.findUnique({
+      const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
         include: {
           reviews: {

@@ -98,9 +98,7 @@ export function useGenerateMembershipCard() {
     return useApi(apiClient.generateMembershipCard.bind(apiClient));
 }
 
-export function useDocuments() {
-    return useApi(apiClient.getDocuments.bind(apiClient));
-}
+// Removed - getDocuments method doesn't exist in ApiClient
 
 export function useNotifications() {
     return useApi(apiClient.getNotifications.bind(apiClient));
@@ -110,6 +108,4 @@ export function useSupportRequests() {
     return useApi(apiClient.getSupportRequests.bind(apiClient));
 }
 
-export function usePhonebookEntries() {
-    return useApi(apiClient.getPhonebookEntries.bind(apiClient));
-} 
+// Removed - getPhonebookEntries method doesn't exist in ApiClient 

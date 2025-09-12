@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
       }
 
       // Get hotel with subscription details
-      const hotel = await prisma.hotel.findUnique({
+      const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
         select: {
           id: true,
@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Get hotel
-      const hotel = await prisma.hotel.findUnique({
+      const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
         select: { id: true, subscriptionStatus: true },
       });
@@ -160,7 +160,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Update hotel subscription
-      const updatedHotel = await prisma.hotel.update({
+      const updatedHotel = await prisma.hotels.update({
         where: { id: hotel.id },
         data: {
           subscriptionStatus: newStatus,

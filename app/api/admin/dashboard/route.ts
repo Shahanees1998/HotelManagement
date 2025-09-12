@@ -19,11 +19,11 @@ export async function GET(request: NextRequest) {
         pendingApprovals,
         supportRequests,
       ] = await Promise.all([
-        prisma.hotel.count(),
-        prisma.hotel.count({ where: { subscriptionStatus: 'ACTIVE' } }),
+        prisma.hotels.count(),
+        prisma.hotels.count({ where: { subscriptionStatus: 'ACTIVE' } }),
         prisma.review.count(),
         // Calculate total earnings based on active subscriptions
-        prisma.hotel.count({ where: { subscriptionStatus: 'ACTIVE' } }),
+        prisma.hotels.count({ where: { subscriptionStatus: 'ACTIVE' } }),
         prisma.user.count({ where: { status: 'PENDING' } }),
         prisma.supportRequest.count({ where: { status: 'OPEN' } }),
       ]);
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
             role: true,
           },
         }),
-        prisma.hotel.findMany({
+        prisma.hotels.findMany({
           take: 5,
           orderBy: { createdAt: 'desc' },
           select: {
@@ -124,7 +124,7 @@ export async function GET(request: NextRequest) {
         const monthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
         const [newHotels, newReviews, monthlyEarnings] = await Promise.all([
-          prisma.hotel.count({
+          prisma.hotels.count({
             where: {
               createdAt: {
                 gte: monthStart,
@@ -141,7 +141,7 @@ export async function GET(request: NextRequest) {
             },
           }),
           // Calculate monthly earnings based on active subscriptions
-          prisma.hotel.count({
+          prisma.hotels.count({
             where: {
               subscriptionStatus: 'ACTIVE',
               createdAt: {

@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Verify hotel ownership
-    const hotel = await prisma.hotel.findFirst({
+    const hotel = await prisma.hotels.findFirst({
       where: {
         id: hotelId,
         ownerId: payload.userId,
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Get form titles for QR codes that have formId
-    const formIds = qrCodes.filter(qr => qr.formId).map(qr => qr.formId);
+    const formIds = qrCodes.filter(qr => qr.formId).map(qr => qr.formId).filter((id): id is string => id !== null);
     const forms = formIds.length > 0 ? await prisma.feedbackForm.findMany({
       where: { id: { in: formIds } },
       select: { id: true, title: true },
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify hotel ownership
-    const hotel = await prisma.hotel.findFirst({
+    const hotel = await prisma.hotels.findFirst({
       where: {
         id: hotelId,
         ownerId: payload.userId,

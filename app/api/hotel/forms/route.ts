@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
       }
 
       // Get hotel
-      const hotel = await prisma.hotel.findUnique({
+      const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
         select: { id: true },
       });
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Get hotel
-      const hotel = await prisma.hotel.findUnique({
+      const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
         select: { id: true },
       });
@@ -169,14 +169,14 @@ export async function POST(request: NextRequest) {
         const { sendAdminNotification, NotificationTemplates } = await import('@/lib/notificationService');
         
         // Get hotel info for notification
-        const hotel = await prisma.hotel.findUnique({
+        const hotel = await prisma.hotels.findUnique({
           where: { id: user.hotelId },
           select: { name: true },
         });
 
         if (hotel) {
           await sendAdminNotification(
-            NotificationTemplates.formCreated(hotel.name, formData.title, result.id)
+            NotificationTemplates.formCreated(hotel.name, title, result.id)
           );
         }
       } catch (notificationError) {

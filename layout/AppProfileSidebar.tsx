@@ -61,20 +61,8 @@ const AppProfileSidebar = () => {
                 status: 'unread'
             });
 
-            // Load recent messages
-            try {
-                const messagesResponse = await apiClient.getChatMessages('general', {
-                    page: 1,
-                    limit: 3
-                });
-
-                if (!messagesResponse.error) {
-                    setMessages(messagesResponse.data?.messages || []);
-                }
-            } catch (error) {
-                console.error('Error loading messages:', error);
-                setMessages([]);
-            }
+            // Chat functionality removed - not relevant to hotel management system
+            setMessages([]);
 
             if (!notificationsResponse.error) {
                 setNotifications(notificationsResponse.data?.notifications || []);

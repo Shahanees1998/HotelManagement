@@ -88,21 +88,9 @@ export default function CalendarModal({ visible, onHide }: CalendarModalProps) {
     }
   };
 
-  // Fetch trestle boards
+  // Initialize trestle boards as empty since this is demo functionality
   const fetchTrestleBoards = async () => {
-    try {
-      const response = await apiClient.getTrestleBoards();
-      if (response.data && Array.isArray(response.data)) {
-        setTrestleBoards(response.data);
-      } else if (response.data && (response.data as any).trestleBoards) {
-        setTrestleBoards((response.data as any).trestleBoards);
-      } else {
-        setTrestleBoards([]);
-      }
-    } catch (error) {
-      console.error('Error fetching trestle boards:', error);
-      showToast('error', 'Error','Failed to fetch trestle boards');
-    }
+    setTrestleBoards([]);
   };
 
   useEffect(() => {

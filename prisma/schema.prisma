@@ -36,13 +36,13 @@ model User {
   notifications        Notification[]
   supportRequests      SupportRequest[]
   announcements        Announcement[]
-  hotel                Hotel?     // If user is a hotel owner
+  hotel                Hotels?     // If user is a hotel owner
   adminEscalations     AdminEscalation[] // Escalations from this user
 
   @@map("users")
 }
 
-model Hotel {
+model Hotels {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   name              String
   slug              String   @unique // Unique slug for hotel access
@@ -86,7 +86,7 @@ model FeedbackForm {
   updatedAt   DateTime @updatedAt
 
   // Relations
-  hotel       Hotel           @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotel       Hotels           @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   questions   FormQuestion[]
   reviews     Review[]
   qrCodes     QRCode[]
@@ -129,7 +129,7 @@ model Review {
   publishedAt   DateTime?
 
   // Relations
-  hotel         Hotel            @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotel         Hotels            @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   form          FeedbackForm     @relation(fields: [formId], references: [id], onDelete: Cascade)
   answers       QuestionAnswer[]
 
@@ -162,7 +162,7 @@ model QRCode {
   updatedAt   DateTime @updatedAt
 
   // Relations
-  hotel       Hotel         @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotel       Hotels         @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   form        FeedbackForm? @relation(fields: [formId], references: [id], onDelete: SetNull)
 
   @@map("qr_codes")
@@ -180,7 +180,7 @@ model HotelAnalytics {
   createdAt       DateTime @default(now())
 
   // Relations
-  hotel           Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotel           Hotels   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
 
   @@map("hotel_analytics")
 }

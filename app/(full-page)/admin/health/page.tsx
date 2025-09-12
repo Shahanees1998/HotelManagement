@@ -72,7 +72,7 @@ export default function AdminHealth() {
   const getSeverity = (status: string) => {
     switch (status) {
       case 'healthy': return 'success';
-      case 'warning': return 'warn';
+      case 'warning': return 'warning';
       case 'error': return 'danger';
       default: return 'info';
     }

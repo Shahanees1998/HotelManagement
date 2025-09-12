@@ -6,6 +6,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { ToggleButton } from "primereact/togglebutton";
+import { Tag } from "primereact/tag";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
@@ -152,8 +153,8 @@ export default function AdminIntegrations() {
         integration.id === integrationId 
           ? { 
               ...integration, 
-              isEnabled: Object.values(config).some(value => value && value.trim() !== ""),
-              status: Object.values(config).some(value => value && value.trim() !== "") ? "connected" : "disconnected",
+              isEnabled: Object.values(config).some(value => value && typeof value === 'string' && value.trim() !== ""),
+              status: Object.values(config).some(value => value && typeof value === 'string' && value.trim() !== "") ? "connected" : "disconnected",
               lastSync: new Date().toISOString()
             }
           : integration
@@ -360,7 +361,6 @@ export default function AdminIntegrations() {
                       offLabel="Disabled"
                       onIcon="pi pi-check"
                       offIcon="pi pi-times"
-                      loading={saving === integration.id}
                     />
                     <Button
                       label="Configure"

@@ -1,5 +1,5 @@
 import type { Demo } from "@/types/index";
-let icons: Demo.Icon[];
+let icons: Demo.Icon[] | undefined;
 let selectedIcon: Demo.Icon | undefined;
 
 export const IconService = {

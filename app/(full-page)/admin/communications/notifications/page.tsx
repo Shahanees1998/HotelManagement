@@ -17,18 +17,14 @@ import { useRouter } from "next/navigation";
 
 interface Notification {
     id: string;
-    userId: string;
     title: string;
     message: string;
-    type: 'BROADCAST' | 'SUPPORT_RESPONSE' | 'USER_JOINED' | 'SYSTEM_ALERT';
+    type: string;
     isRead: boolean;
+    relatedId?: string;
+    relatedType?: string;
+    metadata?: any;
     createdAt: string;
-    user?: {
-        id: string;
-        firstName: string;
-        lastName: string;
-        email: string;
-    };
 }
 
 export default function NotificationsPage() {
@@ -70,11 +66,8 @@ export default function NotificationsPage() {
             const response = await apiClient.getNotifications({
                 page: currentPage,
                 limit: rowsPerPage,
-                search: globalFilterValue,
                 type: selectedType,
                 status: selectedStatus,
-                sortField,
-                sortOrder,
             });
 
             if (response.error) {

@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Check if slug already exists
-    const existingHotel = await prisma.hotel.findUnique({
+    const existingHotel = await prisma.hotels.findUnique({
       where: { slug },
       select: { id: true, name: true },
     });

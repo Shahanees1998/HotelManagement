@@ -15,7 +15,10 @@ import { useAuth } from "@/hooks/useAuth";
 import { canAccessSection, getDefaultRedirectPath } from "@/lib/rolePermissions";
 
 interface DashboardStats {
-    totalUsers: number;
+    totalHotels: number;
+    totalSubscribedHotels: number;
+    totalReviews: number;
+    totalEarnings: number;
     pendingApprovals: number;
     supportRequests: number;
 }
@@ -32,7 +35,9 @@ interface RecentActivity {
 
 interface GrowthData {
     labels: string[];
-    newMembers: number[];
+    newHotels: number[];
+    newReviews: number[];
+    earnings: number[];
 }
 
 export default function AdminDashboard() {
@@ -40,14 +45,19 @@ export default function AdminDashboard() {
     const toast = useRef<Toast>(null);
     const { user, loading: authLoading } = useAuth();
     const [stats, setStats] = useState<DashboardStats>({
-        totalUsers: 0,
+        totalHotels: 0,
+        totalSubscribedHotels: 0,
+        totalReviews: 0,
+        totalEarnings: 0,
         pendingApprovals: 0,
         supportRequests: 0
     });
     const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
     const [growthData, setGrowthData] = useState<GrowthData>({
         labels: [],
-        newMembers: []
+        newHotels: [],
+        newReviews: [],
+        earnings: []
     });
     const [loading, setLoading] = useState(true);
     const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
@@ -114,8 +124,8 @@ export default function AdminDashboard() {
         labels: growthData.labels,
         datasets: [
             {
-                label: 'New Members',
-                data: growthData.newMembers,
+                label: 'New Hotels',
+                data: growthData.newHotels,
                 borderColor: '#4CAF50',
                 backgroundColor: 'rgba(76, 175, 80, 0.1)',
                 tension: 0.4,
@@ -208,10 +218,10 @@ export default function AdminDashboard() {
 
     const cardData = [
         {
-            value: stats.totalUsers,
-            label: "Total Members",
+            value: stats.totalHotels,
+            label: "Total Hotels",
             color: "text-blue-500",
-            route: "/admin/users",
+            route: "/admin/hotels",
             canAccess: canAccessSection(user.role, 'canAccessUsers'),
         },
         {
@@ -320,18 +330,6 @@ export default function AdminDashboard() {
                                                 <p className="text-600 text-sm m-0">{action.description}</p>
                                             </div>
                                         </div>
-                                        {action.refreshAction && (
-                                            <Button
-                                                icon="pi pi-refresh"
-                                                size="small"
-                                                severity="secondary"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    action.refreshAction();
-                                                }}
-                                                tooltip="Refresh Data"
-                                            />
-                                        )}
                                     </div>
                                 </Card>
                             </div>
@@ -347,7 +345,7 @@ export default function AdminDashboard() {
                         <div className="flex align-items-center justify-content-center" style={{ height: '300px' }}>
                             <div className="text-600">Loading chart data...</div>
                         </div>
-                    ) : growthData.newMembers.every(val => val === 0) ? (
+                    ) : growthData.newHotels.every(val => val === 0) ? (
                         <div className="flex align-items-center justify-content-center flex-column" style={{ height: '300px' }}>
                             <i className="pi pi-chart-line text-4xl text-gray-400 mb-3"></i>
                             <div className="text-600 text-center">No growth data available</div>

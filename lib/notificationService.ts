@@ -13,7 +13,7 @@ export interface NotificationData {
 }
 
 export interface AdminNotificationData {
-  id: string;
+  id?: string;
   title: string;
   message: string;
   type: 'NEW_HOTEL_REGISTRATION' | 'NEW_SUBSCRIPTION' | 'NEW_FORM_CREATED' | 'NEW_SUPPORT_REQUEST' | 'NEW_FEEDBACK' | 'SYSTEM_ALERT';
@@ -127,6 +127,85 @@ export async function sendGlobalNotification(data: {
   } catch (error) {
     console.error('Error sending global notification:', error);
     throw error;
+  }
+}
+
+// NotificationService class to wrap all notification functions
+export class NotificationService {
+  // Send notification to specific user
+  static async sendUserNotification(data: NotificationData) {
+    return sendUserNotification(data);
+  }
+
+  // Send notification to all admins
+  static async sendAdminNotification(data: AdminNotificationData) {
+    return sendAdminNotification(data);
+  }
+
+  // Send notification to global channel
+  static async sendGlobalNotification(data: {
+    title: string;
+    message: string;
+    type: 'SYSTEM_ALERT' | 'ANNOUNCEMENT';
+    metadata?: any;
+  }) {
+    return sendGlobalNotification(data);
+  }
+
+  // Mark notification as read
+  static async markAsRead(notificationId: string, userId: string) {
+    try {
+      const notification = await prisma.notification.findFirst({
+        where: {
+          id: notificationId,
+          userId: userId,
+        },
+      });
+
+      if (!notification) {
+        throw new Error('Notification not found');
+      }
+
+      const updatedNotification = await prisma.notification.update({
+        where: { id: notificationId },
+        data: { isRead: true },
+      });
+
+      return updatedNotification;
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
+      throw error;
+    }
+  }
+
+  // Mark all notifications as read for a user
+  static async markAllAsRead(userId: string) {
+    try {
+      const result = await prisma.notification.updateMany({
+        where: {
+          userId: userId,
+          isRead: false,
+        },
+        data: { isRead: true },
+      });
+
+      return { count: result.count };
+    } catch (error) {
+      console.error('Error marking all notifications as read:', error);
+      throw error;
+    }
+  }
+
+  // Create user joined notification
+  static async createUserJoinedNotification(adminUserId: string, userName: string) {
+    return sendUserNotification({
+      id: `user-joined-${Date.now()}`,
+      userId: adminUserId,
+      title: 'New User Joined',
+      message: `${userName} has joined the platform.`,
+      type: 'INFO',
+      relatedType: 'user',
+    });
   }
 }
 

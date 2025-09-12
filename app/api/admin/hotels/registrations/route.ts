@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
 
-      const hotels = await prisma.hotel.findMany({
+      const hotels = await prisma.hotels.findMany({
         include: {
           owner: {
             select: {

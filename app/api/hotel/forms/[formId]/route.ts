@@ -16,7 +16,7 @@ export async function GET(
       }
 
       // Get hotel
-      const hotel = await prisma.hotel.findUnique({
+      const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
         select: { id: true },
       });
@@ -94,7 +94,7 @@ export async function PUT(
       const { title, description, isActive, isPublic, layout, questions } = body;
 
       // Get hotel
-      const hotel = await prisma.hotel.findUnique({
+      const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
         select: { id: true },
       });
@@ -203,7 +203,7 @@ export async function DELETE(
       }
 
       // Get hotel
-      const hotel = await prisma.hotel.findUnique({
+      const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
         select: { id: true },
       });

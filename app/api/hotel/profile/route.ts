@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
       }
 
       // Get hotel data
-      const hotel = await prisma.hotel.findUnique({
+      const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
         select: {
           id: true,
@@ -69,7 +69,7 @@ export async function PUT(request: NextRequest) {
       }
 
       // Check if slug is already taken by another hotel
-      const existingHotel = await prisma.hotel.findFirst({
+      const existingHotel = await prisma.hotels.findFirst({
         where: {
           slug: slug,
           ownerId: { not: user.userId }, // Exclude current hotel
@@ -84,7 +84,7 @@ export async function PUT(request: NextRequest) {
       }
 
       // Update hotel
-      const updatedHotel = await prisma.hotel.update({
+      const updatedHotel = await prisma.hotels.update({
         where: { ownerId: user.userId },
         data: {
           name,

@@ -162,12 +162,9 @@ export class AuthService {
       firstName: user.firstName,
       lastName: user.lastName,
       status: user.status,
-      membershipNumber: user.membershipNumber || undefined,
       profileImage: user.profileImage || undefined,
       profileImagePublicId: user.profileImagePublicId || undefined,
       phone: user.phone || undefined,
-      joinDate: user.joinDate || undefined,
-      paidDate: user.paidDate || undefined,
       lastLogin: user.lastLogin || undefined,
       createdAt: user.createdAt || undefined,
       updatedAt: user.updatedAt || undefined,
@@ -292,33 +289,4 @@ export class AuthService {
     return await bcrypt.compare(password, hashedPassword);
   }
 
-  /**
-   * Generate membership number
-   */
-  static async generateMembershipNumber(): Promise<string> {
-    let attempts = 0;
-    const maxAttempts = 10;
-    
-    while (attempts < maxAttempts) {
-      // Generate a random number between 1000 and 9999
-      const randomNum = Math.floor(Math.random() * 9000) + 1000;
-      const membershipNumber = `primo${randomNum}`;
-      
-      // Check if this membership number already exists
-      const existingUser = await prisma.user.findUnique({
-        where: { membershipNumber },
-        select: { id: true }
-      });
-      
-      if (!existingUser) {
-        return membershipNumber;
-      }
-      
-      attempts++;
-    }
-    
-    // If we can't find a unique number after max attempts, use timestamp
-    const timestamp = Date.now().toString().slice(-6);
-    return `primo${timestamp}`;
-  }
 } 

@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if hotel slug already exists
-    const existingHotel = await prisma.hotel.findUnique({
+    const existingHotel = await prisma.hotels.findUnique({
       where: { slug: hotelSlug },
     });
 
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if hotel already exists for this email
-    const existingHotelByEmail = await prisma.hotel.findFirst({
+    const existingHotelByEmail = await prisma.hotels.findFirst({
       where: { email },
     });
 
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
       });
 
       // Create hotel
-      const hotel = await tx.hotel.create({
+      const hotel = await tx.hotels.create({
         data: {
           name: hotelName,
           slug: hotelSlug,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -10,6 +10,11 @@ import { Checkbox } from "primereact/checkbox";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+const DragDropContextTyped = DragDropContext as any;
+const DroppableTyped = Droppable as any;
+const DraggableTyped = Draggable as any;
+import type { DropResult } from "react-beautiful-dnd";
+
 
 interface FormQuestion {
   id: string;
@@ -143,7 +148,7 @@ export default function FormBuilder({ hotelId, formId, onSave }: FormBuilderProp
     }
   };
 
-  const onDragEnd = (result: any) => {
+  const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
     const items = Array.from(form.questions);
@@ -330,13 +335,13 @@ export default function FormBuilder({ hotelId, formId, onSave }: FormBuilderProp
             />
           </div>
 
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="questions">
-              {(provided) => (
+          <DragDropContextTyped onDragEnd={onDragEnd}>
+            <DroppableTyped droppableId="questions">
+              {(provided: any) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                   {form.questions.map((question, index) => (
-                    <Draggable key={question.id} draggableId={question.id} index={index}>
-                      {(provided, snapshot) => (
+                    <DraggableTyped key={question.id} draggableId={question.id} index={index}>
+                      {(provided: any, snapshot: any) => (
                         <div
                           ref={provided.innerRef}
                           {...provided.draggableProps}
@@ -374,13 +379,13 @@ export default function FormBuilder({ hotelId, formId, onSave }: FormBuilderProp
                           </div>
                         </div>
                       )}
-                    </Draggable>
+                    </DraggableTyped>
                   ))}
                   {provided.placeholder}
                 </div>
               )}
-            </Droppable>
-          </DragDropContext>
+            </DroppableTyped>
+          </DragDropContextTyped>
 
           {form.questions.length === 0 && (
             <div className="text-center py-4">

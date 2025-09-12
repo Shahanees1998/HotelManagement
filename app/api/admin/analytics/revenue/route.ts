@@ -19,11 +19,11 @@ export async function GET(request: NextRequest) {
       startDate.setDate(startDate.getDate() - days);
 
       // Get revenue data
-      const activeSubscriptions = await prisma.hotel.count({
+      const activeSubscriptions = await prisma.hotels.count({
         where: { subscriptionStatus: 'ACTIVE' },
       });
 
-      const totalHotels = await prisma.hotel.count();
+      const totalHotels = await prisma.hotels.count();
       
       // Calculate revenue metrics
       const monthlyRecurringRevenue = activeSubscriptions * 99.99;

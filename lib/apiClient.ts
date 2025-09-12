@@ -541,6 +541,23 @@ class ApiClient {
         return this.delete(`/admin/notifications/${notificationId}`);
     }
 
+    // Membership Card methods
+    async generateMembershipCard(data: {
+        userId: string;
+        organizationName: string;
+        cardNumber: string;
+        issueDate: string;
+        expiryDate: string;
+        design: string;
+        additionalInfo?: string;
+    }) {
+        return this.post<any>('/admin/users/generate-membership-card', data);
+    }
+
+    async getMembershipCard(userId: string) {
+        return this.get<any>(`/admin/users/${userId}/membership-card`);
+    }
+
 
 }
 

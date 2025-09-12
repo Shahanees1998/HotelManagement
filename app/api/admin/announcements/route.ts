@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
           title,
           content,
           type,
-          createdById: authenticatedReq.user.id,
+          createdById: authenticatedReq.user.userId,
         },
         include: {
           createdBy: {

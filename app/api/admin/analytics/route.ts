@@ -26,10 +26,10 @@ export async function GET(request: NextRequest) {
         newHotels,
         newReviews,
       ] = await Promise.all([
-        prisma.hotel.count(),
+        prisma.hotels.count(),
         prisma.review.count(),
-        prisma.hotel.count({ where: { subscriptionStatus: 'ACTIVE' } }),
-        prisma.hotel.count({
+        prisma.hotels.count({ where: { subscriptionStatus: 'ACTIVE' } }),
+        prisma.hotels.count({
           where: {
             createdAt: { gte: startDate },
           },

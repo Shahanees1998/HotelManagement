@@ -63,6 +63,7 @@ export default function AdminDashboard() {
     const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
     useEffect(() => {
+        console.log(user,'<<<<<<<<<<<>>>>>>>>>>>>>> user');
         if (user) {
             // Redirect non-admin users to their allowed section
             if (!canAccessSection(user.role, 'canAccessAll')) {
@@ -78,16 +79,19 @@ export default function AdminDashboard() {
         setLoading(true);
         try {
             const response = await apiClient.getDashboard();
-            
+            console.log(response,'<<<<<<<<<<<>>>>>>>>>>>>>> response');
             if (response.error) {
                 throw new Error(response.error);
             }
 
-            if (response.stats) {
-                setStats(response.stats);
-                setRecentActivity(response.recentActivity);
-                setGrowthData(response.growthData);
+            if ((response as any)?.stats) {
+                setStats((response as any).stats);
+                setRecentActivity((response as any).recentActivity);
+                setGrowthData((response as any).growthData);
                 setLastUpdated(new Date());
+                console.log('Data set successfully');
+            } else {
+                console.log('No stats data in response:', response);
             }
         } catch (error) {
             console.error("Error loading dashboard data:", error);
@@ -258,6 +262,9 @@ export default function AdminDashboard() {
         },
     ];
 
+    console.log('Current stats state:', stats);
+    console.log('Current loading state:', loading);
+    
     const cardData = [
         {
             value: stats.totalHotels,
@@ -393,18 +400,6 @@ export default function AdminDashboard() {
                                                 <p className="text-600 text-sm m-0">{action.description}</p>
                                             </div>
                                         </div>
-                                        {action.refreshAction && (
-                                            <Button
-                                                icon="pi pi-refresh"
-                                                size="small"
-                                                severity="secondary"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    action.refreshAction();
-                                                }}
-                                                tooltip="Refresh Data"
-                                            />
-                                        )}
                                     </div>
                                 </Card>
                             </div>

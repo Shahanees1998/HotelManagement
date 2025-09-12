@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
         ];
       }
 
-      const hotels = await prisma.hotel.findMany({
+      const hotels = await prisma.hotels.findMany({
         where,
         include: {
           owner: {

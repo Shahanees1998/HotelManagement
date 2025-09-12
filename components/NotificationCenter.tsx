@@ -58,8 +58,8 @@ export default function NotificationCenter() {
     try {
       const response = await apiClient.getNotifications({ limit: 20 });
       if (response.data) {
-        setNotifications(response.data.notifications || []);
-        setUnreadCount(response.data.notifications?.filter((n: Notification) => !n.isRead).length || 0);
+        setNotifications((response.data.notifications || []) as Notification[]);
+        setUnreadCount((response.data.notifications as Notification[])?.filter((n: Notification) => !n.isRead).length || 0);
       }
     } catch (error) {
       console.error('Error loading notifications:', error);
@@ -100,7 +100,7 @@ export default function NotificationCenter() {
         return 'danger';
       case 'WARNING':
       case 'SUBSCRIPTION_EXPIRING':
-        return 'warn';
+        return 'warning';
       case 'INFO':
       case 'NEW_REVIEW':
       case 'ESCALATION_RESPONDED':

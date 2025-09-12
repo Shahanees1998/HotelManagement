@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
         const { sendAdminNotification, sendUserNotification, NotificationTemplates } = await import('@/lib/notificationService');
         
         // Get hotel info for notification
-        const hotel = await prisma.hotel.findUnique({
+        const hotel = await prisma.hotels.findUnique({
           where: { ownerId: user.userId },
           select: { name: true },
         });

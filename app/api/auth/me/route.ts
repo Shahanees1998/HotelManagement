@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     // For hotel users, fetch hotel information
     let hotelData = null;
     if (completeUser?.role === 'HOTEL') {
-      const hotel = await prisma.hotel.findUnique({
+      const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
         select: { id: true, slug: true },
       });

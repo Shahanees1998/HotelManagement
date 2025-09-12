@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 
       // For now, return empty array since we don't have templates table yet
       // This would be implemented when we add the templates feature
-      const templates = [];
+      const templates: any[] = [];
 
       return NextResponse.json({ data: templates });
     } catch (error) {

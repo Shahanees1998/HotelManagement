@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
       }
 
       // Get hotel
-      const hotel = await prisma.hotel.findUnique({
+      const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
         select: { id: true },
       });

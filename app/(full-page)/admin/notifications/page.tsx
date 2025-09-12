@@ -19,12 +19,9 @@ interface Notification {
   message: string;
   type: string;
   isRead: boolean;
-  isArchived: boolean;
-  userId: string;
-  userName: string;
-  userEmail: string;
   relatedId?: string;
   relatedType?: string;
+  metadata?: any;
   createdAt: string;
 }
 
@@ -46,8 +43,8 @@ export default function AdminNotifications() {
   const loadNotifications = async () => {
     setLoading(true);
     try {
-      const response = await apiClient.getAdminNotifications();
-      setNotifications(response.data || []);
+      const response = await apiClient.getNotifications();
+      setNotifications(response.data?.notifications || []);
     } catch (error) {
       console.error("Error loading notifications:", error);
       showToast("error", "Error", "Failed to load notifications");
@@ -74,15 +71,13 @@ export default function AdminNotifications() {
     }
   };
 
-  const handleArchive = async (notificationId: string) => {
+  const handleDelete = async (notificationId: string) => {
     try {
-      await apiClient.archiveNotification(notificationId);
-      setNotifications(prev => prev.map(notif => 
-        notif.id === notificationId ? { ...notif, isArchived: true } : notif
-      ));
-      showToast("success", "Success", "Notification archived");
+      await apiClient.deleteNotification(notificationId);
+      setNotifications(prev => prev.filter(notif => notif.id !== notificationId));
+      showToast("success", "Success", "Notification deleted");
     } catch (error) {
-      showToast("error", "Error", "Failed to archive notification");
+      showToast("error", "Error", "Failed to delete notification");
     }
   };
 
@@ -137,8 +132,8 @@ export default function AdminNotifications() {
   const userBodyTemplate = (rowData: Notification) => {
     return (
       <div>
-        <div className="font-semibold">{rowData.userName}</div>
-        <div className="text-sm text-600">{rowData.userEmail}</div>
+        <div className="font-semibold">System</div>
+        <div className="text-sm text-600">system@example.com</div>
       </div>
     );
   };
@@ -159,9 +154,6 @@ export default function AdminNotifications() {
           value={rowData.isRead ? "Read" : "Unread"} 
           severity={rowData.isRead ? "info" : "warning"} 
         />
-        {rowData.isArchived && (
-          <Tag value="Archived" severity="secondary" />
-        )}
       </div>
     );
   };
@@ -178,15 +170,13 @@ export default function AdminNotifications() {
             tooltip="Mark as Read"
           />
         )}
-        {!rowData.isArchived && (
-          <Button
-            icon="pi pi-archive"
-            size="small"
-            className="p-button-outlined p-button-sm"
-            onClick={() => handleArchive(rowData.id)}
-            tooltip="Archive"
-          />
-        )}
+        <Button
+          icon="pi pi-trash"
+          size="small"
+          className="p-button-outlined p-button-sm p-button-danger"
+          onClick={() => handleDelete(rowData.id)}
+          tooltip="Delete"
+        />
       </div>
     );
   };
@@ -195,8 +185,7 @@ export default function AdminNotifications() {
     if (filters.type && notif.type !== filters.type) return false;
     if (filters.status && notif.isRead.toString() !== filters.status) return false;
     if (filters.search && !notif.title.toLowerCase().includes(filters.search.toLowerCase()) && 
-        !notif.message.toLowerCase().includes(filters.search.toLowerCase()) &&
-        !notif.userName.toLowerCase().includes(filters.search.toLowerCase())) return false;
+        !notif.message.toLowerCase().includes(filters.search.toLowerCase())) return false;
     return true;
   });
 
