@@ -17,8 +17,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
-                <title>FRATERNA Admin - Community Management System</title>
-                <meta name="description" content="Administrative dashboard for FRATERNA community management" />
+                <title>HOTEL Admin - Community Management System</title>
+                <meta name="description" content="Administrative dashboard for HOTEL community management" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/images/logo.png" type="image/png" />
                 <link rel="apple-touch-icon" href="/images/logo.png" />

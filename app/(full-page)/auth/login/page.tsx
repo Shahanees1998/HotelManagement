@@ -128,7 +128,7 @@ const LoginContent = () => {
                         <div style={{ display: 'flex', alignItems: 'center' }} className="app-logo flex items-center justify-content-center gap-3">
                             <Image 
                                 src="/images/logo.png" 
-                                alt="FRATERNA Logo" 
+                                alt="HOTEL Logo" 
                                 width={50} 
                                 height={50}
                                 priority

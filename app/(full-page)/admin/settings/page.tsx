@@ -25,8 +25,8 @@ interface SettingsForm {
 }
 
 const defaultSettings: SettingsForm = {
-    siteName: "FRATERNA Admin",
-    siteDescription: "Administrative dashboard for FRATERNA community management",
+    siteName: "HOTEL Admin",
+    siteDescription: "Administrative dashboard for HOTEL community management",
     contactEmail: "app.thebuilders@gmail.com",
     maxFileSize: 10,
     allowedFileTypes: "pdf,doc,docx,jpg,jpeg,png",
