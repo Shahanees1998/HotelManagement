@@ -63,7 +63,6 @@ export default function AdminDashboard() {
     const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
     useEffect(() => {
-        console.log(user,'<<<<<<<<<<<>>>>>>>>>>>>>> user');
         if (user) {
             // Redirect non-admin users to their allowed section
             if (!canAccessSection(user.role, 'canAccessAll')) {
@@ -79,7 +78,6 @@ export default function AdminDashboard() {
         setLoading(true);
         try {
             const response = await apiClient.getDashboard();
-            console.log(response,'<<<<<<<<<<<>>>>>>>>>>>>>> response');
             if (response.error) {
                 throw new Error(response.error);
             }
