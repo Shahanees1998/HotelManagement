@@ -5,7 +5,7 @@ const nextConfig = {
   },
   images: {
     domains: [],
-    unoptimized: true, // For Vercel deployment compatibility
+    unoptimized: false, // Try with optimization enabled
   },
   experimental: {
     serverComponentsExternalPackages: ['chart.js'],
