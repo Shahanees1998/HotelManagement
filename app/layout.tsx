@@ -1,4 +1,3 @@
-"use client";
 import { LayoutProvider } from "../layout/context/layoutcontext";
 import { Providers } from "./providers";
 import ClientOnly from "@/components/ClientOnly";
