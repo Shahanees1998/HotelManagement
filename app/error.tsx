@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import Image from 'next/image';
-import NoInternet from '../public/nointernet.png';
 import { Button } from 'primereact/button';
 export default function Error({
   error,
@@ -22,7 +21,7 @@ export default function Error({
       className="mt-32    mx-auto flex justify-content-center align-items-center flex-column"
     >
       <div>
-        <Image height={200} width={200} src={NoInternet} alt="No Internet" />
+        <Image height={200} width={200} src="/nointernet.png" alt="No Internet" />
       </div>
       <h3 className="text-6xl font-semibold text-blue-400 text-center mt-5 p-0">
         OOPS!
