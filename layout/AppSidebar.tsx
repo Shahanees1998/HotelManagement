@@ -27,7 +27,13 @@ const AppSidebar = () => {
         <>
             <div className="sidebar-header">
                 <Link style={{display:'flex', alignItems: 'center' }} href={dashboardPath} className="app-logo flex items-center justify-content-center gap-3">
-                    <img src="/images/logo.png" alt="HOTEL Logo"  style={{height:'100px'}}/>
+                    <Image 
+                        src="/images/logo.png" 
+                        alt="HOTEL Logo" 
+                        width={100} 
+                        height={100}
+                        priority
+                    />
                     <div style={{fontSize:'2rem'}}>|</div>
                     <div style={{ fontSize: '1.5rem', fontWeight: 'bold', fontStyle: 'italic' }}>{title}</div>
                 </Link>

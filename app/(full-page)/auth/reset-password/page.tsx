@@ -6,6 +6,7 @@ import { InputText } from "primereact/inputtext";
 import { useContext, useState, useRef, useEffect, Suspense } from "react";
 import { LayoutContext } from "../../../../layout/context/layoutcontext";
 import { Toast } from "primereact/toast";
+import Image from "next/image";
 
 const ResetPasswordContent = () => {
     const [password, setPassword] = useState("");
@@ -240,7 +241,13 @@ const ResetPasswordContent = () => {
                 <div className="border-1 surface-border surface-card border-round py-7 px-4 md:px-7 z-1">
                     <div className="mb-4">
                         <div style={{ display: 'flex', alignItems: 'center' }} className="app-logo flex items-center justify-content-center gap-3 mb-4">
-                            <img src="/images/logo.png" alt="HOTEL Logo" style={{ width: '50px' }} />
+                            <Image 
+                                src="/images/logo.png" 
+                                alt="HOTEL Logo" 
+                                width={50} 
+                                height={50}
+                                priority
+                            />
                             <div style={{ fontSize: '2rem' }}>|</div>
                             <div style={{ fontSize: '1.5rem', fontWeight: 'bold', fontStyle: 'italic' }}>Admin</div>
                         </div>
