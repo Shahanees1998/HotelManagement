@@ -1,5 +1,5 @@
 .signup-container {
-  background-image: url('../public/auth-bg.jpg');
+  background-image: url('../images/auth-bg.jpg');
   background-size: cover;
   min-height: 100vh;
   min-width: 100%;
@@ -15,7 +15,7 @@
   background-color: #ffffff;
 }
 .signup-container .sub-container .left-card {
-  background-image: url('../public/auth-bg-left.jpg');
+  background-image: url('../images/auth-bg-left.jpg');
   background-size: cover;
   padding: 30px 70px;
   min-width: 50%;

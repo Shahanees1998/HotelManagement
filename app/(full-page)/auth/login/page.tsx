@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { getDefaultRedirectPath } from "@/lib/rolePermissions";
+import Image from "next/image";
 
 const LoginContent = () => {
     const [rememberMe, setRememberMe] = useState(false);
@@ -125,7 +126,13 @@ const LoginContent = () => {
                 <div className="border-1 surface-border surface-card border-round py-7 px-4 md:px-7 z-1">
                     <div className="mb-4">
                         <div style={{ display: 'flex', alignItems: 'center' }} className="app-logo flex items-center justify-content-center gap-3">
-                            <img src="/images/logo.png" alt="FRATERNA Logo" style={{ width: '50px' }} />
+                            <Image 
+                                src="/images/logo.png" 
+                                alt="FRATERNA Logo" 
+                                width={50} 
+                                height={50}
+                                priority
+                            />
                             <div style={{ fontSize: '2rem' }}>|</div>
                             <div style={{ fontSize: '1.5rem', fontWeight: 'bold', fontStyle: 'italic' }}>Admin</div>
                         </div>

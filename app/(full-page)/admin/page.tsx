@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { Chart } from "primereact/chart";
+import ChartWrapper from "@/components/ChartWrapper";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
@@ -422,7 +422,7 @@ export default function AdminDashboard() {
                             <div className="text-sm text-gray-500 text-center">Growth data will appear here as hotels register and reviews are submitted</div>
                         </div>
                     ) : (
-                        <Chart type="line" data={chartData} options={chartOptions} style={{ height: '300px' }} />
+                        <ChartWrapper type="line" data={chartData} options={chartOptions} style={{ height: '300px' }} />
                     )}
                 </Card>
             </div>

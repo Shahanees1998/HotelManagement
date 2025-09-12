@@ -9,6 +9,7 @@ import { PrimeReactProvider } from "primereact/api";
 import "primereact/resources/primereact.css";
 import "../styles/demo/Demos.scss";
 import "../styles/layout/layout.scss";
+import "../styles/theme.css";
 interface RootLayoutProps {
     children: React.ReactNode;
 }
@@ -20,13 +21,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <title>FRATERNA Admin - Community Management System</title>
                 <meta name="description" content="Administrative dashboard for FRATERNA community management" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/images/logo.png" type="image/svg+xml" />
+                <link rel="icon" href="/images/logo.png" type="image/png" />
                 <link rel="apple-touch-icon" href="/images/logo.png" />
-                <link
-                    id="theme-link"
-                    href={`/theme/theme-light/indigo/theme.css`}
-                    rel="stylesheet"
-                ></link>
             </head>
             <body>
                 <Providers>
