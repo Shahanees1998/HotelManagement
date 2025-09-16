@@ -88,7 +88,6 @@ dist
 
 # Gatsby files
 .cache/
-public
 
 # Storybook build outputs
 .out
@@ -117,6 +116,7 @@ Thumbs.db
 # Prisma
 prisma/migrations/
 
-# Uploads
+# Uploads and generated files
 public/uploads/
 public/qr-codes/
+public/.DS_Store
