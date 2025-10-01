@@ -13,6 +13,7 @@ import { Tag } from "primereact/tag";
 import { Badge } from "primereact/badge";
 import { Skeleton } from "primereact/skeleton";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 import { useRouter } from "next/navigation";
 
 interface Announcement {
@@ -242,18 +243,18 @@ export default function AnnouncementsPage() {
 
     const statusBodyTemplate = (rowData: Announcement) => {
         return (
-            <Tag 
-                value={rowData.status} 
-                severity={getStatusSeverity(rowData.status) as any} 
+            <Tag
+                value={rowData.status}
+                severity={getStatusSeverity(rowData.status) as any}
             />
         );
     };
 
     const typeBodyTemplate = (rowData: Announcement) => {
         return (
-            <Tag 
-                value={rowData.type} 
-                severity={getTypeSeverity(rowData.type) as any} 
+            <Tag
+                value={rowData.type}
+                severity={getTypeSeverity(rowData.type) as any}
             />
         );
     };
@@ -271,8 +272,8 @@ export default function AnnouncementsPage() {
             <div className="max-w-20rem">
                 <div className="font-semibold mb-1">{rowData.title}</div>
                 <div className="text-sm text-600 line-height-2">
-                    {rowData.content.length > 100 
-                        ? `${rowData.content.substring(0, 100)}...` 
+                    {rowData.content.length > 100
+                        ? `${rowData.content.substring(0, 100)}...`
                         : rowData.content
                     }
                 </div>
@@ -282,14 +283,15 @@ export default function AnnouncementsPage() {
 
     const audienceBodyTemplate = (rowData: Announcement) => {
         return (
-            <Badge 
-                value={rowData.targetAudience ? rowData.targetAudience.replace('_', ' ') : 'Unknown'} 
+            <Badge
+                value={rowData.targetAudience ? rowData.targetAudience.replace('_', ' ') : 'Unknown'}
                 severity="info"
             />
         );
     };
 
     return (
+
         <div className="grid">
             <div className="col-12">
                 <Card>
@@ -349,120 +351,143 @@ export default function AnnouncementsPage() {
 
                     {/* Announcements Table Skeleton */}
                     {loading ? (
-                        <DataTable
-                            value={Array.from({ length: 5 }, (_, i) => ({ id: i }))}
-                            className="p-datatable-sm"
-                        >
-                            <Column
-                                field="content"
-                                header="Announcement"
-                                body={() => (
-                                    <div className="flex flex-column gap-1">
-                                        <Skeleton width="200px" height="16px" />
-                                        <Skeleton width="150px" height="14px" />
-                            </div>
-                                )}
-                                sortable={false}
+                        <>
+                            <DataTable
+                                value={Array.from({ length: 5 }, (_, i) => ({ id: i }))}
+                                className="p-datatable-sm"
+                            >
+                                <Column
+                                    field="content"
+                                    header="Announcement"
+                                    body={() => (
+                                        <div className="flex flex-column gap-1">
+                                            <Skeleton width="200px" height="16px" />
+                                            <Skeleton width="150px" height="14px" />
+                                        </div>
+                                    )}
+                                    sortable={false}
+                                />
+                                <Column
+                                    field="type"
+                                    header="Type"
+                                    body={() => <Skeleton width="80px" height="24px" />}
+                                    sortable
+                                    style={{ width: '120px' }}
+                                />
+                                <Column
+                                    field="targetAudience"
+                                    header="Audience"
+                                    body={() => <Skeleton width="80px" height="24px" />}
+                                    sortable
+                                    style={{ width: '120px' }}
+                                />
+                                <Column
+                                    field="status"
+                                    header="Status"
+                                    body={() => <Skeleton width="80px" height="24px" />}
+                                    sortable
+                                    style={{ width: '100px' }}
+                                />
+                                <Column
+                                    field="createdAt"
+                                    header="Created"
+                                    body={() => <Skeleton width="100px" height="16px" />}
+                                    sortable
+                                    style={{ width: '150px' }}
+                                />
+                                <Column
+                                    header="Actions"
+                                    body={() => (
+                                        <div className="flex gap-2">
+                                            <Skeleton width="32px" height="32px" />
+                                            <Skeleton width="32px" height="32px" />
+                                            <Skeleton width="32px" height="32px" />
+                                        </div>
+                                    )}
+                                    style={{ width: '120px' }}
+                                />
+                            </DataTable>
+                            <CustomPaginator
+                                currentPage={currentPage}
+                                totalRecords={announcements.length}
+                                rowsPerPage={rowsPerPage}
+                                onPageChange={setCurrentPage}
+                                onRowsPerPageChange={(rows) => {
+                                    setRowsPerPage(rows);
+                                    setCurrentPage(1);
+                                }}
                             />
-                            <Column
-                                field="type"
-                                header="Type"
-                                body={() => <Skeleton width="80px" height="24px" />}
-                                sortable
-                                style={{ width: '120px' }}
-                            />
-                            <Column
-                                field="targetAudience"
-                                header="Audience"
-                                body={() => <Skeleton width="80px" height="24px" />}
-                                sortable
-                                style={{ width: '120px' }}
-                            />
-                            <Column
-                                field="status"
-                                header="Status"
-                                body={() => <Skeleton width="80px" height="24px" />}
-                                sortable
-                                style={{ width: '100px' }}
-                            />
-                            <Column
-                                field="createdAt"
-                                header="Created"
-                                body={() => <Skeleton width="100px" height="16px" />}
-                                sortable
-                                style={{ width: '150px' }}
-                            />
-                            <Column
-                                header="Actions"
-                                body={() => (
-                                    <div className="flex gap-2">
-                                        <Skeleton width="32px" height="32px" />
-                                        <Skeleton width="32px" height="32px" />
-                                        <Skeleton width="32px" height="32px" />
-                                </div>
-                                )}
-                                style={{ width: '120px' }}
-                            />
-                        </DataTable>
+                        </>
                     ) : (
-                        <DataTable
-                            value={announcements}
-                            loading={loading}
-                            paginator
-                            rows={rowsPerPage}
-                            totalRecords={totalRecords}
-                            lazy
-                            first={(currentPage - 1) * rowsPerPage}
-                            onPage={(e) => setCurrentPage((e.page || 0) + 1)}
-                            sortField={sortField}
-                            sortOrder={sortOrder as any}
-                            onSort={(e) => {
-                                setSortField(e.sortField);
-                                setSortOrder(e.sortOrder || undefined);
-                            }}
-                            emptyMessage={loading ? "Loading..." : "No announcements found"}
-                            className="p-datatable-sm"
-                        >
-                            <Column
-                                field="content"
-                                header="Announcement"
-                                body={contentBodyTemplate}
-                                sortable={false}
+                        <>
+                            <DataTable
+                                value={announcements.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)}
+                                loading={loading}
+                                rows={rowsPerPage}
+                                totalRecords={totalRecords}
+                                lazy
+                                first={(currentPage - 1) * rowsPerPage}
+                                onPage={(e) => setCurrentPage((e.page || 0) + 1)}
+                                sortField={sortField}
+                                sortOrder={sortOrder as any}
+                                onSort={(e) => {
+                                    setSortField(e.sortField);
+                                    setSortOrder(e.sortOrder || undefined);
+                                }}
+                                emptyMessage={loading ? "Loading..." : "No announcements found"}
+                                className="p-datatable-sm"
+                            >
+                                <Column
+                                    field="content"
+                                    header="Announcement"
+                                    body={contentBodyTemplate}
+                                    sortable={false}
+                                />
+                                <Column
+                                    field="type"
+                                    header="Type"
+                                    body={typeBodyTemplate}
+                                    sortable
+                                    style={{ width: '120px' }}
+                                />
+                                <Column
+                                    field="targetAudience"
+                                    header="Audience"
+                                    body={audienceBodyTemplate}
+                                    sortable
+                                    style={{ width: '120px' }}
+                                />
+                                <Column
+                                    field="status"
+                                    header="Status"
+                                    body={statusBodyTemplate}
+                                    sortable
+                                    style={{ width: '100px' }}
+                                />
+                                <Column
+                                    field="createdAt"
+                                    header="Created"
+                                    body={dateBodyTemplate}
+                                    sortable
+                                    style={{ width: '150px' }}
+                                />
+                                <Column
+                                    header="Actions"
+                                    body={actionBodyTemplate}
+                                    style={{ width: '120px' }}
+                                />
+                            </DataTable>
+                            <CustomPaginator
+                                currentPage={currentPage}
+                                totalRecords={announcements.length}
+                                rowsPerPage={rowsPerPage}
+                                onPageChange={setCurrentPage}
+                                onRowsPerPageChange={(rows) => {
+                                    setRowsPerPage(rows);
+                                    setCurrentPage(1);
+                                }}
                             />
-                            <Column
-                                field="type"
-                                header="Type"
-                                body={typeBodyTemplate}
-                                sortable
-                                style={{ width: '120px' }}
-                            />
-                            <Column
-                                field="targetAudience"
-                                header="Audience"
-                                body={audienceBodyTemplate}
-                                sortable
-                                style={{ width: '120px' }}
-                            />
-                            <Column
-                                field="status"
-                                header="Status"
-                                body={statusBodyTemplate}
-                                sortable
-                                style={{ width: '100px' }}
-                            />
-                            <Column
-                                field="createdAt"
-                                header="Created"
-                                body={dateBodyTemplate}
-                                sortable
-                                style={{ width: '150px' }}
-                            />
-                            <Column
-                                header="Actions"
-                                body={actionBodyTemplate}
-                                style={{ width: '120px' }}
-                            />
-                        </DataTable>
+                        </>
                     )}
 
                     {/* Statistics Skeleton */}

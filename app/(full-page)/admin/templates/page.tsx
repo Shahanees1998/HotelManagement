@@ -14,6 +14,7 @@ import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface FormTemplate {
   id: string;
@@ -38,6 +39,8 @@ export default function AdminTemplates() {
   const { user } = useAuth();
   const [templates, setTemplates] = useState<FormTemplate[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filters, setFilters] = useState({
     category: "",
     status: "",
@@ -54,6 +57,11 @@ export default function AdminTemplates() {
   useEffect(() => {
     loadTemplates();
   }, []);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters.category, filters.status, filters.search]);
 
   const loadTemplates = async () => {
     setLoading(true);
@@ -195,6 +203,12 @@ export default function AdminTemplates() {
     return true;
   });
 
+  // Paginate the filtered templates
+  const paginatedTemplates = filteredTemplates.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
   const categoryOptions = [
     { label: "All Categories", value: "" },
     { label: "General", value: "General" },
@@ -296,13 +310,10 @@ export default function AdminTemplates() {
               </p>
             </div>
           ) : (
-            <DataTable 
-              value={filteredTemplates} 
-              showGridlines
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-            >
+            <>
+              <DataTable 
+                value={paginatedTemplates}
+              >
               <Column field="template" header="Template" body={templateBodyTemplate} sortable />
               <Column field="category" header="Category" body={categoryBodyTemplate} sortable />
               <Column field="status" header="Status" body={statusBodyTemplate} sortable />
@@ -312,8 +323,18 @@ export default function AdminTemplates() {
                 header="Created" 
                 body={(rowData) => formatDate(rowData.createdAt)}
                 sortable 
+              />              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={filteredTemplates.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
               />
-            </DataTable>
+            </>
           )}
         </Card>
       </div>
@@ -341,9 +362,7 @@ export default function AdminTemplates() {
           <label className="block text-900 font-medium mb-2">Description *</label>
           <InputTextarea
             value={newTemplate.description}
-            onChange={(e) => setNewTemplate(prev => ({ ...prev, description: e.target.value }))}
-            rows={3}
-            placeholder="Enter template description..."
+            onChange={(e) => setNewTemplate(prev => ({ ...prev, description: e.target.value }))}placeholder="Enter template description..."
             className="w-full"
           />
         </div>

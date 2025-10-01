@@ -1,17 +1,15 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { Password } from "primereact/password";
 import { Dropdown } from "primereact/dropdown";
 import { Checkbox } from "primereact/checkbox";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
-import { LayoutContext } from "@/layout/context/layoutcontext";
-import { useContext } from "react";
+import AuthHeader from "@/components/AuthHeader";
+import AuthFooter from "@/components/AuthFooter";
 
 const countries = [
   { label: "United States", value: "US" },
@@ -23,126 +21,52 @@ const countries = [
   { label: "Spain", value: "ES" },
   { label: "Italy", value: "IT" },
   { label: "Japan", value: "JP" },
+  { label: "India", value: "IN" },
+  { label: "China", value: "CN" },
+  { label: "Brazil", value: "BR" },
+  { label: "Mexico", value: "MX" },
   { label: "Other", value: "OTHER" },
 ];
 
 export default function RegisterHotel() {
+  const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
-  const [slugValidating, setSlugValidating] = useState(false);
-  const [slugStatus, setSlugStatus] = useState<{
-    available: boolean;
-    message: string;
-  } | null>(null);
+  const [confirmedStep1, setConfirmedStep1] = useState(false);
+  const [confirmedStep2, setConfirmedStep2] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
+    // Owner Information
+    fullName: "",
+    email: "",
+    phone: "",
+    password: "",
+    
     // Hotel Information
     hotelName: "",
-    hotelSlug: "",
-    description: "",
-    address: "",
+    hotelWebsite: "",
+    hotelAddress: "",
     city: "",
     country: "",
-    phone: "",
-    website: "",
-    
-    // Owner Information
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    hotelDescription: "",
   });
   
   const router = useRouter();
   const toast = useRef<Toast>(null);
-  const { layoutConfig } = useContext(LayoutContext);
-  const dark = layoutConfig.colorScheme !== "light";
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
-
-    // Auto-generate slug from hotel name
-    if (field === "hotelName") {
-      const slug = value
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, "")
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-")
-        .trim();
-      setFormData(prev => ({
-        ...prev,
-        hotelSlug: slug
-      }));
-      
-      // Validate the auto-generated slug
-      if (slug.length >= 3) {
-        validateSlug(slug);
-      }
-    }
-
-    // Validate slug when manually changed
-    if (field === "hotelSlug") {
-      if (value.length >= 3) {
-        // Debounce the validation
-        const timeoutId = setTimeout(() => {
-          validateSlug(value);
-        }, 500);
-        
-        return () => clearTimeout(timeoutId);
-      } else {
-        setSlugStatus(null);
-      }
-    }
   };
 
   const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
     toast.current?.show({ severity, summary, detail, life: 3000 });
   };
 
-  const validateSlug = async (slug: string) => {
-    if (!slug || slug.length < 3) {
-      setSlugStatus(null);
-      return;
-    }
-
-    setSlugValidating(true);
-    try {
-      const response = await fetch(`/api/hotel/validate-slug?slug=${encodeURIComponent(slug)}`);
-      const data = await response.json();
-      
-      if (response.ok) {
-        setSlugStatus({
-          available: data.available,
-          message: data.message,
-        });
-      } else {
-        setSlugStatus({
-          available: false,
-          message: "Error checking availability",
-        });
-      }
-    } catch (error) {
-      setSlugStatus({
-        available: false,
-        message: "Error checking availability",
-      });
-    } finally {
-      setSlugValidating(false);
-    }
-  };
-
-  const validateForm = () => {
-    if (!formData.hotelName || !formData.hotelSlug || !formData.firstName || 
-        !formData.lastName || !formData.email || !formData.password) {
+  const validateStep1 = () => {
+    if (!formData.fullName || !formData.email || !formData.phone || !formData.password) {
       showToast("warn", "Warning", "Please fill in all required fields");
-      return false;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      showToast("warn", "Warning", "Passwords do not match");
       return false;
     }
 
@@ -151,35 +75,73 @@ export default function RegisterHotel() {
       return false;
     }
 
-    if (!confirmed) {
+    if (!confirmedStep1) {
       showToast("warn", "Warning", "Please accept the terms and conditions");
-      return false;
-    }
-
-    if (slugStatus && !slugStatus.available) {
-      showToast("warn", "Warning", "Hotel URL is not available. Please choose a different one.");
-      return false;
-    }
-
-    if (slugValidating) {
-      showToast("warn", "Warning", "Please wait while we check the hotel URL availability.");
       return false;
     }
 
     return true;
   };
 
+  const validateStep2 = () => {
+    if (!formData.hotelName || !formData.hotelAddress || !formData.city || !formData.country) {
+      showToast("warn", "Warning", "Please fill in all required fields");
+      return false;
+    }
+
+    if (!confirmedStep2) {
+      showToast("warn", "Warning", "Please accept the terms and conditions and privacy policy");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleNextStep = () => {
+    if (validateStep1()) {
+      setStep(2);
+    }
+  };
+
   const handleRegister = async () => {
-    if (!validateForm()) return;
+    if (!validateStep2()) return;
 
     setLoading(true);
     try {
+      // Split full name into first and last name
+      const nameParts = formData.fullName.trim().split(' ');
+      const firstName = nameParts[0];
+      const lastName = nameParts.slice(1).join(' ') || nameParts[0];
+
+      // Generate slug from hotel name
+      const hotelSlug = formData.hotelName
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-")
+        .trim();
+
+      const registrationData = {
+        firstName,
+        lastName,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+        hotelName: formData.hotelName,
+        hotelSlug: hotelSlug,
+        website: formData.hotelWebsite,
+        address: formData.hotelAddress,
+        city: formData.city,
+        country: formData.country,
+        description: formData.hotelDescription,
+      };
+
       const response = await fetch('/api/hotel/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(registrationData),
       });
 
       const data = await response.json();
@@ -200,235 +162,350 @@ export default function RegisterHotel() {
   };
 
   return (
-    <>
-      <div className="min-h-screen flex align-items-center justify-content-center py-6">
-        <div className="w-full max-w-4xl px-4">
-          <Card className="shadow-2">
-            <div className="text-center mb-6">
-              <h1 className="text-3xl font-bold text-900 mb-2">Register Your Hotel</h1>
-              <p className="text-600">Join our guest feedback management platform</p>
-            </div>
+    <div style={{ backgroundColor: "#FDFCF9", display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <Toast ref={toast} />
+      
+      {/* Header */}
+      <AuthHeader />
 
-            <div className="grid">
-              {/* Hotel Information */}
-              <div className="col-12">
-                <h3 className="text-xl font-semibold mb-4 text-900">Hotel Information</h3>
+      {/* Main Content */}
+      <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", padding: "2rem 1rem" }}>
+        <div style={{ 
+          display: "grid", 
+          gridTemplateColumns: "1fr 1fr", 
+          gap: "2rem", 
+          width: "100%", 
+          maxWidth: "1200px",
+          alignItems: "center"
+        }}>
+          {/* Left Side - Form */}
+          <div className="py-7 px-4 md:px-7">
+            {step === 1 ? (
+              <>
+                {/* Step 1: Owner Information */}
+                <div className="mb-4">
+                  <div className="text-[#1B2A49] text-2xl font-bold mb-2">
+                    Owner Information!
               </div>
-
-              <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">Hotel Name *</label>
-                <InputText
-                  value={formData.hotelName}
-                  onChange={(e) => handleInputChange('hotelName', e.target.value)}
-                  placeholder="Enter hotel name"
-                  className="w-full"
-                />
-              </div>
-
-              <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">Hotel URL *</label>
-                <div className="p-inputgroup">
-                  <span className="p-inputgroup-addon">yourdomain.com/</span>
-                  <InputText
-                    value={formData.hotelSlug}
-                    onChange={(e) => handleInputChange('hotelSlug', e.target.value)}
-                    placeholder="hotel-name"
-                    className={`w-full ${slugStatus && !slugStatus.available ? 'p-invalid' : ''}`}
-                  />
-                  {slugValidating && (
-                    <span className="p-inputgroup-addon">
-                      <i className="pi pi-spinner pi-spin"></i>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
+                    <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
+                      Is my data safe?
                     </span>
-                  )}
-                  {slugStatus && !slugValidating && (
-                    <span className={`p-inputgroup-addon ${slugStatus.available ? 'text-green-500' : 'text-red-500'}`}>
-                      <i className={`pi ${slugStatus.available ? 'pi-check' : 'pi-times'}`}></i>
-                    </span>
-                  )}
-                </div>
-                <small className="text-600">This will be your unique hotel URL</small>
-                {slugStatus && (
-                  <div className={`text-sm mt-1 ${slugStatus.available ? 'text-green-600' : 'text-red-600'}`}>
-                    <i className={`pi ${slugStatus.available ? 'pi-check-circle' : 'pi-times-circle'} mr-1`}></i>
-                    {slugStatus.message}
+                    <i className="pi pi-info-circle" style={{ fontSize: "1rem", color: "#6b7280" }}></i>
                   </div>
-                )}
               </div>
 
-              <div className="col-12">
-                <label className="block text-900 font-medium mb-2">Description</label>
-                <InputTextarea
-                  value={formData.description}
-                  onChange={(e) => handleInputChange('description', e.target.value)}
-                  placeholder="Brief description of your hotel"
-                  rows={3}
+                <div className="flex flex-column">
+                  <label htmlFor="fullName" className="text-900 font-medium mb-2">
+                    Full Name<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <span className="p-input-icon-left w-full mb-4">
+                    <i className="pi pi-user"></i>
+                    <InputText
+                      id="fullName"
+                      type="text"
                   className="w-full"
-                />
-              </div>
+                      placeholder="Enter your full name"
+                      value={formData.fullName}
+                      onChange={(e) => handleInputChange('fullName', e.target.value)}
+                    />
+                  </span>
 
-              <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">Address</label>
+                  <label htmlFor="email" className="text-900 font-medium mb-2">
+                    Email Address<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <span className="p-input-icon-left w-full mb-4">
+                    <i className="pi pi-envelope"></i>
                 <InputText
-                  value={formData.address}
-                  onChange={(e) => handleInputChange('address', e.target.value)}
-                  placeholder="Street address"
+                      id="email"
+                      type="email"
                   className="w-full"
-                />
-              </div>
+                      placeholder="Enter your email address"
+                      value={formData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                    />
+                  </span>
 
-              <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">City</label>
+                  <label htmlFor="phone" className="text-900 font-medium mb-2">
+                    Phone Number<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <span className="p-input-icon-left w-full mb-4">
+                    <i className="pi pi-phone"></i>
                 <InputText
-                  value={formData.city}
-                  onChange={(e) => handleInputChange('city', e.target.value)}
-                  placeholder="City"
+                      id="phone"
+                      type="tel"
                   className="w-full"
-                />
-              </div>
+                      placeholder="Enter your phone number"
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                    />
+                  </span>
 
-              <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">Country</label>
-                <Dropdown
-                  value={formData.country}
-                  options={countries}
-                  onChange={(e) => handleInputChange('country', e.value)}
-                  placeholder="Select country"
+                  <label htmlFor="password" className="text-900 font-medium mb-2">
+                    Password<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <div style={{ position: "relative" }} className="w-full mb-4">
+                    <span className="p-input-icon-left w-full">
+                      <i className="pi pi-lock"></i>
+                      <InputText
+                        id="password"
+                        type={showPassword ? "text" : "password"}
                   className="w-full"
-                />
+                        placeholder="Enter your password"
+                        value={formData.password}
+                        onChange={(e) => handleInputChange('password', e.target.value)}
+                        style={{ paddingRight: "2.5rem" }}
+                      />
+                    </span>
+                    <button
+                      type="button"
+                      tabIndex={-1}
+                      onClick={() => setShowPassword((v) => !v)}
+                      style={{
+                        position: "absolute",
+                        right: "0.75rem",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: 0,
+                        zIndex: 2,
+                      }}
+                    >
+                      <i className={`pi ${showPassword ? "pi-eye-slash" : "pi-eye"}`}></i>
+                    </button>
               </div>
 
-              <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">Phone</label>
-                <InputText
-                  value={formData.phone}
-                  onChange={(e) => handleInputChange('phone', e.target.value)}
-                  placeholder="+1 (555) 123-4567"
-                  className="w-full"
-                />
-              </div>
-
-              <div className="col-12">
-                <label className="block text-900 font-medium mb-2">Website</label>
-                <InputText
-                  value={formData.website}
-                  onChange={(e) => handleInputChange('website', e.target.value)}
-                  placeholder="https://www.yourhotel.com"
-                  className="w-full"
-                />
-              </div>
-
-              {/* Owner Information */}
-              <div className="col-12">
-                <h3 className="text-xl font-semibold mb-4 text-900 mt-4">Owner Information</h3>
-              </div>
-
-              <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">First Name *</label>
-                <InputText
-                  value={formData.firstName}
-                  onChange={(e) => handleInputChange('firstName', e.target.value)}
-                  placeholder="Your first name"
-                  className="w-full"
-                />
-              </div>
-
-              <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">Last Name *</label>
-                <InputText
-                  value={formData.lastName}
-                  onChange={(e) => handleInputChange('lastName', e.target.value)}
-                  placeholder="Your last name"
-                  className="w-full"
-                />
-              </div>
-
-              <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">Email *</label>
-                <InputText
-                  value={formData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
-                  placeholder="your.email@example.com"
-                  type="email"
-                  className="w-full"
-                />
-              </div>
-
-              <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">Password *</label>
-                <Password
-                  value={formData.password}
-                  onChange={(e) => handleInputChange('password', e.target.value)}
-                  placeholder="Enter password"
-                  toggleMask
-                  className="w-full"
-                  inputClassName="w-full"
-                />
-              </div>
-
-              <div className="col-12">
-                <label className="block text-900 font-medium mb-2">Confirm Password *</label>
-                <Password
-                  value={formData.confirmPassword}
-                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                  placeholder="Confirm password"
-                  toggleMask
-                  className="w-full"
-                  inputClassName="w-full"
-                />
-              </div>
-
-              {/* Terms and Conditions */}
-              <div className="col-12">
-                <div className="flex align-items-start gap-3 mt-4">
-                  <Checkbox
-                    checked={confirmed}
-                    onChange={(e) => setConfirmed(e.checked || false)}
-                    className="mt-1"
-                  />
-                  <div>
-                    <label className="text-900 font-medium">
+                  <div className="flex align-items-start mb-4">
+                    <Checkbox
+                      inputId="terms1"
+                      checked={confirmedStep1}
+                      onChange={(e) => setConfirmedStep1(e.checked ?? false)}
+                      className="mr-2"
+                    />
+                    <label htmlFor="terms1" style={{ fontSize: "0.875rem", lineHeight: "1.4" }}>
                       I agree to the{" "}
-                      <a href="#" className="text-primary cursor-pointer">
-                        Terms and Conditions
+                      <a href="#" style={{ color: "#6F522F", textDecoration: "underline" }}>
+                        Terms & Conditions
                       </a>{" "}
                       and{" "}
-                      <a href="#" className="text-primary cursor-pointer">
+                      <a href="#" style={{ color: "#6F522F", textDecoration: "underline" }}>
                         Privacy Policy
                       </a>
                     </label>
-                    <p className="text-600 text-sm mt-2 mb-0">
-                      By registering, you agree to our terms and understand that your hotel will be subject to our subscription billing.
-                    </p>
-                  </div>
-                </div>
               </div>
 
-              {/* Submit Button */}
-              <div className="col-12">
-                <div className="flex flex-column md:flex-row gap-3 mt-6">
                   <Button
-                    label="Register Hotel"
-                    icon="pi pi-building"
+                    label="Let's Keep Going!"
+                    icon="pi pi-arrow-right"
+                    iconPos="right"
+                  className="w-full"
+                    style={{
+                      backgroundColor: "#1e3a5f",
+                      border: "none",
+                      padding: "0.75rem",
+                      marginBottom: "1rem"
+                    }}
+                    onClick={handleNextStep}
+                  />
+
+                  <div className="flex align-items-center mb-3" style={{ gap: "1rem" }}>
+                    <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
+                    <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
+                      or register via
+                    </span>
+                    <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
+              </div>
+
+                  <div className="text-center">
+                    <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
+                      Already have an account?{" "}
+                      <a
+                        className="cursor-pointer"
+                        style={{ color: "#1e3a5f", fontWeight: 600 }}
+                        onClick={() => router.push('/auth/login')}
+                      >
+                        Login
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Step 2: Hotel Information */}
+                <div className="mb-4">
+                  <div className="text-[#1B2A49] text-2xl font-bold mb-2">
+                    Hotel Information!
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
+                    <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
+                      Is my data safe?
+                    </span>
+                    <i className="pi pi-info-circle" style={{ fontSize: "1rem", color: "#6b7280" }}></i>
+                  </div>
+              </div>
+
+                <div className="flex flex-column">
+                  <label htmlFor="hotelName" className="text-900 font-medium mb-2">
+                    Hotel Name<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <span className="p-input-icon-left w-full mb-4">
+                    <i className="pi pi-building"></i>
+                <InputText
+                      id="hotelName"
+                      type="text"
+                  className="w-full"
+                      placeholder="Enter hotel name"
+                      value={formData.hotelName}
+                      onChange={(e) => handleInputChange('hotelName', e.target.value)}
+                    />
+                  </span>
+
+                  <label htmlFor="hotelWebsite" className="text-900 font-medium mb-2">
+                    Hotel Website<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <span className="p-input-icon-left w-full mb-4">
+                    <i className="pi pi-globe"></i>
+                <InputText
+                      id="hotelWebsite"
+                      type="url"
+                  className="w-full"
+                      placeholder="Enter hotel website url"
+                      value={formData.hotelWebsite}
+                      onChange={(e) => handleInputChange('hotelWebsite', e.target.value)}
+                />
+                  </span>
+
+                  <label htmlFor="hotelAddress" className="text-900 font-medium mb-2">
+                    Hotel Address<span style={{ color: "red" }}>*</span>
+                  </label>
+                <InputText
+                    id="hotelAddress"
+                    type="text"
+                    className="w-full mb-4"
+                    placeholder="Enter hotel street address"
+                    value={formData.hotelAddress}
+                    onChange={(e) => handleInputChange('hotelAddress', e.target.value)}
+                  />
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+                    <div>
+                      <label htmlFor="city" className="text-900 font-medium mb-2" style={{ display: "block" }}>
+                        City<span style={{ color: "red" }}>*</span>
+                      </label>
+                      <InputText
+                        id="city"
+                        type="text"
+                        className="w-full"
+                        placeholder="Enter hotel city"
+                        value={formData.city}
+                        onChange={(e) => handleInputChange('city', e.target.value)}
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="country" className="text-900 font-medium mb-2" style={{ display: "block" }}>
+                        Country<span style={{ color: "red" }}>*</span>
+                      </label>
+                      <Dropdown
+                        id="country"
+                        value={formData.country}
+                        options={countries}
+                        onChange={(e) => handleInputChange('country', e.value)}
+                        placeholder="Select Country"
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+
+                  <label htmlFor="hotelDescription" className="text-900 font-medium mb-2">
+                    Hotel Description<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <InputTextarea
+                    id="hotelDescription"
+                    className="w-full mb-4"
+                    placeholder="Enter brief description of your hotel"
+                    rows={4}
+                    value={formData.hotelDescription}
+                    onChange={(e) => handleInputChange('hotelDescription', e.target.value)}
+                  />
+
+                  <div className="flex align-items-start mb-4">
+                    <Checkbox
+                      inputId="terms2"
+                      checked={confirmedStep2}
+                      onChange={(e) => setConfirmedStep2(e.checked ?? false)}
+                      className="mr-2"
+                    />
+                    <label htmlFor="terms2" style={{ fontSize: "0.875rem", lineHeight: "1.4" }}>
+                      I agree to the{" "}
+                      <a href="#" style={{ color: "#6F522F", textDecoration: "underline" }}>
+                        Terms & Conditions
+                      </a>{" "}
+                      and{" "}
+                      <a href="#" style={{ color: "#6F522F", textDecoration: "underline" }}>
+                        Privacy Policy
+                      </a>
+                    </label>
+              </div>
+
+                  <Button
+                    label={loading ? "Registering..." : "Register Now"}
+                    icon="pi pi-check"
+                    iconPos="right"
+                    className="w-full"
+                    style={{
+                      backgroundColor: "#1e3a5f",
+                      border: "none",
+                      padding: "0.75rem",
+                      marginBottom: "1rem"
+                    }}
                     onClick={handleRegister}
                     loading={loading}
-                    disabled={loading || slugValidating || (slugStatus?.available === false)}
-                    className="flex-1"
-                    size="large"
+                    disabled={loading}
                   />
-                  <Button
-                    label="Already have an account?"
-                    icon="pi pi-sign-in"
+
+                  <div className="flex align-items-center mb-3" style={{ gap: "1rem" }}>
+                    <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
+                    <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
+                      or register via
+                    </span>
+                    <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
+                  </div>
+
+                  <div className="text-center">
+                    <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
+                      Already have an account?{" "}
+                      <a
+                        className="cursor-pointer"
+                        style={{ color: "#1e3a5f", fontWeight: 600 }}
                     onClick={() => router.push('/auth/login')}
-                    className="p-button-outlined flex-1"
-                    size="large"
-                  />
+                      >
+                        Login
+                      </a>
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </>
+            )}
+          </div>
+
+          {/* Right Side - Illustration */}
+          <div>
+            {step === 1 ? (
+            <img src="/images/owner-information.svg" alt="Register Hotel" style={{ width: "100%", height: "100%" }} />
+            ) : (
+              <img src="/images/hotel-information.svg" alt="Register Hotel" style={{ width: "100%", height: "100%" }} />
+
+            )}
             </div>
-          </Card>
         </div>
       </div>
-      <Toast ref={toast} />
-    </>
+
+      {/* Footer */}
+      <AuthFooter />
+    </div>
   );
 }

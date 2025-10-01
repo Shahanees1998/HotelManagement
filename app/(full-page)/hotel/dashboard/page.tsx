@@ -286,7 +286,7 @@ export default function HotelDashboard() {
               <div className="text-600">Loading recent reviews...</div>
             </div>
           ) : (
-            <DataTable value={recentReviews} showGridlines>
+            <DataTable value={recentReviews}>
               <Column field="guestName" header="Guest" />
               <Column field="overallRating" header="Rating" body={ratingBodyTemplate} />
               <Column field="status" header="Status" body={statusBodyTemplate} />

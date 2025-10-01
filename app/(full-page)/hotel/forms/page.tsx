@@ -11,6 +11,7 @@ import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import FeedbackFormBuilder from "@/components/FeedbackFormBuilder";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface FeedbackForm {
   id: string;
@@ -30,6 +31,8 @@ export default function HotelForms() {
   const router = useRouter();
   const [forms, setForms] = useState<FeedbackForm[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [showFormBuilder, setShowFormBuilder] = useState(false);
   const [editingFormId, setEditingFormId] = useState<string | null>(null);
   const toast = useRef<Toast>(null);
@@ -252,13 +255,10 @@ export default function HotelForms() {
               />
             </div>
           ) : (
-            <DataTable 
-              value={forms} 
-              showGridlines
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-            >
+            <>
+              <DataTable 
+                value={forms.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)}
+              >
               <Column field="title" header="Form Title" sortable />
               <Column field="description" header="Description" />
               <Column field="questionsCount" header="Questions" sortable />
@@ -270,8 +270,18 @@ export default function HotelForms() {
                 body={(rowData) => formatDate(rowData.updatedAt)}
                 sortable 
               />
-              <Column header="Actions" body={actionsBodyTemplate} />
-            </DataTable>
+              <Column header="Actions" body={actionsBodyTemplate} />              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={forms.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
+              />
+            </>
           )}
         </Card>
       </div>

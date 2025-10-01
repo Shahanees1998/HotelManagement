@@ -14,6 +14,7 @@ import { FilterMatchMode } from "primereact/api";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "primereact/skeleton";
 import { useDebounce } from "@/hooks/useDebounce";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface User {
     id: string;
@@ -257,10 +258,9 @@ export default function PendingUsersPage() {
                             </div>
                         </div>
                     ) : (
-                        <DataTable
-                            value={users}
-                            paginator
-                            rows={rowsPerPage}
+            <>
+              <DataTable
+                            value={users.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)}rows={rowsPerPage}
                             totalRecords={totalRecords}
                             lazy
                             first={(currentPage - 1) * rowsPerPage}
@@ -291,8 +291,18 @@ export default function PendingUsersPage() {
                             <Column field="createdAt" header="Registration Date" body={(rowData) => (
                                 new Date(rowData.createdAt).toLocaleDateString()
                             )} style={{ minWidth: "150px" }} />
-                            <Column body={actionBodyTemplate} style={{ width: "150px" }} />
-                        </DataTable>
+                            <Column body={actionBodyTemplate} style={{ width: "150px" }} />              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={users.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
+              />
+            </>
                     )}
                 </Card>
             </div>

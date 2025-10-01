@@ -1,17 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
-import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
+import { Dropdown } from "primereact/dropdown";
 
 interface Hotel {
   id: string;
@@ -42,33 +43,47 @@ export default function AdminHotels() {
     subscription: "",
     search: "",
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [totalRecords, setTotalRecords] = useState(0);
   const toast = useRef<Toast>(null);
 
-  useEffect(() => {
-    loadHotels();
-  }, [filters]);
+  const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+    toast.current?.show({ severity, summary, detail, life: 3000 });
+  }, []);
 
-  const loadHotels = async () => {
+  const loadHotels = useCallback(async () => {
     setLoading(true);
     try {
       const response = await apiClient.getAdminHotels({
         status: filters.status,
         subscription: filters.subscription,
         search: filters.search,
+        page: currentPage,
+        limit: rowsPerPage,
       });
       setHotels(response.data || []);
+      setTotalRecords(response.pagination?.total || 0);
     } catch (error) {
       console.error("Error loading hotels:", error);
       showToast("error", "Error", "Failed to load hotels");
       setHotels([]);
+      setTotalRecords(0);
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters.status, filters.subscription, filters.search, currentPage, rowsPerPage, showToast]);
 
-  const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
-    toast.current?.show({ severity, summary, detail, life: 3000 });
-  };
+  useEffect(() => {
+    loadHotels();
+  }, [loadHotels]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    if (currentPage !== 1) {
+      setCurrentPage(1);
+    }
+  }, [filters.status, filters.subscription, filters.search]);
 
   const handleStatusChange = async (hotelId: string, newStatus: boolean) => {
     try {
@@ -230,7 +245,6 @@ export default function AdminHotels() {
 
       {/* Hotels Table */}
       <div className="col-12">
-        <Card>
           {loading ? (
             <div className="flex align-items-center justify-content-center" style={{ height: '200px' }}>
               <div className="text-center">
@@ -250,29 +264,36 @@ export default function AdminHotels() {
               </p>
             </div>
           ) : (
-            <DataTable 
-              value={hotels} 
-              showGridlines
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-            >
-              <Column field="name" header="Hotel Name" sortable />
-              <Column field="slug" header="URL Slug" />
-              <Column field="owner" header="Owner" body={ownerBodyTemplate} />
-              <Column field="city" header="Location" sortable />
-              <Column field="subscriptionStatus" header="Subscription" body={subscriptionBodyTemplate} sortable />
-              <Column field="status" header="Status" body={statusBodyTemplate} />
-              <Column field="rating" header="Rating" body={ratingBodyTemplate} sortable />
-              <Column 
-                field="createdAt" 
-                header="Created" 
-                body={(rowData) => formatDate(rowData.createdAt)}
-                sortable 
+            <>
+              <DataTable 
+                value={hotels}
+              >
+                <Column field="name" header="Hotel Name" sortable />
+                <Column field="slug" header="URL Slug" />
+                <Column field="owner" header="Owner" body={ownerBodyTemplate} />
+                <Column field="city" header="Location" sortable />
+                <Column field="subscriptionStatus" header="Subscription" body={subscriptionBodyTemplate} sortable />
+                <Column field="status" header="Status" body={statusBodyTemplate} />
+                <Column field="rating" header="Rating" body={ratingBodyTemplate} sortable />
+                <Column 
+                  field="createdAt" 
+                  header="Created" 
+                  body={(rowData) => formatDate(rowData.createdAt)}
+                  sortable 
+                />
+              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={totalRecords}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
               />
-            </DataTable>
+            </>
           )}
-        </Card>
       </div>
 
       <Toast ref={toast} />

@@ -370,7 +370,7 @@ export default function AdminDashboard() {
                             <div className="text-sm text-gray-500 text-center">Activities will appear here as they occur</div>
                         </div>
                     ) : (
-                        <DataTable value={recentActivity} showGridlines>
+                        <DataTable value={recentActivity}>
                             <Column 
                                 field="type" 
                                 header="Type" 

@@ -5,3 +5,21 @@
 @import './Landing.scss';
 @import './CustomFileUpload.scss';
 @import './Calendar.scss';
+
+.p-ripple {
+    overflow: hidden;
+    position: relative;
+    padding: 10px 0px 10px 10px !important;
+    margin: 10px 0px 10px 0px;
+  }
+
+  .active-route {
+    background-color: #C19A6B;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    margin-right: 30px;
+  }
+
+  .layout-menuitem-icon {
+    margin-right: 10px;
+  }

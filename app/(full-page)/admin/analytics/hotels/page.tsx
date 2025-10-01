@@ -12,6 +12,7 @@ import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface HotelPerformance {
   id: string;
@@ -32,6 +33,8 @@ export default function HotelPerformanceAnalytics() {
   const { user } = useAuth();
   const [hotels, setHotels] = useState<HotelPerformance[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filters, setFilters] = useState({
     subscription: "",
     status: "",
@@ -250,13 +253,10 @@ export default function HotelPerformanceAnalytics() {
               </p>
             </div>
           ) : (
-            <DataTable 
-              value={filteredHotels} 
-              showGridlines
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-            >
+            <>
+              <DataTable 
+                value={filteredHotels}
+              >
               <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable />
               <Column field="subscription" header="Plan" sortable />
               <Column field="rating" header="Rating" body={ratingBodyTemplate} sortable />
@@ -269,8 +269,18 @@ export default function HotelPerformanceAnalytics() {
                 header="Last Activity" 
                 body={(rowData) => formatDate(rowData.lastActivity)}
                 sortable 
+              />              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={hotels.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
               />
-            </DataTable>
+            </>
           )}
         </Card>
       </div>

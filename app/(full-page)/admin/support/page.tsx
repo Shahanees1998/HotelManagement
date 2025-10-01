@@ -14,6 +14,7 @@ import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface SupportRequest {
   id: string;
@@ -40,6 +41,8 @@ export default function AdminSupport() {
   const { user } = useAuth();
   const [requests, setRequests] = useState<SupportRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filters, setFilters] = useState({
     status: "",
     priority: "",
@@ -53,6 +56,11 @@ export default function AdminSupport() {
   useEffect(() => {
     loadSupportRequests();
   }, []);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters.status, filters.priority, filters.search]);
 
   const loadSupportRequests = async () => {
     setLoading(true);
@@ -210,6 +218,12 @@ export default function AdminSupport() {
     return true;
   });
 
+  // Paginate the filtered requests
+  const paginatedRequests = filteredRequests.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
   const statusOptions = [
     { label: "All Statuses", value: "" },
     { label: "Open", value: "OPEN" },
@@ -306,13 +320,10 @@ export default function AdminSupport() {
               </p>
             </div>
           ) : (
-            <DataTable
-              value={filteredRequests}
-              showGridlines
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-            >
+            <>
+              <DataTable
+                value={paginatedRequests}
+              >
               <Column field="subject" header="Subject" sortable />
               <Column field="user" header="User" body={userBodyTemplate} />
               <Column field="priority" header="Priority" body={priorityBodyTemplate} sortable />
@@ -323,8 +334,18 @@ export default function AdminSupport() {
                 body={(rowData) => formatDate(rowData.createdAt)}
                 sortable
               />
-              <Column header="Actions" body={actionsBodyTemplate} />
-            </DataTable>
+              <Column header="Actions" body={actionsBodyTemplate} />              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={filteredRequests.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
+              />
+            </>
           )}
         </Card>
       </div>
@@ -349,9 +370,7 @@ export default function AdminSupport() {
           <label className="block text-900 font-medium mb-2">Your Response</label>
           <InputTextarea
             value={responseText}
-            onChange={(e) => setResponseText(e.target.value)}
-            rows={6}
-            className="w-full"
+            onChange={(e) => setResponseText(e.target.value)}className="w-full"
             placeholder="Enter your response..."
           />
         </div>

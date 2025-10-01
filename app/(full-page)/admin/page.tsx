@@ -267,42 +267,54 @@ export default function AdminDashboard() {
         {
             value: stats.totalHotels,
             label: "Total Hotels",
-            color: "text-blue-500",
+            icon: "pi pi-building",
+            bgColor: "bg-blue-50",
+            iconColor: "text-blue-500",
             route: "/admin/hotels",
             canAccess: true,
         },
         {
             value: stats.totalSubscribedHotels,
             label: "Subscribed Hotels",
-            color: "text-green-500",
+            icon: "pi pi-check-circle",
+            bgColor: "bg-green-50",
+            iconColor: "text-green-500",
             route: "/admin/subscriptions",
             canAccess: true,
         },
         {
             value: stats.totalReviews,
             label: "Total Reviews",
-            color: "text-orange-500",
+            icon: "pi pi-star",
+            bgColor: "bg-orange-50",
+            iconColor: "text-orange-500",
             route: "/admin/reviews",
             canAccess: true,
         },
         {
             value: `$${stats.totalEarnings.toLocaleString()}`,
             label: "Total Earnings",
-            color: "text-purple-500",
+            icon: "pi pi-dollar",
+            bgColor: "bg-purple-50",
+            iconColor: "text-purple-500",
             route: "/admin/subscriptions",
             canAccess: true,
         },
         {
             value: stats.pendingApprovals,
             label: "Pending Approvals",
-            color: "text-yellow-500",
+            icon: "pi pi-clock",
+            bgColor: "bg-yellow-50",
+            iconColor: "text-yellow-600",
             route: "/admin/hotels",
             canAccess: true,
         },
         {
             value: stats.supportRequests,
             label: "Support Requests",
-            color: "text-red-500",
+            icon: "pi pi-question-circle",
+            bgColor: "bg-red-50",
+            iconColor: "text-red-500",
             route: "/admin/support",
             canAccess: true,
         },
@@ -314,7 +326,7 @@ export default function AdminDashboard() {
             <div className="col-12">
                 <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-4">
                     <div>
-                        <h1 className="text-3xl font-bold m-0">Admin Dashboard</h1>
+                        <h1 className="text-3xl font-bold m-0 text-[#1B2A49]">Admin Dashboard</h1>
                         <p className="text-600 mt-2 mb-0">Welcome back! Here's what's happening with your organization.</p>
                         <p className="text-sm text-gray-500 mt-1 mb-0">
                             {new Date().toLocaleDateString('en-US', { 
@@ -338,6 +350,7 @@ export default function AdminDashboard() {
                     </div>
                     <div className="flex gap-2">
                         <Button
+                        style={{backgroundColor: '#1B2A49', borderColor: '#1B2A49'}}
                             label="Refresh"
                             icon="pi pi-refresh"
                             onClick={loadDashboardData}
@@ -363,17 +376,27 @@ export default function AdminDashboard() {
             ) : (
                 <>
                     {cardData.map((card) => (
-                        <div className="col-12 md:col-6 lg:col-4" key={card.label}>
+                        <div className="col-12 md:col-6 lg:col-3" key={card.label}>
                             <Card
-                                style={{ height: "150px" }}
-                                className="text-center cursor-pointer hover:shadow-lg transition-shadow"
+                                className="cursor-pointer hover:shadow-2 transition-all border-round-lg"
                                 onClick={() => router.push(card.route)}
                                 role="button"
                                 tabIndex={0}
                                 onKeyPress={e => { if (e.key === "Enter") router.push(card.route); }}
+                                style={{ 
+                                    border: '1px solid #e5e7eb',
+                                    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
+                                }}
                             >
-                                <div className={`text-3xl font-bold ${card.color}`}>{card.value}</div>
-                                <div className="text-600">{card.label}</div>
+                                <div className="flex align-items-center" style={{ gap: '1rem' }}>
+                                    <div className={`flex align-items-center justify-content-center ${card.bgColor} border-round-lg flex-shrink-0`} style={{ width: '48px', height: '48px' }}>
+                                        <i className={`${card.icon} ${card.iconColor}`} style={{ fontSize: '1.5rem' }}></i>
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="text-900 font-semibold mb-1" style={{ fontSize: '1.5rem', lineHeight: '1.2' }}>{card.value}</div>
+                                        <div className="text-500" style={{ fontSize: '0.875rem', fontWeight: '400' }}>{card.label}</div>
+                                    </div>
+                                </div>
                             </Card>
                         </div>
                     ))}
@@ -438,7 +461,7 @@ export default function AdminDashboard() {
                             <div className="text-sm text-gray-500 text-center">Activities will appear here as they occur</div>
                         </div>
                     ) : (
-                        <DataTable value={recentActivity} showGridlines>
+                        <DataTable value={recentActivity}>
                             <Column 
                                 field="type" 
                                 header="Type" 
@@ -453,9 +476,9 @@ export default function AdminDashboard() {
                                 field="description" 
                                 header="Description" 
                                 body={(rowData) => (
-                                    <div className="text-sm">
+                                    <div>
                                         <div className="font-semibold">{rowData.description}</div>
-                                        <div className="text-600">{rowData.user}</div>
+                                        <div className="text-sm text-500">{rowData.user}</div>
                                     </div>
                                 )}
                             />
@@ -463,7 +486,7 @@ export default function AdminDashboard() {
                                 field="timestamp" 
                                 header="Time" 
                                 body={(rowData) => (
-                                    <div className="text-xs text-600">
+                                    <div className="text-sm text-500">
                                         {formatRelativeTime(rowData.timestamp)}
                                     </div>
                                 )}

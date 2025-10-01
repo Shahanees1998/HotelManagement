@@ -17,6 +17,7 @@ import { Calendar } from "primereact/calendar";
 import { SortOrderType } from "@/types";
 import { Skeleton } from "primereact/skeleton";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface User {
     id: string;
@@ -403,6 +404,7 @@ export default function MembershipCardsPage() {
                         <div className="p-error p-3 mb-3">{error}</div>
                     )}
                     {loading ? (
+                        <>
                         <DataTable
                             value={Array.from({ length: 5 }, (_, i) => ({ id: i }))}
                             className="p-datatable-sm"
@@ -458,11 +460,21 @@ export default function MembershipCardsPage() {
                                 style={{ width: "120px" }}
                             />
                         </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={users.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
+              />
+            </>
                     ) : (
-                        <DataTable
-                            value={users}
-                            paginator
-                            rows={rowsPerPage}
+            <>
+              <DataTable
+                            value={users.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)}rows={rowsPerPage}
                             totalRecords={totalRecords}
                             lazy
                             first={(currentPage - 1) * rowsPerPage}
@@ -524,6 +536,17 @@ export default function MembershipCardsPage() {
                                 style={{ width: "150px" }} 
                             />
                         </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={users.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
+              />
+            </>
                     )}
                 </Card>
             </div>
@@ -608,9 +631,7 @@ export default function MembershipCardsPage() {
                             <label className="font-bold mb-2 block">Additional Information</label>
                             <InputTextarea
                                 value={cardContent.additionalInfo}
-                                onChange={(e) => setCardContent({...cardContent, additionalInfo: e.target.value})}
-                                rows={3}
-                                className="w-full"
+                                onChange={(e) => setCardContent({...cardContent, additionalInfo: e.target.value})}className="w-full"
                                 placeholder="Any additional information to display on the card..."
                             />
                         </div>

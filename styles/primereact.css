@@ -4750,6 +4750,7 @@ input.p-dropdown-label {
 .p-ripple {
   overflow: hidden;
   position: relative;
+  padding: 0px 20px 20px 10px !important;
 }
 
 .p-ink {

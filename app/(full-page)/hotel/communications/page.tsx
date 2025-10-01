@@ -213,7 +213,7 @@ export default function CommunicationsPage() {
                 </div>
 
                 {/* Recent Activity */}
-                <div className="grid mt-4">
+                {/* <div className="grid mt-4">
                     <div className="col-12 md:col-6">
                         <Card>
                             <h3 className="text-xl font-bold mb-3">Recent Messages</h3>
@@ -254,7 +254,7 @@ export default function CommunicationsPage() {
                             </div>
                         </Card>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

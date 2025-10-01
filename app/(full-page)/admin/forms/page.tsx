@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
@@ -12,6 +12,7 @@ import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface FeedbackForm {
   id: string;
@@ -32,6 +33,9 @@ export default function AdminForms() {
   const { user } = useAuth();
   const [forms, setForms] = useState<FeedbackForm[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [totalRecords, setTotalRecords] = useState(0);
   const [filters, setFilters] = useState({
     hotel: "",
     status: "",
@@ -39,31 +43,42 @@ export default function AdminForms() {
   });
   const toast = useRef<Toast>(null);
 
-  useEffect(() => {
-    loadForms();
-  }, [filters]);
+  const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+    toast.current?.show({ severity, summary, detail, life: 3000 });
+  }, []);
 
-  const loadForms = async () => {
+  const loadForms = useCallback(async () => {
     setLoading(true);
     try {
       const response = await apiClient.getAdminForms({
         hotel: filters.hotel,
         status: filters.status,
         search: filters.search,
+        page: currentPage,
+        limit: rowsPerPage,
       });
       setForms(response.data || []);
+      setTotalRecords(response.pagination?.total || 0);
     } catch (error) {
       console.error("Error loading forms:", error);
       showToast("error", "Error", "Failed to load feedback forms");
       setForms([]);
+      setTotalRecords(0);
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters.hotel, filters.status, filters.search, currentPage, rowsPerPage, showToast]);
 
-  const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
-    toast.current?.show({ severity, summary, detail, life: 3000 });
-  };
+  useEffect(() => {
+    loadForms();
+  }, [loadForms]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    if (currentPage !== 1) {
+      setCurrentPage(1);
+    }
+  }, [filters.hotel, filters.status, filters.search]);
 
   const handleStatusChange = async (formId: string, newStatus: boolean) => {
     try {
@@ -153,13 +168,13 @@ export default function AdminForms() {
 
   // Server-side filtering - no client-side filtering needed
 
-  const hotelOptions = [
+  const hotelOptions = useMemo(() => [
     { label: "All Hotels", value: "" },
     ...Array.from(new Set(forms.map(f => f.hotelName))).map(hotel => ({
       label: hotel,
       value: hotel,
     })),
-  ];
+  ], [forms]);
 
   const statusOptions = [
     { label: "All Statuses", value: "" },
@@ -247,25 +262,33 @@ export default function AdminForms() {
               </p>
             </div>
           ) : (
-            <DataTable 
-              value={forms} 
-              showGridlines
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-            >
-              <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable />
-              <Column field="form" header="Form" body={formBodyTemplate} sortable />
-              <Column field="status" header="Status" body={statusBodyTemplate} sortable />
-              <Column field="visibility" header="Visibility" body={visibilityBodyTemplate} />
-              <Column field="rating" header="Rating" body={ratingBodyTemplate} sortable />
-              <Column 
-                field="createdAt" 
-                header="Created" 
-                body={(rowData) => formatDate(rowData.createdAt)}
-                sortable 
+            <>
+              <DataTable 
+                value={forms}
+              >
+                <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable />
+                <Column field="form" header="Form" body={formBodyTemplate} sortable />
+                <Column field="status" header="Status" body={statusBodyTemplate} sortable />
+                <Column field="visibility" header="Visibility" body={visibilityBodyTemplate} />
+                <Column field="rating" header="Rating" body={ratingBodyTemplate} sortable />
+                <Column 
+                  field="createdAt" 
+                  header="Created" 
+                  body={(rowData) => formatDate(rowData.createdAt)}
+                  sortable 
+                />
+              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={totalRecords}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
               />
-            </DataTable>
+            </>
           )}
         </Card>
       </div>

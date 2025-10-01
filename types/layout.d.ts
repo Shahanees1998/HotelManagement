@@ -149,6 +149,8 @@ export interface AppTopbarRef {
 }
 
 /* AppMenu Types */
+export type MenuModelItem = MenuModel | AppMenuItem;
+
 type CommandProps = {
     originalEvent: React.MouseEvent<HTMLAnchorElement, MouseEvent>;
     item: MenuModelItem;
@@ -166,6 +168,7 @@ export interface MenuModel {
     url?: string;
     target?: HTMLAttributeAnchorTarget;
     seperator?: boolean;
+    command?: (event: CommandProps) => void;
 }
 
 export interface UseSubmenuOverlayPositionProps {

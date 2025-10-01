@@ -247,7 +247,7 @@ const AppProfileSidebar = () => {
                 )}
             </div>
 
-            <div className="flex flex-column mt-5 mx-auto md:mx-0">
+            {/* <div className="flex flex-column mt-5 mx-auto md:mx-0">
                 <span className="mb-2 font-semibold">Recent Messages</span>
                 <span className="text-color-secondary font-medium mb-5">
                     {loading ? (
@@ -310,7 +310,7 @@ const AppProfileSidebar = () => {
                         <p className="m-0">No recent messages</p>
                     </div>
                 )}
-            </div>
+            </div> */}
         </Sidebar>
     );
 };

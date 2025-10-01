@@ -19,6 +19,7 @@ import { Skeleton } from "primereact/skeleton";
 import { FileUpload } from "primereact/fileupload";
 import { ProgressBar } from "primereact/progressbar";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 import { getProfileImageUrl } from "@/lib/cloudinary-client";
 import { useDebounce } from "@/hooks/useDebounce";
 
@@ -551,6 +552,7 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                     )}
                     <>
                         {loading ? (
+                            <>
                             <DataTable
                                 value={Array.from({ length: 5 }, (_, i) => ({ id: i }))}
                                 className="p-datatable-sm"
@@ -609,13 +611,22 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                                         </div>
                                     )}
                                     style={{ width: "120px" }}
-                                />
-                            </DataTable>
+                                />              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={users.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
+              />
+            </>
                         ) : (
-                            <DataTable
-                                value={users}
-                                paginator
-                                rows={rowsPerPage}
+            <>
+              <DataTable
+                                value={users.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)}rows={rowsPerPage}
                                 totalRecords={totalRecords}
                                 lazy
                                 first={(currentPage - 1) * rowsPerPage}
@@ -660,8 +671,18 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                                 {/* <Column field="joinDate" header="Join Date" body={(rowData) => (
                                 new Date(rowData.joinDate || "").toLocaleDateString()
                             )} style={{ minWidth: "120px" }} /> */}
-                                <Column body={actionBodyTemplate} style={{ width: "150px" }} />
-                            </DataTable>
+                                <Column body={actionBodyTemplate} style={{ width: "150px" }} />              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={users.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
+              />
+            </>
                         )}
                     </>
                 </Card>

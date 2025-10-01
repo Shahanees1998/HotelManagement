@@ -12,6 +12,7 @@ import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dialog } from "primereact/dialog";
 
@@ -35,6 +36,8 @@ export default function AdminEscalations() {
   const { user } = useAuth();
   const [escalations, setEscalations] = useState<Escalation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filters, setFilters] = useState({
     status: "",
     priority: "",
@@ -48,6 +51,11 @@ export default function AdminEscalations() {
   useEffect(() => {
     loadEscalations();
   }, []);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters.status, filters.priority, filters.search]);
 
   const loadEscalations = async () => {
     setLoading(true);
@@ -233,6 +241,12 @@ export default function AdminEscalations() {
     return true;
   });
 
+  // Paginate the filtered escalations
+  const paginatedEscalations = filteredEscalations.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
   const statusOptions = [
     { label: "All Statuses", value: "" },
     { label: "Open", value: "OPEN" },
@@ -329,13 +343,10 @@ export default function AdminEscalations() {
               </p>
             </div>
           ) : (
-            <DataTable 
-              value={filteredEscalations} 
-              showGridlines
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-            >
+            <>
+              <DataTable 
+                value={paginatedEscalations}
+              >
               <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable />
               <Column field="user" header="User" body={userBodyTemplate} />
               <Column field="subject" header="Subject" body={subjectBodyTemplate} sortable />
@@ -347,8 +358,18 @@ export default function AdminEscalations() {
                 body={(rowData) => formatDate(rowData.createdAt)}
                 sortable 
               />
-              <Column header="Actions" body={actionsBodyTemplate} />
-            </DataTable>
+              <Column header="Actions" body={actionsBodyTemplate} />              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={filteredEscalations.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
+              />
+            </>
           )}
         </Card>
       </div>
@@ -373,9 +394,7 @@ export default function AdminEscalations() {
           <label className="block text-900 font-medium mb-2">Your Response</label>
           <InputTextarea
             value={responseText}
-            onChange={(e) => setResponseText(e.target.value)}
-            rows={6}
-            className="w-full"
+            onChange={(e) => setResponseText(e.target.value)}className="w-full"
             placeholder="Enter your response..."
           />
         </div>

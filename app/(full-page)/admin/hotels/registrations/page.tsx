@@ -12,6 +12,7 @@ import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface HotelRegistration {
   id: string;
@@ -34,6 +35,8 @@ export default function HotelRegistrations() {
   const { user } = useAuth();
   const [registrations, setRegistrations] = useState<HotelRegistration[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filters, setFilters] = useState({
     status: "",
     subscription: "",
@@ -44,6 +47,11 @@ export default function HotelRegistrations() {
   useEffect(() => {
     loadRegistrations();
   }, []);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters.status, filters.subscription, filters.search]);
 
   const loadRegistrations = async () => {
     setLoading(true);
@@ -201,6 +209,12 @@ export default function HotelRegistrations() {
     return true;
   });
 
+  // Paginate the filtered registrations
+  const paginatedRegistrations = filteredRegistrations.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
   const statusOptions = [
     { label: "All Statuses", value: "" },
     { label: "Pending", value: "PENDING" },
@@ -295,25 +309,33 @@ export default function HotelRegistrations() {
               </p>
             </div>
           ) : (
-            <DataTable 
-              value={filteredRegistrations} 
-              showGridlines
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-            >
-              <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable />
-              <Column field="owner" header="Owner" body={ownerBodyTemplate} />
-              <Column field="status" header="Status" body={statusBodyTemplate} sortable />
-              <Column field="subscription" header="Subscription" body={subscriptionBodyTemplate} sortable />
-              <Column 
-                field="createdAt" 
-                header="Submitted" 
-                body={(rowData) => formatDate(rowData.createdAt)}
-                sortable 
+            <>
+              <DataTable 
+                value={paginatedRegistrations}
+              >
+                <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable />
+                <Column field="owner" header="Owner" body={ownerBodyTemplate} />
+                <Column field="status" header="Status" body={statusBodyTemplate} sortable />
+                <Column field="subscription" header="Subscription" body={subscriptionBodyTemplate} sortable />
+                <Column 
+                  field="createdAt" 
+                  header="Submitted" 
+                  body={(rowData) => formatDate(rowData.createdAt)}
+                  sortable 
+                />
+                <Column header="Actions" body={actionsBodyTemplate} />
+              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={filteredRegistrations.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
               />
-              <Column header="Actions" body={actionsBodyTemplate} />
-            </DataTable>
+            </>
           )}
         </Card>
       </div>

@@ -12,6 +12,7 @@ import { apiClient } from "@/lib/apiClient";
 import { getProfileImageUrl } from "@/lib/cloudinary-client";
 import { Avatar } from "primereact/avatar";
 import NotificationCenter from "@/components/NotificationCenter";
+import { usePathname } from "next/navigation";
 
 const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     const { onMenuToggle, showProfileSidebar, showConfigSidebar } =
@@ -20,6 +21,60 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     const { user } = useAuth();
     const [profile, setProfile] = useState<any | null>(null);
     const toast = useRef<Toast>(null);
+    const pathname = usePathname();
+
+    // Get page title from pathname
+    const getPageTitle = () => {
+        if (!pathname) return "Dashboard";
+        
+        const segments = pathname.split('/').filter(Boolean);
+        const lastSegment = segments[segments.length - 1];
+        
+        // Map route segments to readable titles
+        const titleMap: Record<string, string> = {
+            'admin': 'Admin Dashboard',
+            'hotel': 'Hotel Dashboard',
+            'hotels': 'Hotels',
+            'forms': 'Forms',
+            'users': 'Users',
+            'reviews': 'Reviews',
+            'support': 'Support',
+            'subscriptions': 'Subscriptions',
+            'templates': 'Templates',
+            'notifications': 'Notifications',
+            'escalations': 'Escalations',
+            'communications': 'Communications',
+            'announcements': 'Announcements',
+            'analytics': 'Analytics',
+            'registrations': 'Registrations',
+            'dashboard': 'Dashboard',
+            'profile': 'Profile',
+            'settings': 'Settings',
+            'qr-codes': 'QR Codes',
+            'subscription': 'Subscription',
+            'pending': 'Pending',
+            'cards': 'Cards',
+            'health': 'System Health',
+            'integrations': 'Integrations',
+            'stats': 'Statistics',
+        };
+        
+        // Get the last meaningful segment
+        if (titleMap[lastSegment]) {
+            return titleMap[lastSegment];
+        }
+        
+        // Check the second-to-last segment if last is a dynamic route
+        if (segments.length > 1 && titleMap[segments[segments.length - 2]]) {
+            return titleMap[segments[segments.length - 2]];
+        }
+        
+        // Capitalize and format the segment
+        return lastSegment
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    };
 
     useEffect(() => {
         if (user?.id) {
@@ -77,7 +132,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     }));
 
     return (
-        <div className="layout-topbar">
+        <div className="layout-topbar" style={{backgroundColor:'white', padding:'0'}}>
             <div className="topbar-start">
                 <button
                     ref={menubuttonRef}
@@ -87,6 +142,18 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                 >
                     <i className="pi pi-bars"></i>
                 </button>
+
+                <div className="page-title-container">
+                    <h1 className="page-title" style={{
+                        fontSize: '1rem',
+                        fontWeight: '400',
+                        color: '#1B2A49',
+                        margin: 0,
+                        marginLeft: '1rem'
+                    }}>
+                       Dashboard / {getPageTitle()}
+                    </h1>
+                </div>
 
                 <AppBreadcrumb className="topbar-breadcrumb"></AppBreadcrumb>
             </div>
@@ -102,19 +169,38 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                     <li className="ml-3">
                         <button
                             type="button"
-                            style={{border : 'none', cursor:'pointer'}}
+                            style={{
+                                border: 'none',
+                                cursor: 'pointer',
+                                background: 'white',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.75rem',
+                                padding: '0.25rem'
+                            }}
                             onClick={showProfileSidebar}
                         >
-                             <Avatar
-                                    image={profile?.profileImagePublicId ? 
-                                        getProfileImageUrl(profile.profileImagePublicId, 'large') : 
-                                        profile?.profileImage
-                                    }
-                                    label={getUserInitials()}
-                                    size="large"
-                                    shape="circle"
-                                    className="bg-primary"
-                                />
+                            <Avatar
+                                image={profile?.profileImagePublicId ? 
+                                    getProfileImageUrl(profile.profileImagePublicId, 'large') : 
+                                    profile?.profileImage
+                                }
+                                label={getUserInitials()}
+                                size="normal"
+                                shape="circle"
+                                className="bg-primary"
+                            />
+                            <span style={{ 
+                                fontSize: '0.9375rem',
+                                fontWeight: '500',
+                                color: 'var(--text-color)'
+                            }}>
+                                {profile?.firstName && profile?.lastName 
+                                    ? `${profile.firstName} ${profile.lastName}`
+                                    : user?.email
+                                }
+                            </span>
+                            <i className="pi pi-angle-down" style={{ fontSize: '0.875rem', color: 'var(--text-color)' }}></i>
                         </button>
                     </li>
                 </ul>

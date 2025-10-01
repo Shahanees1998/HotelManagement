@@ -14,6 +14,9 @@ export async function GET(request: NextRequest) {
       const status = searchParams.get('status');
       const plan = searchParams.get('plan');
       const search = searchParams.get('search');
+      const page = parseInt(searchParams.get('page') || '1');
+      const limit = parseInt(searchParams.get('limit') || '10');
+      const skip = (page - 1) * limit;
 
       // Build where clause for filtering
       const where: any = {};
@@ -30,20 +33,26 @@ export async function GET(request: NextRequest) {
         ];
       }
 
-      const hotels = await prisma.hotels.findMany({
-        where,
-        include: {
-          owner: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-              email: true,
+      // Get total count and paginated data in parallel
+      const [hotels, total] = await Promise.all([
+        prisma.hotels.findMany({
+          where,
+          skip,
+          take: limit,
+          include: {
+            owner: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+              },
             },
           },
-        },
-        orderBy: { createdAt: 'desc' },
-      });
+          orderBy: { createdAt: 'desc' },
+        }),
+        prisma.hotels.count({ where })
+      ]);
 
       // Transform the data to match the expected interface
       let subscriptions = hotels.map(hotel => ({
@@ -70,7 +79,15 @@ export async function GET(request: NextRequest) {
         subscriptions = subscriptions.filter(sub => sub.planName === plan);
       }
 
-      return NextResponse.json({ data: subscriptions });
+      return NextResponse.json({ 
+        data: subscriptions,
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit)
+        }
+      });
     } catch (error) {
       console.error('Error fetching subscriptions:', error);
       return NextResponse.json(

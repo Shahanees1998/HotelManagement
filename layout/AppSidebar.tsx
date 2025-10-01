@@ -21,26 +21,30 @@ const AppSidebar = () => {
 
     const isHotelUser = user?.role === "HOTEL";
     const dashboardPath = isHotelUser ? "/hotel/dashboard" : "/admin";
-    const title = isHotelUser ? "Hotel" : "Admin";
 
     return (
         <>
-            <div className="sidebar-header">
-                <Link style={{display:'flex', alignItems: 'center' }} href={dashboardPath} className="app-logo flex items-center justify-content-center gap-3">
-                    <img 
-                        src="/images/logo.png" 
-                        alt="HOTEL Logo" 
-                        width={100} 
-                        height={100}
-                        style={{ objectFit: 'contain' }}
-                    />
-                    <div style={{fontSize:'2rem'}}>|</div>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 'bold', fontStyle: 'italic' }}>{title}</div>
+            <div className="sidebar-header" style={{ padding: "2rem 1.5rem", textAlign: 'center' }}>
+                <Link 
+                    href={dashboardPath} 
+                    className="app-logo"
+                    style={{
+                        display: 'block',
+                        textAlign: 'center',
+                        fontSize: '1.5rem',
+                        fontWeight: '700',
+                        color: 'white',
+                        textDecoration: 'none',
+                        letterSpacing: '0.5px'
+                    }}
+                >
+                    C-Reviews
                 </Link>
                 <button
-                    className="layout-sidebar-anchor p-link z-2 mb-2"
+                    className="layout-sidebar-anchor p-link z-2"
                     type="button"
                     onClick={anchor}
+                    style={{ display: 'none' }}
                 ></button>
             </div>
 

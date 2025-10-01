@@ -1,23 +1,25 @@
 .layout-topbar {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0.5rem 0;
 
     .topbar-start {
         display: flex;
         align-items: center;
+        gap: 1.5rem;
 
         .topbar-menubutton {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-right: 2rem;
-            border-radius: 50%;
-            width: 2.5rem;
-            height: 2.5rem;
+            border-radius: 4px;
+            width: 2.25rem;
+            height: 2.25rem;
             flex-shrink: 0;
-            transition: background-color var(--transition-duration);
+            transition: background-color 0.2s;
+            background: transparent;
 
             i {
                 font-size: 1.25rem;
@@ -26,11 +28,22 @@
             }
 
             &:hover {
-                background-color: var(--primary-color);
+                background-color: var(--surface-hover);
+            }
+        }
 
-                i {
-                    color: var(--primary-color-text);
-                }
+        .page-title-container {
+            display: flex;
+            align-items: center;
+            margin-left: -0.5rem;
+
+            .page-title {
+                font-size: 1rem;
+                font-weight: 400;
+                color: #1B2A49;
+                margin: 0;
+                white-space: nowrap;
+                line-height: 1.2;
             }
         }
     }

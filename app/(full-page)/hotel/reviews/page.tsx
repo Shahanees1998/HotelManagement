@@ -11,6 +11,7 @@ import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface Review {
   id: string;
@@ -29,6 +30,8 @@ export default function HotelReviews() {
   const { user } = useAuth();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filters, setFilters] = useState({
     status: "",
     rating: "",
@@ -39,6 +42,11 @@ export default function HotelReviews() {
   useEffect(() => {
     loadReviews();
   }, []);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters.status, filters.rating, filters.search]);
 
   const loadReviews = async () => {
     setLoading(true);
@@ -149,6 +157,12 @@ export default function HotelReviews() {
     return true;
   });
 
+  // Paginate the filtered reviews
+  const paginatedReviews = filteredReviews.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
   const statusOptions = [
     { label: "All Statuses", value: "" },
     { label: "Pending", value: "PENDING" },
@@ -245,13 +259,10 @@ export default function HotelReviews() {
               </p>
             </div>
           ) : (
-            <DataTable 
-              value={filteredReviews} 
-              showGridlines
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-            >
+            <>
+              <DataTable 
+                value={paginatedReviews}
+              >
               <Column field="guestName" header="Guest" sortable />
               <Column field="guestEmail" header="Email" />
               <Column field="overallRating" header="Rating" body={ratingBodyTemplate} sortable />
@@ -263,8 +274,18 @@ export default function HotelReviews() {
                 header="Submitted" 
                 body={(rowData) => formatDate(rowData.submittedAt)}
                 sortable 
+              />              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={filteredReviews.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
               />
-            </DataTable>
+            </>
           )}
         </Card>
       </div>

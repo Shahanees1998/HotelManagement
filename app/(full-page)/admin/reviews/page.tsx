@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
@@ -12,6 +12,7 @@ import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface Review {
   id: string;
@@ -32,6 +33,9 @@ export default function AdminReviews() {
   const { user } = useAuth();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [totalRecords, setTotalRecords] = useState(0);
   const [filters, setFilters] = useState({
     status: "",
     rating: "",
@@ -40,11 +44,11 @@ export default function AdminReviews() {
   });
   const toast = useRef<Toast>(null);
 
-  useEffect(() => {
-    loadReviews();
-  }, [filters]);
+  const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+    toast.current?.show({ severity, summary, detail, life: 3000 });
+  }, []);
 
-  const loadReviews = async () => {
+  const loadReviews = useCallback(async () => {
     setLoading(true);
     try {
       const response = await apiClient.getAdminReviews({
@@ -52,20 +56,31 @@ export default function AdminReviews() {
         rating: filters.rating,
         hotel: filters.hotel,
         search: filters.search,
+        page: currentPage,
+        limit: rowsPerPage,
       });
       setReviews(response.data || []);
+      setTotalRecords(response.pagination?.total || 0);
     } catch (error) {
       console.error("Error loading reviews:", error);
       showToast("error", "Error", "Failed to load reviews");
       setReviews([]);
+      setTotalRecords(0);
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters.status, filters.rating, filters.hotel, filters.search, currentPage, rowsPerPage, showToast]);
 
-  const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
-    toast.current?.show({ severity, summary, detail, life: 3000 });
-  };
+  useEffect(() => {
+    loadReviews();
+  }, [loadReviews]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    if (currentPage !== 1) {
+      setCurrentPage(1);
+    }
+  }, [filters.status, filters.rating, filters.hotel, filters.search]);
 
   const handleStatusChange = async (reviewId: string, newStatus: string) => {
     try {
@@ -191,13 +206,13 @@ export default function AdminReviews() {
     { label: "1 Star", value: "1" },
   ];
 
-  const hotelOptions = [
+  const hotelOptions = useMemo(() => [
     { label: "All Hotels", value: "" },
     ...Array.from(new Set(reviews.map(r => r.hotelName))).map(hotel => ({
       label: hotel,
       value: hotel,
     })),
-  ];
+  ], [reviews]);
 
   return (
     <div className="grid">
@@ -289,26 +304,34 @@ export default function AdminReviews() {
               </p>
             </div>
           ) : (
-            <DataTable 
-              value={reviews} 
-              showGridlines
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-            >
-              <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable />
-              <Column field="guest" header="Guest" body={guestBodyTemplate} />
-              <Column field="overallRating" header="Rating" body={ratingBodyTemplate} sortable />
-              <Column field="status" header="Status" body={statusBodyTemplate} sortable />
-              <Column field="visibility" header="Visibility" body={visibilityBodyTemplate} />
-              <Column field="formTitle" header="Form" />
-              <Column 
-                field="submittedAt" 
-                header="Submitted" 
-                body={(rowData) => formatDate(rowData.submittedAt)}
-                sortable 
+            <>
+              <DataTable 
+                value={reviews}
+              >
+                <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable />
+                <Column field="guest" header="Guest" body={guestBodyTemplate} />
+                <Column field="overallRating" header="Rating" body={ratingBodyTemplate} sortable />
+                <Column field="status" header="Status" body={statusBodyTemplate} sortable />
+                <Column field="visibility" header="Visibility" body={visibilityBodyTemplate} />
+                <Column field="formTitle" header="Form" />
+                <Column 
+                  field="submittedAt" 
+                  header="Submitted" 
+                  body={(rowData) => formatDate(rowData.submittedAt)}
+                  sortable 
+                />
+              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={totalRecords}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
               />
-            </DataTable>
+            </>
           )}
         </Card>
       </div>

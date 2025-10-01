@@ -14,6 +14,7 @@ import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface Announcement {
   id: string;
@@ -31,6 +32,8 @@ export default function AdminAnnouncements() {
   const { user } = useAuth();
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filters, setFilters] = useState({
     type: "",
     status: "",
@@ -51,6 +54,11 @@ export default function AdminAnnouncements() {
   useEffect(() => {
     loadAnnouncements();
   }, []);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters.type, filters.status, filters.search]);
 
   const loadAnnouncements = async () => {
     setLoading(true);
@@ -213,6 +221,12 @@ export default function AdminAnnouncements() {
     return true;
   });
 
+  // Paginate the filtered announcements
+  const paginatedAnnouncements = filteredAnnouncements.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
   const typeOptions = [
     { label: "All Types", value: "" },
     { label: "General", value: "GENERAL" },
@@ -315,13 +329,9 @@ export default function AdminAnnouncements() {
               </p>
             </div>
           ) : (
-            <DataTable 
-              value={filteredAnnouncements} 
-              showGridlines
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-            >
+            <>
+              <DataTable 
+              value={paginatedAnnouncements}>
               <Column field="content" header="Announcement" body={contentBodyTemplate} sortable />
               <Column field="type" header="Type" body={typeBodyTemplate} sortable />
               <Column field="status" header="Status" body={statusBodyTemplate} sortable />
@@ -332,8 +342,18 @@ export default function AdminAnnouncements() {
                 body={(rowData) => formatDate(rowData.createdAt)}
                 sortable 
               />
-              <Column header="Actions" body={actionsBodyTemplate} />
-            </DataTable>
+              <Column header="Actions" body={actionsBodyTemplate} />              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={filteredAnnouncements.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
+              />
+            </>
           )}
         </Card>
       </div>
@@ -371,9 +391,7 @@ export default function AdminAnnouncements() {
           <label className="block text-900 font-medium mb-2">Content *</label>
           <InputTextarea
             value={newAnnouncement.content}
-            onChange={(e) => setNewAnnouncement(prev => ({ ...prev, content: e.target.value }))}
-            rows={6}
-            placeholder="Enter announcement content..."
+            onChange={(e) => setNewAnnouncement(prev => ({ ...prev, content: e.target.value }))}placeholder="Enter announcement content..."
             className="w-full"
           />
         </div>

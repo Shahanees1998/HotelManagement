@@ -118,8 +118,8 @@ const LayoutInner = (props: ChildContainerProps) => {
             document.body.className = document.body.className.replace(
                 new RegExp(
                     "(^|\\b)" +
-                        "blocked-scroll".split(" ").join("|") +
-                        "(\\b|$)",
+                    "blocked-scroll".split(" ").join("|") +
+                    "(\\b|$)",
                     "gi"
                 ),
                 " "
@@ -204,11 +204,14 @@ const LayoutInner = (props: ChildContainerProps) => {
                 >
                     <AppSidebar />
                 </div>
-                <div className="layout-content-wrapper">
+                <div className="layout-content-wrapper" style={{ backgroundColor: 'white', padding:0}}>
+                   <div style={{paddingInline:'2rem', paddingTop:'1rem'}}>
                     <AppTopbar ref={topbarRef} />
-
-                    <AppBreadCrumb className="content-breadcrumb"></AppBreadCrumb>
-                    <div className="layout-content">{props.children}</div>
+                    </div>
+                    <div style={{ backgroundColor: 'rgb(253, 252, 249)', paddingInline:'2rem' }}>
+                        <AppBreadCrumb className="content-breadcrumb"></AppBreadCrumb>
+                        <div className="layout-content">{props.children}</div>
+                    </div>
                 </div>
                 <AppProfileSidebar />
                 <AppConfig />

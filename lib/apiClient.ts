@@ -405,6 +405,8 @@ class ApiClient {
         status?: string;
         subscription?: string;
         search?: string;
+        page?: number;
+        limit?: number;
     }) {
         return this.get<any>('/admin/hotels', params);
     }
@@ -429,6 +431,8 @@ class ApiClient {
         status?: string;
         plan?: string;
         search?: string;
+        page?: number;
+        limit?: number;
     }) {
         return this.get<any>('/admin/subscriptions', params);
     }
@@ -438,6 +442,8 @@ class ApiClient {
         hotel?: string;
         status?: string;
         search?: string;
+        page?: number;
+        limit?: number;
     }) {
         return this.get<any>('/admin/forms', params);
     }
@@ -447,6 +453,8 @@ class ApiClient {
         rating?: string;
         hotel?: string;
         search?: string;
+        page?: number;
+        limit?: number;
     }) {
         return this.get<any>('/admin/reviews', params);
     }

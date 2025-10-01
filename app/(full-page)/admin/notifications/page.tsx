@@ -12,6 +12,7 @@ import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface Notification {
   id: string;
@@ -29,6 +30,8 @@ export default function AdminNotifications() {
   const { user } = useAuth();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filters, setFilters] = useState({
     type: "",
     status: "",
@@ -39,6 +42,11 @@ export default function AdminNotifications() {
   useEffect(() => {
     loadNotifications();
   }, []);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters.type, filters.status, filters.search]);
 
   const loadNotifications = async () => {
     setLoading(true);
@@ -189,6 +197,12 @@ export default function AdminNotifications() {
     return true;
   });
 
+  // Paginate the filtered notifications
+  const paginatedNotifications = filteredNotifications.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
   const typeOptions = [
     { label: "All Types", value: "" },
     { label: "New Review", value: "NEW_REVIEW" },
@@ -293,13 +307,10 @@ export default function AdminNotifications() {
               </p>
             </div>
           ) : (
-            <DataTable 
-              value={filteredNotifications} 
-              showGridlines
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-            >
+            <>
+              <DataTable 
+                value={paginatedNotifications}
+              >
               <Column field="title" header="Title" sortable />
               <Column field="message" header="Message" style={{ maxWidth: '300px' }} />
               <Column field="user" header="User" body={userBodyTemplate} />
@@ -311,8 +322,18 @@ export default function AdminNotifications() {
                 body={(rowData) => formatDate(rowData.createdAt)}
                 sortable 
               />
-              <Column header="Actions" body={actionsBodyTemplate} />
-            </DataTable>
+              <Column header="Actions" body={actionsBodyTemplate} />              </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={filteredNotifications.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
+              />
+            </>
           )}
         </Card>
       </div>

@@ -13,6 +13,7 @@ import { Tag } from "primereact/tag";
 import { Badge } from "primereact/badge";
 import { Skeleton } from "primereact/skeleton";
 import { apiClient } from "@/lib/apiClient";
+import { CustomPaginator } from "@/components/CustomPaginator";
 import { useRouter } from "next/navigation";
 
 interface Notification {
@@ -398,10 +399,8 @@ export default function NotificationsPage() {
 
                     {/* Notifications Table */}
                     <DataTable
-                        value={notifications}
-                        loading={loading}
-                        paginator
-                        rows={rowsPerPage}
+                        value={notifications.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)}
+                        loading={loading}rows={rowsPerPage}
                         totalRecords={totalRecords}
                         lazy
                         first={(currentPage - 1) * rowsPerPage}
@@ -453,6 +452,16 @@ export default function NotificationsPage() {
                             style={{ width: '100px' }}
                         />
                     </DataTable>
+              <CustomPaginator
+                currentPage={currentPage}
+                totalRecords={notifications.length}
+                rowsPerPage={rowsPerPage}
+                onPageChange={setCurrentPage}
+                onRowsPerPageChange={(rows) => {
+                  setRowsPerPage(rows);
+                  setCurrentPage(1);
+                }}
+              />
 
                     {/* Statistics */}
                     <div className="grid mt-4">

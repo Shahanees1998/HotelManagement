@@ -1,140 +1,94 @@
 import type { MenuModel } from "@/types/index";
 import AppSubMenu from "./AppSubMenu";
 import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 const AppMenuHotel = () => {
     const { user } = useAuth();
+    const router = useRouter();
     
     if (!user) {
         return null;
     }
     
-    const model: MenuModel[] = [
+    const handleLogout = async () => {
+        try {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            router.push('/auth/login');
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
+    
+    const mainMenuModel: MenuModel[] = [
         // Dashboard
         {
             label: "Dashboard",
-            icon: "pi pi-home",
-            items: [
-                {
-                    label: "Overview",
-                    icon: "pi pi-fw pi-home",
-                    to: "/hotel/dashboard",
-                },
-                {
-                    label: "Quick Stats",
-                    icon: "pi pi-fw pi-chart-line",
-                    to: "/hotel/dashboard/stats",
-                },
-                {
-                    label: "Recent Activity",
-                    icon: "pi pi-fw pi-clock",
-                    to: "/hotel/dashboard/activity",
-                },
-            ],
+            icon: "pi pi-fw pi-th-large",
+            to: "/hotel/dashboard",
         },
         
-        // Feedback Management
+        // Feedback Forms
         {
-            label: "Feedback Management",
-            icon: "pi pi-comments",
-            items: [
-                {
-                    label: "All Reviews",
-                    icon: "pi pi-fw pi-star",
-                    to: "/hotel/reviews",
-                },
-                {
-                    label: "Feedback Forms",
-                    icon: "pi pi-fw pi-file-edit",
-                    to: "/hotel/forms",
-                },
-                {
-                    label: "QR Codes",
-                    icon: "pi pi-fw pi-qrcode",
-                    to: "/hotel/qr-codes",
-                },
-            ],
+            label: "Feedback Forms",
+            icon: "pi pi-fw pi-file-edit",
+            to: "/hotel/forms",
         },
         
-        // Analytics & Reports
+        // QR Codes
         {
-            label: "Analytics",
-            icon: "pi pi-chart-bar",
-            items: [
-                {
-                    label: "Overview",
-                    icon: "pi pi-fw pi-chart-line",
-                    to: "/hotel/analytics",
-                },
-                // {
-                //     label: "Satisfaction Trends",
-                //     icon: "pi pi-fw pi-chart-pie",
-                //     to: "/hotel/analytics/satisfaction",
-                // },
-                // {
-                //     label: "Response Rates",
-                //     icon: "pi pi-fw pi-chart-bar",
-                //     to: "/hotel/analytics/response-rates",
-                // },
-            ],
+            label: "QR Codes",
+            icon: "pi pi-fw pi-qrcode",
+            to: "/hotel/qr-codes",
         },
         
-        // Hotel Settings
+        // All Reviews
         {
-            label: "Hotel Settings",
-            icon: "pi pi-cog",
-            items: [
-                {
-                    label: "Hotel Profile",
-                    icon: "pi pi-fw pi-building",
-                    to: "/hotel/profile",
-                },
-                {
-                    label: "Subscription",
-                    icon: "pi pi-fw pi-credit-card",
-                    to: "/hotel/subscription",
-                }
-            ],
+            label: "All Reviews",
+            icon: "pi pi-fw pi-star",
+            to: "/hotel/reviews",
         },
         
-        // Support
+        // Contact Admin
         {
-            label: "Support",
-            icon: "pi pi-question-circle",
-            items: [
-                {
-                    label: "Contact Admin",
-                    icon: "pi pi-fw pi-envelope",
-                    to: "/hotel/support",
-                },
-            ],
+            label: "Contact Admin",
+            icon: "pi pi-fw pi-envelope",
+            to: "/hotel/support",
         },
         
-        // Profile
+        // Settings
         {
-            label: "Profile",
-            icon: "pi pi-user",
-            items: [
-                {
-                    label: "Personal Info",
-                    icon: "pi pi-fw pi-user",
-                    to: "/hotel/profile/user",
-                },
-                {
-                    label: "Change Password",
-                    icon: "pi pi-fw pi-key",
-                    to: "/hotel/profile/password",
-                },
-                {
-                    label: "Account Settings",
-                    icon: "pi pi-fw pi-cog",
-                    to: "/hotel/profile/settings",
-                },
-            ],
+            label: "Settings",
+            icon: "pi pi-fw pi-cog",
+            to: "/hotel/settings",
         },
     ];
 
-    return <AppSubMenu model={model} />;
+    const logoutModel: MenuModel[] = [
+        // Logout
+        {
+            label: "Logout",
+            icon: "pi pi-fw pi-sign-out",
+            command: handleLogout,
+        },
+    ];
+
+    return (
+        <>
+            <div style={{ flex: 1 }}>
+                <AppSubMenu model={mainMenuModel} />
+            </div>
+            <div style={{ 
+                marginTop: "auto", 
+                paddingTop: "1rem",
+                borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+                marginLeft: "1rem",
+                marginRight: "1rem"
+            }}>
+                <AppSubMenu model={logoutModel} />
+            </div>
+        </>
+    );
 };
 
 export default AppMenuHotel;
