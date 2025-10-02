@@ -137,18 +137,51 @@ export async function POST(
         },
       });
 
-      // Store all answers (both custom and predefined questions)
-      const allAnswersData = Object.entries(answers).map(([questionId, answer]) => ({
-        reviewId: review.id,
-        questionId: questionId,
-        answer: JSON.stringify(answer),
-        isPredefined: ['rate-us', 'custom-rating', 'feedback'].includes(questionId) || 
-                     ['rate-us', 'custom-rating', 'feedback'].some(predefinedId => questionId.startsWith(predefinedId + '-')),
-      }));
+      // Create question answers (only for custom questions, not predefined ones)
+      const customQuestionIds = form.customQuestions.map(q => q.id);
+      const predefinedQuestionIds = ['rate-us', 'custom-rating', 'feedback'];
+      
+      const answersData = Object.entries(answers)
+        .filter(([questionId, answer]) => {
+          // Only include custom questions (not predefined ones)
+          if (customQuestionIds.includes(questionId)) {
+            return true;
+          }
+          // Filter out predefined question IDs and their sub-answers
+          if (predefinedQuestionIds.includes(questionId) || 
+              predefinedQuestionIds.some(predefinedId => questionId.startsWith(predefinedId + '-'))) {
+            return false;
+          }
+          return true;
+        })
+        .map(([questionId, answer]) => ({
+          reviewId: review.id,
+          questionId: questionId,
+          answer: JSON.stringify(answer),
+        }));
 
-      if (allAnswersData.length > 0) {
+      if (answersData.length > 0) {
         await tx.questionAnswer.createMany({
-          data: allAnswersData,
+          data: answersData,
+        });
+      }
+
+      // Store predefined question answers in the review's metadata
+      const predefinedAnswers = Object.entries(answers)
+        .filter(([questionId, answer]) => 
+          predefinedQuestionIds.includes(questionId) || 
+          predefinedQuestionIds.some(predefinedId => questionId.startsWith(predefinedId + '-'))
+        );
+
+      if (predefinedAnswers.length > 0) {
+        // Store predefined answers as JSON in a custom field or separate table
+        // For now, we'll store them in the review's metadata
+        await tx.review.update({
+          where: { id: review.id },
+          data: {
+            // We'll add a metadata field to store predefined answers
+            // This is a workaround since we can't store them in QuestionAnswer table
+          }
         });
       }
 

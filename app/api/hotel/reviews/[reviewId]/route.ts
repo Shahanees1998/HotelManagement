@@ -56,8 +56,67 @@ export async function GET(
         },
       });
 
+      // Get form with predefined questions to reconstruct the complete feedback
+      const formWithPredefined = await prisma.feedbackForm.findFirst({
+        where: { id: review.formId },
+        include: {
+          predefinedQuestions: {
+            include: {
+              customRatingItems: {
+                orderBy: { order: 'asc' },
+              },
+            },
+          },
+        },
+      });
+
       if (!review) {
         return NextResponse.json({ error: 'Review not found' }, { status: 404 });
+      }
+
+      // Generate predefined questions based on form configuration
+      const predefinedQuestions = [];
+      
+      if (formWithPredefined?.predefinedQuestions?.hasRateUs) {
+        predefinedQuestions.push({
+          id: 'rate-us',
+          question: 'How do you rate us?',
+          type: 'STAR_RATING',
+          isRequired: true,
+          options: [],
+          isDefault: true,
+          answer: review.overallRating, // Use the overall rating as the answer
+        });
+      }
+      
+      if (formWithPredefined?.predefinedQuestions?.hasCustomRating && formWithPredefined.predefinedQuestions.customRatingItems.length > 0) {
+        // For custom rating, we'll show the items but without individual answers since they're not stored
+        predefinedQuestions.push({
+          id: 'custom-rating',
+          question: 'Custom Rating',
+          type: 'CUSTOM_RATING',
+          isRequired: true,
+          options: [],
+          isDefault: true,
+          customRatingItems: formWithPredefined.predefinedQuestions.customRatingItems.map(item => ({
+            id: item.id,
+            label: item.label,
+            order: item.order,
+          })),
+          answer: 'Custom rating items available (individual ratings not stored)',
+        });
+      }
+      
+      if (formWithPredefined?.predefinedQuestions?.hasFeedback) {
+        predefinedQuestions.push({
+          id: 'feedback',
+          question: 'Please give us honest feedback?',
+          type: 'LONG_TEXT',
+          isRequired: true,
+          options: [],
+          isDefault: true,
+          answer: 'Feedback question was included in this form (detailed feedback not stored)',
+        });
       }
 
       // Format the review data
@@ -77,17 +136,33 @@ export async function GET(
           description: review.form?.description,
           layout: review.form?.layout || 'basic',
         },
-        answers: review.answers.map(answer => ({
-          id: answer.id,
-          question: {
-            id: answer.question.id,
-            question: answer.question.question,
-            type: answer.question.type,
-            isRequired: answer.question.isRequired,
-            options: answer.question.options,
-          },
-          answer: JSON.parse(answer.answer),
-        })),
+        answers: [
+          // Include predefined questions first
+          ...predefinedQuestions.map(q => ({
+            id: q.id,
+            question: {
+              id: q.id,
+              question: q.question,
+              type: q.type,
+              isRequired: q.isRequired,
+              options: q.options,
+            },
+            answer: q.answer,
+            customRatingItems: q.customRatingItems,
+          })),
+          // Then include custom question answers
+          ...review.answers.map(answer => ({
+            id: answer.id,
+            question: {
+              id: answer.question.id,
+              question: answer.question.question,
+              type: answer.question.type,
+              isRequired: answer.question.isRequired,
+              options: answer.question.options,
+            },
+            answer: JSON.parse(answer.answer),
+          })),
+        ],
       };
 
       return NextResponse.json({ data: formattedReview });

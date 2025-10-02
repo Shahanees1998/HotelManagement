@@ -55,6 +55,11 @@ interface DetailedReview {
       options: string[];
     };
     answer: any;
+    customRatingItems?: Array<{
+      id: string;
+      label: string;
+      order: number;
+    }>;
   }>;
 }
 
@@ -165,7 +170,7 @@ export default function HotelReviews() {
     });
   };
 
-  const renderAnswer = (question: any, answer: any) => {
+  const renderAnswer = (question: any, answer: any, customRatingItems?: any[]) => {
     switch (question.type) {
       case 'SHORT_TEXT':
       case 'LONG_TEXT':
@@ -176,6 +181,24 @@ export default function HotelReviews() {
           <div className="flex align-items-center gap-2">
             <Rating value={answer || 0} readOnly stars={5} cancel={false} />
             <span className="text-600">({answer || 0}/5)</span>
+          </div>
+        );
+      
+      case 'CUSTOM_RATING':
+        return (
+          <div className="flex flex-column gap-2">
+            {customRatingItems && customRatingItems.length > 0 ? (
+              customRatingItems.map((item: any) => (
+                <div key={item.id} className="flex align-items-center justify-content-between p-2 border-1 border-200 border-round">
+                  <span className="text-900 font-medium">{item.label}</span>
+                  <span className="text-600 text-sm">
+                    {answer.includes('not stored') ? 'Rating not stored' : '★ ★ ★ ★ ★'}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <span className="text-600">{answer}</span>
+            )}
           </div>
         );
       
@@ -489,7 +512,7 @@ export default function HotelReviews() {
                             </small>
                           </div>
                           <div className="question-answer">
-                            {renderAnswer(answer.question, answer.answer)}
+                            {renderAnswer(answer.question, answer.answer, answer.customRatingItems)}
                           </div>
                         </div>
                         {index < detailedReview.answers.length - 1 && <Divider />}
