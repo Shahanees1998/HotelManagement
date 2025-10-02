@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
             },
             _count: {
               select: {
-                questions: true,
+                customQuestions: true,
                 reviews: true,
               },
             },
@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
         hotelSlug: form.hotel.slug,
         isActive: form.isActive,
         isPublic: form.isPublic,
-        questionCount: form._count.questions,
+        questionCount: form._count.customQuestions,
         responseCount: form._count.reviews,
         averageRating: 4.2, // This would need to be calculated from actual reviews
         createdAt: form.createdAt.toISOString(),

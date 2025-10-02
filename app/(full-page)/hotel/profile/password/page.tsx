@@ -6,6 +6,8 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { Password } from "primereact/password";
+import { ProgressBar } from "primereact/progressbar";
+import { Dialog } from "primereact/dialog";
 
 export default function ChangePasswordPage() {
   const [loading, setLoading] = useState(false);
@@ -14,6 +16,8 @@ export default function ChangePasswordPage() {
     newPassword: "",
     confirmPassword: "",
   });
+  const [passwordStrength, setPasswordStrength] = useState(0);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const toast = useRef<Toast>(null);
 
   const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
@@ -25,6 +29,41 @@ export default function ChangePasswordPage() {
       ...prev,
       [field]: value
     }));
+
+    // Calculate password strength when new password changes
+    if (field === 'newPassword') {
+      calculatePasswordStrength(value);
+    }
+  };
+
+  const calculatePasswordStrength = (password: string) => {
+    let strength = 0;
+    const checks = {
+      length: password.length >= 8,
+      uppercase: /[A-Z]/.test(password),
+      lowercase: /[a-z]/.test(password),
+      numbers: /\d/.test(password),
+      special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    };
+
+    // Calculate strength based on criteria met
+    Object.values(checks).forEach(check => {
+      if (check) strength += 20;
+    });
+
+    setPasswordStrength(strength);
+  };
+
+  const getPasswordStrengthLabel = () => {
+    if (passwordStrength < 40) return 'Weak';
+    if (passwordStrength < 80) return 'Medium';
+    return 'Strong';
+  };
+
+  const getPasswordStrengthColor = () => {
+    if (passwordStrength < 40) return '#ff6b6b';
+    if (passwordStrength < 80) return '#ffa726';
+    return '#66bb6a';
   };
 
   const validatePassword = () => {
@@ -43,6 +82,17 @@ export default function ChangePasswordPage() {
       return false;
     }
 
+    // Check for password strength
+    const hasUpperCase = /[A-Z]/.test(passwordData.newPassword);
+    const hasLowerCase = /[a-z]/.test(passwordData.newPassword);
+    const hasNumbers = /\d/.test(passwordData.newPassword);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(passwordData.newPassword);
+
+    if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecialChar) {
+      showToast("error", "Error", "New password must contain uppercase, lowercase, numbers, and special characters");
+      return false;
+    }
+
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       showToast("error", "Error", "New password and confirmation do not match");
       return false;
@@ -56,22 +106,41 @@ export default function ChangePasswordPage() {
     return true;
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
     if (!validatePassword()) return;
+    setShowConfirmDialog(true);
+  };
 
+  const confirmPasswordChange = async () => {
     setLoading(true);
+    setShowConfirmDialog(false);
+    
     try {
-      // TODO: Implement password change API call
-      // await apiClient.changePassword(passwordData);
-      
-      showToast("success", "Success", "Password changed successfully");
-      
-      // Reset form
-      setPasswordData({
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
+      const response = await fetch('/api/users/change-password', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          currentPassword: passwordData.currentPassword,
+          newPassword: passwordData.newPassword,
+        }),
       });
+
+      if (response.ok) {
+        showToast("success", "Success", "Password changed successfully");
+        
+        // Reset form
+        setPasswordData({
+          currentPassword: "",
+          newPassword: "",
+          confirmPassword: "",
+        });
+        setPasswordStrength(0);
+      } else {
+        const errorData = await response.json();
+        showToast("error", "Error", errorData.error || "Failed to change password");
+      }
     } catch (error) {
       console.error("Error changing password:", error);
       showToast("error", "Error", "Failed to change password");
@@ -127,6 +196,24 @@ export default function ChangePasswordPage() {
                 toggleMask
                 feedback={true}
               />
+              {passwordData.newPassword && (
+                <div className="mt-2">
+                  <div className="flex justify-content-between align-items-center mb-1">
+                    <span className="text-sm text-600">Password Strength:</span>
+                    <span 
+                      className="text-sm font-semibold"
+                      style={{ color: getPasswordStrengthColor() }}
+                    >
+                      {getPasswordStrengthLabel()}
+                    </span>
+                  </div>
+                  <ProgressBar 
+                    value={passwordStrength} 
+                    style={{ height: '6px' }}
+                    color={getPasswordStrengthColor()}
+                  />
+                </div>
+              )}
             </div>
 
             <div className="col-12">
@@ -149,24 +236,34 @@ export default function ChangePasswordPage() {
         <Card title="Password Requirements" className="mb-4">
           <div className="flex flex-column gap-3">
             <div className="flex align-items-center gap-2">
-              <i className="pi pi-check text-green-500"></i>
-              <span className="text-sm">At least 8 characters long</span>
+              <i className={`pi ${passwordData.newPassword.length >= 8 ? 'pi-check text-green-500' : 'pi-times text-red-500'}`}></i>
+              <span className={`text-sm ${passwordData.newPassword.length >= 8 ? 'text-green-600' : 'text-600'}`}>
+                At least 8 characters long
+              </span>
             </div>
             <div className="flex align-items-center gap-2">
-              <i className="pi pi-check text-green-500"></i>
-              <span className="text-sm">Contains uppercase letters</span>
+              <i className={`pi ${/[A-Z]/.test(passwordData.newPassword) ? 'pi-check text-green-500' : 'pi-times text-red-500'}`}></i>
+              <span className={`text-sm ${/[A-Z]/.test(passwordData.newPassword) ? 'text-green-600' : 'text-600'}`}>
+                Contains uppercase letters
+              </span>
             </div>
             <div className="flex align-items-center gap-2">
-              <i className="pi pi-check text-green-500"></i>
-              <span className="text-sm">Contains lowercase letters</span>
+              <i className={`pi ${/[a-z]/.test(passwordData.newPassword) ? 'pi-check text-green-500' : 'pi-times text-red-500'}`}></i>
+              <span className={`text-sm ${/[a-z]/.test(passwordData.newPassword) ? 'text-green-600' : 'text-600'}`}>
+                Contains lowercase letters
+              </span>
             </div>
             <div className="flex align-items-center gap-2">
-              <i className="pi pi-check text-green-500"></i>
-              <span className="text-sm">Contains numbers</span>
+              <i className={`pi ${/\d/.test(passwordData.newPassword) ? 'pi-check text-green-500' : 'pi-times text-red-500'}`}></i>
+              <span className={`text-sm ${/\d/.test(passwordData.newPassword) ? 'text-green-600' : 'text-600'}`}>
+                Contains numbers
+              </span>
             </div>
             <div className="flex align-items-center gap-2">
-              <i className="pi pi-check text-green-500"></i>
-              <span className="text-sm">Contains special characters</span>
+              <i className={`pi ${/[!@#$%^&*(),.?":{}|<>]/.test(passwordData.newPassword) ? 'pi-check text-green-500' : 'pi-times text-red-500'}`}></i>
+              <span className={`text-sm ${/[!@#$%^&*(),.?":{}|<>]/.test(passwordData.newPassword) ? 'text-green-600' : 'text-600'}`}>
+                Contains special characters
+              </span>
             </div>
           </div>
         </Card>
@@ -192,6 +289,41 @@ export default function ChangePasswordPage() {
           </div>
         </Card>
       </div>
+
+      {/* Confirmation Dialog */}
+      <Dialog
+        header="Confirm Password Change"
+        visible={showConfirmDialog}
+        style={{ width: '25vw' }}
+        onHide={() => setShowConfirmDialog(false)}
+        footer={
+          <div className="flex justify-content-end gap-2">
+            <Button
+              label="Cancel"
+              icon="pi pi-times"
+              className="p-button-text"
+              onClick={() => setShowConfirmDialog(false)}
+            />
+            <Button
+              label="Change Password"
+              icon="pi pi-key"
+              className="p-button-danger"
+              onClick={confirmPasswordChange}
+              loading={loading}
+            />
+          </div>
+        }
+      >
+        <div className="flex align-items-center gap-3 mb-3">
+          <i className="pi pi-exclamation-triangle text-2xl text-orange-500"></i>
+          <div>
+            <p className="m-0 font-semibold">Are you sure you want to change your password?</p>
+            <p className="m-0 text-600 text-sm mt-1">
+              This action will log you out of all devices and you'll need to log in again.
+            </p>
+          </div>
+        </div>
+      </Dialog>
 
       <Toast ref={toast} />
     </div>

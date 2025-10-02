@@ -36,8 +36,15 @@ export async function GET(
         isPublic: true,
       },
       include: {
-        questions: {
+        customQuestions: {
           orderBy: { order: 'asc' },
+        },
+        predefinedQuestions: {
+          include: {
+            customRatingItems: {
+              orderBy: { order: 'asc' },
+            },
+          },
         },
       },
     });
@@ -49,11 +56,65 @@ export async function GET(
       );
     }
 
+    // Generate predefined questions based on flags
+    const predefinedQuestions = [];
+    
+    if (form.predefinedQuestions?.hasRateUs) {
+      predefinedQuestions.push({
+        id: 'rate-us',
+        question: 'How do you rate us?',
+        type: 'STAR_RATING',
+        isRequired: true,
+        options: [],
+        isDefault: true,
+      });
+    }
+    
+    if (form.predefinedQuestions?.hasCustomRating && form.predefinedQuestions.customRatingItems.length > 0) {
+      predefinedQuestions.push({
+        id: 'custom-rating',
+        question: 'Custom Rating',
+        type: 'CUSTOM_RATING',
+        isRequired: true,
+        options: [],
+        isDefault: true,
+        customRatingItems: form.predefinedQuestions.customRatingItems.map(item => ({
+          id: item.id,
+          label: item.label,
+          order: item.order,
+        })),
+      });
+    }
+    
+    if (form.predefinedQuestions?.hasFeedback) {
+      predefinedQuestions.push({
+        id: 'feedback',
+        question: 'Please give us honest feedback?',
+        type: 'LONG_TEXT',
+        isRequired: true,
+        options: [],
+        isDefault: true,
+      });
+    }
+
+    // Combine predefined and custom questions
+    const allQuestions = [
+      ...predefinedQuestions,
+      ...form.customQuestions.map(q => ({
+        id: q.id,
+        question: q.question,
+        type: q.type,
+        isRequired: q.isRequired,
+        options: q.options,
+        isDefault: false,
+      })),
+    ];
+
     return NextResponse.json({
       id: form.id,
       title: form.title,
       description: form.description,
-      questions: form.questions,
+      questions: allQuestions,
       hotel: {
         name: hotel.name,
         logo: hotel.logo,

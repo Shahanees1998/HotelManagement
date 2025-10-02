@@ -60,7 +60,33 @@ const AppMenuHotel = () => {
         {
             label: "Settings",
             icon: "pi pi-fw pi-cog",
-            to: "/hotel/settings",
+            items: [
+                {
+                    label: "User Profile",
+                    icon: "pi pi-fw pi-user",
+                    to: "/hotel/profile/user",
+                },
+                {
+                    label: "Hotel Profile",
+                    icon: "pi pi-fw pi-building",
+                    to: "/hotel/profile",
+                },
+                {
+                    label: "Change Password",
+                    icon: "pi pi-fw pi-key",
+                    to: "/hotel/profile/password",
+                },
+                {
+                    label: "Subscriptions",
+                    icon: "pi pi-fw pi-credit-card",
+                    to: "/hotel/subscription",
+                },
+                {
+                    label: "Payment Methods",
+                    icon: "pi pi-fw pi-wallet",
+                    to: "/hotel/payment-methods",
+                },
+            ],
         },
     ];
 
@@ -78,14 +104,9 @@ const AppMenuHotel = () => {
             <div style={{ flex: 1 }}>
                 <AppSubMenu model={mainMenuModel} />
             </div>
-            <div style={{ 
-                marginTop: "auto", 
-                paddingTop: "1rem",
-                borderTop: "1px solid rgba(255, 255, 255, 0.1)",
-                marginLeft: "1rem",
-                marginRight: "1rem"
-            }}>
-                <AppSubMenu model={logoutModel} />
+            <div onClick={handleLogout} className="flex gap-2 text-white cursor-pointer" style={{ paddingLeft: '10px', marginTop: '20px' }}>
+                <img src="/images/logout.svg" alt="Logout" style={{ width: '18px' }} />
+                Logout
             </div>
         </>
     );

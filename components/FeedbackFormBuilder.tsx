@@ -14,6 +14,7 @@ import { Divider } from "primereact/divider";
 import { Badge } from "primereact/badge";
 import { Rating } from "primereact/rating";
 import { Panel } from "primereact/panel";
+import { useAuth } from "@/hooks/useAuth";
 
 interface Question {
   id?: string;
@@ -32,6 +33,25 @@ interface FeedbackForm {
   isPublic: boolean;
   layout: string;
   questions: Question[];
+  predefinedSection?: {
+    hasRateUs: boolean;
+    hasCustomRating: boolean;
+    hasFeedback: boolean;
+    customRatingItems: Array<{
+      label: string;
+      order: number;
+      isActive: boolean;
+    }>;
+  };
+  customQuestions?: Array<{
+    question: string;
+    type: string;
+    isRequired: boolean;
+    order: number;
+    options: string[];
+    validation?: string;
+    section: string;
+  }>;
 }
 
 const questionTypes = [
@@ -49,15 +69,16 @@ const layoutOptions = [
   { label: "Excellent", value: "excellent", description: "Premium design with animations" },
 ];
 
-export default function FeedbackFormBuilder({ 
-  formId, 
-  onSave, 
-  onCancel 
-}: { 
-  formId?: string; 
-  onSave: (form: FeedbackForm) => void; 
-  onCancel: () => void; 
+export default function FeedbackFormBuilder({
+  formId,
+  onSave,
+  onCancel
+}: {
+  formId?: string;
+  onSave: (form: FeedbackForm) => void;
+  onCancel: () => void;
 }) {
+  const { user } = useAuth();
   const [form, setForm] = useState<FeedbackForm>({
     title: "",
     description: "",
@@ -65,6 +86,10 @@ export default function FeedbackFormBuilder({
     isPublic: true,
     layout: "basic",
     questions: [],
+  });
+  const [hotelData, setHotelData] = useState({
+    name: "Hotel Famulus",
+    logo: "/images/logo.png",
   });
 
   const [showQuestionDialog, setShowQuestionDialog] = useState(false);
@@ -79,6 +104,49 @@ export default function FeedbackFormBuilder({
   const [newOption, setNewOption] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+
+  // Load hotel data for preview
+  useEffect(() => {
+    loadHotelData();
+  }, []);
+
+  // Listen for hotel profile updates
+  useEffect(() => {
+    const handleProfileUpdate = () => {
+      loadHotelData();
+    };
+
+    window.addEventListener('profile-updated', handleProfileUpdate);
+    
+    return () => {
+      window.removeEventListener('profile-updated', handleProfileUpdate);
+    };
+  }, []);
+
+  const loadHotelData = async () => {
+    try {
+      const response = await fetch('/api/hotel/profile');
+      if (response.ok) {
+        const data = await response.json();
+        setHotelData({
+          name: data.data.name || "Hotel Famulus",
+          logo: data.data.logo || "/images/logo.png",
+        });
+      }
+    } catch (error) {
+      console.error("Error loading hotel data:", error);
+      // Keep default values
+    }
+  };
+  const [customRatingItems, setCustomRatingItems] = useState([
+    { id: "room-experience", label: "Room Experience", isEditing: false },
+    { id: "staff-service", label: "Staff Service", isEditing: false },
+    { id: "amenities", label: "Amenities", isEditing: false },
+    { id: "ambiance", label: "Ambiance", isEditing: false },
+    { id: "food", label: "Food", isEditing: false }
+  ]);
+  const [editingRatingItem, setEditingRatingItem] = useState<string | null>(null);
+  const [newRatingItemLabel, setNewRatingItemLabel] = useState("");
   const toast = useRef<Toast>(null);
 
   const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
@@ -94,7 +162,7 @@ export default function FeedbackFormBuilder({
 
   const loadFormData = async () => {
     if (!formId) return;
-    
+
     setLoading(true);
     try {
       const response = await fetch(`/api/hotel/forms/${formId}`, {
@@ -108,17 +176,81 @@ export default function FeedbackFormBuilder({
       if (response.ok) {
         const data = await response.json();
         const formData = data.data;
-        
+
         // Transform the API response to match our form structure
-        setForm({
+        const baseForm = {
           title: formData.title || "",
           description: formData.description || "",
           isActive: formData.isActive !== undefined ? formData.isActive : true,
           isPublic: formData.isPublic !== undefined ? formData.isPublic : true,
           layout: formData.layout || "basic",
-          questions: formData.questions || [],
+          questions: [], // Will be set properly below
+        };
+
+        // Load predefined questions section
+        const predefinedSection = formData.predefinedQuestions || {};
+        const hasRateUs = predefinedSection.hasRateUs || false;
+        const hasCustomRating = predefinedSection.hasCustomRating || false;
+        const hasFeedback = predefinedSection.hasFeedback || false;
+
+        // Load custom rating items
+        const customRatingItems = predefinedSection.customRatingItems || [];
+        setCustomRatingItems(customRatingItems.map((item: any, index: number) => ({
+          id: item.id || `custom-${Date.now()}-${index}`,
+          label: item.label,
+          isEditing: false
+        })));
+
+        // Load custom questions
+        const customQuestions = formData.customQuestions || [];
+
+        // Add predefined questions to form.questions if they exist in loaded data
+        const predefinedQuestions = [];
+        if (hasRateUs) {
+          predefinedQuestions.push({
+            id: "rate-us",
+            question: "Rate Us",
+            type: "STAR_RATING",
+            isRequired: true,
+            options: [],
+            isDefault: true
+          });
+        }
+        if (hasCustomRating) {
+          predefinedQuestions.push({
+            id: "custom-rating",
+            question: "Custom Rating",
+            type: "CUSTOM_RATING",
+            isRequired: true,
+            options: [],
+            isDefault: true
+          });
+        }
+        if (hasFeedback) {
+          predefinedQuestions.push({
+            id: "feedback",
+            question: "Please give us honest feedback?",
+            type: "LONG_TEXT",
+            isRequired: true,
+            options: [],
+            isDefault: true
+          });
+        }
+
+        // Update form with predefined questions + custom questions
+        setForm({
+          ...baseForm,
+          questions: [...predefinedQuestions, ...customQuestions.map((q: any) => ({
+            id: q.id || `custom-${Date.now()}-${Math.random()}`,
+            question: q.question,
+            type: q.type,
+            isRequired: q.isRequired,
+            options: q.options || [],
+            validation: q.validation,
+            isDefault: false
+          }))]
         });
-        
+
         showToast("success", "Success", "Form data loaded successfully");
       } else {
         throw new Error('Failed to load form data');
@@ -154,8 +286,8 @@ export default function FeedbackFormBuilder({
       return;
     }
 
-    if ((questionForm.type === "MULTIPLE_CHOICE_SINGLE" || questionForm.type === "MULTIPLE_CHOICE_MULTIPLE") && 
-        questionForm.options.length < 2) {
+    if ((questionForm.type === "MULTIPLE_CHOICE_SINGLE" || questionForm.type === "MULTIPLE_CHOICE_MULTIPLE") &&
+      questionForm.options.length < 2) {
       showToast("warn", "Warning", "Multiple choice questions must have at least 2 options");
       return;
     }
@@ -165,7 +297,7 @@ export default function FeedbackFormBuilder({
       : [...form.questions, { ...questionForm, id: Date.now().toString() }];
 
     setForm({ ...form, questions: updatedQuestions });
-    
+
     // Reset dialog state
     setShowQuestionDialog(false);
     setEditingQuestion(null);
@@ -176,7 +308,7 @@ export default function FeedbackFormBuilder({
       options: [],
     });
     setNewOption("");
-    
+
     showToast("success", "Success", editingQuestion ? "Question updated" : "Question added");
   };
 
@@ -204,11 +336,65 @@ export default function FeedbackFormBuilder({
   const moveQuestion = (index: number, direction: 'up' | 'down') => {
     const questions = [...form.questions];
     const newIndex = direction === 'up' ? index - 1 : index + 1;
-    
+
     if (newIndex >= 0 && newIndex < questions.length) {
       [questions[index], questions[newIndex]] = [questions[newIndex], questions[index]];
       setForm({ ...form, questions });
     }
+  };
+
+  // Custom Rating Item Functions
+  const startEditingRatingItem = (itemId: string) => {
+    setEditingRatingItem(itemId);
+    const item = customRatingItems.find(i => i.id === itemId);
+    if (item) {
+      setNewRatingItemLabel(item.label);
+    }
+  };
+
+  const saveRatingItemEdit = (itemId: string) => {
+    if (!newRatingItemLabel.trim()) {
+      showToast("warn", "Warning", "Rating item label cannot be empty");
+      return;
+    }
+
+    setCustomRatingItems(items =>
+      items.map(item =>
+        item.id === itemId
+          ? { ...item, label: newRatingItemLabel.trim(), isEditing: false }
+          : item
+      )
+    );
+    setEditingRatingItem(null);
+    setNewRatingItemLabel("");
+    showToast("success", "Success", "Rating item updated");
+  };
+
+  const cancelRatingItemEdit = () => {
+    setEditingRatingItem(null);
+    setNewRatingItemLabel("");
+  };
+
+  const deleteRatingItem = (itemId: string) => {
+    setCustomRatingItems(items => items.filter(item => item.id !== itemId));
+    showToast("success", "Success", "Rating item deleted");
+  };
+
+  const addNewRatingItem = () => {
+    if (!newRatingItemLabel.trim()) {
+      showToast("warn", "Warning", "Please enter a label for the new rating item");
+      return;
+    }
+
+    const newItem = {
+      id: `custom-${Date.now()}`,
+      label: newRatingItemLabel.trim(),
+      isEditing: false
+    };
+
+    setCustomRatingItems(items => [...items, newItem]);
+    setNewRatingItemLabel("");
+    showToast("success", "Success", "New rating item added");
   };
 
   const handleSave = async () => {
@@ -224,8 +410,39 @@ export default function FeedbackFormBuilder({
 
     setLoading(true);
     try {
-      console.log("Calling onSave with form:", form);
-      await onSave(form);
+      // Prepare predefined questions section data
+      const predefinedSection = {
+        hasRateUs: form.questions.some(q => q.question === "Rate Us"),
+        hasCustomRating: form.questions.some(q => q.question === "Custom Rating"),
+        hasFeedback: form.questions.some(q => q.question === "Please give us honest feedback?"),
+        customRatingItems: customRatingItems.map((item, index) => ({
+          label: item.label,
+          order: index,
+          isActive: true
+        }))
+      };
+
+      // Prepare custom questions (non-predefined)
+      const customQuestions = form.questions
+        .filter(q => !q.isDefault)
+        .map((q, index) => ({
+          question: q.question,
+          type: q.type,
+          isRequired: q.isRequired,
+          order: index,
+          options: q.options,
+          validation: q.validation,
+          section: "CUSTOM"
+        }));
+
+      const formToSave = {
+        ...form,
+        predefinedSection,
+        customQuestions
+      };
+
+      console.log("Calling onSave with form:", formToSave);
+      await onSave(formToSave);
       console.log("onSave completed successfully");
       // Success handling is done by the parent component
     } catch (error) {
@@ -238,7 +455,7 @@ export default function FeedbackFormBuilder({
 
   const renderQuestionPreview = (question: Question, index: number) => {
     const layoutClass = `feedback-form-${form.layout}`;
-    
+
     return (
       <div key={question.id || index} className={`question-item ${layoutClass}`}>
         <div className="question-header">
@@ -247,25 +464,25 @@ export default function FeedbackFormBuilder({
             {question.isRequired && <span className="required"> *</span>}
           </label>
         </div>
-        
+
         <div className="question-input">
           {question.type === "SHORT_TEXT" && (
             <InputText placeholder="Enter your answer" className="w-full" disabled />
           )}
-          
+
           {question.type === "LONG_TEXT" && (
-            <InputTextarea 
-              placeholder="Enter your answer" 
-              rows={3} 
-              className="w-full" 
-              disabled 
+            <InputTextarea
+              placeholder="Enter your answer"
+              rows={3}
+              className="w-full"
+              disabled
             />
           )}
-          
+
           {question.type === "STAR_RATING" && (
             <Rating value={0} readOnly />
           )}
-          
+
           {question.type === "MULTIPLE_CHOICE_SINGLE" && (
             <div className="radio-group">
               {question.options.map((option, optIndex) => (
@@ -276,7 +493,7 @@ export default function FeedbackFormBuilder({
               ))}
             </div>
           )}
-          
+
           {question.type === "MULTIPLE_CHOICE_MULTIPLE" && (
             <div className="checkbox-group">
               {question.options.map((option, optIndex) => (
@@ -287,7 +504,7 @@ export default function FeedbackFormBuilder({
               ))}
             </div>
           )}
-          
+
           {question.type === "YES_NO" && (
             <div className="radio-group">
               <div className="radio-option">
@@ -301,7 +518,7 @@ export default function FeedbackFormBuilder({
             </div>
           )}
         </div>
-        
+
         <div className="question-actions">
           {question.isDefault ? (
             <div className="flex align-items-center gap-2">
@@ -359,252 +576,732 @@ export default function FeedbackFormBuilder({
 
   return (
     <div className="feedback-form-builder">
-      {/* Header with Toggle Buttons */}
-      <div className="flex justify-content-between align-items-center mb-4">
-        <h2 className="text-2xl font-bold text-900 m-0">
-          {formId ? "Edit Form" : "Create New Form"}
-        </h2>
-        <div className="flex gap-2">
+      {/* Header Section - Exact Figma Design */}
+      <div className="form-builder-header">
+        <div className="header-left">
+          <div style={{ backgroundColor: '#6F522F', borderRadius: '5px' }}>
+
+            <Button
+              icon="pi pi-arrow-left"
+              className="p-button-text header-back-btn"
+              onClick={onCancel}
+
+            />
+          </div>
+          <h1 className="header-title">
+            {showPreview ? 'Live Preview' : formId ? "Edit Form" : "Create New Form"}
+          </h1>
+        </div>
+        <div className="header-actions">
           <Button
-            label="Form Builder"
-            icon="pi pi-pencil"
-            onClick={() => setShowPreview(false)}
-            className={!showPreview ? "p-button-primary" : "p-button-outlined"}
+            label={showPreview ? 'Form Builder' : 'Live Preview'}
+            className="p-button-outlined live-preview-btn"
+            onClick={() => setShowPreview(!showPreview)}
           />
           <Button
-            label="Live Preview"
-            icon="pi pi-eye"
-            onClick={() => setShowPreview(true)}
-            className={showPreview ? "p-button-primary" : "p-button-outlined"}
+            label="Save Form"
+            className="p-button-primary save-form-btn"
+            onClick={handleSave}
+            loading={loading}
+            disabled={loading}
           />
         </div>
       </div>
 
       {!showPreview ? (
         /* Form Builder View */
-        <div className="grid">
-          {/* Form Settings */}
-          <div className="col-12">
-            <Card title="Form Settings" className="mb-4">
+        <div className="form-builder-content">
+          {/* Form Settings Card - Exact Figma Design */}
+          <div className="form-settings-card">
+            <h3 className="card-title">Form Settings</h3>
+            <div className="form-settings-content">
               <div className="grid">
-                <div className="col-12 md:col-6">
-                  <label className="block text-900 font-medium mb-2">Form Title *</label>
-                  <InputText
-                    value={form.title}
-                    onChange={(e) => setForm({ ...form, title: e.target.value })}
-                    placeholder="Enter form title"
-                    className="w-full"
-                  />
-                </div>
-                <div className="col-12 md:col-6">
-                  <label className="block text-900 font-medium mb-2">Layout Design</label>
-                  <Dropdown
-                    value={form.layout}
-                    options={layoutOptions}
-                    onChange={(e) => setForm({ ...form, layout: e.value })}
-                    optionLabel="label"
-                    className="w-full"
-                  />
-                  <small className="text-600">
-                    {layoutOptions.find(l => l.value === form.layout)?.description}
-                  </small>
-                </div>
-                <div className="col-12">
-                  <label className="block text-900 font-medium mb-2">Description</label>
-                  <InputTextarea
-                    value={form.description}
-                    onChange={(e) => setForm({ ...form, description: e.target.value })}
-                    placeholder="Enter form description"
-                    rows={3}
-                    className="w-full"
-                  />
-                </div>
-                <div className="col-12 md:col-6">
-                  <div className="flex align-items-center gap-3">
-                    <Checkbox
-                      checked={form.isActive}
-                      onChange={(e) => setForm({ ...form, isActive: e.checked || false })}
+                <div className="col-6">
+                  <div className="form-field">
+                    <label className="field-label">Form Title*</label>
+                    <InputText
+                      value={form.title}
+                      onChange={(e) => setForm({ ...form, title: e.target.value })}
+                      placeholder="Enter form title"
+                      className="form-input"
                     />
-                    <label className="text-900">Active</label>
                   </div>
                 </div>
-                <div className="col-12 md:col-6">
-                  <div className="flex align-items-center gap-3">
-                    <Checkbox
-                      checked={form.isPublic}
-                      onChange={(e) => setForm({ ...form, isPublic: e.checked || false })}
+                <div className="col-6">
+                  <div className="form-field">
+                    <label className="field-label">Layout Design*</label>
+                    <Dropdown
+                      value={form.layout}
+                      options={layoutOptions}
+                      onChange={(e) => setForm({ ...form, layout: e.value })}
+                      optionLabel="label"
+                      placeholder="Select form from the list"
+                      className="form-dropdown"
                     />
-                    <label className="text-900">Public</label>
                   </div>
                 </div>
               </div>
-            </Card>
-          </div>
 
-          {/* Questions */}
-          <div className="col-12">
-            <Card title="Questions" className="mb-4">
-              <div className="mb-4">
-               {form.questions.length === 0 && <Button
-                  label="Add Question"
-                  icon="pi pi-plus"
-                  onClick={addQuestion}
-                  className="p-button-success"
-                  size="large"
-                />}
+
+              <div className="form-field">
+                <label className="field-label">Form Description*</label>
+                <InputTextarea
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                  placeholder="Enter brief description of your form"
+                  rows={3}
+                  className="form-textarea"
+                />
               </div>
-              
-              {form.questions.length === 0 ? (
-                <div className="text-center py-6">
-                  <i className="pi pi-question-circle text-4xl text-400 mb-3"></i>
-                  <p className="text-600">No questions added yet</p>
-                  <p className="text-500 text-sm">Click "Add Question" above to get started</p>
-                </div>
-              ) : (
-                <div className="questions-list">
-                  {form.questions.map((question, index) => renderQuestionPreview(question, index))}
-                  
-                  <div className="text-center mt-4">
-                    <Button
-                      label="Add Another Question"
-                      icon="pi pi-plus"
-                      onClick={addQuestion}
-                      className="p-button-outlined"
-                    />
-                  </div>
-                </div>
-              )}
-            </Card>
-          </div>
-
-          {/* Actions */}
-          <div className="col-12">
-            <div className="flex justify-content-end gap-3">
-              <Button
-                label="Cancel"
-                icon="pi pi-times"
-                onClick={onCancel}
-                className="p-button-outlined"
-              />
-              <Button
-                label="Save Form"
-                icon="pi pi-save"
-                onClick={handleSave}
-                loading={loading}
-                disabled={loading}
-              />
             </div>
           </div>
+
+          {/* Questions Card - Exact Figma Design */}
+          <div className="questions-card">
+            <div className="questions-header">
+              <h3 className="card-title">Questions</h3>
+              <Button
+                label="Add New"
+                className="add-new-btn"
+                onClick={addQuestion}
+              />
+            </div>
+
+            <div className="questions-content">
+              {/* Predefined Questions Section */}
+              <div className="predefined-questions">
+                <h4 className="section-subtitle">Predefined Questions</h4>
+
+                {/* Rate Us Question */}
+                <div className="question-item">
+                  <div className="question-checkbox">
+                    <Checkbox
+                      checked={form.questions.some(q => q.question === "Rate Us")}
+                      onChange={(e) => {
+                        if (e.checked) {
+                          const rateUsQuestion = {
+                            id: "rate-us",
+                            question: "Rate Us",
+                            type: "STAR_RATING",
+                            isRequired: true,
+                            options: [],
+                            isDefault: true
+                          };
+                          setForm({
+                            ...form,
+                            questions: [...form.questions, rateUsQuestion]
+                          });
+                        } else {
+                          setForm({
+                            ...form,
+                            questions: form.questions.filter(q => q.question !== "Rate Us")
+                          });
+                        }
+                      }}
+                    />
+                    <label className="question-label">Rate Us*</label>
+                  </div>
+                  <div className="">
+                    {form.questions.some(q => q.question === "Rate Us") && (
+                      <div className="rating-stars">
+                        <Rating value={0} readOnly />
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Custom Rating Question */}
+                <div className="question-item mt-4">
+                  <div className="question-checkbox">
+                    <Checkbox
+                      checked={form.questions.some(q => q.question === "Custom Rating")}
+                      onChange={(e) => {
+                        if (e.checked) {
+                          const customRatingQuestion = {
+                            id: "custom-rating",
+                            question: "Custom Rating",
+                            type: "CUSTOM_RATING",
+                            isRequired: true,
+                            options: [],
+                            isDefault: true
+                          };
+                          setForm({
+                            ...form,
+                            questions: [...form.questions, customRatingQuestion]
+                          });
+                        } else {
+                          setForm({
+                            ...form,
+                            questions: form.questions.filter(q => q.question !== "Custom Rating")
+                          });
+                        }
+                      }}
+                    />
+                    <label className="question-label">Custom Rating*</label>
+                  </div>
+                  {form.questions.some(q => q.question === "Custom Rating") && (
+                    <div className="custom-rating-items">
+                      {customRatingItems.map((item, index) => (
+                        <div key={item.id} className="custom-rating-item">
+                          {editingRatingItem === item.id ? (
+                            <div className="rating-item-edit">
+                              <InputText
+                                value={newRatingItemLabel}
+                                onChange={(e) => setNewRatingItemLabel(e.target.value)}
+                                placeholder="Enter rating item label"
+                                className="rating-item-input"
+                                onKeyPress={(e) => e.key === 'Enter' && saveRatingItemEdit(item.id)}
+                                autoFocus
+                              />
+                              <div className="rating-item-actions">
+                                <Button
+                                  icon="pi pi-check"
+                                  className="p-button-text p-button-sm p-button-success"
+                                  onClick={() => saveRatingItemEdit(item.id)}
+                                  tooltip="Save"
+                                />
+                                <Button
+                                  icon="pi pi-times"
+                                  className="p-button-text p-button-sm p-button-danger"
+                                  onClick={cancelRatingItemEdit}
+                                  tooltip="Cancel"
+                                />
+                              </div>
+                            </div>
+                          ) : (
+                            <>
+                              <span
+                                className="rating-item-label"
+                                onClick={() => startEditingRatingItem(item.id)}
+                                style={{ cursor: 'pointer' }}
+                                title="Click to edit"
+                              >
+                                {item.label}
+                              </span>
+                              <div className="rating-stars">
+                                <Rating value={0} readOnly />
+                              </div>
+                              <div className="rating-item-actions">
+                                <Button
+                                  icon="pi pi-pencil"
+                                  className="p-button-text p-button-sm"
+                                  onClick={() => startEditingRatingItem(item.id)}
+                                  tooltip="Edit"
+                                />
+                                <Button
+                                  icon="pi pi-trash"
+                                  className="p-button-text p-button-sm delete-rating-btn"
+                                  onClick={() => deleteRatingItem(item.id)}
+                                  tooltip="Delete"
+                                />
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      ))}
+
+                      {/* Add New Rating Item */}
+                      <div className="add-rating-item-section">
+                        <div className="add-rating-input">
+                          <InputText
+                            value={newRatingItemLabel}
+                            onChange={(e) => setNewRatingItemLabel(e.target.value)}
+                            placeholder="Enter new rating item label"
+                            className="rating-item-input"
+                            onKeyPress={(e) => e.key === 'Enter' && addNewRatingItem()}
+                          />
+                          <Button
+                            label="+ Add New"
+                            className="add-new-rating-btn"
+                            onClick={addNewRatingItem}
+                            disabled={!newRatingItemLabel.trim()}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Feedback Question */}
+                <div className="question-item mt-4">
+                  <div className="question-checkbox">
+                    <Checkbox
+                      checked={form.questions.some(q => q.question === "Please give us honest feedback?")}
+                      onChange={(e) => {
+                        if (e.checked) {
+                          const feedbackQuestion = {
+                            id: "feedback",
+                            question: "Please give us honest feedback?",
+                            type: "LONG_TEXT",
+                            isRequired: true,
+                            options: [],
+                            isDefault: true
+                          };
+                          setForm({
+                            ...form,
+                            questions: [...form.questions, feedbackQuestion]
+                          });
+                        } else {
+                          setForm({
+                            ...form,
+                            questions: form.questions.filter(q => q.question !== "Please give us honest feedback?")
+                          });
+                        }
+                      }}
+                    />
+                    <label className="question-label">Please give us honest feedback?*</label>
+                  </div>
+                  {form.questions.some(q => q.question === "Please give us honest feedback?") && (
+                    <div className="feedback-textarea">
+                      <InputTextarea
+                        placeholder="Enter your detail feedback"
+                        rows={3}
+                        className="form-textarea w-full"
+                        disabled
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Custom Questions Section */}
+              {form.questions.filter(q => !q.isDefault).length > 0 && (
+                <div className="custom-questions">
+                  <h4 className="section-subtitle">Custom Questions</h4>
+                  {form.questions
+                    .filter(q => !q.isDefault)
+                    .map((question, index) => (
+                      <div key={question.id || index} className="custom-question-item">
+                        <div className="question-header">
+                          <label className="question-label">
+                            {question.question}
+                            {question.isRequired && <span className="required"> *</span>}
+                          </label>
+                          <div className="question-type-badge">
+                            {questionTypes.find(t => t.value === question.type)?.label}
+                          </div>
+                        </div>
+
+                        <div className="question-preview">
+                          {question.type === "SHORT_TEXT" && (
+                            <InputText placeholder="Enter your answer" className="w-full" disabled />
+                          )}
+
+                          {question.type === "LONG_TEXT" && (
+                            <InputTextarea
+                              placeholder="Enter your answer"
+                              rows={3}
+                              className="w-full"
+                              disabled
+                            />
+                          )}
+
+                          {question.type === "STAR_RATING" && (
+                            <Rating value={0} readOnly />
+                          )}
+
+                          {question.type === "MULTIPLE_CHOICE_SINGLE" && (
+                            <div className="radio-group">
+                              {question.options.map((option, optIndex) => (
+                                <div key={optIndex} className="radio-option">
+                                  <RadioButton checked={false} disabled />
+                                  <label>{option}</label>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {question.type === "MULTIPLE_CHOICE_MULTIPLE" && (
+                            <div className="checkbox-group">
+                              {question.options.map((option, optIndex) => (
+                                <div key={optIndex} className="checkbox-option">
+                                  <Checkbox checked={false} disabled />
+                                  <label>{option}</label>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {question.type === "YES_NO" && (
+                            <div className="radio-group">
+                              <div className="radio-option">
+                                <RadioButton checked={false} disabled />
+                                <label>Yes</label>
+                              </div>
+                              <div className="radio-option">
+                                <RadioButton checked={false} disabled />
+                                <label>No</label>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="question-actions">
+                          <Button
+                            icon="pi pi-pencil"
+                            className="p-button-text p-button-sm"
+                            onClick={() => editQuestion(question)}
+                            tooltip="Edit"
+                          />
+                          <Button
+                            icon="pi pi-trash"
+                            className="p-button-text p-button-sm p-button-danger"
+                            onClick={() => deleteQuestion(question)}
+                            tooltip="Delete"
+                          />
+                          <Button
+                            icon="pi pi-arrow-up"
+                            className="p-button-text p-button-sm"
+                            onClick={() => moveQuestion(index, 'up')}
+                            disabled={index === 0}
+                            tooltip="Move Up"
+                          />
+                          <Button
+                            icon="pi pi-arrow-down"
+                            className="p-button-text p-button-sm"
+                            onClick={() => moveQuestion(index, 'down')}
+                            disabled={index === form.questions.filter(q => !q.isDefault).length - 1}
+                            tooltip="Move Down"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              )}
+
+              {/* No Questions State */}
+              {form.questions.length === 0 && (
+                <div className="no-questions-state">
+                  <i className="pi pi-question-circle text-4xl text-400 mb-3"></i>
+                  <p className="text-600">No questions added yet</p>
+                  <p className="text-500 text-sm">Use the predefined questions above or add custom questions</p>
+                </div>
+              )}
+            </div>
+          </div>
+
         </div>
       ) : (
         /* Live Preview View */
-        <div className="preview-container">
-          <div className="flex justify-content-between align-items-center mb-4">
-            <div>
-              <h3 className="text-xl font-semibold text-900 m-0">Live Preview</h3>
-              <p className="text-600 text-sm mt-1">Current Layout: <span className="font-semibold text-primary">{form.layout.toUpperCase()}</span></p>
+        <div
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "16px",
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "500px",
+              backgroundColor: "#fff",
+              borderRadius: "12px",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+              padding: "24px",
+            }}
+          >
+            {/* Logo + Heading */}
+            <div style={{ textAlign: "center", marginBottom: "24px" }}>
+              <img
+                src={hotelData.logo}
+                alt={hotelData.name}
+                style={{ height: "50px", marginBottom: "8px", objectFit: "contain" }}
+                onError={(e) => {
+                  // Fallback to default logo if hotel logo fails to load
+                  e.currentTarget.src = "/images/logo.png";
+                }}
+              />
+              <h5 style={{ margin: 0, fontWeight: 600, color: "#333" }}>{hotelData.name}</h5>
+              <p
+                style={{
+                  fontSize: "13px",
+                  color: "#6c757d",
+                  marginTop: "8px",
+                  lineHeight: 1.5,
+                }}
+              >
+                {form.description || "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance."}
+              </p>
             </div>
-            <Button
-              label="Back to Builder"
-              icon="pi pi-arrow-left"
-              onClick={() => setShowPreview(false)}
-              className="p-button-outlined"
-            />
-          </div>
-          
-          <div className={`feedback-form-preview feedback-form-${form.layout}`}>
-            <div className="form-header">
-              <h2 className="form-title">{form.title || "Form Title"}</h2>
-              {form.description && (
-                <p className="form-description">{form.description}</p>
-              )}
+
+            {/* Full Name & Email */}
+            <div style={{ display: "flex", gap: "12px", marginBottom: "20px" }}>
+              <div style={{ flex: 1 }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 500,
+                    color: "#444",
+                    marginBottom: "6px",
+                  }}
+                >
+                  Full Name*
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter your full name"
+                  disabled
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "6px",
+                    border: "1px solid #ced4da",
+                    fontSize: "14px",
+                    backgroundColor: "#f8f9fa",
+                    color: "#6c757d",
+                  }}
+                />
+              </div>
+              <div style={{ flex: 1 }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 500,
+                    color: "#444",
+                    marginBottom: "6px",
+                  }}
+                >
+                  Email*
+                </label>
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  disabled
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "6px",
+                    border: "1px solid #ced4da",
+                    fontSize: "14px",
+                    backgroundColor: "#f8f9fa",
+                    color: "#6c757d",
+                  }}
+                />
+              </div>
             </div>
-            
-            <div className="form-questions">
-              {form.questions.length === 0 ? (
-                <div className="text-center py-6">
-                  <i className="pi pi-question-circle text-4xl text-400 mb-3"></i>
-                  <p className="text-600">Add questions to see preview</p>
-                  <Button
-                    label="Go to Builder"
-                    icon="pi pi-pencil"
-                    onClick={() => setShowPreview(false)}
-                    className="mt-3"
-                  />
-                </div>
-              ) : (
-                form.questions.map((question, index) => (
-                  <div key={question.id || index} className="question-item">
-                    <div className="question-header">
-                      <label className="question-label">
-                        {question.question}
-                        {question.isRequired && <span className="required"> *</span>}
-                      </label>
+
+            {/* Custom Rating Questions */}
+            {form.questions.some(q => q.question === "Custom Rating") && customRatingItems.length > 0 && (
+              <div style={{ marginBottom: "20px" }}>
+                {customRatingItems.map((item, index) => {
+                  const rating = index === 0 ? 4 : index === 1 ? 5 : index === 2 ? 3 : index === 3 ? 4 : 3;
+                  return (
+                    <div
+                      key={item.id}
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        marginBottom: "12px",
+                        padding: "8px 12px",
+                        backgroundColor: "#f8f9fa",
+                        borderRadius: "6px",
+                        border: "1px solid #e9ecef",
+                      }}
+                    >
+                      <span style={{ fontSize: "14px", fontWeight: 500, color: "#333" }}>
+                        {item.label}
+                      </span>
+                      <div style={{ display: "flex", gap: "4px" }}>
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <span
+                            key={i}
+                            style={{
+                              fontSize: "18px",
+                              color: i < rating ? "#facc15" : "#d1d5db",
+                            }}
+                          >
+                            ★
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    
-                    <div className="question-input">
-                      {question.type === "SHORT_TEXT" && (
-                        <InputText placeholder="Enter your answer" className="w-full" disabled />
-                      )}
-                      
-                      {question.type === "LONG_TEXT" && (
-                        <InputTextarea 
-                          placeholder="Enter your answer" 
-                          rows={3} 
-                          className="w-full" 
-                          disabled 
-                        />
-                      )}
-                      
-                      {question.type === "STAR_RATING" && (
-                        <Rating value={0} readOnly />
-                      )}
-                      
-                      {question.type === "MULTIPLE_CHOICE_SINGLE" && (
-                        <div className="radio-group">
-                          {question.options.map((option, optIndex) => (
-                            <div key={optIndex} className="radio-option">
-                              <RadioButton checked={false} disabled />
-                              <label>{option}</label>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      
-                      {question.type === "MULTIPLE_CHOICE_MULTIPLE" && (
-                        <div className="checkbox-group">
-                          {question.options.map((option, optIndex) => (
-                            <div key={optIndex} className="checkbox-option">
-                              <Checkbox checked={false} disabled />
-                              <label>{option}</label>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      
-                      {question.type === "YES_NO" && (
-                        <div className="radio-group">
-                          <div className="radio-option">
-                            <RadioButton checked={false} disabled />
-                            <label>Yes</label>
-                          </div>
-                          <div className="radio-option">
-                            <RadioButton checked={false} disabled />
-                            <label>No</label>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-            
-            {form.questions.length > 0 && (
-              <div className="form-footer">
-                <Button label="Submit Feedback" className="w-full" disabled />
+                  );
+                })}
               </div>
             )}
+
+            {/* Feedback Question */}
+            {form.questions.some(q => q.question === "Please give us honest feedback?") && (
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 500,
+                    color: "#444",
+                    marginBottom: "6px",
+                  }}
+                >
+                  Please give us honest feedback?
+                </label>
+                <textarea
+                  rows={3}
+                  placeholder="Enter your detail feedback"
+                  disabled
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "6px",
+                    border: "1px solid #ced4da",
+                    fontSize: "14px",
+                    resize: "none",
+                    backgroundColor: "#f8f9fa",
+                    color: "#6c757d",
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Custom Questions */}
+            {form.questions
+              .filter(q => !q.isDefault)
+              .map((question, index) => (
+                <div key={question.id || index} style={{ marginBottom: "20px" }}>
+                  <label
+                    style={{
+                      display: "block",
+                      fontSize: "13px",
+                      fontWeight: 500,
+                      color: "#444",
+                      marginBottom: "6px",
+                    }}
+                  >
+                    {question.question}
+                    {question.isRequired && <span style={{ color: "#dc3545" }}> *</span>}
+                  </label>
+
+                  <div>
+                    {question.type === "SHORT_TEXT" && (
+                      <input
+                        type="text"
+                        placeholder="Enter your answer"
+                        disabled
+                        style={{
+                          width: "100%",
+                          padding: "10px",
+                          borderRadius: "6px",
+                          border: "1px solid #ced4da",
+                          fontSize: "14px",
+                          backgroundColor: "#f8f9fa",
+                          color: "#6c757d",
+                        }}
+                      />
+                    )}
+
+                    {question.type === "LONG_TEXT" && (
+                      <textarea
+                        placeholder="Enter your answer"
+                        rows={3}
+                        disabled
+                        style={{
+                          width: "100%",
+                          padding: "10px",
+                          borderRadius: "6px",
+                          border: "1px solid #ced4da",
+                          fontSize: "14px",
+                          resize: "none",
+                          backgroundColor: "#f8f9fa",
+                          color: "#6c757d",
+                        }}
+                      />
+                    )}
+
+                    {question.type === "STAR_RATING" && (
+                      <div style={{ display: "flex", gap: "4px" }}>
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <span
+                            key={i}
+                            style={{
+                              fontSize: "18px",
+                              color: "#d1d5db",
+                            }}
+                          >
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {question.type === "MULTIPLE_CHOICE_SINGLE" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                        {question.options.map((option, optIndex) => (
+                          <div key={optIndex} style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                              type="radio"
+                              name={`question-${index}`}
+                              disabled
+                              style={{ marginRight: "8px" }}
+                            />
+                            <label style={{ fontSize: "14px", color: "#6c757d" }}>{option}</label>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {question.type === "MULTIPLE_CHOICE_MULTIPLE" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                        {question.options.map((option, optIndex) => (
+                          <div key={optIndex} style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                              type="checkbox"
+                              disabled
+                              style={{ marginRight: "8px" }}
+                            />
+                            <label style={{ fontSize: "14px", color: "#6c757d" }}>{option}</label>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {question.type === "YES_NO" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <input
+                            type="radio"
+                            name={`question-${index}`}
+                            disabled
+                            style={{ marginRight: "8px" }}
+                          />
+                          <label style={{ fontSize: "14px", color: "#6c757d" }}>Yes</label>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <input
+                            type="radio"
+                            name={`question-${index}`}
+                            disabled
+                            style={{ marginRight: "8px" }}
+                          />
+                          <label style={{ fontSize: "14px", color: "#6c757d" }}>No</label>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+            {/* Submit Button */}
+            <button
+              disabled
+              style={{
+                width: "100%",
+                backgroundColor: "#6c757d",
+                color: "#fff",
+                fontSize: "14px",
+                fontWeight: 500,
+                padding: "12px",
+                borderRadius: "8px",
+                border: "none",
+                cursor: "not-allowed",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+              }}
+            >
+              Submit Now
+            </button>
           </div>
         </div>
       )}
@@ -638,7 +1335,7 @@ export default function FeedbackFormBuilder({
               className="w-full"
             />
           </div>
-          <div className="col-12 md:col-6">
+          <div className="col-12">
             <label className="block text-900 font-medium mb-2">Question Type</label>
             <Dropdown
               value={questionForm.type}
@@ -648,7 +1345,7 @@ export default function FeedbackFormBuilder({
               className="w-full"
             />
           </div>
-          <div className="col-12 md:col-6">
+          {/* <div className="col-12 md:col-6">
             <div className="flex align-items-center gap-3 mt-6">
               <Checkbox
                 checked={questionForm.isRequired}
@@ -656,7 +1353,7 @@ export default function FeedbackFormBuilder({
               />
               <label className="text-900">Required</label>
             </div>
-          </div>
+          </div> */}
 
           {/* Options for Multiple Choice */}
           {(questionForm.type === "MULTIPLE_CHOICE_SINGLE" || questionForm.type === "MULTIPLE_CHOICE_MULTIPLE") && (

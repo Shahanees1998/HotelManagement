@@ -1,0 +1,102 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { withAuth, AuthenticatedRequest } from '@/lib/authMiddleware';
+import { prisma } from '@/lib/prisma';
+
+// GET /api/hotel/reviews/[reviewId] - Get complete review details
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { reviewId: string } }
+) {
+  return withAuth(request, async (authenticatedReq: AuthenticatedRequest) => {
+    try {
+      const user = authenticatedReq.user;
+      const { reviewId } = params;
+      
+      if (!user || user.role !== 'HOTEL') {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+
+      // Get hotel
+      const hotel = await prisma.hotels.findUnique({
+        where: { ownerId: user.userId },
+        select: { id: true },
+      });
+
+      if (!hotel) {
+        return NextResponse.json({ error: 'Hotel not found' }, { status: 404 });
+      }
+
+      // Get review with complete details
+      const review = await prisma.review.findFirst({
+        where: { 
+          id: reviewId,
+          hotelId: hotel.id 
+        },
+        include: {
+          form: {
+            select: { 
+              title: true,
+              description: true,
+              layout: true,
+            },
+          },
+          answers: {
+            include: {
+              question: {
+                select: {
+                  id: true,
+                  question: true,
+                  type: true,
+                  isRequired: true,
+                  options: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!review) {
+        return NextResponse.json({ error: 'Review not found' }, { status: 404 });
+      }
+
+      // Format the review data
+      const formattedReview = {
+        id: review.id,
+        guestName: review.guestName,
+        guestEmail: review.guestEmail,
+        guestPhone: review.guestPhone,
+        overallRating: review.overallRating,
+        status: review.status,
+        isPublic: review.isPublic,
+        isShared: review.isShared,
+        submittedAt: review.submittedAt.toISOString(),
+        publishedAt: review.publishedAt?.toISOString(),
+        form: {
+          title: review.form?.title || 'Unknown Form',
+          description: review.form?.description,
+          layout: review.form?.layout || 'basic',
+        },
+        answers: review.answers.map(answer => ({
+          id: answer.id,
+          question: {
+            id: answer.question.id,
+            question: answer.question.question,
+            type: answer.question.type,
+            isRequired: answer.question.isRequired,
+            options: answer.question.options,
+          },
+          answer: JSON.parse(answer.answer),
+        })),
+      };
+
+      return NextResponse.json({ data: formattedReview });
+    } catch (error) {
+      console.error('Error fetching review details:', error);
+      return NextResponse.json(
+        { error: 'Failed to fetch review details' },
+        { status: 500 }
+      );
+    }
+  });
+}

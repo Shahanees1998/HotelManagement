@@ -82,6 +82,13 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
         }
     }, [user?.id, user?.profileImage]);
 
+    // Update profile state when user data changes
+    useEffect(() => {
+        if (user) {
+            setProfile(user);
+        }
+    }, [user]);
+
     // Listen for custom profile update events
     useEffect(() => {
         const handleProfileUpdate = () => {
@@ -98,8 +105,11 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     }, [user?.id]);
 
     const getUserInitials = () => {
-        if (profile?.firstName && profile?.lastName) {
-            return `${profile.firstName[0]}${profile.lastName[0]}`;
+        const firstName = profile?.firstName || user?.firstName;
+        const lastName = profile?.lastName || user?.lastName;
+        
+        if (firstName && lastName) {
+            return `${firstName[0]}${lastName[0]}`;
         }
         return 'U';
     };
@@ -142,19 +152,6 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                 >
                     <i className="pi pi-bars"></i>
                 </button>
-
-                <div className="page-title-container">
-                    <h1 className="page-title" style={{
-                        fontSize: '1rem',
-                        fontWeight: '400',
-                        color: '#1B2A49',
-                        margin: 0,
-                        marginLeft: '1rem'
-                    }}>
-                       Dashboard / {getPageTitle()}
-                    </h1>
-                </div>
-
                 <AppBreadcrumb className="topbar-breadcrumb"></AppBreadcrumb>
             </div>
 
@@ -181,10 +178,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                             onClick={showProfileSidebar}
                         >
                             <Avatar
-                                image={profile?.profileImagePublicId ? 
-                                    getProfileImageUrl(profile.profileImagePublicId, 'large') : 
-                                    profile?.profileImage
-                                }
+                                image={profile?.profileImage || user?.profileImage}
                                 label={getUserInitials()}
                                 size="normal"
                                 shape="circle"
@@ -195,8 +189,8 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                                 fontWeight: '500',
                                 color: 'var(--text-color)'
                             }}>
-                                {profile?.firstName && profile?.lastName 
-                                    ? `${profile.firstName} ${profile.lastName}`
+                                {(profile?.firstName && profile?.lastName) || (user?.firstName && user?.lastName)
+                                    ? `${profile?.firstName || user?.firstName} ${profile?.lastName || user?.lastName}`
                                     : user?.email
                                 }
                             </span>

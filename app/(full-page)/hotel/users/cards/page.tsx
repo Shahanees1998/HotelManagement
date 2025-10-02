@@ -399,7 +399,6 @@ export default function MembershipCardsPage() {
     return (
         <div className="grid">
             <div className="col-12">
-                <Card>
                     {error && (
                         <div className="p-error p-3 mb-3">{error}</div>
                     )}
@@ -546,7 +545,6 @@ export default function MembershipCardsPage() {
               />
             </>
                     )}
-                </Card>
             </div>
 
             {/* Card Generation Dialog */}

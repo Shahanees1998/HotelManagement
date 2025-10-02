@@ -9,6 +9,9 @@ import { Tag } from "primereact/tag";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
+import { Dialog } from "primereact/dialog";
+import { Divider } from "primereact/divider";
+import { Rating } from "primereact/rating";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { CustomPaginator } from "@/components/CustomPaginator";
@@ -26,6 +29,35 @@ interface Review {
   formTitle: string;
 }
 
+interface DetailedReview {
+  id: string;
+  guestName: string;
+  guestEmail: string;
+  guestPhone?: string;
+  overallRating: number;
+  status: string;
+  isPublic: boolean;
+  isShared: boolean;
+  submittedAt: string;
+  publishedAt?: string;
+  form: {
+    title: string;
+    description?: string;
+    layout: string;
+  };
+  answers: Array<{
+    id: string;
+    question: {
+      id: string;
+      question: string;
+      type: string;
+      isRequired: boolean;
+      options: string[];
+    };
+    answer: any;
+  }>;
+}
+
 export default function HotelReviews() {
   const { user } = useAuth();
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -37,6 +69,9 @@ export default function HotelReviews() {
     rating: "",
     search: "",
   });
+  const [showDetailsDialog, setShowDetailsDialog] = useState(false);
+  const [detailedReview, setDetailedReview] = useState<DetailedReview | null>(null);
+  const [loadingDetails, setLoadingDetails] = useState(false);
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
@@ -71,6 +106,26 @@ export default function HotelReviews() {
 
   const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
     toast.current?.show({ severity, summary, detail, life: 3000 });
+  };
+
+  const loadDetailedReview = async (reviewId: string) => {
+    setLoadingDetails(true);
+    try {
+      const response = await fetch(`/api/hotel/reviews/${reviewId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setDetailedReview(data.data);
+        setShowDetailsDialog(true);
+      } else {
+        const errorData = await response.json();
+        showToast("error", "Error", errorData.error || "Failed to load review details");
+      }
+    } catch (error) {
+      console.error("Error loading review details:", error);
+      showToast("error", "Error", "Failed to load review details");
+    } finally {
+      setLoadingDetails(false);
+    }
   };
 
   const handleStatusChange = async (reviewId: string, newStatus: string) => {
@@ -110,6 +165,49 @@ export default function HotelReviews() {
     });
   };
 
+  const renderAnswer = (question: any, answer: any) => {
+    switch (question.type) {
+      case 'SHORT_TEXT':
+      case 'LONG_TEXT':
+        return <span className="text-900">{answer || 'No answer provided'}</span>;
+      
+      case 'STAR_RATING':
+        return (
+          <div className="flex align-items-center gap-2">
+            <Rating value={answer || 0} readOnly stars={5} cancel={false} />
+            <span className="text-600">({answer || 0}/5)</span>
+          </div>
+        );
+      
+      case 'MULTIPLE_CHOICE_SINGLE':
+        return <span className="text-900">{answer || 'No answer provided'}</span>;
+      
+      case 'MULTIPLE_CHOICE_MULTIPLE':
+        return (
+          <div className="flex flex-wrap gap-1">
+            {Array.isArray(answer) && answer.length > 0 ? (
+              answer.map((item: string, index: number) => (
+                <Tag key={index} value={item} severity="info" />
+              ))
+            ) : (
+              <span className="text-600">No answer provided</span>
+            )}
+          </div>
+        );
+      
+      case 'YES_NO':
+        return (
+          <Tag 
+            value={answer || 'No answer'} 
+            severity={answer === 'Yes' ? 'success' : answer === 'No' ? 'danger' : 'info'} 
+          />
+        );
+      
+      default:
+        return <span className="text-900">{JSON.stringify(answer) || 'No answer provided'}</span>;
+    }
+  };
+
   const ratingBodyTemplate = (rowData: Review) => {
     return (
       <div className="flex align-items-center gap-2">
@@ -146,6 +244,21 @@ export default function HotelReviews() {
         {rowData.isShared && (
           <Tag value="Shared" severity="warning" />
         )}
+      </div>
+    );
+  };
+
+  const actionsBodyTemplate = (rowData: Review) => {
+    return (
+      <div className="flex gap-2">
+        <Button
+          label="View Details"
+          icon="pi pi-eye"
+          size="small"
+          className="p-button-outlined"
+          onClick={() => loadDetailedReview(rowData.id)}
+          loading={loadingDetails}
+        />
       </div>
     );
   };
@@ -274,7 +387,8 @@ export default function HotelReviews() {
                 header="Submitted" 
                 body={(rowData) => formatDate(rowData.submittedAt)}
                 sortable 
-              />              </DataTable>
+              />
+              <Column header="Actions" body={actionsBodyTemplate} />              </DataTable>
               <CustomPaginator
                 currentPage={currentPage}
                 totalRecords={filteredReviews.length}
@@ -289,6 +403,105 @@ export default function HotelReviews() {
           )}
         </Card>
       </div>
+
+      {/* Detailed Review Dialog */}
+      <Dialog
+        header="Complete Feedback Details"
+        visible={showDetailsDialog}
+        onHide={() => setShowDetailsDialog(false)}
+        style={{ width: '90vw', maxWidth: '800px' }}
+        maximizable
+        modal
+      >
+        {detailedReview && (
+          <div className="grid">
+            {/* Guest Information */}
+            <div className="col-12">
+              <Card title="Guest Information" className="mb-4">
+                <div className="grid">
+                  <div className="col-12 md:col-4">
+                    <strong>Name:</strong> {detailedReview.guestName || 'Not provided'}
+                  </div>
+                  <div className="col-12 md:col-4">
+                    <strong>Email:</strong> {detailedReview.guestEmail || 'Not provided'}
+                  </div>
+                  <div className="col-12 md:col-4">
+                    <strong>Phone:</strong> {detailedReview.guestPhone || 'Not provided'}
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* Form Information */}
+            <div className="col-12">
+              <Card title="Form Information" className="mb-4">
+                <div className="grid">
+                  <div className="col-12">
+                    <strong>Form Title:</strong> {detailedReview.form.title}
+                  </div>
+                  {detailedReview.form.description && (
+                    <div className="col-12">
+                      <strong>Description:</strong> {detailedReview.form.description}
+                    </div>
+                  )}
+                  <div className="col-12 md:col-4">
+                    <strong>Overall Rating:</strong>
+                    <div className="flex align-items-center gap-2 mt-2">
+                      <Rating value={detailedReview.overallRating} readOnly stars={5} cancel={false} />
+                      <span className="text-600">({detailedReview.overallRating}/5)</span>
+                    </div>
+                  </div>
+                  <div className="col-12 md:col-4">
+                    <strong>Status:</strong>
+                    <Tag 
+                      value={detailedReview.status} 
+                      severity={getStatusSeverity(detailedReview.status)} 
+                      className="ml-2"
+                    />
+                  </div>
+                  <div className="col-12 md:col-4">
+                    <strong>Submitted:</strong> {formatDate(detailedReview.submittedAt)}
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* Feedback Answers */}
+            <div className="col-12">
+              <Card title="Feedback Responses">
+                {detailedReview.answers.length === 0 ? (
+                  <div className="text-center py-4">
+                    <i className="pi pi-info-circle text-2xl text-400 mb-2"></i>
+                    <p className="text-600">No detailed responses available for this review.</p>
+                  </div>
+                ) : (
+                  <div className="grid">
+                    {detailedReview.answers.map((answer, index) => (
+                      <div key={answer.id} className="col-12">
+                        <div className="question-item p-3 border-1 border-200 border-round mb-3">
+                          <div className="question-header mb-2">
+                            <h6 className="text-900 m-0">
+                              {answer.question.question}
+                              {answer.question.isRequired && <span className="text-red-500 ml-1">*</span>}
+                            </h6>
+                            <small className="text-600">
+                              {answer.question.type.replace('_', ' ').toLowerCase()}
+                            </small>
+                          </div>
+                          <div className="question-answer">
+                            {renderAnswer(answer.question, answer.answer)}
+                          </div>
+                        </div>
+                        {index < detailedReview.answers.length - 1 && <Divider />}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Card>
+            </div>
+          </div>
+        )}
+      </Dialog>
 
       <Toast ref={toast} />
     </div>

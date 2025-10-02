@@ -545,10 +545,10 @@
     }
   }
   
-  .preview-container {
-    background: transparent;
-    padding: 1rem;
-    min-height: 400px;
+      .preview-container {
+        background: #F8F8F8; /* Light off-white background from Figma */
+        padding: 1rem;
+        min-height: 400px;
     
     .feedback-form-preview {
       max-width: 800px;
@@ -660,11 +660,1060 @@
   
   .feedback-form-builder {
     .preview-container {
-      padding: 1rem;
+      padding: 0;
+      min-height: 100vh;
+      
+      /* Live Preview Header - Exact Figma Design */
+      .preview-header {
+        background: #8B4513; /* Dark brown color from Figma */
+        padding: 16px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0;
+
+        .preview-header-left {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+
+          .preview-back-btn {
+            color: white !important;
+            background: transparent !important;
+            border: none !important;
+            padding: 8px !important;
+            
+            &:hover {
+              background: rgba(255, 255, 255, 0.1) !important;
+            }
+          }
+
+          .preview-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          }
+        }
+
+        .preview-header-actions {
+          display: flex;
+          gap: 12px;
+
+          .form-builder-btn {
+            background: #6F522F !important; /* Dark brown from Figma */
+            border: 1px solid #6F522F !important;
+            color: white !important;
+            padding: 8px 16px !important;
+            border-radius: 4px !important;
+            font-weight: 500 !important;
+
+            &:hover {
+              background: #5a4128 !important;
+              border-color: #5a4128 !important;
+            }
+          }
+
+          .save-form-btn {
+            background: #1B2A49 !important; /* Dark blue from Figma */
+            border: 1px solid #1B2A49 !important;
+            color: white !important;
+            padding: 8px 16px !important;
+            border-radius: 4px !important;
+            font-weight: 500 !important;
+
+            &:hover {
+              background: #1e3a8a !important;
+              border-color: #1e3a8a !important;
+            }
+          }
+        }
+      }
       
       .feedback-form-preview {
-        padding: 1.5rem;
+        background: white;
+        margin: 24px auto;
+        max-width: 800px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        border: 1px solid #e5e7eb;
+
+        /* Hotel Logo Section - Exact Figma Design */
+        .hotel-logo-section {
+          text-align: center;
+          margin-bottom: 32px;
+
+          .hotel-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+
+            .logo-container {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 8px;
+
+              .logo-stars {
+                display: flex;
+                gap: 4px;
+                
+                i {
+                  color: #FFCC00; /* Gold stars from Figma */
+                  font-size: 12px;
+                }
+              }
+
+              .logo-icon {
+                width: 60px;
+                height: 60px;
+                background: #3C5A3C; /* Dark green from Figma */
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 28px;
+                font-weight: bold;
+                font-family: serif;
+                position: relative;
+                
+                /* Add ornate styling */
+                &::before {
+                  content: '';
+                  position: absolute;
+                  top: -2px;
+                  left: -2px;
+                  right: -2px;
+                  bottom: -2px;
+                  background: linear-gradient(45deg, #3C5A3C, #789678);
+                  border-radius: 10px;
+                  z-index: -1;
+                }
+              }
+            }
+
+            .logo-text {
+              text-align: left;
+
+              .hotel-name {
+                font-size: 32px;
+                font-weight: 600;
+                color: #3C5A3C; /* Dark green from Figma */
+                font-family: serif;
+                margin: 0;
+                line-height: 1.2;
+                letter-spacing: 0.5px;
+              }
+
+              .hotel-tagline {
+                font-size: 14px;
+                color: #789678; /* Lighter green from Figma */
+                font-weight: 500;
+                letter-spacing: 2px;
+                margin: 0;
+                text-transform: uppercase;
+              }
+            }
+          }
+        }
+
+        /* Form Description - Exact Figma Design */
+        .form-description-section {
+          margin-bottom: 32px;
+          text-align: left;
+
+          .form-description-text {
+            color: #464646; /* Dark gray from Figma */
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+            max-width: 100%;
+            font-weight: 400;
+          }
+        }
+
+        /* Form Fields Section - Exact Figma Design */
+        .form-fields-section {
+          .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+
+            .form-field {
+              .field-label {
+                display: block;
+                color: #464646; /* Dark gray from Figma */
+                font-size: 14px;
+                font-weight: 500;
+                margin-bottom: 8px;
+              }
+
+              .input-with-icon {
+                position: relative;
+
+                .input-icon {
+                  position: absolute;
+                  left: 12px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  color: #969696; /* Light gray from Figma */
+                  z-index: 1;
+                  font-size: 16px;
+                }
+
+                .form-input {
+                  width: 100%;
+                  padding: 12px 12px 12px 40px;
+                  border: 1px solid #DCDCDC; /* Light gray border from Figma */
+                  border-radius: 6px;
+                  font-size: 14px;
+                  color: #464646; /* Dark gray from Figma */
+                  background: white;
+
+                  &:focus {
+                    border-color: #3b82f6;
+                    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+                  }
+
+                  &::placeholder {
+                    color: #969696; /* Light gray from Figma */
+                  }
+                }
+              }
+            }
+          }
+
+          /* Rating Sections - Exact Figma Design */
+          .rating-sections {
+            margin-bottom: 32px;
+
+            .rating-item {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 16px 12px;
+              border: 1px solid #f3f4f6;
+              background: white;
+              border-radius: 4px;
+              margin-bottom: 8px;
+
+              &:last-child {
+                margin-bottom: 0;
+              }
+
+              .rating-label {
+                color: #464646; /* Dark gray from Figma */
+                font-size: 16px;
+                font-weight: 500;
+                margin: 0;
+                flex: 1;
+              }
+
+              .rating-stars {
+                .preview-rating {
+                  .p-rating-icon {
+                    color: #AAAAAA; /* Gray stars from Figma */
+                    font-size: 20px;
+
+                    &.p-rating-icon-active {
+                      color: #FFCC00; /* Gold/yellow for active stars from Figma */
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          /* Feedback Section - Exact Figma Design */
+          .feedback-section {
+            margin-bottom: 32px;
+
+            .field-label {
+              display: block;
+              color: #464646; /* Dark gray from Figma */
+              font-size: 16px;
+              font-weight: 500;
+              margin-bottom: 12px;
+            }
+
+            .form-textarea {
+              width: 100%;
+              padding: 12px;
+              border: 1px solid #DCDCDC; /* Light gray border from Figma */
+              border-radius: 6px;
+              font-size: 14px;
+              color: #464646; /* Dark gray from Figma */
+              background: white;
+              resize: vertical;
+              min-height: 100px;
+
+              &:focus {
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+              }
+
+              &::placeholder {
+                color: #969696; /* Light gray from Figma */
+              }
+            }
+          }
+
+          /* Custom Questions - Exact Figma Design */
+          .custom-question-preview {
+            margin-bottom: 24px;
+
+            .field-label {
+              display: block;
+              color: #464646; /* Dark gray from Figma */
+              font-size: 16px;
+              font-weight: 500;
+              margin-bottom: 12px;
+
+              .required {
+                color: #dc2626;
+                margin-left: 4px;
+              }
+            }
+
+            .question-input {
+              .form-input {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #DCDCDC; /* Light gray border from Figma */
+                border-radius: 6px;
+                font-size: 14px;
+                color: #464646; /* Dark gray from Figma */
+                background: white;
+
+                &:focus {
+                  border-color: #3b82f6;
+                  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+                }
+
+                &::placeholder {
+                  color: #969696; /* Light gray from Figma */
+                }
+              }
+
+              .form-textarea {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #DCDCDC; /* Light gray border from Figma */
+                border-radius: 6px;
+                font-size: 14px;
+                color: #464646; /* Dark gray from Figma */
+                background: white;
+                resize: vertical;
+                min-height: 80px;
+
+                &:focus {
+                  border-color: #3b82f6;
+                  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+                }
+
+                &::placeholder {
+                  color: #969696; /* Light gray from Figma */
+                }
+              }
+
+              .preview-rating {
+                .p-rating-icon {
+                  color: #AAAAAA; /* Gray stars from Figma */
+                  font-size: 20px;
+
+                  &.p-rating-icon-active {
+                    color: #FFCC00; /* Gold/yellow for active stars from Figma */
+                  }
+                }
+              }
+
+              .radio-group,
+              .checkbox-group {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+
+                .radio-option,
+                .checkbox-option {
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+
+                  label {
+                    color: #464646; /* Dark gray from Figma */
+                    font-size: 14px;
+                    margin: 0;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        /* Submit Button - Exact Figma Design */
+        .form-footer {
+          margin-top: 40px;
+
+          .submit-btn {
+            width: 100%;
+            background: #1E3250 !important; /* Dark blue/navy from Figma */
+            border: 1px solid #1E3250 !important;
+            color: #FFFFFF !important; /* White text from Figma */
+            padding: 16px 24px !important;
+            border-radius: 8px !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+            &:hover:not(:disabled) {
+              background: #1e3a8a !important;
+              border-color: #1e3a8a !important;
+            }
+
+            &:disabled {
+              background: #9ca3af !important;
+              border-color: #9ca3af !important;
+              cursor: not-allowed;
+            }
+          }
+        }
       }
+    }
+  }
+}
+
+/* Form Builder Styles - Pixel Perfect Figma Design */
+.feedback-form-builder {
+  min-height: 100vh;
+  padding: 0;
+
+  /* Header Section - Dark brown bar with back arrow and title */
+  .form-builder-header {
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .header-back-btn {
+        color: white !important;
+        background: transparent !important;
+        border: none !important;
+        padding: 8px !important;
+        
+        &:hover {
+          background: rgba(255, 255, 255, 0.1) !important;
+        }
+      }
+
+      .header-title {
+        color: #4a4a4a; /* Dark gray text from Figma */
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+
+      .live-preview-btn {
+        background: #6F522F !important; /* Warm brown from Figma */
+        border: 1px solid #6F522F !important;
+        color: white !important;
+        padding: 8px 16px !important;
+        border-radius: 4px !important;
+        font-weight: 500 !important;
+
+        &:hover {
+          background: #B8860B !important;
+          border-color: #B8860B !important;
+        }
+      }
+
+      .save-form-btn {
+        background: #1B2A49 !important; /* Dark blue from Figma */
+        border: 1px solid #1B2A49 !important;
+        color: white !important;
+        padding: 8px 16px !important;
+        border-radius: 4px !important;
+        font-weight: 500 !important;
+
+        &:hover {
+          background: #1e3a8a !important;
+          border-color: #1e3a8a !important;
+        }
+      }
+    }
+  }
+
+  /* Form Builder Content */
+  .form-builder-content {
+    padding: 0 24px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Form Settings Card */
+  .form-settings-card {
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+
+    .card-title {
+      color: #374151; /* Dark gray from Figma */
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 20px 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .form-settings-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .field-label {
+        color: #374151; /* Dark gray from Figma */
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+
+      .form-input,
+      .form-dropdown,
+      .form-textarea {
+        border: 1px solid #d1d5db !important; /* Light gray border from Figma */
+        border-radius: 4px !important;
+        padding: 12px !important;
+        font-size: 14px !important;
+        color: #374151 !important;
+        background: white !important;
+
+        &:focus {
+          border-color: #3b82f6 !important;
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+        }
+
+        &::placeholder {
+          color: #9ca3af !important;
+        }
+      }
+
+      .form-textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+    }
+  }
+
+  /* Questions Card */
+  .questions-card {
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+
+    .questions-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .card-title {
+        color: #374151; /* Dark gray from Figma */
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+
+      .add-new-btn {
+        background: #1e40af !important; /* Dark blue from Figma */
+        border: 1px solid #1e40af !important;
+        color: white !important;
+        padding: 8px 16px !important;
+        border-radius: 4px !important;
+        font-weight: 500 !important;
+
+        &:hover {
+          background: #1e3a8a !important;
+          border-color: #1e3a8a !important;
+        }
+      }
+    }
+
+    .questions-content {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .predefined-questions,
+    .custom-questions {
+      .section-subtitle {
+        color: #374151;
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0 0 16px 0;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #e5e7eb;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+    }
+
+    .custom-questions {
+      margin-top: 24px;
+    }
+
+    .custom-question-item {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+      }
+
+      .question-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+
+        .question-label {
+          color: #374151;
+          font-size: 14px;
+          font-weight: 500;
+          margin: 0;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+          .required {
+            color: #dc2626;
+            margin-left: 2px;
+          }
+        }
+
+        .question-type-badge {
+          background: #e0e7ff;
+          color: #3730a3;
+          padding: 4px 8px;
+          border-radius: 12px;
+          font-size: 12px;
+          font-weight: 500;
+        }
+      }
+
+      .question-preview {
+        margin-bottom: 12px;
+        border-radius: 4px;
+
+        .radio-group,
+        .checkbox-group {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          .radio-option,
+          .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            label {
+              color: #374151;
+              font-size: 14px;
+              margin: 0;
+            }
+          }
+        }
+      }
+
+      .question-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      &:hover .question-actions {
+        opacity: 1;
+      }
+    }
+
+    .no-questions-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: #6b7280;
+
+      i {
+        display: block;
+        margin-bottom: 16px;
+      }
+
+      p {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+
+        &:last-child {
+          font-size: 14px;
+          color: #9ca3af;
+        }
+      }
+    }
+
+    .question-item {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      .question-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .question-label {
+          color: #374151; /* Dark gray from Figma */
+          font-size: 14px;
+          font-weight: 500;
+          margin: 0;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+      }
+
+      .rating-stars {
+        margin-left: 24px;
+      }
+
+      .custom-rating-items {
+        margin-left: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        .custom-rating-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 8px 0;
+          border-bottom: 1px solid #f3f4f6;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background-color: #f9fafb;
+            border-radius: 4px;
+            padding: 8px 12px;
+            margin: 0 -12px;
+          }
+
+          .rating-item-label {
+            color: #374151; /* Dark gray from Figma */
+            font-size: 14px;
+            font-weight: 400;
+            min-width: 120px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+              background-color: #e5e7eb;
+            }
+          }
+
+          .rating-stars {
+            flex: 1;
+          }
+
+          .rating-item-edit {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+
+            .rating-item-input {
+              flex: 1;
+              border: 1px solid #d1d5db !important;
+              border-radius: 4px !important;
+              padding: 8px 12px !important;
+              font-size: 14px !important;
+              color: #374151 !important;
+              background: white !important;
+
+              &:focus {
+                border-color: #3b82f6 !important;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+              }
+            }
+
+            .rating-item-actions {
+              display: flex;
+              gap: 4px;
+            }
+          }
+
+          .rating-item-actions {
+            display: flex;
+            gap: 4px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+          }
+
+          &:hover .rating-item-actions {
+            opacity: 1;
+          }
+
+          .delete-rating-btn {
+            color: #dc2626 !important; /* Red color from Figma */
+            background: transparent !important;
+            border: none !important;
+            padding: 4px !important;
+            border-radius: 50% !important;
+            width: 24px !important;
+            height: 24px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            &:hover {
+              background: #fef2f2 !important;
+            }
+          }
+        }
+
+        .add-rating-item-section {
+          margin-top: 16px;
+          padding-top: 16px;
+          border-top: 2px solid #e5e7eb;
+
+          .add-rating-input {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+
+            .rating-item-input {
+              flex: 1;
+              border: 1px solid #d1d5db !important;
+              border-radius: 4px !important;
+              padding: 8px 12px !important;
+              font-size: 14px !important;
+              color: #374151 !important;
+              background: white !important;
+
+              &:focus {
+                border-color: #3b82f6 !important;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+              }
+
+              &::placeholder {
+                color: #9ca3af !important;
+              }
+            }
+
+            .add-new-rating-btn {
+              background: #1B2A49 !important; /* Dark blue from Figma */
+              border: 1px solid #1B2A49 !important;
+              color: white !important;
+              padding: 8px 16px !important;
+              border-radius: 4px !important;
+              font-weight: 500 !important;
+              white-space: nowrap;
+
+              &:hover:not(:disabled) {
+                background: #1e3a8a !important;
+                border-color: #1e3a8a !important;
+              }
+
+              &:disabled {
+                background: #9ca3af !important;
+                border-color: #9ca3af !important;
+                cursor: not-allowed;
+              }
+            }
+          }
+        }
+
+        .add-new-rating-btn {
+          background: #1e40af !important; /* Dark blue from Figma */
+          border: 1px solid #1e40af !important;
+          color: white !important;
+          padding: 8px 16px !important;
+          border-radius: 4px !important;
+          font-weight: 500 !important;
+          align-self: flex-start !important;
+
+          &:hover {
+            background: #1e3a8a !important;
+            border-color: #1e3a8a !important;
+          }
+        }
+      }
+
+      .feedback-textarea {
+        margin-left: 24px;
+
+        .form-textarea {
+          border: 1px solid #d1d5db !important; /* Light gray border from Figma */
+          border-radius: 4px !important;
+          padding: 12px !important;
+          font-size: 14px !important;
+          color: #374151 !important;
+          background: white !important;
+          resize: vertical;
+          min-height: 80px;
+
+          &:focus {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+          }
+
+          &::placeholder {
+            color: #9ca3af !important;
+          }
+        }
+      }
+    }
+  }
+
+  /* Custom Checkbox Styling */
+  .p-checkbox {
+    .p-checkbox-box {
+      border: 1px solid #d1d5db !important;
+      border-radius: 4px !important;
+      width: 16px !important;
+      height: 16px !important;
+
+      &.p-highlight {
+        background: #1e40af !important;
+        border-color: #1e40af !important;
+      }
+    }
+  }
+
+  /* Custom Rating Styling */
+  .p-rating {
+    .p-rating-icon {
+      color: #d1d5db !important; /* Gray stars from Figma */
+      font-size: 18px !important;
+
+      &.p-rating-icon-active {
+        color: #fbbf24 !important; /* Gold/yellow for active stars */
+      }
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .form-builder-header {
+      padding: 12px 16px;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+
+      .header-left {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .header-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+
+    .form-builder-content {
+      padding: 0 16px 16px;
+    }
+
+    .form-settings-card,
+    .questions-card {
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .questions-header {
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+
+      .add-new-btn {
+        align-self: flex-end;
+      }
+    }
+
+    .custom-rating-items {
+      .custom-rating-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+
+        .rating-item-label {
+          min-width: auto;
+        }
+
+        .rating-stars {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .form-builder-header {
+      .header-title {
+        font-size: 16px;
+      }
+
+      .header-actions {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+
+        .live-preview-btn,
+        .save-form-btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+
+    .form-settings-content {
+      gap: 16px;
+    }
+
+    .questions-content {
+      gap: 16px;
     }
   }
 }

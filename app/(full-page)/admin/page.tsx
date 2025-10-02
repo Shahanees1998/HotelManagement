@@ -15,12 +15,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { canAccessSection, getDefaultRedirectPath } from "@/lib/rolePermissions";
 
 interface DashboardStats {
-  totalHotels: number;
-  totalSubscribedHotels: number;
-  totalReviews: number;
-  totalEarnings: number;
-  pendingApprovals: number;
-  supportRequests: number;
+    totalHotels: number;
+    totalSubscribedHotels: number;
+    totalReviews: number;
+    totalEarnings: number;
+    pendingApprovals: number;
+    supportRequests: number;
 }
 
 interface RecentActivity {
@@ -34,10 +34,10 @@ interface RecentActivity {
 }
 
 interface GrowthData {
-  labels: string[];
-  newHotels: number[];
-  newReviews: number[];
-  earnings: number[];
+    labels: string[];
+    newHotels: number[];
+    newReviews: number[];
+    earnings: number[];
 }
 
 export default function AdminDashboard() {
@@ -262,7 +262,7 @@ export default function AdminDashboard() {
 
     console.log('Current stats state:', stats);
     console.log('Current loading state:', loading);
-    
+
     const cardData = [
         {
             value: stats.totalHotels,
@@ -329,20 +329,20 @@ export default function AdminDashboard() {
                         <h1 className="text-3xl font-bold m-0 text-[#1B2A49]">Admin Dashboard</h1>
                         <p className="text-600 mt-2 mb-0">Welcome back! Here's what's happening with your organization.</p>
                         <p className="text-sm text-gray-500 mt-1 mb-0">
-                            {new Date().toLocaleDateString('en-US', { 
-                                weekday: 'long', 
-                                year: 'numeric', 
-                                month: 'long', 
-                                day: 'numeric' 
-                            })} • {new Date().toLocaleTimeString('en-US', { 
-                                hour: '2-digit', 
-                                minute: '2-digit' 
+                            {new Date().toLocaleDateString('en-US', {
+                                weekday: 'long',
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })} • {new Date().toLocaleTimeString('en-US', {
+                                hour: '2-digit',
+                                minute: '2-digit'
                             })}
                             {lastUpdated && (
                                 <span className="ml-3">
-                                    • Last updated: {lastUpdated.toLocaleTimeString('en-US', { 
-                                        hour: '2-digit', 
-                                        minute: '2-digit' 
+                                    • Last updated: {lastUpdated.toLocaleTimeString('en-US', {
+                                        hour: '2-digit',
+                                        minute: '2-digit'
                                     })}
                                 </span>
                             )}
@@ -350,7 +350,7 @@ export default function AdminDashboard() {
                     </div>
                     <div className="flex gap-2">
                         <Button
-                        style={{backgroundColor: '#1B2A49', borderColor: '#1B2A49'}}
+                            style={{ backgroundColor: '#1B2A49', borderColor: '#1B2A49' }}
                             label="Refresh"
                             icon="pi pi-refresh"
                             onClick={loadDashboardData}
@@ -383,18 +383,20 @@ export default function AdminDashboard() {
                                 role="button"
                                 tabIndex={0}
                                 onKeyPress={e => { if (e.key === "Enter") router.push(card.route); }}
-                                style={{ 
-                                    border: '1px solid #e5e7eb',
-                                    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
+                                style={{
+                                    border: 'none',
+                                    boxShadow: '0 2px 8px 0 rgba(0, 0, 0, 0.08)',
+                                    backgroundColor: '#FFFFFF',
+                                    padding: '0 !important'
                                 }}
                             >
-                                <div className="flex align-items-center" style={{ gap: '1rem' }}>
-                                    <div className={`flex align-items-center justify-content-center ${card.bgColor} border-round-lg flex-shrink-0`} style={{ width: '48px', height: '48px' }}>
-                                        <i className={`${card.icon} ${card.iconColor}`} style={{ fontSize: '1.5rem' }}></i>
+                                <div className="flex align-items-center" style={{ gap: '1.5rem', padding: 0 }}>
+                                    <div className={`flex align-items-center justify-content-center ${card.bgColor} border-round-lg flex-shrink-0`} style={{ width: '60px', height: '60px' }}>
+                                        <i className={`${card.icon} ${card.iconColor}`} style={{ fontSize: '1.75rem' }}></i>
                                     </div>
                                     <div className="flex-1">
-                                        <div className="text-900 font-semibold mb-1" style={{ fontSize: '1.5rem', lineHeight: '1.2' }}>{card.value}</div>
-                                        <div className="text-500" style={{ fontSize: '0.875rem', fontWeight: '400' }}>{card.label}</div>
+                                        <div className="text-900 font-bold mb-2" style={{ fontSize: '1.2rem', lineHeight: '1.2', color: '#333333' }}>{card.value}</div>
+                                        <div className="text-500" style={{ fontSize: '0.9rem', fontWeight: '400', color: '#666666' }}>{card.label}</div>
                                     </div>
                                 </div>
                             </Card>
@@ -403,34 +405,11 @@ export default function AdminDashboard() {
                 </>
             )}
 
-            {/* Quick Actions */}
-            <div className="col-12">
-                <Card title="Quick Actions" className="mt-4">
-                    <div className="grid">
-                        {quickActions.map((action, index) => (
-                            <div key={index} className="col-12 md:col-6 lg:col-4">
-                                <Card style={{height : '120px'}} className="cursor-pointer hover:shadow-lg transition-shadow">
-                                    <div className="flex align-items-center justify-content-between h-full">
-                                        <div 
-                                            className="flex align-items-center gap-3 flex-1 cursor-pointer"
-                                            onClick={() => router.push(action.route)}
-                                        >
-                                            <i className={`${action.icon} text-2xl text-${action.color}-500`}></i>
-                                            <div>
-                                                <h3 className="text-lg font-semibold m-0">{action.title}</h3>
-                                                <p className="text-600 text-sm m-0">{action.description}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Card>
-                            </div>
-                        ))}
-                    </div>
-                </Card>
-            </div>
+
 
             {/* Charts and Activity */}
-            <div className="col-12 lg:col-8">
+            <div className="col-12 mt-4">
+                
                 <Card title="System Growth & Revenue" className="mt-4">
                     {loading ? (
                         <div className="flex align-items-center justify-content-center" style={{ height: '300px' }}>
@@ -448,54 +427,108 @@ export default function AdminDashboard() {
                 </Card>
             </div>
 
-            <div className="col-12 lg:col-4">
-                <Card title="Recent Activity" className="mt-4">
-                    {loading ? (
-                        <div className="flex align-items-center justify-content-center" style={{ height: '200px' }}>
-                            <div className="text-600">Loading activity...</div>
-                        </div>
-                    ) : recentActivity.length === 0 ? (
-                        <div className="flex align-items-center justify-content-center flex-column" style={{ height: '200px' }}>
-                            <i className="pi pi-info-circle text-4xl text-gray-400 mb-3"></i>
-                            <div className="text-600 text-center">No recent activity</div>
-                            <div className="text-sm text-gray-500 text-center">Activities will appear here as they occur</div>
-                        </div>
-                    ) : (
-                        <DataTable value={recentActivity}>
-                            <Column 
-                                field="type" 
-                                header="Type" 
-                                body={(rowData) => (
-                                    <Tag 
-                                        value={getActivityTypeLabel(rowData.type)} 
-                                        severity={getActivityTypeSeverity(rowData.type)} 
-                                    />
-                                )}
-                            />
-                            <Column 
-                                field="description" 
-                                header="Description" 
-                                body={(rowData) => (
-                                    <div>
-                                        <div className="font-semibold">{rowData.description}</div>
-                                        <div className="text-sm text-500">{rowData.user}</div>
-                                    </div>
-                                )}
-                            />
-                            <Column 
-                                field="timestamp" 
-                                header="Time" 
-                                body={(rowData) => (
-                                    <div className="text-sm text-500">
-                                        {formatRelativeTime(rowData.timestamp)}
-                                    </div>
-                                )}
-                            />
-                        </DataTable>
-                    )}
-                </Card>
-            </div>
 
+            {/* Quick Actions */}
+            <div className="col-12 mt-4" style={{ backgroundColor: '#fcfaf7', borderRadius: '12px', marginTop: '2rem' }}>
+                <div className="mb-4">
+                    <h2 className="text-3xl font-bold m-0 mb-2" style={{ color: '#1a2b48' }}>Quick Actions</h2>
+                    <p className="text-lg m-0" style={{ color: '#4a4a4a', lineHeight: '1.5' }}>
+                        Respond faster to guest concerns, follow up on feedback, and resolve issues in just a few clicks.
+                    </p>
+                </div>
+                <div className="grid">
+                    {quickActions.map((action, index) => (
+                        <div key={index} className="col-12 md:col-6 lg:col-3">
+                            <Card
+                                className="cursor-pointer hover:shadow-lg transition-all border-round-lg"
+                                onClick={() => router.push(action.route)}
+                                role="button"
+                                tabIndex={0}
+                                onKeyPress={e => { if (e.key === "Enter") router.push(action.route); }}
+                                style={{
+                                    border: '1px solid #e0d8cc',
+                                    boxShadow: 'none',
+                                    backgroundColor: '#FFFFFF',
+                                    padding: '0 !important'
+                                }}
+                            >
+                                <div className="flex align-items-center" style={{ gap: '1rem', padding: '0rem' }}>
+                                    <div
+                                        className="flex align-items-center justify-content-center border-round-lg flex-shrink-0"
+                                        style={{
+                                            width: '48px',
+                                            height: '48px',
+                                            backgroundColor: '#f5f0e8'
+                                        }}
+                                    >
+                                        <i
+                                            className={`${action.icon}`}
+                                            style={{
+                                                fontSize: '1.5rem',
+                                                color: '#8b5e3c'
+                                            }}
+                                        ></i>
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-base font-semibold m-0" style={{ color: '#333333' }}>{action.title}</h3>
+                                    </div>
+                                </div>
+                            </Card>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="col-12 mt-4">
+                <div className="mb-4">
+                    <h2 className="text-xl font-bold m-0 mb-2" style={{ color: '#1a2b48' }}>Recent Activity</h2>
+                    <p className="text-lg m-0" style={{ color: '#4a4a4a', lineHeight: '1.5' }}>
+                        Track your recent activities and updates.
+                    </p>
+                </div>
+                {loading ? (
+                    <div className="flex align-items-center justify-content-center" style={{ height: '200px' }}>
+                        <div className="text-600">Loading activity...</div>
+                    </div>
+                ) : recentActivity.length === 0 ? (
+                    <div className="flex align-items-center justify-content-center flex-column" style={{ height: '200px' }}>
+                        <i className="pi pi-info-circle text-4xl text-gray-400 mb-3"></i>
+                        <div className="text-600 text-center">No recent activity</div>
+                        <div className="text-sm text-gray-500 text-center">Activities will appear here as they occur</div>
+                    </div>
+                ) : (
+                    <DataTable value={recentActivity}>
+                        <Column
+                            field="type"
+                            header="Type"
+                            body={(rowData) => (
+                                <Tag
+                                    value={getActivityTypeLabel(rowData.type)}
+                                    severity={getActivityTypeSeverity(rowData.type)}
+                                />
+                            )}
+                        />
+                        <Column
+                            field="description"
+                            header="Description"
+                            body={(rowData) => (
+                                <div>
+                                    <div className="font-semibold">{rowData.description}</div>
+                                    <div className="text-sm text-500">{rowData.user}</div>
+                                </div>
+                            )}
+                        />
+                        <Column
+                            field="timestamp"
+                            header="Time"
+                            body={(rowData) => (
+                                <div className="text-sm text-500">
+                                    {formatRelativeTime(rowData.timestamp)}
+                                </div>
+                            )}
+                        />
+                    </DataTable>
+                )}
+            </div>
             <Toast ref={toast} />
         </div>
     );

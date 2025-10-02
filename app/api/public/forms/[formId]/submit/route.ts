@@ -22,8 +22,15 @@ export async function POST(
     const form = await prisma.feedbackForm.findUnique({
       where: { id: formId },
       include: {
-        questions: {
+        customQuestions: {
           orderBy: { order: 'asc' },
+        },
+        predefinedQuestions: {
+          include: {
+            customRatingItems: {
+              orderBy: { order: 'asc' },
+            },
+          },
         },
         hotel: {
           select: {
@@ -44,13 +51,59 @@ export async function POST(
       return NextResponse.json({ error: 'Form is not available' }, { status: 403 });
     }
 
+    // Generate predefined questions for validation
+    const predefinedQuestions = [];
+    
+    if (form.predefinedQuestions?.hasRateUs) {
+      predefinedQuestions.push({
+        id: 'rate-us',
+        question: 'How do you rate us?',
+        type: 'STAR_RATING',
+        isRequired: true,
+      });
+    }
+    
+    if (form.predefinedQuestions?.hasCustomRating && form.predefinedQuestions.customRatingItems.length > 0) {
+      predefinedQuestions.push({
+        id: 'custom-rating',
+        question: 'Custom Rating',
+        type: 'CUSTOM_RATING',
+        isRequired: true,
+      });
+    }
+    
+    if (form.predefinedQuestions?.hasFeedback) {
+      predefinedQuestions.push({
+        id: 'feedback',
+        question: 'Please give us honest feedback?',
+        type: 'LONG_TEXT',
+        isRequired: true,
+      });
+    }
+
+    // Combine all questions for validation
+    const allQuestions = [...predefinedQuestions, ...form.customQuestions];
+
     // Validate required questions
-    for (const question of form.questions) {
-      if (question.isRequired && !answers[question.id]) {
-        return NextResponse.json(
-          { error: `Question "${question.question}" is required` },
-          { status: 400 }
-        );
+    for (const question of allQuestions) {
+      if (question.isRequired) {
+        if (question.type === 'CUSTOM_RATING') {
+          // For custom rating, check if at least one rating item has been answered
+          const hasAnyRating = form.predefinedQuestions?.customRatingItems?.some(item => 
+            answers[`${question.id}-${item.id}`]
+          );
+          if (!hasAnyRating) {
+            return NextResponse.json(
+              { error: `Question "${question.question}" is required` },
+              { status: 400 }
+            );
+          }
+        } else if (!answers[question.id]) {
+          return NextResponse.json(
+            { error: `Question "${question.question}" is required` },
+            { status: 400 }
+          );
+        }
       }
     }
 
@@ -58,7 +111,7 @@ export async function POST(
     let overallRating = 0;
     let ratingCount = 0;
     
-    for (const question of form.questions) {
+    for (const question of allQuestions) {
       if (question.type === 'STAR_RATING' && answers[question.id]) {
         overallRating += answers[question.id];
         ratingCount++;
@@ -84,16 +137,20 @@ export async function POST(
         },
       });
 
-      // Create question answers
-      const answersData = Object.entries(answers).map(([questionId, answer]) => ({
+      // Store all answers (both custom and predefined questions)
+      const allAnswersData = Object.entries(answers).map(([questionId, answer]) => ({
         reviewId: review.id,
         questionId: questionId,
         answer: JSON.stringify(answer),
+        isPredefined: ['rate-us', 'custom-rating', 'feedback'].includes(questionId) || 
+                     ['rate-us', 'custom-rating', 'feedback'].some(predefinedId => questionId.startsWith(predefinedId + '-')),
       }));
 
-      await tx.questionAnswer.createMany({
-        data: answersData,
-      });
+      if (allAnswersData.length > 0) {
+        await tx.questionAnswer.createMany({
+          data: allAnswersData,
+        });
+      }
 
       return review;
     });

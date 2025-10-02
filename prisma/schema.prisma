@@ -70,6 +70,7 @@ model Hotels {
   reviews           Review[]
   qrCodes           QRCode[]
   analytics         HotelAnalytics[]
+  paymentMethods    PaymentMethod[]
 
   @@map("hotels")
 }
@@ -85,13 +86,52 @@ model FeedbackForm {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  // Predefined Questions Section
+  predefinedQuestions PredefinedQuestionSection?
+  
+  // Custom Questions Section
+  customQuestions     FormQuestion[]
+
   // Relations
   hotel       Hotels           @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-  questions   FormQuestion[]
   reviews     Review[]
   qrCodes     QRCode[]
 
   @@map("feedback_forms")
+}
+
+model PredefinedQuestionSection {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  formId            String   @unique @db.ObjectId
+  
+  // Predefined question states
+  hasRateUs         Boolean  @default(false)
+  hasCustomRating   Boolean  @default(false)
+  hasFeedback       Boolean  @default(false)
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  form              FeedbackForm     @relation(fields: [formId], references: [id], onDelete: Cascade)
+  customRatingItems CustomRatingItem[]
+
+  @@map("predefined_question_sections")
+}
+
+model CustomRatingItem {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  predefinedSectionId String @db.ObjectId
+  label             String
+  order             Int      @default(0)
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  predefinedSection PredefinedQuestionSection @relation(fields: [predefinedSectionId], references: [id], onDelete: Cascade)
+
+  @@map("custom_rating_items")
 }
 
 model FormQuestion {
@@ -103,7 +143,7 @@ model FormQuestion {
   order         Int
   options       String[]         @default([]) // For multiple choice questions
   validation    String?          // JSON string for validation rules
-  isDefault     Boolean          @default(false) // Mark default questions that can't be edited/deleted
+  section       QuestionSection  @default(CUSTOM) // CUSTOM or PREDEFINED
   createdAt     DateTime         @default(now())
   updatedAt     DateTime         @updatedAt
 
@@ -274,6 +314,32 @@ model SystemSettings {
 }
 
 // Enums
+model PaymentMethod {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  hotelId       String   @db.ObjectId
+  type          PaymentType
+  last4         String?  // Last 4 digits of card/account
+  brand         String?  // Card brand (visa, mastercard, etc.)
+  expiryMonth   Int?     // Card expiry month
+  expiryYear    Int?     // Card expiry year
+  bankName      String?  // Bank name for bank accounts
+  accountType   String?  // Checking, Savings, etc.
+  isDefault     Boolean  @default(false)
+  encryptedData String?  // Encrypted sensitive data
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  hotel         Hotels   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@map("payment_methods")
+}
+
+enum PaymentType {
+  CARD
+  BANK
+}
+
 enum UserRole {
   ADMIN
   HOTEL
@@ -303,6 +369,12 @@ enum QuestionType {
   MULTIPLE_CHOICE_MULTIPLE
   YES_NO
   FILE_UPLOAD
+  CUSTOM_RATING
+}
+
+enum QuestionSection {
+  PREDEFINED
+  CUSTOM
 }
 
 enum ReviewStatus {
@@ -329,6 +401,7 @@ enum NotificationType {
   ESCALATION_RESPONDED
   SYSTEM_ALERT
   NEW_HOTEL_REGISTRATION
+  NEW_FORM_CREATED
 }
 
 enum SupportStatus {

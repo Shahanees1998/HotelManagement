@@ -164,12 +164,13 @@ export default function NotificationCenter() {
 
   return (
     <div className="notification-center">
-      <Button
-        icon="pi pi-bell"
+      <div
         className="p-button-text p-button-rounded relative"
         onClick={(e) => overlayRef.current?.toggle(e)}
         aria-label="Notifications"
+        style={{backgroundColor:'white !important'}}
       >
+        <img className='pt-1' src='/images/notification.svg' alt='notification' style={{width:'20px', height:'20px'}} />
         {unreadCount > 0 && (
           <Badge 
             value={unreadCount} 
@@ -177,7 +178,7 @@ export default function NotificationCenter() {
             className="absolute -top-1 -right-1"
           />
         )}
-      </Button>
+      </div>
 
       <OverlayPanel ref={overlayRef} className="notification-panel">
         <div className="flex justify-content-between align-items-center mb-3">

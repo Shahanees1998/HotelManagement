@@ -184,7 +184,6 @@ export default function HotelSupportPage() {
     return (
         <div className="grid">
             <div className="col-12">
-                <Card>
                     <DataTable
                         value={requests}
                         loading={loading}
@@ -205,7 +204,6 @@ export default function HotelSupportPage() {
                             new Date(rowData.createdAt).toLocaleDateString()
                         )} style={{ minWidth: "120px" }} />
                     </DataTable>
-                </Card>
             </div>
 
             {/* Create Dialog */}

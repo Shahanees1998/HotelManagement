@@ -546,7 +546,6 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
     return (
         <div className="grid">
             <div className="col-12">
-                <Card>
                     {error && (
                         <div className="p-error p-3 mb-3">{error}</div>
                     )}
@@ -685,7 +684,6 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
             </>
                         )}
                     </>
-                </Card>
             </div>
 
             {/* User Dialog always rendered */}

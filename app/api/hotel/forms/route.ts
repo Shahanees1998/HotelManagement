@@ -25,7 +25,14 @@ export async function GET(request: NextRequest) {
       const forms = await prisma.feedbackForm.findMany({
         where: { hotelId: hotel.id },
         include: {
-          questions: {
+          predefinedQuestions: {
+            include: {
+              customRatingItems: {
+                orderBy: { order: 'asc' },
+              },
+            },
+          },
+          customQuestions: {
             orderBy: { order: 'asc' },
           },
           reviews: {
@@ -44,9 +51,20 @@ export async function GET(request: NextRequest) {
         layout: form.layout || 'basic',
         createdAt: form.createdAt.toISOString(),
         updatedAt: form.updatedAt.toISOString(),
-        questionsCount: form.questions.length,
+        questionsCount: (form.predefinedQuestions ? 1 : 0) + (form.customQuestions?.length || 0),
         totalResponses: form.reviews.length,
-        questions: form.questions.map(q => ({
+        predefinedQuestions: form.predefinedQuestions ? {
+          hasRateUs: form.predefinedQuestions.hasRateUs,
+          hasCustomRating: form.predefinedQuestions.hasCustomRating,
+          hasFeedback: form.predefinedQuestions.hasFeedback,
+          customRatingItems: form.predefinedQuestions.customRatingItems.map(item => ({
+            id: item.id,
+            label: item.label,
+            order: item.order,
+            isActive: item.isActive,
+          })),
+        } : null,
+        customQuestions: form.customQuestions?.map(q => ({
           id: q.id,
           question: q.question,
           type: q.type,
@@ -54,8 +72,8 @@ export async function GET(request: NextRequest) {
           order: q.order,
           options: q.options,
           validation: q.validation,
-          isDefault: q.isDefault || false,
-        })),
+          section: q.section,
+        })) || [],
       }));
 
       return NextResponse.json({ data: formsWithStats });
@@ -79,12 +97,12 @@ export async function POST(request: NextRequest) {
       }
 
       const body = await request.json();
-      const { title, description, isActive, isPublic, layout, questions } = body;
+      const { title, description, isActive, isPublic, layout, predefinedSection, customQuestions } = body;
 
       // Validate required fields
-      if (!title || !questions || !Array.isArray(questions)) {
+      if (!title) {
         return NextResponse.json(
-          { error: 'Title and questions are required' },
+          { error: 'Title is required' },
           { status: 400 }
         );
       }
@@ -99,22 +117,24 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Hotel not found' }, { status: 404 });
       }
 
-      // Validate questions
-      for (const question of questions) {
-        if (!question.question || !question.type) {
-          return NextResponse.json(
-            { error: 'Each question must have text and type' },
-            { status: 400 }
-          );
-        }
+      // Validate custom questions if provided
+      if (customQuestions && Array.isArray(customQuestions)) {
+        for (const question of customQuestions) {
+          if (!question.question || !question.type) {
+            return NextResponse.json(
+              { error: 'Each custom question must have text and type' },
+              { status: 400 }
+            );
+          }
 
-        // Validate options for multiple choice questions
-        if ((question.type === 'MULTIPLE_CHOICE_SINGLE' || question.type === 'MULTIPLE_CHOICE_MULTIPLE') && 
-            (!question.options || question.options.length < 2)) {
-          return NextResponse.json(
-            { error: 'Multiple choice questions must have at least 2 options' },
-            { status: 400 }
-          );
+          // Validate options for multiple choice questions
+          if ((question.type === 'MULTIPLE_CHOICE_SINGLE' || question.type === 'MULTIPLE_CHOICE_MULTIPLE') && 
+              (!question.options || question.options.length < 2)) {
+            return NextResponse.json(
+              { error: 'Multiple choice questions must have at least 2 options' },
+              { status: 400 }
+            );
+          }
         }
       }
 
@@ -132,34 +152,49 @@ export async function POST(request: NextRequest) {
           },
         });
 
-        // Create default rating question first (order 0)
-        const defaultRatingQuestion = {
-          formId: form.id,
-          question: "How do you rate us?",
-          type: "STAR_RATING",
-          isRequired: true,
-          order: 0,
-          options: [],
-          validation: null,
-          isDefault: true, // Mark as default question
-        };
+        // Create predefined questions section if provided
+        if (predefinedSection) {
+          const predefinedSectionData = await tx.predefinedQuestionSection.create({
+            data: {
+              formId: form.id,
+              hasRateUs: predefinedSection.hasRateUs || false,
+              hasCustomRating: predefinedSection.hasCustomRating || false,
+              hasFeedback: predefinedSection.hasFeedback || false,
+            },
+          });
 
-        // Create custom questions (starting from order 1)
-        const customQuestionsData = questions.map((q: any, index: number) => ({
-          formId: form.id,
-          question: q.question,
-          type: q.type,
-          isRequired: q.isRequired !== undefined ? q.isRequired : true,
-          order: index + 1,
-          options: q.options || [],
-          validation: q.validation || null,
-          isDefault: false,
-        }));
+          // Create custom rating items if custom rating is enabled
+          if (predefinedSection.hasCustomRating && predefinedSection.customRatingItems) {
+            const customRatingItemsData = predefinedSection.customRatingItems.map((item: any, index: number) => ({
+              predefinedSectionId: predefinedSectionData.id,
+              label: item.label,
+              order: item.order || index,
+              isActive: item.isActive !== undefined ? item.isActive : true,
+            }));
 
-        // Create all questions (default + custom)
-        await tx.formQuestion.createMany({
-          data: [defaultRatingQuestion, ...customQuestionsData],
-        });
+            await tx.customRatingItem.createMany({
+              data: customRatingItemsData,
+            });
+          }
+        }
+
+        // Create custom questions if provided
+        if (customQuestions && customQuestions.length > 0) {
+          const customQuestionsData = customQuestions.map((q: any, index: number) => ({
+            formId: form.id,
+            question: q.question,
+            type: q.type,
+            isRequired: q.isRequired !== undefined ? q.isRequired : true,
+            order: q.order || index,
+            options: q.options || [],
+            validation: q.validation || null,
+            section: 'CUSTOM',
+          }));
+
+          await tx.formQuestion.createMany({
+            data: customQuestionsData,
+          });
+        }
 
         return form;
       });

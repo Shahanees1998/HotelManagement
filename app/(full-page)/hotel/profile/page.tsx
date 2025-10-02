@@ -8,6 +8,8 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Dropdown } from "primereact/dropdown";
 import { Toast } from "primereact/toast";
 import { Badge } from "primereact/badge";
+import { FileUpload } from "primereact/fileupload";
+import { Image } from "primereact/image";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import SubscriptionManager from "@/components/SubscriptionManager";
@@ -28,6 +30,7 @@ const countries = [
 export default function HotelProfile() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
   const [showSubscriptionManager, setShowSubscriptionManager] = useState(false);
   const [hotelData, setHotelData] = useState({
     name: "",
@@ -39,6 +42,7 @@ export default function HotelProfile() {
     phone: "",
     email: "",
     website: "",
+    logo: "",
   });
   const [subscriptionData, setSubscriptionData] = useState({
     status: "TRIAL",
@@ -68,6 +72,7 @@ export default function HotelProfile() {
           phone: data.data.phone || "",
           email: data.data.email || "",
           website: data.data.website || "",
+          logo: data.data.logo || "",
         });
       } else {
         const errorData = await response.json();
@@ -133,6 +138,55 @@ export default function HotelProfile() {
     }
   };
 
+  const handleLogoUpload = async (event: any) => {
+    const file = event.files[0];
+    if (!file) return;
+
+    // Validate file type and size
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      showToast("error", "Error", "Please select a valid image file (JPG, PNG, GIF, or WebP)");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) { // 5MB
+      showToast("error", "Error", "Image size must be less than 5MB");
+      return;
+    }
+
+    setUploadingLogo(true);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('/api/hotel/logo', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setHotelData(prev => ({
+          ...prev,
+          logo: data.logoUrl
+        }));
+        
+        // Dispatch custom event to update topbar (in case user profile image is used)
+        window.dispatchEvent(new CustomEvent('profile-updated'));
+        
+        showToast("success", "Success", "Hotel logo updated successfully");
+      } else {
+        const errorData = await response.json();
+        showToast("error", "Error", errorData.error || "Failed to upload logo");
+      }
+    } catch (error) {
+      console.error("Error uploading logo:", error);
+      showToast("error", "Error", "Failed to upload logo");
+    } finally {
+      setUploadingLogo(false);
+    }
+  };
+
   return (
     <div className="grid">
       {/* Header */}
@@ -154,11 +208,79 @@ export default function HotelProfile() {
         </div>
       </div>
 
+      {/* Hotel Logo */}
+      <div className="col-12 lg:col-4">
+        <div className="col-12">
+        <Card title="Hotel Logo" className="mb-4">
+          <div className="flex flex-column align-items-center gap-3">
+            <div className="border-1 border-300 border-round p-3" style={{ width: '150px', height: '150px' }}>
+              {uploadingLogo ? (
+                <div className="flex align-items-center justify-content-center h-full">
+                  <i className="pi pi-spinner pi-spin text-4xl text-400"></i>
+                </div>
+              ) : hotelData.logo ? (
+                <Image
+                  src={hotelData.logo}
+                  alt="Hotel Logo"
+                  width="100%"
+                  height="100%"
+                  className="border-round"
+                  style={{ objectFit: 'contain' }}
+                />
+              ) : (
+                <div className="flex align-items-center justify-content-center h-full">
+                  <i className="pi pi-building text-4xl text-400"></i>
+                </div>
+              )}
+            </div>
+            <FileUpload
+              mode="basic"
+              name="hotelLogo"
+              accept="image/*"
+              maxFileSize={5000000}
+              customUpload
+              uploadHandler={handleLogoUpload}
+              chooseLabel={uploadingLogo ? "Uploading..." : "Upload Logo"}
+              className="w-full"
+              auto
+              disabled={uploadingLogo}
+            />
+            <small className="text-600 text-center">
+              JPG, PNG or GIF. Max size 5MB. Recommended: 300x300px
+            </small>
+          </div>
+        </Card>
+        </div>
+        <div className="col-12">
+        <Card title="Actions">
+          <div className="flex flex-column gap-2">
+            <Button
+              label="View Public Page"
+              icon="pi pi-external-link"
+              className="p-button-outlined"
+              onClick={() => window.open(`/feedback/${hotelData.slug}`, '_blank')}
+            />
+            <Button
+              label="Manage Subscription"
+              icon="pi pi-credit-card"
+              className="p-button-outlined"
+              onClick={() => setShowSubscriptionManager(true)}
+            />
+            <Button
+              label="Contact Support"
+              icon="pi pi-envelope"
+              className="p-button-outlined"
+            />
+          </div>
+        </Card>
+</div>
+      </div>
+
       {/* Hotel Information */}
       <div className="col-12 lg:col-8">
         <Card title="Hotel Information" className="mb-4">
           <div className="grid">
-            <div className="col-12 md:col-6">
+            <div className="col-12">
               <label className="block text-900 font-medium mb-2">Hotel Name *</label>
               <InputText
                 value={hotelData.name}
@@ -168,7 +290,7 @@ export default function HotelProfile() {
               />
             </div>
 
-            <div className="col-12 md:col-6">
+            {/* <div className="col-12 md:col-6">
               <label className="block text-900 font-medium mb-2">Hotel URL *</label>
               <div className="p-inputgroup">
                 <span className="p-inputgroup-addon">yourdomain.com/</span>
@@ -180,7 +302,7 @@ export default function HotelProfile() {
                 />
               </div>
               <small className="text-600">This is your unique hotel URL</small>
-            </div>
+            </div> */}
 
             <div className="col-12">
               <label className="block text-900 font-medium mb-2">Description</label>
@@ -254,61 +376,6 @@ export default function HotelProfile() {
                 className="w-full"
               />
             </div>
-          </div>
-        </Card>
-      </div>
-
-      {/* Quick Info */}
-      <div className="col-12 lg:col-4">
-        <Card title="Quick Info" className="mb-4">
-          <div className="flex flex-column gap-3">
-            <div className="flex justify-content-between">
-              <span className="text-600">Status:</span>
-              <Badge 
-                value={subscriptionData.status === 'TRIAL' ? 'Trial' : subscriptionData.status === 'ACTIVE' ? 'Active' : subscriptionData.status}
-                severity={subscriptionData.status === 'TRIAL' ? 'info' : subscriptionData.status === 'ACTIVE' ? 'success' : 'warning'}
-              />
-            </div>
-            <div className="flex justify-content-between">
-              <span className="text-600">Subscription:</span>
-              <span className="font-semibold">{subscriptionData.status}</span>
-            </div>
-            {subscriptionData.status === 'TRIAL' && (
-              <div className="flex justify-content-between">
-                <span className="text-600">Trial Ends:</span>
-                <span className="font-semibold">{subscriptionData.trialDaysRemaining} days</span>
-              </div>
-            )}
-            <div className="flex justify-content-between">
-              <span className="text-600">Total Reviews:</span>
-              <span className="font-semibold">{subscriptionData.totalReviews}</span>
-            </div>
-            <div className="flex justify-content-between">
-              <span className="text-600">Average Rating:</span>
-              <span className="font-semibold">{subscriptionData.averageRating.toFixed(1)} ⭐</span>
-            </div>
-          </div>
-        </Card>
-
-        <Card title="Actions">
-          <div className="flex flex-column gap-2">
-            <Button
-              label="View Public Page"
-              icon="pi pi-external-link"
-              className="p-button-outlined"
-              onClick={() => window.open(`/feedback/${hotelData.slug}`, '_blank')}
-            />
-            <Button
-              label="Manage Subscription"
-              icon="pi pi-credit-card"
-              className="p-button-outlined"
-              onClick={() => setShowSubscriptionManager(true)}
-            />
-            <Button
-              label="Contact Support"
-              icon="pi pi-envelope"
-              className="p-button-outlined"
-            />
           </div>
         </Card>
       </div>

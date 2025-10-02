@@ -187,16 +187,7 @@ export default function HotelForms() {
     return (
       <div className="grid">
         <div className="col-12">
-          <div className="flex align-items-center gap-3 mb-4">
-            <Button
-              icon="pi pi-arrow-left"
-              className="p-button-outlined"
-              onClick={() => setShowFormBuilder(false)}
-            />
-            <h1 className="text-2xl font-bold m-0">
-              {editingFormId ? "Edit Form" : "Create New Form"}
-            </h1>
-          </div>
+     
           <FeedbackFormBuilder
             formId={editingFormId || undefined}
             onSave={handleFormSaved}
@@ -235,7 +226,6 @@ export default function HotelForms() {
 
       {/* Forms Table */}
       <div className="col-12">
-        <Card>
           {loading ? (
             <div className="flex align-items-center justify-content-center" style={{ height: '200px' }}>
               <div className="text-center">
@@ -283,7 +273,6 @@ export default function HotelForms() {
               />
             </>
           )}
-        </Card>
       </div>
 
       <Toast ref={toast} />

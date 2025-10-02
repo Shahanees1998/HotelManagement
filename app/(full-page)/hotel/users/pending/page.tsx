@@ -239,7 +239,6 @@ export default function PendingUsersPage() {
     return (
         <div className="grid">
             <div className="col-12">
-                <Card>
                     {loading ? (
                         <div className="p-4">
                             <div className="grid">
@@ -304,7 +303,6 @@ export default function PendingUsersPage() {
               />
             </>
                     )}
-                </Card>
             </div>
 
             <Toast ref={toast} />

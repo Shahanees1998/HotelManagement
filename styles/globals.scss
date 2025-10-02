@@ -1,16 +1,124 @@
 @import 'feedback-layouts.scss';
 
+/* Global Font Family - Jost Regular */
+*:not([class*="pi"]):not([class*="p-icon"]):not(i) {
+  font-family: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  box-sizing: border-box;
+}
+
+/* Ensure icons maintain their original font */
+[class*="pi"], [class*="p-icon"], i {
+  font-family: 'primeicons' !important;
+  box-sizing: border-box;
+}
+
 html,
+body {
+  font-family: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+}
 
 a {
   color: inherit;
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
+.p-card-body {
+  padding: 0 10px 0px 10px !important;
 }
 
+/* PrimeReact Components Font Override - Exclude Icons */
+.p-component:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-button:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-inputtext,
+.p-dropdown:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-multiselect:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-calendar:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-datatable:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-card:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-tag:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-toast:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-dialog:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-menu:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-menuitem:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-tabview:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-accordion:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-panel:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-fieldset:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-toolbar:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-tooltip:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-overlaypanel:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-sidebar:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-megamenu:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-breadcrumb:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-steps:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-tabmenu:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-slidemenu:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-contextmenu:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-tieredmenu:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-menubar:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-treetable:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-tree:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-paginator:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-picklist:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-orderlist:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-carousel:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-galleria:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-image:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-fileupload:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-editor:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-inputtextarea,
+.p-inputnumber,
+.p-password:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-radiobutton:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-checkbox:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-togglebutton:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-selectbutton:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-listbox:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-autocomplete:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-chips:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-cascadeselect:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-treeselect:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-colorpicker:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-rating:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-slider:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-knob:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-progressbar:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-progressspinner:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-skeleton:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-splitter:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-divider:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-scrollpanel:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-scrolltop:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-confirmdialog:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-message:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-inlinemessage:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-growl:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-blockui:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-deferredcontent:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-virtualscroller:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-organizationchart:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-timeline:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-chart:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-gmap:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-terminal:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-code:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-keyboard:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-ripple:not([class*="pi"]):not([class*="p-icon"]):not(i),
+.p-ripple-effect:not([class*="pi"]):not([class*="p-icon"]):not(i) {
+  font-family: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+}
+
+.p-button{
+  background: #1B2A49 !important;
+  color: white !important;
+}
+
+// .layout-submenu-toggler {
+//   padding: 0px 27px 3px 7px;
+// }
+.feedback-form-builder .form-settings-card .form-field .form-dropdown{
+  padding: 1px !important;
+}
 .edit-addintional p,
 .additional-notes p {
   font-size: 18px !important;

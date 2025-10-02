@@ -18,6 +18,12 @@ interface Question {
   type: string;
   isRequired: boolean;
   options: string[];
+  isDefault?: boolean;
+  customRatingItems?: Array<{
+    id: string;
+    label: string;
+    order: number;
+  }>;
 }
 
 interface FeedbackForm {
@@ -47,6 +53,10 @@ export default function CustomerFeedbackForm() {
   const [submitting, setSubmitting] = useState(false);
   const [showSuccessPage, setShowSuccessPage] = useState(false);
   const [hotelWebsite, setHotelWebsite] = useState<string | null>(null);
+  const [hotelData, setHotelData] = useState({
+    name: "Hotel Famulus",
+    logo: "/images/logo.png",
+  });
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
@@ -82,6 +92,10 @@ export default function CustomerFeedbackForm() {
       if (hotelResponse.ok) {
         const hotelData = await hotelResponse.json();
         setHotelWebsite(hotelData.data?.website || null);
+        setHotelData({
+          name: hotelData.data?.name || "Hotel Famulus",
+          logo: hotelData.data?.logo || "/images/logo.png",
+        });
       }
     } catch (error) {
       console.error("Error loading form:", error);
@@ -109,9 +123,20 @@ export default function CustomerFeedbackForm() {
     if (!form) return false;
 
     for (const question of form.questions) {
-      if (question.isRequired && !submission.answers[question.id]) {
-        showToast("warn", "Warning", `Please answer: ${question.question}`);
-        return false;
+      if (question.isRequired) {
+        if (question.type === 'CUSTOM_RATING' && question.customRatingItems) {
+          // For custom rating, check if at least one rating item has been answered
+          const hasAnyRating = question.customRatingItems.some(item => 
+            submission.answers[`${question.id}-${item.id}`]
+          );
+          if (!hasAnyRating) {
+            showToast("warn", "Warning", `Please answer: ${question.question}`);
+            return false;
+          }
+        } else if (!submission.answers[question.id]) {
+          showToast("warn", "Warning", `Please answer: ${question.question}`);
+          return false;
+        }
       }
     }
 
@@ -163,129 +188,7 @@ export default function CustomerFeedbackForm() {
     }
   };
 
-  const renderQuestion = (question: Question) => {
-    const value = submission.answers[question.id];
 
-    switch (question.type) {
-      case 'SHORT_TEXT':
-        return (
-          <InputText
-            value={value || ''}
-            onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-            placeholder="Your answer..."
-            className="w-full"
-          />
-        );
-
-      case 'LONG_TEXT':
-        return (
-          <InputTextarea
-            value={value || ''}
-            onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-            placeholder="Your detailed answer..."
-            rows={4}
-            className="w-full"
-          />
-        );
-
-      case 'STAR_RATING':
-        return (
-          <Rating
-            value={value || 0}
-            onChange={(e) => handleAnswerChange(question.id, e.value)}
-            stars={5}
-            cancel={false}
-          />
-        );
-
-      case 'MULTIPLE_CHOICE_SINGLE':
-        return (
-          <div className="radio-group">
-            {question.options.map((option, index) => (
-              <div key={index} className="radio-option">
-                <RadioButton
-                  inputId={`${question.id}-${index}`}
-                  name={question.id}
-                  value={option}
-                  checked={value === option}
-                  onChange={(e) => handleAnswerChange(question.id, e.value)}
-                />
-                <label htmlFor={`${question.id}-${index}`}>
-                  {option}
-                </label>
-              </div>
-            ))}
-          </div>
-        );
-
-      case 'MULTIPLE_CHOICE_MULTIPLE':
-        return (
-          <div className="checkbox-group">
-            {question.options.map((option, index) => (
-              <div key={index} className="checkbox-option">
-                <Checkbox
-                  inputId={`${question.id}-${index}`}
-                  value={option}
-                  checked={value?.includes(option) || false}
-                  onChange={(e) => {
-                    const currentValues = value || [];
-                    const newValues = e.checked
-                      ? [...currentValues, option]
-                      : currentValues.filter((v: string) => v !== option);
-                    handleAnswerChange(question.id, newValues);
-                  }}
-                />
-                <label htmlFor={`${question.id}-${index}`}>
-                  {option}
-                </label>
-              </div>
-            ))}
-          </div>
-        );
-
-      case 'YES_NO':
-        return (
-          <div className="radio-group">
-            <div className="radio-option">
-              <RadioButton
-                inputId={`${question.id}-yes`}
-                name={question.id}
-                value="Yes"
-                checked={value === "Yes"}
-                onChange={(e) => handleAnswerChange(question.id, e.value)}
-              />
-              <label htmlFor={`${question.id}-yes`}>Yes</label>
-            </div>
-            <div className="radio-option">
-              <RadioButton
-                inputId={`${question.id}-no`}
-                name={question.id}
-                value="No"
-                checked={value === "No"}
-                onChange={(e) => handleAnswerChange(question.id, e.value)}
-              />
-              <label htmlFor={`${question.id}-no`}>No</label>
-            </div>
-          </div>
-        );
-
-      default:
-        return <div>Unsupported question type</div>;
-    }
-  };
-
-  const getLayoutClasses = () => {
-    if (!form) return '';
-    
-    switch (form.layout) {
-      case 'good':
-        return 'layout-good';
-      case 'excellent':
-        return 'layout-excellent';
-      default:
-        return 'layout-basic';
-    }
-  };
 
   if (loading) {
     return (
@@ -356,82 +259,324 @@ export default function CustomerFeedbackForm() {
   }
 
   return (
-    <div className="min-h-screen p-4">
-      <div className="max-w-4xl mx-auto">
-        <div className={`feedback-form-preview feedback-form-${form.layout}`}>
-          {/* Header */}
-          <div className="form-header">
-            <h1 className="form-title">{form.title}</h1>
-            {form.description && (
-              <p className="form-description">{form.description}</p>
-            )}
-          </div>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "16px",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "500px",
+          backgroundColor: "#fff",
+          borderRadius: "12px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+          padding: "24px",
+        }}
+      >
+        {/* Logo + Heading */}
+        <div style={{ textAlign: "center", marginBottom: "24px" }}>
+          <img
+            src={hotelData.logo}
+            alt={hotelData.name}
+            style={{ height: "50px", marginBottom: "8px", objectFit: "contain" }}
+            onError={(e) => {
+              // Fallback to default logo if hotel logo fails to load
+              e.currentTarget.src = "/images/logo.png";
+            }}
+          />
+          <h5 style={{ margin: 0, fontWeight: 600, color: "#333" }}>{hotelData.name}</h5>
+          <p
+            style={{
+              fontSize: "13px",
+              color: "#6c757d",
+              marginTop: "8px",
+              lineHeight: 1.5,
+            }}
+          >
+            {form.description || "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance."}
+          </p>
+        </div>
 
-          {/* Guest Information */}
-          <div className="question-item">
-            <div className="question-header">
-              <label className="question-label">Your Information (Optional)</label>
-            </div>
-            <div className="question-input">
-              <div className="grid">
-                <div className="col-12 md:col-4">
-                  <InputText
-                    value={submission.guestName || ''}
-                    onChange={(e) => setSubmission({ ...submission, guestName: e.target.value })}
-                    placeholder="Your name"
-                    className="w-full"
-                  />
-                </div>
-                <div className="col-12 md:col-4">
-                  <InputText
-                    value={submission.guestEmail || ''}
-                    onChange={(e) => setSubmission({ ...submission, guestEmail: e.target.value })}
-                    placeholder="your.email@example.com"
-                    type="email"
-                    className="w-full"
-                  />
-                </div>
-                <div className="col-12 md:col-4">
-                  <InputText
-                    value={submission.guestPhone || ''}
-                    onChange={(e) => setSubmission({ ...submission, guestPhone: e.target.value })}
-                    placeholder="Your phone number"
-                    className="w-full"
-                  />
-                </div>
-              </div>
-            </div>
+        {/* Full Name & Email */}
+        <div style={{ display: "flex", gap: "12px", marginBottom: "20px" }}>
+          <div style={{ flex: 1 }}>
+            <label
+              style={{
+                display: "block",
+                fontSize: "13px",
+                fontWeight: 500,
+                color: "#444",
+                marginBottom: "6px",
+              }}
+            >
+              Full Name*
+            </label>
+            <InputText
+              value={submission.guestName || ''}
+              onChange={(e) => setSubmission({ ...submission, guestName: e.target.value })}
+              placeholder="Enter your full name"
+              style={{
+                width: "100%",
+                padding: "10px",
+                borderRadius: "6px",
+                border: "1px solid #ced4da",
+                fontSize: "14px",
+              }}
+            />
           </div>
-
-          {/* Questions */}
-          <div className="form-questions">
-            {form.questions.map((question, index) => (
-              <div key={question.id} className="question-item">
-                <div className="question-header">
-                  <label className="question-label">
-                    {question.question}
-                    {question.isRequired && <span className="required"> *</span>}
-                  </label>
-                </div>
-                <div className="question-input">
-                  {renderQuestion(question)}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Submit Button */}
-          <div className="form-footer">
-            <Button
-              label="Submit Feedback"
-              icon="pi pi-send"
-              onClick={handleSubmit}
-              loading={submitting}
-              disabled={submitting}
-              className="w-full"
+          <div style={{ flex: 1 }}>
+            <label
+              style={{
+                display: "block",
+                fontSize: "13px",
+                fontWeight: 500,
+                color: "#444",
+                marginBottom: "6px",
+              }}
+            >
+              Email*
+            </label>
+            <InputText
+              value={submission.guestEmail || ''}
+              onChange={(e) => setSubmission({ ...submission, guestEmail: e.target.value })}
+              placeholder="Enter your email address"
+              type="email"
+              style={{
+                width: "100%",
+                padding: "10px",
+                borderRadius: "6px",
+                border: "1px solid #ced4da",
+                fontSize: "14px",
+              }}
             />
           </div>
         </div>
+
+        {/* Phone Number */}
+        <div style={{ marginBottom: "20px" }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: "13px",
+              fontWeight: 500,
+              color: "#444",
+              marginBottom: "6px",
+            }}
+          >
+            Phone Number
+          </label>
+          <InputText
+            value={submission.guestPhone || ''}
+            onChange={(e) => setSubmission({ ...submission, guestPhone: e.target.value })}
+            placeholder="Enter your phone number"
+            style={{
+              width: "100%",
+              padding: "10px",
+              borderRadius: "6px",
+              border: "1px solid #ced4da",
+              fontSize: "14px",
+            }}
+          />
+        </div>
+
+        {/* Questions */}
+        {form.questions.map((question, index) => (
+          <div key={question.id} style={{ marginBottom: "20px" }}>
+            <label
+              style={{
+                display: "block",
+                fontSize: "13px",
+                fontWeight: 500,
+                color: "#444",
+                marginBottom: "6px",
+              }}
+            >
+              {question.question}
+              {question.isRequired && <span style={{ color: "#dc3545" }}> *</span>}
+            </label>
+
+            <div>
+              {question.type === "SHORT_TEXT" && (
+                <InputText
+                  value={submission.answers[question.id] || ''}
+                  onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                  placeholder="Enter your answer"
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "6px",
+                    border: "1px solid #ced4da",
+                    fontSize: "14px",
+                  }}
+                />
+              )}
+
+              {question.type === "LONG_TEXT" && (
+                <InputTextarea
+                  value={submission.answers[question.id] || ''}
+                  onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                  placeholder="Enter your answer"
+                  rows={3}
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "6px",
+                    border: "1px solid #ced4da",
+                    fontSize: "14px",
+                    resize: "none",
+                  }}
+                />
+              )}
+
+              {question.type === "STAR_RATING" && (
+                <Rating
+                  value={submission.answers[question.id] || 0}
+                  onChange={(e) => handleAnswerChange(question.id, e.value)}
+                  stars={5}
+                  cancel={false}
+                />
+              )}
+
+              {question.type === "MULTIPLE_CHOICE_SINGLE" && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  {question.options.map((option, optIndex) => (
+                    <div key={optIndex} style={{ display: "flex", alignItems: "center" }}>
+                      <RadioButton
+                        inputId={`${question.id}-${optIndex}`}
+                        name={question.id}
+                        value={option}
+                        checked={submission.answers[question.id] === option}
+                        onChange={(e) => handleAnswerChange(question.id, e.value)}
+                        style={{ marginRight: "8px" }}
+                      />
+                      <label htmlFor={`${question.id}-${optIndex}`} style={{ fontSize: "14px", color: "#333" }}>
+                        {option}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {question.type === "MULTIPLE_CHOICE_MULTIPLE" && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  {question.options.map((option, optIndex) => (
+                    <div key={optIndex} style={{ display: "flex", alignItems: "center" }}>
+                      <Checkbox
+                        inputId={`${question.id}-${optIndex}`}
+                        value={option}
+                        checked={submission.answers[question.id]?.includes(option) || false}
+                        onChange={(e) => {
+                          const currentValues = submission.answers[question.id] || [];
+                          const newValues = e.checked
+                            ? [...currentValues, option]
+                            : currentValues.filter((v: string) => v !== option);
+                          handleAnswerChange(question.id, newValues);
+                        }}
+                        style={{ marginRight: "8px" }}
+                      />
+                      <label htmlFor={`${question.id}-${optIndex}`} style={{ fontSize: "14px", color: "#333" }}>
+                        {option}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {question.type === "YES_NO" && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <RadioButton
+                      inputId={`${question.id}-yes`}
+                      name={question.id}
+                      value="Yes"
+                      checked={submission.answers[question.id] === "Yes"}
+                      onChange={(e) => handleAnswerChange(question.id, e.value)}
+                      style={{ marginRight: "8px" }}
+                    />
+                    <label htmlFor={`${question.id}-yes`} style={{ fontSize: "14px", color: "#333" }}>Yes</label>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <RadioButton
+                      inputId={`${question.id}-no`}
+                      name={question.id}
+                      value="No"
+                      checked={submission.answers[question.id] === "No"}
+                      onChange={(e) => handleAnswerChange(question.id, e.value)}
+                      style={{ marginRight: "8px" }}
+                    />
+                    <label htmlFor={`${question.id}-no`} style={{ fontSize: "14px", color: "#333" }}>No</label>
+                  </div>
+                </div>
+              )}
+
+              {question.type === "CUSTOM_RATING" && question.customRatingItems && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  {question.customRatingItems.map((item, itemIndex) => {
+                    const rating = submission.answers[`${question.id}-${item.id}`] || 0;
+                    return (
+                      <div
+                        key={item.id}
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          padding: "12px",
+                          backgroundColor: "#f8f9fa",
+                          borderRadius: "6px",
+                          border: "1px solid #e9ecef",
+                        }}
+                      >
+                        <span style={{ fontSize: "14px", fontWeight: 500, color: "#333" }}>
+                          {item.label}
+                        </span>
+                        <div style={{ display: "flex", gap: "4px" }}>
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <span
+                              key={i}
+                              style={{
+                                fontSize: "18px",
+                                color: i < rating ? "#facc15" : "#d1d5db",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => handleAnswerChange(`${question.id}-${item.id}`, i + 1)}
+                            >
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+
+        {/* Submit Button */}
+        <Button
+          label="Submit Feedback"
+          icon="pi pi-send"
+          onClick={handleSubmit}
+          loading={submitting}
+          disabled={submitting}
+          style={{
+            width: "100%",
+            backgroundColor: "#007bff",
+            color: "#fff",
+            fontSize: "14px",
+            fontWeight: 500,
+            padding: "12px",
+            borderRadius: "8px",
+            border: "none",
+            cursor: submitting ? "not-allowed" : "pointer",
+          }}
+        />
       </div>
 
       <Toast ref={toast} />

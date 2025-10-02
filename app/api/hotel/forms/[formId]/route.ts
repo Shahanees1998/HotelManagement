@@ -32,7 +32,14 @@ export async function GET(
           hotelId: hotel.id,
         },
         include: {
-          questions: {
+          predefinedQuestions: {
+            include: {
+              customRatingItems: {
+                orderBy: { order: 'asc' },
+              },
+            },
+          },
+          customQuestions: {
             orderBy: { order: 'asc' },
           },
           reviews: {
@@ -55,7 +62,18 @@ export async function GET(
         createdAt: form.createdAt.toISOString(),
         updatedAt: form.updatedAt.toISOString(),
         totalResponses: form.reviews.length,
-        questions: form.questions.map(q => ({
+        predefinedQuestions: form.predefinedQuestions ? {
+          hasRateUs: form.predefinedQuestions.hasRateUs,
+          hasCustomRating: form.predefinedQuestions.hasCustomRating,
+          hasFeedback: form.predefinedQuestions.hasFeedback,
+          customRatingItems: form.predefinedQuestions.customRatingItems.map(item => ({
+            id: item.id,
+            label: item.label,
+            order: item.order,
+            isActive: item.isActive,
+          })),
+        } : null,
+        customQuestions: form.customQuestions?.map(q => ({
           id: q.id,
           question: q.question,
           type: q.type,
@@ -63,7 +81,8 @@ export async function GET(
           order: q.order,
           options: q.options,
           validation: q.validation,
-        })),
+          section: q.section,
+        })) || [],
       };
 
       return NextResponse.json({ data: formData });

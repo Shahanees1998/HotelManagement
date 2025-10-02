@@ -195,7 +195,7 @@ const LayoutInner = (props: ChildContainerProps) => {
 
     return (
         <React.Fragment>
-            <div className={classNames("layout-container", containerClass)}>
+            <div className={classNames("layout-container", containerClass)} style={{backgroundColor: 'rgb(253, 252, 249) !important'}}>
                 <div
                     ref={sidebarRef}
                     className="layout-sidebar"

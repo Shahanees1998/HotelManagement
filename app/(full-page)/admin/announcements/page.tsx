@@ -309,7 +309,6 @@ export default function AdminAnnouncements() {
 
       {/* Announcements Table */}
       <div className="col-12">
-        <Card>
           {loading ? (
             <div className="flex align-items-center justify-content-center" style={{ height: '200px' }}>
               <div className="text-center">
@@ -355,7 +354,6 @@ export default function AdminAnnouncements() {
               />
             </>
           )}
-        </Card>
       </div>
 
       {/* Create Announcement Dialog */}

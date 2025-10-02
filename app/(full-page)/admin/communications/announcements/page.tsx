@@ -294,7 +294,6 @@ export default function AnnouncementsPage() {
     return (
         <div className="grid">
             <div className="col-12">
-                <Card>
                     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-4">
                         <div className="flex flex-column">
                             <h2 className="text-2xl font-bold m-0">Announcements</h2>
@@ -538,7 +537,6 @@ export default function AnnouncementsPage() {
                             </>
                         )}
                     </div>
-                </Card>
             </div>
 
             <Toast ref={toast} />

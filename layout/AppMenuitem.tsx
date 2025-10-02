@@ -102,7 +102,7 @@ const AppMenuitemInner = (props: AppMenuItemProps) => {
 
         // toggle active state
         if (item?.items) {
-            setActiveMenu(active ? props.parentKey! : key);
+            setActiveMenu(active ? "" : key);
 
             if (
                 props.root &&
@@ -198,6 +198,7 @@ const AppMenuitemInner = (props: AppMenuItemProps) => {
                             item?.class,
                             "p-ripple tooltip-target"
                         )}
+                        style={{ cursor: 'pointer' }}
                         target={item?.target}
                         data-pr-tooltip={item?.label}
                         data-pr-disabled={
@@ -236,6 +237,7 @@ const AppMenuitemInner = (props: AppMenuItemProps) => {
                         className={classNames(item?.class, "p-ripple ", {
                             "active-route": isActiveRoute,
                         })}
+                        style={{ cursor: 'pointer' }}
                         tabIndex={0}
                         onMouseEnter={onMouseEnter}
                     >

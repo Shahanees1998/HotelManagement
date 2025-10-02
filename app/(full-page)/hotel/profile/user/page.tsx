@@ -5,16 +5,20 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
+import { FileUpload } from "primereact/fileupload";
+import { Avatar } from "primereact/avatar";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function UserProfilePage() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
+    profileImage: "",
   });
   const toast = useRef<Toast>(null);
 
@@ -25,6 +29,7 @@ export default function UserProfilePage() {
         lastName: user.lastName || "",
         email: user.email || "",
         phone: user.phone || "",
+        profileImage: user.profileImage || "",
       });
     }
   }, [user]);
@@ -43,15 +48,75 @@ export default function UserProfilePage() {
   const handleSave = async () => {
     setLoading(true);
     try {
-      // TODO: Implement save API call
-      // await apiClient.updateUserProfile(userData);
-      
-      showToast("success", "Success", "Profile updated successfully");
+      const response = await fetch('/api/users/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        showToast("success", "Success", "Profile updated successfully");
+      } else {
+        const errorData = await response.json();
+        showToast("error", "Error", errorData.error || "Failed to update profile");
+      }
     } catch (error) {
       console.error("Error saving user data:", error);
       showToast("error", "Error", "Failed to update profile");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleImageUpload = async (event: any) => {
+    const file = event.files[0];
+    if (!file || !user?.id) return;
+
+    // Validate file type and size
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      showToast("error", "Error", "Please select a valid image file (JPG, PNG, GIF, or WebP)");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) { // 5MB
+      showToast("error", "Error", "Image size must be less than 5MB");
+      return;
+    }
+
+    setUploadingImage(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('userId', user.id);
+
+    try {
+      const response = await fetch('/api/users/profile-image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUserData(prev => ({
+          ...prev,
+          profileImage: data.imageUrl
+        }));
+        
+        // Dispatch custom event to update topbar
+        window.dispatchEvent(new CustomEvent('profile-updated'));
+        
+        showToast("success", "Success", "Profile image updated successfully");
+      } else {
+        const errorData = await response.json();
+        showToast("error", "Error", errorData.error || "Failed to upload image");
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      showToast("error", "Error", "Failed to upload image");
+    } finally {
+      setUploadingImage(false);
     }
   };
 
@@ -76,9 +141,39 @@ export default function UserProfilePage() {
         </div>
       </div>
 
+      {/* Profile Image */}
+      <div className="col-12 lg:col-4">
+        <Card title="Profile Image" className="mb-4 p-4">
+          <div className="flex flex-column align-items-center gap-3">
+            <Avatar
+              image={userData.profileImage}
+              icon={uploadingImage ? "pi pi-spinner pi-spin" : "pi pi-user"}
+              size="xlarge"
+              shape="circle"
+              className="mb-3"
+            />
+            <FileUpload
+              mode="basic"
+              name="profileImage"
+              accept="image/*"
+              maxFileSize={5000000}
+              customUpload
+              uploadHandler={handleImageUpload}
+              chooseLabel={uploadingImage ? "Uploading..." : "Change Photo"}
+              className="w-full"
+              auto
+              disabled={uploadingImage}
+            />
+            <small className="text-600 text-center">
+              JPG, PNG or GIF. Max size 5MB.
+            </small>
+          </div>
+        </Card>
+      </div>
+
       {/* Personal Information */}
       <div className="col-12 lg:col-8">
-        <Card title="Personal Information" className="mb-4">
+        <Card title="Personal Information" className="mb-4 p-4">
           <div className="grid">
             <div className="col-12 md:col-6">
               <label className="block text-900 font-medium mb-2">First Name *</label>
@@ -125,8 +220,8 @@ export default function UserProfilePage() {
       </div>
 
       {/* Account Info */}
-      <div className="col-12 lg:col-4">
-        <Card title="Account Information" className="mb-4">
+      <div className="col-12 lg:col-6">
+        <Card title="Account Information" className="mb-4 p-4">
           <div className="flex flex-column gap-3">
             <div className="flex justify-content-between">
               <span className="text-600">Account Type:</span>
@@ -150,8 +245,10 @@ export default function UserProfilePage() {
             </div>
           </div>
         </Card>
+</div>
+<div className="col-12 lg:col-6">
 
-        <Card title="Security">
+        <Card title="Security" className="mb-4 p-5">
           <div className="flex flex-column gap-2">
             <Button
               label="Change Password"
@@ -162,7 +259,7 @@ export default function UserProfilePage() {
             <Button
               label="Two-Factor Authentication"
               icon="pi pi-shield"
-              className="p-button-outlined"
+              className="p-button-outlined mt-3"
               onClick={() => showToast("info", "Coming Soon", "Two-factor authentication will be available soon")}
             />
           </div>
