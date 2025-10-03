@@ -16,6 +16,7 @@ export interface NotificationFilters {
   userId?: string;
   isRead?: boolean;
   type?: NotificationType;
+  search?: string;
   limit?: number;
   offset?: number;
 }
@@ -184,6 +185,12 @@ export class NotificationService {
       if (filters.userId) where.userId = filters.userId;
       if (filters.isRead !== undefined) where.isRead = filters.isRead;
       if (filters.type) where.type = filters.type;
+      if (filters.search) {
+        where.OR = [
+          { title: { contains: filters.search, mode: 'insensitive' } },
+          { message: { contains: filters.search, mode: 'insensitive' } },
+        ];
+      }
 
       const notifications = await prisma.notification.findMany({
         where,
@@ -205,6 +212,52 @@ export class NotificationService {
       return notifications;
     } catch (error) {
       console.error('Error getting notifications:', error);
+      throw error;
+    }
+  }
+
+  // Get notifications with pagination info
+  static async getNotificationsWithPagination(filters: NotificationFilters) {
+    try {
+      const where: any = {};
+      
+      if (filters.userId) where.userId = filters.userId;
+      if (filters.isRead !== undefined) where.isRead = filters.isRead;
+      if (filters.type) where.type = filters.type;
+      if (filters.search) {
+        where.OR = [
+          { title: { contains: filters.search, mode: 'insensitive' } },
+          { message: { contains: filters.search, mode: 'insensitive' } },
+        ];
+      }
+
+      const [notifications, total] = await Promise.all([
+        prisma.notification.findMany({
+          where,
+          include: {
+            user: {
+              select: {
+                id: true,
+                role: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+          orderBy: { createdAt: 'desc' },
+          take: filters.limit || 10,
+          skip: filters.offset || 0,
+        }),
+        prisma.notification.count({ where })
+      ]);
+
+      return {
+        notifications,
+        total,
+        hasMore: (filters.offset || 0) + (filters.limit || 10) < total
+      };
+    } catch (error) {
+      console.error('Error getting notifications with pagination:', error);
       throw error;
     }
   }

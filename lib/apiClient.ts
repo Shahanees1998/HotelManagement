@@ -367,8 +367,23 @@ class ApiClient {
     }
 
     // Hotel Forms
-    async getHotelForms() {
-        return this.get<any>('/hotel/forms');
+    async getHotelForms(params?: {
+        status?: string;
+        search?: string;
+        page?: number;
+        limit?: number;
+        sortField?: string;
+        sortOrder?: string;
+    }) {
+        return this.get<{
+            data: any[];
+            pagination: {
+                page: number;
+                limit: number;
+                total: number;
+                totalPages: number;
+            };
+        }>('/hotel/forms', params);
     }
 
     async createHotelForm(formData: any) {
@@ -381,6 +396,88 @@ class ApiClient {
 
     async deleteHotelForm(formId: string) {
         return this.delete<any>(`/hotel/forms/${formId}`);
+    }
+
+    // Hotel Reviews
+    async getHotelReviews(params?: {
+        status?: string;
+        rating?: string;
+        search?: string;
+        page?: number;
+        limit?: number;
+        sortField?: string;
+        sortOrder?: string;
+    }) {
+        return this.get<{
+            data: any[];
+            pagination: {
+                page: number;
+                limit: number;
+                total: number;
+                totalPages: number;
+            };
+        }>('/hotel/reviews', params);
+    }
+
+    // Hotel Users
+    async getHotelUsers(params?: {
+        search?: string;
+        status?: string;
+        page?: number;
+        limit?: number;
+        sortField?: string;
+        sortOrder?: string;
+    }) {
+        return this.get<{
+            data: any[];
+            pagination: {
+                page: number;
+                limit: number;
+                total: number;
+                totalPages: number;
+            };
+        }>('/hotel/users', params);
+    }
+
+    // Hotel Support
+    async getHotelSupportRequests(params?: {
+        status?: string;
+        priority?: string;
+        search?: string;
+        page?: number;
+        limit?: number;
+        sortField?: string;
+        sortOrder?: string;
+    }) {
+        return this.get<{
+            data: any[];
+            pagination: {
+                page: number;
+                limit: number;
+                total: number;
+                totalPages: number;
+            };
+        }>('/hotel/support', params);
+    }
+
+    // User Notifications
+    async getUserNotifications(params?: {
+        isRead?: string;
+        type?: string;
+        search?: string;
+        page?: number;
+        limit?: number;
+    }) {
+        return this.get<{
+            data: any[];
+            unreadCount: number;
+            pagination: {
+                page: number;
+                limit: number;
+                total: number;
+                totalPages: number;
+            };
+        }>('/notifications', params);
     }
     // System Settings/Integrations
     async getSystemSettings() {

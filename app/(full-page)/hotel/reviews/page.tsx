@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
@@ -15,6 +15,7 @@ import { Rating } from "primereact/rating";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { CustomPaginator } from "@/components/CustomPaginator";
+import { apiClient } from "@/lib/apiClient";
 
 interface Review {
   id: string;
@@ -70,6 +71,7 @@ export default function HotelReviews() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [totalRecords, setTotalRecords] = useState(0);
   const [filters, setFilters] = useState({
     status: "",
     rating: "",
@@ -80,40 +82,48 @@ export default function HotelReviews() {
   const [loadingDetails, setLoadingDetails] = useState(false);
   const toast = useRef<Toast>(null);
 
-  // Helper function to update filters and reset page
-  const updateFilters = (newFilters: Partial<typeof filters>) => {
-    setFilters(prev => ({ ...prev, ...newFilters }));
-    setCurrentPage(1);
-  };
 
-  const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+  const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
     toast.current?.show({ severity, summary, detail, life: 3000 });
-  };
+  }, []);
 
-  const loadReviews = async () => {
+  const loadReviews = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/hotel/reviews');
-      if (response.ok) {
-        const data = await response.json();
-        setReviews(data.data || []);
-      } else {
-        const errorData = await response.json();
-        showToast("error", "Error", errorData.error || "Failed to load reviews");
-        setReviews([]);
+      const response = await apiClient.getHotelReviews({
+        status: filters.status,
+        rating: filters.rating,
+        search: filters.search,
+        page: currentPage,
+        limit: rowsPerPage,
+      });
+
+      if (response.error) {
+        throw new Error(response.error);
       }
+
+      setReviews((response as any).data || []);
+      setTotalRecords(response.pagination?.total || 0);
     } catch (error) {
       console.error("Error loading reviews:", error);
       showToast("error", "Error", "Failed to load reviews");
       setReviews([]);
+      setTotalRecords(0);
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters.status, filters.rating, filters.search, currentPage, rowsPerPage, showToast]);
 
   useEffect(() => {
     loadReviews();
-  }, []);
+  }, [loadReviews]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    if (currentPage !== 1) {
+      setCurrentPage(1);
+    }
+  }, [filters.status, filters.rating, filters.search]);
 
   const loadDetailedReview = async (reviewId: string) => {
     setLoadingDetails(true);
@@ -289,22 +299,6 @@ export default function HotelReviews() {
     );
   }, [loadingDetails]);
 
-  const filteredReviews = useMemo(() => {
-    return reviews.filter(review => {
-      if (filters.status && review.status !== filters.status) return false;
-      if (filters.rating && review.overallRating.toString() !== filters.rating) return false;
-      if (filters.search && !review.guestName.toLowerCase().includes(filters.search.toLowerCase())) return false;
-      return true;
-    });
-  }, [reviews, filters.status, filters.rating, filters.search]);
-
-  // Paginate the filtered reviews
-  const paginatedReviews = useMemo(() => {
-    return filteredReviews.slice(
-      (currentPage - 1) * rowsPerPage,
-      currentPage * rowsPerPage
-    );
-  }, [filteredReviews, currentPage, rowsPerPage]);
 
   const statusOptions = useMemo(() => [
     { label: "All Statuses", value: "" },
@@ -351,7 +345,7 @@ export default function HotelReviews() {
               <label className="block text-900 font-medium mb-2">Search Guest</label>
               <InputText
                 value={filters.search}
-                onChange={(e) => updateFilters({ search: e.target.value })}
+                onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
                 placeholder="Search by guest name..."
                 className="w-full"
               />
@@ -361,7 +355,7 @@ export default function HotelReviews() {
               <Dropdown
                 value={filters.status}
                 options={statusOptions}
-                onChange={(e) => updateFilters({ status: e.value })}
+                onChange={(e) => setFilters(prev => ({ ...prev, status: e.value }))}
                 placeholder="All Statuses"
                 className="w-full"
               />
@@ -371,7 +365,7 @@ export default function HotelReviews() {
               <Dropdown
                 value={filters.rating}
                 options={ratingOptions}
-                onChange={(e) => updateFilters({ rating: e.value })}
+                onChange={(e) => setFilters(prev => ({ ...prev, rating: e.value }))}
                 placeholder="All Ratings"
                 className="w-full"
               />
@@ -389,7 +383,7 @@ export default function HotelReviews() {
                 <p>Loading reviews...</p>
               </div>
             </div>
-          ) : filteredReviews.length === 0 ? (
+          ) : reviews.length === 0 ? (
             <div className="text-center py-6">
               <i className="pi pi-star text-4xl text-400 mb-3"></i>
               <h3 className="text-900 mb-2">No Reviews Found</h3>
@@ -403,7 +397,7 @@ export default function HotelReviews() {
           ) : (
             <>
               <DataTable 
-                value={paginatedReviews}
+                value={reviews}
               >
                 <Column field="guestName" header="Guest" sortable />
                 <Column field="guestEmail" header="Email" />
@@ -421,7 +415,7 @@ export default function HotelReviews() {
               </DataTable>
               <CustomPaginator
                 currentPage={currentPage}
-                totalRecords={filteredReviews.length}
+                totalRecords={totalRecords}
                 rowsPerPage={rowsPerPage}
                 onPageChange={setCurrentPage}
                 onRowsPerPageChange={(rows) => {

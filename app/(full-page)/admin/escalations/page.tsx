@@ -65,7 +65,7 @@ export default function AdminEscalations() {
     setLoading(true);
     try {
       const response = await apiClient.getAdminEscalations();
-      setEscalations(response.data || []);
+      setEscalations((response as any).data || []);
     } catch (error) {
       console.error("Error loading escalations:", error);
       showToast("error", "Error", "Failed to load escalations");

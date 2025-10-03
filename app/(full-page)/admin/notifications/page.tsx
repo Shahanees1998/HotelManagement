@@ -56,7 +56,7 @@ export default function AdminNotifications() {
       if (response.ok) {
         const data = await response.json();
         console.log('Notifications API response:', data); // Debug log
-        setNotifications(data.notifications || []);
+        setNotifications(data.data || []);
       } else {
         throw new Error('Failed to load notifications');
       }
@@ -307,12 +307,12 @@ export default function AdminNotifications() {
             <p className="text-600 mt-2 mb-0">Manage all system notifications and alerts.</p>
           </div>
           <div className="flex gap-2">
-            <Button
+            {/* <Button
               label="Generate Test Notifications"
               icon="pi pi-plus"
               onClick={generateTestNotifications}
               className="p-button-info"
-            />
+            /> */}
             <Button
               label="Mark All as Read"
               icon="pi pi-check"

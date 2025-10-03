@@ -59,7 +59,7 @@ export default function AdminReviews() {
         page: currentPage,
         limit: rowsPerPage,
       });
-      setReviews(response.data || []);
+      setReviews((response as any).data || []);
       setTotalRecords(response.pagination?.total || 0);
     } catch (error) {
       console.error("Error loading reviews:", error);

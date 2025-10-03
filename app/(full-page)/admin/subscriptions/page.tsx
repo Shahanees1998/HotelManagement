@@ -60,7 +60,7 @@ export default function AdminSubscriptions() {
         page: currentPage,
         limit: rowsPerPage,
       });
-      setSubscriptions(response.data || []);
+      setSubscriptions((response as any).data || []);
       setTotalRecords(response.pagination?.total || 0);
     } catch (error) {
       console.error("Error loading subscriptions:", error);

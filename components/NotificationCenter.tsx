@@ -169,7 +169,7 @@ export default function NotificationCenter() {
           </div>
         </div>
 
-        {notifications.length === 0 ? (
+        {!notifications || notifications.length === 0 ? (
           <div className="text-center py-4">
             <i className="pi pi-bell-slash text-4xl text-400 mb-3"></i>
             <p className="text-600 m-0">No notifications yet</p>
@@ -183,7 +183,7 @@ export default function NotificationCenter() {
               width: '100%'
             }}
           >
-            {notifications.map((notification) => (
+            {(notifications || []).map((notification) => (
               <div
                 key={notification.id}
                 className={`notification-item p-3 border-1 border-200 border-round mb-2 cursor-pointer transition-colors ${

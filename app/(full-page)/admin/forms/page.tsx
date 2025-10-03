@@ -57,7 +57,7 @@ export default function AdminForms() {
         page: currentPage,
         limit: rowsPerPage,
       });
-      setForms(response.data || []);
+      setForms((response as any).data || []);
       setTotalRecords(response.pagination?.total || 0);
     } catch (error) {
       console.error("Error loading forms:", error);

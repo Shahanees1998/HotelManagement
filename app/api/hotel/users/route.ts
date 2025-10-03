@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withAuth, AuthenticatedRequest } from '@/lib/authMiddleware';
 import { prisma } from '@/lib/prisma';
 
-// GET /api/hotel/reviews - Get hotel's reviews
 export async function GET(request: NextRequest) {
   return withAuth(request, async (authenticatedReq: AuthenticatedRequest) => {
     try {
@@ -23,77 +22,77 @@ export async function GET(request: NextRequest) {
       }
 
       const { searchParams } = new URL(request.url);
-      const status = searchParams.get('status');
-      const rating = searchParams.get('rating');
       const search = searchParams.get('search');
+      const status = searchParams.get('status');
       const page = parseInt(searchParams.get('page') || '1');
       const limit = parseInt(searchParams.get('limit') || '10');
-      const sortField = searchParams.get('sortField') || 'submittedAt';
+      const sortField = searchParams.get('sortField') || 'createdAt';
       const sortOrder = searchParams.get('sortOrder') || 'desc';
       const skip = (page - 1) * limit;
 
       // Build where clause for filtering
-      const where: any = { hotelId: hotel.id };
+      const where: any = {};
       
       if (status) {
         where.status = status;
       }
       
-      if (rating) {
-        where.overallRating = parseInt(rating);
-      }
-      
       if (search) {
         where.OR = [
-          { guestName: { contains: search, mode: 'insensitive' } },
-          { guestEmail: { contains: search, mode: 'insensitive' } },
-          { form: { title: { contains: search, mode: 'insensitive' } } },
+          { firstName: { contains: search, mode: 'insensitive' } },
+          { lastName: { contains: search, mode: 'insensitive' } },
+          { email: { contains: search, mode: 'insensitive' } },
         ];
       }
 
       // Build orderBy clause
       const orderBy: any = {};
-      if (sortField === 'guestName') {
-        orderBy.guestName = sortOrder;
-      } else if (sortField === 'overallRating') {
-        orderBy.overallRating = sortOrder;
-      } else if (sortField === 'status') {
-        orderBy.status = sortOrder;
+      if (sortField === 'name') {
+        orderBy.firstName = sortOrder;
       } else {
         orderBy[sortField] = sortOrder;
       }
 
       // Get total count and paginated data in parallel
-      const [reviews, total] = await Promise.all([
-        prisma.review.findMany({
+      const [users, total] = await Promise.all([
+        prisma.user.findMany({
           where,
           skip,
           take: limit,
-          include: {
-            form: {
-              select: { title: true },
-            },
+          select: {
+            id: true,
+            email: true,
+            firstName: true,
+            lastName: true,
+            phone: true,
+            role: true,
+            status: true,
+            profileImage: true,
+            profileImagePublicId: true,
+            createdAt: true,
+            updatedAt: true,
           },
           orderBy,
         }),
-        prisma.review.count({ where })
+        prisma.user.count({ where })
       ]);
 
-      const formattedReviews = reviews.map(review => ({
-        id: review.id,
-        guestName: review.guestName,
-        guestEmail: review.guestEmail,
-        overallRating: review.overallRating,
-        status: review.status,
-        isPublic: review.isPublic,
-        isShared: review.isShared,
-        submittedAt: review.submittedAt.toISOString(),
-        publishedAt: review.publishedAt?.toISOString(),
-        formTitle: review.form?.title || 'Unknown Form',
+      const formattedUsers = users.map(user => ({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+        status: user.status,
+        profileImage: user.profileImage,
+        profileImagePublicId: user.profileImagePublicId,
+        createdAt: user.createdAt.toISOString(),
+        updatedAt: user.updatedAt.toISOString(),
       }));
 
       return NextResponse.json({ 
-        data: formattedReviews,
+        data: formattedUsers,
         pagination: {
           page,
           limit,
@@ -102,9 +101,9 @@ export async function GET(request: NextRequest) {
         }
       });
     } catch (error) {
-      console.error('Error fetching hotel reviews:', error);
+      console.error('Error fetching hotel users:', error);
       return NextResponse.json(
-        { error: 'Failed to fetch reviews' },
+        { error: 'Failed to fetch users' },
         { status: 500 }
       );
     }

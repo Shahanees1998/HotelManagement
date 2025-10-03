@@ -7,11 +7,14 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
 import { Toast } from "primereact/toast";
+import { InputText } from "primereact/inputtext";
+import { Dropdown } from "primereact/dropdown";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import FeedbackFormBuilder from "@/components/FeedbackFormBuilder";
 import { CustomPaginator } from "@/components/CustomPaginator";
+import { apiClient } from "@/lib/apiClient";
 
 interface FeedbackForm {
   id: string;
@@ -33,43 +36,55 @@ export default function HotelForms() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [filters, setFilters] = useState({
+    status: "",
+    search: "",
+  });
   const [showFormBuilder, setShowFormBuilder] = useState(false);
   const [editingFormId, setEditingFormId] = useState<string | null>(null);
   const toast = useRef<Toast>(null);
 
-  useEffect(() => {
-    loadForms();
-  }, []);
-
-  const loadForms = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch('/api/hotel/forms', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.data) {
-        setForms(data.data);
-      } else {
-        throw new Error(data.error || 'Failed to load forms');
-      }
-    } catch (error) {
-      console.error("Error loading forms:", error);
-      showToast("error", "Error", "Failed to load forms");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
     toast.current?.show({ severity, summary, detail, life: 3000 });
   }, []);
+
+  const loadForms = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await apiClient.getHotelForms({
+        status: filters.status,
+        search: filters.search,
+        page: currentPage,
+        limit: rowsPerPage,
+      });
+
+      if (response.error) {
+        throw new Error(response.error);
+      }
+
+      setForms((response as any).data || []);
+      setTotalRecords(response.pagination?.total || 0);
+    } catch (error) {
+      console.error("Error loading forms:", error);
+      showToast("error", "Error", "Failed to load forms");
+      setForms([]);
+      setTotalRecords(0);
+    } finally {
+      setLoading(false);
+    }
+  }, [filters.status, filters.search, currentPage, rowsPerPage, showToast]);
+
+  useEffect(() => {
+    loadForms();
+  }, [loadForms]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    if (currentPage !== 1) {
+      setCurrentPage(1);
+    }
+  }, [filters.status, filters.search]);
 
   const handleCreateForm = useCallback(() => {
     setEditingFormId(null);
@@ -183,10 +198,11 @@ export default function HotelForms() {
     );
   }, [handleEditForm, handleDeleteForm]);
 
-  // Memoize paginated forms to prevent unnecessary re-renders
-  const paginatedForms = useMemo(() => {
-    return forms.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
-  }, [forms, currentPage, rowsPerPage]);
+  const statusOptions = useMemo(() => [
+    { label: "All Statuses", value: "" },
+    { label: "Active", value: "true" },
+    { label: "Inactive", value: "false" },
+  ], []);
 
   if (showFormBuilder) {
     return (
@@ -229,6 +245,43 @@ export default function HotelForms() {
         </div>
       </div>
 
+      {/* Filters */}
+      <div className="col-12">
+        <Card className="mb-4">
+          <div className="grid">
+            <div className="col-12 md:col-6">
+              <div className="field">
+                <label htmlFor="search" className="block text-900 font-medium mb-2">
+                  Search Forms
+                </label>
+                <InputText
+                  id="search"
+                  value={filters.search}
+                  onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
+                  placeholder="Search by title or description..."
+                  className="w-full"
+                />
+              </div>
+            </div>
+            <div className="col-12 md:col-6">
+              <div className="field">
+                <label htmlFor="status" className="block text-900 font-medium mb-2">
+                  Status
+                </label>
+                <Dropdown
+                  id="status"
+                  value={filters.status}
+                  options={statusOptions}
+                  onChange={(e) => setFilters(prev => ({ ...prev, status: e.value }))}
+                  placeholder="Select status"
+                  className="w-full"
+                />
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+
       {/* Forms Table */}
       <div className="col-12">
           {loading ? (
@@ -252,7 +305,7 @@ export default function HotelForms() {
           ) : (
             <>
               <DataTable 
-                value={paginatedForms}
+                value={forms}
                 dataKey="id"
                 emptyMessage="No Forms found"
                 className="p-datatable-sm"
@@ -281,7 +334,7 @@ export default function HotelForms() {
               </DataTable>
               <CustomPaginator
                 currentPage={currentPage}
-                totalRecords={forms.length}
+                totalRecords={totalRecords}
                 rowsPerPage={rowsPerPage}
                 onPageChange={setCurrentPage}
                 onRowsPerPageChange={(rows) => {

@@ -72,7 +72,7 @@ export default function AdminSupport() {
     setLoading(true);
     try {
       const response = await apiClient.getAdminSupportRequests();
-      setRequests(response.data || []);
+      setRequests((response as any).data || []);
     } catch (error) {
       console.error("Error loading support requests:", error);
       showToast("error", "Error", "Failed to load support requests");

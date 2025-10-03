@@ -14,26 +14,35 @@ export async function GET(request: NextRequest) {
       const { searchParams } = new URL(request.url);
       const isRead = searchParams.get('isRead');
       const type = searchParams.get('type');
-      const limit = searchParams.get('limit');
-      const offset = searchParams.get('offset');
+      const search = searchParams.get('search');
+      const page = parseInt(searchParams.get('page') || '1');
+      const limit = parseInt(searchParams.get('limit') || '10');
+      const offset = (page - 1) * limit;
 
       const filters = {
         userId: user.userId,
         isRead: isRead ? isRead === 'true' : undefined,
         type: type as any,
-        limit: limit ? parseInt(limit) : 50,
-        offset: offset ? parseInt(offset) : 0,
+        search: search || undefined,
+        limit,
+        offset,
       };
 
       console.log('Fetching notifications for user:', user.userId, 'with filters:', filters);
-      const notifications = await NotificationService.getNotifications(filters);
+      const result = await NotificationService.getNotificationsWithPagination(filters);
       const unreadCount = await NotificationService.getUnreadCount(user.userId);
-      console.log('Found notifications:', notifications.length, 'unread count:', unreadCount);
+      console.log('Found notifications:', result.notifications.length, 'total:', result.total, 'unread count:', unreadCount);
 
       return NextResponse.json({
         success: true,
-        notifications,
+        data: result.notifications,
         unreadCount,
+        pagination: {
+          page,
+          limit,
+          total: result.total,
+          totalPages: Math.ceil(result.total / limit)
+        }
       });
     } catch (error) {
       console.error('Error fetching notifications:', error);

@@ -79,7 +79,7 @@ const AppProfileSidebar = () => {
 
             if (notificationsResponse.ok) {
                 const data = await notificationsResponse.json();
-                setNotifications(data.notifications || []);
+                setNotifications(data.data || []);
             } else {
                 console.error('Failed to load notifications:', notificationsResponse.statusText);
                 setNotifications([]);

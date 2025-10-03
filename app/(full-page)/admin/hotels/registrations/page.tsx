@@ -57,7 +57,7 @@ export default function HotelRegistrations() {
     setLoading(true);
     try {
       const response = await apiClient.getHotelRegistrations();
-      setRegistrations(response.data || []);
+      setRegistrations((response as any).data || []);
     } catch (error) {
       console.error("Error loading registrations:", error);
       showToast("error", "Error", "Failed to load hotel registrations");

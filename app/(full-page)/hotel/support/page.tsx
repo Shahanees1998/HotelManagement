@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -13,6 +13,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Toast } from "primereact/toast";
 import { useAuth } from "@/hooks/useAuth";
 import { CustomPaginator } from "@/components/CustomPaginator";
+import { apiClient } from "@/lib/apiClient";
 
 interface SupportRequest {
     id: string;
@@ -31,6 +32,7 @@ export default function HotelSupportPage() {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [totalRecords, setTotalRecords] = useState(0);
     const [filters, setFilters] = useState({
         status: "",
         priority: "",
@@ -45,39 +47,48 @@ export default function HotelSupportPage() {
     const [submitting, setSubmitting] = useState(false);
     const toast = useRef<Toast>(null);
 
-
-    useEffect(() => {
-        loadSupportRequests();
+    const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+        toast.current?.show({ severity, summary, detail, life: 3000 });
     }, []);
 
-    const loadSupportRequests = async () => {
+    const loadSupportRequests = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await fetch('/api/hotel/support');
-            if (response.ok) {
-                const data = await response.json();
-                setRequests(data.data || []);
-            } else {
-                const errorData = await response.json();
-                showToast("error", "Error", errorData.error || "Failed to load support requests");
+            const response = await apiClient.getHotelSupportRequests({
+                status: filters.status,
+                priority: filters.priority,
+                search: filters.search,
+                page: currentPage,
+                limit: rowsPerPage,
+            });
+
+            if (response.error) {
+                throw new Error(response.error);
             }
+
+            setRequests((response as any).data || []);
+            setTotalRecords(response.pagination?.total || 0);
         } catch (error) {
             console.error("Error loading support requests:", error);
             showToast("error", "Error", "Failed to load support requests");
+            setRequests([]);
+            setTotalRecords(0);
         } finally {
             setLoading(false);
         }
-    };
+    }, [filters.status, filters.priority, filters.search, currentPage, rowsPerPage, showToast]);
 
-    const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
-        toast.current?.show({ severity, summary, detail, life: 3000 });
-    };
+    useEffect(() => {
+        loadSupportRequests();
+    }, [loadSupportRequests]);
 
-    // Helper function to update filters and reset page
-    const updateFilters = (newFilters: Partial<typeof filters>) => {
-        setFilters(prev => ({ ...prev, ...newFilters }));
-        setCurrentPage(1);
-    };
+    // Reset to page 1 when filters change
+    useEffect(() => {
+        if (currentPage !== 1) {
+            setCurrentPage(1);
+        }
+    }, [filters.status, filters.priority, filters.search]);
+
 
     const openCreateDialog = () => {
         setCreateForm({
@@ -190,22 +201,6 @@ export default function HotelSupportPage() {
         })
     ), []);
 
-    // Filter and paginate data
-    const filteredRequests = useMemo(() => {
-        return requests.filter(request => {
-            if (filters.status && request.status !== filters.status) return false;
-            if (filters.priority && request.priority !== filters.priority) return false;
-            if (filters.search && !request.subject.toLowerCase().includes(filters.search.toLowerCase())) return false;
-            return true;
-        });
-    }, [requests, filters.status, filters.priority, filters.search]);
-
-    const paginatedRequests = useMemo(() => {
-        return filteredRequests.slice(
-            (currentPage - 1) * rowsPerPage,
-            currentPage * rowsPerPage
-        );
-    }, [filteredRequests, currentPage, rowsPerPage]);
 
     const statusOptions = useMemo(() => [
         { label: "All Statuses", value: "" },
@@ -258,7 +253,7 @@ export default function HotelSupportPage() {
                             <label className="block text-900 font-medium mb-2">Search Subject</label>
                             <InputText
                                 value={filters.search}
-                                onChange={(e) => updateFilters({ search: e.target.value })}
+                                onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
                                 placeholder="Search by subject..."
                                 className="w-full"
                             />
@@ -268,7 +263,7 @@ export default function HotelSupportPage() {
                             <Dropdown
                                 value={filters.status}
                                 options={statusOptions}
-                                onChange={(e) => updateFilters({ status: e.value })}
+                                onChange={(e) => setFilters(prev => ({ ...prev, status: e.value }))}
                                 placeholder="All Statuses"
                                 className="w-full"
                             />
@@ -278,7 +273,7 @@ export default function HotelSupportPage() {
                             <Dropdown
                                 value={filters.priority}
                                 options={priorityOptions}
-                                onChange={(e) => updateFilters({ priority: e.value })}
+                                onChange={(e) => setFilters(prev => ({ ...prev, priority: e.value }))}
                                 placeholder="All Priorities"
                                 className="w-full"
                             />
@@ -296,7 +291,7 @@ export default function HotelSupportPage() {
                             <p>Loading support requests...</p>
                         </div>
                     </div>
-                ) : filteredRequests.length === 0 ? (
+                ) : requests.length === 0 ? (
                     <div className="text-center py-6">
                         <i className="pi pi-life-ring text-4xl text-400 mb-3"></i>
                         <h3 className="text-900 mb-2">No Support Requests Found</h3>
@@ -314,7 +309,7 @@ export default function HotelSupportPage() {
                     </div>
                 ) : (
                     <>
-                        <DataTable value={paginatedRequests}>
+                        <DataTable value={requests}>
                             <Column field="subject" header="Subject" sortable />
                             <Column field="message" header="Message" body={messageBodyTemplate} />
                             <Column field="status" header="Status" body={statusBodyTemplate} sortable />
@@ -324,7 +319,7 @@ export default function HotelSupportPage() {
                         </DataTable>
                         <CustomPaginator
                             currentPage={currentPage}
-                            totalRecords={filteredRequests.length}
+                            totalRecords={totalRecords}
                             rowsPerPage={rowsPerPage}
                             onPageChange={setCurrentPage}
                             onRowsPerPageChange={(rows) => {

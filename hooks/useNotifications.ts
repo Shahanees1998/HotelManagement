@@ -36,8 +36,8 @@ export const useNotifications = () => {
       const data = await response.json();
 
       if (data.success) {
-        setNotifications(data.data.notifications);
-        setUnreadCount(data.data.unreadCount);
+        setNotifications(data.data || []);
+        setUnreadCount(data.unreadCount || 0);
         setError(null);
       } else {
         setError(data.error || 'Failed to fetch notifications');

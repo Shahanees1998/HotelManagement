@@ -123,20 +123,20 @@ export default function MembersPage() {
         setLoading(true);
         setError(null);
         try {
-            const response = await apiClient.getUsers({
+            const response = await apiClient.getHotelUsers({
                 page: currentPage,
                 limit: rowsPerPage,
                 search: debouncedFilterValue,
                 sortField,
-                sortOrder,
+                sortOrder: sortOrder?.toString(),
             });
 
             if (response.error) {
                 throw new Error(response.error);
             }
 
-            setUsers(response.data?.users || []);
-            setTotalRecords(response.data?.pagination?.total || 0);
+            setUsers((response as any).data || []);
+            setTotalRecords(response.pagination?.total || 0);
         } catch (error) {
             setError("Failed to load members. Please check your connection or try again later.");
             showToast("error", "Error", "Failed to load members");
@@ -625,7 +625,8 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                         ) : (
             <>
               <DataTable
-                                value={users.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)}rows={rowsPerPage}
+                                value={users}
+                                rows={rowsPerPage}
                                 totalRecords={totalRecords}
                                 lazy
                                 first={(currentPage - 1) * rowsPerPage}

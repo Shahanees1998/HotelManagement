@@ -67,7 +67,7 @@ export default function AdminTemplates() {
     setLoading(true);
     try {
       const response = await apiClient.getAdminTemplates();
-      setTemplates(response.data || []);
+      setTemplates((response as any).data || []);
     } catch (error) {
       console.error("Error loading templates:", error);
       showToast("error", "Error", "Failed to load form templates");

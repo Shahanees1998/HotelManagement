@@ -50,7 +50,7 @@ export default function HotelPerformanceAnalytics() {
     setLoading(true);
     try {
       const response = await apiClient.getHotelPerformanceAnalytics();
-      setHotels(response.data || []);
+      setHotels((response as any).data || []);
     } catch (error) {
       console.error("Error loading hotel performance:", error);
       showToast("error", "Error", "Failed to load hotel performance data");

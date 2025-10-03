@@ -64,18 +64,19 @@ export default function NotificationsPage() {
     const loadNotifications = async () => {
         setLoading(true);
         try {
-            const response = await apiClient.getNotifications({
+            const response = await apiClient.getUserNotifications({
                 page: currentPage,
                 limit: rowsPerPage,
                 type: selectedType,
-                status: selectedStatus,
+                isRead: selectedStatus === "read" ? "true" : selectedStatus === "unread" ? "false" : undefined,
+                search: globalFilterValue || undefined,
             });
 
             if (response.error) {
                 throw new Error(response.error);
             }
 
-            setNotifications(response.data?.notifications || []);
+            setNotifications(response.data?.data || []);
             setTotalRecords(response.data?.pagination?.total || 0);
         } catch (error) {
             showToast("error", "Error", "Failed to load notifications");

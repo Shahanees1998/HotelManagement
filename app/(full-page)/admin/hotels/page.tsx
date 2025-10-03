@@ -62,7 +62,7 @@ export default function AdminHotels() {
         page: currentPage,
         limit: rowsPerPage,
       });
-      setHotels(response.data || []);
+      setHotels((response as any).data || []);
       setTotalRecords(response.pagination?.total || 0);
     } catch (error) {
       console.error("Error loading hotels:", error);
