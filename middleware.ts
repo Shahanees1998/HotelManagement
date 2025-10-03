@@ -87,14 +87,7 @@ export async function middleware(req: NextRequest) {
         if (pathname.startsWith('/api/admin/notifications') && payload.role === 'HOTEL') {
           // Allow hotel users to access their notifications
         } else if (payload.role !== 'ADMIN') {
-          // For API routes, return 403 instead of redirecting
-          if (pathname.startsWith('/api/')) {
-            return NextResponse.json(
-              { error: 'Admin access required' },
-              { status: 403}
-            );
-          }
-          
+      
           // For frontend routes, redirect to hotel dashboard
           return NextResponse.redirect(new URL('/hotel/dashboard', req.url));
         }

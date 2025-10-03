@@ -167,6 +167,7 @@ model Review {
   status        ReviewStatus @default(PENDING)
   submittedAt   DateTime @default(now())
   publishedAt   DateTime?
+  predefinedAnswers String? // JSON string to store predefined question answers
 
   // Relations
   hotel         Hotels            @relation(fields: [hotelId], references: [id], onDelete: Cascade)

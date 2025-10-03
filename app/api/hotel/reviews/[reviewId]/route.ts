@@ -56,6 +56,10 @@ export async function GET(
         },
       });
 
+      if (!review) {
+        return NextResponse.json({ error: 'Review not found' }, { status: 404 });
+      }
+
       // Get form with predefined questions to reconstruct the complete feedback
       const formWithPredefined = await prisma.feedbackForm.findFirst({
         where: { id: review.formId },
@@ -70,11 +74,18 @@ export async function GET(
         },
       });
 
-      if (!review) {
-        return NextResponse.json({ error: 'Review not found' }, { status: 404 });
+      // Parse stored predefined answers
+      let storedPredefinedAnswers: Record<string, any> = {};
+      if (review.predefinedAnswers) {
+        try {
+          const predefinedAnswersArray = JSON.parse(review.predefinedAnswers);
+          storedPredefinedAnswers = Object.fromEntries(predefinedAnswersArray);
+        } catch (error) {
+          console.error('Error parsing predefined answers:', error);
+        }
       }
 
-      // Generate predefined questions based on form configuration
+      // Generate predefined questions based on form configuration and stored answers
       const predefinedQuestions = [];
       
       if (formWithPredefined?.predefinedQuestions?.hasRateUs) {
@@ -85,12 +96,11 @@ export async function GET(
           isRequired: true,
           options: [],
           isDefault: true,
-          answer: review.overallRating, // Use the overall rating as the answer
+          answer: storedPredefinedAnswers['rate-us'] || review.overallRating,
         });
       }
       
       if (formWithPredefined?.predefinedQuestions?.hasCustomRating && formWithPredefined.predefinedQuestions.customRatingItems.length > 0) {
-        // For custom rating, we'll show the items but without individual answers since they're not stored
         predefinedQuestions.push({
           id: 'custom-rating',
           question: 'Custom Rating',
@@ -102,8 +112,9 @@ export async function GET(
             id: item.id,
             label: item.label,
             order: item.order,
+            rating: storedPredefinedAnswers[`custom-rating-${item.id}`] || 0,
           })),
-          answer: 'Custom rating items available (individual ratings not stored)',
+          answer: 'Custom rating items with individual ratings',
         });
       }
       
@@ -115,7 +126,7 @@ export async function GET(
           isRequired: true,
           options: [],
           isDefault: true,
-          answer: 'Feedback question was included in this form (detailed feedback not stored)',
+          answer: storedPredefinedAnswers['feedback'] || 'No feedback provided',
         });
       }
 

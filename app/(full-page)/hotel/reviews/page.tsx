@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
@@ -59,6 +59,7 @@ interface DetailedReview {
       id: string;
       label: string;
       order: number;
+      rating?: number;
     }>;
   }>;
 }
@@ -79,14 +80,15 @@ export default function HotelReviews() {
   const [loadingDetails, setLoadingDetails] = useState(false);
   const toast = useRef<Toast>(null);
 
-  useEffect(() => {
-    loadReviews();
-  }, []);
-
-  // Reset to page 1 when filters change
-  useEffect(() => {
+  // Helper function to update filters and reset page
+  const updateFilters = (newFilters: Partial<typeof filters>) => {
+    setFilters(prev => ({ ...prev, ...newFilters }));
     setCurrentPage(1);
-  }, [filters.status, filters.rating, filters.search]);
+  };
+
+  const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+    toast.current?.show({ severity, summary, detail, life: 3000 });
+  };
 
   const loadReviews = async () => {
     setLoading(true);
@@ -109,9 +111,9 @@ export default function HotelReviews() {
     }
   };
 
-  const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
-    toast.current?.show({ severity, summary, detail, life: 3000 });
-  };
+  useEffect(() => {
+    loadReviews();
+  }, []);
 
   const loadDetailedReview = async (reviewId: string) => {
     setLoadingDetails(true);
@@ -191,9 +193,10 @@ export default function HotelReviews() {
               customRatingItems.map((item: any) => (
                 <div key={item.id} className="flex align-items-center justify-content-between p-2 border-1 border-200 border-round">
                   <span className="text-900 font-medium">{item.label}</span>
-                  <span className="text-600 text-sm">
-                    {answer.includes('not stored') ? 'Rating not stored' : '★ ★ ★ ★ ★'}
-                  </span>
+                  <div className="flex align-items-center gap-2">
+                    <Rating value={item.rating || 0} readOnly stars={5} cancel={false} />
+                    <span className="text-600 text-sm">({item.rating || 0}/5)</span>
+                  </div>
                 </div>
               ))
             ) : (
@@ -231,7 +234,7 @@ export default function HotelReviews() {
     }
   };
 
-  const ratingBodyTemplate = (rowData: Review) => {
+  const ratingBodyTemplate = useMemo(() => (rowData: Review) => {
     return (
       <div className="flex align-items-center gap-2">
         <span className={`font-bold ${getRatingColor(rowData.overallRating)}`}>
@@ -240,9 +243,9 @@ export default function HotelReviews() {
         <i className="pi pi-star-fill text-yellow-500"></i>
       </div>
     );
-  };
+  }, []);
 
-  const statusBodyTemplate = (rowData: Review) => {
+  const statusBodyTemplate = useMemo(() => (rowData: Review) => {
     return (
       <Dropdown
         value={rowData.status}
@@ -255,9 +258,9 @@ export default function HotelReviews() {
         className="w-full"
       />
     );
-  };
+  }, []);
 
-  const visibilityBodyTemplate = (rowData: Review) => {
+  const visibilityBodyTemplate = useMemo(() => (rowData: Review) => {
     return (
       <div className="flex align-items-center gap-2">
         <Tag 
@@ -269,9 +272,9 @@ export default function HotelReviews() {
         )}
       </div>
     );
-  };
+  }, []);
 
-  const actionsBodyTemplate = (rowData: Review) => {
+  const actionsBodyTemplate = useMemo(() => (rowData: Review) => {
     return (
       <div className="flex gap-2">
         <Button
@@ -284,36 +287,40 @@ export default function HotelReviews() {
         />
       </div>
     );
-  };
+  }, [loadingDetails]);
 
-  const filteredReviews = reviews.filter(review => {
-    if (filters.status && review.status !== filters.status) return false;
-    if (filters.rating && review.overallRating.toString() !== filters.rating) return false;
-    if (filters.search && !review.guestName.toLowerCase().includes(filters.search.toLowerCase())) return false;
-    return true;
-  });
+  const filteredReviews = useMemo(() => {
+    return reviews.filter(review => {
+      if (filters.status && review.status !== filters.status) return false;
+      if (filters.rating && review.overallRating.toString() !== filters.rating) return false;
+      if (filters.search && !review.guestName.toLowerCase().includes(filters.search.toLowerCase())) return false;
+      return true;
+    });
+  }, [reviews, filters.status, filters.rating, filters.search]);
 
   // Paginate the filtered reviews
-  const paginatedReviews = filteredReviews.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
-  );
+  const paginatedReviews = useMemo(() => {
+    return filteredReviews.slice(
+      (currentPage - 1) * rowsPerPage,
+      currentPage * rowsPerPage
+    );
+  }, [filteredReviews, currentPage, rowsPerPage]);
 
-  const statusOptions = [
+  const statusOptions = useMemo(() => [
     { label: "All Statuses", value: "" },
     { label: "Pending", value: "PENDING" },
     { label: "Approved", value: "APPROVED" },
     { label: "Rejected", value: "REJECTED" },
-  ];
+  ], []);
 
-  const ratingOptions = [
+  const ratingOptions = useMemo(() => [
     { label: "All Ratings", value: "" },
     { label: "5 Stars", value: "5" },
     { label: "4 Stars", value: "4" },
     { label: "3 Stars", value: "3" },
     { label: "2 Stars", value: "2" },
     { label: "1 Star", value: "1" },
-  ];
+  ], []);
 
   return (
     <div className="grid">
@@ -344,7 +351,7 @@ export default function HotelReviews() {
               <label className="block text-900 font-medium mb-2">Search Guest</label>
               <InputText
                 value={filters.search}
-                onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
+                onChange={(e) => updateFilters({ search: e.target.value })}
                 placeholder="Search by guest name..."
                 className="w-full"
               />
@@ -354,7 +361,7 @@ export default function HotelReviews() {
               <Dropdown
                 value={filters.status}
                 options={statusOptions}
-                onChange={(e) => setFilters(prev => ({ ...prev, status: e.value }))}
+                onChange={(e) => updateFilters({ status: e.value })}
                 placeholder="All Statuses"
                 className="w-full"
               />
@@ -364,7 +371,7 @@ export default function HotelReviews() {
               <Dropdown
                 value={filters.rating}
                 options={ratingOptions}
-                onChange={(e) => setFilters(prev => ({ ...prev, rating: e.value }))}
+                onChange={(e) => updateFilters({ rating: e.value })}
                 placeholder="All Ratings"
                 className="w-full"
               />
@@ -375,7 +382,6 @@ export default function HotelReviews() {
 
       {/* Reviews Table */}
       <div className="col-12">
-        <Card>
           {loading ? (
             <div className="flex align-items-center justify-content-center" style={{ height: '200px' }}>
               <div className="text-center">
@@ -399,19 +405,20 @@ export default function HotelReviews() {
               <DataTable 
                 value={paginatedReviews}
               >
-              <Column field="guestName" header="Guest" sortable />
-              <Column field="guestEmail" header="Email" />
-              <Column field="overallRating" header="Rating" body={ratingBodyTemplate} sortable />
-              <Column field="status" header="Status" body={statusBodyTemplate} />
-              <Column field="visibility" header="Visibility" body={visibilityBodyTemplate} />
-              <Column field="formTitle" header="Form" />
-              <Column 
-                field="submittedAt" 
-                header="Submitted" 
-                body={(rowData) => formatDate(rowData.submittedAt)}
-                sortable 
-              />
-              <Column header="Actions" body={actionsBodyTemplate} />              </DataTable>
+                <Column field="guestName" header="Guest" sortable />
+                <Column field="guestEmail" header="Email" />
+                <Column field="overallRating" header="Rating" body={ratingBodyTemplate} sortable />
+                <Column field="status" header="Status" body={statusBodyTemplate} />
+                <Column field="visibility" header="Visibility" body={visibilityBodyTemplate} />
+                <Column field="formTitle" header="Form" />
+                <Column 
+                  field="submittedAt" 
+                  header="Submitted" 
+                  body={(rowData) => formatDate(rowData.submittedAt)}
+                  sortable 
+                />
+                <Column header="Actions" body={actionsBodyTemplate} />
+              </DataTable>
               <CustomPaginator
                 currentPage={currentPage}
                 totalRecords={filteredReviews.length}
@@ -424,7 +431,6 @@ export default function HotelReviews() {
               />
             </>
           )}
-        </Card>
       </div>
 
       {/* Detailed Review Dialog */}

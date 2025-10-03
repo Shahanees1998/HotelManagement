@@ -174,13 +174,11 @@ export async function POST(
         );
 
       if (predefinedAnswers.length > 0) {
-        // Store predefined answers as JSON in a custom field or separate table
-        // For now, we'll store them in the review's metadata
+        // Store predefined answers as JSON in the predefinedAnswers field
         await tx.review.update({
           where: { id: review.id },
           data: {
-            // We'll add a metadata field to store predefined answers
-            // This is a workaround since we can't store them in QuestionAnswer table
+            predefinedAnswers: JSON.stringify(predefinedAnswers)
           }
         });
       }
