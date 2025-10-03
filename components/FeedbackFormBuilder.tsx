@@ -408,6 +408,15 @@ export default function FeedbackFormBuilder({
       return;
     }
 
+    // Check if either Rate Us or Custom Rating is selected
+    const hasRateUs = form.questions.some(q => q.question === "Rate Us");
+    const hasCustomRating = form.questions.some(q => q.question === "Custom Rating");
+    
+    if (!hasRateUs && !hasCustomRating) {
+      showToast("warn", "Warning", "Either 'Rate Us' or 'Custom Rating' must be selected");
+      return;
+    }
+
     setLoading(true);
     try {
       // Prepare predefined questions section data
@@ -603,7 +612,8 @@ export default function FeedbackFormBuilder({
             className="p-button-primary save-form-btn"
             onClick={handleSave}
             loading={loading}
-            disabled={loading}
+            disabled={loading || (!form.questions.some(q => q.question === "Rate Us") && !form.questions.some(q => q.question === "Custom Rating"))}
+            tooltip={(!form.questions.some(q => q.question === "Rate Us") && !form.questions.some(q => q.question === "Custom Rating")) ? "Either 'Rate Us' or 'Custom Rating' must be selected" : "Save the form"}
           />
         </div>
       </div>
@@ -1031,6 +1041,19 @@ export default function FeedbackFormBuilder({
                     <div>
                       <p className="text-600 text-sm mb-1 font-medium">Basic Layout Features</p>
                       <p className="text-500 text-xs">Only "Rate Us" question is available. Upgrade to Good or Excellent layout for more options.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Rating Requirement Warning */}
+              {!form.questions.some(q => q.question === "Rate Us") && !form.questions.some(q => q.question === "Custom Rating") && form.questions.length > 0 && (
+                <div className="rating-requirement-warning">
+                  <div className="flex align-items-center gap-2 p-3 bg-orange-50 border-round mb-3">
+                    <i className="pi pi-exclamation-triangle text-orange-500"></i>
+                    <div>
+                      <p className="text-600 text-sm mb-1 font-medium">Rating Required</p>
+                      <p className="text-500 text-xs">Either "Rate Us" or "Custom Rating" must be selected to save the form.</p>
                     </div>
                   </div>
                 </div>
