@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
@@ -67,21 +67,21 @@ export default function HotelForms() {
     }
   };
 
-  const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+  const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
     toast.current?.show({ severity, summary, detail, life: 3000 });
-  };
+  }, []);
 
-  const handleCreateForm = () => {
+  const handleCreateForm = useCallback(() => {
     setEditingFormId(null);
     setShowFormBuilder(true);
-  };
+  }, []);
 
-  const handleEditForm = (formId: string) => {
+  const handleEditForm = useCallback((formId: string) => {
     setEditingFormId(formId);
     setShowFormBuilder(true);
-  };
+  }, []);
 
-  const handleFormSaved = async (form: any) => {
+  const handleFormSaved = useCallback(async (form: any) => {
     console.log("handleFormSaved called with:", form);
     try {
       const url = editingFormId ? `/api/hotel/forms/${editingFormId}` : '/api/hotel/forms';
@@ -114,9 +114,9 @@ export default function HotelForms() {
       console.error("Error saving form:", error);
       showToast("error", "Error", "Failed to save form");
     }
-  };
+  }, [editingFormId, showToast]);
 
-  const handleDeleteForm = async (formId: string) => {
+  const handleDeleteForm = useCallback(async (formId: string) => {
     if (confirm('Are you sure you want to delete this form? This action cannot be undone.')) {
       try {
         const response = await fetch(`/api/hotel/forms/${formId}`, {
@@ -139,30 +139,30 @@ export default function HotelForms() {
         showToast("error", "Error", "Failed to delete form");
       }
     }
-  };
+  }, [showToast]);
 
-  const getStatusSeverity = (isActive: boolean) => {
+  const getStatusSeverity = useCallback((isActive: boolean) => {
     return isActive ? "success" : "danger";
-  };
+  }, []);
 
-  const formatDate = (dateString: string) => {
+  const formatDate = useCallback((dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
     });
-  };
+  }, []);
 
-  const statusBodyTemplate = (rowData: FeedbackForm) => {
+  const statusBodyTemplate = useMemo(() => (rowData: FeedbackForm) => {
     return (
       <Tag 
         value={rowData.isActive ? "Active" : "Inactive"} 
         severity={getStatusSeverity(rowData.isActive) as any} 
       />
     );
-  };
+  }, [getStatusSeverity]);
 
-  const actionsBodyTemplate = (rowData: FeedbackForm) => {
+  const actionsBodyTemplate = useMemo(() => (rowData: FeedbackForm) => {
     return (
       <div className="flex gap-2">
         <Button
@@ -181,7 +181,12 @@ export default function HotelForms() {
         />
       </div>
     );
-  };
+  }, [handleEditForm, handleDeleteForm]);
+
+  // Memoize paginated forms to prevent unnecessary re-renders
+  const paginatedForms = useMemo(() => {
+    return forms.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+  }, [forms, currentPage, rowsPerPage]);
 
   if (showFormBuilder) {
     return (
@@ -247,20 +252,33 @@ export default function HotelForms() {
           ) : (
             <>
               <DataTable 
-                value={forms.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)}
+                value={paginatedForms}
+                dataKey="id"
+                emptyMessage="No Forms found"
+                className="p-datatable-sm"
+                scrollable
+                scrollHeight="400px"
               >
-              <Column field="title" header="Form Title" sortable />
-              <Column field="description" header="Description" />
-              <Column field="questionsCount" header="Questions" sortable />
-              <Column field="totalResponses" header="Responses" sortable />
-              <Column field="status" header="Status" body={statusBodyTemplate} />
-              <Column 
-                field="updatedAt" 
-                header="Last Updated" 
-                body={(rowData) => formatDate(rowData.updatedAt)}
-                sortable 
-              />
-              <Column header="Actions" body={actionsBodyTemplate} />              </DataTable>
+                <Column field="title" header="Form Title" sortable style={{ minWidth: '200px' }} />
+                <Column field="description" header="Description" style={{ minWidth: '250px' }} />
+                <Column field="questionsCount" header="Questions" sortable style={{ minWidth: '100px' }} />
+                <Column field="totalResponses" header="Responses" sortable style={{ minWidth: '100px' }} />
+                <Column field="status" header="Status" body={statusBodyTemplate} style={{ minWidth: '120px' }} />
+                <Column 
+                  field="updatedAt" 
+                  header="Last Updated" 
+                  body={(rowData) => formatDate(rowData.updatedAt)}
+                  sortable 
+                  style={{ minWidth: '150px' }}
+                />
+                <Column 
+                  header="Actions" 
+                  body={actionsBodyTemplate} 
+                  style={{ minWidth: '120px' }}
+                  frozen
+                  alignFrozen="right"
+                />
+              </DataTable>
               <CustomPaginator
                 currentPage={currentPage}
                 totalRecords={forms.length}
