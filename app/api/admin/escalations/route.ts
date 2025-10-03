@@ -119,11 +119,11 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      // Update support request status to ESCALATED
+      // Update support request status to IN_PROGRESS
       await prisma.supportRequest.update({
         where: { id: supportRequestId },
         data: {
-          status: 'ESCALATED',
+          status: 'IN_PROGRESS',
           adminResponse: `Escalated: ${escalationReason}`,
         },
       });

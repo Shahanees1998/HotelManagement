@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
           userId: user.userId,
           title: 'Payment Method Added',
           message: 'Test Hotel added a new payment method.',
-          type: 'PAYMENT_METHOD_ADDED' as const,
+          type: 'SUCCESS' as const,
           relatedId: 'test-payment-1',
           relatedType: 'payment',
         },
