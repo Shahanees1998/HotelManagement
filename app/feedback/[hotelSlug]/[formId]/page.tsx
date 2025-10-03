@@ -53,6 +53,7 @@ export default function CustomerFeedbackForm() {
   const [submitting, setSubmitting] = useState(false);
   const [showSuccessPage, setShowSuccessPage] = useState(false);
   const [hotelWebsite, setHotelWebsite] = useState<string | null>(null);
+  const [finalRating, setFinalRating] = useState(0);
   const [hotelData, setHotelData] = useState({
     name: "Hotel Famulus",
     logo: "/images/logo.png",
@@ -143,6 +144,30 @@ export default function CustomerFeedbackForm() {
     return true;
   };
 
+  const calculateAverageRating = () => {
+    if (!form) return 0;
+
+    // Check for Rate Us question
+    const rateUsQuestion = form.questions.find(q => q.question === "Rate Us");
+    if (rateUsQuestion && submission.answers[rateUsQuestion.id]) {
+      return submission.answers[rateUsQuestion.id];
+    }
+
+    // Check for Custom Rating question
+    const customRatingQuestion = form.questions.find(q => q.question === "Custom Rating");
+    if (customRatingQuestion && customRatingQuestion.customRatingItems) {
+      const ratings = customRatingQuestion.customRatingItems
+        .map(item => submission.answers[`${customRatingQuestion.id}-${item.id}`])
+        .filter(rating => rating && rating > 0);
+      
+      if (ratings.length > 0) {
+        return ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+      }
+    }
+
+    return 0;
+  };
+
   const handleSubmit = async () => {
     if (!validateForm()) return;
 
@@ -159,10 +184,12 @@ export default function CustomerFeedbackForm() {
       const data = await response.json();
 
       if (response.ok) {
-        // Check if rating is 4+ stars for default question
-        const defaultRatingQuestion = form?.questions.find(q => q.question === "How do you rate us?");
-        const rating = defaultRatingQuestion ? submission.answers[defaultRatingQuestion.id] : 0;
-        const isHighRating = rating >= 4;
+        // Calculate average rating
+        const averageRating = calculateAverageRating();
+        const isHighRating = averageRating >= 3; // Changed to 3+ stars as per requirements
+        
+        // Store the final rating for success page
+        setFinalRating(averageRating);
         
         if (isHighRating) {
           showToast("success", "Thank You!", "Your feedback has been submitted successfully! We truly appreciate your positive experience.");
@@ -173,7 +200,7 @@ export default function CustomerFeedbackForm() {
         // Reset form
         setSubmission({ answers: {} });
         
-        // Show success page with review button if high rating
+        // Show success page with review button if high rating (3+ stars)
         if (isHighRating) {
           setShowSuccessPage(true);
         }
@@ -217,11 +244,11 @@ export default function CustomerFeedbackForm() {
               </p>
             </div>
             
-            {hotelWebsite && (
+            {hotelWebsite && finalRating > 3 && (
               <div className="mb-6">
                 <p className="text-600 mb-4">Would you like to share your experience with others?</p>
                 <Button
-                  label="Leave a Review on Our Website"
+                  label="Rate Us on Site"
                   icon="pi pi-star"
                   onClick={() => window.open(hotelWebsite, '_blank')}
                   className="p-button-success p-button-lg"
@@ -525,10 +552,6 @@ export default function CustomerFeedbackForm() {
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
-                          padding: "12px",
-                          backgroundColor: "#f8f9fa",
-                          borderRadius: "6px",
-                          border: "1px solid #e9ecef",
                         }}
                       >
                         <span style={{ fontSize: "14px", fontWeight: 500, color: "#333" }}>

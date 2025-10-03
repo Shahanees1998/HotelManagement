@@ -633,7 +633,42 @@ export default function FeedbackFormBuilder({
                     <Dropdown
                       value={form.layout}
                       options={layoutOptions}
-                      onChange={(e) => setForm({ ...form, layout: e.value })}
+                      onChange={(e) => {
+                        const newLayout = e.value;
+                        let updatedQuestions = [...form.questions];
+                        
+                        if (newLayout === "basic") {
+                          // Basic: Only Rate Us allowed
+                          updatedQuestions = updatedQuestions.filter(q => q.question === "Rate Us");
+                        } else if (newLayout === "good") {
+                          // Good: Remove custom questions and add Rate Us by default
+                          updatedQuestions = updatedQuestions.filter(q => q.isDefault);
+                          if (updatedQuestions.length === 0) {
+                            updatedQuestions = [{
+                              id: "rate-us",
+                              question: "Rate Us",
+                              type: "STAR_RATING",
+                              isRequired: true,
+                              options: [],
+                              isDefault: true
+                            }];
+                          }
+                        } else if (newLayout === "excellent") {
+                          // Excellent: Keep existing questions or add Rate Us if none exist
+                          if (updatedQuestions.length === 0) {
+                            updatedQuestions = [{
+                              id: "rate-us",
+                              question: "Rate Us",
+                              type: "STAR_RATING",
+                              isRequired: true,
+                              options: [],
+                              isDefault: true
+                            }];
+                          }
+                        }
+                        
+                        setForm({ ...form, layout: newLayout, questions: updatedQuestions });
+                      }}
                       optionLabel="label"
                       placeholder="Select form from the list"
                       className="form-dropdown"
@@ -664,6 +699,8 @@ export default function FeedbackFormBuilder({
                 label="Add New"
                 className="add-new-btn"
                 onClick={addQuestion}
+                disabled={form.layout !== "excellent"}
+                tooltip={form.layout === "basic" ? "Custom questions available in Excellent layout" : form.layout === "good" ? "Custom questions available in Excellent layout" : "Add custom question"}
               />
             </div>
 
@@ -677,8 +714,11 @@ export default function FeedbackFormBuilder({
                   <div className="question-checkbox">
                     <Checkbox
                       checked={form.questions.some(q => q.question === "Rate Us")}
+                      disabled={form.layout === "good" && form.questions.some(q => q.question === "Custom Rating")}
                       onChange={(e) => {
                         if (e.checked) {
+                          // Remove custom rating if rate us is selected
+                          const updatedQuestions = form.questions.filter(q => q.question !== "Custom Rating");
                           const rateUsQuestion = {
                             id: "rate-us",
                             question: "Rate Us",
@@ -689,7 +729,7 @@ export default function FeedbackFormBuilder({
                           };
                           setForm({
                             ...form,
-                            questions: [...form.questions, rateUsQuestion]
+                            questions: [...updatedQuestions, rateUsQuestion]
                           });
                         } else {
                           setForm({
@@ -699,7 +739,10 @@ export default function FeedbackFormBuilder({
                         }
                       }}
                     />
-                    <label className="question-label">Rate Us*</label>
+                    <label className="question-label">
+                      Rate Us*
+                      {form.layout === "good" && form.questions.some(q => q.question === "Custom Rating") && <span className="text-xs text-400 ml-2">(Cannot select both Rate Us and Custom Rating)</span>}
+                    </label>
                   </div>
                   <div className="">
                     {form.questions.some(q => q.question === "Rate Us") && (
@@ -715,8 +758,11 @@ export default function FeedbackFormBuilder({
                   <div className="question-checkbox">
                     <Checkbox
                       checked={form.questions.some(q => q.question === "Custom Rating")}
+                      disabled={form.layout === "basic" || (form.layout === "good" && form.questions.some(q => q.question === "Rate Us"))}
                       onChange={(e) => {
                         if (e.checked) {
+                          // Remove rate us if custom rating is selected
+                          const updatedQuestions = form.questions.filter(q => q.question !== "Rate Us");
                           const customRatingQuestion = {
                             id: "custom-rating",
                             question: "Custom Rating",
@@ -727,7 +773,7 @@ export default function FeedbackFormBuilder({
                           };
                           setForm({
                             ...form,
-                            questions: [...form.questions, customRatingQuestion]
+                            questions: [...updatedQuestions, customRatingQuestion]
                           });
                         } else {
                           setForm({
@@ -737,7 +783,11 @@ export default function FeedbackFormBuilder({
                         }
                       }}
                     />
-                    <label className="question-label">Custom Rating*</label>
+                    <label className={`question-label ${form.layout === "basic" ? "text-400" : ""}`}>
+                      Custom Rating*
+                      {form.layout === "basic" && <span className="text-xs text-400 ml-2">(Available in Good/Excellent layouts)</span>}
+                      {form.layout === "good" && form.questions.some(q => q.question === "Rate Us") && <span className="text-xs text-400 ml-2">(Cannot select both Rate Us and Custom Rating)</span>}
+                    </label>
                   </div>
                   {form.questions.some(q => q.question === "Custom Rating") && (
                     <div className="custom-rating-items">
@@ -827,6 +877,7 @@ export default function FeedbackFormBuilder({
                   <div className="question-checkbox">
                     <Checkbox
                       checked={form.questions.some(q => q.question === "Please give us honest feedback?")}
+                      disabled={form.layout === "basic"}
                       onChange={(e) => {
                         if (e.checked) {
                           const feedbackQuestion = {
@@ -849,7 +900,10 @@ export default function FeedbackFormBuilder({
                         }
                       }}
                     />
-                    <label className="question-label">Please give us honest feedback?*</label>
+                    <label className={`question-label ${form.layout === "basic" ? "text-400" : ""}`}>
+                      Please give us honest feedback?*
+                      {form.layout === "basic" && <span className="text-xs text-400 ml-2">(Available in Good/Excellent layouts)</span>}
+                    </label>
                   </div>
                   {form.questions.some(q => q.question === "Please give us honest feedback?") && (
                     <div className="feedback-textarea">
@@ -865,7 +919,7 @@ export default function FeedbackFormBuilder({
               </div>
 
               {/* Custom Questions Section */}
-              {form.questions.filter(q => !q.isDefault).length > 0 && (
+              {form.layout === "excellent" && form.questions.filter(q => !q.isDefault).length > 0 && (
                 <div className="custom-questions">
                   <h4 className="section-subtitle">Custom Questions</h4>
                   {form.questions
@@ -969,12 +1023,56 @@ export default function FeedbackFormBuilder({
                 </div>
               )}
 
+              {/* Layout Info */}
+              {form.layout === "basic" && (
+                <div className="basic-layout-info">
+                  <div className="flex align-items-center gap-2 p-3 bg-blue-50 border-round mb-3">
+                    <i className="pi pi-info-circle text-blue-500"></i>
+                    <div>
+                      <p className="text-600 text-sm mb-1 font-medium">Basic Layout Features</p>
+                      <p className="text-500 text-xs">Only "Rate Us" question is available. Upgrade to Good or Excellent layout for more options.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {form.layout === "good" && (
+                <div className="good-layout-info">
+                  <div className="flex align-items-center gap-2 p-3 bg-green-50 border-round mb-3">
+                    <i className="pi pi-info-circle text-green-500"></i>
+                    <div>
+                      <p className="text-600 text-sm mb-1 font-medium">Good Layout Features</p>
+                      <p className="text-500 text-xs">Choose either "Rate Us" OR "Custom Rating" (mutually exclusive). You can also add "Feedback" question. Custom questions available in Excellent layout.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {form.layout === "excellent" && (
+                <div className="excellent-layout-info">
+                  <div className="flex align-items-center gap-2 p-3 bg-purple-50 border-round mb-3">
+                    <i className="pi pi-info-circle text-purple-500"></i>
+                    <div>
+                      <p className="text-600 text-sm mb-1 font-medium">Excellent Layout Features</p>
+                      <p className="text-500 text-xs">All predefined questions available plus custom questions. Full flexibility for creating comprehensive feedback forms.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* No Questions State */}
               {form.questions.length === 0 && (
                 <div className="no-questions-state">
                   <i className="pi pi-question-circle text-4xl text-400 mb-3"></i>
                   <p className="text-600">No questions added yet</p>
-                  <p className="text-500 text-sm">Use the predefined questions above or add custom questions</p>
+                  <p className="text-500 text-sm">
+                    {form.layout === "basic" 
+                      ? "Select 'Rate Us' above to get started" 
+                      : form.layout === "good"
+                      ? "Use the predefined questions above to get started"
+                      : "Use the predefined questions above or add custom questions"
+                    }
+                  </p>
                 </div>
               )}
             </div>
@@ -1084,6 +1182,36 @@ export default function FeedbackFormBuilder({
               </div>
             </div>
 
+            {/* Rate Us Question */}
+            {form.questions.some(q => q.question === "Rate Us") && (
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 500,
+                    color: "#444",
+                    marginBottom: "6px",
+                  }}
+                >
+                  Rate Us
+                </label>
+                <div style={{ display: "flex", gap: "4px" }}>
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        fontSize: "18px",
+                        color: "#d1d5db",
+                      }}
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Custom Rating Questions */}
             {form.questions.some(q => q.question === "Custom Rating") && customRatingItems.length > 0 && (
               <div style={{ marginBottom: "20px" }}>
@@ -1097,10 +1225,6 @@ export default function FeedbackFormBuilder({
                         justifyContent: "space-between",
                         alignItems: "center",
                         marginBottom: "12px",
-                        padding: "8px 12px",
-                        backgroundColor: "#f8f9fa",
-                        borderRadius: "6px",
-                        border: "1px solid #e9ecef",
                       }}
                     >
                       <span style={{ fontSize: "14px", fontWeight: 500, color: "#333" }}>
