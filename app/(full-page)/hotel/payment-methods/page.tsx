@@ -41,6 +41,7 @@ export default function PaymentMethodsPage() {
   const [loading, setLoading] = useState(false);
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
   const [newMethod, setNewMethod] = useState({
@@ -59,7 +60,50 @@ export default function PaymentMethodsPage() {
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
-    loadPaymentMethods();
+    // For demo purposes, add some mock data
+    setPaymentMethods([
+      {
+        id: '1',
+        type: 'CARD',
+        last4: '7830',
+        brand: 'visa',
+        expiryMonth: 9,
+        expiryYear: 2024,
+        isDefault: true,
+        createdAt: '2024-01-01'
+      },
+      {
+        id: '2',
+        type: 'CARD',
+        last4: '7830',
+        brand: 'mastercard',
+        expiryMonth: 3,
+        expiryYear: 2024,
+        isDefault: false,
+        createdAt: '2024-01-01'
+      },
+      {
+        id: '3',
+        type: 'CARD',
+        last4: '7830',
+        brand: 'visa',
+        expiryMonth: 9,
+        expiryYear: 2024,
+        isDefault: false,
+        createdAt: '2024-01-01'
+      },
+      {
+        id: '4',
+        type: 'CARD',
+        last4: '7830',
+        brand: 'amex',
+        expiryMonth: 9,
+        expiryYear: 2024,
+        isDefault: false,
+        createdAt: '2024-01-01'
+      }
+    ]);
+    // loadPaymentMethods();
   }, []);
 
   const loadPaymentMethods = async () => {
@@ -173,6 +217,67 @@ export default function PaymentMethodsPage() {
     }
   };
 
+  const handleEditMethod = (method: PaymentMethod) => {
+    setSelectedMethod(method);
+    setNewMethod({
+      type: method.type === 'CARD' ? 'card' : 'bank',
+      cardNumber: method.type === 'CARD' ? `**** **** **** ${method.last4}` : '',
+      expiryMonth: method.expiryMonth?.toString() || '',
+      expiryYear: method.expiryYear?.toString() || '',
+      cvv: '',
+      cardholderName: '',
+      brand: method.brand || '',
+      bankName: method.bankName || '',
+      accountNumber: method.type === 'BANK' ? `****${method.last4}` : '',
+      routingNumber: '',
+      accountType: method.accountType || '',
+    });
+    setShowEditDialog(true);
+  };
+
+  const handleUpdateMethod = async () => {
+    if (!selectedMethod) return;
+    
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/hotel/payment-methods/${selectedMethod.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newMethod),
+      });
+
+      if (response.ok) {
+        showToast("success", "Success", "Payment method updated successfully");
+        setShowEditDialog(false);
+        setSelectedMethod(null);
+        setNewMethod({
+          type: 'card',
+          cardNumber: '',
+          expiryMonth: '',
+          expiryYear: '',
+          cvv: '',
+          cardholderName: '',
+          brand: '',
+          bankName: '',
+          accountNumber: '',
+          routingNumber: '',
+          accountType: '',
+        });
+        loadPaymentMethods();
+      } else {
+        const errorData = await response.json();
+        showToast("error", "Error", errorData.error || "Failed to update payment method");
+      }
+    } catch (error) {
+      console.error("Error updating payment method:", error);
+      showToast("error", "Error", "Failed to update payment method");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getCardIcon = (brand: string) => {
     switch (brand.toLowerCase()) {
       case 'visa': return 'pi pi-credit-card';
@@ -191,17 +296,22 @@ export default function PaymentMethodsPage() {
     <div className="grid">
       {/* Header */}
       <div className="col-12">
-        <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-4">
+        <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-6">
           <div>
-            <h1 className="text-3xl font-bold m-0">Payment Methods</h1>
-            <p className="text-600 mt-2 mb-0">Manage your payment methods for subscriptions and billing.</p>
+            <h1 className="text-3xl font-bold m-0 text-900 mt-4">Add Payment Method</h1>
           </div>
           <div className="flex gap-2">
             <Button
-              label="Add Payment Method"
-              icon="pi pi-plus"
+              label="Add"
               onClick={() => setShowAddDialog(true)}
-              className="p-button-success"
+              className="p-button-primary"
+              style={{ 
+                backgroundColor: '#3B82F6', 
+                borderColor: '#3B82F6',
+                borderRadius: '6px',
+                padding: '0.5rem 1rem',
+                fontWeight: '500'
+              }}
             />
           </div>
         </div>
@@ -210,74 +320,204 @@ export default function PaymentMethodsPage() {
       {/* Payment Methods List */}
       <div className="col-12">
         {loading ? (
-          <Card>
             <div className="flex align-items-center justify-content-center py-6">
               <i className="pi pi-spinner pi-spin text-2xl mr-2"></i>
               <span>Loading payment methods...</span>
             </div>
-          </Card>
         ) : paymentMethods.length === 0 ? (
-          <Card>
             <div className="text-center py-6">
               <i className="pi pi-credit-card text-4xl text-400 mb-3"></i>
               <h3 className="text-900 mb-2">No Payment Methods</h3>
               <p className="text-600 mb-4">Add a payment method to manage your subscriptions.</p>
             </div>
-          </Card>
         ) : (
-          <div className="grid">
+          <div className="flex flex-column gap-3">
             {paymentMethods.map((method) => (
-              <div key={method.id} className="col-12 md:col-6 lg:col-4">
-                <Card className="h-full">
-                  <div className="flex justify-content-between align-items-start mb-3">
-                    <div className="flex align-items-center gap-2">
-                      <i className={`${method.type === 'CARD' ? getCardIcon(method.brand || '') : getBankIcon(method.bankName || '')} text-2xl`}></i>
-                      <div>
-                        <h4 className="text-lg font-semibold m-0">
-                          {method.type === 'CARD' ? method.brand?.toUpperCase() : method.bankName}
-                        </h4>
-                        {method.type === 'CARD' && (
-                          <p className="text-600 text-sm m-0">**** **** **** {method.last4}</p>
-                        )}
-                        {method.type === 'BANK' && (
-                          <p className="text-600 text-sm m-0">{method.accountType} Account</p>
-                        )}
+              <div 
+                key={method.id} 
+                className="payment-method-card"
+                style={{
+                  border: '1px solid #E5E7EB',
+                  borderRadius: '8px',
+                  padding: '1rem',
+                  backgroundColor: '#FFFFFF',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  transition: 'all 0.2s ease',
+                  cursor: 'default'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#D1D5DB';
+                  e.currentTarget.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#E5E7EB';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                {/* Left Side - Card Info */}
+                <div className="flex align-items-center gap-3">
+                  {/* Card Brand Logo */}
+                  <div 
+                    className="card-brand-logo"
+                    style={{
+                      width: '40px',
+                      height: '24px',
+                      border: '1px solid #E5E7EB',
+                      borderRadius: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: '#FFFFFF'
+                    }}
+                  >
+                    {method.type === 'CARD' && method.brand?.toLowerCase() === 'visa' && (
+                      <span style={{ color: '#1A1F71', fontSize: '10px', fontWeight: 'bold' }}>VISA</span>
+                    )}
+                    {method.type === 'CARD' && method.brand?.toLowerCase() === 'mastercard' && (
+                      <div style={{ display: 'flex', gap: '2px' }}>
+                        <div style={{ width: '8px', height: '8px', backgroundColor: '#EB001B', borderRadius: '50%' }}></div>
+                        <div style={{ width: '8px', height: '8px', backgroundColor: '#F79E1B', borderRadius: '50%' }}></div>
                       </div>
-                    </div>
-                    {method.isDefault && (
-                      <Badge value="Default" severity="success" />
+                    )}
+                    {method.type === 'CARD' && method.brand?.toLowerCase() === 'amex' && (
+                      <span style={{ color: '#006FCF', fontSize: '8px', fontWeight: 'bold' }}>AMEX</span>
+                    )}
+                    {method.type === 'BANK' && (
+                      <i className="pi pi-building" style={{ color: '#6B7280' }}></i>
                     )}
                   </div>
 
-                  {method.type === 'CARD' && (
-                    <div className="mb-3">
-                      <p className="text-600 text-sm m-0">
-                        Expires: {method.expiryMonth?.toString().padStart(2, '0')}/{method.expiryYear}
-                      </p>
+                  {/* Card Details */}
+                  <div>
+                    <div style={{ fontSize: '14px', fontWeight: '500', color: '#111827', marginBottom: '2px' }}>
+                      {method.type === 'CARD' ? method.brand?.toUpperCase() : method.bankName} ending in {method.last4}
                     </div>
+                    <div style={{ fontSize: '12px', color: '#6B7280' }}>
+                      {method.type === 'CARD' 
+                        ? `Exp. date ${method.expiryMonth?.toString().padStart(2, '0')}/${method.expiryYear}`
+                        : `${method.accountType} Account`
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Side - Actions and Status */}
+                <div className="flex align-items-center gap-2">
+                  {/* Primary Badge or Set Primary Button */}
+                  {method.isDefault ? (
+                    <span 
+                      style={{
+                        backgroundColor: '#10B981',
+                        color: '#FFFFFF',
+                        fontSize: '12px',
+                        fontWeight: '500',
+                        padding: '2px 8px',
+                        borderRadius: '4px'
+                      }}
+                    >
+                      Primary
+                    </span>
+                  ) : (
+                    <button
+                      onClick={() => handleSetDefault(method.id)}
+                      disabled={loading}
+                      style={{
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        color: '#6B7280',
+                        fontSize: '12px',
+                        fontWeight: '500',
+                        cursor: 'pointer',
+                        padding: '2px 0',
+                        transition: 'all 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!loading) {
+                          e.currentTarget.style.color = '#374151';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!loading) {
+                          e.currentTarget.style.color = '#6B7280';
+                        }
+                      }}
+                    >
+                      Set as Primary
+                    </button>
                   )}
 
-                  <div className="flex gap-2">
-                    {!method.isDefault && (
-                      <Button
-                        label="Set Default"
-                        icon="pi pi-star"
-                        className="p-button-outlined p-button-sm"
-                        onClick={() => handleSetDefault(method.id)}
-                        loading={loading}
-                      />
-                    )}
-                    <Button
-                      label="Delete"
-                      icon="pi pi-trash"
-                      className="p-button-danger p-button-outlined p-button-sm"
+                  {/* Expired Badge (if applicable) */}
+                  {method.type === 'CARD' && method.expiryYear && 
+                   (method.expiryYear < new Date().getFullYear() || 
+                    (method.expiryYear === new Date().getFullYear() && method.expiryMonth && method.expiryMonth < new Date().getMonth() + 1)) && (
+                    <span 
+                      style={{
+                        backgroundColor: '#EF4444',
+                        color: '#FFFFFF',
+                        fontSize: '12px',
+                        fontWeight: '500',
+                        padding: '2px 8px',
+                        borderRadius: '4px'
+                      }}
+                    >
+                      Expired
+                    </span>
+                  )}
+
+                  {/* Action Buttons */}
+                  <button
+                    onClick={() => handleEditMethod(method)}
+                    style={{
+                      backgroundColor: 'transparent',
+                      border: 'none',
+                      color: '#6B7280',
+                      cursor: 'pointer',
+                      padding: '4px',
+                      borderRadius: '4px',
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#F3F4F6';
+                      e.currentTarget.style.color = '#374151';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.color = '#6B7280';
+                    }}
+                    title="Edit"
+                  >
+                    <i className="pi pi-pencil" style={{ fontSize: '14px' }}></i>
+                  </button>
+                  
+                  <button
                       onClick={() => {
                         setSelectedMethod(method);
                         setShowDeleteDialog(true);
                       }}
-                    />
+                    style={{
+                      backgroundColor: 'transparent',
+                      border: 'none',
+                      color: '#6B7280',
+                      cursor: 'pointer',
+                      padding: '4px',
+                      borderRadius: '4px',
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#FEF2F2';
+                      e.currentTarget.style.color = '#DC2626';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.color = '#6B7280';
+                    }}
+                    title="Delete"
+                  >
+                    <i className="pi pi-trash" style={{ fontSize: '14px' }}></i>
+                  </button>
                   </div>
-                </Card>
               </div>
             ))}
           </div>
@@ -404,6 +644,132 @@ export default function PaymentMethodsPage() {
                   placeholder="Account number"
                   className="w-full"
                 />
+              </div>
+              <div className="col-12 md:col-6">
+                <label className="block text-900 font-medium mb-2">Routing Number</label>
+                <InputMask
+                  mask="999999999"
+                  value={newMethod.routingNumber}
+                  onChange={(e) => setNewMethod({ ...newMethod, routingNumber: e.target.value || '' })}
+                  placeholder="123456789"
+                  className="w-full"
+                />
+              </div>
+              <div className="col-12 md:col-6">
+                <label className="block text-900 font-medium mb-2">Account Type</label>
+                <Dropdown
+                  value={newMethod.accountType}
+                  options={accountTypes}
+                  onChange={(e) => setNewMethod({ ...newMethod, accountType: e.value })}
+                  placeholder="Select account type"
+                  className="w-full"
+                />
+              </div>
+            </>
+          )}
+        </div>
+      </Dialog>
+
+      {/* Edit Payment Method Dialog */}
+      <Dialog
+        header="Edit Payment Method"
+        visible={showEditDialog}
+        style={{ width: '50vw' }}
+        onHide={() => setShowEditDialog(false)}
+        footer={
+          <div className="flex justify-content-end gap-2">
+            <Button
+              label="Cancel"
+              icon="pi pi-times"
+              className="p-button-text"
+              onClick={() => setShowEditDialog(false)}
+            />
+            <Button
+              label="Update Method"
+              icon="pi pi-check"
+              onClick={handleUpdateMethod}
+              loading={loading}
+              disabled={loading}
+            />
+          </div>
+        }
+      >
+        <div className="grid">
+          <div className="col-12">
+            <label className="block text-900 font-medium mb-2">Payment Type</label>
+            <Dropdown
+              value={newMethod.type}
+              options={[
+                { label: "Credit/Debit Card", value: "card" },
+                { label: "Bank Account", value: "bank" },
+              ]}
+              onChange={(e) => setNewMethod({ ...newMethod, type: e.value })}
+              className="w-full"
+              disabled={true} // Don't allow changing type when editing
+            />
+          </div>
+
+          {newMethod.type === 'card' ? (
+            <>
+              <div className="col-12">
+                <label className="block text-900 font-medium mb-2">Card Number</label>
+                <InputText
+                  value={newMethod.cardNumber}
+                  disabled={true} // Don't allow editing card number
+                  className="w-full"
+                />
+                <small className="text-600">Card number cannot be changed for security reasons</small>
+              </div>
+              <div className="col-12 md:col-6">
+                <label className="block text-900 font-medium mb-2">Expiry Month</label>
+                <InputMask
+                  mask="99"
+                  value={newMethod.expiryMonth}
+                  onChange={(e) => setNewMethod({ ...newMethod, expiryMonth: e.target.value || '' })}
+                  placeholder="MM"
+                  className="w-full"
+                />
+              </div>
+              <div className="col-12 md:col-6">
+                <label className="block text-900 font-medium mb-2">Expiry Year</label>
+                <InputMask
+                  mask="9999"
+                  value={newMethod.expiryYear}
+                  onChange={(e) => setNewMethod({ ...newMethod, expiryYear: e.target.value || '' })}
+                  placeholder="YYYY"
+                  className="w-full"
+                />
+              </div>
+              <div className="col-12">
+                <label className="block text-900 font-medium mb-2">Card Brand</label>
+                <Dropdown
+                  value={newMethod.brand}
+                  options={cardBrands}
+                  onChange={(e) => setNewMethod({ ...newMethod, brand: e.value })}
+                  placeholder="Select card brand"
+                  className="w-full"
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="col-12">
+                <label className="block text-900 font-medium mb-2">Bank Name</label>
+                <InputText
+                  value={newMethod.bankName}
+                  onChange={(e) => setNewMethod({ ...newMethod, bankName: e.target.value })}
+                  placeholder="Bank of America"
+                  className="w-full"
+                />
+              </div>
+              <div className="col-12">
+                <label className="block text-900 font-medium mb-2">Account Number</label>
+                <InputText
+                  value={newMethod.accountNumber}
+                  disabled={true} // Don't allow editing account number
+                  className="w-full"
+                />
+                <small className="text-600">Account number cannot be changed for security reasons</small>
               </div>
               <div className="col-12 md:col-6">
                 <label className="block text-900 font-medium mb-2">Routing Number</label>

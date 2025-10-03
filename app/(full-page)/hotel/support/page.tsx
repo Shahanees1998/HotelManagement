@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -12,6 +12,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Toast } from "primereact/toast";
 import { useAuth } from "@/hooks/useAuth";
+import { CustomPaginator } from "@/components/CustomPaginator";
 
 interface SupportRequest {
     id: string;
@@ -28,6 +29,13 @@ export default function HotelSupportPage() {
     const { user } = useAuth();
     const [requests, setRequests] = useState<SupportRequest[]>([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [filters, setFilters] = useState({
+        status: "",
+        priority: "",
+        search: "",
+    });
     const [showCreateDialog, setShowCreateDialog] = useState(false);
     const [createForm, setCreateForm] = useState({
         subject: "",
@@ -37,12 +45,6 @@ export default function HotelSupportPage() {
     const [submitting, setSubmitting] = useState(false);
     const toast = useRef<Toast>(null);
 
-    const priorityOptions = [
-        { label: "Low", value: "LOW" },
-        { label: "Medium", value: "MEDIUM" },
-        { label: "High", value: "HIGH" },
-        { label: "Urgent", value: "URGENT" },
-    ];
 
     useEffect(() => {
         loadSupportRequests();
@@ -69,6 +71,12 @@ export default function HotelSupportPage() {
 
     const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
         toast.current?.show({ severity, summary, detail, life: 3000 });
+    };
+
+    // Helper function to update filters and reset page
+    const updateFilters = (newFilters: Partial<typeof filters>) => {
+        setFilters(prev => ({ ...prev, ...newFilters }));
+        setCurrentPage(1);
     };
 
     const openCreateDialog = () => {
@@ -136,7 +144,7 @@ export default function HotelSupportPage() {
         }
     };
 
-    const messageBodyTemplate = (rowData: SupportRequest) => {
+    const messageBodyTemplate = useMemo(() => (rowData: SupportRequest) => {
         return (
             <div className="max-w-xs">
                 <div className="text-sm">
@@ -147,9 +155,9 @@ export default function HotelSupportPage() {
                 </div>
             </div>
         );
-    };
+    }, []);
 
-    const responseBodyTemplate = (rowData: SupportRequest) => {
+    const responseBodyTemplate = useMemo(() => (rowData: SupportRequest) => {
         return rowData.adminResponse ? (
             <div className="max-w-xs">
                 <div className="text-sm">
@@ -162,48 +170,170 @@ export default function HotelSupportPage() {
         ) : (
             <span className="text-600">No response yet</span>
         );
-    };
+    }, []);
 
-    const header = (
-        <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3">
-            <div className="flex flex-column">
-                <h2 className="text-2xl font-bold m-0">Support Requests</h2>
-                <span className="text-600">Create and track your support requests</span>
-            </div>
-            <div className="flex gap-2">
-                <Button
-                    label="Create Support Request"
-                    icon="pi pi-plus"
-                    onClick={openCreateDialog}
-                    severity="success"
-                />
-            </div>
-        </div>
-    );
+    const statusBodyTemplate = useMemo(() => (rowData: SupportRequest) => (
+        <Tag value={rowData.status.replace('_', ' ')} severity={getStatusSeverity(rowData.status)} />
+    ), []);
+
+    const priorityBodyTemplate = useMemo(() => (rowData: SupportRequest) => (
+        <Tag value={rowData.priority} severity={getPrioritySeverity(rowData.priority)} />
+    ), []);
+
+    const dateBodyTemplate = useMemo(() => (rowData: SupportRequest) => (
+        new Date(rowData.createdAt).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        })
+    ), []);
+
+    // Filter and paginate data
+    const filteredRequests = useMemo(() => {
+        return requests.filter(request => {
+            if (filters.status && request.status !== filters.status) return false;
+            if (filters.priority && request.priority !== filters.priority) return false;
+            if (filters.search && !request.subject.toLowerCase().includes(filters.search.toLowerCase())) return false;
+            return true;
+        });
+    }, [requests, filters.status, filters.priority, filters.search]);
+
+    const paginatedRequests = useMemo(() => {
+        return filteredRequests.slice(
+            (currentPage - 1) * rowsPerPage,
+            currentPage * rowsPerPage
+        );
+    }, [filteredRequests, currentPage, rowsPerPage]);
+
+    const statusOptions = useMemo(() => [
+        { label: "All Statuses", value: "" },
+        { label: "Open", value: "OPEN" },
+        { label: "In Progress", value: "IN_PROGRESS" },
+        { label: "Resolved", value: "RESOLVED" },
+        { label: "Closed", value: "CLOSED" },
+    ], []);
+
+    const priorityOptions = useMemo(() => [
+        { label: "All Priorities", value: "" },
+        { label: "Low", value: "LOW" },
+        { label: "Medium", value: "MEDIUM" },
+        { label: "High", value: "HIGH" },
+        { label: "Urgent", value: "URGENT" },
+    ], []);
 
     return (
         <div className="grid">
+            {/* Header */}
             <div className="col-12">
-                    <DataTable
-                        value={requests}
-                        loading={loading}
-                        header={header}
-                        emptyMessage="No support requests found. Create your first request!"
-                        responsiveLayout="scroll"
-                    >
-                        <Column field="subject" header="Subject" style={{ minWidth: "200px" }} />
-                        <Column field="message" header="Message" body={messageBodyTemplate} style={{ minWidth: "300px" }} />
-                        <Column field="status" header="Status" body={(rowData) => (
-                            <Tag value={rowData.status.replace('_', ' ')} severity={getStatusSeverity(rowData.status)} />
-                        )} style={{ minWidth: "120px" }} />
-                        <Column field="priority" header="Priority" body={(rowData) => (
-                            <Tag value={rowData.priority} severity={getPrioritySeverity(rowData.priority)} />
-                        )} style={{ minWidth: "120px" }} />
-                        <Column field="adminResponse" header="Response" body={responseBodyTemplate} style={{ minWidth: "300px" }} />
-                        <Column field="createdAt" header="Created" body={(rowData) => (
-                            new Date(rowData.createdAt).toLocaleDateString()
-                        )} style={{ minWidth: "120px" }} />
-                    </DataTable>
+                <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-4">
+                    <div>
+                        <h1 className="text-3xl font-bold m-0">Support Requests</h1>
+                        <p className="text-600 mt-2 mb-0">Create and track your support requests with our team.</p>
+                    </div>
+                    <div className="flex gap-2">
+                        <Button
+                            label="Create Request"
+                            icon="pi pi-plus"
+                            onClick={openCreateDialog}
+                            severity="success"
+                        />
+                        <Button
+                            label="Refresh"
+                            icon="pi pi-refresh"
+                            onClick={loadSupportRequests}
+                            loading={loading}
+                            className="p-button-outlined"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* Filters */}
+            <div className="col-12">
+                <Card title="Filters" className="mb-4">
+                    <div className="grid">
+                        <div className="col-12 md:col-4">
+                            <label className="block text-900 font-medium mb-2">Search Subject</label>
+                            <InputText
+                                value={filters.search}
+                                onChange={(e) => updateFilters({ search: e.target.value })}
+                                placeholder="Search by subject..."
+                                className="w-full"
+                            />
+                        </div>
+                        <div className="col-12 md:col-4">
+                            <label className="block text-900 font-medium mb-2">Status</label>
+                            <Dropdown
+                                value={filters.status}
+                                options={statusOptions}
+                                onChange={(e) => updateFilters({ status: e.value })}
+                                placeholder="All Statuses"
+                                className="w-full"
+                            />
+                        </div>
+                        <div className="col-12 md:col-4">
+                            <label className="block text-900 font-medium mb-2">Priority</label>
+                            <Dropdown
+                                value={filters.priority}
+                                options={priorityOptions}
+                                onChange={(e) => updateFilters({ priority: e.value })}
+                                placeholder="All Priorities"
+                                className="w-full"
+                            />
+                        </div>
+                    </div>
+                </Card>
+            </div>
+
+            {/* Support Requests Table */}
+            <div className="col-12">
+                {loading ? (
+                    <div className="flex align-items-center justify-content-center" style={{ height: '200px' }}>
+                        <div className="text-center">
+                            <i className="pi pi-spinner pi-spin text-2xl mb-2"></i>
+                            <p>Loading support requests...</p>
+                        </div>
+                    </div>
+                ) : filteredRequests.length === 0 ? (
+                    <div className="text-center py-6">
+                        <i className="pi pi-life-ring text-4xl text-400 mb-3"></i>
+                        <h3 className="text-900 mb-2">No Support Requests Found</h3>
+                        <p className="text-600 mb-4">
+                            {requests.length === 0 
+                                ? "No support requests have been created yet." 
+                                : "No requests match your current filters."
+                            }
+                        </p>
+                        <Button
+                            label="Create Your First Request"
+                            icon="pi pi-plus"
+                            onClick={openCreateDialog}
+                        />
+                    </div>
+                ) : (
+                    <>
+                        <DataTable value={paginatedRequests}>
+                            <Column field="subject" header="Subject" sortable />
+                            <Column field="message" header="Message" body={messageBodyTemplate} />
+                            <Column field="status" header="Status" body={statusBodyTemplate} sortable />
+                            <Column field="priority" header="Priority" body={priorityBodyTemplate} sortable />
+                            <Column field="adminResponse" header="Response" body={responseBodyTemplate} />
+                            <Column field="createdAt" header="Created" body={dateBodyTemplate} sortable />
+                        </DataTable>
+                        <CustomPaginator
+                            currentPage={currentPage}
+                            totalRecords={filteredRequests.length}
+                            rowsPerPage={rowsPerPage}
+                            onPageChange={setCurrentPage}
+                            onRowsPerPageChange={(rows) => {
+                                setRowsPerPage(rows);
+                                setCurrentPage(1);
+                            }}
+                        />
+                    </>
+                )}
             </div>
 
             {/* Create Dialog */}
@@ -246,7 +376,12 @@ export default function HotelSupportPage() {
                         <label className="block text-sm font-medium mb-2">Priority</label>
                         <Dropdown
                             value={createForm.priority}
-                            options={priorityOptions}
+                            options={[
+                                { label: "Low", value: "LOW" },
+                                { label: "Medium", value: "MEDIUM" },
+                                { label: "High", value: "HIGH" },
+                                { label: "Urgent", value: "URGENT" },
+                            ]}
                             onChange={(e) => setCreateForm(prev => ({ ...prev, priority: e.value }))}
                             placeholder="Select Priority"
                             className="w-full"

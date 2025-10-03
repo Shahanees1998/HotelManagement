@@ -5,7 +5,6 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
-import { Password } from "primereact/password";
 import { ProgressBar } from "primereact/progressbar";
 import { Dialog } from "primereact/dialog";
 
@@ -18,6 +17,11 @@ export default function ChangePasswordPage() {
   });
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [showPasswords, setShowPasswords] = useState({
+    current: false,
+    new: false,
+    confirm: false,
+  });
   const toast = useRef<Toast>(null);
 
   const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
@@ -176,26 +180,74 @@ export default function ChangePasswordPage() {
           <div className="grid">
             <div className="col-12">
               <label className="block text-900 font-medium mb-2">Current Password *</label>
-              <Password
-                value={passwordData.currentPassword}
-                onChange={(e) => handleInputChange('currentPassword', e.target.value)}
-                placeholder="Enter your current password"
-                className="w-full"
-                toggleMask
-                feedback={false}
-              />
+              <div style={{ position: "relative" }} className="w-full mb-1">
+                <span className="p-input-icon-left w-full">
+                  <i className="pi pi-lock"></i>
+                  <InputText
+                    type={showPasswords.current ? "text" : "password"}
+                    className="w-full"
+                    placeholder="Enter your current password"
+                    value={passwordData.currentPassword}
+                    onChange={(e) => handleInputChange('currentPassword', e.target.value)}
+                    style={{ paddingRight: "2.5rem" }}
+                  />
+                </span>
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  onClick={() => setShowPasswords(prev => ({ ...prev, current: !prev.current }))}
+                  style={{
+                    position: "absolute",
+                    right: "0.75rem",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                    zIndex: 2,
+                  }}
+                  aria-label={showPasswords.current ? "Hide password" : "Show password"}
+                >
+                  <i className={`pi ${showPasswords.current ? "pi-eye-slash" : "pi-eye"}`}></i>
+                </button>
+              </div>
             </div>
 
             <div className="col-12">
               <label className="block text-900 font-medium mb-2">New Password *</label>
-              <Password
-                value={passwordData.newPassword}
-                onChange={(e) => handleInputChange('newPassword', e.target.value)}
-                placeholder="Enter your new password"
-                className="w-full"
-                toggleMask
-                feedback={true}
-              />
+              <div style={{ position: "relative" }} className="w-full mb-1">
+                <span className="p-input-icon-left w-full">
+                  <i className="pi pi-lock"></i>
+                  <InputText
+                    type={showPasswords.new ? "text" : "password"}
+                    className="w-full"
+                    placeholder="Enter your new password"
+                    value={passwordData.newPassword}
+                    onChange={(e) => handleInputChange('newPassword', e.target.value)}
+                    style={{ paddingRight: "2.5rem" }}
+                  />
+                </span>
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  onClick={() => setShowPasswords(prev => ({ ...prev, new: !prev.new }))}
+                  style={{
+                    position: "absolute",
+                    right: "0.75rem",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                    zIndex: 2,
+                  }}
+                  aria-label={showPasswords.new ? "Hide password" : "Show password"}
+                >
+                  <i className={`pi ${showPasswords.new ? "pi-eye-slash" : "pi-eye"}`}></i>
+                </button>
+              </div>
               {passwordData.newPassword && (
                 <div className="mt-2">
                   <div className="flex justify-content-between align-items-center mb-1">
@@ -218,14 +270,38 @@ export default function ChangePasswordPage() {
 
             <div className="col-12">
               <label className="block text-900 font-medium mb-2">Confirm New Password *</label>
-              <Password
-                value={passwordData.confirmPassword}
-                onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                placeholder="Confirm your new password"
-                className="w-full"
-                toggleMask
-                feedback={false}
-              />
+              <div style={{ position: "relative" }} className="w-full mb-1">
+                <span className="p-input-icon-left w-full">
+                  <i className="pi pi-lock"></i>
+                  <InputText
+                    type={showPasswords.confirm ? "text" : "password"}
+                    className="w-full"
+                    placeholder="Confirm your new password"
+                    value={passwordData.confirmPassword}
+                    onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                    style={{ paddingRight: "2.5rem" }}
+                  />
+                </span>
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  onClick={() => setShowPasswords(prev => ({ ...prev, confirm: !prev.confirm }))}
+                  style={{
+                    position: "absolute",
+                    right: "0.75rem",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                    zIndex: 2,
+                  }}
+                  aria-label={showPasswords.confirm ? "Hide password" : "Show password"}
+                >
+                  <i className={`pi ${showPasswords.confirm ? "pi-eye-slash" : "pi-eye"}`}></i>
+                </button>
+              </div>
             </div>
           </div>
         </Card>

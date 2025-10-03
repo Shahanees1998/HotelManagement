@@ -377,7 +377,7 @@ export default function AdminDashboard() {
                 <>
                     {cardData.map((card) => (
                         <div className="col-12 md:col-6 lg:col-3" key={card.label}>
-                            <Card
+                            <div
                                 className="cursor-pointer hover:shadow-2 transition-all border-round-lg"
                                 onClick={() => router.push(card.route)}
                                 role="button"
@@ -390,7 +390,7 @@ export default function AdminDashboard() {
                                     padding: '0 !important'
                                 }}
                             >
-                                <div className="flex align-items-center" style={{ gap: '1.5rem', padding: 0 }}>
+                                <div className="flex align-items-center" style={{ gap: '1.5rem', padding: '0.5rem' }}>
                                     <div className={`flex align-items-center justify-content-center ${card.bgColor} border-round-lg flex-shrink-0`} style={{ width: '60px', height: '60px' }}>
                                         <i className={`${card.icon} ${card.iconColor}`} style={{ fontSize: '1.75rem' }}></i>
                                     </div>
@@ -399,7 +399,7 @@ export default function AdminDashboard() {
                                         <div className="text-500" style={{ fontSize: '0.9rem', fontWeight: '400', color: '#666666' }}>{card.label}</div>
                                     </div>
                                 </div>
-                            </Card>
+                            </div>
                         </div>
                     ))}
                 </>
@@ -439,7 +439,7 @@ export default function AdminDashboard() {
                 <div className="grid">
                     {quickActions.map((action, index) => (
                         <div key={index} className="col-12 md:col-6 lg:col-3">
-                            <Card
+                            <div
                                 className="cursor-pointer hover:shadow-lg transition-all border-round-lg"
                                 onClick={() => router.push(action.route)}
                                 role="button"
@@ -452,7 +452,7 @@ export default function AdminDashboard() {
                                     padding: '0 !important'
                                 }}
                             >
-                                <div className="flex align-items-center" style={{ gap: '1rem', padding: '0rem' }}>
+                                <div className="flex align-items-center" style={{ gap: '1rem', padding: '0.5rem' }}>
                                     <div
                                         className="flex align-items-center justify-content-center border-round-lg flex-shrink-0"
                                         style={{
@@ -473,7 +473,7 @@ export default function AdminDashboard() {
                                         <h3 className="text-base font-semibold m-0" style={{ color: '#333333' }}>{action.title}</h3>
                                     </div>
                                 </div>
-                            </Card>
+                            </div>
                         </div>
                     ))}
                 </div>

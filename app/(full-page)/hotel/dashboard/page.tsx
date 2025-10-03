@@ -24,6 +24,7 @@ interface DashboardStats {
 interface RecentReview {
   id: string;
   guestName: string;
+  guestEmail: string;
   overallRating: number;
   submittedAt: string;
   status: string;
@@ -266,7 +267,7 @@ export default function HotelDashboard() {
         <>
           {statsCards.map((card, index) => (
             <div className="col-12 md:col-6 lg:col-3" key={index}>
-              <Card
+              <div
                 className="cursor-pointer hover:shadow-2 transition-all border-round-lg"
                 role="button"
                 tabIndex={0}
@@ -278,14 +279,14 @@ export default function HotelDashboard() {
                     padding: '0 !important'
                 }}
               >
-                <div className="flex align-items-center" style={{ gap: '1.5rem', padding: 0 }}>
+                <div className="flex align-items-center" style={{ gap: '1.5rem', padding: '0.5rem' }}>
                     <img src={card.image} alt={card.title} className={`flex align-items-center justify-content-center bg-${card.color} border-round-lg flex-shrink-0`} style={{ width: '60px', height: '60px' }} />
                     <div className="flex-1">
                         <div className="text-900 font-bold mb-2" style={{ fontSize: '1.2rem', lineHeight: '1.2', color: '#333333' }}>{card.value}</div>
                         <div className="text-500" style={{ fontSize: '0.9rem', fontWeight: '400', color: '#666666' }}>{card.title}</div>
                     </div>
                 </div>
-              </Card>
+              </div>
             </div>
           ))}
         </>
@@ -314,8 +315,8 @@ export default function HotelDashboard() {
         </div>
         <div className="grid">
           {quickActions.map((action, index) => (
-            <div key={index} className="col-12 md:col-6 lg:col-3">
-              <Card
+            <div key={index} className="col-12 md:col-6 lg:col-3 p-2">
+              <div
                 className="cursor-pointer hover:shadow-lg transition-all border-round-lg"
                 onClick={() => router.push(action.route)}
                 role="button"
@@ -325,10 +326,10 @@ export default function HotelDashboard() {
                   border: '1px solid #e0d8cc',
                   boxShadow: 'none',
                   backgroundColor: '#FFFFFF',
-                  padding: '0 !important'
+                  padding:'10px !important'
                 }}
               >
-                <div className="flex align-items-center" style={{ gap: '1rem', padding: '0rem' }}>
+                <div className="flex align-items-center" style={{ gap: '1rem', padding: '0.5rem' }}>
                   <div
                     className="flex align-items-center justify-content-center border-round-lg flex-shrink-0"
                     style={{
@@ -349,7 +350,7 @@ export default function HotelDashboard() {
                     <h3 className="text-base font-semibold m-0" style={{  lineHeight: '1.2', color: '#333333' }}>{action.title}</h3>
                   </div>
                 </div>
-              </Card>
+              </div>
             </div>
           ))}
         </div>
@@ -357,7 +358,13 @@ export default function HotelDashboard() {
 
       {/* Recent Reviews */}
       <div className="col-12">
-        <Card title="Recent Reviews" className="mt-4">
+        <div title="Recent Reviews" className="mt-4">
+        <div className="mb-4">
+          <h2 className="text-3xl font-bold m-0 mb-2" style={{ color: '#1a2b48' }}>Recent Reviews</h2>
+          <p className="text-lg m-0" style={{ color: '#4a4a4a', lineHeight: '1.5' }}>
+            View and manage your recent reviews.
+          </p>
+        </div>
           {loading ? (
             <div className="flex align-items-center justify-content-center" style={{ height: '200px' }}>
               <div className="text-600">Loading recent reviews...</div>
@@ -365,6 +372,7 @@ export default function HotelDashboard() {
           ) : (
             <DataTable value={recentReviews}>
               <Column field="guestName" header="Guest" />
+              <Column field="guestEmail" header="Email" />
               <Column field="overallRating" header="Rating" body={ratingBodyTemplate} />
               <Column field="status" header="Status" body={statusBodyTemplate} />
               <Column 
@@ -374,7 +382,7 @@ export default function HotelDashboard() {
               />
             </DataTable>
           )}
-        </Card>
+        </div>
       </div>
 
       <Toast ref={toast} />

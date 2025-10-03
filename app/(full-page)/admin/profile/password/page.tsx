@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { Password } from "primereact/password";
+import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
@@ -18,6 +18,11 @@ export default function AdminProfilePassword() {
     confirmPassword: '',
   });
   const [saving, setSaving] = useState(false);
+  const [showPasswords, setShowPasswords] = useState({
+    current: false,
+    new: false,
+    confirm: false,
+  });
 
   const handleSave = async () => {
     if (!formData.currentPassword || !formData.newPassword || !formData.confirmPassword) {
@@ -87,37 +92,109 @@ export default function AdminProfilePassword() {
           <div className="grid">
             <div className="col-12">
               <label className="block text-900 font-medium mb-2">Current Password *</label>
-              <Password
-                value={formData.currentPassword}
-                onChange={(e) => setFormData({ ...formData, currentPassword: e.target.value })}
-                placeholder="Enter current password"
-                toggleMask
-                className="w-full"
-                inputClassName="w-full"
-              />
+              <div style={{ position: "relative" }} className="w-full mb-1">
+                <span className="p-input-icon-left w-full">
+                  <i className="pi pi-lock"></i>
+                  <InputText
+                    type={showPasswords.current ? "text" : "password"}
+                    className="w-full"
+                    placeholder="Enter current password"
+                    value={formData.currentPassword}
+                    onChange={(e) => setFormData({ ...formData, currentPassword: e.target.value })}
+                    style={{ paddingRight: "2.5rem" }}
+                  />
+                </span>
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  onClick={() => setShowPasswords(prev => ({ ...prev, current: !prev.current }))}
+                  style={{
+                    position: "absolute",
+                    right: "0.75rem",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                    zIndex: 2,
+                  }}
+                  aria-label={showPasswords.current ? "Hide password" : "Show password"}
+                >
+                  <i className={`pi ${showPasswords.current ? "pi-eye-slash" : "pi-eye"}`}></i>
+                </button>
+              </div>
             </div>
             <div className="col-12">
               <label className="block text-900 font-medium mb-2">New Password *</label>
-              <Password
-                value={formData.newPassword}
-                onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
-                placeholder="Enter new password"
-                toggleMask
-                className="w-full"
-                inputClassName="w-full"
-              />
+              <div style={{ position: "relative" }} className="w-full mb-1">
+                <span className="p-input-icon-left w-full">
+                  <i className="pi pi-lock"></i>
+                  <InputText
+                    type={showPasswords.new ? "text" : "password"}
+                    className="w-full"
+                    placeholder="Enter new password"
+                    value={formData.newPassword}
+                    onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
+                    style={{ paddingRight: "2.5rem" }}
+                  />
+                </span>
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  onClick={() => setShowPasswords(prev => ({ ...prev, new: !prev.new }))}
+                  style={{
+                    position: "absolute",
+                    right: "0.75rem",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                    zIndex: 2,
+                  }}
+                  aria-label={showPasswords.new ? "Hide password" : "Show password"}
+                >
+                  <i className={`pi ${showPasswords.new ? "pi-eye-slash" : "pi-eye"}`}></i>
+                </button>
+              </div>
               <small className="text-600">Password must be at least 6 characters long</small>
             </div>
             <div className="col-12">
               <label className="block text-900 font-medium mb-2">Confirm New Password *</label>
-              <Password
-                value={formData.confirmPassword}
-                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                placeholder="Confirm new password"
-                toggleMask
-                className="w-full"
-                inputClassName="w-full"
-              />
+              <div style={{ position: "relative" }} className="w-full mb-1">
+                <span className="p-input-icon-left w-full">
+                  <i className="pi pi-lock"></i>
+                  <InputText
+                    type={showPasswords.confirm ? "text" : "password"}
+                    className="w-full"
+                    placeholder="Confirm new password"
+                    value={formData.confirmPassword}
+                    onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                    style={{ paddingRight: "2.5rem" }}
+                  />
+                </span>
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  onClick={() => setShowPasswords(prev => ({ ...prev, confirm: !prev.confirm }))}
+                  style={{
+                    position: "absolute",
+                    right: "0.75rem",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                    zIndex: 2,
+                  }}
+                  aria-label={showPasswords.confirm ? "Hide password" : "Show password"}
+                >
+                  <i className={`pi ${showPasswords.confirm ? "pi-eye-slash" : "pi-eye"}`}></i>
+                </button>
+              </div>
             </div>
           </div>
         </Card>

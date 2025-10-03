@@ -18,6 +18,8 @@ export async function GET(request: NextRequest) {
           reviews: {
             select: {
               id: true,
+              guestName: true,
+              guestEmail: true,
               overallRating: true,
               submittedAt: true,
               status: true,
@@ -82,6 +84,8 @@ export async function GET(request: NextRequest) {
         },
         recentReviews: hotel.reviews.slice(0, 5).map(review => ({
           id: review.id,
+          guestName: review.guestName,
+          guestEmail: review.guestEmail,
           overallRating: review.overallRating,
           submittedAt: review.submittedAt.toISOString(),
           status: review.status,
