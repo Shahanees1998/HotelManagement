@@ -9,19 +9,31 @@ export async function PUT(
 ) {
   return withAuth(request, async (authenticatedReq: AuthenticatedRequest) => {
     try {
-      const notification = await NotificationService.markAsRead(params.id, authenticatedReq.user!.userId);
-      
+      const user = authenticatedReq.user;
+      if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+
+      const { id } = params;
+      const result = await NotificationService.markAsRead(id, user.userId);
+
+      if (result.count === 0) {
+        return NextResponse.json(
+          { error: 'Notification not found' },
+          { status: 404 }
+        );
+      }
+
       return NextResponse.json({
         success: true,
         message: 'Notification marked as read',
-        notification,
       });
     } catch (error) {
-      console.error('Mark notification as read error:', error);
+      console.error('Error marking notification as read:', error);
       return NextResponse.json(
-        { error: 'Failed to mark notification as read' },
+        { error: 'Internal server error' },
         { status: 500 }
       );
     }
   });
-} 
+}

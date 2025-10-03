@@ -201,18 +201,16 @@ export async function POST(request: NextRequest) {
 
       // Send notification to admins about new form creation
       try {
-        const { sendAdminNotification, NotificationTemplates } = await import('@/lib/notificationService');
+        const { NotificationCreators } = await import('@/lib/notificationService');
         
         // Get hotel info for notification
         const hotel = await prisma.hotels.findUnique({
-          where: { id: user.hotelId },
-          select: { name: true },
+          where: { ownerId: user.userId },
+          select: { id: true, name: true },
         });
 
         if (hotel) {
-          await sendAdminNotification(
-            NotificationTemplates.formCreated(hotel.name, title, result.id)
-          );
+          await NotificationCreators.newFormCreated(hotel.id, hotel.name, title);
         }
       } catch (notificationError) {
         console.error('Error sending form creation notification:', notificationError);

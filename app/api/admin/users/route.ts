@@ -161,18 +161,26 @@ export async function POST(request: NextRequest) {
 
                     // Create notifications for each admin user
                     const notificationPromises = adminUsers.map(adminUser => 
-                        NotificationService.createUserJoinedNotification(
-                            adminUser.id,
-                            `${user.firstName} ${user.lastName}`
-                        )
+                        NotificationService.createNotification({
+                            userId: adminUser.id,
+                            title: 'New User Created',
+                            message: `${user.firstName} ${user.lastName} has been added to the system`,
+                            type: 'SYSTEM_ALERT',
+                            relatedId: user.id,
+                            relatedType: 'user',
+                        })
                     );
 
                     // Also send a specific notification to the admin who created the user
                     if (authenticatedReq.user?.userId) {
-                        const creatorNotification = NotificationService.createUserJoinedNotification(
-                            authenticatedReq.user.userId,
-                            `${user.firstName} ${user.lastName}`
-                        );
+                        const creatorNotification = NotificationService.createNotification({
+                            userId: authenticatedReq.user.userId,
+                            title: 'User Created Successfully',
+                            message: `You have successfully created user: ${user.firstName} ${user.lastName}`,
+                            type: 'SUCCESS',
+                            relatedId: user.id,
+                            relatedType: 'user',
+                        });
 
                         // Send all notifications in parallel
                         await Promise.all([...notificationPromises, creatorNotification]);

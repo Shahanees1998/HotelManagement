@@ -188,34 +188,20 @@ export async function POST(
 
     // Send notifications
     try {
-      const { sendUserNotification, sendAdminNotification, NotificationTemplates } = await import('@/lib/notificationService');
+      const { NotificationCreators } = await import('@/lib/notificationService');
       
-      const hotelOwner = await prisma.user.findUnique({
-        where: { id: form.hotel.ownerId },
-        select: { id: true },
-      });
+      // Send notification to hotel owner
+      await NotificationCreators.newFeedback(
+        form.hotel.id,
+        guestName || 'Anonymous',
+        finalRating
+      );
 
-      if (hotelOwner) {
-        // Send notification to hotel owner
-        await sendUserNotification({
-          id: result.id,
-          userId: hotelOwner.id,
-          title: 'New Review Received',
-          message: `A new ${finalRating}-star review has been submitted for "${form.title}"`,
-          type: 'SUCCESS',
-          relatedId: result.id,
-          relatedType: 'review',
-          metadata: {
-            formTitle: form.title,
-            guestName: guestName || 'Anonymous',
-            rating: finalRating,
-          },
-        });
-      }
-
-      // Send notification to admins about new feedback
-      await sendAdminNotification(
-        NotificationTemplates.feedbackSubmitted(form.hotel.name, finalRating, result.id)
+      // Send notification to admins about new review
+      await NotificationCreators.newReview(
+        form.hotel.id,
+        form.hotel.name,
+        finalRating
       );
 
       console.log('Feedback notifications sent successfully');

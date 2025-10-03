@@ -1,21 +1,18 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Badge } from 'primereact/badge';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { Button } from 'primereact/button';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
 import { Tag } from 'primereact/tag';
 import { useAuth } from '@/hooks/useAuth';
-import { usePusher } from '@/hooks/usePusher';
-import { apiClient } from '@/lib/apiClient';
+import { useNotifications } from '@/hooks/useNotifications';
 
 interface Notification {
   id: string;
   title: string;
   message: string;
-  type: 'NEW_REVIEW' | 'REVIEW_APPROVED' | 'REVIEW_REJECTED' | 'SUBSCRIPTION_EXPIRING' | 'SUBSCRIPTION_CANCELLED' | 'ESCALATION_RECEIVED' | 'ESCALATION_RESPONDED' | 'SYSTEM_ALERT' | 'NEW_HOTEL_REGISTRATION' | 'SUCCESS' | 'INFO' | 'WARNING' | 'ERROR';
+  type: string;
   isRead: boolean;
   relatedId?: string;
   relatedType?: string;
@@ -25,70 +22,12 @@ interface Notification {
 
 export default function NotificationCenter() {
   const { user } = useAuth();
-  const { subscribeUser } = usePusher(user?.id);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [unreadCount, setUnreadCount] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const { notifications, unreadCount, loading, markAsRead, markAllAsRead, deleteNotification } = useNotifications();
   const overlayRef = useRef<OverlayPanel>(null);
-
-  useEffect(() => {
-    if (user) {
-      loadNotifications();
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (!user) return;
-
-    const unsubscribe = subscribeUser({
-      onNotification: (notification: Notification) => {
-        console.log('Received real-time notification:', notification);
-        setNotifications(prev => [notification, ...prev]);
-        setUnreadCount(prev => prev + 1);
-      },
-    });
-
-    return unsubscribe;
-  }, [user, subscribeUser]);
-
-  const loadNotifications = async () => {
-    if (!user) return;
-    
-    setLoading(true);
-    try {
-      const response = await apiClient.getNotifications({ limit: 20 });
-      if (response.data) {
-        setNotifications((response.data.notifications || []) as Notification[]);
-        setUnreadCount((response.data.notifications as Notification[])?.filter((n: Notification) => !n.isRead).length || 0);
-      }
-    } catch (error) {
-      console.error('Error loading notifications:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const markAsRead = async (notificationId: string) => {
-    try {
-      await apiClient.markNotificationAsRead(notificationId);
-      setNotifications(prev => 
-        prev.map(n => n.id === notificationId ? { ...n, isRead: true } : n)
-      );
-      setUnreadCount(prev => Math.max(0, prev - 1));
-    } catch (error) {
-      console.error('Error marking notification as read:', error);
-    }
-  };
-
-  const markAllAsRead = async () => {
-    try {
-      await apiClient.markAllNotificationsAsRead();
-      setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
-      setUnreadCount(0);
-    } catch (error) {
-      console.error('Error marking all notifications as read:', error);
-    }
-  };
+  
+  // Individual loading states for different actions
+  const [markAllLoading, setMarkAllLoading] = useState(false);
+  const [deletingNotifications, setDeletingNotifications] = useState<Set<string>>(new Set());
 
   const getSeverity = (type: string) => {
     switch (type) {
@@ -148,9 +87,9 @@ export default function NotificationCenter() {
     }
   };
 
-  const handleNotificationClick = (notification: Notification) => {
+  const handleNotificationClick = async (notification: Notification) => {
     if (!notification.isRead) {
-      markAsRead(notification.id);
+      await markAsRead(notification.id);
     }
     
     // Handle navigation based on notification type
@@ -160,27 +99,54 @@ export default function NotificationCenter() {
     }
   };
 
+  const handleMarkAllAsRead = async () => {
+    setMarkAllLoading(true);
+    try {
+      await markAllAsRead();
+    } finally {
+      setMarkAllLoading(false);
+    }
+  };
+
+  const handleDeleteNotification = async (notificationId: string) => {
+    setDeletingNotifications(prev => new Set(prev).add(notificationId));
+    try {
+      await deleteNotification(notificationId);
+    } finally {
+      setDeletingNotifications(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(notificationId);
+        return newSet;
+      });
+    }
+  };
+
   if (!user) return null;
 
   return (
     <div className="notification-center">
       <div
-        className="p-button-text p-button-rounded relative"
+        className="p-button-text p-button-rounded relative flex align-items-center"
         onClick={(e) => overlayRef.current?.toggle(e)}
         aria-label="Notifications"
         style={{backgroundColor:'white !important'}}
       >
-        <img className='pt-1' src='/images/notification.svg' alt='notification' style={{width:'20px', height:'20px'}} />
         {unreadCount > 0 && (
           <Badge 
             value={unreadCount} 
             severity="danger" 
-            className="absolute -top-1 -right-1"
+            className="mr-0 mb-2"
+            style={{ fontSize: '0.7rem' }}
           />
         )}
+        <img className='pt-1 cursor-pointer' src='/images/notification.svg' alt='notification' style={{width:'20px', height:'20px'}} />
       </div>
 
-      <OverlayPanel ref={overlayRef} className="notification-panel">
+      <OverlayPanel 
+        ref={overlayRef} 
+        className="notification-panel"
+        style={{ width: '400px', maxWidth: '90vw' }}
+      >
         <div className="flex justify-content-between align-items-center mb-3">
           <h3 className="m-0">Notifications</h3>
           <div className="flex gap-2">
@@ -189,14 +155,15 @@ export default function NotificationCenter() {
                 label="Mark All Read"
                 size="small"
                 className="p-button-outlined p-button-sm"
-                onClick={markAllAsRead}
+                onClick={handleMarkAllAsRead}
+                loading={markAllLoading}
+                disabled={markAllLoading}
               />
             )}
             <Button
               icon="pi pi-refresh"
               size="small"
               className="p-button-outlined p-button-sm"
-              onClick={loadNotifications}
               loading={loading}
             />
           </div>
@@ -208,13 +175,26 @@ export default function NotificationCenter() {
             <p className="text-600 m-0">No notifications yet</p>
           </div>
         ) : (
-          <div className="notification-list" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+          <div 
+            className="notification-list" 
+            style={{ 
+              maxHeight: '400px', 
+              overflowY: 'auto',
+              width: '100%'
+            }}
+          >
             {notifications.map((notification) => (
               <div
                 key={notification.id}
                 className={`notification-item p-3 border-1 border-200 border-round mb-2 cursor-pointer transition-colors ${
                   !notification.isRead ? 'bg-blue-50 border-blue-200' : 'hover:bg-gray-50'
                 }`}
+                style={{ 
+                  width: '100%',
+                  minHeight: '80px',
+                  wordWrap: 'break-word',
+                  overflowWrap: 'break-word'
+                }}
                 onClick={() => handleNotificationClick(notification)}
               >
                 <div className="flex justify-content-between align-items-start mb-2">
@@ -228,9 +208,22 @@ export default function NotificationCenter() {
                       <div className="w-2 h-2 bg-blue-500 border-round"></div>
                     )}
                   </div>
-                  <span className="text-xs text-600">
-                    {formatTime(notification.createdAt)}
-                  </span>
+                  <div className="flex align-items-center gap-2">
+                    <span className="text-xs text-600">
+                      {formatTime(notification.createdAt)}
+                    </span>
+                    <Button
+                      icon="pi pi-times"
+                      size="small"
+                      className="p-button-text p-button-sm text-gray-400"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteNotification(notification.id);
+                      }}
+                      loading={deletingNotifications.has(notification.id)}
+                      disabled={deletingNotifications.has(notification.id)}
+                    />
+                  </div>
                 </div>
                 <h4 className="text-sm font-semibold m-0 mb-1">
                   {notification.title}

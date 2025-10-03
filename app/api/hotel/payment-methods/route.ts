@@ -91,6 +91,16 @@ export async function POST(request: NextRequest) {
         }
       });
 
+      // Send notification to admins
+      try {
+        const { NotificationCreators } = await import('@/lib/notificationService');
+        await NotificationCreators.paymentMethodAdded(hotel.id, hotel.name);
+        console.log('Payment method notification sent successfully');
+      } catch (notificationError) {
+        console.error('Error sending payment method notification:', notificationError);
+        // Don't fail the creation if notifications fail
+      }
+
       return NextResponse.json({
         success: true,
         data: paymentMethod

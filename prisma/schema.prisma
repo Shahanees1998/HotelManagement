@@ -403,6 +403,10 @@ enum NotificationType {
   SYSTEM_ALERT
   NEW_HOTEL_REGISTRATION
   NEW_FORM_CREATED
+  SUCCESS
+  INFO
+  WARNING
+  ERROR
 }
 
 enum SupportStatus {

@@ -105,11 +105,9 @@ export async function POST(request: NextRequest) {
 
     // Send notifications to admin users
     try {
-      const { sendAdminNotification, NotificationTemplates } = await import('@/lib/notificationService');
+      const { NotificationCreators } = await import('@/lib/notificationService');
       
-      await sendAdminNotification(
-        NotificationTemplates.hotelRegistered(hotelName, result.hotel.id)
-      );
+      await NotificationCreators.newHotelRegistered(result.hotel.id, hotelName);
       
       console.log('Admin notification sent successfully');
     } catch (notificationError) {

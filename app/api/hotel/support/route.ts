@@ -74,24 +74,27 @@ export async function POST(request: NextRequest) {
 
       // Send notifications
       try {
-        const { sendAdminNotification, sendUserNotification, NotificationTemplates } = await import('@/lib/notificationService');
+        const { NotificationService } = await import('@/lib/notificationService');
         
         // Get hotel info for notification
         const hotel = await prisma.hotels.findUnique({
           where: { ownerId: user.userId },
-          select: { name: true },
+          select: { id: true, name: true },
         });
 
         const hotelName = hotel?.name || 'Unknown Hotel';
 
         // Send notification to admins
-        await sendAdminNotification(
-          NotificationTemplates.supportRequestCreated(hotelName, subject, supportRequest.id)
+        await NotificationService.notifyAdmins(
+          'New Support Request',
+          `${hotelName} submitted a support request: ${subject}`,
+          'ESCALATION_RECEIVED',
+          supportRequest.id,
+          'support_request'
         );
 
         // Send confirmation notification to user
-        await sendUserNotification({
-          id: supportRequest.id,
+        await NotificationService.createNotification({
           userId: user.userId,
           title: 'Support Request Submitted',
           message: `Your support request "${subject}" has been submitted successfully.`,
