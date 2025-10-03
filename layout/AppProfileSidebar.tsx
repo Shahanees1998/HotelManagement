@@ -51,24 +51,45 @@ const AppProfileSidebar = () => {
         }
     }, [layoutState.profileSidebarVisible, user?.id]);
 
+    // Listen for notification updates
+    useEffect(() => {
+        const handleNotificationUpdate = () => {
+            if (layoutState.profileSidebarVisible && user?.id) {
+                loadSidebarData();
+            }
+        };
+
+        window.addEventListener('notification-updated', handleNotificationUpdate);
+        
+        return () => {
+            window.removeEventListener('notification-updated', handleNotificationUpdate);
+        };
+    }, [layoutState.profileSidebarVisible, user?.id]);
+
     const loadSidebarData = async () => {
         setLoading(true);
         try {
-            // Load recent notifications
-            const notificationsResponse = await apiClient.getNotifications({
-                page: 1,
-                limit: 3,
-                status: 'unread'
+            // Load recent notifications using the correct endpoint
+            const notificationsResponse = await fetch('/api/notifications?limit=3&status=unread', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
+
+            if (notificationsResponse.ok) {
+                const data = await notificationsResponse.json();
+                setNotifications(data.notifications || []);
+            } else {
+                console.error('Failed to load notifications:', notificationsResponse.statusText);
+                setNotifications([]);
+            }
 
             // Chat functionality removed - not relevant to hotel management system
             setMessages([]);
-
-            if (!notificationsResponse.error) {
-                setNotifications(notificationsResponse.data?.notifications || []);
-            }
         } catch (error) {
             console.error('Error loading sidebar data:', error);
+            setNotifications([]);
         } finally {
             setLoading(false);
         }
@@ -80,19 +101,35 @@ const AppProfileSidebar = () => {
     };
 
     const handleProfileClick = () => {
-        router.push('/admin/profile');
+        // Redirect based on user role
+        const profileRoute = user?.role === 'ADMIN' ? '/admin/profile' : '/hotel/profile';
+        router.push(profileRoute);
         onProfileSidebarHide();
     };
 
     const handleSettingsClick = () => {
-        router.push('/admin/settings');
+        // Redirect based on user role
+        const settingsRoute = user?.role === 'ADMIN' ? '/admin/settings' : '/hotel/settings';
+        router.push(settingsRoute);
         onProfileSidebarHide();
     };
 
-    const handleNotificationClick = (notificationId: string) => {
-        // Mark as read and navigate to notifications page
-        apiClient.markNotificationAsRead(notificationId);
-        router.push('/admin/communications/notifications');
+    const handleNotificationClick = async (notificationId: string) => {
+        try {
+            // Mark as read using the correct API endpoint
+            await fetch(`/api/notifications/${notificationId}/read`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        } catch (error) {
+            console.error('Error marking notification as read:', error);
+        }
+        
+        // Redirect based on user role
+        const notificationsRoute = user?.role === 'ADMIN' ? '/admin/communications/notifications' : '/hotel/notifications';
+        router.push(notificationsRoute);
         onProfileSidebarHide();
     };
 
@@ -114,11 +151,20 @@ const AppProfileSidebar = () => {
 
     const getNotificationIcon = (type: string) => {
         switch (type) {
-            case 'EVENT_UPDATE': return 'pi-calendar';
-            case 'DOCUMENT_UPLOAD': return 'pi-file';
-            case 'CHAT_MESSAGE': return 'pi-comments';
-            case 'BROADCAST': return 'pi-bell';
-            case 'SUPPORT_RESPONSE': return 'pi-question-circle';
+            case 'NEW_REVIEW': return 'pi-star';
+            case 'REVIEW_APPROVED': return 'pi-check-circle';
+            case 'REVIEW_REJECTED': return 'pi-times-circle';
+            case 'SUBSCRIPTION_EXPIRING': return 'pi-exclamation-triangle';
+            case 'SUBSCRIPTION_CANCELLED': return 'pi-ban';
+            case 'ESCALATION_RECEIVED': return 'pi-question-circle';
+            case 'ESCALATION_RESPONDED': return 'pi-reply';
+            case 'SYSTEM_ALERT': return 'pi-exclamation-circle';
+            case 'NEW_HOTEL_REGISTRATION': return 'pi-building';
+            case 'NEW_FORM_CREATED': return 'pi-file-edit';
+            case 'SUCCESS': return 'pi-check';
+            case 'INFO': return 'pi-info-circle';
+            case 'WARNING': return 'pi-exclamation-triangle';
+            case 'ERROR': return 'pi-times';
             default: return 'pi-bell';
         }
     };
@@ -133,7 +179,7 @@ const AppProfileSidebar = () => {
             <div className="flex flex-column mx-auto md:mx-0">
                 <span className="mb-2 font-semibold">Welcome</span>
                 <span className="text-color-secondary font-medium mb-5">
-                    {user ? `${user.firstName} ${user.lastName}` : 'Admin User'}
+                    {user ? `${user.firstName}` : 'Admin User'}
                 </span>
 
                 <ul className="list-none m-0 p-0">
@@ -143,7 +189,7 @@ const AppProfileSidebar = () => {
                             className="cursor-pointer flex surface-border mb-3 p-3 align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150 w-full text-left"
                         >
                             <span>
-                                <i className="pi pi-user text-xl text-primary"></i>
+                                <i className="pi pi-user text-xl text-primary" />
                             </span>
                             <div className="ml-3">
                                 <span className="mb-2 font-semibold">

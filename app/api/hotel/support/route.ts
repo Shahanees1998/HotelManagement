@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
       }
 
       // Get hotel's support requests
-      const requests = await prisma.adminEscalation.findMany({
+      const requests = await prisma.supportRequest.findMany({
         where: { userId: user.userId },
         orderBy: { createdAt: 'desc' },
       });
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Create support request
-      const supportRequest = await prisma.adminEscalation.create({
+      const supportRequest = await prisma.supportRequest.create({
         data: {
           userId: user.userId,
           subject,

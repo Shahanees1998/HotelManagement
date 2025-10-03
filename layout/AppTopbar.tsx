@@ -117,13 +117,12 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     const loadProfile = async () => {
         if (!user?.id) return;
         try {
-            const response = await apiClient.getUser(user.id);
-
+            const response = await apiClient.getCurrentUser();
             if (response.error) {
                 throw new Error(response.error);
             }
 
-            const userProfile = response.data as any;
+            const userProfile = (response as any).user as any;
             if (userProfile) {
                 setProfile(userProfile);
             }
@@ -190,7 +189,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                                 color: 'var(--text-color)'
                             }}>
                                 {(profile?.firstName && profile?.lastName) || (user?.firstName && user?.lastName)
-                                    ? `${profile?.firstName || user?.firstName} ${profile?.lastName || user?.lastName}`
+                                    ? `${profile?.firstName || user?.firstName}`
                                     : user?.email
                                 }
                             </span>

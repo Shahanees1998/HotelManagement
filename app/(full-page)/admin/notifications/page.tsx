@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
@@ -39,20 +39,27 @@ export default function AdminNotifications() {
   });
   const toast = useRef<Toast>(null);
 
+  // Helper function to update filters and reset page
+  const updateFilters = (newFilters: Partial<typeof filters>) => {
+    setFilters(prev => ({ ...prev, ...newFilters }));
+    setCurrentPage(1);
+  };
+
   useEffect(() => {
     loadNotifications();
   }, []);
 
-  // Reset to page 1 when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [filters.type, filters.status, filters.search]);
-
   const loadNotifications = async () => {
     setLoading(true);
     try {
-      const response = await apiClient.getNotifications();
-      setNotifications(response.data?.notifications || []);
+      const response = await fetch('/api/notifications');
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Notifications API response:', data); // Debug log
+        setNotifications(data.notifications || []);
+      } else {
+        throw new Error('Failed to load notifications');
+      }
     } catch (error) {
       console.error("Error loading notifications:", error);
       showToast("error", "Error", "Failed to load notifications");
@@ -63,39 +70,79 @@ export default function AdminNotifications() {
     }
   };
 
-  const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+  const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
     toast.current?.show({ severity, summary, detail, life: 3000 });
-  };
+  }, []);
 
-  const handleMarkAsRead = async (notificationId: string) => {
+  const handleMarkAsRead = useCallback(async (notificationId: string) => {
     try {
-      await apiClient.markNotificationAsRead(notificationId);
-      setNotifications(prev => prev.map(notif => 
-        notif.id === notificationId ? { ...notif, isRead: true } : notif
-      ));
-      showToast("success", "Success", "Notification marked as read");
+      const response = await fetch(`/api/notifications/${notificationId}/read`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (response.ok) {
+        setNotifications(prev => prev.map(notif => 
+          notif.id === notificationId ? { ...notif, isRead: true } : notif
+        ));
+        showToast("success", "Success", "Notification marked as read");
+      } else {
+        throw new Error('Failed to mark notification as read');
+      }
     } catch (error) {
       showToast("error", "Error", "Failed to mark notification as read");
     }
-  };
+  }, [showToast]);
 
-  const handleDelete = async (notificationId: string) => {
+  const handleDelete = useCallback(async (notificationId: string) => {
     try {
-      await apiClient.deleteNotification(notificationId);
-      setNotifications(prev => prev.filter(notif => notif.id !== notificationId));
-      showToast("success", "Success", "Notification deleted");
+      const response = await fetch(`/api/notifications/${notificationId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (response.ok) {
+        setNotifications(prev => prev.filter(notif => notif.id !== notificationId));
+        showToast("success", "Success", "Notification deleted");
+      } else {
+        throw new Error('Failed to delete notification');
+      }
     } catch (error) {
       showToast("error", "Error", "Failed to delete notification");
     }
-  };
+  }, [showToast]);
 
   const handleMarkAllAsRead = async () => {
     try {
-      await apiClient.markAllNotificationsAsRead();
-      setNotifications(prev => prev.map(notif => ({ ...notif, isRead: true })));
-      showToast("success", "Success", "All notifications marked as read");
+      const response = await fetch('/api/notifications/mark-all-read', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (response.ok) {
+        setNotifications(prev => prev.map(notif => ({ ...notif, isRead: true })));
+        showToast("success", "Success", "All notifications marked as read");
+      } else {
+        throw new Error('Failed to mark all notifications as read');
+      }
     } catch (error) {
       showToast("error", "Error", "Failed to mark all notifications as read");
+    }
+  };
+
+  const generateTestNotifications = async () => {
+    try {
+      const response = await fetch('/api/test-notifications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        showToast("success", "Success", data.message);
+        // Reload notifications to show the new ones
+        loadNotifications();
+      } else {
+        throw new Error('Failed to generate test notifications');
+      }
+    } catch (error) {
+      showToast("error", "Error", "Failed to generate test notifications");
     }
   };
 
@@ -109,6 +156,13 @@ export default function AdminNotifications() {
       case "ESCALATION_RECEIVED": return "danger";
       case "ESCALATION_RESPONDED": return "info";
       case "SYSTEM_ALERT": return "warning";
+      case "NEW_HOTEL_REGISTRATION": return "success";
+      case "NEW_FORM_CREATED": return "info";
+      case "PAYMENT_METHOD_ADDED": return "info";
+      case "SUCCESS": return "success";
+      case "INFO": return "info";
+      case "WARNING": return "warning";
+      case "ERROR": return "danger";
       default: return "info";
     }
   };
@@ -123,11 +177,18 @@ export default function AdminNotifications() {
       case "ESCALATION_RECEIVED": return "Escalation Received";
       case "ESCALATION_RESPONDED": return "Escalation Responded";
       case "SYSTEM_ALERT": return "System Alert";
+      case "NEW_HOTEL_REGISTRATION": return "New Hotel Registration";
+      case "NEW_FORM_CREATED": return "New Form Created";
+      case "PAYMENT_METHOD_ADDED": return "Payment Method Added";
+      case "SUCCESS": return "Success";
+      case "INFO": return "Info";
+      case "WARNING": return "Warning";
+      case "ERROR": return "Error";
       default: return type;
     }
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = useCallback((dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
@@ -135,27 +196,27 @@ export default function AdminNotifications() {
       hour: '2-digit',
       minute: '2-digit',
     });
-  };
+  }, []);
 
-  const userBodyTemplate = (rowData: Notification) => {
+  const userBodyTemplate = useMemo(() => (rowData: Notification) => {
     return (
       <div>
         <div className="font-semibold">System</div>
         <div className="text-sm text-600">system@example.com</div>
       </div>
     );
-  };
+  }, []);
 
-  const typeBodyTemplate = (rowData: Notification) => {
+  const typeBodyTemplate = useMemo(() => (rowData: Notification) => {
     return (
       <Tag 
         value={getTypeLabel(rowData.type)} 
         severity={getTypeSeverity(rowData.type) as any} 
       />
     );
-  };
+  }, []);
 
-  const statusBodyTemplate = (rowData: Notification) => {
+  const statusBodyTemplate = useMemo(() => (rowData: Notification) => {
     return (
       <div className="flex align-items-center gap-2">
         <Tag 
@@ -164,9 +225,9 @@ export default function AdminNotifications() {
         />
       </div>
     );
-  };
+  }, []);
 
-  const actionsBodyTemplate = (rowData: Notification) => {
+  const actionsBodyTemplate = useMemo(() => (rowData: Notification) => {
     return (
       <div className="flex gap-2">
         {!rowData.isRead && (
@@ -187,23 +248,31 @@ export default function AdminNotifications() {
         />
       </div>
     );
-  };
+  }, [handleMarkAsRead, handleDelete]);
 
-  const filteredNotifications = notifications.filter(notif => {
-    if (filters.type && notif.type !== filters.type) return false;
-    if (filters.status && notif.isRead.toString() !== filters.status) return false;
-    if (filters.search && !notif.title.toLowerCase().includes(filters.search.toLowerCase()) && 
-        !notif.message.toLowerCase().includes(filters.search.toLowerCase())) return false;
-    return true;
-  });
+  const dateBodyTemplate = useMemo(() => (rowData: Notification) => {
+    return formatDate(rowData.createdAt);
+  }, [formatDate]);
+
+  const filteredNotifications = useMemo(() => {
+    return notifications.filter(notif => {
+      if (filters.type && notif.type !== filters.type) return false;
+      if (filters.status && notif.isRead.toString() !== filters.status) return false;
+      if (filters.search && !notif.title.toLowerCase().includes(filters.search.toLowerCase()) && 
+          !notif.message.toLowerCase().includes(filters.search.toLowerCase())) return false;
+      return true;
+    });
+  }, [notifications, filters.type, filters.status, filters.search]);
 
   // Paginate the filtered notifications
-  const paginatedNotifications = filteredNotifications.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
-  );
+  const paginatedNotifications = useMemo(() => {
+    return filteredNotifications.slice(
+      (currentPage - 1) * rowsPerPage,
+      currentPage * rowsPerPage
+    );
+  }, [filteredNotifications, currentPage, rowsPerPage]);
 
-  const typeOptions = [
+  const typeOptions = useMemo(() => [
     { label: "All Types", value: "" },
     { label: "New Review", value: "NEW_REVIEW" },
     { label: "Review Approved", value: "REVIEW_APPROVED" },
@@ -213,13 +282,20 @@ export default function AdminNotifications() {
     { label: "Escalation Received", value: "ESCALATION_RECEIVED" },
     { label: "Escalation Responded", value: "ESCALATION_RESPONDED" },
     { label: "System Alert", value: "SYSTEM_ALERT" },
-  ];
+    { label: "New Hotel Registration", value: "NEW_HOTEL_REGISTRATION" },
+    { label: "New Form Created", value: "NEW_FORM_CREATED" },
+    { label: "Payment Method Added", value: "PAYMENT_METHOD_ADDED" },
+    { label: "Success", value: "SUCCESS" },
+    { label: "Info", value: "INFO" },
+    { label: "Warning", value: "WARNING" },
+    { label: "Error", value: "ERROR" },
+  ], []);
 
-  const statusOptions = [
+  const statusOptions = useMemo(() => [
     { label: "All Statuses", value: "" },
     { label: "Unread", value: "false" },
     { label: "Read", value: "true" },
-  ];
+  ], []);
 
   return (
     <div className="grid">
@@ -231,6 +307,12 @@ export default function AdminNotifications() {
             <p className="text-600 mt-2 mb-0">Manage all system notifications and alerts.</p>
           </div>
           <div className="flex gap-2">
+            <Button
+              label="Generate Test Notifications"
+              icon="pi pi-plus"
+              onClick={generateTestNotifications}
+              className="p-button-info"
+            />
             <Button
               label="Mark All as Read"
               icon="pi pi-check"
@@ -256,7 +338,7 @@ export default function AdminNotifications() {
               <label className="block text-900 font-medium mb-2">Search Notifications</label>
               <InputText
                 value={filters.search}
-                onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
+                onChange={(e) => updateFilters({ search: e.target.value })}
                 placeholder="Search by title, message, or user..."
                 className="w-full"
               />
@@ -266,7 +348,7 @@ export default function AdminNotifications() {
               <Dropdown
                 value={filters.type}
                 options={typeOptions}
-                onChange={(e) => setFilters(prev => ({ ...prev, type: e.value }))}
+                onChange={(e) => updateFilters({ type: e.value })}
                 placeholder="All Types"
                 className="w-full"
               />
@@ -276,7 +358,7 @@ export default function AdminNotifications() {
               <Dropdown
                 value={filters.status}
                 options={statusOptions}
-                onChange={(e) => setFilters(prev => ({ ...prev, status: e.value }))}
+                onChange={(e) => updateFilters({ status: e.value })}
                 placeholder="All Statuses"
                 className="w-full"
               />
@@ -310,19 +392,32 @@ export default function AdminNotifications() {
             <>
               <DataTable 
                 value={paginatedNotifications}
+                dataKey="id"
+                emptyMessage="No notifications found"
+                className="p-datatable-sm"
+                scrollable
+                scrollHeight="400px"
               >
-              <Column field="title" header="Title" sortable />
-              <Column field="message" header="Message" style={{ maxWidth: '300px' }} />
-              <Column field="user" header="User" body={userBodyTemplate} />
-              <Column field="type" header="Type" body={typeBodyTemplate} sortable />
-              <Column field="status" header="Status" body={statusBodyTemplate} sortable />
-              <Column 
-                field="createdAt" 
-                header="Created" 
-                body={(rowData) => formatDate(rowData.createdAt)}
-                sortable 
-              />
-              <Column header="Actions" body={actionsBodyTemplate} />              </DataTable>
+                <Column field="title" header="Title" sortable style={{ minWidth: '200px' }} />
+                <Column field="message" header="Message" style={{ minWidth: '300px', maxWidth: '300px' }} />
+                <Column field="user" header="User" body={userBodyTemplate} style={{ minWidth: '150px' }} />
+                <Column field="type" header="Type" body={typeBodyTemplate} sortable style={{ minWidth: '150px' }} />
+                <Column field="isRead" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '120px' }} />
+                <Column 
+                  field="createdAt" 
+                  header="Created" 
+                  body={dateBodyTemplate}
+                  sortable 
+                  style={{ minWidth: '150px' }}
+                />
+                <Column 
+                  header="Actions" 
+                  body={actionsBodyTemplate} 
+                  style={{ minWidth: '120px' }}
+                  frozen
+                  alignFrozen="right"
+                />
+              </DataTable>
               <CustomPaginator
                 currentPage={currentPage}
                 totalRecords={filteredNotifications.length}

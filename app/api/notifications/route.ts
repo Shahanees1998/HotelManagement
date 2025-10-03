@@ -25,15 +25,15 @@ export async function GET(request: NextRequest) {
         offset: offset ? parseInt(offset) : 0,
       };
 
+      console.log('Fetching notifications for user:', user.userId, 'with filters:', filters);
       const notifications = await NotificationService.getNotifications(filters);
       const unreadCount = await NotificationService.getUnreadCount(user.userId);
+      console.log('Found notifications:', notifications.length, 'unread count:', unreadCount);
 
       return NextResponse.json({
         success: true,
-        data: {
-          notifications,
-          unreadCount,
-        },
+        notifications,
+        unreadCount,
       });
     } catch (error) {
       console.error('Error fetching notifications:', error);

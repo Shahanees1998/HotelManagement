@@ -70,13 +70,13 @@ export default function ProfilePage() {
 
         setLoading(true);
         try {
-            const response = await apiClient.getUser(user.id);
+            const response = await apiClient.getCurrentUser();
 
             if (response.error) {
                 throw new Error(response.error);
             }
 
-            const userProfile = response.data as UserProfile;
+            const userProfile = (response as any).user as UserProfile;
             if (userProfile) {
                 setProfile(userProfile);
                 setProfileForm({
@@ -103,12 +103,12 @@ export default function ProfilePage() {
 
         setSaving(true);
         try {
-            const response = await apiClient.updateUser(profile.id, {
+            const response = await apiClient.editProfile({
                 firstName: profileForm.firstName,
                 lastName: profileForm.lastName,
-                email: profileForm.email,
                 phone: profileForm.phone,
-                membershipNumber: profileForm.membershipNumber,
+                profileImage: profile.profileImage,
+                profileImagePublicId: profile.profileImagePublicId,
             });
 
             if (response.error) {
@@ -120,6 +120,9 @@ export default function ProfilePage() {
 
             // Refresh user data
             await refreshUser();
+
+            // Dispatch custom event to notify other components
+            window.dispatchEvent(new Event('profile-updated'));
 
             showToast("success", "Success", "Profile updated successfully");
         } catch (error) {
@@ -135,8 +138,8 @@ export default function ProfilePage() {
             return;
         }
 
-        if (passwordForm.newPassword.length < 6) {
-            showToast("error", "Error", "Password must be at least 6 characters long");
+        if (passwordForm.newPassword.length < 8) {
+            showToast("error", "Error", "Password must be at least 8 characters long");
             return;
         }
 
@@ -549,7 +552,7 @@ export default function ProfilePage() {
                                     <i className={`pi ${showNew ? "pi-eye-slash" : "pi-eye"}`}></i>
                                 </button>
                             </div>
-                            <small className="text-600">Password must be at least 6 characters long</small>
+                            <small className="text-600">Password must be at least 8 characters long</small>
                         </div>
                         <div>
                             <label className="block text-sm font-medium mb-2">Confirm New Password *</label>

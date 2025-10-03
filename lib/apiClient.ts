@@ -168,6 +168,10 @@ class ApiClient {
         return this.get(`/admin/users/${id}`);
     }
 
+    async getCurrentUser() {
+        return this.get('/auth/me');
+    }
+
     async createUser(userData: {
         firstName: string;
         lastName: string;
@@ -214,7 +218,7 @@ class ApiClient {
     }
 
     async changePassword(currentPassword: string, newPassword: string) {
-        return this.post('/users/change-password', { currentPassword, newPassword });
+        return this.put('/users/change-password', { currentPassword, newPassword });
     }
 
     async editProfile(profileData: {

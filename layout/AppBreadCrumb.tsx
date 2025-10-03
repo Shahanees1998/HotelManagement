@@ -30,7 +30,7 @@ const AppBreadcrumb = (props: AppBreadcrumbProps) => {
                                             /{" "}
                                         </li>
                                     )}
-                                    <li key={index}> Dashboard / {label}</li>
+                                    <li key={index}> {label}</li>
                                 </React.Fragment>
                             );
                         })
