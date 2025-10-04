@@ -372,7 +372,7 @@ export default function NotificationsPage() {
                                         value={globalFilterValue}
                                         onChange={onGlobalFilterChange}
                                         placeholder="Search by title, message, or user..."
-                                        className="w-full p-inputtext-lg"
+                                        className="w-full"
                                     />
                                 </span>
                             </div>
