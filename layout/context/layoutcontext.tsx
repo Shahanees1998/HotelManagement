@@ -112,7 +112,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         <LayoutContext.Provider value={value}>
             <>
                 <Head>
-                    <title>PrimeReact - APOLLO</title>
+                    <title>Hotel Management System</title>
                     <meta charSet="UTF-8" />
                     <meta
                         name="description"
@@ -126,7 +126,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
                     <meta property="og:type" content="website"></meta>
                     <meta
                         property="og:title"
-                        content="Apollo by PrimeReact for Next.js"
+                        content="Hotel Management System"
                     ></meta>
                     <meta
                         property="og:url"

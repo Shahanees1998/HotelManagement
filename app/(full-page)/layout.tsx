@@ -5,13 +5,13 @@ interface MainLayoutProps {
 }
 
 export const metadata: Metadata = {
-    title: "PrimeReact APOLLO",
+    title: "Hotel Management System",
     description:
         "The ultimate collection of design-agnostic, flexible and accessible React UI Components.",
     robots: { index: false, follow: false },
     openGraph: {
         type: "website",
-        title: "PrimeReact APOLLO-REACT",
+        title: "Hotel Management System",
         url: "https://www.primefaces.org/apollo-react",
         description:
             "The ultimate collection of design-agnostic, flexible and accessible React UI Components.",
