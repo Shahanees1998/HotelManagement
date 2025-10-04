@@ -217,7 +217,28 @@ export default function HotelQRCodes() {
                 <Dropdown
                   value={selectedForm}
                   options={formOptions}
-                  onChange={(e) => setSelectedForm(e.value)}
+                  onChange={(e) => {
+                    setSelectedForm(e.value);
+                    // Auto-show QR code if form already has one
+                    const selectedFormData = forms.find(form => form.id === e.value);
+                    if (selectedFormData?.hasQrCode && selectedFormData.qrCode) {
+                      setQrCodeUrl(selectedFormData.qrCode.url);
+                      QRCode.toDataURL(selectedFormData.qrCode.url, {
+                        width: 300,
+                        margin: 2,
+                        color: {
+                          dark: "#000000",
+                          light: "#FFFFFF",
+                        },
+                      }).then(qrDataUrl => {
+                        setQrCodeDataUrl(qrDataUrl);
+                      });
+                    } else {
+                      // Clear QR code display if form doesn't have one
+                      setQrCodeUrl("");
+                      setQrCodeDataUrl("");
+                    }
+                  }}
                   placeholder="Select form from the list"
                   className="w-full"
                   style={{
@@ -227,6 +248,23 @@ export default function HotelQRCodes() {
                 />
               </div>
               
+              {/* Status Message */}
+              {selectedForm && (
+                <div className="mb-4">
+                  {forms.find(f => f.id === selectedForm)?.hasQrCode ? (
+                    <div className="flex align-items-center gap-2 p-3" style={{ backgroundColor: '#d4edda', borderRadius: '8px', border: '1px solid #c3e6cb' }}>
+                      <i className="pi pi-check-circle text-green-600"></i>
+                      <span className="text-green-700 font-medium">QR Code already generated for this form</span>
+                    </div>
+                  ) : (
+                    <div className="flex align-items-center gap-2 p-3" style={{ backgroundColor: '#fff3cd', borderRadius: '8px', border: '1px solid #ffeaa7' }}>
+                      <i className="pi pi-info-circle text-yellow-600"></i>
+                      <span className="text-yellow-700 font-medium">No QR code generated yet. Click "Generate QR Code" to create one.</span>
+                    </div>
+                  )}
+                </div>
+              )}
+              
               <Button
                 label={selectedForm && forms.find(f => f.id === selectedForm)?.hasQrCode ? "Show QR Code" : "Generate QR Code"}
                 onClick={generateQRCode}
@@ -234,8 +272,8 @@ export default function HotelQRCodes() {
                 disabled={!selectedForm || generating}
                 className="w-full"
                 style={{
-                  backgroundColor: '#1a2b48',
-                  borderColor: '#1a2b48',
+                  backgroundColor: selectedForm && forms.find(f => f.id === selectedForm)?.hasQrCode ? '#28a745' : '#1a2b48',
+                  borderColor: selectedForm && forms.find(f => f.id === selectedForm)?.hasQrCode ? '#28a745' : '#1a2b48',
                   borderRadius: '8px',
                   padding: '0.75rem 1.5rem',
                   fontSize: '1rem',

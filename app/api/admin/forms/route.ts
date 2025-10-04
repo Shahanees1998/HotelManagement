@@ -26,9 +26,7 @@ export async function GET(request: NextRequest) {
       }
       
       if (hotel) {
-        where.hotel = {
-          name: hotel
-        };
+        where.hotelId = hotel;
       }
       
       if (search) {

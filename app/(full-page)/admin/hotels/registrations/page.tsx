@@ -254,7 +254,7 @@ export default function HotelRegistrations() {
       <div className="col-12">
         <Card title="Filters" className="mb-4">
           <div className="grid">
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-6">
               <label className="block text-900 font-medium mb-2">Search</label>
               <InputText
                 value={filters.search}
@@ -263,7 +263,7 @@ export default function HotelRegistrations() {
                 className="w-full"
               />
             </div>
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-6">
               <label className="block text-900 font-medium mb-2">Status</label>
               <Dropdown
                 value={filters.status}
@@ -273,7 +273,7 @@ export default function HotelRegistrations() {
                 className="w-full"
               />
             </div>
-            <div className="col-12 md:col-4">
+            {/* <div className="col-12 md:col-4">
               <label className="block text-900 font-medium mb-2">Subscription</label>
               <Dropdown
                 value={filters.subscription}
@@ -282,7 +282,7 @@ export default function HotelRegistrations() {
                 placeholder="All Subscriptions"
                 className="w-full"
               />
-            </div>
+            </div> */}
           </div>
         </Card>
       </div>
@@ -316,7 +316,7 @@ export default function HotelRegistrations() {
                 <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable />
                 <Column field="owner" header="Owner" body={ownerBodyTemplate} />
                 <Column field="status" header="Status" body={statusBodyTemplate} sortable />
-                <Column field="subscription" header="Subscription" body={subscriptionBodyTemplate} sortable />
+                {/* <Column field="subscription" header="Subscription" body={subscriptionBodyTemplate} sortable /> */}
                 <Column 
                   field="createdAt" 
                   header="Submitted" 

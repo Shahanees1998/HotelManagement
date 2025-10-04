@@ -198,7 +198,7 @@ export default function HotelPerformanceAnalytics() {
       <div className="col-12">
         <Card title="Filters" className="mb-4">
           <div className="grid">
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-6">
               <label className="block text-900 font-medium mb-2">Search Hotels</label>
               <InputText
                 value={filters.search}
@@ -207,7 +207,7 @@ export default function HotelPerformanceAnalytics() {
                 className="w-full"
               />
             </div>
-            <div className="col-12 md:col-4">
+            {/* <div className="col-12 md:col-4">
               <label className="block text-900 font-medium mb-2">Subscription</label>
               <Dropdown
                 value={filters.subscription}
@@ -216,8 +216,8 @@ export default function HotelPerformanceAnalytics() {
                 placeholder="All Subscriptions"
                 className="w-full"
               />
-            </div>
-            <div className="col-12 md:col-4">
+            </div> */}
+            <div className="col-12 md:col-6">
               <label className="block text-900 font-medium mb-2">Status</label>
               <Dropdown
                 value={filters.status}
@@ -257,10 +257,10 @@ export default function HotelPerformanceAnalytics() {
                 value={filteredHotels}
               >
               <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable />
-              <Column field="subscription" header="Plan" sortable />
+              {/* <Column field="subscription" header="Plan" sortable /> */}
               <Column field="rating" header="Rating" body={ratingBodyTemplate} sortable />
               <Column field="responseRate" header="Response Rate" body={responseRateBodyTemplate} sortable />
-              <Column field="revenue" header="Monthly Revenue" body={revenueBodyTemplate} sortable />
+              {/* <Column field="revenue" header="Monthly Revenue" body={revenueBodyTemplate} sortable /> */}
               <Column field="growth" header="Growth Rate" body={growthBodyTemplate} sortable />
               <Column field="status" header="Status" body={statusBodyTemplate} sortable />
               <Column 

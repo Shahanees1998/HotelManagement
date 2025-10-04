@@ -295,7 +295,7 @@ export default function AdminHotels() {
       <div className="col-12">
         <Card title="Filters" className="mb-4">
           <div className="grid">
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-6">
               <label className="block text-900 font-medium mb-2">Search Hotels</label>
               <InputText
                 value={filters.search}
@@ -304,7 +304,7 @@ export default function AdminHotels() {
                 className="w-full"
               />
             </div>
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-6">
               <label className="block text-900 font-medium mb-2">Status</label>
               <Dropdown
                 value={filters.status}
@@ -314,7 +314,7 @@ export default function AdminHotels() {
                 className="w-full"
               />
             </div>
-            <div className="col-12 md:col-4">
+            {/* <div className="col-12 md:col-4">
               <label className="block text-900 font-medium mb-2">Subscription</label>
               <Dropdown
                 value={filters.subscription}
@@ -323,7 +323,7 @@ export default function AdminHotels() {
                 placeholder="All Subscriptions"
                 className="w-full"
               />
-            </div>
+            </div> */}
           </div>
         </Card>
       </div>
@@ -357,7 +357,7 @@ export default function AdminHotels() {
                 <Column field="slug" header="URL Slug" />
                 <Column field="owner" header="Owner" body={ownerBodyTemplate} />
                 <Column field="city" header="Location" sortable />
-                <Column field="subscriptionStatus" header="Subscription" body={subscriptionBodyTemplate} sortable />
+                {/* <Column field="subscriptionStatus" header="Subscription" body={subscriptionBodyTemplate} sortable /> */}
                 <Column field="status" header="Status" body={statusBodyTemplate} />
                 <Column field="rating" header="Rating" body={ratingBodyTemplate} sortable />
                 <Column 

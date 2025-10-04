@@ -142,26 +142,18 @@ export default function AdminDashboard() {
         labels: growthData.labels,
         datasets: [
             {
-                label: 'New Hotels',
+                label: 'Registered Hotels',
                 data: growthData.newHotels,
                 borderColor: '#4CAF50',
                 backgroundColor: 'rgba(76, 175, 80, 0.1)',
                 tension: 0.4,
             },
             {
-                label: 'New Reviews',
+                label: 'Reviews',
                 data: growthData.newReviews,
                 borderColor: '#2196F3',
                 backgroundColor: 'rgba(33, 150, 243, 0.1)',
                 tension: 0.4,
-            },
-            {
-                label: 'Earnings ($)',
-                data: growthData.earnings,
-                borderColor: '#FF9800',
-                backgroundColor: 'rgba(255, 152, 0, 0.1)',
-                tension: 0.4,
-                yAxisID: 'y1',
             },
         ],
     };
@@ -180,14 +172,6 @@ export default function AdminDashboard() {
                 display: true,
                 position: 'left' as const,
                 beginAtZero: true,
-            },
-            y1: {
-                type: 'linear' as const,
-                display: true,
-                position: 'right' as const,
-                grid: {
-                    drawOnChartArea: false,
-                },
             },
         },
     };
@@ -234,14 +218,14 @@ export default function AdminDashboard() {
             color: "blue",
             canAccess: true,
         },
-        {
-            title: "View Subscriptions",
-            description: "Monitor subscription status and billing",
-            icon: "pi pi-credit-card",
-            route: "/admin/subscriptions",
-            color: "green",
-            canAccess: true,
-        },
+        // {
+        //     title: "View Subscriptions",
+        //     description: "Monitor subscription status and billing",
+        //     icon: "pi pi-credit-card",
+        //     route: "/admin/subscriptions",
+        //     color: "green",
+        //     canAccess: true,
+        // },
         {
             title: "All Reviews",
             description: "Monitor all guest reviews across hotels",
@@ -273,15 +257,15 @@ export default function AdminDashboard() {
             route: "/admin/hotels",
             canAccess: true,
         },
-        {
-            value: stats.totalSubscribedHotels,
-            label: "Subscribed Hotels",
-            icon: "pi pi-check-circle",
-            bgColor: "bg-green-50",
-            iconColor: "text-green-500",
-            route: "/admin/subscriptions",
-            canAccess: true,
-        },
+        // {
+        //     value: stats.totalSubscribedHotels,
+        //     label: "Subscribed Hotels",
+        //     icon: "pi pi-check-circle",
+        //     bgColor: "bg-green-50",
+        //     iconColor: "text-green-500",
+        //     route: "/admin/subscriptions",
+        //     canAccess: true,
+        // },
         {
             value: stats.totalReviews,
             label: "Total Reviews",
@@ -291,15 +275,15 @@ export default function AdminDashboard() {
             route: "/admin/reviews",
             canAccess: true,
         },
-        {
-            value: `$${stats.totalEarnings.toLocaleString()}`,
-            label: "Total Earnings",
-            icon: "pi pi-dollar",
-            bgColor: "bg-purple-50",
-            iconColor: "text-purple-500",
-            route: "/admin/subscriptions",
-            canAccess: true,
-        },
+        // {
+        //     value: `$${stats.totalEarnings.toLocaleString()}`,
+        //     label: "Total Earnings",
+        //     icon: "pi pi-dollar",
+        //     bgColor: "bg-purple-50",
+        //     iconColor: "text-purple-500",
+        //     route: "/admin/subscriptions",
+        //     canAccess: true,
+        // },
         {
             value: stats.pendingApprovals,
             label: "Pending Approvals",
@@ -410,7 +394,7 @@ export default function AdminDashboard() {
             {/* Charts and Activity */}
             <div className="col-12 mt-4">
                 
-                <Card title="System Growth & Revenue" className="mt-4">
+                <Card title="System Growth" className="mt-4">
                     {loading ? (
                         <div className="flex align-items-center justify-content-center" style={{ height: '300px' }}>
                             <div className="text-600">Loading chart data...</div>

@@ -28,54 +28,54 @@ const AppMenu = () => {
             to: "/admin",
         },
 
-        // Hotels
+        // Hotel Management Dropdown
         {
-            label: "All Hotels",
+            label: "Hotel Management",
             icon: "pi pi-fw pi-building",
-            to: "/admin/hotels",
-        },
-
-        // Hotel Registrations
-        {
-            label: "Hotel Registrations",
-            icon: "pi pi-fw pi-user-plus",
-            to: "/admin/hotels/registrations",
-        },
-
-        // All Reviews
-        {
-            label: "All Reviews",
-            icon: "pi pi-fw pi-star",
-            to: "/admin/reviews",
-        },
-
-        // Feedback Forms
-        {
-            label: "Feedback Forms",
-            icon: "pi pi-fw pi-file-edit",
-            to: "/admin/forms",
+            items: [
+                {
+                    label: "All Hotels",
+                    icon: "pi pi-fw pi-building",
+                    to: "/admin/hotels",
+                },
+                {
+                    label: "Hotel Registrations",
+                    icon: "pi pi-fw pi-user-plus",
+                    to: "/admin/hotels/registrations",
+                },
+                {
+                    label: "All Reviews",
+                    icon: "pi pi-fw pi-star",
+                    to: "/admin/reviews",
+                },
+                {
+                    label: "Feedback Forms",
+                    icon: "pi pi-fw pi-file-edit",
+                    to: "/admin/forms",
+                },
+            ],
         },
 
         // Analytics
-        {
-            label: "Analytics",
-            icon: "pi pi-fw pi-chart-line",
-            to: "/admin/analytics",
-        },
+        // {
+        //     label: "Analytics",
+        //     icon: "pi pi-fw pi-chart-line",
+        //     to: "/admin/analytics",
+        // },
 
         // Subscriptions
-        {
-            label: "Subscriptions",
-            icon: "pi pi-fw pi-credit-card",
-            to: "/admin/subscriptions",
-        },
+        // {
+        //     label: "Subscriptions",
+        //     icon: "pi pi-fw pi-credit-card",
+        //     to: "/admin/subscriptions",
+        // },
 
         // Escalations
-        {
-            label: "Escalations",
-            icon: "pi pi-fw pi-exclamation-triangle",
-            to: "/admin/escalations",
-        },
+        // {
+        //     label: "Escalations",
+        //     icon: "pi pi-fw pi-exclamation-triangle",
+        //     to: "/admin/escalations",
+        // },
 
         // Support Tickets
         {

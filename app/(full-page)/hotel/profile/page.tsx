@@ -260,12 +260,12 @@ export default function HotelProfile() {
               className="p-button-outlined"
               onClick={() => window.open(`/feedback/${hotelData.slug}`, '_blank')}
             />
-            <Button
+            {/* <Button
               label="Manage Subscription"
               icon="pi pi-credit-card"
               className="p-button-outlined"
               onClick={() => setShowSubscriptionManager(true)}
-            />
+            /> */}
             <Button
               label="Contact Support"
               icon="pi pi-envelope"

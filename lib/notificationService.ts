@@ -504,7 +504,7 @@ export const NotificationCreators = {
     return await NotificationService.notifyAllHotels(
       `New Announcement: ${title}`,
       content,
-      'ANNOUNCEMENT',
+      'SYSTEM_ALERT',
       announcementId,
       'announcement',
       { type, title }

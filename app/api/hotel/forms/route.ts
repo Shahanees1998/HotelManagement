@@ -238,7 +238,7 @@ export async function POST(request: NextRequest) {
             order: q.order || index,
             options: q.options || [],
             validation: q.validation || null,
-            section: 'CUSTOM',
+            section: 'CUSTOM' as const,
           }));
 
           await tx.formQuestion.createMany({
