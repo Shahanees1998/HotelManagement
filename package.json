@@ -24,6 +24,7 @@
     "@fullcalendar/interaction": "^6.1.17",
     "@fullcalendar/react": "^6.1.17",
     "@fullcalendar/timegrid": "^6.1.17",
+    "@google-cloud/translate": "^9.2.0",
     "@next/third-parties": "^14.1.4",
     "@prisma/client": "^6.15.0",
     "@sendgrid/mail": "^8.1.5",
