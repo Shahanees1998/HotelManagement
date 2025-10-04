@@ -324,7 +324,7 @@ export default function NotificationsPage() {
     return (
         <div className="grid">
             <div className="col-12">
-                <Card className="shadow-2 border-round-xl">
+                <div>
                     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-4 mb-6">
                         <div className="flex flex-column">
                             <h2 className="text-3xl font-bold m-0 text-primary mb-2">Notifications</h2>
@@ -506,7 +506,7 @@ export default function NotificationsPage() {
                             </Card>
                         </div>
                     </div>
-                </Card>
+                </div>
             </div>
 
             <Toast ref={toast} />

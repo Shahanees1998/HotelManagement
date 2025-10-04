@@ -107,7 +107,7 @@ export async function POST(
       }
     }
 
-    // Calculate overall rating from star rating questions
+    // Calculate overall rating from star rating questions and custom rating items
     let overallRating = 0;
     let ratingCount = 0;
     
@@ -115,6 +115,17 @@ export async function POST(
       if (question.type === 'STAR_RATING' && answers[question.id]) {
         overallRating += answers[question.id];
         ratingCount++;
+      } else if (question.type === 'CUSTOM_RATING' && form.predefinedQuestions?.customRatingItems) {
+        // Calculate average for custom rating items
+        const customRatings = form.predefinedQuestions.customRatingItems
+          .map(item => answers[`${question.id}-${item.id}`])
+          .filter(rating => rating && rating > 0);
+        
+        if (customRatings.length > 0) {
+          const customAverage = customRatings.reduce((sum, rating) => sum + rating, 0) / customRatings.length;
+          overallRating += customAverage;
+          ratingCount++;
+        }
       }
     }
     
