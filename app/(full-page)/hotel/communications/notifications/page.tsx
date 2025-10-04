@@ -325,20 +325,19 @@ export default function NotificationsPage() {
         <div className="grid">
             <div className="col-12">
                 <div>
-                    <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-4 mb-6">
-                        <div className="flex flex-column">
-                            <h2 className="text-3xl font-bold m-0 text-primary mb-2">Notifications</h2>
-                            <span className="text-600 text-lg">Manage system notifications and alerts</span>
+                    <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-4">
+                        <div>
+                            <h1 className="text-3xl font-bold m-0">Notifications</h1>
+                            <p className="text-600 mt-2 mb-0">Manage system notifications and alerts</p>
                         </div>
-                        <div className="flex gap-3 justify-content-end">
+                        <div className="flex gap-2">
                             {selectedNotifications.length > 0 && (
                                 <Button
                                     label={`Delete Selected (${selectedNotifications.length})`}
                                     icon="pi pi-trash"
                                     onClick={confirmBulkDeleteNotifications}
                                     severity="danger"
-                                    className="p-button-raised"
-                                    size="large"
+                                    className="p-button-outlined"
                                 />
                             )}
                             <Button
@@ -347,58 +346,55 @@ export default function NotificationsPage() {
                                 onClick={markAllAsRead}
                                 severity="success"
                                 disabled={notifications.every(n => n.isRead)}
-                                className="p-button-raised"
-                                size="large"
+                                className="p-button-outlined"
                             />
                             <Button
                                 label="Refresh"
-                                icon="pi pi-sync"
+                                icon="pi pi-refresh"
                                 onClick={loadNotifications}
-                                severity="secondary"
+                                loading={loading}
                                 className="p-button-outlined"
-                                size="large"
                             />
                         </div>
                     </div>
 
                     {/* Filters */}
-                    <div className="surface-100 p-4 border-round-lg mb-6">
-                        <div className="flex flex-column md:flex-row gap-4 align-items-end">
-                            <div className="flex-1">
-                                <label className="block text-900 font-medium mb-2">Search Notifications</label>
-                                <span className="p-input-icon-left w-full">
-                                    <i className="pi pi-search" />
+                    <div className="col-12">
+                        <Card title="Filters" className="mb-4">
+                            <div className="grid">
+                                <div className="col-12 md:col-4">
+                                    <label className="block text-900 font-medium mb-2">Search Notifications</label>
                                     <InputText
                                         value={globalFilterValue}
                                         onChange={onGlobalFilterChange}
                                         placeholder="Search by title, message, or user..."
                                         className="w-full"
                                     />
-                                </span>
+                                </div>
+                                <div className="col-12 md:col-4">
+                                    <label className="block text-900 font-medium mb-2">Type</label>
+                                    <Dropdown
+                                        value={selectedType}
+                                        options={typeOptions}
+                                        onChange={onTypeFilterChange}
+                                        placeholder="All Types"
+                                        className="w-full"
+                                        showClear
+                                    />
+                                </div>
+                                <div className="col-12 md:col-4">
+                                    <label className="block text-900 font-medium mb-2">Status</label>
+                                    <Dropdown
+                                        value={selectedStatus}
+                                        options={statusOptions}
+                                        onChange={onStatusFilterChange}
+                                        placeholder="All Status"
+                                        className="w-full"
+                                        showClear
+                                    />
+                                </div>
                             </div>
-                            <div className="w-full md:w-12rem">
-                                <label className="block text-900 font-medium mb-2">Type</label>
-                                <Dropdown
-                                    value={selectedType}
-                                    options={typeOptions}
-                                    onChange={onTypeFilterChange}
-                                    placeholder="All Types"
-                                    className="w-full"
-                                    showClear
-                                />
-                            </div>
-                            <div className="w-full md:w-12rem">
-                                <label className="block text-900 font-medium mb-2">Status</label>
-                                <Dropdown
-                                    value={selectedStatus}
-                                    options={statusOptions}
-                                    onChange={onStatusFilterChange}
-                                    placeholder="All Status"
-                                    className="w-full"
-                                    showClear
-                                />
-                            </div>
-                        </div>
+                        </Card>
                     </div>
 
                     {/* Notifications Table */}
