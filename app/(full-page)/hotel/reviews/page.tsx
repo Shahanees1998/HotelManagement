@@ -402,9 +402,9 @@ export default function HotelReviews() {
                 <Column field="guestName" header="Guest" sortable />
                 <Column field="guestEmail" header="Email" />
                 <Column field="overallRating" header="Rating" body={ratingBodyTemplate} sortable />
-                <Column field="status" header="Status" body={statusBodyTemplate} />
+                {/* <Column field="status" header="Status" body={statusBodyTemplate} />
                 <Column field="visibility" header="Visibility" body={visibilityBodyTemplate} />
-                <Column field="formTitle" header="Form" />
+                <Column field="formTitle" header="Form" /> */}
                 <Column 
                   field="submittedAt" 
                   header="Submitted" 

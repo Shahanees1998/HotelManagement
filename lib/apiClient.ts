@@ -516,6 +516,10 @@ class ApiClient {
         return this.put<any>(`/admin/hotels/${id}/status`, data);
     }
 
+    async updateHotel(id: string, data: any) {
+        return this.put<any>(`/admin/hotels/${id}`, data);
+    }
+
     async getHotelRegistrations() {
         return this.get<any>('/admin/hotels/registrations');
     }
@@ -639,15 +643,15 @@ class ApiClient {
     }
 
     async markNotificationAsRead(notificationId: string) {
-        return this.put(`/admin/notifications/${notificationId}/read`, {});
+        return this.put(`/notifications/${notificationId}/read`, {});
     }
 
     async markAllNotificationsAsRead() {
-        return this.put('/admin/notifications/read-all', {});
+        return this.put('/notifications/mark-all-read', {});
     }
 
     async deleteNotification(notificationId: string) {
-        return this.delete(`/admin/notifications/${notificationId}`);
+        return this.delete(`/notifications/${notificationId}`);
     }
 
     // Membership Card methods

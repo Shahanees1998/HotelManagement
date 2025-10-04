@@ -10,6 +10,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
 import { CustomPaginator } from "@/components/CustomPaginator";
@@ -31,6 +32,7 @@ interface Review {
 
 export default function AdminReviews() {
   const { user } = useAuth();
+  const searchParams = useSearchParams();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,7 +41,7 @@ export default function AdminReviews() {
   const [filters, setFilters] = useState({
     status: "",
     rating: "",
-    hotel: "",
+    hotel: searchParams.get('hotelId') || "",
     search: "",
   });
   const toast = useRef<Toast>(null);
@@ -311,9 +313,9 @@ export default function AdminReviews() {
                 <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable />
                 <Column field="guest" header="Guest" body={guestBodyTemplate} />
                 <Column field="overallRating" header="Rating" body={ratingBodyTemplate} sortable />
-                <Column field="status" header="Status" body={statusBodyTemplate} sortable />
+                {/* <Column field="status" header="Status" body={statusBodyTemplate} sortable />
                 <Column field="visibility" header="Visibility" body={visibilityBodyTemplate} />
-                <Column field="formTitle" header="Form" />
+                <Column field="formTitle" header="Form" /> */}
                 <Column 
                   field="submittedAt" 
                   header="Submitted" 

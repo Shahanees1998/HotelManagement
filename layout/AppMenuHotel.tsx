@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 const AppMenuHotel = () => {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const router = useRouter();
     
     if (!user) {
@@ -13,7 +13,7 @@ const AppMenuHotel = () => {
     
     const handleLogout = async () => {
         try {
-            await fetch('/api/auth/logout', { method: 'POST' });
+            await logout();
             router.push('/auth/login');
         } catch (error) {
             console.error('Logout error:', error);
@@ -49,6 +49,13 @@ const AppMenuHotel = () => {
             to: "/hotel/reviews",
         },
         
+        // Notifications
+        {
+            label: "Notifications",
+            icon: "pi pi-fw pi-bell",
+            to: "/hotel/communications/notifications",
+        },
+        
         // Contact Admin
         {
             label: "Contact Admin",
@@ -76,16 +83,16 @@ const AppMenuHotel = () => {
                     icon: "pi pi-fw pi-key",
                     to: "/hotel/profile/password",
                 },
-                {
-                    label: "Subscriptions",
-                    icon: "pi pi-fw pi-credit-card",
-                    to: "/hotel/subscription",
-                },
-                {
-                    label: "Payment Methods",
-                    icon: "pi pi-fw pi-wallet",
-                    to: "/hotel/payment-methods",
-                },
+                // {
+                //     label: "Subscriptions",
+                //     icon: "pi pi-fw pi-credit-card",
+                //     to: "/hotel/subscription",
+                // },
+                // {
+                //     label: "Payment Methods",
+                //     icon: "pi pi-fw pi-wallet",
+                //     to: "/hotel/payment-methods",
+                // },
             ],
         },
     ];

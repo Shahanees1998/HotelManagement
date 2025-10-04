@@ -7,8 +7,11 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
 import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { Toast } from "primereact/toast";
+import { Dialog } from "primereact/dialog";
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
 import { CustomPaginator } from "@/components/CustomPaginator";
@@ -36,6 +39,7 @@ interface Hotel {
 
 export default function AdminHotels() {
   const { user } = useAuth();
+  const router = useRouter();
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
@@ -46,6 +50,19 @@ export default function AdminHotels() {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [editingHotel, setEditingHotel] = useState<Hotel | null>(null);
+  const [editForm, setEditForm] = useState({
+    name: "",
+    slug: "",
+    email: "",
+    phone: "",
+    city: "",
+    country: "",
+    description: "",
+    address: "",
+    website: "",
+  });
   const toast = useRef<Toast>(null);
 
   const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
@@ -95,6 +112,46 @@ export default function AdminHotels() {
     } catch (error) {
       showToast("error", "Error", "Failed to update hotel status");
     }
+  };
+
+  const handleEditHotel = (hotel: Hotel) => {
+    setEditingHotel(hotel);
+    setEditForm({
+      name: hotel.name,
+      slug: hotel.slug,
+      email: hotel.email,
+      phone: hotel.phone,
+      city: hotel.city,
+      country: hotel.country,
+      description: (hotel as any).description || "",
+      address: (hotel as any).address || "",
+      website: (hotel as any).website || "",
+    });
+    setShowEditDialog(true);
+  };
+
+  const handleUpdateHotel = async () => {
+    if (!editingHotel) return;
+
+    try {
+      await apiClient.updateHotel(editingHotel.id, editForm);
+      setHotels(prev => prev.map(hotel => 
+        hotel.id === editingHotel.id ? { ...hotel, ...editForm } : hotel
+      ));
+      setShowEditDialog(false);
+      setEditingHotel(null);
+      showToast("success", "Success", "Hotel information updated successfully");
+    } catch (error) {
+      showToast("error", "Error", "Failed to update hotel information");
+    }
+  };
+
+  const handleViewReviews = (hotelId: string) => {
+    router.push(`/admin/reviews?hotelId=${hotelId}`);
+  };
+
+  const handleViewForms = (hotelId: string) => {
+    router.push(`/admin/forms?hotelId=${hotelId}`);
   };
 
   const getSubscriptionSeverity = (status: string) => {
@@ -153,6 +210,34 @@ export default function AdminHotels() {
           }`}
           onClick={() => handleStatusChange(rowData.id, !rowData.isActive)}
           tooltip={rowData.isActive ? "Deactivate" : "Activate"}
+        />
+      </div>
+    );
+  };
+
+  const actionsBodyTemplate = (rowData: Hotel) => {
+    return (
+      <div className="flex gap-2">
+        <Button
+          icon="pi pi-star"
+          size="small"
+          className="p-button-outlined p-button-sm"
+          onClick={() => handleViewReviews(rowData.id)}
+          tooltip="View Reviews"
+        />
+        <Button
+          icon="pi pi-file-edit"
+          size="small"
+          className="p-button-outlined p-button-sm"
+          onClick={() => handleViewForms(rowData.id)}
+          tooltip="View Forms"
+        />
+        <Button
+          icon="pi pi-pencil"
+          size="small"
+          className="p-button-outlined p-button-sm"
+          onClick={() => handleEditHotel(rowData)}
+          tooltip="Edit Hotel"
         />
       </div>
     );
@@ -281,6 +366,11 @@ export default function AdminHotels() {
                   body={(rowData) => formatDate(rowData.createdAt)}
                   sortable 
                 />
+                <Column 
+                  header="Actions" 
+                  body={actionsBodyTemplate} 
+                  style={{ minWidth: '100px' }}
+                />
               </DataTable>
               <CustomPaginator
                 currentPage={currentPage}
@@ -295,6 +385,141 @@ export default function AdminHotels() {
             </>
           )}
       </div>
+
+      {/* Edit Hotel Dialog */}
+      <Dialog
+        header="Edit Hotel Information"
+        visible={showEditDialog}
+        onHide={() => {
+          setShowEditDialog(false);
+          setEditingHotel(null);
+        }}
+        style={{ width: '600px' }}
+        modal
+      >
+        <div className="grid">
+          <div className="col-12 md:col-6">
+            <div className="field">
+              <label className="block text-900 font-medium mb-2">Hotel Name *</label>
+              <InputText
+                value={editForm.name}
+                onChange={(e) => setEditForm(prev => ({ ...prev, name: e.target.value }))}
+                placeholder="Enter hotel name"
+                className="w-full"
+              />
+            </div>
+          </div>
+          <div className="col-12 md:col-6">
+            <div className="field">
+              <label className="block text-900 font-medium mb-2">URL Slug *</label>
+              <InputText
+                value={editForm.slug}
+                onChange={(e) => setEditForm(prev => ({ ...prev, slug: e.target.value }))}
+                placeholder="Enter URL slug"
+                className="w-full"
+              />
+            </div>
+          </div>
+          <div className="col-12 md:col-6">
+            <div className="field">
+              <label className="block text-900 font-medium mb-2">Email *</label>
+              <InputText
+                value={editForm.email}
+                onChange={(e) => setEditForm(prev => ({ ...prev, email: e.target.value }))}
+                placeholder="Enter email address"
+                className="w-full"
+                type="email"
+              />
+            </div>
+          </div>
+          <div className="col-12 md:col-6">
+            <div className="field">
+              <label className="block text-900 font-medium mb-2">Phone</label>
+              <InputText
+                value={editForm.phone}
+                onChange={(e) => setEditForm(prev => ({ ...prev, phone: e.target.value }))}
+                placeholder="Enter phone number"
+                className="w-full"
+              />
+            </div>
+          </div>
+          <div className="col-12 md:col-6">
+            <div className="field">
+              <label className="block text-900 font-medium mb-2">City *</label>
+              <InputText
+                value={editForm.city}
+                onChange={(e) => setEditForm(prev => ({ ...prev, city: e.target.value }))}
+                placeholder="Enter city"
+                className="w-full"
+              />
+            </div>
+          </div>
+          <div className="col-12 md:col-6">
+            <div className="field">
+              <label className="block text-900 font-medium mb-2">Country *</label>
+              <InputText
+                value={editForm.country}
+                onChange={(e) => setEditForm(prev => ({ ...prev, country: e.target.value }))}
+                placeholder="Enter country"
+                className="w-full"
+              />
+            </div>
+          </div>
+          <div className="col-12">
+            <div className="field">
+              <label className="block text-900 font-medium mb-2">Address</label>
+              <InputTextarea
+                value={editForm.address}
+                onChange={(e) => setEditForm(prev => ({ ...prev, address: e.target.value }))}
+                placeholder="Enter hotel address"
+                rows={2}
+                className="w-full"
+              />
+            </div>
+          </div>
+          <div className="col-12">
+            <div className="field">
+              <label className="block text-900 font-medium mb-2">Description</label>
+              <InputTextarea
+                value={editForm.description}
+                onChange={(e) => setEditForm(prev => ({ ...prev, description: e.target.value }))}
+                placeholder="Enter hotel description"
+                rows={3}
+                className="w-full"
+              />
+            </div>
+          </div>
+          <div className="col-12">
+            <div className="field">
+              <label className="block text-900 font-medium mb-2">Website</label>
+              <InputText
+                value={editForm.website}
+                onChange={(e) => setEditForm(prev => ({ ...prev, website: e.target.value }))}
+                placeholder="Enter website URL"
+                className="w-full"
+                type="url"
+              />
+            </div>
+          </div>
+        </div>
+        
+        <div className="flex justify-content-end gap-2 mt-4">
+          <Button
+            label="Cancel"
+            icon="pi pi-times"
+            onClick={() => {
+              setShowEditDialog(false);
+              setEditingHotel(null);
+            }}
+            className="p-button-outlined"
+          />
+          <Button
+            label="Update Hotel"
+            icon="pi pi-check"
+            onClick={handleUpdateHotel}
+          />
+        </div>
+      </Dialog>
 
       <Toast ref={toast} />
     </div>

@@ -72,11 +72,13 @@ const layoutOptions = [
 export default function FeedbackFormBuilder({
   formId,
   onSave,
-  onCancel
+  onCancel,
+  previewMode = false
 }: {
   formId?: string;
   onSave: (form: FeedbackForm) => void;
   onCancel: () => void;
+  previewMode?: boolean;
 }) {
   const { user } = useAuth();
   const [form, setForm] = useState<FeedbackForm>({
@@ -229,7 +231,7 @@ export default function FeedbackFormBuilder({
         if (hasFeedback) {
           predefinedQuestions.push({
             id: "feedback",
-            question: "Please give us honest feedback?",
+            question: "Please give us your honest feedback?",
             type: "LONG_TEXT",
             isRequired: true,
             options: [],
@@ -423,7 +425,7 @@ export default function FeedbackFormBuilder({
       const predefinedSection = {
         hasRateUs: form.questions.some(q => q.question === "Rate Us"),
         hasCustomRating: form.questions.some(q => q.question === "Custom Rating"),
-        hasFeedback: form.questions.some(q => q.question === "Please give us honest feedback?"),
+        hasFeedback: form.questions.some(q => q.question === "Please give us your honest feedback?"),
         customRatingItems: customRatingItems.map((item, index) => ({
           label: item.label,
           order: index,
@@ -598,7 +600,7 @@ export default function FeedbackFormBuilder({
             />
           </div>
           <h1 className="header-title">
-            {showPreview ? 'Live Preview' : formId ? "Edit Form" : "Create New Form"}
+            {previewMode ? 'Preview Form' : showPreview ? 'Live Preview' : formId ? "Edit Form" : "Create New Form"}
           </h1>
         </div>
         <div className="header-actions">
@@ -607,14 +609,16 @@ export default function FeedbackFormBuilder({
             className="p-button-outlined live-preview-btn"
             onClick={() => setShowPreview(!showPreview)}
           />
-          <Button
-            label="Save Form"
-            className="p-button-primary save-form-btn"
-            onClick={handleSave}
-            loading={loading}
-            disabled={loading || (!form.questions.some(q => q.question === "Rate Us") && !form.questions.some(q => q.question === "Custom Rating"))}
-            tooltip={(!form.questions.some(q => q.question === "Rate Us") && !form.questions.some(q => q.question === "Custom Rating")) ? "Either 'Rate Us' or 'Custom Rating' must be selected" : "Save the form"}
-          />
+          {!previewMode && (
+            <Button
+              label="Save Form"
+              className="p-button-primary save-form-btn"
+              onClick={handleSave}
+              loading={loading}
+              disabled={loading || (!form.questions.some(q => q.question === "Rate Us") && !form.questions.some(q => q.question === "Custom Rating"))}
+              tooltip={(!form.questions.some(q => q.question === "Rate Us") && !form.questions.some(q => q.question === "Custom Rating")) ? "Either 'Rate Us' or 'Custom Rating' must be selected" : "Save the form"}
+            />
+          )}
         </div>
       </div>
 
@@ -634,6 +638,7 @@ export default function FeedbackFormBuilder({
                       onChange={(e) => setForm({ ...form, title: e.target.value })}
                       placeholder="Enter form title"
                       className="form-input"
+                      disabled={previewMode}
                     />
                   </div>
                 </div>
@@ -644,15 +649,28 @@ export default function FeedbackFormBuilder({
                       value={form.layout}
                       options={layoutOptions}
                       onChange={(e) => {
+                        if (previewMode) return;
                         const newLayout = e.value;
                         let updatedQuestions = [...form.questions];
                         
                         if (newLayout === "basic") {
-                          // Basic: Only Rate Us allowed
+                          // Basic: Only Rate Us allowed - remove all other questions
                           updatedQuestions = updatedQuestions.filter(q => q.question === "Rate Us");
+                          // If no Rate Us question exists, add it
+                          if (updatedQuestions.length === 0) {
+                            updatedQuestions = [{
+                              id: "rate-us",
+                              question: "Rate Us",
+                              type: "STAR_RATING",
+                              isRequired: true,
+                              options: [],
+                              isDefault: true
+                            }];
+                          }
                         } else if (newLayout === "good") {
-                          // Good: Remove custom questions and add Rate Us by default
+                          // Good: Remove custom questions, keep only predefined questions
                           updatedQuestions = updatedQuestions.filter(q => q.isDefault);
+                          // If no predefined questions exist, add Rate Us by default
                           if (updatedQuestions.length === 0) {
                             updatedQuestions = [{
                               id: "rate-us",
@@ -677,11 +695,25 @@ export default function FeedbackFormBuilder({
                           }
                         }
                         
+                        console.log('Layout changed to:', newLayout);
+                        console.log('Previous questions:', form.questions);
+                        console.log('Updated questions:', updatedQuestions);
+                        
+                        // Show toast notification about layout change
+                        if (newLayout === "basic") {
+                          showToast("info", "Layout Changed", "Switched to Basic layout. Only 'Rate Us' question is available.");
+                        } else if (newLayout === "good") {
+                          showToast("info", "Layout Changed", "Switched to Good layout. Custom questions removed, predefined questions available.");
+                        } else if (newLayout === "excellent") {
+                          showToast("info", "Layout Changed", "Switched to Excellent layout. All features available including custom questions.");
+                        }
+                        
                         setForm({ ...form, layout: newLayout, questions: updatedQuestions });
                       }}
                       optionLabel="label"
                       placeholder="Select form from the list"
                       className="form-dropdown"
+                      disabled={previewMode}
                     />
                   </div>
                 </div>
@@ -696,6 +728,7 @@ export default function FeedbackFormBuilder({
                   placeholder="Enter brief description of your form"
                   rows={3}
                   className="form-textarea"
+                  disabled={previewMode}
                 />
               </div>
             </div>
@@ -709,8 +742,8 @@ export default function FeedbackFormBuilder({
                 label="Add New"
                 className="add-new-btn"
                 onClick={addQuestion}
-                disabled={form.layout !== "excellent"}
-                tooltip={form.layout === "basic" ? "Custom questions available in Excellent layout" : form.layout === "good" ? "Custom questions available in Excellent layout" : "Add custom question"}
+                disabled={form.layout !== "excellent" || previewMode}
+                tooltip={previewMode ? "Preview mode - editing disabled" : form.layout === "basic" ? "Custom questions available in Excellent layout" : form.layout === "good" ? "Custom questions available in Excellent layout" : "Add custom question"}
               />
             </div>
 
@@ -724,8 +757,9 @@ export default function FeedbackFormBuilder({
                   <div className="question-checkbox">
                     <Checkbox
                       checked={form.questions.some(q => q.question === "Rate Us")}
-                      disabled={form.layout === "good" && form.questions.some(q => q.question === "Custom Rating")}
+                      disabled={previewMode}
                       onChange={(e) => {
+                        if (previewMode) return;
                         if (e.checked) {
                           // Remove custom rating if rate us is selected
                           const updatedQuestions = form.questions.filter(q => q.question !== "Custom Rating");
@@ -751,7 +785,6 @@ export default function FeedbackFormBuilder({
                     />
                     <label className="question-label">
                       Rate Us*
-                      {form.layout === "good" && form.questions.some(q => q.question === "Custom Rating") && <span className="text-xs text-400 ml-2">(Cannot select both Rate Us and Custom Rating)</span>}
                     </label>
                   </div>
                   <div className="">
@@ -768,8 +801,9 @@ export default function FeedbackFormBuilder({
                   <div className="question-checkbox">
                     <Checkbox
                       checked={form.questions.some(q => q.question === "Custom Rating")}
-                      disabled={form.layout === "basic" || (form.layout === "good" && form.questions.some(q => q.question === "Rate Us"))}
+                      disabled={previewMode || form.layout === "basic"}
                       onChange={(e) => {
+                        if (previewMode) return;
                         if (e.checked) {
                           // Remove rate us if custom rating is selected
                           const updatedQuestions = form.questions.filter(q => q.question !== "Rate Us");
@@ -796,7 +830,6 @@ export default function FeedbackFormBuilder({
                     <label className={`question-label ${form.layout === "basic" ? "text-400" : ""}`}>
                       Custom Rating*
                       {form.layout === "basic" && <span className="text-xs text-400 ml-2">(Available in Good/Excellent layouts)</span>}
-                      {form.layout === "good" && form.questions.some(q => q.question === "Rate Us") && <span className="text-xs text-400 ml-2">(Cannot select both Rate Us and Custom Rating)</span>}
                     </label>
                   </div>
                   {form.questions.some(q => q.question === "Custom Rating") && (
@@ -886,13 +919,14 @@ export default function FeedbackFormBuilder({
                 <div className="question-item mt-4">
                   <div className="question-checkbox">
                     <Checkbox
-                      checked={form.questions.some(q => q.question === "Please give us honest feedback?")}
-                      disabled={form.layout === "basic"}
+                      checked={form.questions.some(q => q.question === "Please give us your honest feedback?")}
+                      disabled={previewMode || form.layout === "basic"}
                       onChange={(e) => {
+                        if (previewMode) return;
                         if (e.checked) {
                           const feedbackQuestion = {
                             id: "feedback",
-                            question: "Please give us honest feedback?",
+                            question: "Please give us your honest feedback?",
                             type: "LONG_TEXT",
                             isRequired: true,
                             options: [],
@@ -905,17 +939,17 @@ export default function FeedbackFormBuilder({
                         } else {
                           setForm({
                             ...form,
-                            questions: form.questions.filter(q => q.question !== "Please give us honest feedback?")
+                            questions: form.questions.filter(q => q.question !== "Please give us your honest feedback?")
                           });
                         }
                       }}
                     />
                     <label className={`question-label ${form.layout === "basic" ? "text-400" : ""}`}>
-                      Please give us honest feedback?*
+                      Please give us your honest feedback?*
                       {form.layout === "basic" && <span className="text-xs text-400 ml-2">(Available in Good/Excellent layouts)</span>}
                     </label>
                   </div>
-                  {form.questions.some(q => q.question === "Please give us honest feedback?") && (
+                  {form.questions.some(q => q.question === "Please give us your honest feedback?") && (
                     <div className="feedback-textarea">
                       <InputTextarea
                         placeholder="Enter your detail feedback"
@@ -1006,25 +1040,27 @@ export default function FeedbackFormBuilder({
                             className="p-button-text p-button-sm"
                             onClick={() => editQuestion(question)}
                             tooltip="Edit"
+                            disabled={previewMode}
                           />
                           <Button
                             icon="pi pi-trash"
                             className="p-button-text p-button-sm p-button-danger"
                             onClick={() => deleteQuestion(question)}
                             tooltip="Delete"
+                            disabled={previewMode}
                           />
                           <Button
                             icon="pi pi-arrow-up"
                             className="p-button-text p-button-sm"
                             onClick={() => moveQuestion(index, 'up')}
-                            disabled={index === 0}
+                            disabled={previewMode || index === 0}
                             tooltip="Move Up"
                           />
                           <Button
                             icon="pi pi-arrow-down"
                             className="p-button-text p-button-sm"
                             onClick={() => moveQuestion(index, 'down')}
-                            disabled={index === form.questions.filter(q => !q.isDefault).length - 1}
+                            disabled={previewMode || index === form.questions.filter(q => !q.isDefault).length - 1}
                             tooltip="Move Down"
                           />
                         </div>
@@ -1065,7 +1101,7 @@ export default function FeedbackFormBuilder({
                     <i className="pi pi-info-circle text-green-500"></i>
                     <div>
                       <p className="text-600 text-sm mb-1 font-medium">Good Layout Features</p>
-                      <p className="text-500 text-xs">Choose either "Rate Us" OR "Custom Rating" (mutually exclusive). You can also add "Feedback" question. Custom questions available in Excellent layout.</p>
+                      <p className="text-500 text-xs">Choose either "Rate Us" OR "Custom Rating" (mutually exclusive - selecting one will uncheck the other). You can also add "Feedback" question. Custom questions available in Excellent layout.</p>
                     </div>
                   </div>
                 </div>
@@ -1273,7 +1309,7 @@ export default function FeedbackFormBuilder({
             )}
 
             {/* Feedback Question */}
-            {form.questions.some(q => q.question === "Please give us honest feedback?") && (
+            {form.questions.some(q => q.question === "Please give us your honest feedback?") && (
               <div style={{ marginBottom: "20px" }}>
                 <label
                   style={{
@@ -1284,7 +1320,7 @@ export default function FeedbackFormBuilder({
                     marginBottom: "6px",
                   }}
                 >
-                  Please give us honest feedback?
+                  Please give us your honest feedback?
                 </label>
                 <textarea
                   rows={3}

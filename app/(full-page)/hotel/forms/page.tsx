@@ -9,7 +9,9 @@ import { Tag } from "primereact/tag";
 import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
+import { Dialog } from "primereact/dialog";
 import { useRef } from "react";
+import QRCode from "qrcode";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import FeedbackFormBuilder from "@/components/FeedbackFormBuilder";
@@ -43,6 +45,12 @@ export default function HotelForms() {
   });
   const [showFormBuilder, setShowFormBuilder] = useState(false);
   const [editingFormId, setEditingFormId] = useState<string | null>(null);
+  const [previewFormId, setPreviewFormId] = useState<string | null>(null);
+  const [previewForm, setPreviewForm] = useState<any>(null);
+  const [showQrDialog, setShowQrDialog] = useState(false);
+  const [qrCodeUrl, setQrCodeUrl] = useState<string>("");
+  const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
+  const [qrFormTitle, setQrFormTitle] = useState<string>("");
   const toast = useRef<Toast>(null);
 
   const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
@@ -96,6 +104,29 @@ export default function HotelForms() {
     setShowFormBuilder(true);
   }, []);
 
+  const handlePreviewForm = useCallback(async (formId: string) => {
+    try {
+      const response = await fetch(`/api/hotel/forms/${formId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setPreviewForm(data.data);
+        setPreviewFormId(formId);
+      } else {
+        throw new Error('Failed to load form for preview');
+      }
+    } catch (error) {
+      console.error("Error loading form for preview:", error);
+      showToast("error", "Error", "Failed to load form for preview");
+    }
+  }, [showToast]);
+
   const handleFormSaved = useCallback(async (form: any) => {
     console.log("handleFormSaved called with:", form);
     try {
@@ -130,6 +161,103 @@ export default function HotelForms() {
       showToast("error", "Error", "Failed to save form");
     }
   }, [editingFormId, showToast]);
+
+  const handleShowQrCode = useCallback(async (formId: string, formTitle: string) => {
+    try {
+      // First try to get existing QR code
+      const qrResponse = await fetch(`/api/hotel/qr-codes/by-form/${formId}`);
+      
+      if (qrResponse.ok) {
+        // QR code exists, show it
+        const qrData = await qrResponse.json();
+        setQrCodeUrl(qrData.url);
+        setQrFormTitle(formTitle);
+        
+        // Generate QR code image
+        const qrDataUrl = await QRCode.toDataURL(qrData.url, {
+          width: 300,
+          margin: 2,
+          color: {
+            dark: "#000000",
+            light: "#FFFFFF",
+          },
+        });
+        setQrCodeDataUrl(qrDataUrl);
+        setShowQrDialog(true);
+      } else {
+        // QR code doesn't exist, generate it
+        const response = await fetch("/api/hotel/qr-codes", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            hotelId: user?.hotelId,
+            formId: formId,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setQrCodeUrl(data.url);
+          setQrFormTitle(formTitle);
+          
+          // Generate QR code image
+          const qrDataUrl = await QRCode.toDataURL(data.url, {
+            width: 300,
+            margin: 2,
+            color: {
+              dark: "#000000",
+              light: "#FFFFFF",
+            },
+          });
+          setQrCodeDataUrl(qrDataUrl);
+          setShowQrDialog(true);
+          showToast("success", "Success", "QR code generated successfully");
+        } else {
+          const errorData = await response.json();
+          if (response.status === 409 && errorData.existingQrCode) {
+            // QR code already exists, show it
+            setQrCodeUrl(errorData.existingQrCode.url);
+            setQrFormTitle(formTitle);
+            
+            const qrDataUrl = await QRCode.toDataURL(errorData.existingQrCode.url, {
+              width: 300,
+              margin: 2,
+              color: {
+                dark: "#000000",
+                light: "#FFFFFF",
+              },
+            });
+            setQrCodeDataUrl(qrDataUrl);
+            setShowQrDialog(true);
+            showToast("info", "Info", "QR code already exists for this form");
+          } else {
+            throw new Error(errorData.error || "Failed to generate QR code");
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error handling QR code:", error);
+      showToast("error", "Error", "Failed to handle QR code");
+    }
+  }, [user?.hotelId, showToast]);
+
+  const downloadQrCode = useCallback(() => {
+    if (qrCodeDataUrl) {
+      const link = document.createElement("a");
+      link.download = `qr-code-${qrFormTitle.replace(/[^a-zA-Z0-9]/g, '-')}.png`;
+      link.href = qrCodeDataUrl;
+      link.click();
+    }
+  }, [qrCodeDataUrl, qrFormTitle]);
+
+  const copyQrUrl = useCallback(() => {
+    if (qrCodeUrl) {
+      navigator.clipboard.writeText(qrCodeUrl);
+      showToast("success", "Success", "URL copied to clipboard");
+    }
+  }, [qrCodeUrl, showToast]);
 
   const handleDeleteForm = useCallback(async (formId: string) => {
     if (confirm('Are you sure you want to delete this form? This action cannot be undone.')) {
@@ -181,6 +309,20 @@ export default function HotelForms() {
     return (
       <div className="flex gap-2">
         <Button
+          icon="pi pi-eye"
+          size="small"
+          className="p-button-outlined p-button-sm"
+          onClick={() => handlePreviewForm(rowData.id)}
+          tooltip="Preview Form"
+        />
+        <Button
+          icon="pi pi-qrcode"
+          size="small"
+          className="p-button-outlined p-button-sm"
+          onClick={() => handleShowQrCode(rowData.id, rowData.title)}
+          tooltip="QR Code"
+        />
+        <Button
           icon="pi pi-pencil"
           size="small"
           className="p-button-outlined p-button-sm"
@@ -196,7 +338,7 @@ export default function HotelForms() {
         />
       </div>
     );
-  }, [handleEditForm, handleDeleteForm]);
+  }, [handleEditForm, handleDeleteForm, handleShowQrCode]);
 
   const statusOptions = useMemo(() => [
     { label: "All Statuses", value: "" },
@@ -213,6 +355,36 @@ export default function HotelForms() {
             formId={editingFormId || undefined}
             onSave={handleFormSaved}
             onCancel={() => setShowFormBuilder(false)}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  if (previewForm) {
+    return (
+      <div className="grid">
+        <div className="col-12">
+          <div className="flex align-items-center gap-3 mb-4">
+            <Button
+              icon="pi pi-arrow-left"
+              className="p-button-text"
+              onClick={() => {
+                setPreviewForm(null);
+                setPreviewFormId(null);
+              }}
+              tooltip="Back to Forms"
+            />
+            <h1 className="text-3xl font-bold m-0">Form Preview</h1>
+          </div>
+          <FeedbackFormBuilder
+            formId={previewFormId || undefined}
+            onSave={() => {}} // No save functionality in preview
+            onCancel={() => {
+              setPreviewForm(null);
+              setPreviewFormId(null);
+            }}
+            previewMode={true}
           />
         </div>
       </div>
@@ -310,7 +482,7 @@ export default function HotelForms() {
                 emptyMessage="No Forms found"
                 className="p-datatable-sm"
                 scrollable
-                scrollHeight="400px"
+                
               >
                 <Column field="title" header="Form Title" sortable style={{ minWidth: '200px' }} />
                 <Column field="description" header="Description" style={{ minWidth: '250px' }} />
@@ -345,6 +517,46 @@ export default function HotelForms() {
             </>
           )}
       </div>
+
+      {/* QR Code Dialog */}
+      <Dialog
+        header={`QR Code - ${qrFormTitle}`}
+        visible={showQrDialog}
+        style={{ width: '400px' }}
+        onHide={() => setShowQrDialog(false)}
+        modal
+      >
+        <div className="text-center">
+          {qrCodeDataUrl && (
+            <>
+              <img
+                src={qrCodeDataUrl}
+                alt="QR Code"
+                className="mb-4"
+                style={{ 
+                  maxWidth: "100%", 
+                  height: "auto",
+                  borderRadius: '8px'
+                }}
+              />
+              <div className="flex flex-column gap-2">
+                <Button
+                  label="Download QR Code"
+                  icon="pi pi-download"
+                  onClick={downloadQrCode}
+                  className="w-full"
+                />
+                <Button
+                  label="Copy URL"
+                  icon="pi pi-copy"
+                  onClick={copyQrUrl}
+                  className="p-button-outlined w-full"
+                />
+              </div>
+            </>
+          )}
+        </div>
+      </Dialog>
 
       <Toast ref={toast} />
     </div>

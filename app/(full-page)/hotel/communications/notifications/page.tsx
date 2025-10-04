@@ -32,8 +32,8 @@ export default function NotificationsPage() {
     const router = useRouter();
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [totalRecords, setTotalRecords] = useState(0);
     const [globalFilterValue, setGlobalFilterValue] = useState("");
     const [selectedType, setSelectedType] = useState<string>("");
@@ -45,6 +45,7 @@ export default function NotificationsPage() {
 
     const typeOptions = [
         { label: "All Types", value: "" },
+        { label: "Announcement", value: "ANNOUNCEMENT" },
         { label: "Broadcast", value: "BROADCAST" },
         { label: "Support Response", value: "SUPPORT_RESPONSE" },
         { label: "User Joined", value: "USER_JOINED" },
@@ -76,8 +77,8 @@ export default function NotificationsPage() {
                 throw new Error(response.error);
             }
 
-            setNotifications(response.data?.data || []);
-            setTotalRecords(response.data?.pagination?.total || 0);
+            setNotifications((response as any).data || []);
+            setTotalRecords(response.pagination?.total || 0);
         } catch (error) {
             showToast("error", "Error", "Failed to load notifications");
         } finally {
@@ -108,9 +109,9 @@ export default function NotificationsPage() {
                 throw new Error(response.error);
             }
 
-            setNotifications(prev => 
-                prev.map(notification => 
-                    notification.id === notificationId 
+            setNotifications(prev =>
+                prev.map(notification =>
+                    notification.id === notificationId
                         ? { ...notification, isRead: true }
                         : notification
                 )
@@ -128,7 +129,7 @@ export default function NotificationsPage() {
                 throw new Error(response.error);
             }
 
-            setNotifications(prev => 
+            setNotifications(prev =>
                 prev.map(notification => ({ ...notification, isRead: true }))
             );
             showToast("success", "Success", "All notifications marked as read");
@@ -150,7 +151,7 @@ export default function NotificationsPage() {
                 throw new Error(response.error);
             }
 
-            setNotifications(prev => 
+            setNotifications(prev =>
                 prev.filter(notification => notification.id !== notificationId)
             );
             setTotalRecords(prev => prev - 1);
@@ -162,7 +163,7 @@ export default function NotificationsPage() {
 
     const confirmBulkDeleteNotifications = () => {
         if (selectedNotifications.length === 0) return;
-        
+
         confirmDialog({
             message: `Are you sure you want to delete ${selectedNotifications.length} selected notification(s)?`,
             header: 'Bulk Delete Confirmation',
@@ -173,18 +174,18 @@ export default function NotificationsPage() {
 
     const bulkDeleteNotifications = async () => {
         if (selectedNotifications.length === 0) return;
-        
+
         try {
             const deletePromises = selectedNotifications.map(notification => apiClient.deleteNotification(notification.id));
             await Promise.all(deletePromises);
-            
+
             // Remove deleted notifications from local state
-            setNotifications(prev => 
-                prev.filter(notification => 
+            setNotifications(prev =>
+                prev.filter(notification =>
                     !selectedNotifications.some(selected => selected.id === notification.id)
                 )
             );
-            
+
             setTotalRecords(prev => prev - selectedNotifications.length);
             setSelectedNotifications([]);
             showToast("success", "Success", `${selectedNotifications.length} notification(s) deleted successfully`);
@@ -208,6 +209,7 @@ export default function NotificationsPage() {
 
     const getTypeSeverity = (type: string) => {
         switch (type) {
+            case 'ANNOUNCEMENT': return 'info';
             case 'BROADCAST': return 'danger';
             case 'SUPPORT_RESPONSE': return 'help';
             case 'USER_JOINED': return 'success';
@@ -218,6 +220,7 @@ export default function NotificationsPage() {
 
     const getTypeLabel = (type: string) => {
         switch (type) {
+            case 'ANNOUNCEMENT': return 'Announcement';
             case 'BROADCAST': return 'Broadcast';
             case 'SUPPORT_RESPONSE': return 'Support';
             case 'USER_JOINED': return 'User Joined';
@@ -230,7 +233,7 @@ export default function NotificationsPage() {
         const date = new Date(dateString);
         const now = new Date();
         const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
-        
+
         if (diffInHours < 1) {
             return 'Just now';
         } else if (diffInHours < 24) {
@@ -277,9 +280,9 @@ export default function NotificationsPage() {
 
     const typeBodyTemplate = (rowData: Notification) => {
         return (
-            <Tag 
-                value={getTypeLabel(rowData.type)} 
-                severity={getTypeSeverity(rowData.type) as any} 
+            <Tag
+                value={getTypeLabel(rowData.type)}
+                severity={getTypeSeverity(rowData.type) as any}
             />
         );
     };
@@ -297,8 +300,8 @@ export default function NotificationsPage() {
             <div className="max-w-20rem">
                 <div className="font-semibold mb-1">{rowData.title}</div>
                 <div className="text-sm text-600 line-height-2">
-                    {rowData.message.length > 100 
-                        ? `${rowData.message.substring(0, 100)}...` 
+                    {rowData.message.length > 100
+                        ? `${rowData.message.substring(0, 100)}...`
                         : rowData.message
                     }
                 </div>
@@ -328,16 +331,16 @@ export default function NotificationsPage() {
                             <span className="text-600 text-lg">Manage system notifications and alerts</span>
                         </div>
                         <div className="flex gap-3 justify-content-end">
-                                                         {selectedNotifications.length > 0 && (
-                                 <Button
-                                     label={`Delete Selected (${selectedNotifications.length})`}
-                                     icon="pi pi-trash"
-                                     onClick={confirmBulkDeleteNotifications}
-                                     severity="danger"
-                                     className="p-button-raised"
-                                     size="large"
-                                 />
-                             )}
+                            {selectedNotifications.length > 0 && (
+                                <Button
+                                    label={`Delete Selected (${selectedNotifications.length})`}
+                                    icon="pi pi-trash"
+                                    onClick={confirmBulkDeleteNotifications}
+                                    severity="danger"
+                                    className="p-button-raised"
+                                    size="large"
+                                />
+                            )}
                             <Button
                                 label="Mark All as Read"
                                 icon="pi pi-check-double"
@@ -400,8 +403,9 @@ export default function NotificationsPage() {
 
                     {/* Notifications Table */}
                     <DataTable
-                        value={notifications.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)}
-                        loading={loading}rows={rowsPerPage}
+                        value={notifications}
+                        loading={loading}
+                        rows={rowsPerPage}
                         totalRecords={totalRecords}
                         lazy
                         first={(currentPage - 1) * rowsPerPage}
@@ -415,8 +419,8 @@ export default function NotificationsPage() {
                         selection={selectedNotifications}
                         onSelectionChange={(e) => setSelectedNotifications(e.value as Notification[])}
                     >
-                        <Column 
-                            selectionMode="multiple" 
+                        <Column
+                            selectionMode="multiple"
                             headerStyle={{ width: '3rem' }}
                             style={{ width: '3rem' }}
                         />
@@ -447,21 +451,17 @@ export default function NotificationsPage() {
                             sortable
                             style={{ width: '120px' }}
                         />
-                        <Column
-                            header="Actions"
-                            body={actionBodyTemplate}
-                            style={{ width: '100px' }}
-                        />              </DataTable>
-              <CustomPaginator
-                currentPage={currentPage}
-                totalRecords={notifications.length}
-                rowsPerPage={rowsPerPage}
-                onPageChange={setCurrentPage}
-                onRowsPerPageChange={(rows) => {
-                  setRowsPerPage(rows);
-                  setCurrentPage(1);
-                }}
-              />
+                    </DataTable>
+                    <CustomPaginator
+                        currentPage={currentPage}
+                        totalRecords={totalRecords}
+                        rowsPerPage={rowsPerPage}
+                        onPageChange={setCurrentPage}
+                        onRowsPerPageChange={(rows) => {
+                            setRowsPerPage(rows);
+                            setCurrentPage(1);
+                        }}
+                    />
 
                     {/* Statistics */}
                     <div className="grid mt-4">
@@ -479,6 +479,14 @@ export default function NotificationsPage() {
                                     {notifications.filter(n => n.isRead).length}
                                 </div>
                                 <div className="text-600">Read</div>
+                            </Card>
+                        </div>
+                        <div className="col-12 md:col-3">
+                            <Card className="text-center">
+                                <div className="text-2xl font-bold text-blue-500">
+                                    {notifications.filter(n => n.type === 'ANNOUNCEMENT').length}
+                                </div>
+                                <div className="text-600">Announcements</div>
                             </Card>
                         </div>
                         <div className="col-12 md:col-3">

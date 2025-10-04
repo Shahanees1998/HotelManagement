@@ -110,7 +110,7 @@ export async function PUT(
       }
 
       const body = await request.json();
-      const { title, description, isActive, isPublic, layout, questions } = body;
+      const { title, description, isActive, isPublic, layout, predefinedSection, customQuestions } = body;
 
       // Get hotel
       const hotel = await prisma.hotels.findUnique({
@@ -134,16 +134,17 @@ export async function PUT(
         return NextResponse.json({ error: 'Form not found' }, { status: 404 });
       }
 
-      // Validate questions if provided
-      if (questions && Array.isArray(questions)) {
-        for (const question of questions) {
+      // Validate custom questions if provided
+      if (customQuestions && Array.isArray(customQuestions)) {
+        for (const question of customQuestions) {
           if (!question.question || !question.type) {
             return NextResponse.json(
-              { error: 'Each question must have text and type' },
+              { error: 'Each custom question must have text and type' },
               { status: 400 }
             );
           }
 
+          // Validate options for multiple choice questions
           if ((question.type === 'MULTIPLE_CHOICE_SINGLE' || question.type === 'MULTIPLE_CHOICE_MULTIPLE') && 
               (!question.options || question.options.length < 2)) {
             return NextResponse.json(
@@ -168,27 +169,93 @@ export async function PUT(
           },
         });
 
-        // Update questions if provided
-        if (questions && Array.isArray(questions)) {
-          // Delete existing questions
+        // Update predefined questions section if provided
+        if (predefinedSection) {
+          // Delete existing predefined section and its custom rating items
+          const existingPredefinedSection = await tx.predefinedQuestionSection.findFirst({
+            where: { formId: formId },
+          });
+
+          if (existingPredefinedSection) {
+            // Delete existing custom rating items
+            await tx.customRatingItem.deleteMany({
+              where: { predefinedSectionId: existingPredefinedSection.id },
+            });
+
+            // Update predefined section
+            await tx.predefinedQuestionSection.update({
+              where: { id: existingPredefinedSection.id },
+              data: {
+                hasRateUs: predefinedSection.hasRateUs || false,
+                hasCustomRating: predefinedSection.hasCustomRating || false,
+                hasFeedback: predefinedSection.hasFeedback || false,
+              },
+            });
+
+            // Create custom rating items if custom rating is enabled
+            if (predefinedSection.hasCustomRating && predefinedSection.customRatingItems) {
+              const customRatingItemsData = predefinedSection.customRatingItems.map((item: any, index: number) => ({
+                predefinedSectionId: existingPredefinedSection.id,
+                label: item.label,
+                order: item.order || index,
+                isActive: item.isActive !== undefined ? item.isActive : true,
+              }));
+
+              await tx.customRatingItem.createMany({
+                data: customRatingItemsData,
+              });
+            }
+          } else {
+            // Create new predefined section
+            const newPredefinedSection = await tx.predefinedQuestionSection.create({
+              data: {
+                formId: formId,
+                hasRateUs: predefinedSection.hasRateUs || false,
+                hasCustomRating: predefinedSection.hasCustomRating || false,
+                hasFeedback: predefinedSection.hasFeedback || false,
+              },
+            });
+
+            // Create custom rating items if custom rating is enabled
+            if (predefinedSection.hasCustomRating && predefinedSection.customRatingItems) {
+              const customRatingItemsData = predefinedSection.customRatingItems.map((item: any, index: number) => ({
+                predefinedSectionId: newPredefinedSection.id,
+                label: item.label,
+                order: item.order || index,
+                isActive: item.isActive !== undefined ? item.isActive : true,
+              }));
+
+              await tx.customRatingItem.createMany({
+                data: customRatingItemsData,
+              });
+            }
+          }
+        }
+
+        // Update custom questions if provided
+        if (customQuestions && Array.isArray(customQuestions)) {
+          // Delete existing custom questions
           await tx.formQuestion.deleteMany({
             where: { formId: formId },
           });
 
-          // Create new questions
-          const questionsData = questions.map((q: any, index: number) => ({
-            formId: formId,
-            question: q.question,
-            type: q.type,
-            isRequired: q.isRequired !== undefined ? q.isRequired : true,
-            order: index + 1,
-            options: q.options || [],
-            validation: q.validation || null,
-          }));
+          // Create new custom questions
+          if (customQuestions.length > 0) {
+            const customQuestionsData = customQuestions.map((q: any, index: number) => ({
+              formId: formId,
+              question: q.question,
+              type: q.type,
+              isRequired: q.isRequired !== undefined ? q.isRequired : true,
+              order: q.order || index,
+              options: q.options || [],
+              validation: q.validation || null,
+              section: 'CUSTOM',
+            }));
 
-          await tx.formQuestion.createMany({
-            data: questionsData,
-          });
+            await tx.formQuestion.createMany({
+              data: customQuestionsData,
+            });
+          }
         }
 
         return updatedForm;

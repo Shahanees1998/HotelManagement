@@ -403,7 +403,7 @@ export default function AdminEscalations() {
                 emptyMessage="No escalations found"
                 className="p-datatable-sm"
                 scrollable
-                scrollHeight="400px"
+                
               >
                 <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable style={{ minWidth: '150px' }} />
                 <Column field="user" header="User" body={userBodyTemplate} style={{ minWidth: '150px' }} />

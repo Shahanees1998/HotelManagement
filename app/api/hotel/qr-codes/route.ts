@@ -113,6 +113,29 @@ export async function POST(request: NextRequest) {
       if (!form) {
         return NextResponse.json({ error: 'Feedback form not found' }, { status: 404 });
       }
+
+      // Check if QR code already exists for this form
+      const existingQrCode = await prisma.qRCode.findFirst({
+        where: {
+          hotelId: hotel.id,
+          formId: formId,
+        },
+      });
+
+      if (existingQrCode) {
+        return NextResponse.json({ 
+          error: 'QR code already exists for this form',
+          existingQrCode: {
+            id: existingQrCode.id,
+            code: existingQrCode.code,
+            url: existingQrCode.url,
+            formId: existingQrCode.formId,
+            scanCount: existingQrCode.scanCount,
+            isActive: existingQrCode.isActive,
+            createdAt: existingQrCode.createdAt.toISOString(),
+          }
+        }, { status: 409 });
+      }
     }
 
     // Generate unique QR code

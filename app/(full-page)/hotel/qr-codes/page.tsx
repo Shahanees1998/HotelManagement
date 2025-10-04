@@ -13,6 +13,15 @@ interface FeedbackForm {
   id: string;
   title: string;
   isActive: boolean;
+  hasQrCode?: boolean;
+  qrCode?: {
+    id: string;
+    code: string;
+    url: string;
+    scanCount: number;
+    isActive: boolean;
+    createdAt: string;
+  };
 }
 
 export default function HotelQRCodes() {
@@ -35,7 +44,36 @@ export default function HotelQRCodes() {
       const response = await fetch(`/api/hotel/forms?hotelId=${user?.hotelId}`);
       if (response.ok) {
         const data = await response.json();
-        setForms(Array.isArray(data.data) ? data.data : []);
+        const formsData = Array.isArray(data.data) ? data.data : [];
+        
+        // Check for existing QR codes for each form
+        const formsWithQrStatus = await Promise.all(
+          formsData.map(async (form: FeedbackForm) => {
+            try {
+              const qrResponse = await fetch(`/api/hotel/qr-codes/by-form/${form.id}`);
+              if (qrResponse.ok) {
+                const qrData = await qrResponse.json();
+                return {
+                  ...form,
+                  hasQrCode: true,
+                  qrCode: qrData
+                };
+              } else {
+                return {
+                  ...form,
+                  hasQrCode: false
+                };
+              }
+            } catch (error) {
+              return {
+                ...form,
+                hasQrCode: false
+              };
+            }
+          })
+        );
+        
+        setForms(formsWithQrStatus);
       }
     } catch (error) {
       console.error("Error loading forms:", error);
@@ -51,6 +89,27 @@ export default function HotelQRCodes() {
   const generateQRCode = async () => {
     if (!selectedForm) {
       showToast("warn", "Warning", "Please select a feedback form");
+      return;
+    }
+
+    // Check if form already has QR code
+    const selectedFormData = forms.find(form => form.id === selectedForm);
+    if (selectedFormData?.hasQrCode && selectedFormData.qrCode) {
+      // Show existing QR code
+      setQrCodeUrl(selectedFormData.qrCode.url);
+      
+      // Generate QR code image
+      const qrDataUrl = await QRCode.toDataURL(selectedFormData.qrCode.url, {
+        width: 300,
+        margin: 2,
+        color: {
+          dark: "#000000",
+          light: "#FFFFFF",
+        },
+      });
+      setQrCodeDataUrl(qrDataUrl);
+      
+      showToast("info", "Info", "Showing existing QR code for this form");
       return;
     }
 
@@ -83,9 +142,28 @@ export default function HotelQRCodes() {
         setQrCodeDataUrl(qrDataUrl);
         
         showToast("success", "Success", "QR code generated successfully");
+        loadForms(); // Refresh forms to update QR code status
       } else {
         const errorData = await response.json();
-        showToast("error", "Error", errorData.error || "Failed to generate QR code");
+        if (response.status === 409 && errorData.existingQrCode) {
+          // QR code already exists, show it
+          setQrCodeUrl(errorData.existingQrCode.url);
+          
+          const qrDataUrl = await QRCode.toDataURL(errorData.existingQrCode.url, {
+            width: 300,
+            margin: 2,
+            color: {
+              dark: "#000000",
+              light: "#FFFFFF",
+            },
+          });
+          setQrCodeDataUrl(qrDataUrl);
+          
+          showToast("info", "Info", "QR code already exists for this form");
+          loadForms(); // Refresh forms to update QR code status
+        } else {
+          showToast("error", "Error", errorData.error || "Failed to generate QR code");
+        }
       }
     } catch (error) {
       console.error("Error generating QR code:", error);
@@ -105,7 +183,7 @@ export default function HotelQRCodes() {
   };
 
   const formOptions = forms.map(form => ({
-    label: form.title,
+    label: `${form.title}${form.hasQrCode ? ' (QR Code Generated)' : ''}`,
     value: form.id,
   }));
 
@@ -150,7 +228,7 @@ export default function HotelQRCodes() {
               </div>
               
               <Button
-                label="Generate QR Code"
+                label={selectedForm && forms.find(f => f.id === selectedForm)?.hasQrCode ? "Show QR Code" : "Generate QR Code"}
                 onClick={generateQRCode}
                 loading={generating}
                 disabled={!selectedForm || generating}

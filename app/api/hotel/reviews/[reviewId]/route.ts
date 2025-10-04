@@ -121,7 +121,7 @@ export async function GET(
       if (formWithPredefined?.predefinedQuestions?.hasFeedback) {
         predefinedQuestions.push({
           id: 'feedback',
-          question: 'Please give us honest feedback?',
+          question: 'Please give us your honest feedback?',
           type: 'LONG_TEXT',
           isRequired: true,
           options: [],

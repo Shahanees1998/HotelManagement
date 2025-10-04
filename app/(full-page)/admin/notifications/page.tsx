@@ -396,7 +396,7 @@ export default function AdminNotifications() {
                 emptyMessage="No notifications found"
                 className="p-datatable-sm"
                 scrollable
-                scrollHeight="400px"
+                
               >
                 <Column field="title" header="Title" sortable style={{ minWidth: '200px' }} />
                 <Column field="message" header="Message" style={{ minWidth: '300px', maxWidth: '300px' }} />

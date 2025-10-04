@@ -1,8 +1,8 @@
 import { SignJWT, jwtVerify, decodeJwt } from 'jose';
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
-import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
+import { BcryptService } from '@/lib/bcrypt';
 
 // JWT Configuration
 const JWT_SECRET = new TextEncoder().encode(
@@ -143,7 +143,7 @@ export class AuthService {
     }
 
     // Verify password
-    const isValidPassword = await bcrypt.compare(password, user.password);
+    const isValidPassword = await BcryptService.comparePassword(password, user.password);
     if (!isValidPassword) {
       throw new Error('Invalid email or password');
     }
@@ -279,14 +279,14 @@ export class AuthService {
    */
   static async hashPassword(password: string): Promise<string> {
     const saltRounds = 12;
-    return await bcrypt.hash(password, saltRounds);
+    return await BcryptService.hashPassword(password);
   }
 
   /**
    * Verify password
    */
   static async verifyPassword(password: string, hashedPassword: string): Promise<boolean> {
-    return await bcrypt.compare(password, hashedPassword);
+    return await BcryptService.comparePassword(password, hashedPassword);
   }
 
 } 

@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 const AppMenu = () => {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const router = useRouter();
 
     if (!user) {
@@ -13,7 +13,7 @@ const AppMenu = () => {
 
     const handleLogout = async () => {
         try {
-            await fetch('/api/auth/logout', { method: 'POST' });
+            await logout();
             router.push('/auth/login');
         } catch (error) {
             console.error('Logout error:', error);

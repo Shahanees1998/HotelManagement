@@ -83,6 +83,23 @@ export async function POST(request: NextRequest) {
         },
       });
 
+      // Send notifications to all hotels
+      try {
+        const { NotificationCreators } = await import('@/lib/notificationService');
+        
+        await NotificationCreators.newAnnouncement(
+          announcement.id,
+          announcement.title,
+          announcement.content,
+          announcement.type
+        );
+        
+        console.log('Announcement notifications sent to all hotels');
+      } catch (notificationError) {
+        console.error('Error sending announcement notifications:', notificationError);
+        // Don't fail the announcement creation if notifications fail
+      }
+
       return NextResponse.json({
         data: {
           id: announcement.id,

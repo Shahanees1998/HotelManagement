@@ -177,6 +177,44 @@ export class NotificationService {
     }
   }
 
+  // Send notification to all hotels
+  static async notifyAllHotels(
+    title: string,
+    message: string,
+    type: NotificationType,
+    relatedId?: string,
+    relatedType?: string,
+    metadata?: any
+  ) {
+    try {
+      // Get all hotels
+      const hotels = await prisma.hotels.findMany({
+        select: { id: true, ownerId: true, name: true },
+      });
+
+      // Create notifications for all hotel owners
+      const notifications = await Promise.all(
+        hotels.map(hotel =>
+          this.createNotification({
+            userId: hotel.ownerId,
+            title,
+            message,
+            type,
+            relatedId,
+            relatedType,
+            metadata,
+          })
+        )
+      );
+
+      console.log(`Sent ${notifications.length} notifications to hotels`);
+      return notifications;
+    } catch (error) {
+      console.error('Error notifying all hotels:', error);
+      throw error;
+    }
+  }
+
   // Get notifications for a user
   static async getNotifications(filters: NotificationFilters) {
     try {
@@ -458,6 +496,18 @@ export const NotificationCreators = {
       status === 'APPROVED' ? 'REVIEW_APPROVED' : 'REVIEW_REJECTED',
       reviewId,
       'review'
+    );
+  },
+
+  // Announcement notifications
+  newAnnouncement: async (announcementId: string, title: string, content: string, type: string) => {
+    return await NotificationService.notifyAllHotels(
+      `New Announcement: ${title}`,
+      content,
+      'ANNOUNCEMENT',
+      announcementId,
+      'announcement',
+      { type, title }
     );
   },
 };
