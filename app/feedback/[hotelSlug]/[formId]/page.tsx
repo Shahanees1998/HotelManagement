@@ -13,6 +13,7 @@ import { Dropdown } from "primereact/dropdown";
 import { useRef } from "react";
 import { useParams } from "next/navigation";
 import { translationService, SUPPORTED_LANGUAGES, Language } from "@/lib/translationService";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface Question {
   id: string;
@@ -64,6 +65,7 @@ export default function CustomerFeedbackForm() {
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(SUPPORTED_LANGUAGES[0]); // Default to English
   const [translating, setTranslating] = useState(false);
   const toast = useRef<Toast>(null);
+  const { t, isTranslating: isTranslatingStatic } = useTranslation(selectedLanguage);
 
   useEffect(() => {
     loadForm();
@@ -114,7 +116,7 @@ export default function CustomerFeedbackForm() {
       }
     } catch (error) {
       console.error("Error loading form:", error);
-      showToast("error", "Error", "Failed to load form");
+      showToast("error", t('Error'), t('Failed to load form'));
     } finally {
       setLoading(false);
     }
@@ -129,7 +131,7 @@ export default function CustomerFeedbackForm() {
       setTranslatedForm(translated);
     } catch (error) {
       console.error("Translation error:", error);
-      showToast("warn", "Translation Error", "Failed to translate form. Showing original language.");
+      showToast("warn", t('Translation Error'), t('Failed to translate form. Showing original language.'));
       setTranslatedForm(form);
     } finally {
       setTranslating(false);
@@ -161,7 +163,7 @@ export default function CustomerFeedbackForm() {
             submission.answers[`${question.id}-${item.id}`]
           );
           if (!hasAnyRating) {
-            showToast("warn", "Warning", `Please answer: ${question.question}`);
+            showToast("warn", t('Warning'), `${t('Please answer:')} ${question.question}`);
             return false;
           }
         } else if (!submission.answers[question.id]) {
@@ -239,7 +241,7 @@ export default function CustomerFeedbackForm() {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      showToast("error", "Error", "Failed to submit feedback");
+      showToast("error", t('Error'), t('Failed to submit feedback'));
     } finally {
       setSubmitting(false);
     }
@@ -431,8 +433,8 @@ export default function CustomerFeedbackForm() {
       <div className="min-h-screen flex align-items-center justify-content-center">
         <div className="text-center">
           <i className="pi pi-exclamation-triangle text-4xl text-orange-500 mb-3"></i>
-          <h2 className="text-900 mb-2">Form Not Found</h2>
-          <p className="text-600">The feedback form you're looking for doesn't exist or is no longer available.</p>
+          <h2 className="text-900 mb-2">{t('Form Not Found')}</h2>
+          <p className="text-600">{t('The feedback form you\'re looking for doesn\'t exist or is no longer available.')}</p>
         </div>
       </div>
     );
@@ -465,14 +467,14 @@ export default function CustomerFeedbackForm() {
             marginBottom: "8px",
           }}
         >
-          Select Language / Choisir la langue
+          {t('Select Language / Choisir la langue')}
         </label>
         <Dropdown
           value={selectedLanguage}
           options={SUPPORTED_LANGUAGES}
           onChange={(e) => setSelectedLanguage(e.value)}
           optionLabel="name"
-          placeholder="Select Language"
+          placeholder={t('Select Language')}
           filter
           filterBy="name,code"
           showClear
@@ -496,10 +498,10 @@ export default function CustomerFeedbackForm() {
           )}
           disabled={translating}
         />
-        {translating && (
+        {(translating || isTranslatingStatic) && (
           <div style={{ marginTop: "8px", fontSize: "12px", color: "#6c757d" }}>
             <i className="pi pi-spinner pi-spin" style={{ marginRight: "4px" }}></i>
-            Translating...
+            {t('Translating...')}
           </div>
         )}
       </div>
@@ -534,7 +536,7 @@ export default function CustomerFeedbackForm() {
               lineHeight: 1.5,
             }}
           >
-            {translatedForm?.description || form?.description || "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance."}
+            {translatedForm?.description || form?.description || t('Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance.')}
           </p>
         </div>
 
@@ -550,50 +552,12 @@ export default function CustomerFeedbackForm() {
                 marginBottom: "6px",
               }}
             >
-              {selectedLanguage.code === 'en' ? 'Full Name*' :
-             selectedLanguage.code === 'es' ? 'Nombre Completo*' :
-             selectedLanguage.code === 'fr' ? 'Nom Complet*' :
-             selectedLanguage.code === 'de' ? 'Vollständiger Name*' :
-             selectedLanguage.code === 'it' ? 'Nome Completo*' :
-             selectedLanguage.code === 'pt' ? 'Nome Completo*' :
-             selectedLanguage.code === 'ru' ? 'Полное Имя*' :
-             selectedLanguage.code === 'ja' ? 'フルネーム*' :
-             selectedLanguage.code === 'ko' ? '전체 이름*' :
-             selectedLanguage.code === 'zh' ? '全名*' :
-             selectedLanguage.code === 'ar' ? 'الاسم الكامل*' :
-             selectedLanguage.code === 'hi' ? 'पूरा नाम*' :
-             selectedLanguage.code === 'th' ? 'ชื่อเต็ม*' :
-             selectedLanguage.code === 'vi' ? 'Họ và Tên*' :
-             selectedLanguage.code === 'tr' ? 'Tam Ad*' :
-             selectedLanguage.code === 'nl' ? 'Volledige Naam*' :
-             selectedLanguage.code === 'sv' ? 'Fullständigt Namn*' :
-             selectedLanguage.code === 'da' ? 'Fulde Navn*' :
-             selectedLanguage.code === 'no' ? 'Fullt Navn*' :
-             selectedLanguage.code === 'fi' ? 'Koko Nimi*' : 'Full Name*'}
+              {t('Full Name*')}
             </label>
             <InputText
               value={submission.guestName || ''}
               onChange={(e) => setSubmission({ ...submission, guestName: e.target.value })}
-              placeholder={selectedLanguage.code === 'en' ? 'Enter your full name' :
-                         selectedLanguage.code === 'es' ? 'Ingrese su nombre completo' :
-                         selectedLanguage.code === 'fr' ? 'Entrez votre nom complet' :
-                         selectedLanguage.code === 'de' ? 'Geben Sie Ihren vollständigen Namen ein' :
-                         selectedLanguage.code === 'it' ? 'Inserisci il tuo nome completo' :
-                         selectedLanguage.code === 'pt' ? 'Digite seu nome completo' :
-                         selectedLanguage.code === 'ru' ? 'Введите ваше полное имя' :
-                         selectedLanguage.code === 'ja' ? 'フルネームを入力してください' :
-                         selectedLanguage.code === 'ko' ? '전체 이름을 입력하세요' :
-                         selectedLanguage.code === 'zh' ? '输入您的全名' :
-                         selectedLanguage.code === 'ar' ? 'أدخل اسمك الكامل' :
-                         selectedLanguage.code === 'hi' ? 'अपना पूरा नाम दर्ज करें' :
-                         selectedLanguage.code === 'th' ? 'ใส่ชื่อเต็มของคุณ' :
-                         selectedLanguage.code === 'vi' ? 'Nhập họ và tên của bạn' :
-                         selectedLanguage.code === 'tr' ? 'Tam adınızı girin' :
-                         selectedLanguage.code === 'nl' ? 'Voer uw volledige naam in' :
-                         selectedLanguage.code === 'sv' ? 'Ange ditt fullständiga namn' :
-                         selectedLanguage.code === 'da' ? 'Indtast dit fulde navn' :
-                         selectedLanguage.code === 'no' ? 'Skriv inn ditt fulle navn' :
-                         selectedLanguage.code === 'fi' ? 'Syötä koko nimesi' : 'Enter your full name'}
+              placeholder={t('Enter your full name')}
               style={{
                 width: "100%",
                 padding: "10px",
@@ -613,50 +577,12 @@ export default function CustomerFeedbackForm() {
                 marginBottom: "6px",
               }}
             >
-              {selectedLanguage.code === 'en' ? 'Email*' :
-             selectedLanguage.code === 'es' ? 'Correo Electrónico*' :
-             selectedLanguage.code === 'fr' ? 'E-mail*' :
-             selectedLanguage.code === 'de' ? 'E-Mail*' :
-             selectedLanguage.code === 'it' ? 'E-mail*' :
-             selectedLanguage.code === 'pt' ? 'E-mail*' :
-             selectedLanguage.code === 'ru' ? 'Электронная почта*' :
-             selectedLanguage.code === 'ja' ? 'メール*' :
-             selectedLanguage.code === 'ko' ? '이메일*' :
-             selectedLanguage.code === 'zh' ? '电子邮件*' :
-             selectedLanguage.code === 'ar' ? 'البريد الإلكتروني*' :
-             selectedLanguage.code === 'hi' ? 'ईमेल*' :
-             selectedLanguage.code === 'th' ? 'อีเมล*' :
-             selectedLanguage.code === 'vi' ? 'E-mail*' :
-             selectedLanguage.code === 'tr' ? 'E-posta*' :
-             selectedLanguage.code === 'nl' ? 'E-mail*' :
-             selectedLanguage.code === 'sv' ? 'E-post*' :
-             selectedLanguage.code === 'da' ? 'E-mail*' :
-             selectedLanguage.code === 'no' ? 'E-post*' :
-             selectedLanguage.code === 'fi' ? 'Sähköposti*' : 'Email*'}
+              {t('Email*')}
             </label>
             <InputText
               value={submission.guestEmail || ''}
               onChange={(e) => setSubmission({ ...submission, guestEmail: e.target.value })}
-              placeholder={selectedLanguage.code === 'en' ? 'Enter your email address' :
-                         selectedLanguage.code === 'es' ? 'Ingrese su dirección de correo electrónico' :
-                         selectedLanguage.code === 'fr' ? 'Entrez votre adresse e-mail' :
-                         selectedLanguage.code === 'de' ? 'Geben Sie Ihre E-Mail-Adresse ein' :
-                         selectedLanguage.code === 'it' ? 'Inserisci il tuo indirizzo email' :
-                         selectedLanguage.code === 'pt' ? 'Digite seu endereço de e-mail' :
-                         selectedLanguage.code === 'ru' ? 'Введите ваш адрес электронной почты' :
-                         selectedLanguage.code === 'ja' ? 'メールアドレスを入力してください' :
-                         selectedLanguage.code === 'ko' ? '이메일 주소를 입력하세요' :
-                         selectedLanguage.code === 'zh' ? '输入您的电子邮件地址' :
-                         selectedLanguage.code === 'ar' ? 'أدخل عنوان بريدك الإلكتروني' :
-                         selectedLanguage.code === 'hi' ? 'अपना ईमेल पता दर्ज करें' :
-                         selectedLanguage.code === 'th' ? 'ใส่ที่อยู่อีเมลของคุณ' :
-                         selectedLanguage.code === 'vi' ? 'Nhập địa chỉ email của bạn' :
-                         selectedLanguage.code === 'tr' ? 'E-posta adresinizi girin' :
-                         selectedLanguage.code === 'nl' ? 'Voer uw e-mailadres in' :
-                         selectedLanguage.code === 'sv' ? 'Ange din e-postadress' :
-                         selectedLanguage.code === 'da' ? 'Indtast din e-mailadresse' :
-                         selectedLanguage.code === 'no' ? 'Skriv inn din e-postadresse' :
-                         selectedLanguage.code === 'fi' ? 'Syötä sähköpostiosoitteesi' : 'Enter your email address'}
+              placeholder={t('Enter your email address')}
               type="email"
               style={{
                 width: "100%",
@@ -680,50 +606,12 @@ export default function CustomerFeedbackForm() {
               marginBottom: "6px",
             }}
           >
-            {selectedLanguage.code === 'en' ? 'Phone Number' :
-             selectedLanguage.code === 'es' ? 'Número de Teléfono' :
-             selectedLanguage.code === 'fr' ? 'Numéro de Téléphone' :
-             selectedLanguage.code === 'de' ? 'Telefonnummer' :
-             selectedLanguage.code === 'it' ? 'Numero di Telefono' :
-             selectedLanguage.code === 'pt' ? 'Número de Telefone' :
-             selectedLanguage.code === 'ru' ? 'Номер Телефона' :
-             selectedLanguage.code === 'ja' ? '電話番号' :
-             selectedLanguage.code === 'ko' ? '전화번호' :
-             selectedLanguage.code === 'zh' ? '电话号码' :
-             selectedLanguage.code === 'ar' ? 'رقم الهاتف' :
-             selectedLanguage.code === 'hi' ? 'फोन नंबर' :
-             selectedLanguage.code === 'th' ? 'หมายเลขโทรศัพท์' :
-             selectedLanguage.code === 'vi' ? 'Số Điện Thoại' :
-             selectedLanguage.code === 'tr' ? 'Telefon Numarası' :
-             selectedLanguage.code === 'nl' ? 'Telefoonnummer' :
-             selectedLanguage.code === 'sv' ? 'Telefonnummer' :
-             selectedLanguage.code === 'da' ? 'Telefonnummer' :
-             selectedLanguage.code === 'no' ? 'Telefonnummer' :
-             selectedLanguage.code === 'fi' ? 'Puhelinnumero' : 'Phone Number'}
+            {t('Phone Number')}
           </label>
           <InputText
             value={submission.guestPhone || ''}
             onChange={(e) => setSubmission({ ...submission, guestPhone: e.target.value })}
-            placeholder={selectedLanguage.code === 'en' ? 'Enter your phone number' :
-                         selectedLanguage.code === 'es' ? 'Ingrese su número de teléfono' :
-                         selectedLanguage.code === 'fr' ? 'Entrez votre numéro de téléphone' :
-                         selectedLanguage.code === 'de' ? 'Geben Sie Ihre Telefonnummer ein' :
-                         selectedLanguage.code === 'it' ? 'Inserisci il tuo numero di telefono' :
-                         selectedLanguage.code === 'pt' ? 'Digite seu número de telefone' :
-                         selectedLanguage.code === 'ru' ? 'Введите ваш номер телефона' :
-                         selectedLanguage.code === 'ja' ? '電話番号を入力してください' :
-                         selectedLanguage.code === 'ko' ? '전화번호를 입력하세요' :
-                         selectedLanguage.code === 'zh' ? '输入您的电话号码' :
-                         selectedLanguage.code === 'ar' ? 'أدخل رقم هاتفك' :
-                         selectedLanguage.code === 'hi' ? 'अपना फोन नंबर दर्ज करें' :
-                         selectedLanguage.code === 'th' ? 'ใส่หมายเลขโทรศัพท์ของคุณ' :
-                         selectedLanguage.code === 'vi' ? 'Nhập số điện thoại của bạn' :
-                         selectedLanguage.code === 'tr' ? 'Telefon numaranızı girin' :
-                         selectedLanguage.code === 'nl' ? 'Voer uw telefoonnummer in' :
-                         selectedLanguage.code === 'sv' ? 'Ange ditt telefonnummer' :
-                         selectedLanguage.code === 'da' ? 'Indtast dit telefonnummer' :
-                         selectedLanguage.code === 'no' ? 'Skriv inn ditt telefonnummer' :
-                         selectedLanguage.code === 'fi' ? 'Syötä puhelinnumerosi' : 'Enter your phone number'}
+            placeholder={t('Enter your phone number')}
             style={{
               width: "100%",
               padding: "10px",
@@ -755,7 +643,7 @@ export default function CustomerFeedbackForm() {
                 <InputText
                   value={submission.answers[question.id] || ''}
                   onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                  placeholder="Enter your answer"
+                  placeholder={t('Enter your answer')}
                   style={{
                     width: "100%",
                     padding: "10px",
@@ -770,7 +658,7 @@ export default function CustomerFeedbackForm() {
                 <InputTextarea
                   value={submission.answers[question.id] || ''}
                   onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                  placeholder="Enter your answer"
+                  placeholder={t('Enter your answer')}
                   rows={3}
                   style={{
                     width: "100%",
@@ -906,26 +794,7 @@ export default function CustomerFeedbackForm() {
 
         {/* Submit Button */}
         <Button
-          label={selectedLanguage.code === 'en' ? 'Submit Feedback' :
-                 selectedLanguage.code === 'es' ? 'Enviar Comentario' :
-                 selectedLanguage.code === 'fr' ? 'Soumettre le Commentaire' :
-                 selectedLanguage.code === 'de' ? 'Feedback Senden' :
-                 selectedLanguage.code === 'it' ? 'Invia Feedback' :
-                 selectedLanguage.code === 'pt' ? 'Enviar Feedback' :
-                 selectedLanguage.code === 'ru' ? 'Отправить Отзыв' :
-                 selectedLanguage.code === 'ja' ? 'フィードバックを送信' :
-                 selectedLanguage.code === 'ko' ? '피드백 제출' :
-                 selectedLanguage.code === 'zh' ? '提交反馈' :
-                 selectedLanguage.code === 'ar' ? 'إرسال الملاحظات' :
-                 selectedLanguage.code === 'hi' ? 'प्रतिक्रिया जमा करें' :
-                 selectedLanguage.code === 'th' ? 'ส่งข้อเสนอแนะ' :
-                 selectedLanguage.code === 'vi' ? 'Gửi Phản hồi' :
-                 selectedLanguage.code === 'tr' ? 'Geri Bildirim Gönder' :
-                 selectedLanguage.code === 'nl' ? 'Feedback Verzenden' :
-                 selectedLanguage.code === 'sv' ? 'Skicka Feedback' :
-                 selectedLanguage.code === 'da' ? 'Send Feedback' :
-                 selectedLanguage.code === 'no' ? 'Send Tilbakemelding' :
-                 selectedLanguage.code === 'fi' ? 'Lähetä Palaute' : 'Submit Feedback'}
+          label={t('Submit Feedback')}
           icon="pi pi-send"
           onClick={handleSubmit}
           loading={submitting}
