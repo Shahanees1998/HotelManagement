@@ -40,7 +40,7 @@ export function useTranslation(selectedLanguage: { code: string }) {
 
   useEffect(() => {
     const translateStaticTexts = async () => {
-      if (selectedLanguage.code === 'en') {
+      if (selectedLanguage?.code === 'en') {
         setTranslatedTexts(STATIC_TEXTS);
         return;
       }
@@ -51,7 +51,7 @@ export function useTranslation(selectedLanguage: { code: string }) {
         const textValues = Object.values(STATIC_TEXTS);
         
         // Use batch translation for better performance
-        const translatedValues = await translationService.translateBatch(textValues, selectedLanguage.code);
+        const translatedValues = await translationService.translateBatch(textValues, selectedLanguage?.code);
         
         // Reconstruct the translations object
         const translations: Record<string, string> = {};

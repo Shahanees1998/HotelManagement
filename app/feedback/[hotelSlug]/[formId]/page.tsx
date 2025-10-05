@@ -75,9 +75,9 @@ export default function CustomerFeedbackForm() {
   }, [hotelSlug, formId]);
 
   useEffect(() => {
-    if (form && selectedLanguage.code !== 'en') {
+    if (form && selectedLanguage?.code !== 'en') {
       translateForm();
-    } else if (form && selectedLanguage.code === 'en') {
+    } else if (form && selectedLanguage?.code === 'en') {
       setTranslatedForm(form);
     }
   }, [form, selectedLanguage]);
@@ -130,7 +130,7 @@ export default function CustomerFeedbackForm() {
     
     setTranslating(true);
     try {
-      const translated = await translationService.translateObject(form, selectedLanguage.code);
+      const translated = await translationService.translateObject(form, selectedLanguage?.code);
       setTranslatedForm(translated);
     } catch (error) {
       console.error("Translation error:", error);
@@ -271,71 +271,71 @@ export default function CustomerFeedbackForm() {
             <div className="mb-6">
               <i className="pi pi-check-circle text-6xl text-green-500 mb-4"></i>
               <h1 className="text-3xl font-bold text-900 mb-3">
-                {selectedLanguage.code === 'en' ? 'Thank You!' : 
-                 selectedLanguage.code === 'es' ? '¡Gracias!' :
-                 selectedLanguage.code === 'fr' ? 'Merci!' :
-                 selectedLanguage.code === 'de' ? 'Danke!' :
-                 selectedLanguage.code === 'it' ? 'Grazie!' :
-                 selectedLanguage.code === 'pt' ? 'Obrigado!' :
-                 selectedLanguage.code === 'ru' ? 'Спасибо!' :
-                 selectedLanguage.code === 'ja' ? 'ありがとうございます！' :
-                 selectedLanguage.code === 'ko' ? '감사합니다!' :
-                 selectedLanguage.code === 'zh' ? '谢谢！' :
-                 selectedLanguage.code === 'ar' ? 'شكراً لك!' :
-                 selectedLanguage.code === 'hi' ? 'धन्यवाद!' :
-                 selectedLanguage.code === 'th' ? 'ขอบคุณ!' :
-                 selectedLanguage.code === 'vi' ? 'Cảm ơn!' :
-                 selectedLanguage.code === 'tr' ? 'Teşekkürler!' :
-                 selectedLanguage.code === 'nl' ? 'Dank je!' :
-                 selectedLanguage.code === 'sv' ? 'Tack!' :
-                 selectedLanguage.code === 'da' ? 'Tak!' :
-                 selectedLanguage.code === 'no' ? 'Takk!' :
-                 selectedLanguage.code === 'fi' ? 'Kiitos!' : 'Thank You!'}
+                {selectedLanguage?.code === 'en' ? 'Thank You!' : 
+                 selectedLanguage?.code === 'es' ? '¡Gracias!' :
+                 selectedLanguage?.code === 'fr' ? 'Merci!' :
+                 selectedLanguage?.code === 'de' ? 'Danke!' :
+                 selectedLanguage?.code === 'it' ? 'Grazie!' :
+                 selectedLanguage?.code === 'pt' ? 'Obrigado!' :
+                 selectedLanguage?.code === 'ru' ? 'Спасибо!' :
+                 selectedLanguage?.code === 'ja' ? 'ありがとうございます！' :
+                 selectedLanguage?.code === 'ko' ? '감사합니다!' :
+                 selectedLanguage?.code === 'zh' ? '谢谢！' :
+                 selectedLanguage?.code === 'ar' ? 'شكراً لك!' :
+                 selectedLanguage?.code === 'hi' ? 'धन्यवाद!' :
+                 selectedLanguage?.code === 'th' ? 'ขอบคุณ!' :
+                 selectedLanguage?.code === 'vi' ? 'Cảm ơn!' :
+                 selectedLanguage?.code === 'tr' ? 'Teşekkürler!' :
+                 selectedLanguage?.code === 'nl' ? 'Dank je!' :
+                 selectedLanguage?.code === 'sv' ? 'Tack!' :
+                 selectedLanguage?.code === 'da' ? 'Tak!' :
+                 selectedLanguage?.code === 'no' ? 'Takk!' :
+                 selectedLanguage?.code === 'fi' ? 'Kiitos!' : 'Thank You!'}
               </h1>
               <p className="text-lg text-600 mb-4">
-                {selectedLanguage.code === 'en' ? 'Your feedback has been submitted successfully! We truly appreciate your positive experience.' :
-                 selectedLanguage.code === 'es' ? '¡Su comentario ha sido enviado exitosamente! Realmente apreciamos su experiencia positiva.' :
-                 selectedLanguage.code === 'fr' ? 'Votre commentaire a été soumis avec succès ! Nous apprécions vraiment votre expérience positive.' :
-                 selectedLanguage.code === 'de' ? 'Ihr Feedback wurde erfolgreich übermittelt! Wir schätzen Ihre positive Erfahrung wirklich.' :
-                 selectedLanguage.code === 'it' ? 'Il tuo feedback è stato inviato con successo! Apprezziamo davvero la tua esperienza positiva.' :
-                 selectedLanguage.code === 'pt' ? 'Seu feedback foi enviado com sucesso! Realmente apreciamos sua experiência positiva.' :
-                 selectedLanguage.code === 'ru' ? 'Ваш отзыв был успешно отправлен! Мы действительно ценим ваш положительный опыт.' :
-                 selectedLanguage.code === 'ja' ? 'フィードバックが正常に送信されました！あなたのポジティブな体験を本当に感謝しています。' :
-                 selectedLanguage.code === 'ko' ? '피드백이 성공적으로 제출되었습니다! 귀하의 긍정적인 경험을 정말 감사합니다.' :
-                 selectedLanguage.code === 'zh' ? '您的反馈已成功提交！我们真的很感谢您的积极体验。' :
-                 selectedLanguage.code === 'ar' ? 'تم إرسال ملاحظاتك بنجاح! نحن نقدر حقاً تجربتك الإيجابية.' :
-                 selectedLanguage.code === 'hi' ? 'आपकी प्रतिक्रिया सफलतापूर्वक जमा की गई! हम आपके सकारात्मक अनुभव की सराहना करते हैं।' :
-                 selectedLanguage.code === 'th' ? 'ข้อเสนอแนะของคุณถูกส่งเรียบร้อยแล้ว! เราขอขอบคุณประสบการณ์เชิงบวกของคุณ' :
-                 selectedLanguage.code === 'vi' ? 'Phản hồi của bạn đã được gửi thành công! Chúng tôi thực sự đánh giá cao trải nghiệm tích cực của bạn.' :
-                 selectedLanguage.code === 'tr' ? 'Geri bildiriminiz başarıyla gönderildi! Olumlu deneyiminizi gerçekten takdir ediyoruz.' :
-                 selectedLanguage.code === 'nl' ? 'Uw feedback is succesvol ingediend! We waarderen uw positieve ervaring echt.' :
-                 selectedLanguage.code === 'sv' ? 'Din feedback har skickats framgångsrikt! Vi uppskattar verkligen din positiva upplevelse.' :
-                 selectedLanguage.code === 'da' ? 'Din feedback er blevet indsendt med succes! Vi værdsætter virkelig din positive oplevelse.' :
-                 selectedLanguage.code === 'no' ? 'Din tilbakemelding har blitt sendt inn! Vi setter virkelig pris på din positive opplevelse.' :
-                 selectedLanguage.code === 'fi' ? 'Palautteesi on lähetetty onnistuneesti! Arvostamme todella positiivista kokemustasi.' : 
+                {selectedLanguage?.code === 'en' ? 'Your feedback has been submitted successfully! We truly appreciate your positive experience.' :
+                 selectedLanguage?.code === 'es' ? '¡Su comentario ha sido enviado exitosamente! Realmente apreciamos su experiencia positiva.' :
+                 selectedLanguage?.code === 'fr' ? 'Votre commentaire a été soumis avec succès ! Nous apprécions vraiment votre expérience positive.' :
+                 selectedLanguage?.code === 'de' ? 'Ihr Feedback wurde erfolgreich übermittelt! Wir schätzen Ihre positive Erfahrung wirklich.' :
+                 selectedLanguage?.code === 'it' ? 'Il tuo feedback è stato inviato con successo! Apprezziamo davvero la tua esperienza positiva.' :
+                 selectedLanguage?.code === 'pt' ? 'Seu feedback foi enviado com sucesso! Realmente apreciamos sua experiência positiva.' :
+                 selectedLanguage?.code === 'ru' ? 'Ваш отзыв был успешно отправлен! Мы действительно ценим ваш положительный опыт.' :
+                 selectedLanguage?.code === 'ja' ? 'フィードバックが正常に送信されました！あなたのポジティブな体験を本当に感謝しています。' :
+                 selectedLanguage?.code === 'ko' ? '피드백이 성공적으로 제출되었습니다! 귀하의 긍정적인 경험을 정말 감사합니다.' :
+                 selectedLanguage?.code === 'zh' ? '您的反馈已成功提交！我们真的很感谢您的积极体验。' :
+                 selectedLanguage?.code === 'ar' ? 'تم إرسال ملاحظاتك بنجاح! نحن نقدر حقاً تجربتك الإيجابية.' :
+                 selectedLanguage?.code === 'hi' ? 'आपकी प्रतिक्रिया सफलतापूर्वक जमा की गई! हम आपके सकारात्मक अनुभव की सराहना करते हैं।' :
+                 selectedLanguage?.code === 'th' ? 'ข้อเสนอแนะของคุณถูกส่งเรียบร้อยแล้ว! เราขอขอบคุณประสบการณ์เชิงบวกของคุณ' :
+                 selectedLanguage?.code === 'vi' ? 'Phản hồi của bạn đã được gửi thành công! Chúng tôi thực sự đánh giá cao trải nghiệm tích cực của bạn.' :
+                 selectedLanguage?.code === 'tr' ? 'Geri bildiriminiz başarıyla gönderildi! Olumlu deneyiminizi gerçekten takdir ediyoruz.' :
+                 selectedLanguage?.code === 'nl' ? 'Uw feedback is succesvol ingediend! We waarderen uw positieve ervaring echt.' :
+                 selectedLanguage?.code === 'sv' ? 'Din feedback har skickats framgångsrikt! Vi uppskattar verkligen din positiva upplevelse.' :
+                 selectedLanguage?.code === 'da' ? 'Din feedback er blevet indsendt med succes! Vi værdsætter virkelig din positive oplevelse.' :
+                 selectedLanguage?.code === 'no' ? 'Din tilbakemelding har blitt sendt inn! Vi setter virkelig pris på din positive opplevelse.' :
+                 selectedLanguage?.code === 'fi' ? 'Palautteesi on lähetetty onnistuneesti! Arvostamme todella positiivista kokemustasi.' : 
                  'Your feedback has been submitted successfully! We truly appreciate your positive experience.'}
               </p>
               <p className="text-600 mb-6">
-                {selectedLanguage.code === 'en' ? 'Your input helps us continue providing excellent service to all our guests.' :
-                 selectedLanguage.code === 'es' ? 'Su aporte nos ayuda a continuar brindando un excelente servicio a todos nuestros huéspedes.' :
-                 selectedLanguage.code === 'fr' ? 'Votre contribution nous aide à continuer à fournir un excellent service à tous nos invités.' :
-                 selectedLanguage.code === 'de' ? 'Ihr Beitrag hilft uns, weiterhin exzellenten Service für alle unsere Gäste zu bieten.' :
-                 selectedLanguage.code === 'it' ? 'Il tuo contributo ci aiuta a continuare a fornire un servizio eccellente a tutti i nostri ospiti.' :
-                 selectedLanguage.code === 'pt' ? 'Sua contribuição nos ajuda a continuar fornecendo excelente serviço a todos os nossos hóspedes.' :
-                 selectedLanguage.code === 'ru' ? 'Ваш вклад помогает нам продолжать предоставлять отличный сервис всем нашим гостям.' :
-                 selectedLanguage.code === 'ja' ? 'あなたのご意見は、すべてのゲストに優れたサービスを提供し続けるのに役立ちます。' :
-                 selectedLanguage.code === 'ko' ? '귀하의 의견은 모든 게스트에게 훌륭한 서비스를 계속 제공하는 데 도움이 됩니다.' :
-                 selectedLanguage.code === 'zh' ? '您的意见帮助我们继续为所有客人提供优质服务。' :
-                 selectedLanguage.code === 'ar' ? 'مساهمتك تساعدنا على الاستمرار في تقديم خدمة ممتازة لجميع ضيوفنا.' :
-                 selectedLanguage.code === 'hi' ? 'आपका योगदान हमें अपने सभी मेहमानों को उत्कृष्ट सेवा प्रदान करना जारी रखने में मदद करता है।' :
-                 selectedLanguage.code === 'th' ? 'ข้อมูลของคุณช่วยให้เราสามารถให้บริการที่ดีเยี่ยมแก่แขกทุกท่านต่อไป' :
-                 selectedLanguage.code === 'vi' ? 'Đóng góp của bạn giúp chúng tôi tiếp tục cung cấp dịch vụ tuyệt vời cho tất cả khách hàng.' :
-                 selectedLanguage.code === 'tr' ? 'Katkınız, tüm misafirlerimize mükemmel hizmet sunmaya devam etmemize yardımcı oluyor.' :
-                 selectedLanguage.code === 'nl' ? 'Uw bijdrage helpt ons om uitstekende service te blijven bieden aan al onze gasten.' :
-                 selectedLanguage.code === 'sv' ? 'Ditt bidrag hjälper oss att fortsätta ge utmärkt service till alla våra gäster.' :
-                 selectedLanguage.code === 'da' ? 'Dit bidrag hjælper os med at fortsætte med at levere fremragende service til alle vores gæster.' :
-                 selectedLanguage.code === 'no' ? 'Ditt bidrag hjelper oss med å fortsette å levere utmerket service til alle våre gjester.' :
-                 selectedLanguage.code === 'fi' ? 'Panoksesi auttaa meitä jatkamaan erinomaista palvelua kaikille vieraillamme.' : 
+                {selectedLanguage?.code === 'en' ? 'Your input helps us continue providing excellent service to all our guests.' :
+                 selectedLanguage?.code === 'es' ? 'Su aporte nos ayuda a continuar brindando un excelente servicio a todos nuestros huéspedes.' :
+                 selectedLanguage?.code === 'fr' ? 'Votre contribution nous aide à continuer à fournir un excellent service à tous nos invités.' :
+                 selectedLanguage?.code === 'de' ? 'Ihr Beitrag hilft uns, weiterhin exzellenten Service für alle unsere Gäste zu bieten.' :
+                 selectedLanguage?.code === 'it' ? 'Il tuo contributo ci aiuta a continuare a fornire un servizio eccellente a tutti i nostri ospiti.' :
+                 selectedLanguage?.code === 'pt' ? 'Sua contribuição nos ajuda a continuar fornecendo excelente serviço a todos os nossos hóspedes.' :
+                 selectedLanguage?.code === 'ru' ? 'Ваш вклад помогает нам продолжать предоставлять отличный сервис всем нашим гостям.' :
+                 selectedLanguage?.code === 'ja' ? 'あなたのご意見は、すべてのゲストに優れたサービスを提供し続けるのに役立ちます。' :
+                 selectedLanguage?.code === 'ko' ? '귀하의 의견은 모든 게스트에게 훌륭한 서비스를 계속 제공하는 데 도움이 됩니다.' :
+                 selectedLanguage?.code === 'zh' ? '您的意见帮助我们继续为所有客人提供优质服务。' :
+                 selectedLanguage?.code === 'ar' ? 'مساهمتك تساعدنا على الاستمرار في تقديم خدمة ممتازة لجميع ضيوفنا.' :
+                 selectedLanguage?.code === 'hi' ? 'आपका योगदान हमें अपने सभी मेहमानों को उत्कृष्ट सेवा प्रदान करना जारी रखने में मदद करता है।' :
+                 selectedLanguage?.code === 'th' ? 'ข้อมูลของคุณช่วยให้เราสามารถให้บริการที่ดีเยี่ยมแก่แขกทุกท่านต่อไป' :
+                 selectedLanguage?.code === 'vi' ? 'Đóng góp của bạn giúp chúng tôi tiếp tục cung cấp dịch vụ tuyệt vời cho tất cả khách hàng.' :
+                 selectedLanguage?.code === 'tr' ? 'Katkınız, tüm misafirlerimize mükemmel hizmet sunmaya devam etmemize yardımcı oluyor.' :
+                 selectedLanguage?.code === 'nl' ? 'Uw bijdrage helpt ons om uitstekende service te blijven bieden aan al onze gasten.' :
+                 selectedLanguage?.code === 'sv' ? 'Ditt bidrag hjälper oss att fortsätta ge utmärkt service till alla våra gäster.' :
+                 selectedLanguage?.code === 'da' ? 'Dit bidrag hjælper os med at fortsætte med at levere fremragende service til alle vores gæster.' :
+                 selectedLanguage?.code === 'no' ? 'Ditt bidrag hjelper oss med å fortsette å levere utmerket service til alle våre gjester.' :
+                 selectedLanguage?.code === 'fi' ? 'Panoksesi auttaa meitä jatkamaan erinomaista palvelua kaikille vieraillamme.' : 
                  'Your input helps us continue providing excellent service to all our guests.'}
               </p>
             </div>
@@ -343,49 +343,49 @@ export default function CustomerFeedbackForm() {
             {hotelWebsite && finalRating > 3 && (
               <div className="mb-6">
                 <p className="text-600 mb-4">
-                  {selectedLanguage.code === 'en' ? 'Would you like to share your experience with others?' :
-                   selectedLanguage.code === 'es' ? '¿Te gustaría compartir tu experiencia con otros?' :
-                   selectedLanguage.code === 'fr' ? 'Aimeriez-vous partager votre expérience avec d\'autres ?' :
-                   selectedLanguage.code === 'de' ? 'Möchten Sie Ihre Erfahrung mit anderen teilen?' :
-                   selectedLanguage.code === 'it' ? 'Vorresti condividere la tua esperienza con altri?' :
-                   selectedLanguage.code === 'pt' ? 'Gostaria de compartilhar sua experiência com outros?' :
-                   selectedLanguage.code === 'ru' ? 'Хотели бы вы поделиться своим опытом с другими?' :
-                   selectedLanguage.code === 'ja' ? '他の人とあなたの経験を共有しますか？' :
-                   selectedLanguage.code === 'ko' ? '다른 사람들과 경험을 공유하시겠습니까?' :
-                   selectedLanguage.code === 'zh' ? '您想与他人分享您的体验吗？' :
-                   selectedLanguage.code === 'ar' ? 'هل تريد مشاركة تجربتك مع الآخرين؟' :
-                   selectedLanguage.code === 'hi' ? 'क्या आप अपना अनुभव दूसरों के साथ साझा करना चाहेंगे?' :
-                   selectedLanguage.code === 'th' ? 'คุณต้องการแบ่งปันประสบการณ์ของคุณกับผู้อื่นหรือไม่?' :
-                   selectedLanguage.code === 'vi' ? 'Bạn có muốn chia sẻ trải nghiệm của mình với người khác không?' :
-                   selectedLanguage.code === 'tr' ? 'Deneyiminizi başkalarıyla paylaşmak ister misiniz?' :
-                   selectedLanguage.code === 'nl' ? 'Wil je je ervaring delen met anderen?' :
-                   selectedLanguage.code === 'sv' ? 'Vill du dela din upplevelse med andra?' :
-                   selectedLanguage.code === 'da' ? 'Vil du dele din oplevelse med andre?' :
-                   selectedLanguage.code === 'no' ? 'Vil du dele din opplevelse med andre?' :
-                   selectedLanguage.code === 'fi' ? 'Haluatko jakaa kokemuksesi muiden kanssa?' : 
+                  {selectedLanguage?.code === 'en' ? 'Would you like to share your experience with others?' :
+                   selectedLanguage?.code === 'es' ? '¿Te gustaría compartir tu experiencia con otros?' :
+                   selectedLanguage?.code === 'fr' ? 'Aimeriez-vous partager votre expérience avec d\'autres ?' :
+                   selectedLanguage?.code === 'de' ? 'Möchten Sie Ihre Erfahrung mit anderen teilen?' :
+                   selectedLanguage?.code === 'it' ? 'Vorresti condividere la tua esperienza con altri?' :
+                   selectedLanguage?.code === 'pt' ? 'Gostaria de compartilhar sua experiência com outros?' :
+                   selectedLanguage?.code === 'ru' ? 'Хотели бы вы поделиться своим опытом с другими?' :
+                   selectedLanguage?.code === 'ja' ? '他の人とあなたの経験を共有しますか？' :
+                   selectedLanguage?.code === 'ko' ? '다른 사람들과 경험을 공유하시겠습니까?' :
+                   selectedLanguage?.code === 'zh' ? '您想与他人分享您的体验吗？' :
+                   selectedLanguage?.code === 'ar' ? 'هل تريد مشاركة تجربتك مع الآخرين؟' :
+                   selectedLanguage?.code === 'hi' ? 'क्या आप अपना अनुभव दूसरों के साथ साझा करना चाहेंगे?' :
+                   selectedLanguage?.code === 'th' ? 'คุณต้องการแบ่งปันประสบการณ์ของคุณกับผู้อื่นหรือไม่?' :
+                   selectedLanguage?.code === 'vi' ? 'Bạn có muốn chia sẻ trải nghiệm của mình với người khác không?' :
+                   selectedLanguage?.code === 'tr' ? 'Deneyiminizi başkalarıyla paylaşmak ister misiniz?' :
+                   selectedLanguage?.code === 'nl' ? 'Wil je je ervaring delen met anderen?' :
+                   selectedLanguage?.code === 'sv' ? 'Vill du dela din upplevelse med andra?' :
+                   selectedLanguage?.code === 'da' ? 'Vil du dele din oplevelse med andre?' :
+                   selectedLanguage?.code === 'no' ? 'Vil du dele din opplevelse med andre?' :
+                   selectedLanguage?.code === 'fi' ? 'Haluatko jakaa kokemuksesi muiden kanssa?' : 
                    'Would you like to share your experience with others?'}
                 </p>
                 <Button
-                  label={selectedLanguage.code === 'en' ? 'Rate Us on Site' :
-                         selectedLanguage.code === 'es' ? 'Califícanos en el Sitio' :
-                         selectedLanguage.code === 'fr' ? 'Évaluez-nous sur le Site' :
-                         selectedLanguage.code === 'de' ? 'Bewerten Sie uns auf der Website' :
-                         selectedLanguage.code === 'it' ? 'Valutaci sul Sito' :
-                         selectedLanguage.code === 'pt' ? 'Avalie-nos no Site' :
-                         selectedLanguage.code === 'ru' ? 'Оцените нас на сайте' :
-                         selectedLanguage.code === 'ja' ? 'サイトで評価する' :
-                         selectedLanguage.code === 'ko' ? '사이트에서 평가하기' :
-                         selectedLanguage.code === 'zh' ? '在网站上评价我们' :
-                         selectedLanguage.code === 'ar' ? 'قيمنا على الموقع' :
-                         selectedLanguage.code === 'hi' ? 'साइट पर हमें रेट करें' :
-                         selectedLanguage.code === 'th' ? 'ให้คะแนนเราบนเว็บไซต์' :
-                         selectedLanguage.code === 'vi' ? 'Đánh giá chúng tôi trên trang web' :
-                         selectedLanguage.code === 'tr' ? 'Sitede Bizi Değerlendirin' :
-                         selectedLanguage.code === 'nl' ? 'Beoordeel ons op de Site' :
-                         selectedLanguage.code === 'sv' ? 'Betygsätt oss på webbplatsen' :
-                         selectedLanguage.code === 'da' ? 'Bedøm os på webstedet' :
-                         selectedLanguage.code === 'no' ? 'Vurder oss på nettsiden' :
-                         selectedLanguage.code === 'fi' ? 'Arvioi meitä sivustolla' : 
+                  label={selectedLanguage?.code === 'en' ? 'Rate Us on Site' :
+                         selectedLanguage?.code === 'es' ? 'Califícanos en el Sitio' :
+                         selectedLanguage?.code === 'fr' ? 'Évaluez-nous sur le Site' :
+                         selectedLanguage?.code === 'de' ? 'Bewerten Sie uns auf der Website' :
+                         selectedLanguage?.code === 'it' ? 'Valutaci sul Sito' :
+                         selectedLanguage?.code === 'pt' ? 'Avalie-nos no Site' :
+                         selectedLanguage?.code === 'ru' ? 'Оцените нас на сайте' :
+                         selectedLanguage?.code === 'ja' ? 'サイトで評価する' :
+                         selectedLanguage?.code === 'ko' ? '사이트에서 평가하기' :
+                         selectedLanguage?.code === 'zh' ? '在网站上评价我们' :
+                         selectedLanguage?.code === 'ar' ? 'قيمنا على الموقع' :
+                         selectedLanguage?.code === 'hi' ? 'साइट पर हमें रेट करें' :
+                         selectedLanguage?.code === 'th' ? 'ให้คะแนนเราบนเว็บไซต์' :
+                         selectedLanguage?.code === 'vi' ? 'Đánh giá chúng tôi trên trang web' :
+                         selectedLanguage?.code === 'tr' ? 'Sitede Bizi Değerlendirin' :
+                         selectedLanguage?.code === 'nl' ? 'Beoordeel ons op de Site' :
+                         selectedLanguage?.code === 'sv' ? 'Betygsätt oss på webbplatsen' :
+                         selectedLanguage?.code === 'da' ? 'Bedøm os på webstedet' :
+                         selectedLanguage?.code === 'no' ? 'Vurder oss på nettsiden' :
+                         selectedLanguage?.code === 'fi' ? 'Arvioi meitä sivustolla' : 
                          'Rate Us on Site'}
                   icon="pi pi-star"
                   onClick={() => window.open(hotelWebsite, '_blank')}
@@ -396,26 +396,26 @@ export default function CustomerFeedbackForm() {
             
             <div className="text-center">
               <Button
-                label={selectedLanguage.code === 'en' ? 'Submit Another Feedback' :
-                       selectedLanguage.code === 'es' ? 'Enviar Otro Comentario' :
-                       selectedLanguage.code === 'fr' ? 'Soumettre un Autre Commentaire' :
-                       selectedLanguage.code === 'de' ? 'Weiteres Feedback Senden' :
-                       selectedLanguage.code === 'it' ? 'Invia un Altro Feedback' :
-                       selectedLanguage.code === 'pt' ? 'Enviar Outro Feedback' :
-                       selectedLanguage.code === 'ru' ? 'Отправить Другой Отзыв' :
-                       selectedLanguage.code === 'ja' ? '別のフィードバックを送信' :
-                       selectedLanguage.code === 'ko' ? '다른 피드백 제출' :
-                       selectedLanguage.code === 'zh' ? '提交另一个反馈' :
-                       selectedLanguage.code === 'ar' ? 'إرسال ملاحظة أخرى' :
-                       selectedLanguage.code === 'hi' ? 'दूसरी प्रतिक्रिया जमा करें' :
-                       selectedLanguage.code === 'th' ? 'ส่งข้อเสนอแนะอีกครั้ง' :
-                       selectedLanguage.code === 'vi' ? 'Gửi Phản hồi Khác' :
-                       selectedLanguage.code === 'tr' ? 'Başka Geri Bildirim Gönder' :
-                       selectedLanguage.code === 'nl' ? 'Nog een Feedback Verzenden' :
-                       selectedLanguage.code === 'sv' ? 'Skicka en Annan Feedback' :
-                       selectedLanguage.code === 'da' ? 'Indsend en Anden Feedback' :
-                       selectedLanguage.code === 'no' ? 'Send en Annen Tilbakemelding' :
-                       selectedLanguage.code === 'fi' ? 'Lähetä Toinen Palaute' : 
+                label={selectedLanguage?.code === 'en' ? 'Submit Another Feedback' :
+                       selectedLanguage?.code === 'es' ? 'Enviar Otro Comentario' :
+                       selectedLanguage?.code === 'fr' ? 'Soumettre un Autre Commentaire' :
+                       selectedLanguage?.code === 'de' ? 'Weiteres Feedback Senden' :
+                       selectedLanguage?.code === 'it' ? 'Invia un Altro Feedback' :
+                       selectedLanguage?.code === 'pt' ? 'Enviar Outro Feedback' :
+                       selectedLanguage?.code === 'ru' ? 'Отправить Другой Отзыв' :
+                       selectedLanguage?.code === 'ja' ? '別のフィードバックを送信' :
+                       selectedLanguage?.code === 'ko' ? '다른 피드백 제출' :
+                       selectedLanguage?.code === 'zh' ? '提交另一个反馈' :
+                       selectedLanguage?.code === 'ar' ? 'إرسال ملاحظة أخرى' :
+                       selectedLanguage?.code === 'hi' ? 'दूसरी प्रतिक्रिया जमा करें' :
+                       selectedLanguage?.code === 'th' ? 'ส่งข้อเสนอแนะอีกครั้ง' :
+                       selectedLanguage?.code === 'vi' ? 'Gửi Phản hồi Khác' :
+                       selectedLanguage?.code === 'tr' ? 'Başka Geri Bildirim Gönder' :
+                       selectedLanguage?.code === 'nl' ? 'Nog een Feedback Verzenden' :
+                       selectedLanguage?.code === 'sv' ? 'Skicka en Annan Feedback' :
+                       selectedLanguage?.code === 'da' ? 'Indsend en Anden Feedback' :
+                       selectedLanguage?.code === 'no' ? 'Send en Annen Tilbakemelding' :
+                       selectedLanguage?.code === 'fi' ? 'Lähetä Toinen Palaute' : 
                        'Submit Another Feedback'}
                 icon="pi pi-refresh"
                 onClick={() => {
