@@ -66,6 +66,9 @@ export default function CustomerFeedbackForm() {
   const [translating, setTranslating] = useState(false);
   const toast = useRef<Toast>(null);
   const { t, isTranslating: isTranslatingStatic } = useTranslation(selectedLanguage);
+  
+  // Combined translation state
+  const isAnyTranslating = translating || isTranslatingStatic;
 
   useEffect(() => {
     loadForm();

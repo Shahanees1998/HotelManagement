@@ -94,6 +94,7 @@ export const SUPPORTED_LANGUAGES = [
 export class TranslationService {
   private static instance: TranslationService;
   private cache: Map<string, string> = new Map();
+  private pendingRequests: Map<string, Promise<string>> = new Map();
 
   static getInstance(): TranslationService {
     if (!TranslationService.instance) {
@@ -109,10 +110,31 @@ export class TranslationService {
     }
 
     const cacheKey = `${text}-${targetLanguage}`;
+    
+    // Return cached result if available
     if (this.cache.has(cacheKey)) {
       return this.cache.get(cacheKey)!;
     }
 
+    // Return existing pending request if one exists for this text
+    if (this.pendingRequests.has(cacheKey)) {
+      return this.pendingRequests.get(cacheKey)!;
+    }
+
+    // Create new translation request
+    const translationPromise = this.performTranslation(text, targetLanguage, cacheKey);
+    this.pendingRequests.set(cacheKey, translationPromise);
+
+    try {
+      const result = await translationPromise;
+      return result;
+    } finally {
+      // Clean up pending request
+      this.pendingRequests.delete(cacheKey);
+    }
+  }
+
+  private async performTranslation(text: string, targetLanguage: string, cacheKey: string): Promise<string> {
     try {
       // Using MyMemory API (free, no API key required)
       const response = await fetch(
@@ -135,6 +157,48 @@ export class TranslationService {
     }
   }
 
+  // Batch translation for multiple texts to reduce API calls
+  async translateBatch(texts: string[], targetLanguage: string): Promise<string[]> {
+    if (targetLanguage === 'en' || !texts.length) {
+      return texts;
+    }
+
+    const results: string[] = [];
+    const uncachedTexts: string[] = [];
+    const uncachedIndices: number[] = [];
+
+    // Check cache first
+    texts.forEach((text, index) => {
+      if (!text) {
+        results[index] = text;
+        return;
+      }
+      
+      const cacheKey = `${text}-${targetLanguage}`;
+      if (this.cache.has(cacheKey)) {
+        results[index] = this.cache.get(cacheKey)!;
+      } else {
+        uncachedTexts.push(text);
+        uncachedIndices.push(index);
+      }
+    });
+
+    // Translate all uncached texts concurrently for maximum speed
+    if (uncachedTexts.length > 0) {
+      // Process all texts concurrently without delays
+      const translationPromises = uncachedTexts.map(async (text, batchIndex) => {
+        const originalIndex = uncachedIndices[batchIndex];
+        const translated = await this.translateText(text, targetLanguage);
+        results[originalIndex] = translated;
+      });
+
+      // Wait for all translations to complete at once
+      await Promise.all(translationPromises);
+    }
+
+    return results;
+  }
+
   async translateObject(obj: any, targetLanguage: string): Promise<any> {
     if (targetLanguage === 'en' || !obj) {
       return obj;
@@ -152,56 +216,86 @@ export class TranslationService {
 
     if (typeof obj === 'object') {
       const translated: any = {};
+      
+      // Collect all texts that need translation for batch processing
+      const textsToTranslate: string[] = [];
+      const textPaths: Array<{obj: any, key: string}> = [];
+      
       for (const [key, value] of Object.entries(obj)) {
-        // Translate specific fields that contain user-facing text
-        if (['question', 'title', 'description', 'label'].includes(key)) {
-          translated[key] = await this.translateText(value as string, targetLanguage);
+        if (['question', 'title', 'description', 'label'].includes(key) && typeof value === 'string') {
+          textsToTranslate.push(value);
+          textPaths.push({obj: translated, key});
         } else if (key === 'options' && Array.isArray(value)) {
-          translated[key] = await Promise.all(
-            (value as string[]).map(async option => await this.translateText(option, targetLanguage))
-          );
+          translated[key] = [...value]; // Copy array structure
+          value.forEach((option: string, index: number) => {
+            if (typeof option === 'string') {
+              textsToTranslate.push(option);
+              textPaths.push({obj: translated[key], key: index.toString()});
+            }
+          });
         } else if (key === 'customRatingItems' && Array.isArray(value)) {
-          translated[key] = await Promise.all(
-            (value as any[]).map(async item => ({
-              ...item,
-              label: await this.translateText(item.label, targetLanguage)
-            }))
-          );
+          translated[key] = value.map(item => ({...item})); // Copy structure
+          value.forEach((item: any, itemIndex: number) => {
+            if (item.label && typeof item.label === 'string') {
+              textsToTranslate.push(item.label);
+              textPaths.push({obj: translated[key][itemIndex], key: 'label'});
+            }
+          });
         } else if (key === 'questions' && Array.isArray(value)) {
-          // Special handling for questions array
-          translated[key] = await Promise.all(
-            (value as any[]).map(async question => {
-              const translatedQuestion = { ...question };
-              
-              // Translate question text
-              if (question.question) {
-                translatedQuestion.question = await this.translateText(question.question, targetLanguage);
-              }
-              
-              // Translate options if they exist
-              if (question.options && Array.isArray(question.options)) {
-                translatedQuestion.options = await Promise.all(
-                  question.options.map(async (option: string) => await this.translateText(option, targetLanguage))
-                );
-              }
-              
-              // Translate custom rating items if they exist
-              if (question.customRatingItems && Array.isArray(question.customRatingItems)) {
-                translatedQuestion.customRatingItems = await Promise.all(
-                  question.customRatingItems.map(async (item: any) => ({
-                    ...item,
-                    label: await this.translateText(item.label, targetLanguage)
-                  }))
-                );
-              }
-              
-              return translatedQuestion;
-            })
-          );
+          // Handle questions array with batch processing
+          translated[key] = value.map(q => ({...q})); // Copy structure
+          
+          // Collect all texts from questions
+          value.forEach((question: any, qIndex: number) => {
+            if (question.question && typeof question.question === 'string') {
+              textsToTranslate.push(question.question);
+              textPaths.push({obj: translated[key][qIndex], key: 'question'});
+            }
+            
+            if (question.options && Array.isArray(question.options)) {
+              translated[key][qIndex].options = [...question.options];
+              question.options.forEach((option: string, optIndex: number) => {
+                if (typeof option === 'string') {
+                  textsToTranslate.push(option);
+                  textPaths.push({obj: translated[key][qIndex].options, key: optIndex.toString()});
+                }
+              });
+            }
+            
+            if (question.customRatingItems && Array.isArray(question.customRatingItems)) {
+              translated[key][qIndex].customRatingItems = question.customRatingItems.map((item: any) => ({...item}));
+              question.customRatingItems.forEach((item: any, itemIndex: number) => {
+                if (item.label && typeof item.label === 'string') {
+                  textsToTranslate.push(item.label);
+                  textPaths.push({obj: translated[key][qIndex].customRatingItems[itemIndex], key: 'label'});
+                }
+              });
+            }
+          });
         } else {
           translated[key] = value;
         }
       }
+      
+      // Batch translate all collected texts
+      if (textsToTranslate.length > 0) {
+        const translatedTexts = await this.translateBatch(textsToTranslate, targetLanguage);
+        
+        // Apply translated texts back to their locations
+        translatedTexts.forEach((translatedText, index) => {
+          const path = textPaths[index];
+          if (path) {
+            if (isNaN(Number(path.key))) {
+              // String key (object property)
+              path.obj[path.key] = translatedText;
+            } else {
+              // Numeric key (array index)
+              path.obj[Number(path.key)] = translatedText;
+            }
+          }
+        });
+      }
+      
       return translated;
     }
 
@@ -210,6 +304,7 @@ export class TranslationService {
 
   clearCache(): void {
     this.cache.clear();
+    this.pendingRequests.clear();
   }
 }
 

@@ -47,13 +47,17 @@ export function useTranslation(selectedLanguage: { code: string }) {
 
       setIsTranslating(true);
       try {
-        const translations: Record<string, string> = {};
+        const textKeys = Object.keys(STATIC_TEXTS);
+        const textValues = Object.values(STATIC_TEXTS);
         
-        // Translate each static text
-        for (const [key, value] of Object.entries(STATIC_TEXTS)) {
-          const translated = await translationService.translateText(value, selectedLanguage.code);
-          translations[key] = translated;
-        }
+        // Use batch translation for better performance
+        const translatedValues = await translationService.translateBatch(textValues, selectedLanguage.code);
+        
+        // Reconstruct the translations object
+        const translations: Record<string, string> = {};
+        textKeys.forEach((key, index) => {
+          translations[key] = translatedValues[index];
+        });
         
         setTranslatedTexts(translations);
       } catch (error) {
@@ -65,7 +69,7 @@ export function useTranslation(selectedLanguage: { code: string }) {
     };
 
     translateStaticTexts();
-  }, [selectedLanguage.code]);
+  }, [selectedLanguage?.code]);
 
   const t = (key: string): string => {
     return translatedTexts[key] || key;
