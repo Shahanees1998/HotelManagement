@@ -1,5 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AuthService, JWTPayload } from './auth';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/nextauth';
+import { jwtVerify } from 'jose';
+
+// JWT Configuration for mobile clients
+const JWT_SECRET = new TextEncoder().encode(
+  process.env.JWT_SECRET || process.env.NEXTAUTH_SECRET || '7b537c24d1f5b2a460c4b3f88ad3e78b2f7462d49a9d9a93c3c86b48a211bc39'
+);
+
+export interface JWTPayload {
+  userId: string;
+  email: string;
+  role: string;
+  firstName: string;
+  lastName: string;
+  status: string;
+  profileImage?: string;
+  profileImagePublicId?: string;
+  phone?: string;
+  lastLogin?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+  hotelId?: string;
+  hotelSlug?: string;
+  hotelName?: string;
+}
 
 export interface AuthenticatedRequest extends NextRequest {
   user?: JWTPayload;
@@ -7,67 +32,61 @@ export interface AuthenticatedRequest extends NextRequest {
 
 /**
  * Middleware to protect API routes
- * Validates JWT token from cookies (web) or Authorization header (mobile)
+ * Validates NextAuth session (web) or JWT token (mobile)
  */
 export async function withAuth(
   req: NextRequest,
   handler: (req: AuthenticatedRequest) => Promise<NextResponse>
 ): Promise<NextResponse> {
   try {
-    const token = AuthService.getTokenFromRequest(req);
-    
-    if (!token) {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
+    // First try NextAuth session (for web clients)
+    const session = await getServerSession(authOptions);
+
+    if (session?.user) {
+      const authenticatedReq = req as AuthenticatedRequest;
+      authenticatedReq.user = {
+        userId: session.user.id,
+        email: session.user.email,
+        firstName: session.user.firstName,
+        lastName: session.user.lastName,
+        role: session.user.role,
+        status: session.user.status,
+        phone: session.user.phone,
+        profileImage: session.user.profileImage,
+        profileImagePublicId: session.user.profileImagePublicId,
+        lastLogin: session.user.lastLogin,
+        createdAt: session.user.createdAt,
+        updatedAt: session.user.updatedAt,
+        hotelId: session.user.hotelId,
+        hotelSlug: session.user.hotelSlug,
+        hotelName: session.user.hotelName,
+      };
+
+      return await handler(authenticatedReq);
     }
 
-    // Verify the token
-    const payload = await AuthService.verifyToken(token);
-    
-    // Add user to request
-    const authenticatedReq = req as AuthenticatedRequest;
-    authenticatedReq.user = payload;
+    // Try JWT token for mobile clients
+    const authHeader = req.headers.get('authorization');
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      try {
+        const { payload } = await jwtVerify(token, JWT_SECRET);
+        
+        const authenticatedReq = req as AuthenticatedRequest;
+        authenticatedReq.user = payload as unknown as JWTPayload;
 
-    return await handler(authenticatedReq);
-  } catch (error) {
-    // If token is expired, try to refresh it
-    if (error instanceof Error && error.message === 'Invalid token') {
-      const refreshToken = AuthService.getRefreshTokenFromCookies();
-      
-      if (refreshToken) {
-        try {
-          const newAccessToken = await AuthService.refreshAccessToken(refreshToken);
-          
-          // Set new access token in cookie
-          const response = await handler(req as AuthenticatedRequest);
-          const isProd = process.env.NODE_ENV === 'production';
-          // Add the new token to the response
-          response.cookies.set('access_token', newAccessToken, {
-            httpOnly: true,
-            secure: isProd,
-            sameSite: isProd ? 'none' : 'lax',
-            maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
-            path: '/',
-          });
-          
-          return response;
-        } catch (refreshError) {
-          // Refresh token is also invalid, clear cookies and return 401
-          const response = NextResponse.json(
-            { error: 'Authentication required' },
-            { status: 401 }
-          );
-          
-          response.cookies.delete('access_token');
-          response.cookies.delete('refresh_token');
-          
-          return response;
-        }
+        return await handler(authenticatedReq);
+      } catch (error) {
+        // Token is invalid or expired
       }
     }
-    
+
+    return NextResponse.json(
+      { error: 'Authentication required' },
+      { status: 401 }
+    );
+  } catch (error) {
+    console.error('Auth middleware error:', error);
     return NextResponse.json(
       { error: 'Authentication required' },
       { status: 401 }
@@ -86,7 +105,7 @@ export async function withAdminAuth(
   return withAuth(req, async (authenticatedReq) => {
     const user = authenticatedReq.user;
     
-    if (!user) {
+    if (!user || user.role !== 'ADMIN') {
       return NextResponse.json(
         { error: 'You are unauthorized to access this page' },
         { status: 403 }
@@ -105,17 +124,49 @@ export async function withOptionalAuth(
   handler: (req: AuthenticatedRequest) => Promise<NextResponse>
 ): Promise<NextResponse> {
   try {
-    const token = AuthService.getTokenFromRequest(req);
-    
-    if (token) {
-      const payload = await AuthService.verifyToken(token);
+    // Try NextAuth session
+    const session = await getServerSession(authOptions);
+
+    if (session?.user) {
       const authenticatedReq = req as AuthenticatedRequest;
-      authenticatedReq.user = payload;
+      authenticatedReq.user = {
+        userId: session.user.id,
+        email: session.user.email,
+        firstName: session.user.firstName,
+        lastName: session.user.lastName,
+        role: session.user.role,
+        status: session.user.status,
+        phone: session.user.phone,
+        profileImage: session.user.profileImage,
+        profileImagePublicId: session.user.profileImagePublicId,
+        lastLogin: session.user.lastLogin,
+        createdAt: session.user.createdAt,
+        updatedAt: session.user.updatedAt,
+        hotelId: session.user.hotelId,
+        hotelSlug: session.user.hotelSlug,
+        hotelName: session.user.hotelName,
+      };
       return await handler(authenticatedReq);
+    }
+
+    // Try JWT token for mobile clients
+    const authHeader = req.headers.get('authorization');
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      try {
+        const { payload } = await jwtVerify(token, JWT_SECRET);
+        
+        const authenticatedReq = req as AuthenticatedRequest;
+        authenticatedReq.user = payload as unknown as JWTPayload;
+
+        return await handler(authenticatedReq);
+      } catch (error) {
+        // Ignore auth errors for optional auth
+      }
     }
   } catch (error) {
     // Ignore auth errors for optional auth
   }
 
   return await handler(req as AuthenticatedRequest);
-} 
+}

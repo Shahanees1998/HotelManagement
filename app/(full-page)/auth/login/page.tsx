@@ -258,14 +258,14 @@ const LoginContent = () => {
                        <div className="flex align-items-center mb-3" style={{ gap: "1rem" }}>
                            <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
                            <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
-                               or create account
+                               or create account.
                            </span>
                            <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
                        </div>
                        
                        <div className="text-center">
                            <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
-                               Own a hotel?{" "}
+                               Own a Hotel?{" "}
                                <a
                                    className="cursor-pointer"
                                    style={{ color: "#6F522F", fontWeight: 600, textDecoration: "underline" }}

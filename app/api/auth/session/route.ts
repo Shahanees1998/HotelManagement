@@ -2,41 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/nextauth';
 import { prisma } from '@/lib/prisma';
-import { jwtVerify } from 'jose';
-
-// JWT Configuration for mobile clients
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || process.env.NEXTAUTH_SECRET || '7b537c24d1f5b2a460c4b3f88ad3e78b2f7462d49a9d9a93c3c86b48a211bc39'
-);
 
 /**
- * GET /api/auth/me
- * Get current user info - supports both NextAuth (web) and JWT (mobile)
+ * GET /api/auth/session
+ * Get current user session with fresh data from database
  */
 export async function GET(request: NextRequest) {
   try {
-    // First try NextAuth session (for web clients)
     const session = await getServerSession(authOptions);
 
-    let userId: string | null = null;
-
-    if (session?.user?.id) {
-      userId = session.user.id;
-    } else {
-      // Try JWT token for mobile clients
-      const authHeader = request.headers.get('authorization');
-      if (authHeader && authHeader.startsWith('Bearer ')) {
-        const token = authHeader.substring(7);
-        try {
-          const { payload } = await jwtVerify(token, JWT_SECRET);
-          userId = payload.userId as string;
-        } catch (error) {
-          // Token invalid or expired
-        }
-      }
-    }
-
-    if (!userId) {
+    if (!session || !session.user) {
       return NextResponse.json(
         { error: 'Not authenticated' },
         { status: 401 }
@@ -45,7 +20,7 @@ export async function GET(request: NextRequest) {
 
     // Fetch complete user data from database
     const user = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id: session.user.id },
       select: {
         id: true,
         email: true,
@@ -74,7 +49,7 @@ export async function GET(request: NextRequest) {
     let hotelData = null;
     if (user.role === 'HOTEL') {
       const hotel = await prisma.hotels.findUnique({
-        where: { ownerId: userId },
+        where: { ownerId: user.id },
         select: { id: true, slug: true, name: true },
       });
       hotelData = hotel;
@@ -90,10 +65,10 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Auth me error:', error);
+    console.error('Session error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
     );
   }
-} 
+}

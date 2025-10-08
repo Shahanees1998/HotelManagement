@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { withAdminAuth, AuthenticatedRequest } from '@/lib/authMiddleware';
-import { AuthService } from '@/lib/auth';
 import { NotificationService } from '@/lib/notificationService';
 import { pusherServer } from '@/lib/realtime';
 import sgMail from '@sendgrid/mail';

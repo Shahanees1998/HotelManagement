@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext, useContext, ReactNode } from 'react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 interface User {
   id: string;
@@ -16,6 +17,7 @@ interface User {
   updatedAt?: string;
   hotelId?: string;
   hotelSlug?: string;
+  hotelName?: string;
 }
 
 interface AuthContextType {
@@ -29,98 +31,56 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const { data: session, status, update } = useSession();
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const loading = status === 'loading';
 
-  // Check if user is authenticated on mount
+  // Update user state when session changes
   useEffect(() => {
-    checkAuth();
-  }, []);
-
-  // Set up automatic token refresh
-  useEffect(() => {
-    if (!user) return;
-
-    // Refresh token every 6 hours (before the 7-day expiry)
-    const refreshInterval = setInterval(async () => {
-      try {
-        const response = await fetch('/api/auth/refresh', {
-          method: 'POST',
-          credentials: 'include',
-        });
-
-        if (!response.ok) {
-          console.warn('Token refresh failed, user may need to re-login');
-          // Don't logout immediately, let the next API call handle it
-        }
-      } catch (error) {
-        console.error('Token refresh error:', error);
-      }
-    }, 6 * 60 * 60 * 1000); // 6 hours
-
-    // Refresh token when user returns to the tab
-    const handleVisibilityChange = async () => {
-      if (document.visibilityState === 'visible') {
-        try {
-          const response = await fetch('/api/auth/refresh', {
-            method: 'POST',
-            credentials: 'include',
-          });
-
-          if (!response.ok) {
-            console.warn('Token refresh on visibility change failed');
-          }
-        } catch (error) {
-          console.error('Token refresh on visibility change error:', error);
-        }
-      }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    return () => {
-      clearInterval(refreshInterval);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, [user]);
-
-  const checkAuth = async () => {
-    try {
-      const response = await fetch('/api/auth/me');
-      if (response.ok) {
-        const data = await response.json();
-        console.log('*************************************', data)
-        setUser(data.user);
-      } else {
-        setUser(null);
-      }
-    } catch (error) {
-      console.error('Auth check failed:', error);
+    if (session?.user) {
+      setUser({
+        id: session.user.id,
+        email: session.user.email,
+        firstName: session.user.firstName,
+        lastName: session.user.lastName,
+        phone: session.user.phone,
+        role: session.user.role,
+        status: session.user.status,
+        profileImage: session.user.profileImage,
+        profileImagePublicId: session.user.profileImagePublicId,
+        lastLogin: session.user.lastLogin?.toString(),
+        isPasswordChanged: session.user.isPasswordChanged,
+        createdAt: session.user.createdAt?.toString(),
+        updatedAt: session.user.updatedAt?.toString(),
+        hotelId: session.user.hotelId,
+        hotelSlug: session.user.hotelSlug,
+        hotelName: session.user.hotelName,
+      });
+    } else {
       setUser(null);
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [session]);
 
   const login = async (email: string, password: string): Promise<User> => {
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-client': 'admin-web',
-        },
-        body: JSON.stringify({ email, password }),
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
       });
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Login failed');
+
+      if (result?.error) {
+        throw new Error(result.error);
       }
 
-      // Get user data after successful login
-      const userResponse = await fetch('/api/auth/me');
-      if (userResponse.ok) {
-        const data = await userResponse.json();
+      if (!result?.ok) {
+        throw new Error('Login failed');
+      }
+
+      // Fetch user data after successful login
+      const response = await fetch('/api/auth/me');
+      if (response.ok) {
+        const data = await response.json();
         setUser(data.user);
         return data.user;
       } else {
@@ -134,19 +94,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     try {
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-      });
+      await signOut({ redirect: false });
       setUser(null);
     } catch (error) {
       console.error('Logout error:', error);
-      // Even if logout fails, clear user state
       setUser(null);
     }
   };
 
   const refreshUser = async () => {
-    await checkAuth();
+    try {
+      // Update session from server
+      await update();
+      
+      // Also fetch fresh user data
+      const response = await fetch('/api/auth/me');
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.user);
+      }
+    } catch (error) {
+      console.error('Refresh user error:', error);
+    }
   };
 
   const value: AuthContextType = {

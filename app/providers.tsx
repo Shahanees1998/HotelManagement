@@ -1,5 +1,6 @@
 "use client";
 
+import { SessionProvider } from "next-auth/react";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ReactNode } from "react";
 import { ToastProvider } from "@/store/toast.context";
@@ -11,12 +12,14 @@ interface ProvidersProps {
 
 export function Providers({ children }: ProvidersProps) {
   return (
-    <AuthProvider>
-      <ClientOnly>
-        <ToastProvider>
-          {children}
-        </ToastProvider>
-      </ClientOnly>
-    </AuthProvider>
+    <SessionProvider>
+      <AuthProvider>
+        <ClientOnly>
+          <ToastProvider>
+            {children}
+          </ToastProvider>
+        </ClientOnly>
+      </AuthProvider>
+    </SessionProvider>
   );
 } 

@@ -16,7 +16,8 @@ datasource db {
 model User {
   id                   String     @id @default(auto()) @map("_id") @db.ObjectId
   email                String     @unique
-  password             String
+  emailVerified        DateTime?  // NextAuth field
+  password             String?    // Made optional for NextAuth compatibility
   firstName            String
   lastName             String
   phone                String?
@@ -38,8 +39,51 @@ model User {
   announcements        Announcement[]
   hotel                Hotels?     // If user is a hotel owner
   adminEscalations     AdminEscalation[] // Escalations from this user
+  accounts             Account[]   // NextAuth relation
+  sessions             Session[]   // NextAuth relation
 
   @@map("users")
+}
+
+// NextAuth models
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
 }
 
 model Hotels {
