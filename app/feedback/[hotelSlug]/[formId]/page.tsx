@@ -383,8 +383,32 @@ export default function CustomerFeedbackForm() {
                         className="p-button-text p-button-sm absolute top-0 right-0 mt-2 mr-2"
                         onClick={async () => {
                           try {
-                            await navigator.clipboard.writeText(submittedFeedback);
-                            showToast("success", t('Copied!'), t('Feedback copied to clipboard'));
+                            // Try modern clipboard API first
+                            if (navigator.clipboard && window.isSecureContext) {
+                              await navigator.clipboard.writeText(submittedFeedback);
+                              showToast("success", t('Copied!'), t('Feedback copied to clipboard'));
+                            } else {
+                              // Fallback for older browsers or non-secure contexts
+                              const textArea = document.createElement("textarea");
+                              textArea.value = submittedFeedback;
+                              textArea.style.position = "fixed";
+                              textArea.style.left = "-999999px";
+                              textArea.style.top = "-999999px";
+                              document.body.appendChild(textArea);
+                              textArea.focus();
+                              textArea.select();
+                              
+                              try {
+                                const successful = document.execCommand('copy');
+                                if (successful) {
+                                  showToast("success", t('Copied!'), t('Feedback copied to clipboard'));
+                                } else {
+                                  throw new Error('Copy command failed');
+                                }
+                              } finally {
+                                document.body.removeChild(textArea);
+                              }
+                            }
                           } catch (error) {
                             console.error("Failed to copy:", error);
                             showToast("error", t('Error'), t('Failed to copy to clipboard'));

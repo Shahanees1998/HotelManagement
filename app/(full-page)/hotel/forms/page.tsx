@@ -253,16 +253,41 @@ export default function HotelForms() {
   }, [qrCodeDataUrl, qrFormTitle]);
 
   const copyQrUrl = useCallback(async () => {
-    if (qrCodeUrl) {
-      try {
+    if (!qrCodeUrl) {
+      showToast("warn", "Warning", "No URL to copy");
+      return;
+    }
+
+    try {
+      // Try modern clipboard API first
+      if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(qrCodeUrl);
         showToast("success", "Copied!", "URL copied to clipboard");
-      } catch (error) {
-        console.error("Failed to copy:", error);
-        showToast("error", "Error", "Failed to copy URL to clipboard");
+      } else {
+        // Fallback for older browsers or non-secure contexts
+        const textArea = document.createElement("textarea");
+        textArea.value = qrCodeUrl;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+          const successful = document.execCommand('copy');
+          if (successful) {
+            showToast("success", "Copied!", "URL copied to clipboard");
+          } else {
+            throw new Error('Copy command failed');
+          }
+        } finally {
+          document.body.removeChild(textArea);
+        }
       }
-    } else {
-      showToast("warn", "Warning", "No URL to copy");
+    } catch (error) {
+      console.error("Failed to copy:", error);
+      showToast("error", "Error", "Failed to copy URL to clipboard");
     }
   }, [qrCodeUrl, showToast]);
 
