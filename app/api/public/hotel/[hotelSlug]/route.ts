@@ -24,6 +24,8 @@ export async function GET(
         email: true,
         website: true,
         logo: true,
+        tripAdvisorLink: true,
+        googleReviewsLink: true,
         createdAt: true,
       },
     });

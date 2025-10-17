@@ -43,6 +43,8 @@ export default function HotelProfile() {
     email: "",
     website: "",
     logo: "",
+    tripAdvisorLink: "",
+    googleReviewsLink: "",
   });
   const [subscriptionData, setSubscriptionData] = useState({
     status: "TRIAL",
@@ -73,6 +75,8 @@ export default function HotelProfile() {
           email: data.data.email || "",
           website: data.data.website || "",
           logo: data.data.logo || "",
+          tripAdvisorLink: data.data.tripAdvisorLink || "",
+          googleReviewsLink: data.data.googleReviewsLink || "",
         });
       } else {
         const errorData = await response.json();
@@ -375,6 +379,53 @@ export default function HotelProfile() {
                 placeholder="https://www.yourhotel.com"
                 className="w-full"
               />
+            </div>
+          </div>
+        </Card>
+
+        {/* External Links Card */}
+        <Card title="External Review Links" className="mb-4">
+          <p className="text-600 mb-3">Add links to your TripAdvisor and Google Reviews pages to help guests share positive feedback.</p>
+          <div className="grid">
+            <div className="col-12">
+              <label className="block text-900 font-medium mb-2">
+                <div className="flex align-items-center gap-2">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="24" height="24" rx="4" fill="#00AF87"/>
+                    <path d="M12 6C8.686 6 6 8.686 6 12C6 15.314 8.686 18 12 18C15.314 18 18 15.314 18 12C18 8.686 15.314 6 12 6ZM12 16.5C9.519 16.5 7.5 14.481 7.5 12C7.5 9.519 9.519 7.5 12 7.5C14.481 7.5 16.5 9.519 16.5 12C16.5 14.481 14.481 16.5 12 16.5Z" fill="white"/>
+                    <circle cx="12" cy="12" r="2.5" fill="white"/>
+                  </svg>
+                  <span>TripAdvisor Link</span>
+                </div>
+              </label>
+              <InputText
+                value={hotelData.tripAdvisorLink}
+                onChange={(e) => handleInputChange('tripAdvisorLink', e.target.value)}
+                placeholder="https://www.tripadvisor.com/..."
+                className="w-full"
+              />
+              <small className="text-600">Optional: Link to your TripAdvisor page</small>
+            </div>
+
+            <div className="col-12 mt-3">
+              <label className="block text-900 font-medium mb-2">
+                <div className="flex align-items-center gap-2">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.48 10.92V14.14H17.94C17.72 15.35 16.99 16.38 15.89 17.07V19.28H18.65C20.45 17.64 21.5 15.18 21.5 12.24C21.5 11.56 21.44 10.9 21.32 10.27L12.48 10.92Z" fill="#4285F4"/>
+                    <path d="M12.48 10.92V14.14H17.94C17.72 15.35 16.99 16.38 15.89 17.07L18.65 19.28C20.45 17.64 21.5 15.18 21.5 12.24C21.5 11.56 21.44 10.9 21.32 10.27L12.48 10.92Z" fill="#34A853"/>
+                    <path d="M5.26 14.2L4.46 14.82L2 17C3.96 20.92 7.7 23.5 12 23.5C14.43 23.5 16.47 22.72 18.02 21.42L15.26 19.21C14.39 19.77 13.3 20.14 12 20.14C9.69 20.14 7.71 18.49 7 16.31L5.26 14.2Z" fill="#FBBC05"/>
+                    <path d="M2 7C1.38 8.25 1 9.59 1 11C1 12.41 1.38 13.75 2 15L5.26 12.81C4.86 11.63 4.86 10.37 5.26 9.19L2 7Z" fill="#EA4335"/>
+                  </svg>
+                  <span>Google Reviews Link</span>
+                </div>
+              </label>
+              <InputText
+                value={hotelData.googleReviewsLink}
+                onChange={(e) => handleInputChange('googleReviewsLink', e.target.value)}
+                placeholder="https://g.page/..."
+                className="w-full"
+              />
+              <small className="text-600">Optional: Link to your Google Reviews page</small>
             </div>
           </div>
         </Card>

@@ -30,6 +30,7 @@ export async function GET(
         where: {
           id: formId,
           hotelId: hotel.id,
+          isDeleted: false, // Exclude soft-deleted forms
         },
         include: {
           predefinedQuestions: {
@@ -127,6 +128,7 @@ export async function PUT(
         where: {
           id: formId,
           hotelId: hotel.id,
+          isDeleted: false, // Only allow updating non-deleted forms
         },
       });
 
@@ -303,6 +305,7 @@ export async function DELETE(
         where: {
           id: formId,
           hotelId: hotel.id,
+          isDeleted: false, // Only allow deleting non-deleted forms
         },
       });
 
@@ -310,9 +313,10 @@ export async function DELETE(
         return NextResponse.json({ error: 'Form not found' }, { status: 404 });
       }
 
-      // Delete form (cascade will delete questions and reviews)
-      await prisma.feedbackForm.delete({
+      // Soft delete form by setting isDeleted to true
+      await prisma.feedbackForm.update({
         where: { id: formId },
+        data: { isDeleted: true },
       });
 
       return NextResponse.json({

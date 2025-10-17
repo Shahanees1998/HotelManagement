@@ -27,6 +27,8 @@ export async function GET(request: NextRequest) {
           email: true,
           website: true,
           logo: true,
+          tripAdvisorLink: true,
+          googleReviewsLink: true,
           createdAt: true,
           updatedAt: true,
         },
@@ -58,7 +60,7 @@ export async function PUT(request: NextRequest) {
       }
 
       const body = await request.json();
-      const { name, slug, description, address, city, country, phone, email, website } = body;
+      const { name, slug, description, address, city, country, phone, email, website, tripAdvisorLink, googleReviewsLink } = body;
 
       // Validate required fields
       if (!name || !slug) {
@@ -96,6 +98,8 @@ export async function PUT(request: NextRequest) {
           phone: phone || null,
           email: email || null,
           website: website || null,
+          tripAdvisorLink: tripAdvisorLink || null,
+          googleReviewsLink: googleReviewsLink || null,
         },
         select: {
           id: true,
@@ -109,6 +113,8 @@ export async function PUT(request: NextRequest) {
           email: true,
           website: true,
           logo: true,
+          tripAdvisorLink: true,
+          googleReviewsLink: true,
           createdAt: true,
           updatedAt: true,
         },

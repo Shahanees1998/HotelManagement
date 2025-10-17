@@ -99,6 +99,8 @@ model Hotels {
   website           String?
   logo              String?
   logoPublicId      String? // Cloudinary public_id
+  tripAdvisorLink   String? // TripAdvisor review link
+  googleReviewsLink String? // Google Reviews link
   isActive          Boolean  @default(true)
   subscriptionId    String? // Stripe subscription ID
   subscriptionStatus SubscriptionStatus @default(TRIAL)
@@ -125,6 +127,7 @@ model FeedbackForm {
   description String?
   isActive    Boolean  @default(true)
   isPublic    Boolean  @default(true)
+  isDeleted   Boolean  @default(false)
   layout      String   @default("basic") // basic, good, excellent
   hotelId     String   @db.ObjectId
   createdAt   DateTime @default(now())

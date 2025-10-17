@@ -252,10 +252,17 @@ export default function HotelForms() {
     }
   }, [qrCodeDataUrl, qrFormTitle]);
 
-  const copyQrUrl = useCallback(() => {
+  const copyQrUrl = useCallback(async () => {
     if (qrCodeUrl) {
-      navigator.clipboard.writeText(qrCodeUrl);
-      showToast("success", "Success", "URL copied to clipboard");
+      try {
+        await navigator.clipboard.writeText(qrCodeUrl);
+        showToast("success", "Copied!", "URL copied to clipboard");
+      } catch (error) {
+        console.error("Failed to copy:", error);
+        showToast("error", "Error", "Failed to copy URL to clipboard");
+      }
+    } else {
+      showToast("warn", "Warning", "No URL to copy");
     }
   }, [qrCodeUrl, showToast]);
 

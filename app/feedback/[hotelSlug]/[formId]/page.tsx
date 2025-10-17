@@ -61,7 +61,10 @@ export default function CustomerFeedbackForm() {
   const [hotelData, setHotelData] = useState({
     name: "Hotel Famulus",
     logo: "/images/logo.png",
+    tripAdvisorLink: "",
+    googleReviewsLink: "",
   });
+  const [submittedFeedback, setSubmittedFeedback] = useState<string>("");
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(SUPPORTED_LANGUAGES[0]); // Default to English
   const [translating, setTranslating] = useState(false);
   const toast = useRef<Toast>(null);
@@ -115,6 +118,8 @@ export default function CustomerFeedbackForm() {
         setHotelData({
           name: hotelData.data?.name || "Hotel Famulus",
           logo: hotelData.data?.logo || "/images/logo.png",
+          tripAdvisorLink: hotelData.data?.tripAdvisorLink || "",
+          googleReviewsLink: hotelData.data?.googleReviewsLink || "",
         });
       }
     } catch (error) {
@@ -225,6 +230,25 @@ export default function CustomerFeedbackForm() {
         
         // Store the final rating for success page
         setFinalRating(averageRating);
+        
+        // Collect feedback text for display
+        let feedbackText = "";
+        if (form) {
+          const feedbackQuestion = form.questions.find(q => q.question === "Feedback");
+          if (feedbackQuestion && submission.answers[feedbackQuestion.id]) {
+            feedbackText = submission.answers[feedbackQuestion.id];
+          }
+          
+          // If no specific "Feedback" question, collect all text answers
+          if (!feedbackText) {
+            const textAnswers = form.questions
+              .filter(q => (q.type === "LONG_TEXT" || q.type === "SHORT_TEXT") && submission.answers[q.id])
+              .map(q => `${q.question}: ${submission.answers[q.id]}`)
+              .join("\n\n");
+            feedbackText = textAnswers;
+          }
+        }
+        setSubmittedFeedback(feedbackText);
         
         if (isHighRating) {
           showToast("success", "Thank You!", "Your feedback has been submitted successfully! We truly appreciate your positive experience.");
@@ -340,58 +364,107 @@ export default function CustomerFeedbackForm() {
               </p>
             </div>
             
-            {hotelWebsite && finalRating > 3 && (
-              <div className="mb-6">
-                <p className="text-600 mb-4">
-                  {selectedLanguage?.code === 'en' ? 'Would you like to share your experience with others?' :
-                   selectedLanguage?.code === 'es' ? '¿Te gustaría compartir tu experiencia con otros?' :
-                   selectedLanguage?.code === 'fr' ? 'Aimeriez-vous partager votre expérience avec d\'autres ?' :
-                   selectedLanguage?.code === 'de' ? 'Möchten Sie Ihre Erfahrung mit anderen teilen?' :
-                   selectedLanguage?.code === 'it' ? 'Vorresti condividere la tua esperienza con altri?' :
-                   selectedLanguage?.code === 'pt' ? 'Gostaria de compartilhar sua experiência com outros?' :
-                   selectedLanguage?.code === 'ru' ? 'Хотели бы вы поделиться своим опытом с другими?' :
-                   selectedLanguage?.code === 'ja' ? '他の人とあなたの経験を共有しますか？' :
-                   selectedLanguage?.code === 'ko' ? '다른 사람들과 경험을 공유하시겠습니까?' :
-                   selectedLanguage?.code === 'zh' ? '您想与他人分享您的体验吗？' :
-                   selectedLanguage?.code === 'ar' ? 'هل تريد مشاركة تجربتك مع الآخرين؟' :
-                   selectedLanguage?.code === 'hi' ? 'क्या आप अपना अनुभव दूसरों के साथ साझा करना चाहेंगे?' :
-                   selectedLanguage?.code === 'th' ? 'คุณต้องการแบ่งปันประสบการณ์ของคุณกับผู้อื่นหรือไม่?' :
-                   selectedLanguage?.code === 'vi' ? 'Bạn có muốn chia sẻ trải nghiệm của mình với người khác không?' :
-                   selectedLanguage?.code === 'tr' ? 'Deneyiminizi başkalarıyla paylaşmak ister misiniz?' :
-                   selectedLanguage?.code === 'nl' ? 'Wil je je ervaring delen met anderen?' :
-                   selectedLanguage?.code === 'sv' ? 'Vill du dela din upplevelse med andra?' :
-                   selectedLanguage?.code === 'da' ? 'Vil du dele din oplevelse med andre?' :
-                   selectedLanguage?.code === 'no' ? 'Vil du dele din opplevelse med andre?' :
-                   selectedLanguage?.code === 'fi' ? 'Haluatko jakaa kokemuksesi muiden kanssa?' : 
-                   'Would you like to share your experience with others?'}
-                </p>
-                <Button
-                  label={selectedLanguage?.code === 'en' ? 'Rate Us on Site' :
-                         selectedLanguage?.code === 'es' ? 'Califícanos en el Sitio' :
-                         selectedLanguage?.code === 'fr' ? 'Évaluez-nous sur le Site' :
-                         selectedLanguage?.code === 'de' ? 'Bewerten Sie uns auf der Website' :
-                         selectedLanguage?.code === 'it' ? 'Valutaci sul Sito' :
-                         selectedLanguage?.code === 'pt' ? 'Avalie-nos no Site' :
-                         selectedLanguage?.code === 'ru' ? 'Оцените нас на сайте' :
-                         selectedLanguage?.code === 'ja' ? 'サイトで評価する' :
-                         selectedLanguage?.code === 'ko' ? '사이트에서 평가하기' :
-                         selectedLanguage?.code === 'zh' ? '在网站上评价我们' :
-                         selectedLanguage?.code === 'ar' ? 'قيمنا على الموقع' :
-                         selectedLanguage?.code === 'hi' ? 'साइट पर हमें रेट करें' :
-                         selectedLanguage?.code === 'th' ? 'ให้คะแนนเราบนเว็บไซต์' :
-                         selectedLanguage?.code === 'vi' ? 'Đánh giá chúng tôi trên trang web' :
-                         selectedLanguage?.code === 'tr' ? 'Sitede Bizi Değerlendirin' :
-                         selectedLanguage?.code === 'nl' ? 'Beoordeel ons op de Site' :
-                         selectedLanguage?.code === 'sv' ? 'Betygsätt oss på webbplatsen' :
-                         selectedLanguage?.code === 'da' ? 'Bedøm os på webstedet' :
-                         selectedLanguage?.code === 'no' ? 'Vurder oss på nettsiden' :
-                         selectedLanguage?.code === 'fi' ? 'Arvioi meitä sivustolla' : 
-                         'Rate Us on Site'}
-                  icon="pi pi-star"
-                  onClick={() => window.open(hotelWebsite, '_blank')}
-                  className="p-button-success p-button-lg"
-                />
-              </div>
+            {finalRating >= 3 && (
+              <>
+                {/* Display submitted feedback text with copy button */}
+                {submittedFeedback && (
+                  <div className="mb-6">
+                    <h3 className="text-xl font-semibold mb-3">
+                      {selectedLanguage?.code === 'en' ? 'Your Feedback' :
+                       selectedLanguage?.code === 'es' ? 'Tu Comentario' :
+                       selectedLanguage?.code === 'fr' ? 'Votre Commentaire' :
+                       selectedLanguage?.code === 'de' ? 'Ihr Feedback' :
+                       selectedLanguage?.code === 'it' ? 'Il Tuo Feedback' : 'Your Feedback'}
+                    </h3>
+                    <div className="border-1 border-300 border-round p-3 bg-gray-50 relative">
+                      <p className="text-700 mb-0 white-space-pre-wrap">{submittedFeedback}</p>
+                      <Button
+                        icon="pi pi-copy"
+                        className="p-button-text p-button-sm absolute top-0 right-0 mt-2 mr-2"
+                        onClick={async () => {
+                          try {
+                            await navigator.clipboard.writeText(submittedFeedback);
+                            showToast("success", t('Copied!'), t('Feedback copied to clipboard'));
+                          } catch (error) {
+                            console.error("Failed to copy:", error);
+                            showToast("error", t('Error'), t('Failed to copy to clipboard'));
+                          }
+                        }}
+                        tooltip={t('Copy to clipboard')}
+                        tooltipOptions={{ position: 'left' }}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Review platform buttons */}
+                <div className="mb-6">
+                  <p className="text-600 mb-4">
+                    {selectedLanguage?.code === 'en' ? 'Would you like to share your experience with others?' :
+                     selectedLanguage?.code === 'es' ? '¿Te gustaría compartir tu experiencia con otros?' :
+                     selectedLanguage?.code === 'fr' ? 'Aimeriez-vous partager votre expérience avec d\'autres ?' :
+                     selectedLanguage?.code === 'de' ? 'Möchten Sie Ihre Erfahrung mit anderen teilen?' :
+                     selectedLanguage?.code === 'it' ? 'Vorresti condividere la tua esperienza con altri?' :
+                     selectedLanguage?.code === 'pt' ? 'Gostaria de compartilhar sua experiência com outros?' :
+                     selectedLanguage?.code === 'ru' ? 'Хотели бы вы поделиться своим опытом с другими?' :
+                     selectedLanguage?.code === 'ja' ? '他の人とあなたの経験を共有しますか？' :
+                     selectedLanguage?.code === 'ko' ? '다른 사람들과 경험을 공유하시겠습니까?' :
+                     selectedLanguage?.code === 'zh' ? '您想与他人分享您的体验吗？' :
+                     selectedLanguage?.code === 'ar' ? 'هل تريد مشاركة تجربتك مع الآخرين؟' :
+                     selectedLanguage?.code === 'hi' ? 'क्या आप अपना अनुभव दूसरों के साथ साझा करना चाहेंगे?' :
+                     selectedLanguage?.code === 'th' ? 'คุณต้องการแบ่งปันประสบการณ์ของคุณกับผู้อื่นหรือไม่?' :
+                     selectedLanguage?.code === 'vi' ? 'Bạn có muốn chia sẻ trải nghiệm của mình với người khác không?' :
+                     selectedLanguage?.code === 'tr' ? 'Deneyiminizi başkalarıyla paylaşmak ister misiniz?' :
+                     selectedLanguage?.code === 'nl' ? 'Wil je je ervaring delen met anderen?' :
+                     selectedLanguage?.code === 'sv' ? 'Vill du dela din upplevelse med andra?' :
+                     selectedLanguage?.code === 'da' ? 'Vil du dele din oplevelse med andre?' :
+                     selectedLanguage?.code === 'no' ? 'Vil du dele din opplevelse med andre?' :
+                     selectedLanguage?.code === 'fi' ? 'Haluatko jakaa kokemuksesi muiden kanssa?' : 
+                     'Would you like to share your experience with others?'}
+                  </p>
+                  <div className="flex flex-column gap-3">
+                    {hotelData.tripAdvisorLink && (
+                      <Button
+                        label={selectedLanguage?.code === 'en' ? 'Review us on TripAdvisor' :
+                               selectedLanguage?.code === 'es' ? 'Reseña en TripAdvisor' :
+                               selectedLanguage?.code === 'fr' ? 'Évaluez-nous sur TripAdvisor' :
+                               selectedLanguage?.code === 'de' ? 'Bewerten Sie uns auf TripAdvisor' :
+                               selectedLanguage?.code === 'it' ? 'Recensiscici su TripAdvisor' : 'Review us on TripAdvisor'}
+                        icon={
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+                            <rect width="24" height="24" rx="4" fill="#00AF87"/>
+                            <path d="M12 6C8.686 6 6 8.686 6 12C6 15.314 8.686 18 12 18C15.314 18 18 15.314 18 12C18 8.686 15.314 6 12 6ZM12 16.5C9.519 16.5 7.5 14.481 7.5 12C7.5 9.519 9.519 7.5 12 7.5C14.481 7.5 16.5 9.519 16.5 12C16.5 14.481 14.481 16.5 12 16.5Z" fill="white"/>
+                            <circle cx="12" cy="12" r="2.5" fill="white"/>
+                          </svg>
+                        }
+                        onClick={() => window.open(hotelData.tripAdvisorLink, '_blank')}
+                        className="p-button-lg w-full justify-content-center"
+                        style={{ backgroundColor: '#00AF87', border: 'none' }}
+                      />
+                    )}
+                    {hotelData.googleReviewsLink && (
+                      <Button
+                        label={selectedLanguage?.code === 'en' ? 'Review us on Google' :
+                               selectedLanguage?.code === 'es' ? 'Reseña en Google' :
+                               selectedLanguage?.code === 'fr' ? 'Évaluez-nous sur Google' :
+                               selectedLanguage?.code === 'de' ? 'Bewerten Sie uns auf Google' :
+                               selectedLanguage?.code === 'it' ? 'Recensiscici su Google' : 'Review us on Google'}
+                        icon={
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+                            <path d="M12.48 10.92V14.14H17.94C17.72 15.35 16.99 16.38 15.89 17.07V19.28H18.65C20.45 17.64 21.5 15.18 21.5 12.24C21.5 11.56 21.44 10.9 21.32 10.27L12.48 10.92Z" fill="#4285F4"/>
+                            <path d="M12.48 10.92V14.14H17.94C17.72 15.35 16.99 16.38 15.89 17.07L18.65 19.28C20.45 17.64 21.5 15.18 21.5 12.24C21.5 11.56 21.44 10.9 21.32 10.27L12.48 10.92Z" fill="#34A853"/>
+                            <path d="M5.26 14.2L4.46 14.82L2 17C3.96 20.92 7.7 23.5 12 23.5C14.43 23.5 16.47 22.72 18.02 21.42L15.26 19.21C14.39 19.77 13.3 20.14 12 20.14C9.69 20.14 7.71 18.49 7 16.31L5.26 14.2Z" fill="#FBBC05"/>
+                            <path d="M2 7C1.38 8.25 1 9.59 1 11C1 12.41 1.38 13.75 2 15L5.26 12.81C4.86 11.63 4.86 10.37 5.26 9.19L2 7Z" fill="#EA4335"/>
+                          </svg>
+                        }
+                        onClick={() => window.open(hotelData.googleReviewsLink, '_blank')}
+                        className="p-button-lg w-full justify-content-center"
+                        style={{ backgroundColor: '#4285F4', border: 'none' }}
+                      />
+                    )}
+                  </div>
+                </div>
+              </>
             )}
             
             <div className="text-center">

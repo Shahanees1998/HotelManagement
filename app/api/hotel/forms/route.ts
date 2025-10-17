@@ -31,7 +31,10 @@ export async function GET(request: NextRequest) {
       const skip = (page - 1) * limit;
 
       // Build where clause for filtering
-      const where: any = { hotelId: hotel.id };
+      const where: any = { 
+        hotelId: hotel.id,
+        isDeleted: false, // Exclude soft-deleted forms
+      };
       
       if (status) {
         where.isActive = status === 'true';
