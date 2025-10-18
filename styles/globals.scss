@@ -112,7 +112,13 @@ a {
   background: #1B2A49 !important;
   color: white !important;
 }
-
+.feedback-button {
+  background-color: transparent !important;
+  color: black !important;
+  border: 2px solid #e8e8e8 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06) !important;
+}
 .layout-container {
   background: rgb(253, 252, 249);
 }
