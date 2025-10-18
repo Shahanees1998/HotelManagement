@@ -293,8 +293,9 @@ export default function CustomerFeedbackForm() {
         <div className="max-w-2xl mx-auto">
           <div className="text-center">
             <div className="mb-6">
-              <i className="pi pi-check-circle text-6xl text-green-500 mb-2"></i>
-              <h1 className="text-3xl font-bold text-900 mb-3">
+              <div className="flex justify-content-center gap-4 items-center" style={{alignItems:'center'}}>
+              <i className="pi pi-check-circle text-5xl text-green-500"></i>
+              <h1 className="text-3xl font-bold text-900">
                 {selectedLanguage?.code === 'en' ? 'Thank You!' : 
                  selectedLanguage?.code === 'es' ? '¡Gracias!' :
                  selectedLanguage?.code === 'fr' ? 'Merci!' :
@@ -316,15 +317,14 @@ export default function CustomerFeedbackForm() {
                  selectedLanguage?.code === 'no' ? 'Takk!' :
                  selectedLanguage?.code === 'fi' ? 'Kiitos!' : 'Thank You!'}
               </h1>
-                            
+              </div>      
               {/* Average Rating Display */}
-              <div className="text-center mb-2">
+              <div className="text-center mb-4">
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '16px',
-                  padding: '20px 32px',
                   maxWidth: '250px',
                   margin: '0 auto'
                 }}>
