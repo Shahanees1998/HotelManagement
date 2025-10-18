@@ -293,7 +293,7 @@ export default function CustomerFeedbackForm() {
         <div className="max-w-2xl mx-auto">
           <div className="text-center">
             <div className="mb-6">
-              <i className="pi pi-check-circle text-6xl text-green-500 mb-4"></i>
+              <i className="pi pi-check-circle text-6xl text-green-500 mb-2"></i>
               <h1 className="text-3xl font-bold text-900 mb-3">
                 {selectedLanguage?.code === 'en' ? 'Thank You!' : 
                  selectedLanguage?.code === 'es' ? '¡Gracias!' :
@@ -316,6 +316,42 @@ export default function CustomerFeedbackForm() {
                  selectedLanguage?.code === 'no' ? 'Takk!' :
                  selectedLanguage?.code === 'fi' ? 'Kiitos!' : 'Thank You!'}
               </h1>
+                            
+              {/* Average Rating Display */}
+              <div className="text-center mb-2">
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '16px',
+                  padding: '20px 32px',
+                  maxWidth: '250px',
+                  margin: '0 auto'
+                }}>
+                  <div style={{ display: 'flex', gap: '4px' }}>
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <span
+                        key={i}
+                        style={{
+                          fontSize: '32px',
+                          color: i < Math.floor(finalRating) ? '#facc15' : '#d1d5db',
+                          textShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                        }}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <span style={{
+                    fontSize: '28px',
+                    fontWeight: '700',
+                    color: '#333',
+                    fontFamily: 'system-ui, -apple-system, sans-serif'
+                  }}>
+                    {finalRating.toFixed(1)}
+                  </span>
+                </div>
+              </div>
               <p className="text-lg text-600 mb-4">
                 {selectedLanguage?.code === 'en' ? 'Your feedback has been submitted successfully! We truly appreciate your positive experience.' :
                  selectedLanguage?.code === 'es' ? '¡Su comentario ha sido enviado exitosamente! Realmente apreciamos su experiencia positiva.' :
@@ -362,6 +398,7 @@ export default function CustomerFeedbackForm() {
                  selectedLanguage?.code === 'fi' ? 'Panoksesi auttaa meitä jatkamaan erinomaista palvelua kaikille vieraillamme.' : 
                  'Your input helps us continue providing excellent service to all our guests.'}
               </p>
+
             </div>
             
             {finalRating >= 3 && (
@@ -626,45 +663,6 @@ export default function CustomerFeedbackForm() {
                 </div>
               </>
             )}
-            
-            <div className="text-center">
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '12px',
-                padding: '16px 24px',
-                backgroundColor: '#fafafa',
-                border: '2px solid #e8e8e8',
-                borderRadius: '12px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)',
-                maxWidth: '200px',
-                margin: '0 auto'
-              }}>
-                <div style={{ display: 'flex', gap: '2px' }}>
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <span
-                      key={i}
-                      style={{
-                        fontSize: '20px',
-                        color: i < Math.floor(finalRating) ? '#facc15' : '#d1d5db',
-                        textShadow: '0 1px 2px rgba(0,0,0,0.1)',
-                      }}
-                    >
-                      ★
-                    </span>
-                  ))}
-                </div>
-                <span style={{
-                  fontSize: '18px',
-                  fontWeight: '600',
-                  color: '#333',
-                  fontFamily: 'system-ui, -apple-system, sans-serif'
-                }}>
-                  {finalRating.toFixed(1)}
-                </span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
