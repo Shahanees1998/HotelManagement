@@ -414,72 +414,90 @@ export default function CustomerFeedbackForm() {
                        selectedLanguage?.code === 'it' ? 'Il Tuo Feedback' : 'Your Feedback'}
                     </h3>
                     <div className="border-1 border-300 border-round p-3 bg-gray-50">
-                      <p className="text-700 mb-0 white-space-pre-wrap">{submittedFeedback}</p>
+                      <p 
+                        className="text-700 mb-0 white-space-pre-wrap"
+                        style={{
+                          display: '-webkit-box',
+                          WebkitLineClamp: 4,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          lineHeight: '1.5',
+                          maxHeight: '6em' // 4 lines * 1.5 line-height
+                        }}
+                      >
+                        {submittedFeedback}
+                      </p>
                     </div>
-                    <Button
-                      label={selectedLanguage?.code === 'en' ? 'Copy Your Review' :
-                             selectedLanguage?.code === 'es' ? 'Copiar Tu Comentario' :
-                             selectedLanguage?.code === 'fr' ? 'Copier Votre Commentaire' :
-                             selectedLanguage?.code === 'de' ? 'Kopieren Sie Ihr Feedback' :
-                             selectedLanguage?.code === 'it' ? 'Copia Il Tuo Feedback' :
-                             selectedLanguage?.code === 'pt' ? 'Copiar Seu Feedback' :
-                             selectedLanguage?.code === 'ru' ? 'Скопировать Ваш Отзыв' :
-                             selectedLanguage?.code === 'ja' ? 'あなたのレビューをコピー' :
-                             selectedLanguage?.code === 'ko' ? '피드백을 복사하세요' :
-                             selectedLanguage?.code === 'zh' ? '复制您的评论' :
-                             selectedLanguage?.code === 'ar' ? 'استنساخ تعليقك' :
-                             selectedLanguage?.code === 'hi' ? 'आपकी समीक्षा को प्रतिलिपि बनाएं' :
-                             selectedLanguage?.code === 'th' ? 'คัดลอกความคิดเห็นของคุณ' :
-                             selectedLanguage?.code === 'vi' ? 'Sao chép phản hồi của bạn' :
-                             selectedLanguage?.code === 'tr' ? 'Yorumunuzu kopyala' :
-                             selectedLanguage?.code === 'nl' ? 'Kopieer Uw Beoordeling' :
-                             selectedLanguage?.code === 'sv' ? 'Kopiera Din Recension' :
-                             selectedLanguage?.code === 'da' ? 'Kopier Din Feedback' :
-                             selectedLanguage?.code === 'no' ? 'Kopier Din Tilbakemelding' :
-                             selectedLanguage?.code === 'fi' ? 'Kopioi Palauteesi' : 'Copy Your Review'}
-                      icon="pi pi-copy"
-                      style={{
-                        backgroundColor: '#fafafa !important',
-                        color:'black !important',
-                        border: '2px solid #e8e8e8',
-                        borderRadius: '12px',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)',
-                      }}
-                      className="mt-2 feedback-button"
-                      onClick={async () => {
-                        try {
-                          // Try modern clipboard API first
-                          if (navigator.clipboard && window.isSecureContext) {
-                            await navigator.clipboard.writeText(submittedFeedback);
-                            showToast("success", t('Copied!'), t('Feedback copied to clipboard'));
-                          } else {
-                            // Fallback for older browsers or non-secure contexts
-                            const textArea = document.createElement("textarea");
-                            textArea.value = submittedFeedback;
-                            textArea.style.position = "fixed";
-                            textArea.style.left = "-999999px";
-                            textArea.style.top = "-999999px";
-                            document.body.appendChild(textArea);
-                            textArea.focus();
-                            textArea.select();
-                            
-                            try {
-                              const successful = document.execCommand('copy');
-                              if (successful) {
-                                showToast("success", t('Copied!'), t('Feedback copied to clipboard'));
-                              } else {
-                                throw new Error('Copy command failed');
+                      <Button
+                        label={selectedLanguage?.code === 'en' ? 'Copy Full Review' :
+                               selectedLanguage?.code === 'es' ? 'Copiar Comentario Completo' :
+                               selectedLanguage?.code === 'fr' ? 'Copier Commentaire Complet' :
+                               selectedLanguage?.code === 'de' ? 'Vollständiges Feedback Kopieren' :
+                               selectedLanguage?.code === 'it' ? 'Copia Feedback Completo' :
+                               selectedLanguage?.code === 'pt' ? 'Copiar Feedback Completo' :
+                               selectedLanguage?.code === 'ru' ? 'Скопировать Полный Отзыв' :
+                               selectedLanguage?.code === 'ja' ? '完全なレビューをコピー' :
+                               selectedLanguage?.code === 'ko' ? '전체 피드백 복사' :
+                               selectedLanguage?.code === 'zh' ? '复制完整评论' :
+                               selectedLanguage?.code === 'ar' ? 'استنساخ التعليق الكامل' :
+                               selectedLanguage?.code === 'hi' ? 'पूरी समीक्षा कॉपी करें' :
+                               selectedLanguage?.code === 'th' ? 'คัดลอกความคิดเห็นทั้งหมด' :
+                               selectedLanguage?.code === 'vi' ? 'Sao chép toàn bộ phản hồi' :
+                               selectedLanguage?.code === 'tr' ? 'Tam Yorumu Kopyala' :
+                               selectedLanguage?.code === 'nl' ? 'Kopieer Volledige Beoordeling' :
+                               selectedLanguage?.code === 'sv' ? 'Kopiera Fullständig Recension' :
+                               selectedLanguage?.code === 'da' ? 'Kopier Fuld Feedback' :
+                               selectedLanguage?.code === 'no' ? 'Kopier Fullstendig Tilbakemelding' :
+                               selectedLanguage?.code === 'fi' ? 'Kopioi Täydellinen Palaute' : 'Copy Full Review'}
+                        icon="pi pi-copy"
+                        size="small"
+                        style={{
+                          backgroundColor: '#fafafa !important',
+                          color:'black !important',
+                          border: '2px solid #e8e8e8',
+                          borderRadius: '8px',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                        }}
+                        className="feedback-button mt-2"
+                        onClick={async () => {
+                          try {
+                            // Try modern clipboard API first
+                            if (navigator.clipboard && window.isSecureContext) {
+                              await navigator.clipboard.writeText(submittedFeedback);
+                              showToast("success", t('Copied!'), t('Full feedback copied to clipboard'));
+                            } else {
+                              // Fallback for older browsers or non-secure contexts
+                              const textArea = document.createElement("textarea");
+                              textArea.value = submittedFeedback;
+                              textArea.style.position = "fixed";
+                              textArea.style.left = "-999999px";
+                              textArea.style.top = "-999999px";
+                              document.body.appendChild(textArea);
+                              textArea.focus();
+                              textArea.select();
+                              
+                              try {
+                                const successful = document.execCommand('copy');
+                                if (successful) {
+                                  showToast("success", t('Copied!'), t('Full feedback copied to clipboard'));
+                                } else {
+                                  throw new Error('Copy command failed');
+                                }
+                              } finally {
+                                document.body.removeChild(textArea);
                               }
-                            } finally {
-                              document.body.removeChild(textArea);
                             }
+                          } catch (error) {
+                            console.error("Failed to copy:", error);
+                            showToast("error", t('Error'), t('Failed to copy to clipboard'));
                           }
-                        } catch (error) {
-                          console.error("Failed to copy:", error);
-                          showToast("error", t('Error'), t('Failed to copy to clipboard'));
-                        }
-                      }}
-                    />
+                        }}
+                      />
+                      <small className="text-500">
+                        {submittedFeedback.split('\n').length > 4 ? '...' : ''}
+                      </small>
+            
                   </div>
                 )}
 
