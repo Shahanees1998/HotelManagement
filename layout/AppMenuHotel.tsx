@@ -83,16 +83,16 @@ const AppMenuHotel = () => {
                     icon: "pi pi-fw pi-key",
                     to: "/hotel/profile/password",
                 },
-                // {
-                //     label: "Subscriptions",
-                //     icon: "pi pi-fw pi-credit-card",
-                //     to: "/hotel/subscription",
-                // },
-                // {
-                //     label: "Payment Methods",
-                //     icon: "pi pi-fw pi-wallet",
-                //     to: "/hotel/payment-methods",
-                // },
+                {
+                    label: "Subscriptions",
+                    icon: "pi pi-fw pi-credit-card",
+                    to: "/hotel/subscription",
+                },
+                {
+                    label: "Payment Methods",
+                    icon: "pi pi-fw pi-wallet",
+                    to: "/hotel/payment-methods",
+                },
             ],
         },
     ];

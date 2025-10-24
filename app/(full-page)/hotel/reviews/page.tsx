@@ -8,10 +8,13 @@ import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { Toast } from "primereact/toast";
 import { Dialog } from "primereact/dialog";
 import { Divider } from "primereact/divider";
 import { Rating } from "primereact/rating";
+import { Calendar } from "primereact/calendar";
+import { MultiSelect } from "primereact/multiselect";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { CustomPaginator } from "@/components/CustomPaginator";
@@ -74,12 +77,18 @@ export default function HotelReviews() {
   const [totalRecords, setTotalRecords] = useState(0);
   const [filters, setFilters] = useState({
     status: "",
-    rating: "",
+    ratings: [] as string[],
     search: "",
+    startDate: null as Date | null,
+    endDate: null as Date | null,
   });
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
   const [detailedReview, setDetailedReview] = useState<DetailedReview | null>(null);
   const [loadingDetails, setLoadingDetails] = useState(false);
+  const [showReplyDialog, setShowReplyDialog] = useState(false);
+  const [replyText, setReplyText] = useState("");
+  const [selectedReview, setSelectedReview] = useState<Review | null>(null);
+  const [submittingReply, setSubmittingReply] = useState(false);
   const toast = useRef<Toast>(null);
 
 
@@ -92,8 +101,10 @@ export default function HotelReviews() {
     try {
       const response = await apiClient.getHotelReviews({
         status: filters.status,
-        rating: filters.rating,
+        ratings: filters.ratings.join(','),
         search: filters.search,
+        startDate: filters.startDate ? filters.startDate.toISOString() : undefined,
+        endDate: filters.endDate ? filters.endDate.toISOString() : undefined,
         page: currentPage,
         limit: rowsPerPage,
       });
@@ -112,7 +123,7 @@ export default function HotelReviews() {
     } finally {
       setLoading(false);
     }
-  }, [filters.status, filters.rating, filters.search, currentPage, rowsPerPage, showToast]);
+  }, [filters.status, filters.ratings, filters.search, filters.startDate, filters.endDate, currentPage, rowsPerPage, showToast]);
 
   useEffect(() => {
     loadReviews();
@@ -123,7 +134,7 @@ export default function HotelReviews() {
     if (currentPage !== 1) {
       setCurrentPage(1);
     }
-  }, [filters.status, filters.rating, filters.search]);
+  }, [filters.status, filters.ratings, filters.search, filters.startDate, filters.endDate]);
 
   const loadDetailedReview = async (reviewId: string) => {
     setLoadingDetails(true);
@@ -154,6 +165,48 @@ export default function HotelReviews() {
       showToast("success", "Success", "Review status updated");
     } catch (error) {
       showToast("error", "Error", "Failed to update review status");
+    }
+  };
+
+  const handleReplyClick = (review: Review) => {
+    setSelectedReview(review);
+    setReplyText("");
+    setShowReplyDialog(true);
+  };
+
+  const handleReplySubmit = async () => {
+    if (!selectedReview || !replyText.trim()) {
+      showToast("warn", "Warning", "Please enter a reply message");
+      return;
+    }
+
+    setSubmittingReply(true);
+    try {
+      const response = await fetch(`/api/hotel/reviews/${selectedReview.id}/reply`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          replyText: replyText.trim()
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        showToast("success", "Success", `Reply sent successfully to ${data.sentTo}`);
+        setShowReplyDialog(false);
+        setReplyText("");
+        setSelectedReview(null);
+      } else {
+        showToast("error", "Error", data.error || "Failed to send reply");
+      }
+    } catch (error) {
+      console.error("Error sending reply:", error);
+      showToast("error", "Error", "Failed to send reply");
+    } finally {
+      setSubmittingReply(false);
     }
   };
 
@@ -285,6 +338,8 @@ export default function HotelReviews() {
   }, []);
 
   const actionsBodyTemplate = useMemo(() => (rowData: Review) => {
+    const hasEmail = rowData.guestEmail && rowData.guestEmail.trim() !== "";
+    
     return (
       <div className="flex gap-2">
         <Button
@@ -294,6 +349,15 @@ export default function HotelReviews() {
           className="p-button-outlined"
           onClick={() => loadDetailedReview(rowData.id)}
           loading={loadingDetails}
+        />
+        <Button
+          label="Reply"
+          icon="pi pi-reply"
+          size="small"
+          className="p-button-outlined p-button-success"
+          onClick={() => handleReplyClick(rowData)}
+          disabled={!hasEmail}
+          title={!hasEmail ? "No email available for this review" : "Reply to customer"}
         />
       </div>
     );
@@ -308,13 +372,22 @@ export default function HotelReviews() {
   ], []);
 
   const ratingOptions = useMemo(() => [
-    { label: "All Ratings", value: "" },
     { label: "5 Stars", value: "5" },
     { label: "4 Stars", value: "4" },
     { label: "3 Stars", value: "3" },
     { label: "2 Stars", value: "2" },
     { label: "1 Star", value: "1" },
   ], []);
+
+  const handleClearFilters = useCallback(() => {
+    setFilters({
+      status: "",
+      ratings: [],
+      search: "",
+      startDate: null,
+      endDate: null,
+    });
+  }, []);
 
   return (
     <div className="grid">
@@ -339,9 +412,19 @@ export default function HotelReviews() {
 
       {/* Filters */}
       <div className="col-12">
-        <Card title="Filters" className="mb-4">
+        <Card className="mb-4">
+          <div className="flex justify-content-between align-items-center mb-3">
+            <h3 className="m-0">Filters</h3>
+            <Button
+              label="Clear Filters"
+              icon="pi pi-filter-slash"
+              onClick={handleClearFilters}
+              className="p-button-outlined p-button-secondary"
+              size="small"
+            />
+          </div>
           <div className="grid">
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-6 lg:col-3">
               <label className="block text-900 font-medium mb-2">Search Guest</label>
               <InputText
                 value={filters.search}
@@ -350,7 +433,7 @@ export default function HotelReviews() {
                 className="w-full"
               />
             </div>
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-6 lg:col-3">
               <label className="block text-900 font-medium mb-2">Status</label>
               <Dropdown
                 value={filters.status}
@@ -360,14 +443,43 @@ export default function HotelReviews() {
                 className="w-full"
               />
             </div>
-            <div className="col-12 md:col-4">
-              <label className="block text-900 font-medium mb-2">Rating</label>
-              <Dropdown
-                value={filters.rating}
+            <div className="col-12 md:col-6 lg:col-3">
+              <label className="block text-900 font-medium mb-2">Star Ratings</label>
+              <MultiSelect
+                value={filters.ratings}
                 options={ratingOptions}
-                onChange={(e) => setFilters(prev => ({ ...prev, rating: e.value }))}
+                onChange={(e) => setFilters(prev => ({ ...prev, ratings: e.value }))}
                 placeholder="All Ratings"
                 className="w-full"
+                display="chip"
+                showClear
+              />
+            </div>
+            <div className="col-12 md:col-6 lg:col-3">
+              <label className="block text-900 font-medium mb-2">Start Date</label>
+              <Calendar
+                value={filters.startDate}
+                onChange={(e) => setFilters(prev => ({ ...prev, startDate: e.value as Date | null }))}
+                placeholder="From date"
+                className="w-full"
+                showIcon
+                dateFormat="yy-mm-dd"
+                showButtonBar
+                maxDate={filters.endDate || new Date()}
+              />
+            </div>
+            <div className="col-12 md:col-6 lg:col-3">
+              <label className="block text-900 font-medium mb-2">End Date</label>
+              <Calendar
+                value={filters.endDate}
+                onChange={(e) => setFilters(prev => ({ ...prev, endDate: e.value as Date | null }))}
+                placeholder="To date"
+                className="w-full"
+                showIcon
+                dateFormat="yy-mm-dd"
+                showButtonBar
+                minDate={filters.startDate || undefined}
+                maxDate={new Date()}
               />
             </div>
           </div>
@@ -460,9 +572,9 @@ export default function HotelReviews() {
               <Card title="Form Information" className="mb-4">
                 <div className="grid">
                   <div className="col-12">
-                    <strong>Form Title:</strong> {detailedReview.form.title}
+                    <strong>Form Title:</strong> {detailedReview.form?.title || 'N/A'}
                   </div>
-                  {detailedReview.form.description && (
+                  {detailedReview.form?.description && (
                     <div className="col-12">
                       <strong>Description:</strong> {detailedReview.form.description}
                     </div>
@@ -521,6 +633,70 @@ export default function HotelReviews() {
                   </div>
                 )}
               </Card>
+            </div>
+          </div>
+        )}
+      </Dialog>
+
+      {/* Reply Dialog */}
+      <Dialog
+        header="Reply to Customer"
+        visible={showReplyDialog}
+        onHide={() => setShowReplyDialog(false)}
+        style={{ width: '90vw', maxWidth: '600px' }}
+        modal
+        footer={
+          <div className="flex justify-content-end gap-2">
+            <Button
+              label="Cancel"
+              icon="pi pi-times"
+              onClick={() => setShowReplyDialog(false)}
+              className="p-button-outlined"
+              disabled={submittingReply}
+            />
+            <Button
+              label="Send Reply"
+              icon="pi pi-send"
+              onClick={handleReplySubmit}
+              loading={submittingReply}
+              disabled={!replyText.trim()}
+            />
+          </div>
+        }
+      >
+        {selectedReview && (
+          <div className="grid">
+            <div className="col-12">
+              <div className="mb-4">
+                <h4 className="text-900 mb-2">Customer Information</h4>
+                <div className="grid">
+                  <div className="col-12 md:col-6">
+                    <strong>Name:</strong> {selectedReview.guestName || 'Not provided'}
+                  </div>
+                  <div className="col-12 md:col-6">
+                    <strong>Email:</strong> {selectedReview.guestEmail || 'Not provided'}
+                  </div>
+                </div>
+              </div>
+              
+              <Divider />
+              
+              <div className="mb-3">
+                <label className="block text-900 font-medium mb-2">
+                  Your Reply Message
+                </label>
+                <InputTextarea
+                  value={replyText}
+                  onChange={(e) => setReplyText(e.target.value)}
+                  placeholder="Type your reply message here..."
+                  rows={6}
+                  className="w-full"
+                  autoResize
+                />
+                <small className="text-600">
+                  This message will be sent to {selectedReview.guestEmail}
+                </small>
+              </div>
             </div>
           </div>
         )}

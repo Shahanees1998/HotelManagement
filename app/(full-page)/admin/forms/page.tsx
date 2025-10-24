@@ -10,7 +10,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { apiClient } from "@/lib/apiClient";
 import { CustomPaginator } from "@/components/CustomPaginator";
@@ -32,6 +32,7 @@ interface FeedbackForm {
 
 export default function AdminForms() {
   const { user } = useAuth();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [forms, setForms] = useState<FeedbackForm[]>([]);
   const [loading, setLoading] = useState(true);
@@ -168,6 +169,20 @@ export default function AdminForms() {
     );
   };
 
+  const actionsBodyTemplate = (rowData: FeedbackForm) => {
+    return (
+      <div className="flex gap-2">
+        <Button
+          label="View Details"
+          icon="pi pi-eye"
+          size="small"
+          className="p-button-outlined"
+          onClick={() => router.push(`/admin/forms/${rowData.id}`)}
+        />
+      </div>
+    );
+  };
+
   // Server-side filtering - no client-side filtering needed
 
   const hotelOptions = useMemo(() => [
@@ -269,8 +284,8 @@ export default function AdminForms() {
                 value={forms}
               >
                 <Column field="hotel" header="Hotel" body={hotelBodyTemplate} sortable />
-                {/* <Column field="form" header="Form" body={formBodyTemplate} sortable />
-                <Column field="status" header="Status" body={statusBodyTemplate} sortable />
+                <Column field="form" header="Form" body={formBodyTemplate} sortable />
+                {/* <Column field="status" header="Status" body={statusBodyTemplate} sortable />
                 <Column field="visibility" header="Visibility" body={visibilityBodyTemplate} /> */}
                 <Column field="rating" header="Rating" body={ratingBodyTemplate} sortable />
                 <Column 
@@ -279,6 +294,7 @@ export default function AdminForms() {
                   body={(rowData) => formatDate(rowData.createdAt)}
                   sortable 
                 />
+                <Column header="Actions" body={actionsBodyTemplate} />
               </DataTable>
               <CustomPaginator
                 currentPage={currentPage}

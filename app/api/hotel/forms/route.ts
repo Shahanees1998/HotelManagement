@@ -160,14 +160,46 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Get hotel
+      // Get hotel with subscription status
       const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
-        select: { id: true },
+        select: { 
+          id: true, 
+          subscriptionStatus: true,
+          currentPlan: true,
+          trialEndsAt: true,
+          subscriptionEndsAt: true
+        },
       });
 
       if (!hotel) {
         return NextResponse.json({ error: 'Hotel not found' }, { status: 404 });
+      }
+
+      // Check subscription status - block form creation for cancelled/expired subscriptions
+      if (hotel.subscriptionStatus === 'CANCELLED' || hotel.subscriptionStatus === 'EXPIRED') {
+        return NextResponse.json(
+          { 
+            error: 'Form creation is not available. Your subscription has been cancelled or expired. Please reactivate your subscription to create forms.',
+            subscriptionStatus: hotel.subscriptionStatus
+          },
+          { status: 403 }
+        );
+      }
+
+      // Check if trial has expired
+      if (hotel.subscriptionStatus === 'TRIAL' && hotel.trialEndsAt) {
+        const now = new Date();
+        if (now > hotel.trialEndsAt) {
+          return NextResponse.json(
+            { 
+              error: 'Your trial period has expired. Please upgrade your subscription to continue creating forms.',
+              subscriptionStatus: hotel.subscriptionStatus,
+              trialEndsAt: hotel.trialEndsAt.toISOString()
+            },
+            { status: 403 }
+          );
+        }
       }
 
       // Validate custom questions if provided
@@ -263,7 +295,7 @@ export async function POST(request: NextRequest) {
         });
 
         if (hotel) {
-          await NotificationCreators.newFormCreated(hotel.id, hotel.name, title);
+          await NotificationCreators.newFormCreated(result.id, hotel.id, hotel.name, title);
         }
       } catch (notificationError) {
         console.error('Error sending form creation notification:', notificationError);

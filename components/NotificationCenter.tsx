@@ -7,6 +7,7 @@ import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
 import { useAuth } from '@/hooks/useAuth';
 import { useNotifications } from '@/hooks/useNotifications';
+import FeedbackPopup from './FeedbackPopup';
 
 interface Notification {
   id: string;
@@ -28,6 +29,10 @@ export default function NotificationCenter() {
   // Individual loading states for different actions
   const [markAllLoading, setMarkAllLoading] = useState(false);
   const [deletingNotifications, setDeletingNotifications] = useState<Set<string>>(new Set());
+  
+  // Feedback popup state
+  const [showFeedbackPopup, setShowFeedbackPopup] = useState(false);
+  const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
 
   const getSeverity = (type: string) => {
     switch (type) {
@@ -92,10 +97,32 @@ export default function NotificationCenter() {
       await markAsRead(notification.id);
     }
     
-    // Handle navigation based on notification type
+    // Handle feedback notifications with popup
+    if (notification.type === 'NEW_REVIEW' && notification.relatedId && notification.relatedType === 'review') {
+      setSelectedReviewId(notification.relatedId);
+      setShowFeedbackPopup(true);
+      return;
+    }
+    
+    // Handle other navigation based on notification type and relatedType
     if (notification.relatedId && notification.relatedType) {
-      // You can implement navigation logic here
-      console.log('Navigate to:', notification.relatedType, notification.relatedId);
+      switch (notification.relatedType) {
+        case 'form':
+          window.location.href = `/admin/forms/${notification.relatedId}`;
+          break;
+        case 'hotel':
+          window.location.href = `/admin/hotels?hotelId=${notification.relatedId}`;
+          break;
+        case 'review':
+          window.location.href = `/admin/reviews?reviewId=${notification.relatedId}`;
+          break;
+        case 'announcement':
+          window.location.href = `/admin/announcements`;
+          break;
+        default:
+          console.log('Navigate to:', notification.relatedType, notification.relatedId);
+          break;
+      }
     }
   };
 
@@ -203,6 +230,7 @@ export default function NotificationCenter() {
                       value={getTypeLabel(notification.type)} 
                       severity={getSeverity(notification.type)}
                       className="text-xs"
+                      style={{width:'100px'}}
                     />
                     {!notification.isRead && (
                       <div className="w-2 h-2 bg-blue-500 border-round"></div>
@@ -236,6 +264,16 @@ export default function NotificationCenter() {
           </div>
         )}
       </OverlayPanel>
+      
+      {/* Feedback Popup */}
+      <FeedbackPopup
+        visible={showFeedbackPopup}
+        onHide={() => {
+          setShowFeedbackPopup(false);
+          setSelectedReviewId(null);
+        }}
+        reviewId={selectedReviewId || ''}
+      />
     </div>
   );
 }

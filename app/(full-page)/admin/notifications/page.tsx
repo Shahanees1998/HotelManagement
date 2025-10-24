@@ -93,6 +93,33 @@ export default function AdminNotifications() {
     }
   }, [showToast]);
 
+  const handleNotificationClick = useCallback((notification: Notification) => {
+    // Mark as read first
+    if (!notification.isRead) {
+      handleMarkAsRead(notification.id);
+    }
+    
+    // Navigate based on relatedType
+    if (notification.relatedId && notification.relatedType) {
+      switch (notification.relatedType) {
+        case 'form':
+          window.location.href = `/admin/forms/${notification.relatedId}`;
+          break;
+        case 'hotel':
+          window.location.href = `/admin/hotels?hotelId=${notification.relatedId}`;
+          break;
+        case 'review':
+          window.location.href = `/admin/reviews?reviewId=${notification.relatedId}`;
+          break;
+        case 'announcement':
+          window.location.href = `/admin/announcements`;
+          break;
+        default:
+          break;
+      }
+    }
+  }, [handleMarkAsRead]);
+
   const handleDelete = useCallback(async (notificationId: string) => {
     try {
       const response = await fetch(`/api/notifications/${notificationId}`, {
@@ -396,7 +423,9 @@ export default function AdminNotifications() {
                 emptyMessage="No notifications found"
                 className="p-datatable-sm"
                 scrollable
-                
+                selectionMode="single"
+                onRowClick={(e) => handleNotificationClick(e.data as any)}
+                style={{ cursor: 'pointer' }}
               >
                 <Column field="title" header="Title" sortable style={{ minWidth: '200px' }} />
                 <Column field="message" header="Message" style={{ minWidth: '300px', maxWidth: '300px' }} />

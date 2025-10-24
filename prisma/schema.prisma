@@ -104,6 +104,7 @@ model Hotels {
   isActive          Boolean  @default(true)
   subscriptionId    String? // Stripe subscription ID
   subscriptionStatus SubscriptionStatus @default(TRIAL)
+  currentPlan       String? // Current subscription plan: basic, professional, enterprise
   trialEndsAt       DateTime?
   subscriptionEndsAt DateTime?
   createdAt         DateTime @default(now())

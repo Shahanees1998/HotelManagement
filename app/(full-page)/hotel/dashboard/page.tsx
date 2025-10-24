@@ -223,6 +223,13 @@ export default function HotelDashboard() {
       image: "/images/positive-rating.png"
     },
     {
+      title: "Negative Reviews",
+      value: stats.negativeReviews,
+      icon: "pi pi-thumbs-down",
+      color: "text-red-500",
+      image: "/images/rating.png"
+    },
+    {
       title: "Response Rate",
       value: `${stats.responseRate}%`,
       icon: "pi pi-percentage",
@@ -252,45 +259,49 @@ export default function HotelDashboard() {
       </div>
 
       {/* Stats Cards */}
-      {loading ? (
-        <>
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div key={index} className="col-12 md:col-6 lg:col-3">
-              <Card className="text-center">
-                <div className="text-3xl font-bold text-gray-300 animate-pulse">--</div>
-                <div className="text-600 animate-pulse">Loading...</div>
-              </Card>
-            </div>
-          ))}
-        </>
-      ) : (
-        <>
-          {statsCards.map((card, index) => (
-            <div className="col-12 md:col-6 lg:col-3" key={index}>
-              <div
-                className="cursor-pointer hover:shadow-2 transition-all border-round-lg"
-                role="button"
-                tabIndex={0}
-                onKeyPress={e => { if (e.key === "Enter") { /* Add handler here */ } }}
-                style={{
-                    border: 'none',
-                    boxShadow: '0 2px 8px 0 rgba(0, 0, 0, 0.08)',
-                    backgroundColor: '#FFFFFF',
-                    padding: '0 !important'
-                }}
-              >
-                <div className="flex align-items-center" style={{ gap: '1.5rem', padding: '0.5rem' }}>
-                    <img src={card.image} alt={card.title} className={`flex align-items-center justify-content-center bg-${card.color} border-round-lg flex-shrink-0`} style={{ width: '60px', height: '60px' }} />
-                    <div className="flex-1">
-                        <div className="text-900 font-bold mb-2" style={{ fontSize: '1.2rem', lineHeight: '1.2', color: '#333333' }}>{card.value}</div>
-                        <div className="text-500" style={{ fontSize: '0.9rem', fontWeight: '400', color: '#666666' }}>{card.title}</div>
-                    </div>
+      <div className="col-12">
+        <div className="flex flex-wrap gap-3">
+          {loading ? (
+            <>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <div key={index} className="flex-1 min-w-0" style={{ minWidth: '200px' }}>
+                  <Card className="text-center">
+                    <div className="text-3xl font-bold text-gray-300 animate-pulse">--</div>
+                    <div className="text-600 animate-pulse">Loading...</div>
+                  </Card>
                 </div>
-              </div>
-            </div>
-          ))}
-        </>
-      )}
+              ))}
+            </>
+          ) : (
+            <>
+              {statsCards.map((card, index) => (
+                <div className="flex-1 min-w-0" key={index} style={{ minWidth: '200px' }}>
+                  <div
+                    className="cursor-pointer hover:shadow-2 transition-all border-round-lg"
+                    role="button"
+                    tabIndex={0}
+                    onKeyPress={e => { if (e.key === "Enter") { /* Add handler here */ } }}
+                    style={{
+                        border: 'none',
+                        boxShadow: '0 2px 8px 0 rgba(0, 0, 0, 0.08)',
+                        backgroundColor: '#FFFFFF',
+                        padding: '0 !important'
+                    }}
+                  >
+                    <div className="flex align-items-center" style={{ gap: '1.5rem', padding: '0.5rem' }}>
+                        <img src={card.image} alt={card.title} className={`flex align-items-center justify-content-center bg-${card.color} border-round-lg flex-shrink-0`} style={{ width: '60px', height: '60px' }} />
+                        <div className="flex-1">
+                            <div className="text-900 font-bold mb-2" style={{ fontSize: '1.2rem', lineHeight: '1.2', color: '#333333' }}>{card.value}</div>
+                            <div className="text-500" style={{ fontSize: '0.9rem', fontWeight: '400', color: '#666666' }}>{card.title}</div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      </div>
 
       {/* Charts */}
       <div className="col-12">

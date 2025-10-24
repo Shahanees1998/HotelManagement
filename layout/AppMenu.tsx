@@ -64,11 +64,11 @@ const AppMenu = () => {
         // },
 
         // Subscriptions
-        // {
-        //     label: "Subscriptions",
-        //     icon: "pi pi-fw pi-credit-card",
-        //     to: "/admin/subscriptions",
-        // },
+        {
+            label: "Subscriptions",
+            icon: "pi pi-fw pi-credit-card",
+            to: "/admin/subscriptions",
+        },
 
         // Escalations
         // {

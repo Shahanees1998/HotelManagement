@@ -15,6 +15,7 @@ import { Badge } from "primereact/badge";
 import { Rating } from "primereact/rating";
 import { Panel } from "primereact/panel";
 import { useAuth } from "@/hooks/useAuth";
+import { useCurrentPlan } from "@/hooks/useCurrentPlan";
 
 interface Question {
   id?: string;
@@ -81,6 +82,7 @@ export default function FeedbackFormBuilder({
   previewMode?: boolean;
 }) {
   const { user } = useAuth();
+  const { currentPlan, loading: planLoading, subscriptionStatus } = useCurrentPlan();
   const [form, setForm] = useState<FeedbackForm>({
     title: "",
     description: "",
@@ -150,6 +152,39 @@ export default function FeedbackFormBuilder({
   const [editingRatingItem, setEditingRatingItem] = useState<string | null>(null);
   const [newRatingItemLabel, setNewRatingItemLabel] = useState("");
   const toast = useRef<Toast>(null);
+
+  // Helper functions for plan-based restrictions
+  const getAvailableLayouts = () => {
+    switch (currentPlan) {
+      case 'basic':
+        return [{ label: "Basic", value: "basic", description: "Simple, clean design" }];
+      case 'professional':
+        return [
+          { label: "Basic", value: "basic", description: "Simple, clean design" },
+          { label: "Good", value: "good", description: "Enhanced with colors and icons" }
+        ];
+      case 'enterprise':
+        return [
+          { label: "Basic", value: "basic", description: "Simple, clean design" },
+          { label: "Good", value: "good", description: "Enhanced with colors and icons" },
+          { label: "Excellent", value: "excellent", description: "Premium design with animations" }
+        ];
+      default:
+        return [{ label: "Basic", value: "basic", description: "Simple, clean design" }];
+    }
+  };
+
+  const isLayoutDisabled = (layoutValue: string) => {
+    const availableLayouts = getAvailableLayouts();
+    return !availableLayouts.some(layout => layout.value === layoutValue);
+  };
+
+  const getLayoutTooltip = (layoutValue: string) => {
+    if (isLayoutDisabled(layoutValue)) {
+      return `Upgrade to ${layoutValue === 'good' ? 'Professional' : 'Enterprise'} plan to use this layout`;
+    }
+    return '';
+  };
 
   const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
     toast.current?.show({ severity, summary, detail, life: 3000 });
@@ -456,9 +491,16 @@ export default function FeedbackFormBuilder({
       await onSave(formToSave);
       console.log("onSave completed successfully");
       // Success handling is done by the parent component
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error in handleSave:", error);
-      showToast("error", "Error", "Failed to save form");
+      
+      // Check if it's a subscription-related error
+      if (error?.response?.status === 403 || error?.message?.includes('subscription')) {
+        showToast("error", "Subscription Required", 
+          "Your subscription has been cancelled or expired. Please reactivate your subscription to create forms.");
+      } else {
+        showToast("error", "Error", "Failed to save form");
+      }
       setLoading(false);
     }
   };
@@ -571,6 +613,30 @@ export default function FeedbackFormBuilder({
     );
   };
 
+  // Check subscription status and block access if cancelled/expired
+  if (!planLoading && (subscriptionStatus === 'CANCELLED' || subscriptionStatus === 'EXPIRED')) {
+    return (
+      <div className="feedback-form-builder">
+        <div className="flex justify-content-center align-items-center" style={{ minHeight: '400px' }}>
+          <div className="text-center">
+            <i className="pi pi-exclamation-triangle text-4xl text-red-500 mb-3"></i>
+            <h2 className="text-900 mb-2">Subscription Required</h2>
+            <p className="text-600 mb-4">
+              Your subscription has been {subscriptionStatus.toLowerCase()}. 
+              Please reactivate your subscription to create or edit forms.
+            </p>
+            <Button
+              label="Manage Subscription"
+              icon="pi pi-credit-card"
+              className="p-button-primary"
+              onClick={() => window.open('/hotel/subscription', '_blank')}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Show loading state while fetching form data
   if (loading && formId) {
     return (
@@ -647,7 +713,7 @@ export default function FeedbackFormBuilder({
                     <label className="field-label">Layout Design*</label>
                     <Dropdown
                       value={form.layout}
-                      options={layoutOptions}
+                      options={getAvailableLayouts()}
                       onChange={(e) => {
                         if (previewMode) return;
                         const newLayout = e.value;
@@ -713,7 +779,9 @@ export default function FeedbackFormBuilder({
                       optionLabel="label"
                       placeholder="Select form from the list"
                       className="form-dropdown"
-                      disabled={previewMode}
+                      disabled={previewMode || planLoading}
+                      optionDisabled={(option) => isLayoutDisabled(option.value)}
+                      tooltip={getLayoutTooltip(form.layout)}
                     />
                   </div>
                 </div>
@@ -731,6 +799,46 @@ export default function FeedbackFormBuilder({
                   disabled={previewMode}
                 />
               </div>
+
+              {/* Plan Information */}
+              {!planLoading && (
+                <div className="plan-info-section">
+                  <div className="flex align-items-center gap-2 p-3 border-1 border-round mb-3" 
+                       style={{ 
+                         backgroundColor: currentPlan === 'basic' ? '#fef3c7' : 
+                                        currentPlan === 'professional' ? '#d1fae5' : '#e0e7ff',
+                         borderColor: currentPlan === 'basic' ? '#f59e0b' : 
+                                    currentPlan === 'professional' ? '#10b981' : '#6366f1'
+                       }}>
+                    <i className={`pi ${currentPlan === 'basic' ? 'pi-info-circle' : 
+                                   currentPlan === 'professional' ? 'pi-check-circle' : 'pi-star'} 
+                                   text-lg`} 
+                       style={{ 
+                         color: currentPlan === 'basic' ? '#f59e0b' : 
+                               currentPlan === 'professional' ? '#10b981' : '#6366f1'
+                       }}></i>
+                    <div className="flex-1">
+                      <p className="text-600 text-sm mb-1 font-medium">
+                        Current Plan: {currentPlan === 'basic' ? 'Basic' : 
+                                     currentPlan === 'professional' ? 'Professional' : 'Enterprise'}
+                      </p>
+                      <p className="text-500 text-xs">
+                        {currentPlan === 'basic' ? 'Only Basic layout available. Upgrade to Professional or Enterprise for more options.' :
+                         currentPlan === 'professional' ? 'Basic and Good layouts available. Upgrade to Enterprise for all features.' :
+                         'All layouts and features available.'}
+                      </p>
+                    </div>
+                    {(currentPlan === 'basic' || currentPlan === 'professional') && (
+                      <Button
+                        label="Upgrade"
+                        icon="pi pi-arrow-up"
+                        className="p-button-sm"
+                        onClick={() => window.open('/hotel/subscription', '_blank')}
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

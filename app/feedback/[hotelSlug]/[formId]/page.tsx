@@ -35,6 +35,16 @@ interface FeedbackForm {
   description: string;
   layout: string;
   questions: Question[];
+  predefinedQuestions?: {
+    hasRateUs: boolean;
+    hasCustomRating: boolean;
+    hasFeedback: boolean;
+    customRatingItems: Array<{
+      id: string;
+      label: string;
+      order: number;
+    }>;
+  };
 }
 
 interface FormSubmission {
@@ -187,22 +197,27 @@ export default function CustomerFeedbackForm() {
   const calculateAverageRating = () => {
     if (!form) return 0;
 
-    // Check for Rate Us question
-    const rateUsQuestion = form.questions.find(q => q.question === "Rate Us");
-    if (rateUsQuestion && submission.answers[rateUsQuestion.id]) {
-      return submission.answers[rateUsQuestion.id];
+    // Check for Rate Us question (predefined question with ID 'rate-us')
+    if (submission.answers['rate-us']) {
+      return submission.answers['rate-us'];
     }
 
-    // Check for Custom Rating question
-    const customRatingQuestion = form.questions.find(q => q.question === "Custom Rating");
-    if (customRatingQuestion && customRatingQuestion.customRatingItems) {
-      const ratings = customRatingQuestion.customRatingItems
-        .map(item => submission.answers[`${customRatingQuestion.id}-${item.id}`])
+    // Check for Custom Rating question (predefined question with ID 'custom-rating')
+    if (form.predefinedQuestions?.customRatingItems) {
+      const ratings = form.predefinedQuestions.customRatingItems
+        .map(item => submission.answers[`custom-rating-${item.id}`])
         .filter(rating => rating && rating > 0);
       
       if (ratings.length > 0) {
-        return ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+        const average = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+        return average;
       }
+    }
+
+    // Fallback: Check for any star rating in custom questions
+    const starRatingQuestion = form.questions?.find(q => q.type === 'STAR_RATING');
+    if (starRatingQuestion && submission.answers[starRatingQuestion.id]) {
+      return submission.answers[starRatingQuestion.id];
     }
 
     return 0;
@@ -226,7 +241,7 @@ export default function CustomerFeedbackForm() {
       if (response.ok) {
         // Calculate average rating
         const averageRating = calculateAverageRating();
-        const isHighRating = averageRating >= 3; // Changed to 3+ stars as per requirements
+        const isHighRating = averageRating >= 4; // 4+ stars considered positive
         
         // Store the final rating for success page
         setFinalRating(averageRating);
@@ -259,10 +274,8 @@ export default function CustomerFeedbackForm() {
         // Reset form
         setSubmission({ answers: {} });
         
-        // Show success page with review button if high rating (3+ stars)
-        if (isHighRating) {
-          setShowSuccessPage(true);
-        }
+        // Always show success page
+        setShowSuccessPage(true);
       } else {
         throw new Error(data.error || 'Failed to submit feedback');
       }
@@ -353,27 +366,51 @@ export default function CustomerFeedbackForm() {
                 </div>
               </div>
               <p className="text-lg text-600 mb-4">
-                {selectedLanguage?.code === 'en' ? 'Your feedback has been submitted successfully! We truly appreciate your positive experience.' :
-                 selectedLanguage?.code === 'es' ? '¡Su comentario ha sido enviado exitosamente! Realmente apreciamos su experiencia positiva.' :
-                 selectedLanguage?.code === 'fr' ? 'Votre commentaire a été soumis avec succès ! Nous apprécions vraiment votre expérience positive.' :
-                 selectedLanguage?.code === 'de' ? 'Ihr Feedback wurde erfolgreich übermittelt! Wir schätzen Ihre positive Erfahrung wirklich.' :
-                 selectedLanguage?.code === 'it' ? 'Il tuo feedback è stato inviato con successo! Apprezziamo davvero la tua esperienza positiva.' :
-                 selectedLanguage?.code === 'pt' ? 'Seu feedback foi enviado com sucesso! Realmente apreciamos sua experiência positiva.' :
-                 selectedLanguage?.code === 'ru' ? 'Ваш отзыв был успешно отправлен! Мы действительно ценим ваш положительный опыт.' :
-                 selectedLanguage?.code === 'ja' ? 'フィードバックが正常に送信されました！あなたのポジティブな体験を本当に感謝しています。' :
-                 selectedLanguage?.code === 'ko' ? '피드백이 성공적으로 제출되었습니다! 귀하의 긍정적인 경험을 정말 감사합니다.' :
-                 selectedLanguage?.code === 'zh' ? '您的反馈已成功提交！我们真的很感谢您的积极体验。' :
-                 selectedLanguage?.code === 'ar' ? 'تم إرسال ملاحظاتك بنجاح! نحن نقدر حقاً تجربتك الإيجابية.' :
-                 selectedLanguage?.code === 'hi' ? 'आपकी प्रतिक्रिया सफलतापूर्वक जमा की गई! हम आपके सकारात्मक अनुभव की सराहना करते हैं।' :
-                 selectedLanguage?.code === 'th' ? 'ข้อเสนอแนะของคุณถูกส่งเรียบร้อยแล้ว! เราขอขอบคุณประสบการณ์เชิงบวกของคุณ' :
-                 selectedLanguage?.code === 'vi' ? 'Phản hồi của bạn đã được gửi thành công! Chúng tôi thực sự đánh giá cao trải nghiệm tích cực của bạn.' :
-                 selectedLanguage?.code === 'tr' ? 'Geri bildiriminiz başarıyla gönderildi! Olumlu deneyiminizi gerçekten takdir ediyoruz.' :
-                 selectedLanguage?.code === 'nl' ? 'Uw feedback is succesvol ingediend! We waarderen uw positieve ervaring echt.' :
-                 selectedLanguage?.code === 'sv' ? 'Din feedback har skickats framgångsrikt! Vi uppskattar verkligen din positiva upplevelse.' :
-                 selectedLanguage?.code === 'da' ? 'Din feedback er blevet indsendt med succes! Vi værdsætter virkelig din positive oplevelse.' :
-                 selectedLanguage?.code === 'no' ? 'Din tilbakemelding har blitt sendt inn! Vi setter virkelig pris på din positive opplevelse.' :
-                 selectedLanguage?.code === 'fi' ? 'Palautteesi on lähetetty onnistuneesti! Arvostamme todella positiivista kokemustasi.' : 
-                 'Your feedback has been submitted successfully! We truly appreciate your positive experience.'}
+                {finalRating >= 4 ? (
+                  selectedLanguage?.code === 'en' ? 'Your feedback has been submitted successfully! We truly appreciate your positive experience.' :
+                  selectedLanguage?.code === 'es' ? '¡Su comentario ha sido enviado exitosamente! Realmente apreciamos su experiencia positiva.' :
+                  selectedLanguage?.code === 'fr' ? 'Votre commentaire a été soumis avec succès ! Nous apprécions vraiment votre expérience positive.' :
+                  selectedLanguage?.code === 'de' ? 'Ihr Feedback wurde erfolgreich übermittelt! Wir schätzen Ihre positive Erfahrung wirklich.' :
+                  selectedLanguage?.code === 'it' ? 'Il tuo feedback è stato inviato con successo! Apprezziamo davvero la tua esperienza positiva.' :
+                  selectedLanguage?.code === 'pt' ? 'Seu feedback foi enviado com sucesso! Realmente apreciamos sua experiência positiva.' :
+                  selectedLanguage?.code === 'ru' ? 'Ваш отзыв был успешно отправлен! Мы действительно ценим ваш положительный опыт.' :
+                  selectedLanguage?.code === 'ja' ? 'フィードバックが正常に送信されました！あなたのポジティブな体験を本当に感謝しています。' :
+                  selectedLanguage?.code === 'ko' ? '피드백이 성공적으로 제출되었습니다! 귀하의 긍정적인 경험을 정말 감사합니다.' :
+                  selectedLanguage?.code === 'zh' ? '您的反馈已成功提交！我们真的很感谢您的积极体验。' :
+                  selectedLanguage?.code === 'ar' ? 'تم إرسال ملاحظاتك بنجاح! نحن نقدر حقاً تجربتك الإيجابية.' :
+                  selectedLanguage?.code === 'hi' ? 'आपकी प्रतिक्रिया सफलतापूर्वक जमा की गई! हम आपके सकारात्मक अनुभव की सराहना करते हैं।' :
+                  selectedLanguage?.code === 'th' ? 'ข้อเสนอแนะของคุณถูกส่งเรียบร้อยแล้ว! เราขอขอบคุณประสบการณ์เชิงบวกของคุณ' :
+                  selectedLanguage?.code === 'vi' ? 'Phản hồi của bạn đã được gửi thành công! Chúng tôi thực sự đánh giá cao trải nghiệm tích cực của bạn.' :
+                  selectedLanguage?.code === 'tr' ? 'Geri bildiriminiz başarıyla gönderildi! Olumlu deneyiminizi gerçekten takdir ediyoruz.' :
+                  selectedLanguage?.code === 'nl' ? 'Uw feedback is succesvol ingediend! We waarderen uw positieve ervaring echt.' :
+                  selectedLanguage?.code === 'sv' ? 'Din feedback har skickats framgångsrikt! Vi uppskattar verkligen din positiva upplevelse.' :
+                  selectedLanguage?.code === 'da' ? 'Din feedback er blevet indsendt med succes! Vi værdsætter virkelig din positive oplevelse.' :
+                  selectedLanguage?.code === 'no' ? 'Din tilbakemelding har blitt sendt inn! Vi setter virkelig pris på din positive opplevelse.' :
+                  selectedLanguage?.code === 'fi' ? 'Palautteesi on lähetetty onnistuneesti! Arvostamme todella positiivista kokemustasi.' : 
+                  'Your feedback has been submitted successfully! We truly appreciate your positive experience.'
+                ) : (
+                  selectedLanguage?.code === 'en' ? 'Your feedback has been submitted successfully! We will make sure to improve based on your valuable input.' :
+                  selectedLanguage?.code === 'es' ? '¡Su comentario ha sido enviado exitosamente! Nos aseguraremos de mejorar según su valiosa opinión.' :
+                  selectedLanguage?.code === 'fr' ? 'Votre commentaire a été soumis avec succès ! Nous veillerons à nous améliorer en fonction de votre précieuse contribution.' :
+                  selectedLanguage?.code === 'de' ? 'Ihr Feedback wurde erfolgreich übermittelt! Wir werden uns auf Grundlage Ihrer wertvollen Rückmeldung verbessern.' :
+                  selectedLanguage?.code === 'it' ? 'Il tuo feedback è stato inviato con successo! Ci assicureremo di migliorare in base al tuo prezioso contributo.' :
+                  selectedLanguage?.code === 'pt' ? 'Seu feedback foi enviado com sucesso! Vamos melhorar com base em sua valiosa opinião.' :
+                  selectedLanguage?.code === 'ru' ? 'Ваш отзыв был успешно отправлен! Мы обязательно улучшим наш сервис на основе вашего ценного мнения.' :
+                  selectedLanguage?.code === 'ja' ? 'フィードバックが正常に送信されました！貴重なご意見をもとに改善してまいります。' :
+                  selectedLanguage?.code === 'ko' ? '피드백이 성공적으로 제출되었습니다! 귀중한 의견을 바탕으로 개선하겠습니다.' :
+                  selectedLanguage?.code === 'zh' ? '您的反馈已成功提交！我们一定会根据您宝贵的意见进行改进。' :
+                  selectedLanguage?.code === 'ar' ? 'تم إرسال ملاحظاتك بنجاح! سنتأكد من التحسين بناءً على مدخلاتك القيمة.' :
+                  selectedLanguage?.code === 'hi' ? 'आपकी प्रतिक्रिया सफलतापूर्वक जमा की गई! हम आपके मूल्यवान इनपुट के आधार पर सुधार करेंगे।' :
+                  selectedLanguage?.code === 'th' ? 'ข้อเสนอแนะของคุณถูกส่งเรียบร้อยแล้ว! เราจะพัฒนาตามความคิดเห็นอันมีค่าของคุณ' :
+                  selectedLanguage?.code === 'vi' ? 'Phản hồi của bạn đã được gửi thành công! Chúng tôi sẽ cải thiện dựa trên ý kiến quý báu của bạn.' :
+                  selectedLanguage?.code === 'tr' ? 'Geri bildiriminiz başarıyla gönderildi! Değerli görüşlerinize göre iyileştirmeler yapacağız.' :
+                  selectedLanguage?.code === 'nl' ? 'Uw feedback is succesvol ingediend! We zullen verbeteren op basis van uw waardevolle input.' :
+                  selectedLanguage?.code === 'sv' ? 'Din feedback har skickats framgångsrikt! Vi kommer att förbättra baserat på din värdefulla input.' :
+                  selectedLanguage?.code === 'da' ? 'Din feedback er blevet indsendt med succes! Vi vil forbedre baseret på din værdifulde input.' :
+                  selectedLanguage?.code === 'no' ? 'Din tilbakemelding har blitt sendt inn! Vi vil forbedre basert på dine verdifulle innspill.' :
+                  selectedLanguage?.code === 'fi' ? 'Palautteesi on lähetetty onnistuneesti! Parannamme palvelua arvokkaiden palautteesi perusteella.' : 
+                  'Your feedback has been submitted successfully! We will make sure to improve based on your valuable input.'
+                )}
               </p>
               <p className="text-600 mb-6">
                 {selectedLanguage?.code === 'en' ? 'Your input helps us continue providing excellent service to all our guests.' :
@@ -401,7 +438,7 @@ export default function CustomerFeedbackForm() {
 
             </div>
             
-            {finalRating >= 3 && (
+            {finalRating >= 4 && (
               <>
                 {/* Display submitted feedback text with copy button */}
                 {submittedFeedback && (

@@ -24,8 +24,10 @@ export async function GET(request: NextRequest) {
 
       const { searchParams } = new URL(request.url);
       const status = searchParams.get('status');
-      const rating = searchParams.get('rating');
+      const ratings = searchParams.get('ratings');
       const search = searchParams.get('search');
+      const startDate = searchParams.get('startDate');
+      const endDate = searchParams.get('endDate');
       const page = parseInt(searchParams.get('page') || '1');
       const limit = parseInt(searchParams.get('limit') || '10');
       const sortField = searchParams.get('sortField') || 'submittedAt';
@@ -39,8 +41,26 @@ export async function GET(request: NextRequest) {
         where.status = status;
       }
       
-      if (rating) {
-        where.overallRating = parseInt(rating);
+      // Handle multiple star ratings
+      if (ratings) {
+        const ratingArray = ratings.split(',').map(r => parseInt(r.trim())).filter(r => !isNaN(r));
+        if (ratingArray.length > 0) {
+          where.overallRating = { in: ratingArray };
+        }
+      }
+      
+      // Handle date range filter
+      if (startDate || endDate) {
+        where.submittedAt = {};
+        if (startDate) {
+          where.submittedAt.gte = new Date(startDate);
+        }
+        if (endDate) {
+          // Set end date to end of day
+          const endDateTime = new Date(endDate);
+          endDateTime.setHours(23, 59, 59, 999);
+          where.submittedAt.lte = endDateTime;
+        }
       }
       
       if (search) {

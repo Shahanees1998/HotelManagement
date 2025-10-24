@@ -443,13 +443,14 @@ export const NotificationCreators = {
     );
   },
 
-  newFormCreated: async (hotelId: string, hotelName: string, formTitle: string) => {
+  newFormCreated: async (formId: string, hotelId: string, hotelName: string, formTitle: string) => {
     return await NotificationService.notifyAdmins(
       'New Form Created',
       `${hotelName} created a new form: ${formTitle}`,
       'NEW_FORM_CREATED',
-      hotelId,
-      'form'
+      formId,
+      'form',
+      { hotelId, hotelName, formTitle }
     );
   },
 
@@ -476,15 +477,15 @@ export const NotificationCreators = {
     );
   },
 
-  newFeedback: async (hotelId: string, guestName: string, rating: number) => {
+  newFeedback: async (hotelId: string, guestName: string, rating: number, reviewId?: string) => {
     return await NotificationService.notifyHotel(
       hotelId,
       'New Guest Feedback',
       `${guestName} left a ${rating}-star feedback`,
       'NEW_REVIEW',
-      hotelId,
+      reviewId, // Use reviewId directly, don't fallback to hotelId
       'review',
-      { guestName, rating }
+      { guestName, rating, reviewId }
     );
   },
 

@@ -6,6 +6,7 @@ import { Button } from "primereact/button";
 import { Badge } from "primereact/badge";
 import { Toast } from "primereact/toast";
 import { Divider } from "primereact/divider";
+import { Dialog } from "primereact/dialog";
 import { useAuth } from "@/hooks/useAuth";
 
 interface SubscriptionData {
@@ -13,6 +14,7 @@ interface SubscriptionData {
     id: string;
     name: string;
     subscriptionStatus: string;
+    currentPlan: string;
     trialEndsAt?: string;
     subscriptionEndsAt?: string;
     subscriptionId?: string;
@@ -41,6 +43,9 @@ export default function HotelSubscriptionPage() {
   const [subscriptionData, setSubscriptionData] = useState<SubscriptionData | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [pendingAction, setPendingAction] = useState<{planId: string, action: string} | null>(null);
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
@@ -71,6 +76,19 @@ export default function HotelSubscriptionPage() {
   };
 
   const handleSubscriptionAction = async (planId: string, action: string) => {
+    // Show confirmation for upgrade actions
+    if (action === 'upgrade') {
+      setPendingAction({ planId, action });
+      setSelectedPlan(planId);
+      setShowConfirmation(true);
+      return;
+    }
+
+    // Direct execution for other actions
+    await executeSubscriptionAction(planId, action);
+  };
+
+  const executeSubscriptionAction = async (planId: string, action: string) => {
     setActionLoading(`${planId}-${action}`);
     try {
       const response = await fetch('/api/hotel/subscription', {
@@ -82,8 +100,9 @@ export default function HotelSubscriptionPage() {
       });
 
       if (response.ok) {
-        showToast("success", "Success", "Subscription updated successfully");
-        loadSubscriptionData(); // Refresh data
+        const result = await response.json();
+        showToast("success", "Success", result.message || "Subscription updated successfully");
+        await loadSubscriptionData(); // Refresh data
       } else {
         const errorData = await response.json();
         showToast("error", "Error", errorData.error || "Failed to update subscription");
@@ -94,6 +113,21 @@ export default function HotelSubscriptionPage() {
     } finally {
       setActionLoading(null);
     }
+  };
+
+  const confirmSubscriptionAction = async () => {
+    if (pendingAction) {
+      setShowConfirmation(false);
+      await executeSubscriptionAction(pendingAction.planId, pendingAction.action);
+      setPendingAction(null);
+      setSelectedPlan(null);
+    }
+  };
+
+  const cancelConfirmation = () => {
+    setShowConfirmation(false);
+    setPendingAction(null);
+    setSelectedPlan(null);
   };
 
   const getStatusSeverity = (status: string) => {
@@ -114,6 +148,19 @@ export default function HotelSubscriptionPage() {
       case 'EXPIRED': return 'Expired';
       default: return status;
     }
+  };
+
+  const getCurrentPlanInfo = () => {
+    if (!subscriptionData) return null;
+    
+    // Get plan information based on stored currentPlan
+    const planMap: { [key: string]: { name: string; price: number; interval: string } } = {
+      'basic': { name: 'Basic Plan', price: 29, interval: 'month' },
+      'professional': { name: 'Professional Plan', price: 79, interval: 'month' },
+      'enterprise': { name: 'Enterprise Plan', price: 199, interval: 'month' }
+    };
+    
+    return planMap[subscriptionData.hotel.currentPlan] || null;
   };
 
   if (loading) {
@@ -170,17 +217,28 @@ export default function HotelSubscriptionPage() {
       <div className="col-12">
         <Card title="Current Subscription Status" className="mb-4">
           <div className="grid">
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-3">
               <div className="text-center">
                 <Badge 
                   value={getStatusLabel(subscriptionData.hotel.subscriptionStatus)} 
                   severity={getStatusSeverity(subscriptionData.hotel.subscriptionStatus)}
                   className="text-lg px-3 py-2"
+                  style={{ width: '100px', height:"30px" }}
                 />
-                <p className="text-600 mt-2 mb-0">Current Plan</p>
+                <p className="text-600 mt-2 mb-0">Status</p>
               </div>
             </div>
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-3">
+              <div className="text-center">
+                <div className="text-xl font-bold text-blue-500">
+                  {getCurrentPlanInfo()?.name || 'Trial Plan'}
+                </div>
+                <p className="text-600 mt-1 mb-0">
+                  {getCurrentPlanInfo() ? `$${getCurrentPlanInfo()?.price}/${getCurrentPlanInfo()?.interval}` : 'Free Trial'}
+                </p>
+              </div>
+            </div>
+            <div className="col-12 md:col-3">
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-500">
                   {subscriptionData.stats.totalReviews}
@@ -188,7 +246,7 @@ export default function HotelSubscriptionPage() {
                 <p className="text-600 mt-2 mb-0">Total Reviews</p>
               </div>
             </div>
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-3">
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-500">
                   {subscriptionData.stats.averageRating.toFixed(1)} ⭐
@@ -242,26 +300,31 @@ export default function HotelSubscriptionPage() {
                 <div className="mt-auto">
                   {subscriptionData.hotel.subscriptionStatus === 'TRIAL' ? (
                     <Button
-                      label="Upgrade Now"
-                      icon="pi pi-arrow-up"
+                      label={actionLoading === `${plan.id}-upgrade` ? "Processing..." : "Upgrade Now"}
+                      icon={actionLoading === `${plan.id}-upgrade` ? "pi pi-spinner pi-spin" : "pi pi-arrow-up"}
                       className="w-full p-button-success"
                       onClick={() => handleSubscriptionAction(plan.id, 'upgrade')}
                       loading={actionLoading === `${plan.id}-upgrade`}
+                      disabled={actionLoading !== null}
                     />
                   ) : subscriptionData.hotel.subscriptionStatus === 'ACTIVE' ? (
-                    <Button
-                      label="Current Plan"
-                      icon="pi pi-check"
-                      className="w-full p-button-success"
-                      disabled
-                    />
+                    <div className="text-center">
+                      <Button
+                        label="Current Plan"
+                        icon="pi pi-check"
+                        className="w-full p-button-success"
+                        disabled
+                      />
+                      <p className="text-600 text-sm mt-2">You are currently on this plan</p>
+                    </div>
                   ) : (
                     <Button
-                      label="Reactivate"
-                      icon="pi pi-refresh"
+                      label={actionLoading === `${plan.id}-upgrade` ? "Processing..." : "Reactivate"}
+                      icon={actionLoading === `${plan.id}-upgrade` ? "pi pi-spinner pi-spin" : "pi pi-refresh"}
                       className="w-full p-button-outlined"
                       onClick={() => handleSubscriptionAction(plan.id, 'upgrade')}
                       loading={actionLoading === `${plan.id}-upgrade`}
+                      disabled={actionLoading !== null}
                     />
                   )}
                 </div>
@@ -334,6 +397,65 @@ export default function HotelSubscriptionPage() {
           </div>
         </Card>
       </div>
+
+      {/* Confirmation Dialog */}
+      <Dialog
+        visible={showConfirmation}
+        onHide={cancelConfirmation}
+        header="Confirm Subscription Change"
+        modal
+        style={{ width: '450px' }}
+        footer={
+          <div className="flex justify-content-end gap-2">
+            <Button
+              label="Cancel"
+              icon="pi pi-times"
+              onClick={cancelConfirmation}
+              className="p-button-text"
+              disabled={actionLoading !== null}
+            />
+            <Button
+              label={actionLoading ? "Processing..." : "Confirm"}
+              icon={actionLoading ? "pi pi-spinner pi-spin" : "pi pi-check"}
+              onClick={confirmSubscriptionAction}
+              className="p-button-success"
+              loading={actionLoading !== null}
+              disabled={actionLoading !== null}
+            />
+          </div>
+        }
+      >
+        <div className="flex align-items-center gap-3 mb-3">
+          <i className="pi pi-info-circle text-blue-500 text-2xl"></i>
+          <div>
+            <h4 className="m-0">Upgrade to {selectedPlan && subscriptionData?.plans.find(p => p.id === selectedPlan)?.name}</h4>
+            <p className="text-600 mt-1 mb-0">
+              You are about to upgrade your subscription plan.
+            </p>
+          </div>
+        </div>
+        
+        {selectedPlan && subscriptionData?.plans.find(p => p.id === selectedPlan) && (
+          <div className="p-3 border-1 border-blue-200 border-round bg-blue-50">
+            <div className="flex justify-content-between align-items-center mb-2">
+              <span className="font-semibold">Plan:</span>
+              <span>{subscriptionData.plans.find(p => p.id === selectedPlan)?.name}</span>
+            </div>
+            <div className="flex justify-content-between align-items-center mb-2">
+              <span className="font-semibold">Price:</span>
+              <span>${subscriptionData.plans.find(p => p.id === selectedPlan)?.price}/{subscriptionData.plans.find(p => p.id === selectedPlan)?.interval}</span>
+            </div>
+            <div className="flex justify-content-between align-items-center">
+              <span className="font-semibold">Billing:</span>
+              <span>Monthly</span>
+            </div>
+          </div>
+        )}
+        
+        <p className="text-600 mt-3 mb-0">
+          <strong>Note:</strong> This is a demo environment. No actual payment will be processed.
+        </p>
+      </Dialog>
 
       <Toast ref={toast} />
     </div>

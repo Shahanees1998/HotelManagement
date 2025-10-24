@@ -23,6 +23,25 @@ const NotificationBell = () => {
     if (!notification.isRead) {
       await markAsRead(notification.id);
     }
+    
+    // Handle navigation based on notification type and relatedType
+    if (notification.relatedId && notification.relatedType) {
+      const router = require('next/navigation').useRouter;
+      
+      switch (notification.relatedType) {
+        case 'form':
+          window.location.href = `/admin/forms/${notification.relatedId}`;
+          break;
+        case 'hotel':
+          window.location.href = `/admin/hotels?hotelId=${notification.relatedId}`;
+          break;
+        case 'review':
+          window.location.href = `/admin/reviews?reviewId=${notification.relatedId}`;
+          break;
+        default:
+          break;
+      }
+    }
   };
 
   const handleMarkAllRead = async () => {

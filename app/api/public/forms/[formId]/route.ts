@@ -101,6 +101,7 @@ export async function GET(
       hotelName: form.hotel.name,
       hotelSlug: form.hotel.slug,
       questions: allQuestions,
+      predefinedQuestions: form.predefinedQuestions,
     };
 
     return NextResponse.json({ data: formData });

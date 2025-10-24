@@ -401,8 +401,10 @@ class ApiClient {
     // Hotel Reviews
     async getHotelReviews(params?: {
         status?: string;
-        rating?: string;
+        ratings?: string;
         search?: string;
+        startDate?: string;
+        endDate?: string;
         page?: number;
         limit?: number;
         sortField?: string;
@@ -555,9 +557,11 @@ class ApiClient {
 
     async getAdminReviews(params?: {
         status?: string;
-        rating?: string;
+        ratings?: string;
         hotel?: string;
         search?: string;
+        startDate?: string;
+        endDate?: string;
         page?: number;
         limit?: number;
     }) {

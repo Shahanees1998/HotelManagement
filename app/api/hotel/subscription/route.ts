@@ -19,6 +19,7 @@ export async function GET(request: NextRequest) {
           id: true,
           name: true,
           subscriptionStatus: true,
+          currentPlan: true,
           trialEndsAt: true,
           subscriptionEndsAt: true,
           subscriptionId: true,
@@ -48,6 +49,7 @@ export async function GET(request: NextRequest) {
           id: hotel.id,
           name: hotel.name,
           subscriptionStatus: hotel.subscriptionStatus,
+          currentPlan: hotel.currentPlan || 'basic',
           trialEndsAt: hotel.trialEndsAt?.toISOString(),
           subscriptionEndsAt: hotel.subscriptionEndsAt?.toISOString(),
           subscriptionId: hotel.subscriptionId,
@@ -71,8 +73,8 @@ export async function GET(request: NextRequest) {
             features: [
               'Up to 100 reviews per month',
               'Basic analytics',
-              'Email support',
-              'Custom feedback forms',
+              'QR code generation',
+              'Basic Feedback Form',
             ],
           },
           {
@@ -84,9 +86,8 @@ export async function GET(request: NextRequest) {
             features: [
               'Up to 500 reviews per month',
               'Advanced analytics',
-              'Priority support',
               'QR code generation',
-              'Custom branding',
+              'Customized Star Rating Questions',
             ],
           },
           {
@@ -98,10 +99,8 @@ export async function GET(request: NextRequest) {
             features: [
               'Unlimited reviews',
               'Full analytics suite',
-              '24/7 phone support',
-              'White-label solution',
-              'API access',
-              'Custom integrations',
+              'QR code generation',
+              'All type of questions',
             ],
           },
         ],
@@ -141,7 +140,7 @@ export async function POST(request: NextRequest) {
       // Get hotel
       const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
-        select: { id: true, subscriptionStatus: true },
+        select: { id: true, subscriptionStatus: true, currentPlan: true },
       });
 
       if (!hotel) {
@@ -151,10 +150,19 @@ export async function POST(request: NextRequest) {
       // For now, simulate subscription changes (in real app, integrate with Stripe)
       let newStatus = hotel.subscriptionStatus;
       let subscriptionEndsAt = null;
+      let planName = '';
 
       if (action === 'upgrade') {
         newStatus = 'ACTIVE';
         subscriptionEndsAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
+        
+        // Map plan ID to plan name for display
+        const planMap: { [key: string]: string } = {
+          'basic': 'Basic Plan',
+          'professional': 'Professional Plan', 
+          'enterprise': 'Enterprise Plan'
+        };
+        planName = planMap[planId] || 'Unknown Plan';
       } else if (action === 'cancel') {
         newStatus = 'CANCELLED';
       }
@@ -164,16 +172,18 @@ export async function POST(request: NextRequest) {
         where: { id: hotel.id },
         data: {
           subscriptionStatus: newStatus,
+          currentPlan: planId,
           subscriptionEndsAt: subscriptionEndsAt,
           subscriptionId: `sub_${Date.now()}`, // Mock subscription ID
         },
       });
 
       return NextResponse.json({
-        message: 'Subscription updated successfully',
+        message: `Successfully ${action === 'upgrade' ? 'upgraded to' : 'cancelled'} ${planName || 'subscription'}`,
         data: {
           subscriptionStatus: updatedHotel.subscriptionStatus,
           subscriptionEndsAt: updatedHotel.subscriptionEndsAt?.toISOString(),
+          planName: planName,
         },
       });
     } catch (error) {

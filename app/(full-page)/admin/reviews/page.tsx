@@ -9,6 +9,8 @@ import { Tag } from "primereact/tag";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
+import { Calendar } from "primereact/calendar";
+import { MultiSelect } from "primereact/multiselect";
 import { useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
@@ -40,9 +42,11 @@ export default function AdminReviews() {
   const [totalRecords, setTotalRecords] = useState(0);
   const [filters, setFilters] = useState({
     status: "",
-    rating: "",
+    ratings: [] as string[],
     hotel: searchParams.get('hotelId') || "",
     search: "",
+    startDate: null as Date | null,
+    endDate: null as Date | null,
   });
   const toast = useRef<Toast>(null);
 
@@ -55,9 +59,11 @@ export default function AdminReviews() {
     try {
       const response = await apiClient.getAdminReviews({
         status: filters.status,
-        rating: filters.rating,
+        ratings: filters.ratings.join(','),
         hotel: filters.hotel,
         search: filters.search,
+        startDate: filters.startDate ? filters.startDate.toISOString() : undefined,
+        endDate: filters.endDate ? filters.endDate.toISOString() : undefined,
         page: currentPage,
         limit: rowsPerPage,
       });
@@ -71,7 +77,7 @@ export default function AdminReviews() {
     } finally {
       setLoading(false);
     }
-  }, [filters.status, filters.rating, filters.hotel, filters.search, currentPage, rowsPerPage, showToast]);
+  }, [filters.status, filters.ratings, filters.hotel, filters.search, filters.startDate, filters.endDate, currentPage, rowsPerPage, showToast]);
 
   useEffect(() => {
     loadReviews();
@@ -82,7 +88,7 @@ export default function AdminReviews() {
     if (currentPage !== 1) {
       setCurrentPage(1);
     }
-  }, [filters.status, filters.rating, filters.hotel, filters.search]);
+  }, [filters.status, filters.ratings, filters.hotel, filters.search, filters.startDate, filters.endDate]);
 
   const handleStatusChange = async (reviewId: string, newStatus: string) => {
     try {
@@ -200,13 +206,23 @@ export default function AdminReviews() {
   ];
 
   const ratingOptions = [
-    { label: "All Ratings", value: "" },
     { label: "5 Stars", value: "5" },
     { label: "4 Stars", value: "4" },
     { label: "3 Stars", value: "3" },
     { label: "2 Stars", value: "2" },
     { label: "1 Star", value: "1" },
   ];
+
+  const handleClearFilters = useCallback(() => {
+    setFilters({
+      status: "",
+      ratings: [],
+      hotel: "",
+      search: "",
+      startDate: null,
+      endDate: null,
+    });
+  }, []);
 
   const hotelOptions = useMemo(() => [
     { label: "All Hotels", value: "" },
@@ -239,9 +255,19 @@ export default function AdminReviews() {
 
       {/* Filters */}
       <div className="col-12">
-        <Card title="Filters" className="mb-4">
+        <Card className="mb-4">
+          <div className="flex justify-content-between align-items-center mb-3">
+            <h3 className="m-0">Filters</h3>
+            <Button
+              label="Clear Filters"
+              icon="pi pi-filter-slash"
+              onClick={handleClearFilters}
+              className="p-button-outlined p-button-secondary"
+              size="small"
+            />
+          </div>
           <div className="grid">
-            <div className="col-12 md:col-3">
+            <div className="col-12 md:col-6 lg:col-3">
               <label className="block text-900 font-medium mb-2">Search</label>
               <InputText
                 value={filters.search}
@@ -250,7 +276,7 @@ export default function AdminReviews() {
                 className="w-full"
               />
             </div>
-            <div className="col-12 md:col-3">
+            <div className="col-12 md:col-6 lg:col-3">
               <label className="block text-900 font-medium mb-2">Status</label>
               <Dropdown
                 value={filters.status}
@@ -260,17 +286,19 @@ export default function AdminReviews() {
                 className="w-full"
               />
             </div>
-            <div className="col-12 md:col-3">
-              <label className="block text-900 font-medium mb-2">Rating</label>
-              <Dropdown
-                value={filters.rating}
+            <div className="col-12 md:col-6 lg:col-3">
+              <label className="block text-900 font-medium mb-2">Star Ratings</label>
+              <MultiSelect
+                value={filters.ratings}
                 options={ratingOptions}
-                onChange={(e) => setFilters(prev => ({ ...prev, rating: e.value }))}
+                onChange={(e) => setFilters(prev => ({ ...prev, ratings: e.value }))}
                 placeholder="All Ratings"
                 className="w-full"
+                display="chip"
+                showClear
               />
             </div>
-            <div className="col-12 md:col-3">
+            <div className="col-12 md:col-6 lg:col-3">
               <label className="block text-900 font-medium mb-2">Hotel</label>
               <Dropdown
                 value={filters.hotel}
@@ -278,6 +306,33 @@ export default function AdminReviews() {
                 onChange={(e) => setFilters(prev => ({ ...prev, hotel: e.value }))}
                 placeholder="All Hotels"
                 className="w-full"
+              />
+            </div>
+            <div className="col-12 md:col-6 lg:col-3">
+              <label className="block text-900 font-medium mb-2">Start Date</label>
+              <Calendar
+                value={filters.startDate}
+                onChange={(e) => setFilters(prev => ({ ...prev, startDate: e.value as Date | null }))}
+                placeholder="From date"
+                className="w-full"
+                showIcon
+                dateFormat="yy-mm-dd"
+                showButtonBar
+                maxDate={filters.endDate || new Date()}
+              />
+            </div>
+            <div className="col-12 md:col-6 lg:col-3">
+              <label className="block text-900 font-medium mb-2">End Date</label>
+              <Calendar
+                value={filters.endDate}
+                onChange={(e) => setFilters(prev => ({ ...prev, endDate: e.value as Date | null }))}
+                placeholder="To date"
+                className="w-full"
+                showIcon
+                dateFormat="yy-mm-dd"
+                showButtonBar
+                minDate={filters.startDate || undefined}
+                maxDate={new Date()}
               />
             </div>
           </div>

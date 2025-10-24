@@ -90,7 +90,7 @@ export async function POST(
         if (question.type === 'CUSTOM_RATING') {
           // For custom rating, check if at least one rating item has been answered
           const hasAnyRating = form.predefinedQuestions?.customRatingItems?.some(item => 
-            answers[`${question.id}-${item.id}`]
+            answers[`custom-rating-${item.id}`]
           );
           if (!hasAnyRating) {
             return NextResponse.json(
@@ -110,26 +110,51 @@ export async function POST(
     // Calculate overall rating from star rating questions and custom rating items
     let overallRating = 0;
     let ratingCount = 0;
+    let hasSingleRating = false;
+    let hasCustomRating = false;
     
-    for (const question of allQuestions) {
-      if (question.type === 'STAR_RATING' && answers[question.id]) {
-        overallRating += answers[question.id];
+    // Check for single "Rate Us" question
+    if (form.predefinedQuestions?.hasRateUs && answers['rate-us']) {
+      overallRating += answers['rate-us'];
+      ratingCount++;
+      hasSingleRating = true;
+    }
+    
+    // Check for custom rating questions
+    if (form.predefinedQuestions?.hasCustomRating && form.predefinedQuestions.customRatingItems) {
+      const customRatings = form.predefinedQuestions.customRatingItems
+        .map(item => answers[`custom-rating-${item.id}`])
+        .filter(rating => rating && rating > 0);
+      
+      if (customRatings.length > 0) {
+        const customAverage = customRatings.reduce((sum, rating) => sum + rating, 0) / customRatings.length;
+        overallRating += customAverage;
         ratingCount++;
-      } else if (question.type === 'CUSTOM_RATING' && form.predefinedQuestions?.customRatingItems) {
-        // Calculate average for custom rating items
-        const customRatings = form.predefinedQuestions.customRatingItems
-          .map(item => answers[`${question.id}-${item.id}`])
-          .filter(rating => rating && rating > 0);
-        
-        if (customRatings.length > 0) {
-          const customAverage = customRatings.reduce((sum, rating) => sum + rating, 0) / customRatings.length;
-          overallRating += customAverage;
-          ratingCount++;
-        }
+        hasCustomRating = true;
       }
     }
     
-    const finalRating = ratingCount > 0 ? Math.round(overallRating / ratingCount) : 0;
+    // Calculate final rating
+    let finalRating = 0;
+    if (hasSingleRating && hasCustomRating) {
+      // If both single and custom ratings exist, average them
+      finalRating = Math.round(overallRating / ratingCount);
+    } else if (hasSingleRating) {
+      // If only single rating exists, use it directly
+      finalRating = answers['rate-us'];
+    } else if (hasCustomRating) {
+      // If only custom ratings exist, use their average
+      const customRatings = form.predefinedQuestions?.customRatingItems
+        ?.map(item => answers[`custom-rating-${item.id}`])
+        .filter(rating => rating && rating > 0) || [];
+      
+      if (customRatings.length > 0) {
+        finalRating = Math.round(customRatings.reduce((sum, rating) => sum + rating, 0) / customRatings.length);
+      }
+    }
+    
+    // Ensure rating is between 1-5
+    finalRating = Math.max(1, Math.min(5, finalRating));
 
     // Create review and answers in a transaction
     const result = await prisma.$transaction(async (tx) => {
@@ -160,7 +185,7 @@ export async function POST(
           }
           // Filter out predefined question IDs and their sub-answers
           if (predefinedQuestionIds.includes(questionId) || 
-              predefinedQuestionIds.some(predefinedId => questionId.startsWith(predefinedId + '-'))) {
+              questionId.startsWith('custom-rating-')) {
             return false;
           }
           return true;
@@ -181,7 +206,7 @@ export async function POST(
       const predefinedAnswers = Object.entries(answers)
         .filter(([questionId, answer]) => 
           predefinedQuestionIds.includes(questionId) || 
-          predefinedQuestionIds.some(predefinedId => questionId.startsWith(predefinedId + '-'))
+          questionId.startsWith('custom-rating-')
         );
 
       if (predefinedAnswers.length > 0) {
@@ -205,7 +230,8 @@ export async function POST(
       await NotificationCreators.newFeedback(
         form.hotel.id,
         guestName || 'Anonymous',
-        finalRating
+        finalRating,
+        result.id
       );
 
       // Send notification to admins about new review
