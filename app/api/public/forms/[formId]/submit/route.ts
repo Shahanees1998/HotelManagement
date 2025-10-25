@@ -210,11 +210,14 @@ export async function POST(
         );
 
       if (predefinedAnswers.length > 0) {
+        // Convert array of [key, value] pairs to object
+        const predefinedAnswersObject = Object.fromEntries(predefinedAnswers);
+        
         // Store predefined answers as JSON in the predefinedAnswers field
         await tx.review.update({
           where: { id: review.id },
           data: {
-            predefinedAnswers: JSON.stringify(predefinedAnswers)
+            predefinedAnswers: JSON.stringify(predefinedAnswersObject)
           }
         });
       }

@@ -173,7 +173,40 @@ export default function CustomerFeedbackForm() {
   const validateForm = () => {
     if (!translatedForm) return false;
 
-    for (const question of translatedForm.questions) {
+    // Validate predefined questions
+    if (translatedForm.predefinedQuestions) {
+      // Validate Rate Us question
+      if (translatedForm.predefinedQuestions.hasRateUs && !submission.answers['rate-us']) {
+        showToast("warn", t('Warning'), 'Please rate us');
+        return false;
+      }
+
+      // Validate Custom Rating questions
+      if (translatedForm.predefinedQuestions.hasCustomRating && translatedForm.predefinedQuestions.customRatingItems) {
+        const hasAnyCustomRating = translatedForm.predefinedQuestions.customRatingItems.some(item => 
+          submission.answers[`custom-rating-${item.id}`]
+        );
+        if (!hasAnyCustomRating) {
+          showToast("warn", t('Warning'), 'Please rate at least one item');
+          return false;
+        }
+      }
+    }
+
+    // Validate custom questions (filtered to avoid duplicates with predefined questions)
+    const filteredQuestions = translatedForm.questions.filter(question => {
+      // Filter out CUSTOM_RATING questions if predefined custom rating is enabled
+      if (question.type === 'CUSTOM_RATING' && translatedForm.predefinedQuestions?.hasCustomRating) {
+        return false;
+      }
+      // Filter out LONG_TEXT questions if predefined feedback is enabled
+      if (question.type === 'LONG_TEXT' && translatedForm.predefinedQuestions?.hasFeedback) {
+        return false;
+      }
+      return true;
+    });
+
+    for (const question of filteredQuestions) {
       if (question.isRequired) {
         if (question.type === 'CUSTOM_RATING' && question.customRatingItems) {
           // For custom rating, check if at least one rating item has been answered
@@ -918,8 +951,130 @@ export default function CustomerFeedbackForm() {
           />
         </div>
 
-        {/* Questions */}
-        {translatedForm?.questions.map((question, index) => (
+        {/* Predefined Questions */}
+        {translatedForm?.predefinedQuestions && (
+          <>
+            {/* Rate Us Question */}
+            {translatedForm.predefinedQuestions.hasRateUs && (
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 500,
+                    color: "#444",
+                    marginBottom: "6px",
+                  }}
+                >
+                  How do you rate us? <span style={{ color: "#dc3545" }}>*</span>
+                </label>
+                <Rating
+                  value={submission.answers['rate-us'] || 0}
+                  onChange={(e) => handleAnswerChange('rate-us', e.value)}
+                  stars={5}
+                  cancel={false}
+                />
+              </div>
+            )}
+
+            {/* Custom Rating Questions */}
+            {translatedForm.predefinedQuestions.hasCustomRating && translatedForm.predefinedQuestions.customRatingItems && (
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 500,
+                    color: "#444",
+                    marginBottom: "6px",
+                  }}
+                >
+                  Please rate the following: <span style={{ color: "#dc3545" }}>*</span>
+                </label>
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  {translatedForm.predefinedQuestions.customRatingItems.map((item, itemIndex) => {
+                    const rating = submission.answers[`custom-rating-${item.id}`] || 0;
+                    return (
+                      <div
+                        key={item.id}
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <span style={{ fontSize: "14px", fontWeight: 500, color: "#333" }}>
+                          {item.label}
+                        </span>
+                        <div style={{ display: "flex", gap: "4px" }}>
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <span
+                              key={i}
+                              style={{
+                                fontSize: "18px",
+                                color: i < rating ? "#facc15" : "#d1d5db",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => handleAnswerChange(`custom-rating-${item.id}`, i + 1)}
+                            >
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Feedback Question */}
+            {translatedForm.predefinedQuestions.hasFeedback && (
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 500,
+                    color: "#444",
+                    marginBottom: "6px",
+                  }}
+                >
+                  Please give us your honest feedback?
+                </label>
+                <InputTextarea
+                  value={submission.answers['feedback'] || ''}
+                  onChange={(e) => handleAnswerChange('feedback', e.target.value)}
+                  placeholder="Please share your thoughts about your experience..."
+                  rows={4}
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "6px",
+                    border: "1px solid #ced4da",
+                    fontSize: "14px",
+                    resize: "none",
+                  }}
+                />
+              </div>
+            )}
+          </>
+        )}
+
+        {/* Custom Questions */}
+        {translatedForm?.questions
+          .filter(question => {
+            // Filter out CUSTOM_RATING questions if predefined custom rating is enabled
+            if (question.type === 'CUSTOM_RATING' && translatedForm.predefinedQuestions?.hasCustomRating) {
+              return false;
+            }
+            // Filter out LONG_TEXT questions if predefined feedback is enabled
+            if (question.type === 'LONG_TEXT' && translatedForm.predefinedQuestions?.hasFeedback) {
+              return false;
+            }
+            return true;
+          })
+          .map((question, index) => (
           <div key={question.id} style={{ marginBottom: "20px" }}>
             <label
               style={{

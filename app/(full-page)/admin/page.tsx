@@ -217,15 +217,9 @@ export default function AdminDashboard() {
             route: "/admin/hotels",
             color: "blue",
             canAccess: true,
+            hoverIcon: "pi pi-building",
+            animation: "hover-lift"
         },
-        // {
-        //     title: "View Subscriptions",
-        //     description: "Monitor subscription status and billing",
-        //     icon: "pi pi-credit-card",
-        //     route: "/admin/subscriptions",
-        //     color: "green",
-        //     canAccess: true,
-        // },
         {
             title: "All Reviews",
             description: "Monitor all guest reviews across hotels",
@@ -233,6 +227,8 @@ export default function AdminDashboard() {
             route: "/admin/reviews",
             color: "orange",
             canAccess: true,
+            hoverIcon: "pi pi-star-fill",
+            animation: "hover-scale"
         },
         {
             title: "Support Requests",
@@ -241,7 +237,39 @@ export default function AdminDashboard() {
             route: "/admin/support",
             color: "red",
             canAccess: true,
+            hoverIcon: "pi pi-life-ring",
+            animation: "hover-glow"
         },
+        {
+            title: "Analytics",
+            description: "View detailed analytics and reports",
+            icon: "pi pi-chart-line",
+            route: "/admin/analytics",
+            color: "green",
+            canAccess: true,
+            hoverIcon: "pi pi-chart-bar",
+            animation: "hover-lift"
+        },
+        {
+            title: "User Management",
+            description: "Manage users and permissions",
+            icon: "pi pi-users",
+            route: "/admin/users",
+            color: "purple",
+            canAccess: true,
+            hoverIcon: "pi pi-user-edit",
+            animation: "hover-scale"
+        },
+        {
+            title: "System Settings",
+            description: "Configure system settings",
+            icon: "pi pi-cog",
+            route: "/admin/settings",
+            color: "gray",
+            canAccess: true,
+            hoverIcon: "pi pi-sliders-h",
+            animation: "hover-glow"
+        }
     ];
 
     console.log('Current stats state:', stats);
@@ -252,10 +280,13 @@ export default function AdminDashboard() {
             value: stats.totalHotels,
             label: "Total Hotels",
             icon: "pi pi-building",
+            hoverIcon: "pi pi-building",
             bgColor: "bg-blue-50",
             iconColor: "text-blue-500",
             route: "/admin/hotels",
             canAccess: true,
+            animation: "animate-fade-in",
+            description: "Registered hotels in the system"
         },
         // {
         //     value: stats.totalSubscribedHotels,

@@ -162,7 +162,7 @@ export default function RegisterHotel() {
   };
 
   return (
-    <div style={{ backgroundColor: "#FDFCF9", display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <div style={{ backgroundColor: "#FDFCF9", display: "flex", flexDirection: "column", minHeight: "100vh" }} className="animate-fade-in">
       <Toast ref={toast} />
       
       {/* Header */}
@@ -183,8 +183,9 @@ export default function RegisterHotel() {
             {step === 1 ? (
               <>
                 {/* Step 1: Owner Information */}
-                <div className="mb-4">
-                  <div className="text-[#1B2A49] text-2xl font-bold mb-2">
+                <div className="mb-4 animate-slide-in-left">
+                  <div className="text-[#1B2A49] text-2xl font-bold mb-2 flex align-items-center gap-2">
+                    <i className="pi pi-user text-blue-500"></i>
                     Owner Information!
               </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
@@ -196,11 +197,12 @@ export default function RegisterHotel() {
               </div>
 
                 <div className="flex flex-column">
-                  <label htmlFor="fullName" className="text-900 font-medium mb-2">
+                  <label htmlFor="fullName" className="text-900 font-medium mb-2 flex align-items-center gap-2">
+                    <i className="pi pi-user text-blue-500"></i>
                     Full Name<span style={{ color: "red" }}>*</span>
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
-                    <i className="pi pi-user"></i>
+                    <i className="pi pi-user text-gray-500"></i>
                     <InputText
                       id="fullName"
                       type="text"
@@ -211,11 +213,12 @@ export default function RegisterHotel() {
                     />
                   </span>
 
-                  <label htmlFor="email" className="text-900 font-medium mb-2">
+                  <label htmlFor="email" className="text-900 font-medium mb-2 flex align-items-center gap-2">
+                    <i className="pi pi-envelope text-blue-500"></i>
                     Email Address<span style={{ color: "red" }}>*</span>
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
-                    <i className="pi pi-envelope"></i>
+                    <i className="pi pi-envelope text-gray-500"></i>
                 <InputText
                       id="email"
                       type="email"
@@ -300,7 +303,7 @@ export default function RegisterHotel() {
                     label="Let's Keep Going!"
                     icon="pi pi-arrow-right"
                     iconPos="right"
-                  className="w-full"
+                  className="w-full hover-lift animate-scale-in"
                     style={{
                       backgroundColor: "#1e3a5f",
                       border: "none",

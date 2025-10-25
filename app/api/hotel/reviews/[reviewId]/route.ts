@@ -27,6 +27,13 @@ export async function GET(
               title: true,
               description: true,
               layout: true,
+              predefinedQuestions: {
+                include: {
+                  customRatingItems: {
+                    orderBy: { order: 'asc' },
+                  },
+                },
+              },
             },
           },
           answers: {
@@ -71,6 +78,12 @@ export async function GET(
           title: review.form.title,
           description: review.form.description,
           layout: review.form.layout,
+          predefinedQuestions: review.form.predefinedQuestions ? {
+            hasRateUs: review.form.predefinedQuestions.hasRateUs,
+            hasCustomRating: review.form.predefinedQuestions.hasCustomRating,
+            hasFeedback: review.form.predefinedQuestions.hasFeedback,
+            customRatingItems: review.form.predefinedQuestions.customRatingItems || []
+          } : null,
         },
         predefinedAnswers: review.predefinedAnswers,
         answers: review.answers.map(qa => ({

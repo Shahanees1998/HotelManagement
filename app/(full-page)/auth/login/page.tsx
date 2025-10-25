@@ -139,21 +139,24 @@ const LoginContent = () => {
 
             {/* Main Content */}
             <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", padding: "2rem 1rem" }}>
-                <div className="surface-card border-round py-7 px-4 md:px-7 z-1" style={{ width: "100%", maxWidth: "480px", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)" }}>
-                    <div className="mb-4">
-                        <div className="text-[#1B2A49] text-3xl font-bold mb-2">
+                <div className="surface-card border-round py-7 px-4 md:px-7 z-1 animate-fade-in" style={{ width: "100%", maxWidth: "480px", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)" }}>
+                    <div className="mb-4 animate-slide-in-left">
+                        <div className="text-[#1B2A49] text-3xl font-bold mb-2 flex align-items-center gap-2">
+                            <i className="pi pi-user text-blue-500"></i>
                             Welcome back!
                         </div>
-                        <span className="text-600 font-thin">
+                        <span className="text-600 font-thin flex align-items-center gap-2">
+                            <i className="pi pi-info-circle text-gray-500"></i>
                             Thank you for getting back to C-Reviews, the easiest way for hotels to collect and improve through guest feedback.
                         </span>
                     </div>
                     <div className="flex flex-column">
-                        <label htmlFor="email" className="text-900 font-medium mb-2">
+                        <label htmlFor="email" className="text-900 font-medium mb-2 flex align-items-center gap-2">
+                            <i className="pi pi-envelope text-blue-500"></i>
                             Email Address<span style={{ color: "red" }}>*</span>
                         </label>
                         <span className="p-input-icon-left w-full mb-1">
-                            <i className="pi pi-envelope"></i>
+                            <i className="pi pi-envelope text-gray-500"></i>
                             <InputText
                                 id="email"
                                 type="email"
@@ -171,7 +174,8 @@ const LoginContent = () => {
                             <small className="p-error block mb-3">{emailError}</small>
                         )}
                         
-                        <label htmlFor="password" className="text-900 font-medium mb-2 mt-3">
+                        <label htmlFor="password" className="text-900 font-medium mb-2 mt-3 flex align-items-center gap-2">
+                            <i className="pi pi-lock text-blue-500"></i>
                             Password<span style={{ color: "red" }}>*</span>
                         </label>
                         <div style={{ position: "relative" }} className="w-full mb-1">
@@ -243,7 +247,8 @@ const LoginContent = () => {
                         
                         <Button
                             label={loading || authLoading ? "Logging In..." : "Login"}
-                            className="w-full"
+                            icon={loading || authLoading ? "pi pi-spinner pi-spin" : "pi pi-sign-in"}
+                            className="w-full hover-lift animate-scale-in"
                             style={{
                                 backgroundColor: "#1e3a5f",
                                 border: "none",

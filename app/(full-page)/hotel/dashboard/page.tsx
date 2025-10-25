@@ -328,37 +328,54 @@ export default function HotelDashboard() {
           {quickActions.map((action, index) => (
             <div key={index} className="col-12 md:col-6 lg:col-3 p-2">
               <div
-                className="cursor-pointer hover:shadow-lg transition-all border-round-lg"
+                className={`cursor-pointer hover-lift interactive-card border-round-lg animate-fade-in`}
                 onClick={() => router.push(action.route)}
                 role="button"
                 tabIndex={0}
                 onKeyPress={e => { if (e.key === "Enter") router.push(action.route); }}
                 style={{
                   border: '1px solid #e0d8cc',
-                  boxShadow: 'none',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
                   backgroundColor: '#FFFFFF',
-                  padding:'10px !important'
+                  padding: '1rem',
+                  animationDelay: `${index * 0.1}s`
                 }}
               >
-                <div className="flex align-items-center" style={{ gap: '1rem', padding: '0.5rem' }}>
+                <div className="flex align-items-center" style={{ gap: '1rem' }}>
                   <div
-                    className="flex align-items-center justify-content-center border-round-lg flex-shrink-0"
+                    className="flex align-items-center justify-content-center border-round-lg flex-shrink-0 stats-icon"
                     style={{
-                      width: '48px',
-                      height: '48px',
-                      backgroundColor: '#f5f0e8'
+                      width: '56px',
+                      height: '56px',
+                      backgroundColor: action.color === 'blue' ? '#dbeafe' : 
+                                   action.color === 'green' ? '#dcfce7' :
+                                   action.color === 'orange' ? '#fed7aa' :
+                                   action.color === 'red' ? '#fee2e2' : '#f3f4f6',
+                      transition: 'all 0.3s ease'
                     }}
                   >
                     <i
                       className={`${action.icon}`}
                       style={{
-                        fontSize: '1.5rem',
-                        color: '#8b5e3c'
+                        fontSize: '1.75rem',
+                        color: action.color === 'blue' ? '#3b82f6' : 
+                               action.color === 'green' ? '#10b981' :
+                               action.color === 'orange' ? '#f59e0b' :
+                               action.color === 'red' ? '#ef4444' : '#6b7280',
+                        transition: 'all 0.3s ease'
                       }}
                     ></i>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-base font-semibold m-0" style={{  lineHeight: '1.2', color: '#333333' }}>{action.title}</h3>
+                    <h3 className="text-base font-semibold m-0 mb-1" style={{ lineHeight: '1.2', color: '#333333' }}>
+                      {action.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 m-0" style={{ lineHeight: '1.4' }}>
+                      {action.description}
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <i className="pi pi-arrow-right text-gray-400" style={{ fontSize: '0.875rem' }}></i>
                   </div>
                 </div>
               </div>

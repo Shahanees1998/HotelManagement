@@ -18,6 +18,21 @@ interface FeedbackDetails {
   submittedAt: string;
   isPublic: boolean;
   predefinedAnswers: any;
+  form?: {
+    title: string;
+    description: string;
+    layout: string;
+    predefinedQuestions?: {
+      hasRateUs: boolean;
+      hasCustomRating: boolean;
+      hasFeedback: boolean;
+      customRatingItems: Array<{
+        id: string;
+        label: string;
+        order: number;
+      }>;
+    };
+  };
   questionAnswers?: Array<{
     questionId: string;
     answer: string;
@@ -125,6 +140,11 @@ export default function FeedbackPopup({ visible, onHide, reviewId }: FeedbackPop
         }
         return parsed;
       } catch {
+        // If it's not JSON, clean up repetitive text
+        if (answer.includes('Please give us your honest feed')) {
+          const cleanAnswer = answer.replace(/Please give us your honest feed/g, '').trim();
+          return cleanAnswer.length > 0 ? cleanAnswer : 'No specific feedback provided';
+        }
         return answer;
       }
     }
@@ -134,13 +154,19 @@ export default function FeedbackPopup({ visible, onHide, reviewId }: FeedbackPop
   return (
     <>
       <Dialog
-        header="Guest Feedback Details"
+        header={
+          <div className="flex align-items-center gap-2">
+            <i className="pi pi-star text-yellow-500" style={{ fontSize: '1.2rem' }}></i>
+            <span>Guest Feedback Details</span>
+            <i className="pi pi-info-circle text-blue-500" style={{ fontSize: '1rem' }}></i>
+          </div>
+        }
         visible={visible}
         onHide={onHide}
         style={{ width: '90vw', maxWidth: '800px' }}
         maximizable
         modal
-        className="feedback-popup"
+        className="feedback-popup animate-fade-in"
       >
         {loading ? (
           <div className="space-y-4">
@@ -153,22 +179,29 @@ export default function FeedbackPopup({ visible, onHide, reviewId }: FeedbackPop
         ) : feedback ? (
           <div className="space-y-6">
             {/* Guest Information */}
-            <div className="border-1 border-200 border-round p-4">
-              <h3 className="text-lg font-semibold mb-3">Guest Information</h3>
+            <div className="border-1 border-200 border-round p-4 animate-slide-in-left">
+              <h3 className="text-lg font-semibold mb-3 flex align-items-center gap-2">
+                <i className="pi pi-user text-blue-500"></i>
+                Guest Information
+              </h3>
               <div className="grid">
                 <div className="col-12 md:col-6">
-                  <div className="mb-2">
+                  <div className="mb-2 flex align-items-center gap-2">
+                    <i className="pi pi-id-card text-gray-500"></i>
                     <strong>Name:</strong> {feedback.guestName || 'Anonymous'}
                   </div>
-                  <div className="mb-2">
+                  <div className="mb-2 flex align-items-center gap-2">
+                    <i className="pi pi-envelope text-gray-500"></i>
                     <strong>Email:</strong> {feedback.guestEmail || 'Not provided'}
                   </div>
                 </div>
                 <div className="col-12 md:col-6">
-                  <div className="mb-2">
+                  <div className="mb-2 flex align-items-center gap-2">
+                    <i className="pi pi-phone text-gray-500"></i>
                     <strong>Phone:</strong> {feedback.guestPhone || 'Not provided'}
                   </div>
-                  <div className="mb-2">
+                  <div className="mb-2 flex align-items-center gap-2">
+                    <i className="pi pi-calendar text-gray-500"></i>
                     <strong>Submitted:</strong> {formatDate(feedback.submittedAt)}
                   </div>
                 </div>
@@ -195,18 +228,69 @@ export default function FeedbackPopup({ visible, onHide, reviewId }: FeedbackPop
               <div className="border-1 border-200 border-round p-4">
                 <h3 className="text-lg font-semibold mb-3">Quick Feedback</h3>
                 <div className="space-y-3">
-                  {Object.entries(JSON.parse(feedback.predefinedAnswers)).map(([questionId, answer]) => (
-                    <div key={questionId} className="border-bottom-1 border-200 pb-3">
-                      <div className="font-semibold mb-1">
-                        {questionId === 'rate-us' ? 'How do you rate us?' :
-                         questionId === 'feedback' ? 'Your feedback:' :
-                         questionId === 'custom-rating' ? 'Custom Rating:' : questionId}
+                  {Object.entries(JSON.parse(feedback.predefinedAnswers)).map(([questionId, answer]) => {
+                    // Handle different question types
+                    let questionLabel = '';
+                    let displayAnswer = answer;
+                    
+                    if (questionId === 'rate-us') {
+                      questionLabel = 'How do you rate us?';
+                      // Show visual stars instead of text
+                      const rating = parseInt(String(answer));
+                      displayAnswer = Array.from({ length: 5 }, (_, i) => 
+                        i < rating ? '★' : '☆'
+                      ).join('');
+                    } else if (questionId === 'feedback') {
+                      questionLabel = 'Please give us your honest feedback?';
+                      // Clean up repetitive placeholder text
+                      let cleanAnswer = String(answer);
+                      if (cleanAnswer.includes('Please give us your honest feed')) {
+                        // Remove repetitive placeholder text
+                        cleanAnswer = cleanAnswer.replace(/Please give us your honest feed/g, '').trim();
+                        if (cleanAnswer.length === 0) {
+                          cleanAnswer = 'No specific feedback provided';
+                        }
+                      }
+                      displayAnswer = cleanAnswer;
+                    } else if (questionId.startsWith('custom-rating-')) {
+                      // This is a custom rating item - get the actual label from form data
+                      const customRatingItemId = questionId.replace('custom-rating-', '');
+                      const customRatingItem = feedback.form?.predefinedQuestions?.customRatingItems?.find(
+                        item => item.id === customRatingItemId
+                      );
+                      questionLabel = customRatingItem?.label || `Custom Rating Item (${customRatingItemId})`;
+                      // Show visual stars instead of text
+                      const rating = parseInt(String(answer));
+                      displayAnswer = Array.from({ length: 5 }, (_, i) => 
+                        i < rating ? '★' : '☆'
+                      ).join('');
+                    } else if (questionId === 'custom-rating') {
+                      questionLabel = 'Custom Rating:';
+                      displayAnswer = String(answer);
+                    } else {
+                      questionLabel = questionId;
+                      displayAnswer = typeof answer === 'object' ? JSON.stringify(answer) : String(answer);
+                    }
+                    
+                    return (
+                      <div key={questionId} className="border-bottom-1 border-200 pb-3">
+                        <div className="font-semibold mb-1">{questionLabel}</div>
+                        <div className="text-600">
+                          {questionId === 'rate-us' || questionId.startsWith('custom-rating-') ? (
+                            <span style={{ 
+                              fontSize: '18px', 
+                              color: '#facc15',
+                              letterSpacing: '2px'
+                            }}>
+                              {String(displayAnswer)}
+                            </span>
+                          ) : (
+                            String(displayAnswer)
+                          )}
+                        </div>
                       </div>
-                      <div className="text-600">
-                        {typeof answer === 'object' ? JSON.stringify(answer) : String(answer)}
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             )}

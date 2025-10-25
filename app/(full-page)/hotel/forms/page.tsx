@@ -521,13 +521,7 @@ export default function HotelForms() {
                 <Column field="questionsCount" header="Questions" sortable style={{ minWidth: '100px' }} />
                 <Column field="totalResponses" header="Responses" sortable style={{ minWidth: '100px' }} />
                 <Column field="status" header="Status" body={statusBodyTemplate} style={{ minWidth: '120px' }} />
-                <Column 
-                  field="updatedAt" 
-                  header="Last Updated" 
-                  body={(rowData) => formatDate(rowData.updatedAt)}
-                  sortable 
-                  style={{ minWidth: '150px' }}
-                />
+
                 <Column 
                   header="Actions" 
                   body={actionsBodyTemplate} 
