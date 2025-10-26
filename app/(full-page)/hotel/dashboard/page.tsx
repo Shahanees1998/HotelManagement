@@ -178,7 +178,7 @@ export default function HotelDashboard() {
       title: "Generate QR Code",
       description: "Generate QR codes for feedback collection",
       icon: "pi pi-qrcode",
-      route: "/hotel/qr",
+      route: "/hotel/qr-codes",
       color: "green",
       canAccess: true,
     },

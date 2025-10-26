@@ -493,14 +493,6 @@ export default function NotificationsPage() {
                                 <div className="text-600">Broadcasts</div>
                             </Card>
                         </div>
-                        <div className="col-12 md:col-3">
-                            <Card className="text-center">
-                                <div className="text-2xl font-bold text-purple-500">
-                                    {notifications.filter(n => n.type === 'SUPPORT_RESPONSE').length}
-                                </div>
-                                <div className="text-600">Support</div>
-                            </Card>
-                        </div>
                     </div>
                 </div>
             </div>

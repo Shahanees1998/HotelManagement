@@ -26,6 +26,18 @@ interface FormQuestion {
   }>;
 }
 
+interface PredefinedQuestionSection {
+  id: string;
+  hasRateUs: boolean;
+  hasCustomRating: boolean;
+  hasFeedback: boolean;
+  customRatingItems: Array<{
+    id: string;
+    label: string;
+    order: number;
+  }>;
+}
+
 interface FormDetail {
   id: string;
   title: string;
@@ -38,7 +50,8 @@ interface FormDetail {
     name: string;
     slug: string;
   };
-  questions: FormQuestion[];
+  customQuestions: FormQuestion[];
+  predefinedQuestions: PredefinedQuestionSection | null;
   questionCount: number;
   responseCount: number;
   averageRating: number;
@@ -131,8 +144,55 @@ export default function AdminFormDetail() {
     );
   }
 
+  // Create virtual predefined questions based on the predefined section flags
+  const predefinedQuestions: FormQuestion[] = [];
+  
+  if (form.predefinedQuestions) {
+    if (form.predefinedQuestions.hasRateUs) {
+      predefinedQuestions.push({
+        id: 'predefined-rate-us',
+        question: 'How would you rate your overall experience?',
+        type: 'STAR_RATING',
+        isRequired: true,
+        options: [],
+        section: 'RATING',
+        order: 1,
+      });
+    }
+    
+    if (form.predefinedQuestions.hasCustomRating && form.predefinedQuestions.customRatingItems) {
+      form.predefinedQuestions.customRatingItems.forEach((item, index) => {
+        predefinedQuestions.push({
+          id: `predefined-custom-rating-${item.id}`,
+          question: item.label,
+          type: 'CUSTOM_RATING',
+          isRequired: true,
+          options: [],
+          section: 'RATING',
+          order: 2 + index,
+          customRatingItems: [item],
+        });
+      });
+    }
+    
+    if (form.predefinedQuestions.hasFeedback) {
+      predefinedQuestions.push({
+        id: 'predefined-feedback',
+        question: 'Please share any additional feedback or suggestions',
+        type: 'LONG_TEXT',
+        isRequired: false,
+        options: [],
+        section: 'FEEDBACK',
+        order: 100,
+      });
+    }
+  }
+
+  // Combine custom and predefined questions
+  const allQuestions = [...(form.customQuestions || []), ...predefinedQuestions];
+  
   // Group questions by section
-  const groupedQuestions = form.questions.reduce((acc, question) => {
+  const groupedQuestions = allQuestions.reduce((acc, question) => {
     if (!acc[question.section]) {
       acc[question.section] = [];
     }
@@ -326,7 +386,7 @@ export default function AdminFormDetail() {
           <div className="flex flex-column gap-4">
             <div className="text-center p-3 border-1 border-200 border-round">
               <i className="pi pi-question-circle text-4xl text-primary mb-2"></i>
-              <div className="text-2xl font-bold text-900">{form.questionCount}</div>
+              <div className="text-2xl font-bold text-900">{allQuestions.length}</div>
               <div className="text-600 text-sm">Total Questions</div>
             </div>
             <div className="text-center p-3 border-1 border-200 border-round">
@@ -371,6 +431,8 @@ export default function AdminFormDetail() {
     </div>
   );
 }
+
+
 
 
 

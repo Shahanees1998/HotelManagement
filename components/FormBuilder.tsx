@@ -6,14 +6,9 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dropdown } from "primereact/dropdown";
-import { Checkbox } from "primereact/checkbox";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-const DragDropContextTyped = DragDropContext as any;
-const DroppableTyped = Droppable as any;
-const DraggableTyped = Draggable as any;
-import type { DropResult } from "react-beautiful-dnd";
+// Removed drag and drop animations
 
 
 interface FormQuestion {
@@ -148,24 +143,7 @@ export default function FormBuilder({ hotelId, formId, onSave }: FormBuilderProp
     }
   };
 
-  const onDragEnd = (result: DropResult) => {
-    if (!result.destination) return;
-
-    const items = Array.from(form.questions);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    // Update order
-    const updatedQuestions = items.map((q, index) => ({
-      ...q,
-      order: index,
-    }));
-
-    setForm(prev => ({
-      ...prev,
-      questions: updatedQuestions,
-    }));
-  };
+  // Removed drag and drop functionality
 
   const saveForm = async () => {
     if (!form.title.trim()) {
@@ -234,7 +212,7 @@ export default function FormBuilder({ hotelId, formId, onSave }: FormBuilderProp
           <div className="flex flex-column gap-2">
             {question.options.map((option, index) => (
               <div key={index} className="flex align-items-center">
-                <input type="radio" disabled className="mr-2" />
+                <input type="radio" name={`${question.id}-radio`} disabled className="mr-2" />
                 <span>{option || `Option ${index + 1}`}</span>
               </div>
             ))}
@@ -335,57 +313,39 @@ export default function FormBuilder({ hotelId, formId, onSave }: FormBuilderProp
             />
           </div>
 
-          <DragDropContextTyped onDragEnd={onDragEnd}>
-            <DroppableTyped droppableId="questions">
-              {(provided: any) => (
-                <div {...provided.droppableProps} ref={provided.innerRef}>
-                  {form.questions.map((question, index) => (
-                    <DraggableTyped key={question.id} draggableId={question.id} index={index}>
-                      {(provided: any, snapshot: any) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          className={`border-1 surface-border border-round p-3 mb-3 ${
-                            snapshot.isDragging ? "shadow-2" : ""
-                          }`}
-                        >
-                          <div className="flex justify-content-between align-items-start mb-3">
-                            <div className="flex align-items-center gap-2">
-                              <i className="pi pi-bars text-400 cursor-move" {...provided.dragHandleProps}></i>
-                              <span className="text-600">Question {index + 1}</span>
-                            </div>
-                            <div className="flex gap-2">
-                              <Button
-                                icon="pi pi-pencil"
-                                size="small"
-                                className="p-button-outlined p-button-sm"
-                                onClick={() => setEditingQuestion(question)}
-                              />
-                              <Button
-                                icon="pi pi-trash"
-                                size="small"
-                                className="p-button-outlined p-button-sm p-button-danger"
-                                onClick={() => deleteQuestion(question.id)}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="mb-3">
-                            <label className="block text-900 font-medium mb-2">
-                              {question.question || "Untitled Question"}
-                              {question.isRequired && <span className="text-red-500 ml-1">*</span>}
-                            </label>
-                            {renderQuestionPreview(question)}
-                          </div>
-                        </div>
-                      )}
-                    </DraggableTyped>
-                  ))}
-                  {provided.placeholder}
+          <div>
+            {form.questions.map((question, index) => (
+              <div key={question.id} className="border-1 surface-border border-round p-3 mb-3">
+                <div className="flex justify-content-between align-items-start mb-3">
+                  <div className="flex align-items-center gap-2">
+                    <span className="text-600">Question {index + 1}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      icon="pi pi-pencil"
+                      size="small"
+                      className="p-button-outlined p-button-sm"
+                      onClick={() => setEditingQuestion(question)}
+                    />
+                    <Button
+                      icon="pi pi-trash"
+                      size="small"
+                      className="p-button-outlined p-button-sm p-button-danger"
+                      onClick={() => deleteQuestion(question.id)}
+                    />
+                  </div>
                 </div>
-              )}
-            </DroppableTyped>
-          </DragDropContextTyped>
+
+                <div className="mb-3">
+                  <label className="block text-900 font-medium mb-2">
+                    {question.question || "Untitled Question"}
+                    {question.isRequired && <span className="text-red-500 ml-1">*</span>}
+                  </label>
+                  {renderQuestionPreview(question)}
+                </div>
+              </div>
+            ))}
+          </div>
 
           {form.questions.length === 0 && (
             <div className="text-center py-4">
@@ -436,14 +396,16 @@ export default function FormBuilder({ hotelId, formId, onSave }: FormBuilderProp
               </div>
 
               <div className="flex align-items-center">
-                <Checkbox
-                  inputId="required"
+                <input
+                  type="checkbox"
+                  id="required"
                   checked={editingQuestion.isRequired}
                   onChange={(e) => {
-                    const updated = { ...editingQuestion, isRequired: e.checked || false };
+                    const updated = { ...editingQuestion, isRequired: e.target.checked };
                     setEditingQuestion(updated);
-                    updateQuestion(editingQuestion.id, { isRequired: e.checked || false });
+                    updateQuestion(editingQuestion.id, { isRequired: e.target.checked });
                   }}
+                  className="mr-2"
                 />
                 <label htmlFor="required" className="ml-2">Required question</label>
               </div>

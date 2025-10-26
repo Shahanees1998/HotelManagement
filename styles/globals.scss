@@ -26,6 +26,35 @@ a {
 //   padding: 0 10px 0px 10px !important;
 // }
 
+/* Disable dropdown animations globally */
+.p-dropdown-panel {
+  transition: none !important;
+  animation: none !important;
+}
+
+.p-dropdown-panel.p-component-overlay-enter {
+  animation: none !important;
+}
+
+.p-dropdown-panel.p-component-overlay-leave {
+  animation: none !important;
+}
+
+/* Disable all PrimeReact overlay animations */
+.p-component-overlay-enter {
+  animation: none !important;
+}
+
+.p-component-overlay-leave {
+  animation: none !important;
+}
+
+/* Disable dropdown panel transitions */
+.p-dropdown-panel {
+  transform: none !important;
+  opacity: 1 !important;
+}
+
 /* PrimeReact Components Font Override - Exclude Icons */
 .p-component:not([class*="pi"]):not([class*="p-icon"]):not(i),
 .p-button:not([class*="pi"]):not([class*="p-icon"]):not(i),
@@ -195,12 +224,15 @@ a {
 
 // Success button
 .p-button-success {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  border: 1px solid #1B2A49 !important;
+  background: transparent !important;
+  color: #1B2A49 !important;
   
   &:hover {
-    background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+    background: #1B2A49 !important;
+    color: white !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3) !important;
+    box-shadow: 0 8px 25px rgba(27, 42, 73, 0.3) !important;
   }
 }
 

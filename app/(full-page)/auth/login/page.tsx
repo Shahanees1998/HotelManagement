@@ -142,21 +142,17 @@ const LoginContent = () => {
                 <div className="surface-card border-round py-7 px-4 md:px-7 z-1 animate-fade-in" style={{ width: "100%", maxWidth: "480px", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)" }}>
                     <div className="mb-4 animate-slide-in-left">
                         <div className="text-[#1B2A49] text-3xl font-bold mb-2 flex align-items-center gap-2">
-                            <i className="pi pi-user text-blue-500"></i>
                             Welcome back!
                         </div>
                         <span className="text-600 font-thin flex align-items-center gap-2">
-                            <i className="pi pi-info-circle text-gray-500"></i>
                             Thank you for getting back to C-Reviews, the easiest way for hotels to collect and improve through guest feedback.
                         </span>
                     </div>
                     <div className="flex flex-column">
                         <label htmlFor="email" className="text-900 font-medium mb-2 flex align-items-center gap-2">
-                            <i className="pi pi-envelope text-blue-500"></i>
                             Email Address<span style={{ color: "red" }}>*</span>
                         </label>
                         <span className="p-input-icon-left w-full mb-1">
-                            <i className="pi pi-envelope text-gray-500"></i>
                             <InputText
                                 id="email"
                                 type="email"
@@ -175,12 +171,10 @@ const LoginContent = () => {
                         )}
                         
                         <label htmlFor="password" className="text-900 font-medium mb-2 mt-3 flex align-items-center gap-2">
-                            <i className="pi pi-lock text-blue-500"></i>
                             Password<span style={{ color: "red" }}>*</span>
                         </label>
                         <div style={{ position: "relative" }} className="w-full mb-1">
                             <span className="p-input-icon-left w-full">
-                                <i className="pi pi-lock"></i>
                                 <InputText
                                     id="password"
                                     type={showPassword ? "text" : "password"}

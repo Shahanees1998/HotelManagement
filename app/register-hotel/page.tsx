@@ -40,7 +40,7 @@ export default function RegisterHotel() {
     email: "",
     phone: "",
     password: "",
-    
+
     // Hotel Information
     hotelName: "",
     hotelWebsite: "",
@@ -49,7 +49,7 @@ export default function RegisterHotel() {
     country: "",
     hotelDescription: "",
   });
-  
+
   const router = useRouter();
   const toast = useRef<Toast>(null);
 
@@ -164,17 +164,17 @@ export default function RegisterHotel() {
   return (
     <div style={{ backgroundColor: "#FDFCF9", display: "flex", flexDirection: "column", minHeight: "100vh" }} className="animate-fade-in">
       <Toast ref={toast} />
-      
+
       {/* Header */}
       <AuthHeader />
 
       {/* Main Content */}
       <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", padding: "2rem 1rem" }}>
-        <div style={{ 
-          display: "grid", 
-          gridTemplateColumns: "1fr 1fr", 
-          gap: "2rem", 
-          width: "100%", 
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "2rem",
+          width: "100%",
           maxWidth: "1200px",
           alignItems: "center"
         }}>
@@ -187,26 +187,18 @@ export default function RegisterHotel() {
                   <div className="text-[#1B2A49] text-2xl font-bold mb-2 flex align-items-center gap-2">
                     <i className="pi pi-user text-blue-500"></i>
                     Owner Information!
-              </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
-                    <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
-                      Is my data safe?
-                    </span>
-                    <i className="pi pi-info-circle" style={{ fontSize: "1rem", color: "#6b7280" }}></i>
                   </div>
-              </div>
+                </div>
 
                 <div className="flex flex-column">
                   <label htmlFor="fullName" className="text-900 font-medium mb-2 flex align-items-center gap-2">
-                    <i className="pi pi-user text-blue-500"></i>
                     Full Name<span style={{ color: "red" }}>*</span>
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
-                    <i className="pi pi-user text-gray-500"></i>
                     <InputText
                       id="fullName"
                       type="text"
-                  className="w-full"
+                      className="w-full"
                       placeholder="Enter your full name"
                       value={formData.fullName}
                       onChange={(e) => handleInputChange('fullName', e.target.value)}
@@ -214,15 +206,13 @@ export default function RegisterHotel() {
                   </span>
 
                   <label htmlFor="email" className="text-900 font-medium mb-2 flex align-items-center gap-2">
-                    <i className="pi pi-envelope text-blue-500"></i>
                     Email Address<span style={{ color: "red" }}>*</span>
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
-                    <i className="pi pi-envelope text-gray-500"></i>
-                <InputText
+                    <InputText
                       id="email"
                       type="email"
-                  className="w-full"
+                      className="w-full"
                       placeholder="Enter your email address"
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
@@ -233,11 +223,10 @@ export default function RegisterHotel() {
                     Phone Number<span style={{ color: "red" }}>*</span>
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
-                    <i className="pi pi-phone"></i>
-                <InputText
+                    <InputText
                       id="phone"
                       type="tel"
-                  className="w-full"
+                      className="w-full"
                       placeholder="Enter your phone number"
                       value={formData.phone}
                       onChange={(e) => handleInputChange('phone', e.target.value)}
@@ -249,11 +238,10 @@ export default function RegisterHotel() {
                   </label>
                   <div style={{ position: "relative" }} className="w-full mb-4">
                     <span className="p-input-icon-left w-full">
-                      <i className="pi pi-lock"></i>
                       <InputText
                         id="password"
                         type={showPassword ? "text" : "password"}
-                  className="w-full"
+                        className="w-full"
                         placeholder="Enter your password"
                         value={formData.password}
                         onChange={(e) => handleInputChange('password', e.target.value)}
@@ -278,7 +266,7 @@ export default function RegisterHotel() {
                     >
                       <i className={`pi ${showPassword ? "pi-eye-slash" : "pi-eye"}`}></i>
                     </button>
-              </div>
+                  </div>
 
                   <div className="flex align-items-start mb-4">
                     <Checkbox
@@ -297,13 +285,13 @@ export default function RegisterHotel() {
                         Privacy Policy
                       </a>
                     </label>
-              </div>
+                  </div>
 
                   <Button
                     label="Let's Keep Going!"
                     icon="pi pi-arrow-right"
                     iconPos="right"
-                  className="w-full hover-lift animate-scale-in"
+                    className="w-full hover-lift animate-scale-in"
                     style={{
                       backgroundColor: "#1e3a5f",
                       border: "none",
@@ -319,7 +307,7 @@ export default function RegisterHotel() {
                       or register via
                     </span>
                     <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
-              </div>
+                  </div>
 
                   <div className="text-center">
                     <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
@@ -348,7 +336,7 @@ export default function RegisterHotel() {
                     </span>
                     <i className="pi pi-info-circle" style={{ fontSize: "1rem", color: "#6b7280" }}></i>
                   </div>
-              </div>
+                </div>
 
                 <div className="flex flex-column">
                   <label htmlFor="hotelName" className="text-900 font-medium mb-2">
@@ -356,10 +344,10 @@ export default function RegisterHotel() {
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
                     <i className="pi pi-building"></i>
-                <InputText
+                    <InputText
                       id="hotelName"
                       type="text"
-                  className="w-full"
+                      className="w-full"
                       placeholder="Enter hotel name"
                       value={formData.hotelName}
                       onChange={(e) => handleInputChange('hotelName', e.target.value)}
@@ -371,20 +359,20 @@ export default function RegisterHotel() {
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
                     <i className="pi pi-globe"></i>
-                <InputText
+                    <InputText
                       id="hotelWebsite"
                       type="url"
-                  className="w-full"
+                      className="w-full"
                       placeholder="Enter hotel website url"
                       value={formData.hotelWebsite}
                       onChange={(e) => handleInputChange('hotelWebsite', e.target.value)}
-                />
+                    />
                   </span>
 
                   <label htmlFor="hotelAddress" className="text-900 font-medium mb-2">
                     Hotel Address<span style={{ color: "red" }}>*</span>
                   </label>
-                <InputText
+                  <InputText
                     id="hotelAddress"
                     type="text"
                     className="w-full mb-4"
@@ -452,7 +440,7 @@ export default function RegisterHotel() {
                         Privacy Policy
                       </a>
                     </label>
-              </div>
+                  </div>
 
                   <Button
                     label={loading ? "Registering..." : "Register Now"}
@@ -484,7 +472,7 @@ export default function RegisterHotel() {
                       <a
                         className="cursor-pointer"
                         style={{ color: "#1e3a5f", fontWeight: 600 }}
-                    onClick={() => router.push('/auth/login')}
+                        onClick={() => router.push('/auth/login')}
                       >
                         Login
                       </a>
@@ -498,12 +486,12 @@ export default function RegisterHotel() {
           {/* Right Side - Illustration */}
           <div>
             {step === 1 ? (
-            <img src="/images/owner-information.svg" alt="Register Hotel" style={{ width: "100%", height: "100%" }} />
+              <img src="/images/owner-information.svg" alt="Register Hotel" style={{ width: "100%", height: "100%" }} />
             ) : (
               <img src="/images/hotel-information.svg" alt="Register Hotel" style={{ width: "100%", height: "100%" }} />
 
             )}
-            </div>
+          </div>
         </div>
       </div>
 

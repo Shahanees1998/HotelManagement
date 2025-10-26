@@ -193,20 +193,8 @@ export default function CustomerFeedbackForm() {
       }
     }
 
-    // Validate custom questions (filtered to avoid duplicates with predefined questions)
-    const filteredQuestions = translatedForm.questions.filter(question => {
-      // Filter out CUSTOM_RATING questions if predefined custom rating is enabled
-      if (question.type === 'CUSTOM_RATING' && translatedForm.predefinedQuestions?.hasCustomRating) {
-        return false;
-      }
-      // Filter out LONG_TEXT questions if predefined feedback is enabled
-      if (question.type === 'LONG_TEXT' && translatedForm.predefinedQuestions?.hasFeedback) {
-        return false;
-      }
-      return true;
-    });
-
-    for (const question of filteredQuestions) {
+    // Validate custom questions
+    for (const question of translatedForm.questions) {
       if (question.isRequired) {
         if (question.type === 'CUSTOM_RATING' && question.customRatingItems) {
           // For custom rating, check if at least one rating item has been answered
@@ -976,105 +964,11 @@ export default function CustomerFeedbackForm() {
                 />
               </div>
             )}
-
-            {/* Custom Rating Questions */}
-            {translatedForm.predefinedQuestions.hasCustomRating && translatedForm.predefinedQuestions.customRatingItems && (
-              <div style={{ marginBottom: "20px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    color: "#444",
-                    marginBottom: "6px",
-                  }}
-                >
-                  Please rate the following: <span style={{ color: "#dc3545" }}>*</span>
-                </label>
-                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                  {translatedForm.predefinedQuestions.customRatingItems.map((item, itemIndex) => {
-                    const rating = submission.answers[`custom-rating-${item.id}`] || 0;
-                    return (
-                      <div
-                        key={item.id}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
-                        <span style={{ fontSize: "14px", fontWeight: 500, color: "#333" }}>
-                          {item.label}
-                        </span>
-                        <div style={{ display: "flex", gap: "4px" }}>
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <span
-                              key={i}
-                              style={{
-                                fontSize: "18px",
-                                color: i < rating ? "#facc15" : "#d1d5db",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => handleAnswerChange(`custom-rating-${item.id}`, i + 1)}
-                            >
-                              ★
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* Feedback Question */}
-            {translatedForm.predefinedQuestions.hasFeedback && (
-              <div style={{ marginBottom: "20px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    color: "#444",
-                    marginBottom: "6px",
-                  }}
-                >
-                  Please give us your honest feedback?
-                </label>
-                <InputTextarea
-                  value={submission.answers['feedback'] || ''}
-                  onChange={(e) => handleAnswerChange('feedback', e.target.value)}
-                  placeholder="Please share your thoughts about your experience..."
-                  rows={4}
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "6px",
-                    border: "1px solid #ced4da",
-                    fontSize: "14px",
-                    resize: "none",
-                  }}
-                />
-              </div>
-            )}
           </>
         )}
 
         {/* Custom Questions */}
-        {translatedForm?.questions
-          .filter(question => {
-            // Filter out CUSTOM_RATING questions if predefined custom rating is enabled
-            if (question.type === 'CUSTOM_RATING' && translatedForm.predefinedQuestions?.hasCustomRating) {
-              return false;
-            }
-            // Filter out LONG_TEXT questions if predefined feedback is enabled
-            if (question.type === 'LONG_TEXT' && translatedForm.predefinedQuestions?.hasFeedback) {
-              return false;
-            }
-            return true;
-          })
-          .map((question, index) => (
+        {translatedForm?.questions.map((question, index) => (
           <div key={question.id} style={{ marginBottom: "20px" }}>
             <label
               style={{
@@ -1135,13 +1029,19 @@ export default function CustomerFeedbackForm() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                   {question.options.map((option, optIndex) => (
                     <div key={optIndex} style={{ display: "flex", alignItems: "center" }}>
-                      <RadioButton
-                        inputId={`${question.id}-${optIndex}`}
+                      <input
+                        type="radio"
+                        id={`${question.id}-${optIndex}`}
                         name={question.id}
                         value={option}
                         checked={submission.answers[question.id] === option}
-                        onChange={(e) => handleAnswerChange(question.id, e.value)}
-                        style={{ marginRight: "8px" }}
+                        onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                        style={{ 
+                          marginRight: "8px",
+                          width: "16px",
+                          height: "16px",
+                          accentColor: "#007bff"
+                        }}
                       />
                       <label htmlFor={`${question.id}-${optIndex}`} style={{ fontSize: "14px", color: "#333" }}>
                         {option}
@@ -1179,24 +1079,36 @@ export default function CustomerFeedbackForm() {
               {question.type === "YES_NO" && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <RadioButton
-                      inputId={`${question.id}-yes`}
+                    <input
+                      type="radio"
+                      id={`${question.id}-yes`}
                       name={question.id}
                       value="Yes"
                       checked={submission.answers[question.id] === "Yes"}
-                      onChange={(e) => handleAnswerChange(question.id, e.value)}
-                      style={{ marginRight: "8px" }}
+                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                      style={{ 
+                        marginRight: "8px",
+                        width: "16px",
+                        height: "16px",
+                        accentColor: "#007bff"
+                      }}
                     />
                     <label htmlFor={`${question.id}-yes`} style={{ fontSize: "14px", color: "#333" }}>Yes</label>
                   </div>
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <RadioButton
-                      inputId={`${question.id}-no`}
+                    <input
+                      type="radio"
+                      id={`${question.id}-no`}
                       name={question.id}
                       value="No"
                       checked={submission.answers[question.id] === "No"}
-                      onChange={(e) => handleAnswerChange(question.id, e.value)}
-                      style={{ marginRight: "8px" }}
+                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                      style={{ 
+                        marginRight: "8px",
+                        width: "16px",
+                        height: "16px",
+                        accentColor: "#007bff"
+                      }}
                     />
                     <label htmlFor={`${question.id}-no`} style={{ fontSize: "14px", color: "#333" }}>No</label>
                   </div>

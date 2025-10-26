@@ -446,8 +446,8 @@ export default function FeedbackFormBuilder({
     }
 
     // Check if either Rate Us or Custom Rating is selected
-    const hasRateUs = form.questions.some(q => q.question === "Rate Us");
-    const hasCustomRating = form.questions.some(q => q.question === "Custom Rating");
+    const hasRateUs = form.questions.some(q => q.isDefault && q.question === "Rate Us");
+    const hasCustomRating = form.questions.some(q => q.isDefault && q.question === "Custom Rating");
     
     if (!hasRateUs && !hasCustomRating) {
       showToast("warn", "Warning", "Either 'Rate Us' or 'Custom Rating' must be selected");
@@ -458,9 +458,9 @@ export default function FeedbackFormBuilder({
     try {
       // Prepare predefined questions section data
       const predefinedSection = {
-        hasRateUs: form.questions.some(q => q.question === "Rate Us"),
-        hasCustomRating: form.questions.some(q => q.question === "Custom Rating"),
-        hasFeedback: form.questions.some(q => q.question === "Please give us your honest feedback?"),
+        hasRateUs: form.questions.some(q => q.isDefault && q.question === "Rate Us"),
+        hasCustomRating: form.questions.some(q => q.isDefault && q.question === "Custom Rating"),
+        hasFeedback: form.questions.some(q => q.isDefault && q.question === "Please give us your honest feedback?"),
         customRatingItems: customRatingItems.map((item, index) => ({
           label: item.label,
           order: index,
@@ -483,6 +483,7 @@ export default function FeedbackFormBuilder({
 
       const formToSave = {
         ...form,
+        questions: form.questions.filter(q => q.isDefault), // Only include predefined questions in main questions array
         predefinedSection,
         customQuestions
       };
@@ -540,7 +541,17 @@ export default function FeedbackFormBuilder({
             <div className="radio-group">
               {question.options.map((option, optIndex) => (
                 <div key={optIndex} className="radio-option">
-                  <RadioButton checked={false} disabled />
+                  <input
+                    type="radio"
+                    checked={false}
+                    disabled
+                    style={{ 
+                      marginRight: "8px",
+                      width: "16px",
+                      height: "16px",
+                      accentColor: "#007bff"
+                    }}
+                  />
                   <label>{option}</label>
                 </div>
               ))}
@@ -561,11 +572,31 @@ export default function FeedbackFormBuilder({
           {question.type === "YES_NO" && (
             <div className="radio-group">
               <div className="radio-option">
-                <RadioButton checked={false} disabled />
+                <input
+                  type="radio"
+                  checked={false}
+                  disabled
+                  style={{ 
+                    marginRight: "8px",
+                    width: "16px",
+                    height: "16px",
+                    accentColor: "#007bff"
+                  }}
+                />
                 <label>Yes</label>
               </div>
               <div className="radio-option">
-                <RadioButton checked={false} disabled />
+                <input
+                  type="radio"
+                  checked={false}
+                  disabled
+                  style={{ 
+                    marginRight: "8px",
+                    width: "16px",
+                    height: "16px",
+                    accentColor: "#007bff"
+                  }}
+                />
                 <label>No</label>
               </div>
             </div>
@@ -681,8 +712,8 @@ export default function FeedbackFormBuilder({
               className="p-button-primary save-form-btn"
               onClick={handleSave}
               loading={loading}
-              disabled={loading || (!form.questions.some(q => q.question === "Rate Us") && !form.questions.some(q => q.question === "Custom Rating"))}
-              tooltip={(!form.questions.some(q => q.question === "Rate Us") && !form.questions.some(q => q.question === "Custom Rating")) ? "Either 'Rate Us' or 'Custom Rating' must be selected" : "Save the form"}
+              disabled={loading || (!form.questions.some(q => q.isDefault && q.question === "Rate Us") && !form.questions.some(q => q.isDefault && q.question === "Custom Rating"))}
+              tooltip={(!form.questions.some(q => q.isDefault && q.question === "Rate Us") && !form.questions.some(q => q.isDefault && q.question === "Custom Rating")) ? "Either 'Rate Us' or 'Custom Rating' must be selected" : "Save the form"}
             />
           )}
         </div>
@@ -1110,7 +1141,17 @@ export default function FeedbackFormBuilder({
                             <div className="radio-group">
                               {question.options.map((option, optIndex) => (
                                 <div key={optIndex} className="radio-option">
-                                  <RadioButton checked={false} disabled />
+                                  <input
+                                    type="radio"
+                                    checked={false}
+                                    disabled
+                                    style={{ 
+                                      marginRight: "8px",
+                                      width: "16px",
+                                      height: "16px",
+                                      accentColor: "#007bff"
+                                    }}
+                                  />
                                   <label>{option}</label>
                                 </div>
                               ))}
@@ -1131,11 +1172,31 @@ export default function FeedbackFormBuilder({
                           {question.type === "YES_NO" && (
                             <div className="radio-group">
                               <div className="radio-option">
-                                <RadioButton checked={false} disabled />
+                                <input
+                                  type="radio"
+                                  checked={false}
+                                  disabled
+                                  style={{ 
+                                    marginRight: "8px",
+                                    width: "16px",
+                                    height: "16px",
+                                    accentColor: "#007bff"
+                                  }}
+                                />
                                 <label>Yes</label>
                               </div>
                               <div className="radio-option">
-                                <RadioButton checked={false} disabled />
+                                <input
+                                  type="radio"
+                                  checked={false}
+                                  disabled
+                                  style={{ 
+                                    marginRight: "8px",
+                                    width: "16px",
+                                    height: "16px",
+                                    accentColor: "#007bff"
+                                  }}
+                                />
                                 <label>No</label>
                               </div>
                             </div>
@@ -1668,7 +1729,16 @@ export default function FeedbackFormBuilder({
               </div>
               {questionForm.options.map((option, index) => (
                 <div key={index} className="flex align-items-center gap-2 mb-2">
-                  <RadioButton checked={false} disabled />
+                  <input
+                    type="radio"
+                    checked={false}
+                    disabled
+                    style={{ 
+                      width: "16px",
+                      height: "16px",
+                      accentColor: "#007bff"
+                    }}
+                  />
                   <span className="flex-1">{option}</span>
                   <Button
                     icon="pi pi-trash"
