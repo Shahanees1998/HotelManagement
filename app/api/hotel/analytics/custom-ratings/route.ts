@@ -20,6 +20,7 @@ interface CustomRatingData {
     averageRating: number;
     totalRatings: number;
   }>;
+  totalReviews?: number;
 }
 
 export async function GET(request: NextRequest) {
