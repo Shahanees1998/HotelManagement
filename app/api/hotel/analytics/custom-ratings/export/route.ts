@@ -106,8 +106,12 @@ export async function GET(request: NextRequest) {
                 
                 // Match by position
                 ratings = customRatingItems.map((item, index) => {
-                  const [, value] = ratingKeys[index] || [];
-                  return value || '';
+                  const entry = ratingKeys[index];
+                  if (entry) {
+                    const [, value] = entry;
+                    return typeof value === 'number' ? String(value) : '';
+                  }
+                  return '';
                 });
               }
             } catch (error) {
@@ -199,8 +203,12 @@ export async function GET(request: NextRequest) {
                 
                 // Match by position
                 ratings = customRatingItems.map((item, index) => {
-                  const [, value] = ratingKeys[index] || [];
-                  return value || 'N/A';
+                  const entry = ratingKeys[index];
+                  if (entry) {
+                    const [, value] = entry;
+                    return typeof value === 'number' ? String(value) : 'N/A';
+                  }
+                  return 'N/A';
                 });
               }
             } catch (error) {
