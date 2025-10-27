@@ -97,11 +97,17 @@ export async function GET(request: NextRequest) {
             try {
               const customRatingData = JSON.parse(review.predefinedAnswers);
               
-              // Extract custom rating values
+              // Extract custom rating values by position/order
               if (typeof customRatingData === 'object' && !Array.isArray(customRatingData)) {
-                ratings = customRatingItems.map(item => {
-                  const key = `custom-rating-${item.id}`;
-                  return customRatingData[key] || '';
+                // Get all rating keys and sort them to maintain order
+                const ratingKeys = Object.entries(customRatingData)
+                  .filter(([key]) => key.startsWith('custom-rating-') && typeof customRatingData[key] === 'number')
+                  .sort(([a], [b]) => a.localeCompare(b));
+                
+                // Match by position
+                ratings = customRatingItems.map((item, index) => {
+                  const [, value] = ratingKeys[index] || [];
+                  return value || '';
                 });
               }
             } catch (error) {
@@ -184,11 +190,17 @@ export async function GET(request: NextRequest) {
             try {
               const customRatingData = JSON.parse(review.predefinedAnswers);
               
-              // Extract custom rating values
+              // Extract custom rating values by position/order
               if (typeof customRatingData === 'object' && !Array.isArray(customRatingData)) {
-                ratings = customRatingItems.map(item => {
-                  const key = `custom-rating-${item.id}`;
-                  return customRatingData[key] || 'N/A';
+                // Get all rating keys and sort them to maintain order
+                const ratingKeys = Object.entries(customRatingData)
+                  .filter(([key]) => key.startsWith('custom-rating-') && typeof customRatingData[key] === 'number')
+                  .sort(([a], [b]) => a.localeCompare(b));
+                
+                // Match by position
+                ratings = customRatingItems.map((item, index) => {
+                  const [, value] = ratingKeys[index] || [];
+                  return value || 'N/A';
                 });
               }
             } catch (error) {

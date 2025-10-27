@@ -148,15 +148,19 @@ export async function GET(request: NextRequest) {
           if (customRatingData) {
             // Check if it's in the format: {"custom-rating-id": value, ...}
             if (typeof customRatingData === 'object' && !Array.isArray(customRatingData)) {
-              for (const [key, value] of Object.entries(customRatingData)) {
-                if (key.startsWith('custom-rating-') && typeof value === 'number') {
-                  // Extract the ID from the key (e.g., "custom-rating-68ff54683d3f2b67e20b211e" -> "68ff54683d3f2b67e20b211e")
-                  const ratingItemId = key.replace('custom-rating-', '');
+              // Get all rating keys and sort them to match by order
+              const ratingKeys = Object.entries(customRatingData)
+                .filter(([key]) => key.startsWith('custom-rating-') && typeof customRatingData[key] === 'number')
+                .sort(([a], [b]) => a.localeCompare(b)); // Sort by key to maintain order
+              
+              // Match by position/order if ID doesn't match
+              for (let i = 0; i < ratingKeys.length && i < customRatingItems.length; i++) {
+                const [key, value] = ratingKeys[i];
+                
+                if (typeof value === 'number' && value > 0 && value <= 5) {
+                  const matchingItem = customRatingItems[i]; // Match by position
                   
-                  // Find the matching custom rating item by ID
-                  const matchingItem = customRatingItems.find(item => item.id === ratingItemId);
-                  
-                  if (matchingItem && value > 0 && value <= 5) {
+                  if (matchingItem) {
                     if (!ratingDataByDate.has(reviewDate)) {
                       ratingDataByDate.set(reviewDate, new Map());
                     }
