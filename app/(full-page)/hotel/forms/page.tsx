@@ -154,11 +154,15 @@ export default function HotelForms() {
         loadForms(); // Refresh the list
         showToast("success", "Success", editingFormId ? "Form updated successfully" : "Form created successfully");
       } else {
-        throw new Error(data.error || 'Failed to save form');
+        // Show the actual error message from the API
+        const errorMessage = data.error || 'Failed to save form';
+        throw new Error(errorMessage);
       }
     } catch (error) {
       console.error("Error saving form:", error);
-      showToast("error", "Error", "Failed to save form");
+      // Extract and show the actual error message
+      const errorMessage = error instanceof Error ? error.message : 'Failed to save form';
+      showToast("error", "Error", errorMessage);
     }
   }, [editingFormId, showToast]);
 

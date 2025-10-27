@@ -8,6 +8,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
 import { Toast } from "primereact/toast";
+import { Calendar } from "primereact/calendar";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
@@ -30,6 +31,21 @@ interface RecentReview {
   status: string;
 }
 
+interface CustomRatingData {
+  formTitle: string;
+  labels: string[];
+  chartData: {
+    labels: string[];
+    datasets: any[];
+  };
+  summary: Array<{
+    label: string;
+    averageRating: number;
+    totalRatings: number;
+  }>;
+  totalReviews?: number;
+}
+
 export default function HotelDashboard() {
   const { user } = useAuth();
   const router = useRouter();
@@ -43,21 +59,205 @@ export default function HotelDashboard() {
   });
   const [recentReviews, setRecentReviews] = useState<RecentReview[]>([]);
   const [chartData, setChartData] = useState<any>(null);
+  const [customRatingData, setCustomRatingData] = useState<CustomRatingData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [applyingFilters, setApplyingFilters] = useState(false);
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
     loadDashboardData();
   }, []);
 
+  const applyFilters = async () => {
+    setApplyingFilters(true);
+    await loadDashboardDataWithFilters(startDate, endDate);
+    setApplyingFilters(false);
+    showToast("success", "Success", "Filters applied successfully");
+  };
+
+  const clearFilters = () => {
+    setStartDate(null);
+    setEndDate(null);
+    // Reload with empty filters
+    loadDashboardDataWithFilters(null, null);
+    showToast("info", "Info", "Filters cleared");
+  };
+
+  const exportData = async (format: 'csv' | 'pdf', type: 'main' | 'custom') => {
+    const params = new URLSearchParams();
+    params.append('format', format);
+    if (startDate) params.append('startDate', startDate.toISOString());
+    if (endDate) params.append('endDate', endDate.toISOString());
+
+    try {
+      // For custom ratings, use the existing export endpoint
+      if (type === 'custom') {
+        const response = await fetch(`/api/hotel/analytics/custom-ratings/export?${params.toString()}`);
+        if (response.ok) {
+          if (format === 'csv') {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `custom-ratings-${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          } else {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            window.open(url, '_blank');
+          }
+          showToast("success", "Success", `Data exported successfully as ${format.toUpperCase()}`);
+          return;
+        } else {
+          showToast("error", "Error", "Failed to export data");
+          return;
+        }
+      }
+      
+      // For main dashboard, export the chart data directly
+      if (type === 'main') {
+        let csvContent = 'Date,Total Reviews,Average Rating\n';
+        let htmlContent = '';
+        
+        if (chartData && chartData.labels) {
+          const dates = chartData.labels;
+          const reviews = chartData.datasets[0]?.data || [];
+          const ratings = chartData.datasets[1]?.data || [];
+          
+          // CSV Content
+          for (let i = 0; i < dates.length; i++) {
+            csvContent += `${dates[i]},${reviews[i] || 0},${ratings[i] || 0}\n`;
+          }
+          
+          // HTML/PDF Content
+          htmlContent = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>Dashboard Export</title>
+              <style>
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                h1 { color: #1a2b48; margin-bottom: 10px; }
+                h2 { color: #4a4a4a; margin-bottom: 20px; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { padding: 10px; text-align: left; border: 1px solid #ddd; }
+                th { background-color: #2563eb; color: white; }
+                tr:nth-child(even) { background-color: #f2f2f2; }
+                .info { margin-bottom: 20px; }
+              </style>
+            </head>
+            <body>
+              <h1>Hotel Dashboard Report</h1>
+              <div class="info">
+                <p><strong>Generated:</strong> ${new Date().toLocaleString()}</p>
+                ${startDate || endDate ? `
+                  <p><strong>Date Range:</strong> 
+                    ${startDate ? startDate.toLocaleDateString() : 'No start'} - 
+                    ${endDate ? endDate.toLocaleDateString() : 'No end'}
+                  </p>
+                ` : ''}
+              </div>
+              <h2>Review Trends</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Total Reviews</th>
+                    <th>Average Rating</th>
+                  </tr>
+                </thead>
+                <tbody>
+          `;
+          
+          for (let i = 0; i < dates.length; i++) {
+            htmlContent += `
+              <tr>
+                <td>${dates[i]}</td>
+                <td>${reviews[i] || 0}</td>
+                <td>${(ratings[i] || 0).toFixed(2)}</td>
+              </tr>
+            `;
+          }
+          
+          htmlContent += `
+                </tbody>
+              </table>
+              <div style="margin-top: 30px;">
+                <h2>Summary Statistics</h2>
+                <table>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                  </tr>
+                  <tr>
+                    <td>Total Reviews</td>
+                    <td>${stats.totalReviews}</td>
+                  </tr>
+                  <tr>
+                    <td>Average Rating</td>
+                    <td>${stats.averageRating.toFixed(2)}/5</td>
+                  </tr>
+                  <tr>
+                    <td>Positive Reviews</td>
+                    <td>${stats.positiveReviews}</td>
+                  </tr>
+                  <tr>
+                    <td>Negative Reviews</td>
+                    <td>${stats.negativeReviews}</td>
+                  </tr>
+                  <tr>
+                    <td>Response Rate</td>
+                    <td>${stats.responseRate}%</td>
+                  </tr>
+                </table>
+              </div>
+            </body>
+            </html>
+          `;
+        }
+        
+        if (format === 'csv') {
+          const blob = new Blob([csvContent], { type: 'text/csv' });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `dashboard-${new Date().toISOString().split('T')[0]}.csv`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          showToast("success", "Success", "Data exported successfully as CSV");
+        } else {
+          // PDF export using print
+          const blob = new Blob([htmlContent], { type: 'text/html' });
+          const url = window.URL.createObjectURL(blob);
+          window.open(url, '_blank');
+          showToast("success", "Success", "Opening PDF view. Use browser print to save as PDF.");
+        }
+      }
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      showToast("error", "Error", "Failed to export data");
+    }
+  };
+
   const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
     toast.current?.show({ severity, summary, detail, life: 3000 });
   };
 
-  const loadDashboardData = async () => {
+  const loadDashboardDataWithFilters = async (filterStartDate: Date | null, filterEndDate: Date | null) => {
     setLoading(true);
     try {
-      const response = await fetch('/api/hotel/dashboard', {
+      // Build query params with date filters
+      const params = new URLSearchParams();
+      if (filterStartDate) params.append('startDate', filterStartDate.toISOString());
+      if (filterEndDate) params.append('endDate', filterEndDate.toISOString());
+
+      // Load main dashboard data
+      const response = await fetch(`/api/hotel/dashboard?${params.toString()}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -74,12 +274,43 @@ export default function HotelDashboard() {
       } else {
         throw new Error(data.error || 'Failed to load dashboard data');
       }
+
+      // Load custom rating data
+      await loadCustomRatingDataWithFilters(filterStartDate, filterEndDate);
     } catch (error) {
       console.error("Error loading dashboard data:", error);
       showToast("error", "Error", "Failed to load dashboard data");
     } finally {
       setLoading(false);
     }
+  };
+
+  const loadDashboardData = async () => {
+    await loadDashboardDataWithFilters(startDate, endDate);
+  };
+
+  const loadCustomRatingDataWithFilters = async (filterStartDate: Date | null, filterEndDate: Date | null) => {
+    try {
+      const params = new URLSearchParams();
+      if (filterStartDate) params.append('startDate', filterStartDate.toISOString());
+      if (filterEndDate) params.append('endDate', filterEndDate.toISOString());
+      
+      const response = await fetch(`/api/hotel/analytics/custom-ratings?${params.toString()}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.data) {
+          setCustomRatingData(data.data);
+        }
+      }
+    } catch (error) {
+      console.error("Error loading custom rating data:", error);
+      // Don't show error toast for this, as it's optional data
+    }
+  };
+
+  const loadCustomRatingData = async () => {
+    await loadCustomRatingDataWithFilters(startDate, endDate);
   };
 
   const defaultChartData = {
@@ -128,6 +359,46 @@ export default function HotelDashboard() {
     },
   };
 
+  const customRatingChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    elements: {
+      point: {
+        radius: 6,
+        hoverRadius: 8,
+      },
+      line: {
+        tension: 0.4,
+      },
+    },
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context: any) {
+            return `${context.dataset.label}: ${context.parsed.y.toFixed(1)}/5`;
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        suggestedMax: 5.5,
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
+  };
+
+  const getColorForIndex = (index: number) => {
+    const colors = ['#2563eb', '#dc2626', '#16a34a', '#ca8a04', '#9333ea', '#ea580c'];
+    return colors[index % colors.length];
+  };
+
   const getStatusSeverity = (status: string) => {
     switch (status) {
       case "APPROVED": return "success";
@@ -167,8 +438,8 @@ export default function HotelDashboard() {
 
   const quickActions = [
     {
-      title: "Create Feedback Form",
-      description: "Create custom feedback forms for guests",
+      title: "Feedback Form",
+      description: "Create custom feedback forms",
       icon: "pi pi-plus",
       route: "/hotel/forms",
       color: "blue",
@@ -258,6 +529,58 @@ export default function HotelDashboard() {
         </div>
       </div>
 
+      {/* Date Filters */}
+      <div className="col-12">
+        <Card className="mb-4">
+          <div className="grid">
+            <div className="col-12 md:col-3">
+              <label className="block text-900 font-medium mb-2">Start Date</label>
+              <Calendar
+                value={startDate}
+                onChange={(e) => setStartDate(e.value as Date | null)}
+                placeholder="Select start date"
+                className="w-full"
+                showIcon
+                dateFormat="yy-mm-dd"
+                maxDate={endDate || new Date()}
+              />
+            </div>
+            <div className="col-12 md:col-3">
+              <label className="block text-900 font-medium mb-2">End Date</label>
+              <Calendar
+                value={endDate}
+                onChange={(e) => setEndDate(e.value as Date | null)}
+                placeholder="Select end date"
+                className="w-full"
+                showIcon
+                dateFormat="yy-mm-dd"
+                minDate={startDate || undefined}
+                maxDate={new Date()}
+              />
+            </div>
+            <div className="col-12 md:col-3 flex align-items-end">
+              <Button
+                label="Search"
+                icon="pi pi-search"
+                onClick={applyFilters}
+                loading={applyingFilters}
+                className="w-full"
+                disabled={applyingFilters}
+              />
+            </div>
+            <div className="col-12 md:col-3 flex align-items-end">
+              <Button
+                label="Clear Filters"
+                icon="pi pi-filter-slash"
+                onClick={clearFilters}
+                className="w-full p-button-outlined p-button-secondary"
+                disabled={applyingFilters}
+              />
+            </div>
+          </div>
+        </Card>
+      </div>
+
       {/* Stats Cards */}
       <div className="col-12">
         <div className="flex flex-wrap gap-3">
@@ -313,8 +636,100 @@ export default function HotelDashboard() {
           ) : (
             <Chart type="line" data={chartData || defaultChartData} options={chartOptions} style={{ height: '300px' }} />
           )}
+          <div className="flex justify-content-end gap-2 mt-3 pt-3 border-top-1 surface-border">
+            <Button
+              label="Export CSV"
+              icon="pi pi-file"
+              onClick={() => exportData('csv', 'main')}
+              className="p-button-outlined p-button-sm"
+              disabled={loading}
+            />
+            <Button
+              label="Export PDF"
+              icon="pi pi-file-pdf"
+              onClick={() => exportData('pdf', 'main')}
+              className="p-button-outlined p-button-sm"
+              disabled={loading}
+            />
+          </div>
         </Card>
       </div>
+
+      {/* Custom Rating Analytics */}
+      {customRatingData && (
+        <>
+          <div className="col-12">
+            <Card title={`Custom Rating Trends - ${customRatingData.formTitle}`}>
+              {loading ? (
+                <div className="flex align-items-center justify-content-center" style={{ height: '300px' }}>
+                  <div className="text-600">Loading custom rating data...</div>
+                </div>
+              ) : (
+                <>
+                  <Chart 
+                    type="line" 
+                    data={customRatingData.chartData} 
+                    options={customRatingChartOptions} 
+                    style={{ height: '350px' }} 
+                  />
+                </>
+              )}
+              <div className="flex justify-content-end gap-2 mt-3 pt-3 border-top-1 surface-border">
+                <Button
+                  label="Export CSV"
+                  icon="pi pi-file"
+                  onClick={() => exportData('csv', 'custom')}
+                  className="p-button-outlined p-button-sm"
+                  disabled={loading}
+                />
+                <Button
+                  label="Export PDF"
+                  icon="pi pi-file-pdf"
+                  onClick={() => exportData('pdf', 'custom')}
+                  className="p-button-outlined p-button-sm"
+                  disabled={loading}
+                />
+              </div>
+            </Card>
+          </div>
+
+          <div className="col-12">
+            <Card title="Custom Rating Summary">
+              <div className="grid">
+                {customRatingData.summary.map((item, index) => (
+                  <div key={item.label} className="col-12 md:col-6 lg:col-4">
+                    <div className="border-1 surface-border border-round p-3">
+                      <div className="flex align-items-center justify-content-between mb-2">
+                        <span className="text-900 font-medium">{item.label}</span>
+                        <span className="text-500 text-sm">({item.totalRatings} ratings)</span>
+                      </div>
+                      <div className="flex align-items-center gap-2">
+                        <div 
+                          className="flex align-items-center" 
+                          style={{ 
+                            width: '20px', 
+                            height: '20px', 
+                            borderRadius: '4px',
+                            backgroundColor: getColorForIndex(index),
+                          }}
+                        />
+                        <div className="flex-1">
+                          <div className="text-2xl font-bold text-900">
+                            {item.averageRating.toFixed(2)}/5
+                          </div>
+                          <div className="text-sm text-600">
+                            Average Rating
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </div>
+        </>
+      )}
 
       {/* Quick Actions */}
       <div className="col-12 mt-4" style={{ backgroundColor: '#fcfaf7', borderRadius: '12px', marginTop: '2rem' }}>

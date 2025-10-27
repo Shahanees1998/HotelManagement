@@ -202,6 +202,29 @@ export async function POST(request: NextRequest) {
         }
       }
 
+      // Check if a form with this layout already exists for this hotel
+      const existingForm = await prisma.feedbackForm.findFirst({
+        where: {
+          hotelId: hotel.id,
+          layout: layout || 'basic',
+          isDeleted: false,
+        },
+      });
+
+      if (existingForm) {
+        const layoutNames = {
+          'basic': 'Basic',
+          'good': 'Good',
+          'excellent': 'Excellent'
+        };
+        return NextResponse.json(
+          { 
+            error: `A ${layoutNames[layout as keyof typeof layoutNames] || layout} layout form already exists. Each hotel can have only one form per layout type (Basic, Good, or Excellent).`,
+          },
+          { status: 400 }
+        );
+      }
+
       // Validate custom questions if provided
       if (customQuestions && Array.isArray(customQuestions)) {
         for (const question of customQuestions) {

@@ -494,15 +494,19 @@ export default function FeedbackFormBuilder({
       // Success handling is done by the parent component
     } catch (error: any) {
       console.error("Error in handleSave:", error);
+      setLoading(false);
+      
+      // Extract error message
+      const errorMessage = error?.message || error?.toString() || 'Failed to save form';
       
       // Check if it's a subscription-related error
-      if (error?.response?.status === 403 || error?.message?.includes('subscription')) {
+      if (error?.response?.status === 403 || errorMessage?.includes('subscription')) {
         showToast("error", "Subscription Required", 
           "Your subscription has been cancelled or expired. Please reactivate your subscription to create forms.");
       } else {
-        showToast("error", "Error", "Failed to save form");
+        // Show the actual error message from the API
+        showToast("error", "Error", errorMessage);
       }
-      setLoading(false);
     }
   };
 
@@ -1013,43 +1017,16 @@ export default function FeedbackFormBuilder({
                               <div className="rating-stars">
                                 <Rating value={0} readOnly />
                               </div>
-                              <div className="rating-item-actions">
-                                <Button
-                                  icon="pi pi-pencil"
-                                  className="p-button-text p-button-sm"
-                                  onClick={() => startEditingRatingItem(item.id)}
-                                  tooltip="Edit"
-                                />
-                                <Button
-                                  icon="pi pi-trash"
-                                  className="p-button-text p-button-sm delete-rating-btn"
-                                  onClick={() => deleteRatingItem(item.id)}
-                                  tooltip="Delete"
-                                />
-                              </div>
+                              <Button
+                                icon="pi pi-pencil"
+                                className="p-button-text p-button-sm"
+                                onClick={() => startEditingRatingItem(item.id)}
+                                tooltip="Edit"
+                              />
                             </>
                           )}
                         </div>
                       ))}
-
-                      {/* Add New Rating Item */}
-                      <div className="add-rating-item-section">
-                        <div className="add-rating-input">
-                          <InputText
-                            value={newRatingItemLabel}
-                            onChange={(e) => setNewRatingItemLabel(e.target.value)}
-                            placeholder="Enter new rating item label"
-                            className="rating-item-input"
-                            onKeyPress={(e) => e.key === 'Enter' && addNewRatingItem()}
-                          />
-                          <Button
-                            label="+ Add New"
-                            className="add-new-rating-btn"
-                            onClick={addNewRatingItem}
-                            disabled={!newRatingItemLabel.trim()}
-                          />
-                        </div>
-                      </div>
                     </div>
                   )}
                 </div>
