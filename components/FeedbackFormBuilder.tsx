@@ -143,11 +143,12 @@ export default function FeedbackFormBuilder({
     }
   };
   const [customRatingItems, setCustomRatingItems] = useState([
-    { id: "room-experience", label: "Room Experience", isEditing: false },
+    { id: "location-experience", label: "Location Experience", isEditing: false },
     { id: "staff-service", label: "Staff Service", isEditing: false },
     { id: "amenities", label: "Amenities", isEditing: false },
     { id: "ambiance", label: "Ambiance", isEditing: false },
-    { id: "food", label: "Food", isEditing: false }
+    { id: "food", label: "Food", isEditing: false },
+    { id: "cleanliness", label: "Cleanliness", isEditing: false }
   ]);
   const [editingRatingItem, setEditingRatingItem] = useState<string | null>(null);
   const [newRatingItemLabel, setNewRatingItemLabel] = useState("");
@@ -230,13 +231,31 @@ export default function FeedbackFormBuilder({
         const hasCustomRating = predefinedSection.hasCustomRating || false;
         const hasFeedback = predefinedSection.hasFeedback || false;
 
-        // Load custom rating items
+        // Load custom rating items and ensure we have 6 items
         const customRatingItems = predefinedSection.customRatingItems || [];
-        setCustomRatingItems(customRatingItems.map((item: any, index: number) => ({
-          id: item.id || `custom-${Date.now()}-${index}`,
-          label: item.label,
-          isEditing: false
-        })));
+        const defaultItems = [
+          { id: "location-experience", label: "Location Experience" },
+          { id: "staff-service", label: "Staff Service" },
+          { id: "amenities", label: "Amenities" },
+          { id: "ambiance", label: "Ambiance" },
+          { id: "food", label: "Food" },
+          { id: "cleanliness", label: "Cleanliness" },
+        ];
+
+        // Merge existing items with default items, preserving existing data but ensuring 6 items
+        const mergedItems = defaultItems.map((defaultItem, index) => {
+          const existingItem = customRatingItems.find((item: any) => 
+            item.label === defaultItem.label || item.id === defaultItem.id
+          );
+          
+          return {
+            id: existingItem?.id || defaultItem.id,
+            label: existingItem?.label || defaultItem.label,
+            isEditing: false
+          };
+        });
+
+        setCustomRatingItems(mergedItems);
 
         // Load custom questions
         const customQuestions = formData.customQuestions || [];
@@ -1421,7 +1440,7 @@ export default function FeedbackFormBuilder({
             {form.questions.some(q => q.question === "Custom Rating") && customRatingItems.length > 0 && (
               <div style={{ marginBottom: "20px" }}>
                 {customRatingItems.map((item, index) => {
-                  const rating = index === 0 ? 4 : index === 1 ? 5 : index === 2 ? 3 : index === 3 ? 4 : 3;
+                  const rating = index === 0 ? 4 : index === 1 ? 5 : index === 2 ? 3 : index === 3 ? 4 : index === 4 ? 3 : 4;
                   return (
                     <div
                       key={item.id}
