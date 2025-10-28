@@ -44,12 +44,20 @@ export default function NotificationsPage() {
     const toast = useRef<Toast>(null);
 
     const typeOptions = [
-        { label: "All Types", value: "" },
-        { label: "Announcement", value: "ANNOUNCEMENT" },
-        { label: "Broadcast", value: "BROADCAST" },
-        { label: "Support Response", value: "SUPPORT_RESPONSE" },
-        { label: "User Joined", value: "USER_JOINED" },
+        { label: "New Review", value: "NEW_REVIEW" },
+        { label: "Review Approved", value: "REVIEW_APPROVED" },
+        { label: "Review Rejected", value: "REVIEW_REJECTED" },
+        { label: "Subscription Expiring", value: "SUBSCRIPTION_EXPIRING" },
+        { label: "Subscription Cancelled", value: "SUBSCRIPTION_CANCELLED" },
+        { label: "Escalation Received", value: "ESCALATION_RECEIVED" },
+        { label: "Escalation Responded", value: "ESCALATION_RESPONDED" },
         { label: "System Alert", value: "SYSTEM_ALERT" },
+        { label: "New Hotel Registration", value: "NEW_HOTEL_REGISTRATION" },
+        { label: "New Form Created", value: "NEW_FORM_CREATED" },
+        { label: "Success", value: "SUCCESS" },
+        { label: "Info", value: "INFO" },
+        { label: "Warning", value: "WARNING" },
+        { label: "Error", value: "ERROR" },
     ];
 
     const statusOptions = [
@@ -209,22 +217,40 @@ export default function NotificationsPage() {
 
     const getTypeSeverity = (type: string) => {
         switch (type) {
-            case 'ANNOUNCEMENT': return 'info';
-            case 'BROADCAST': return 'danger';
-            case 'SUPPORT_RESPONSE': return 'help';
-            case 'USER_JOINED': return 'success';
+            case 'NEW_REVIEW': return 'info';
+            case 'REVIEW_APPROVED': return 'success';
+            case 'REVIEW_REJECTED': return 'danger';
+            case 'SUBSCRIPTION_EXPIRING': return 'warning';
+            case 'SUBSCRIPTION_CANCELLED': return 'danger';
+            case 'ESCALATION_RECEIVED': return 'warning';
+            case 'ESCALATION_RESPONDED': return 'success';
             case 'SYSTEM_ALERT': return 'danger';
+            case 'NEW_HOTEL_REGISTRATION': return 'info';
+            case 'NEW_FORM_CREATED': return 'info';
+            case 'SUCCESS': return 'success';
+            case 'INFO': return 'info';
+            case 'WARNING': return 'warning';
+            case 'ERROR': return 'danger';
             default: return 'info';
         }
     };
 
     const getTypeLabel = (type: string) => {
         switch (type) {
-            case 'ANNOUNCEMENT': return 'Announcement';
-            case 'BROADCAST': return 'Broadcast';
-            case 'SUPPORT_RESPONSE': return 'Support';
-            case 'USER_JOINED': return 'User Joined';
+            case 'NEW_REVIEW': return 'New Review';
+            case 'REVIEW_APPROVED': return 'Review Approved';
+            case 'REVIEW_REJECTED': return 'Review Rejected';
+            case 'SUBSCRIPTION_EXPIRING': return 'Subscription Expiring';
+            case 'SUBSCRIPTION_CANCELLED': return 'Subscription Cancelled';
+            case 'ESCALATION_RECEIVED': return 'Escalation Received';
+            case 'ESCALATION_RESPONDED': return 'Escalation Responded';
             case 'SYSTEM_ALERT': return 'System Alert';
+            case 'NEW_HOTEL_REGISTRATION': return 'New Hotel Registration';
+            case 'NEW_FORM_CREATED': return 'New Form Created';
+            case 'SUCCESS': return 'Success';
+            case 'INFO': return 'Info';
+            case 'WARNING': return 'Warning';
+            case 'ERROR': return 'Error';
             default: return type;
         }
     };
@@ -258,6 +284,15 @@ export default function NotificationsPage() {
                         tooltip="Mark as Read"
                     />
                 )}
+                {(rowData.relatedType === 'review' && rowData.relatedId) && (
+                    <Button
+                        icon="pi pi-eye"
+                        size="small"
+                        text
+                        onClick={() => handleView(rowData)}
+                        tooltip="View"
+                    />
+                )}
                 <Button
                     icon="pi pi-trash"
                     size="small"
@@ -268,6 +303,14 @@ export default function NotificationsPage() {
                 />
             </div>
         );
+    };
+
+    const handleView = (notification: Notification) => {
+        // Open review detail in reviews page similar to NotificationCenter behavior
+        if (notification.relatedType === 'review' && notification.relatedId) {
+            router.push(`/hotel/reviews?reviewId=${notification.relatedId}`);
+            return;
+        }
     };
 
     const statusBodyTemplate = (rowData: Notification) => {
@@ -447,6 +490,11 @@ export default function NotificationsPage() {
                             sortable
                             style={{ width: '120px' }}
                         />
+                        <Column
+                            header="Actions"
+                            body={actionBodyTemplate}
+                            style={{ width: '140px' }}
+                        />
                     </DataTable>
                     <CustomPaginator
                         currentPage={currentPage}
@@ -460,7 +508,7 @@ export default function NotificationsPage() {
                     />
 
                     {/* Statistics */}
-                    <div className="grid mt-4">
+                    {/* <div className="grid mt-4">
                         <div className="col-12 md:col-3">
                             <Card className="text-center">
                                 <div className="text-2xl font-bold text-blue-500">
@@ -493,7 +541,7 @@ export default function NotificationsPage() {
                                 <div className="text-600">Broadcasts</div>
                             </Card>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

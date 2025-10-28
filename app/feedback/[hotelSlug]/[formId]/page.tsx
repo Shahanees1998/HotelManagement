@@ -51,6 +51,7 @@ interface FormSubmission {
   guestName?: string;
   guestEmail?: string;
   guestPhone?: string;
+  roomNumber?: string;
   answers: { [questionId: string]: any };
 }
 
@@ -172,6 +173,22 @@ export default function CustomerFeedbackForm() {
 
   const validateForm = () => {
     if (!translatedForm) return false;
+
+    // Validate required fields
+    if (!submission.guestName || !submission.guestName.trim()) {
+      showToast("warn", t('Warning'), t('Please enter your full name'));
+      return false;
+    }
+
+    if (!submission.guestEmail || !submission.guestEmail.trim()) {
+      showToast("warn", t('Warning'), t('Please enter your email address'));
+      return false;
+    }
+
+    if (!submission.roomNumber || !submission.roomNumber.trim()) {
+      showToast("warn", t('Warning'), t('Please enter your room number'));
+      return false;
+    }
 
     // Validate predefined questions
     if (translatedForm.predefinedQuestions) {
@@ -939,33 +956,34 @@ export default function CustomerFeedbackForm() {
           />
         </div>
 
-        {/* Predefined Questions */}
-        {translatedForm?.predefinedQuestions && (
-          <>
-            {/* Rate Us Question */}
-            {translatedForm.predefinedQuestions.hasRateUs && (
-              <div style={{ marginBottom: "20px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    color: "#444",
-                    marginBottom: "6px",
-                  }}
-                >
-                  How do you rate us? <span style={{ color: "#dc3545" }}>*</span>
-                </label>
-                <Rating
-                  value={submission.answers['rate-us'] || 0}
-                  onChange={(e) => handleAnswerChange('rate-us', e.value)}
-                  stars={5}
-                  cancel={false}
-                />
-              </div>
-            )}
-          </>
-        )}
+        {/* Room Number */}
+        <div style={{ marginBottom: "20px" }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: "13px",
+              fontWeight: 500,
+              color: "#444",
+              marginBottom: "6px",
+            }}
+          >
+            {t('Room Number*')}
+          </label>
+          <InputText
+            value={submission.roomNumber || ''}
+            onChange={(e) => setSubmission({ ...submission, roomNumber: e.target.value })}
+            placeholder={t('Enter your room number')}
+            style={{
+              width: "100%",
+              padding: "10px",
+              borderRadius: "6px",
+              border: "1px solid #ced4da",
+              fontSize: "14px",
+            }}
+          />
+        </div>
+
+
 
         {/* Custom Questions */}
         {translatedForm?.questions.map((question, index) => (

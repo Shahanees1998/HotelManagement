@@ -209,6 +209,7 @@ model Review {
   guestName     String?
   guestEmail    String?
   guestPhone    String?
+  roomNumber    String?  // Room number field
   overallRating Int      // 1-5 stars
   isPublic      Boolean  @default(false) // 4-5 stars can be made public
   isShared      Boolean  @default(false) // Whether shared on Google/TripAdvisor
@@ -216,6 +217,10 @@ model Review {
   submittedAt   DateTime @default(now())
   publishedAt   DateTime?
   predefinedAnswers String? // JSON string to store predefined question answers
+  isChecked     Boolean  @default(false) // Whether review has been checked
+  isUrgent      Boolean  @default(false) // Whether review is marked as urgent
+  isReplied     Boolean  @default(false) // Whether a reply has been sent
+  isDeleted     Boolean  @default(false) // Soft delete flag
 
   // Relations
   hotel         Hotels            @relation(fields: [hotelId], references: [id], onDelete: Cascade)

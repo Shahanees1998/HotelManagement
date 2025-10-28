@@ -182,6 +182,16 @@ export default function HotelQRCodes() {
     }
   };
 
+  const copyQrUrl = async () => {
+    if (!qrCodeUrl) return;
+    try {
+      await navigator.clipboard.writeText(qrCodeUrl);
+      showToast("success", "Copied", "QR URL copied to clipboard");
+    } catch (e) {
+      showToast("error", "Error", "Failed to copy URL");
+    }
+  };
+
   const formOptions = forms.map(form => ({
     label: `${form.title}${form.hasQrCode ? ' (QR Code Generated)' : ''}`,
     value: form.id,
@@ -323,6 +333,39 @@ export default function HotelQRCodes() {
                       fontWeight: '600'
                     }}
                   />
+                  {qrCodeUrl && (
+                    <div className="mt-3" style={{ position: 'relative', textAlign: 'left' }}>
+                      <div className="p-3" style={{
+                        border: '1px solid #e0e0e0',
+                        borderRadius: '8px',
+                        backgroundColor: '#f9fafb',
+                        wordBreak: 'break-all',
+                        position: 'relative',
+                        display:'flex',
+                        alignItems:'center',
+                        justifyContent:'center'
+                      }}>
+                        <span>{qrCodeUrl}</span>
+                        <Button
+                          icon="pi pi-copy"
+                          onClick={copyQrUrl}
+                          className="p-button-rounded"
+                          style={{
+                            position: 'absolute',
+                            top: '0px',
+                            right: '-20px',
+                            backgroundColor: '#1a2b48',
+                            borderColor: '#1a2b48',
+                            borderRadius: '8px',
+                            padding: '0.5rem',
+                            fontSize: '0.875rem',
+                            fontWeight: '600'
+                          }}
+                          aria-label="Copy URL"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="text-center py-8">

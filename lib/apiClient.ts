@@ -400,9 +400,10 @@ class ApiClient {
 
     // Hotel Reviews
     async getHotelReviews(params?: {
-        status?: string;
+        filter?: string;
         ratings?: string;
         search?: string;
+        roomNumber?: string;
         startDate?: string;
         endDate?: string;
         page?: number;

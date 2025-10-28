@@ -89,7 +89,14 @@ export default function FeedbackFormBuilder({
     isActive: true,
     isPublic: true,
     layout: "basic",
-    questions: [],
+    questions: [{
+      id: "rate-us",
+      question: "Rate Us",
+      type: "STAR_RATING",
+      isRequired: true,
+      options: [],
+      isDefault: true
+    }],
   });
   const [hotelData, setHotelData] = useState({
     name: "Hotel Famulus",
@@ -153,42 +160,34 @@ export default function FeedbackFormBuilder({
   const [newRatingItemLabel, setNewRatingItemLabel] = useState("");
   const toast = useRef<Toast>(null);
 
-  // Helper functions for plan-based restrictions
-  const getAvailableLayouts = () => {
+  // Auto-select layout based on current plan
+  const getAutoSelectedLayout = () => {
     switch (currentPlan) {
       case 'basic':
-        return [{ label: "Basic", value: "basic", description: "Simple, clean design" }];
+        return "basic";
       case 'professional':
-        return [
-          { label: "Basic", value: "basic", description: "Simple, clean design" },
-          { label: "Good", value: "good", description: "Enhanced with colors and icons" }
-        ];
+        return "good";
       case 'enterprise':
-        return [
-          { label: "Basic", value: "basic", description: "Simple, clean design" },
-          { label: "Good", value: "good", description: "Enhanced with colors and icons" },
-          { label: "Excellent", value: "excellent", description: "Premium design with animations" }
-        ];
+        return "excellent";
       default:
-        return [{ label: "Basic", value: "basic", description: "Simple, clean design" }];
+        return "basic";
     }
-  };
-
-  const isLayoutDisabled = (layoutValue: string) => {
-    const availableLayouts = getAvailableLayouts();
-    return !availableLayouts.some(layout => layout.value === layoutValue);
-  };
-
-  const getLayoutTooltip = (layoutValue: string) => {
-    if (isLayoutDisabled(layoutValue)) {
-      return `Upgrade to ${layoutValue === 'good' ? 'Professional' : 'Enterprise'} plan to use this layout`;
-    }
-    return '';
   };
 
   const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
     toast.current?.show({ severity, summary, detail, life: 3000 });
   };
+
+  // Auto-select layout based on plan when component mounts
+  useEffect(() => {
+    if (!planLoading) {
+      const autoLayout = getAutoSelectedLayout();
+      setForm(prev => ({
+        ...prev,
+        layout: autoLayout
+      }));
+    }
+  }, [currentPlan, planLoading]);
 
   // Load form data when editing
   useEffect(() => {
@@ -445,20 +444,13 @@ export default function FeedbackFormBuilder({
       return;
     }
 
-    // Check if either Rate Us or Custom Rating is selected
-    const hasRateUs = form.questions.some(q => q.isDefault && q.question === "Rate Us");
-    const hasCustomRating = form.questions.some(q => q.isDefault && q.question === "Custom Rating");
-    
-    if (!hasRateUs && !hasCustomRating) {
-      showToast("warn", "Warning", "Either 'Rate Us' or 'Custom Rating' must be selected");
-      return;
-    }
+    // Rate Us is always included, so no need to check for it
 
     setLoading(true);
     try {
       // Prepare predefined questions section data
       const predefinedSection = {
-        hasRateUs: form.questions.some(q => q.isDefault && q.question === "Rate Us"),
+        hasRateUs: true, // Always true since Rate Us is always included
         hasCustomRating: form.questions.some(q => q.isDefault && q.question === "Custom Rating"),
         hasFeedback: form.questions.some(q => q.isDefault && q.question === "Please give us your honest feedback?"),
         customRatingItems: customRatingItems.map((item, index) => ({
@@ -716,8 +708,8 @@ export default function FeedbackFormBuilder({
               className="p-button-primary save-form-btn"
               onClick={handleSave}
               loading={loading}
-              disabled={loading || (!form.questions.some(q => q.isDefault && q.question === "Rate Us") && !form.questions.some(q => q.isDefault && q.question === "Custom Rating"))}
-              tooltip={(!form.questions.some(q => q.isDefault && q.question === "Rate Us") && !form.questions.some(q => q.isDefault && q.question === "Custom Rating")) ? "Either 'Rate Us' or 'Custom Rating' must be selected" : "Save the form"}
+              disabled={loading}
+              tooltip="Save the form"
             />
           )}
         </div>
@@ -731,7 +723,7 @@ export default function FeedbackFormBuilder({
             <h3 className="card-title">Form Settings</h3>
             <div className="form-settings-content">
               <div className="grid">
-                <div className="col-6">
+                <div className="col-12">
                   <div className="form-field">
                     <label className="field-label">Form Title*</label>
                     <InputText
@@ -743,83 +735,39 @@ export default function FeedbackFormBuilder({
                     />
                   </div>
                 </div>
-                <div className="col-6">
+                {/* <div className="col-6">
                   <div className="form-field">
                     <label className="field-label">Layout Design*</label>
-                    <Dropdown
-                      value={form.layout}
-                      options={getAvailableLayouts()}
-                      onChange={(e) => {
-                        if (previewMode) return;
-                        const newLayout = e.value;
-                        let updatedQuestions = [...form.questions];
-                        
-                        if (newLayout === "basic") {
-                          // Basic: Only Rate Us allowed - remove all other questions
-                          updatedQuestions = updatedQuestions.filter(q => q.question === "Rate Us");
-                          // If no Rate Us question exists, add it
-                          if (updatedQuestions.length === 0) {
-                            updatedQuestions = [{
-                              id: "rate-us",
-                              question: "Rate Us",
-                              type: "STAR_RATING",
-                              isRequired: true,
-                              options: [],
-                              isDefault: true
-                            }];
-                          }
-                        } else if (newLayout === "good") {
-                          // Good: Remove custom questions, keep only predefined questions
-                          updatedQuestions = updatedQuestions.filter(q => q.isDefault);
-                          // If no predefined questions exist, add Rate Us by default
-                          if (updatedQuestions.length === 0) {
-                            updatedQuestions = [{
-                              id: "rate-us",
-                              question: "Rate Us",
-                              type: "STAR_RATING",
-                              isRequired: true,
-                              options: [],
-                              isDefault: true
-                            }];
-                          }
-                        } else if (newLayout === "excellent") {
-                          // Excellent: Keep existing questions or add Rate Us if none exist
-                          if (updatedQuestions.length === 0) {
-                            updatedQuestions = [{
-                              id: "rate-us",
-                              question: "Rate Us",
-                              type: "STAR_RATING",
-                              isRequired: true,
-                              options: [],
-                              isDefault: true
-                            }];
-                          }
-                        }
-                        
-                        console.log('Layout changed to:', newLayout);
-                        console.log('Previous questions:', form.questions);
-                        console.log('Updated questions:', updatedQuestions);
-                        
-                        // Show toast notification about layout change
-                        if (newLayout === "basic") {
-                          showToast("info", "Layout Changed", "Switched to Basic layout. Only 'Rate Us' question is available.");
-                        } else if (newLayout === "good") {
-                          showToast("info", "Layout Changed", "Switched to Good layout. Custom questions removed, predefined questions available.");
-                        } else if (newLayout === "excellent") {
-                          showToast("info", "Layout Changed", "Switched to Excellent layout. All features available including custom questions.");
-                        }
-                        
-                        setForm({ ...form, layout: newLayout, questions: updatedQuestions });
-                      }}
-                      optionLabel="label"
-                      placeholder="Select form from the list"
-                      className="form-dropdown"
-                      disabled={previewMode || planLoading}
-                      optionDisabled={(option) => isLayoutDisabled(option.value)}
-                      tooltip={getLayoutTooltip(form.layout)}
-                    />
+                    <div className="layout-display">
+                      <div className="flex align-items-center gap-2 p-3 border-1 border-round" 
+                           style={{ 
+                             backgroundColor: form.layout === 'basic' ? '#fef3c7' : 
+                                            form.layout === 'good' ? '#d1fae5' : '#e0e7ff',
+                             borderColor: form.layout === 'basic' ? '#f59e0b' : 
+                                        form.layout === 'good' ? '#10b981' : '#6366f1'
+                           }}>
+                        <i className={`pi ${form.layout === 'basic' ? 'pi-info-circle' : 
+                                       form.layout === 'good' ? 'pi-check-circle' : 'pi-star'} 
+                                       text-lg`} 
+                           style={{ 
+                             color: form.layout === 'basic' ? '#f59e0b' : 
+                                   form.layout === 'good' ? '#10b981' : '#6366f1'
+                           }}></i>
+                        <div className="flex-1">
+                          <p className="text-600 text-sm mb-1 font-medium">
+                            {form.layout === 'basic' ? 'Basic Layout' : 
+                             form.layout === 'good' ? 'Good Layout' : 'Excellent Layout'}
+                          </p>
+                          <p className="text-500 text-xs">
+                            {form.layout === 'basic' ? 'Simple, clean design' :
+                             form.layout === 'good' ? 'Enhanced with colors and icons' : 
+                             'Premium design with animations'}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </div> */}
               </div>
 
 
@@ -895,47 +843,20 @@ export default function FeedbackFormBuilder({
               <div className="predefined-questions">
                 <h4 className="section-subtitle">Predefined Questions</h4>
 
-                {/* Rate Us Question */}
+                {/* Rate Us Question - Always included */}
                 <div className="question-item">
                   <div className="question-checkbox">
-                    <Checkbox
-                      checked={form.questions.some(q => q.question === "Rate Us")}
-                      disabled={previewMode}
-                      onChange={(e) => {
-                        if (previewMode) return;
-                        if (e.checked) {
-                          // Remove custom rating if rate us is selected
-                          const updatedQuestions = form.questions.filter(q => q.question !== "Custom Rating");
-                          const rateUsQuestion = {
-                            id: "rate-us",
-                            question: "Rate Us",
-                            type: "STAR_RATING",
-                            isRequired: true,
-                            options: [],
-                            isDefault: true
-                          };
-                          setForm({
-                            ...form,
-                            questions: [...updatedQuestions, rateUsQuestion]
-                          });
-                        } else {
-                          setForm({
-                            ...form,
-                            questions: form.questions.filter(q => q.question !== "Rate Us")
-                          });
-                        }
-                      }}
-                    />
-                    <label className="question-label">
-                      Rate Us*
-                    </label>
+                    <div className="flex align-items-center gap-2">
+                      <i className="pi pi-check-circle text-green-500"></i>
+                      <label className="question-label">
+                        Rate Us* (Always included)
+                      </label>
+                    </div>
                   </div>
                   <div className="">
-                    {form.questions.some(q => q.question === "Rate Us") && (
-                      <div className="rating-stars">
-                        <Rating value={0} readOnly />
-                      </div>
-                    )}
+                    <div className="rating-stars">
+                      <Rating value={0} readOnly />
+                    </div>
                   </div>
                 </div>
 

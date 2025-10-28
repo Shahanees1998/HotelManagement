@@ -8,12 +8,34 @@ export async function POST(
   try {
     const { formId } = params;
     const body = await request.json();
-    const { guestName, guestEmail, guestPhone, answers } = body;
+    const { guestName, guestEmail, guestPhone, roomNumber, answers } = body;
 
     // Validate required fields
     if (!answers || typeof answers !== 'object') {
       return NextResponse.json(
         { error: 'Answers are required' },
+        { status: 400 }
+      );
+    }
+
+    // Validate required guest information
+    if (!guestName || !guestName.trim()) {
+      return NextResponse.json(
+        { error: 'Guest name is required' },
+        { status: 400 }
+      );
+    }
+
+    if (!guestEmail || !guestEmail.trim()) {
+      return NextResponse.json(
+        { error: 'Guest email is required' },
+        { status: 400 }
+      );
+    }
+
+    if (!roomNumber || !roomNumber.trim()) {
+      return NextResponse.json(
+        { error: 'Room number is required' },
         { status: 400 }
       );
     }
@@ -166,6 +188,7 @@ export async function POST(
           guestName: guestName || null,
           guestEmail: guestEmail || null,
           guestPhone: guestPhone || null,
+          roomNumber: roomNumber || null,
           overallRating: finalRating,
           isPublic: finalRating >= 4, // Auto-publish 4-5 star reviews
           status: finalRating >= 4 ? 'APPROVED' : 'PENDING',

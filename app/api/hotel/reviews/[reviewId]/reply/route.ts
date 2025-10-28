@@ -74,6 +74,12 @@ export async function POST(
 
           console.log(`Reply email sent to ${review.guestEmail} for review ${review.id}`);
           
+          // Update review to mark as replied
+          await prisma.review.update({
+            where: { id: review.id },
+            data: { isReplied: true }
+          });
+          
           return NextResponse.json({
             message: 'Reply sent successfully',
             sentTo: review.guestEmail

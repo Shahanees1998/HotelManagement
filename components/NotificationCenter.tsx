@@ -7,7 +7,6 @@ import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
 import { useAuth } from '@/hooks/useAuth';
 import { useNotifications } from '@/hooks/useNotifications';
-import FeedbackPopup from './FeedbackPopup';
 
 interface Notification {
   id: string;
@@ -29,10 +28,6 @@ export default function NotificationCenter() {
   // Individual loading states for different actions
   const [markAllLoading, setMarkAllLoading] = useState(false);
   const [deletingNotifications, setDeletingNotifications] = useState<Set<string>>(new Set());
-  
-  // Feedback popup state
-  const [showFeedbackPopup, setShowFeedbackPopup] = useState(false);
-  const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
 
   const getSeverity = (type: string) => {
     switch (type) {
@@ -97,10 +92,12 @@ export default function NotificationCenter() {
       await markAsRead(notification.id);
     }
     
-    // Handle feedback notifications with popup
+    // Hide the notification overlay
+    overlayRef.current?.hide();
+    
+    // Handle feedback notifications - redirect to reviews page with reviewId parameter
     if (notification.type === 'NEW_REVIEW' && notification.relatedId && notification.relatedType === 'review') {
-      setSelectedReviewId(notification.relatedId);
-      setShowFeedbackPopup(true);
+      window.location.href = `/hotel/reviews?reviewId=${notification.relatedId}`;
       return;
     }
     
@@ -114,7 +111,7 @@ export default function NotificationCenter() {
           window.location.href = `/admin/hotels?hotelId=${notification.relatedId}`;
           break;
         case 'review':
-          window.location.href = `/admin/reviews?reviewId=${notification.relatedId}`;
+          window.location.href = `/hotel/reviews?reviewId=${notification.relatedId}`;
           break;
         case 'announcement':
           window.location.href = `/admin/announcements`;
@@ -264,16 +261,6 @@ export default function NotificationCenter() {
           </div>
         )}
       </OverlayPanel>
-      
-      {/* Feedback Popup */}
-      <FeedbackPopup
-        visible={showFeedbackPopup}
-        onHide={() => {
-          setShowFeedbackPopup(false);
-          setSelectedReviewId(null);
-        }}
-        reviewId={selectedReviewId || ''}
-      />
     </div>
   );
 }

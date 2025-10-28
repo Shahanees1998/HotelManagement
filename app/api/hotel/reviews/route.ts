@@ -23,9 +23,10 @@ export async function GET(request: NextRequest) {
       }
 
       const { searchParams } = new URL(request.url);
-      const status = searchParams.get('status');
+      const filter = searchParams.get('filter'); // New filter for replied/checked/urgent
       const ratings = searchParams.get('ratings');
       const search = searchParams.get('search');
+      const roomNumber = searchParams.get('roomNumber');
       const startDate = searchParams.get('startDate');
       const endDate = searchParams.get('endDate');
       const page = parseInt(searchParams.get('page') || '1');
@@ -35,10 +36,33 @@ export async function GET(request: NextRequest) {
       const skip = (page - 1) * limit;
 
       // Build where clause for filtering
-      const where: any = { hotelId: hotel.id };
+      const where: any = { 
+        hotelId: hotel.id,
+        isDeleted: false // Only show non-deleted reviews
+      };
       
-      if (status) {
-        where.status = status;
+      // Handle new filter options
+      if (filter) {
+        switch (filter) {
+          case 'replied':
+            where.isReplied = true;
+            break;
+          case 'not-replied':
+            where.isReplied = false;
+            break;
+          case 'checked':
+            where.isChecked = true;
+            break;
+          case 'not-checked':
+            where.isChecked = false;
+            break;
+          case 'urgent':
+            where.isUrgent = true;
+            break;
+          case 'not-urgent':
+            where.isUrgent = false;
+            break;
+        }
       }
       
       // Handle multiple star ratings
@@ -63,11 +87,18 @@ export async function GET(request: NextRequest) {
         }
       }
       
+      // Handle room number filter
+      if (roomNumber) {
+        where.roomNumber = { contains: roomNumber, mode: 'insensitive' };
+      }
+      
       if (search) {
         where.OR = [
           { guestName: { contains: search, mode: 'insensitive' } },
           { guestEmail: { contains: search, mode: 'insensitive' } },
           { form: { title: { contains: search, mode: 'insensitive' } } },
+          { predefinedAnswers: { contains: search, mode: 'insensitive' } },
+          { answers: { some: { answer: { contains: search, mode: 'insensitive' } } } },
         ];
       }
 
@@ -99,10 +130,18 @@ export async function GET(request: NextRequest) {
         prisma.review.count({ where })
       ]);
 
+      console.log('Reviews query result:', { 
+        total, 
+        reviewsCount: reviews.length,
+        whereClause: where 
+      });
+
       const formattedReviews = reviews.map(review => ({
         id: review.id,
         guestName: review.guestName,
         guestEmail: review.guestEmail,
+        guestPhone: review.guestPhone,
+        roomNumber: review.roomNumber,
         overallRating: review.overallRating,
         status: review.status,
         isPublic: review.isPublic,
@@ -110,6 +149,10 @@ export async function GET(request: NextRequest) {
         submittedAt: review.submittedAt.toISOString(),
         publishedAt: review.publishedAt?.toISOString(),
         formTitle: review.form?.title || 'Unknown Form',
+        isChecked: review.isChecked ?? false,
+        isUrgent: review.isUrgent ?? false,
+        isReplied: review.isReplied ?? false,
+        isDeleted: review.isDeleted ?? false,
       }));
 
       return NextResponse.json({ 
