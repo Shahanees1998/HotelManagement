@@ -97,49 +97,18 @@ export async function GET(request: NextRequest) {
             try {
               const customRatingData = JSON.parse(review.predefinedAnswers);
               
-              // Extract custom rating values with improved matching
+              // Extract custom rating values by position/order
               if (typeof customRatingData === 'object' && !Array.isArray(customRatingData)) {
                 // Get all rating keys and sort them to maintain order
                 const ratingKeys = Object.entries(customRatingData)
                   .filter(([key]) => key.startsWith('custom-rating-') && typeof customRatingData[key] === 'number')
                   .sort(([a], [b]) => a.localeCompare(b));
                 
-                // Create a mapping of old item IDs to new labels for backward compatibility
-                const oldToNewMapping = {
-                  'room-experience': 'Location Experience',
-                  'staff-service': 'Staff Service',
-                  'amenities': 'Amenities',
-                  'ambiance': 'Ambiance',
-                  'food': 'Food',
-                  'cleanliness': 'Cleanliness'
-                };
-                
-                // Match ratings to items with improved logic
-                ratings = customRatingItems.map((item) => {
-                  // Try to find by exact ID match first
-                  let matchingEntry = ratingKeys.find(([key]) => {
-                    const itemId = key.replace('custom-rating-', '');
-                    return itemId === item.id;
-                  });
-                  
-                  // If not found by ID, try to match by old ID mapping
-                  if (!matchingEntry && oldToNewMapping[item.id]) {
-                    matchingEntry = ratingKeys.find(([key]) => {
-                      const itemId = key.replace('custom-rating-', '');
-                      return oldToNewMapping[itemId] === item.label;
-                    });
-                  }
-                  
-                  // If still not found, try position-based matching (fallback)
-                  if (!matchingEntry) {
-                    const itemIndex = customRatingItems.findIndex(i => i.id === item.id);
-                    if (itemIndex < ratingKeys.length) {
-                      matchingEntry = ratingKeys[itemIndex];
-                    }
-                  }
-                  
-                  if (matchingEntry) {
-                    const [, value] = matchingEntry;
+                // Match by position
+                ratings = customRatingItems.map((item, index) => {
+                  const entry = ratingKeys[index];
+                  if (entry) {
+                    const [, value] = entry;
                     return typeof value === 'number' ? String(value) : '';
                   }
                   return '';

@@ -153,37 +153,12 @@ export async function GET(request: NextRequest) {
                 .filter(([key]) => key.startsWith('custom-rating-') && typeof customRatingData[key] === 'number')
                 .sort(([a], [b]) => a.localeCompare(b)); // Sort by key to maintain order
               
-              // Create a mapping of old item IDs to new labels for backward compatibility
-              const oldToNewMapping = {
-                'room-experience': 'Location Experience',
-                'staff-service': 'Staff Service',
-                'amenities': 'Amenities',
-                'ambiance': 'Ambiance',
-                'food': 'Food',
-                'cleanliness': 'Cleanliness'
-              };
-              
-              // Process each rating key
-              for (const [key, value] of ratingKeys) {
+              // Match by position/order if ID doesn't match
+              for (let i = 0; i < ratingKeys.length && i < customRatingItems.length; i++) {
+                const [key, value] = ratingKeys[i];
+                
                 if (typeof value === 'number' && value > 0 && value <= 5) {
-                  // Extract the item ID from the key
-                  const itemId = key.replace('custom-rating-', '');
-                  
-                  // Try to find matching item by ID first
-                  let matchingItem = customRatingItems.find(item => item.id === itemId);
-                  
-                  // If not found by ID, try to match by position (for backward compatibility)
-                  if (!matchingItem) {
-                    const keyIndex = ratingKeys.findIndex(([k]) => k === key);
-                    if (keyIndex < customRatingItems.length) {
-                      matchingItem = customRatingItems[keyIndex];
-                    }
-                  }
-                  
-                  // If still not found, try to match by old ID mapping
-                  if (!matchingItem && oldToNewMapping[itemId]) {
-                    matchingItem = customRatingItems.find(item => item.label === oldToNewMapping[itemId]);
-                  }
+                  const matchingItem = customRatingItems[i]; // Match by position
                   
                   if (matchingItem) {
                     if (!ratingDataByDate.has(reviewDate)) {

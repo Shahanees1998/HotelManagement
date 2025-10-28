@@ -320,32 +320,6 @@ export default function HotelForms() {
     }
   }, [showToast]);
 
-  const handleMigrateCustomRatingItems = useCallback(async () => {
-    if (confirm('This will update existing forms to have 6 custom rating items instead of 5. Continue?')) {
-      try {
-        const response = await fetch('/api/hotel/forms/migrate-custom-rating-items', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          showToast("success", "Success", `Updated ${data.data.updatedForms.length} forms with 6 custom rating items`);
-          loadForms();
-        } else {
-          const data = await response.json();
-          throw new Error(data.error || 'Failed to migrate custom rating items');
-        }
-      } catch (error) {
-        console.error("Error migrating custom rating items:", error);
-        showToast("error", "Error", "Failed to migrate custom rating items");
-      }
-    }
-  }, [showToast]);
-
   const getStatusSeverity = useCallback((isActive: boolean) => {
     return isActive ? "success" : "danger";
   }, []);
@@ -468,13 +442,6 @@ export default function HotelForms() {
               icon="pi pi-plus"
               onClick={handleCreateForm}
             />
-            {/* <Button
-              label="Update to 6 Rating Items"
-              icon="pi pi-refresh"
-              onClick={handleMigrateCustomRatingItems}
-              className="p-button-outlined p-button-help"
-              tooltip="Update existing forms to have 6 custom rating items instead of 5"
-            /> */}
             <Button
               label="Refresh"
               icon="pi pi-refresh"
