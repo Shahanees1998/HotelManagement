@@ -2,6 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withAuth, AuthenticatedRequest } from '@/lib/authMiddleware';
 import { prisma } from '@/lib/prisma';
 
+// Helper function to get rate-us rating from predefined answers
+function getRateUsRating(predefinedAnswers: string | null): number | null {
+  if (!predefinedAnswers) return null;
+  
+  try {
+    const parsed = JSON.parse(predefinedAnswers);
+    return parsed['rate-us'] || null;
+  } catch {
+    return null;
+  }
+}
+
+// Helper function to get effective rating (rate-us or overall)
+function getEffectiveRating(review: any): number {
+  const rateUsRating = getRateUsRating(review.predefinedAnswers);
+  return rateUsRating !== null ? rateUsRating : review.overallRating;
+}
+
 export async function GET(request: NextRequest) {
   return withAuth(request, async (authenticatedReq: AuthenticatedRequest) => {
     try {
@@ -21,6 +39,7 @@ export async function GET(request: NextRequest) {
               guestName: true,
               guestEmail: true,
               overallRating: true,
+              predefinedAnswers: true,
               submittedAt: true,
               status: true,
             },
@@ -53,11 +72,11 @@ export async function GET(request: NextRequest) {
       // Calculate dashboard stats
       const totalReviews = hotel.reviews.length;
       const averageRating = totalReviews > 0 
-        ? hotel.reviews.reduce((sum, review) => sum + review.overallRating, 0) / totalReviews 
+        ? hotel.reviews.reduce((sum, review) => sum + getEffectiveRating(review), 0) / totalReviews 
         : 0;
       
-      const positiveReviews = hotel.reviews.filter(review => review.overallRating >= 4).length;
-      const negativeReviews = hotel.reviews.filter(review => review.overallRating <= 2).length;
+      const positiveReviews = hotel.reviews.filter(review => getEffectiveRating(review) >= 4).length;
+      const negativeReviews = hotel.reviews.filter(review => getEffectiveRating(review) <= 2).length;
       
       // Calculate response rate (reviews with responses)
       const reviewsWithResponses = hotel.reviews.filter(review => review.status === 'APPROVED').length;
@@ -86,7 +105,7 @@ export async function GET(request: NextRequest) {
           id: review.id,
           guestName: review.guestName,
           guestEmail: review.guestEmail,
-          overallRating: review.overallRating,
+          overallRating: getEffectiveRating(review),
           submittedAt: review.submittedAt.toISOString(),
           status: review.status,
         })),
@@ -122,6 +141,7 @@ async function generateChartData(hotelId: string) {
     },
     select: {
       overallRating: true,
+      predefinedAnswers: true,
       submittedAt: true,
     },
     orderBy: { submittedAt: 'asc' },
@@ -136,7 +156,7 @@ async function generateChartData(hotelId: string) {
       monthlyData[month] = { reviews: 0, ratings: [] };
     }
     monthlyData[month].reviews++;
-    monthlyData[month].ratings.push(review.overallRating);
+    monthlyData[month].ratings.push(getEffectiveRating(review));
   });
 
   // Generate labels for last 6 months

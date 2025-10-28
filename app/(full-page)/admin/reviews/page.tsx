@@ -30,6 +30,7 @@ interface Review {
   formTitle: string;
   submittedAt: string;
   publishedAt?: string;
+  predefinedAnswers?: string;
 }
 
 export default function AdminReviews() {
@@ -118,6 +119,17 @@ export default function AdminReviews() {
     }
   };
 
+  const getRateUsRating = (predefinedAnswers?: string): number | null => {
+    if (!predefinedAnswers) return null;
+    
+    try {
+      const parsed = JSON.parse(predefinedAnswers);
+      return parsed['rate-us'] || null;
+    } catch {
+      return null;
+    }
+  };
+
   const getRatingColor = (rating: number) => {
     if (rating >= 4) return "text-green-500";
     if (rating >= 3) return "text-yellow-500";
@@ -153,10 +165,11 @@ export default function AdminReviews() {
   };
 
   const ratingBodyTemplate = (rowData: Review) => {
+    const effectiveRating = getRateUsRating(rowData.predefinedAnswers) ?? rowData.overallRating;
     return (
       <div className="flex align-items-center gap-2">
-        <span className={`font-bold ${getRatingColor(rowData.overallRating)}`}>
-          {rowData.overallRating}
+        <span className={`font-bold ${getRatingColor(effectiveRating)}`}>
+          {effectiveRating}
         </span>
         <i className="pi pi-star-fill text-yellow-500"></i>
       </div>

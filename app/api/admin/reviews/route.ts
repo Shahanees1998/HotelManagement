@@ -102,6 +102,7 @@ export async function GET(request: NextRequest) {
         formTitle: review.form.title,
         submittedAt: review.submittedAt.toISOString(),
         publishedAt: review.publishedAt?.toISOString(),
+        predefinedAnswers: review.predefinedAnswers,
       }));
 
       return NextResponse.json({ 
