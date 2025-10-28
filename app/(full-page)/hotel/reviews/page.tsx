@@ -37,6 +37,7 @@ interface Review {
   isUrgent: boolean;
   isReplied: boolean;
   isDeleted: boolean;
+  predefinedAnswers?: string;
 }
 
 interface DetailedReview {
@@ -340,6 +341,17 @@ export default function HotelReviews() {
     });
   };
 
+  const getRateUsRating = (predefinedAnswers?: string): number | null => {
+    if (!predefinedAnswers) return null;
+    
+    try {
+      const parsed = JSON.parse(predefinedAnswers);
+      return parsed['rate-us'] || null;
+    } catch {
+      return null;
+    }
+  };
+
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
       <i
@@ -371,13 +383,17 @@ export default function HotelReviews() {
   };
 
   const ratingBodyTemplate = useMemo(() => (rowData: Review) => {
+    // Try to get the "rate-us" rating from predefined answers first
+    const rateUsRating = getRateUsRating(rowData.predefinedAnswers);
+    const displayRating = rateUsRating !== null ? rateUsRating : rowData.overallRating;
+    
     return (
       <div className="flex align-items-center gap-2">
         <div className="flex align-items-center gap-1">
-          {renderStars(rowData.overallRating)}
+          {renderStars(displayRating)}
         </div>
-        {/* <span className={`font-bold ${getRatingColor(rowData.overallRating)}`}>
-          {rowData.overallRating}/5
+        {/* <span className={`font-bold ${getRatingColor(displayRating)}`}>
+          {displayRating}/5
         </span> */}
       </div>
     );

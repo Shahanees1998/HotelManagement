@@ -153,6 +153,7 @@ export async function GET(request: NextRequest) {
         isUrgent: review.isUrgent ?? false,
         isReplied: review.isReplied ?? false,
         isDeleted: review.isDeleted ?? false,
+        predefinedAnswers: review.predefinedAnswers,
       }));
 
       return NextResponse.json({ 
