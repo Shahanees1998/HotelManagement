@@ -33,7 +33,6 @@ export default function HotelForms() {
   const [loading, setLoading] = useState(true);
   const [showFormBuilder, setShowFormBuilder] = useState(false);
   const [previewFormId, setPreviewFormId] = useState<string | null>(null);
-  const [previewForm, setPreviewForm] = useState<any>(null);
   const [showQrDialog, setShowQrDialog] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState<string>("");
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
@@ -83,28 +82,14 @@ export default function HotelForms() {
     }
   }, [existingForm]);
 
-  const handlePreviewForm = useCallback(async (formId: string) => {
-    try {
-      const response = await fetch(`/api/hotel/forms/${formId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setPreviewForm(data.data);
-        setPreviewFormId(formId);
-      } else {
-        throw new Error('Failed to load form for preview');
-      }
-    } catch (error) {
-      console.error("Error loading form for preview:", error);
-      showToast("error", "Error", "Failed to load form for preview");
+  const handlePreviewForm = useCallback((formId: string) => {
+    // Show preview of the public feedback form
+    if (user?.hotelSlug) {
+      setPreviewFormId(formId);
+    } else {
+      showToast("error", "Error", "Hotel slug not found. Cannot preview form.");
     }
-  }, [showToast]);
+  }, [user?.hotelSlug, showToast]);
 
   const handleFormSaved = useCallback(async (form: any) => {
     console.log("handleFormSaved called with:", form);
@@ -305,31 +290,101 @@ export default function HotelForms() {
     );
   }
 
-  if (previewForm) {
+  // Prevent body scroll when preview is active
+  useEffect(() => {
+    if (previewFormId) {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }
+  }, [previewFormId]);
+
+  if (previewFormId && user?.hotelSlug) {
+    const publicFormUrl = `/feedback/${user.hotelSlug}/${previewFormId}`;
+    
     return (
-      <div className="grid">
-        <div className="col-12">
-          <div className="flex align-items-center gap-3 mb-4">
-            <Button
-              icon="pi pi-arrow-left"
-              className="p-button-text"
-              onClick={() => {
-                setPreviewForm(null);
-                setPreviewFormId(null);
-              }}
-              tooltip="Back to Forms"
-            />
-            <h1 className="text-3xl font-bold m-0">Form Preview</h1>
-          </div>
-          <FeedbackFormBuilder
-            formId={previewFormId || undefined}
-            onSave={() => {}} // No save functionality in preview
-            onCancel={() => {
-              setPreviewForm(null);
+      <div style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        height: '100vh',
+        width: '100vw',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        backgroundColor: '#f8f9fa',
+        zIndex: 1000
+      }}>
+        <div className="flex align-items-center gap-3 mb-4" style={{ padding: '1rem', flexShrink: 0, backgroundColor: '#fff', borderBottom: '1px solid #e5e7eb' }}>
+          <Button
+            icon="pi pi-arrow-left"
+            className="p-button-text"
+            onClick={() => {
               setPreviewFormId(null);
             }}
-            previewMode={true}
+            tooltip="Back to Forms"
           />
+          <h1 className="text-3xl font-bold m-0">Form Preview</h1>
+          <Tag value="Preview Mode - Interactions Disabled" severity="info" className="ml-auto" />
+        </div>
+        <div style={{ flex: 1, position: 'relative', overflow: 'hidden', padding: '0 1rem 1rem 1rem' }}>
+            <iframe
+              id={`preview-iframe-${previewFormId}`}
+              src={publicFormUrl}
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                borderRadius: '8px',
+                flex: 1,
+                overflow: 'auto'
+              }}
+              title="Form Preview"
+              scrolling="yes"
+              onLoad={() => {
+                // Inject CSS to disable form interactions while allowing scroll
+                const iframe = document.getElementById(`preview-iframe-${previewFormId}`) as HTMLIFrameElement;
+                try {
+                  if (iframe?.contentDocument) {
+                    const style = iframe.contentDocument.createElement('style');
+                    style.textContent = `
+                      input, textarea, button, select,
+                      .p-rating, .p-rating-icon, .p-rating-icon-pi-star,
+                      [role="button"], [role="slider"],
+                      .p-checkbox, .p-radiobutton,
+                      .feedback-button, button.p-button,
+                      span[style*="cursor: pointer"],
+                      .p-float-label input,
+                      .p-float-label label {
+                        pointer-events: none !important;
+                        cursor: not-allowed !important;
+                      }
+                      span[style*="color: #facc15"], 
+                      span[style*="cursor: pointer"] {
+                        pointer-events: none !important;
+                        cursor: not-allowed !important;
+                      }
+                      body, html {
+                        overflow-y: auto !important;
+                        overflow-x: hidden !important;
+                      }
+                      body {
+                        user-select: text !important;
+                        -webkit-user-select: text !important;
+                        -moz-user-select: text !important;
+                        -ms-user-select: text !important;
+                      }
+                    `;
+                    iframe.contentDocument.head.appendChild(style);
+                  }
+                } catch (error) {
+                  console.error('Error injecting preview styles:', error);
+                }
+              }}
+            />
         </div>
       </div>
     );
