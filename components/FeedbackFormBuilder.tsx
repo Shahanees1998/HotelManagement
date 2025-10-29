@@ -784,7 +784,7 @@ export default function FeedbackFormBuilder({
               </div>
 
               {/* Plan Information */}
-              {!planLoading && (
+              {/* {!planLoading && (
                 <div className="plan-info-section">
                   <div className="flex align-items-center gap-2 p-3 border-1 border-round mb-3" 
                        style={{ 
@@ -806,9 +806,7 @@ export default function FeedbackFormBuilder({
                                      currentPlan === 'professional' ? 'Professional' : 'Enterprise'}
                       </p>
                       <p className="text-500 text-xs">
-                        {currentPlan === 'basic' ? 'Only Basic layout available. Upgrade to Professional or Enterprise for more options.' :
-                         currentPlan === 'professional' ? 'Basic and Good layouts available. Upgrade to Enterprise for all features.' :
-                         'All layouts and features available.'}
+                        All question types and custom questions are available in all plans. Layout options vary by plan: {currentPlan === 'basic' ? 'Basic layout available' : currentPlan === 'professional' ? 'Basic and Good layouts available' : 'All layouts available'}.
                       </p>
                     </div>
                     {(currentPlan === 'basic' || currentPlan === 'professional') && (
@@ -821,7 +819,7 @@ export default function FeedbackFormBuilder({
                     )}
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
 
@@ -833,8 +831,8 @@ export default function FeedbackFormBuilder({
                 label="Add New"
                 className="add-new-btn"
                 onClick={addQuestion}
-                disabled={form.layout !== "excellent" || previewMode}
-                tooltip={previewMode ? "Preview mode - editing disabled" : form.layout === "basic" ? "Custom questions available in Excellent layout" : form.layout === "good" ? "Custom questions available in Excellent layout" : "Add custom question"}
+                disabled={previewMode}
+                tooltip={previewMode ? "Preview mode - editing disabled" : "Add custom question"}
               />
             </div>
 
@@ -865,7 +863,7 @@ export default function FeedbackFormBuilder({
                   <div className="question-checkbox">
                     <Checkbox
                       checked={form.questions.some(q => q.question === "Custom Rating")}
-                      disabled={previewMode || form.layout === "basic"}
+                      disabled={previewMode}
                       onChange={(e) => {
                         if (previewMode) return;
                         if (e.checked) {
@@ -891,9 +889,8 @@ export default function FeedbackFormBuilder({
                         }
                       }}
                     />
-                    <label className={`question-label ${form.layout === "basic" ? "text-400" : ""}`}>
+                    <label className="question-label">
                       Custom Rating*
-                      {form.layout === "basic" && <span className="text-xs text-400 ml-2">(Available in Good/Excellent layouts)</span>}
                     </label>
                   </div>
                   {form.questions.some(q => q.question === "Custom Rating") && (
@@ -957,7 +954,7 @@ export default function FeedbackFormBuilder({
                   <div className="question-checkbox">
                     <Checkbox
                       checked={form.questions.some(q => q.question === "Please give us your honest feedback?")}
-                      disabled={previewMode || form.layout === "basic"}
+                      disabled={previewMode}
                       onChange={(e) => {
                         if (previewMode) return;
                         if (e.checked) {
@@ -981,9 +978,8 @@ export default function FeedbackFormBuilder({
                         }
                       }}
                     />
-                    <label className={`question-label ${form.layout === "basic" ? "text-400" : ""}`}>
+                    <label className="question-label">
                       Please give us your honest feedback?*
-                      {form.layout === "basic" && <span className="text-xs text-400 ml-2">(Available in Good/Excellent layouts)</span>}
                     </label>
                   </div>
                   {form.questions.some(q => q.question === "Please give us your honest feedback?") && (
@@ -1000,7 +996,7 @@ export default function FeedbackFormBuilder({
               </div>
 
               {/* Custom Questions Section */}
-              {form.layout === "excellent" && form.questions.filter(q => !q.isDefault).length > 0 && (
+              {form.questions.filter(q => !q.isDefault).length > 0 && (
                 <div className="custom-questions">
                   <h4 className="section-subtitle">Custom Questions</h4>
                   {form.questions
@@ -1143,7 +1139,7 @@ export default function FeedbackFormBuilder({
                     <i className="pi pi-info-circle text-blue-500"></i>
                     <div>
                       <p className="text-600 text-sm mb-1 font-medium">Basic Layout Features</p>
-                      <p className="text-500 text-xs">Only "Rate Us" question is available. Upgrade to Good or Excellent layout for more options.</p>
+                      <p className="text-500 text-xs">All questions are available including custom questions. This layout provides a simple, clean design.</p>
                     </div>
                   </div>
                 </div>
@@ -1168,7 +1164,7 @@ export default function FeedbackFormBuilder({
                     <i className="pi pi-info-circle text-green-500"></i>
                     <div>
                       <p className="text-600 text-sm mb-1 font-medium">Good Layout Features</p>
-                      <p className="text-500 text-xs">Choose either "Rate Us" OR "Custom Rating" (mutually exclusive - selecting one will uncheck the other). You can also add "Feedback" question. Custom questions available in Excellent layout.</p>
+                      <p className="text-500 text-xs">Choose either "Rate Us" OR "Custom Rating" (mutually exclusive - selecting one will uncheck the other). All questions including custom questions are available.</p>
                     </div>
                   </div>
                 </div>
@@ -1180,7 +1176,7 @@ export default function FeedbackFormBuilder({
                     <i className="pi pi-info-circle text-purple-500"></i>
                     <div>
                       <p className="text-600 text-sm mb-1 font-medium">Excellent Layout Features</p>
-                      <p className="text-500 text-xs">All predefined questions available plus custom questions. Full flexibility for creating comprehensive feedback forms.</p>
+                      <p className="text-500 text-xs">All predefined questions available plus custom questions. Full flexibility for creating comprehensive feedback forms with premium design and animations.</p>
                     </div>
                   </div>
                 </div>
@@ -1192,12 +1188,7 @@ export default function FeedbackFormBuilder({
                   <i className="pi pi-question-circle text-4xl text-400 mb-3"></i>
                   <p className="text-600">No questions added yet</p>
                   <p className="text-500 text-sm">
-                    {form.layout === "basic" 
-                      ? "Select 'Rate Us' above to get started" 
-                      : form.layout === "good"
-                      ? "Use the predefined questions above to get started"
-                      : "Use the predefined questions above or add custom questions"
-                    }
+                    Use the predefined questions above or add custom questions to get started
                   </p>
                 </div>
               )}
