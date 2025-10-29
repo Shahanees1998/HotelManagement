@@ -876,111 +876,79 @@ export default function CustomerFeedbackForm() {
 
         {/* Full Name & Email */}
         <div style={{ display: "flex", gap: "12px", marginBottom: "20px" }}>
-          <div style={{ flex: 1 }}>
-            <label
-              style={{
-                display: "block",
-                fontSize: "13px",
-                fontWeight: 500,
-                color: "#444",
-                marginBottom: "6px",
-              }}
-            >
-              {t('Full Name*')}
-            </label>
+          <div className="p-float-label" style={{ flex: 1 }}>
             <InputText
+              id="guestName"
               value={submission.guestName || ''}
               onChange={(e) => setSubmission({ ...submission, guestName: e.target.value })}
-              placeholder={t('Enter your full name')}
+              className={submission.guestName ? 'p-filled' : ''}
               style={{
                 width: "100%",
-                padding: "10px",
+                padding: "1rem 0.75rem",
                 borderRadius: "6px",
-                border: "1px solid #ced4da",
+                border: "2px solid #ced4da",
                 fontSize: "14px",
+                backgroundColor: "#fff",
               }}
             />
+            <label htmlFor="guestName">{t('Full Name')} *</label>
           </div>
-          <div style={{ flex: 1 }}>
-            <label
-              style={{
-                display: "block",
-                fontSize: "13px",
-                fontWeight: 500,
-                color: "#444",
-                marginBottom: "6px",
-              }}
-            >
-              {t('Email*')}
-            </label>
+          <div className="p-float-label" style={{ flex: 1 }}>
             <InputText
+              id="guestEmail"
               value={submission.guestEmail || ''}
               onChange={(e) => setSubmission({ ...submission, guestEmail: e.target.value })}
-              placeholder={t('Enter your email address')}
               type="email"
+              className={submission.guestEmail ? 'p-filled' : ''}
               style={{
                 width: "100%",
-                padding: "10px",
+                padding: "1rem 0.75rem",
                 borderRadius: "6px",
-                border: "1px solid #ced4da",
+                border: "2px solid #ced4da",
                 fontSize: "14px",
+                backgroundColor: "#fff",
               }}
             />
+            <label htmlFor="guestEmail">{t('Email')} *</label>
           </div>
         </div>
 
         {/* Phone Number */}
-        <div style={{ marginBottom: "20px" }}>
-          <label
-            style={{
-              display: "block",
-              fontSize: "13px",
-              fontWeight: 500,
-              color: "#444",
-              marginBottom: "6px",
-            }}
-          >
-            {t('Phone Number')}
-          </label>
+        <div className="p-float-label" style={{ marginBottom: "20px" }}>
           <InputText
+            id="guestPhone"
             value={submission.guestPhone || ''}
             onChange={(e) => setSubmission({ ...submission, guestPhone: e.target.value })}
-            placeholder={t('Enter your phone number')}
+            className={submission.guestPhone ? 'p-filled' : ''}
             style={{
               width: "100%",
-              padding: "10px",
+              padding: "1rem 0.75rem",
               borderRadius: "6px",
-              border: "1px solid #ced4da",
+              border: "2px solid #ced4da",
               fontSize: "14px",
+              backgroundColor: "#fff",
             }}
           />
+          <label htmlFor="guestPhone">{t('Phone Number')}</label>
         </div>
 
         {/* Room Number */}
-        <div style={{ marginBottom: "20px" }}>
-          <label
-            style={{
-              display: "block",
-              fontSize: "13px",
-              fontWeight: 500,
-              color: "#444",
-              marginBottom: "6px",
-            }}
-          >
-            {t('Room Number*')}
-          </label>
+        <div className="p-float-label" style={{ marginBottom: "20px" }}>
           <InputText
+            id="roomNumber"
             value={submission.roomNumber || ''}
             onChange={(e) => setSubmission({ ...submission, roomNumber: e.target.value })}
-            placeholder={t('Enter your room number')}
+            className={submission.roomNumber ? 'p-filled' : ''}
             style={{
               width: "100%",
-              padding: "10px",
+              padding: "1rem 0.75rem",
               borderRadius: "6px",
-              border: "1px solid #ced4da",
+              border: "2px solid #ced4da",
               fontSize: "14px",
+              backgroundColor: "#fff",
             }}
           />
+          <label htmlFor="roomNumber">{t('Room Number')} *</label>
         </div>
 
 
@@ -988,20 +956,28 @@ export default function CustomerFeedbackForm() {
         {/* Custom Questions */}
         {translatedForm?.questions.map((question, index) => (
           <div key={question.id} style={{ marginBottom: "20px" }}>
-            <label
-              style={{
-                display: "block",
-                fontSize: "13px",
-                fontWeight: 500,
-                color: "#444",
-                marginBottom: "6px",
-              }}
-            >
-              {question.question}
-              {question.isRequired && <span style={{ color: "#dc3545" }}> *</span>}
-            </label>
+            {/* Hide label for Custom Rating */}
+            {!(question.id === "custom-rating" && question.type === "CUSTOM_RATING") && (
+              <label
+                style={{
+                  display: "block",
+                  fontSize: question.id === "rate-us" ? "16px" : "13px",
+                  fontWeight: question.id === "rate-us" ? 600 : 500,
+                  color: "#444",
+                  marginBottom: "6px",
+                  textAlign: question.id === "rate-us" ? "center" : "left",
+                }}
+              >
+                {question.question}
+                {question.isRequired && <span style={{ color: "#dc3545" }}> *</span>}
+              </label>
+            )}
 
-            <div>
+            <div style={{ 
+              display: question.id === "rate-us" ? "flex" : "block",
+              justifyContent: question.id === "rate-us" ? "center" : "flex-start",
+              alignItems: question.id === "rate-us" ? "center" : "flex-start"
+            }}>
               {question.type === "SHORT_TEXT" && (
                 <InputText
                   value={submission.answers[question.id] || ''}
@@ -1035,12 +1011,21 @@ export default function CustomerFeedbackForm() {
               )}
 
               {question.type === "STAR_RATING" && (
-                <Rating
-                  value={submission.answers[question.id] || 0}
-                  onChange={(e) => handleAnswerChange(question.id, e.value)}
-                  stars={5}
-                  cancel={false}
-                />
+                <div 
+                  className={question.id === "rate-us" ? "rate-us-rating-large" : ""}
+                  style={{ 
+                    display: question.id === "rate-us" ? "flex" : "block",
+                    justifyContent: question.id === "rate-us" ? "center" : "flex-start",
+                    alignItems: question.id === "rate-us" ? "center" : "flex-start"
+                  }}
+                >
+                  <Rating
+                    value={submission.answers[question.id] || 0}
+                    onChange={(e) => handleAnswerChange(question.id, e.value)}
+                    stars={5}
+                    cancel={false}
+                  />
+                </div>
               )}
 
               {question.type === "MULTIPLE_CHOICE_SINGLE" && (
@@ -1136,7 +1121,7 @@ export default function CustomerFeedbackForm() {
               {question.type === "CUSTOM_RATING" && question.customRatingItems && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                   {question.customRatingItems.map((item, itemIndex) => {
-                    const rating = submission.answers[`${question.id}-${item.id}`] || 0;
+                    const rating = submission.answers[`${question.id === "custom-rating" ? "custom-rating" : question.id}-${item.id}`] || 0;
                     return (
                       <div
                         key={item.id}
@@ -1158,7 +1143,7 @@ export default function CustomerFeedbackForm() {
                                 color: i < rating ? "#facc15" : "#d1d5db",
                                 cursor: "pointer",
                               }}
-                              onClick={() => handleAnswerChange(`${question.id}-${item.id}`, i + 1)}
+                              onClick={() => handleAnswerChange(`${question.id === "custom-rating" ? "custom-rating" : question.id}-${item.id}`, i + 1)}
                             >
                               ★
                             </span>

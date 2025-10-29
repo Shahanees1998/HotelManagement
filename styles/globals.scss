@@ -1124,6 +1124,75 @@ textarea:focus {
   z-index: -1 !important;
 }
 
+// Large rating stars for "How do you rate us?" question
+.rate-us-rating-large {
+  .p-rating {
+    .p-rating-icon {
+      font-size: 2.5rem !important; // Make stars bigger (40px)
+      width: 2.5rem !important;
+      height: 2.5rem !important;
+    }
+  }
+}
+
+// Outlined floating label styling for feedback form (label on border line)
+.p-float-label {
+  position: relative;
+  
+  label {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    margin-top: -0.5rem;
+    background-color: #fff;
+    padding: 0 0.5rem;
+    color: #64748b;
+    font-size: 0.875rem;
+    font-weight: 500;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    line-height: 1;
+    z-index: 1;
+    height: auto;
+  }
+
+  input.p-filled ~ label,
+  input:focus ~ label,
+  input:-webkit-autofill ~ label {
+    top: 0;
+    margin-top: -0.75rem;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.875rem;
+    color: #6366f1;
+    font-weight: 500;
+    height: auto;
+    line-height: 1.2;
+    min-height: 1.5rem;
+  }
+
+  input {
+    background-color: #fff;
+    padding: 1rem 0.75rem;
+    border: 2px solid #ced4da;
+    
+    &:focus {
+      border-color: #6366f1;
+      outline: none;
+    }
+  }
+
+  // Ensure label stays on border when filled
+  input.p-filled ~ label {
+    top: 0;
+    margin-top: -0.75rem;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.875rem;
+    height: auto;
+    line-height: 1.2;
+    min-height: 1.5rem;
+  }
+}
+
 .login-center-container {
   min-height: 100vh;
   display: flex;
