@@ -47,11 +47,10 @@ export async function GET(request: NextRequest) {
       const startDate = searchParams.get('startDate');
       const endDate = searchParams.get('endDate');
 
-      // Find the "Good" layout form
-      const goodForm = await prisma.feedbackForm.findFirst({
+      // Find the single form for this hotel (only one form allowed per hotel)
+      const hotelForm = await prisma.feedbackForm.findFirst({
         where: {
           hotelId: hotel.id,
-          layout: 'good',
           isDeleted: false,
         },
         include: {
@@ -66,22 +65,22 @@ export async function GET(request: NextRequest) {
         },
       });
 
-      if (!goodForm || !goodForm.predefinedQuestions?.hasCustomRating) {
+      if (!hotelForm || !hotelForm.predefinedQuestions?.hasCustomRating) {
         return NextResponse.json({
           success: true,
           data: null,
-          message: 'No "Good" layout form with custom ratings found',
+          message: 'No form with custom ratings found',
         });
       }
 
-      const customRatingItems = goodForm.predefinedQuestions.customRatingItems;
+      const customRatingItems = hotelForm.predefinedQuestions.customRatingItems;
 
       if (customRatingItems.length === 0) {
         return NextResponse.json({
           success: true,
           data: {
-            formId: goodForm.id,
-            formTitle: goodForm.title,
+            formId: hotelForm.id,
+            formTitle: hotelForm.title,
             labels: [],
             chartData: {
               labels: [],
@@ -105,7 +104,7 @@ export async function GET(request: NextRequest) {
       const reviews = await prisma.review.findMany({
         where: {
           hotelId: hotel.id,
-          formId: goodForm.id,
+          formId: hotelForm.id,
           submittedAt: Object.keys(dateFilter).length > 0 ? dateFilter : undefined,
         },
         select: {
@@ -250,8 +249,8 @@ export async function GET(request: NextRequest) {
       const totalReviews = reviews.length;
 
       const responseData: CustomRatingData = {
-        formId: goodForm.id,
-        formTitle: goodForm.title,
+        formId: hotelForm.id,
+        formTitle: hotelForm.title,
         labels: customRatingItems.map(item => ({
           id: item.id,
           label: item.label,

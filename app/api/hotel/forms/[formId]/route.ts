@@ -293,6 +293,9 @@ export async function PUT(
         }
 
         return updatedForm;
+      }, {
+        maxWait: 10000, // Maximum time to wait for the transaction to start (10 seconds)
+        timeout: 30000, // Maximum time the transaction can run (30 seconds)
       });
 
       return NextResponse.json({
@@ -314,52 +317,10 @@ export async function DELETE(
   { params }: { params: { formId: string } }
 ) {
   return withAuth(request, async (authenticatedReq: AuthenticatedRequest) => {
-    try {
-      const user = authenticatedReq.user;
-      const { formId } = params;
-      
-      if (!user || user.role !== 'HOTEL') {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-      }
-
-      // Get hotel
-      const hotel = await prisma.hotels.findUnique({
-        where: { ownerId: user.userId },
-        select: { id: true },
-      });
-
-      if (!hotel) {
-        return NextResponse.json({ error: 'Hotel not found' }, { status: 404 });
-      }
-
-      // Check if form exists and belongs to hotel
-      const existingForm = await prisma.feedbackForm.findFirst({
-        where: {
-          id: formId,
-          hotelId: hotel.id,
-          isDeleted: false, // Only allow deleting non-deleted forms
-        },
-      });
-
-      if (!existingForm) {
-        return NextResponse.json({ error: 'Form not found' }, { status: 404 });
-      }
-
-      // Soft delete form by setting isDeleted to true
-      await prisma.feedbackForm.update({
-        where: { id: formId },
-        data: { isDeleted: true },
-      });
-
-      return NextResponse.json({
-        message: 'Form deleted successfully',
-      });
-    } catch (error) {
-      console.error('Error deleting form:', error);
-      return NextResponse.json(
-        { error: 'Failed to delete form' },
-        { status: 500 }
-      );
-    }
+    // Form deletion is not allowed - hotels can only have one form that can be updated
+    return NextResponse.json(
+      { error: 'Form deletion is not allowed. Each hotel can have only one form that can be updated, not deleted.' },
+      { status: 403 }
+    );
   });
 }

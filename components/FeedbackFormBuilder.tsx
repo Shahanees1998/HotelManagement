@@ -154,7 +154,8 @@ export default function FeedbackFormBuilder({
     { id: "staff-service", label: "Staff Service", isEditing: false },
     { id: "amenities", label: "Amenities", isEditing: false },
     { id: "ambiance", label: "Ambiance", isEditing: false },
-    { id: "food", label: "Food", isEditing: false }
+    { id: "food", label: "Food", isEditing: false },
+    { id: "value-for-money", label: "Value for Money", isEditing: false }
   ]);
   const [editingRatingItem, setEditingRatingItem] = useState<string | null>(null);
   const [newRatingItemLabel, setNewRatingItemLabel] = useState("");

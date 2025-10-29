@@ -28,9 +28,9 @@ const AppMenuHotel = () => {
             to: "/hotel/dashboard",
         },
         
-        // Feedback Forms
+        // Feedback Form
         {
-            label: "Feedback Forms",
+            label: "Feedback Form",
             icon: "pi pi-fw pi-file-edit",
             to: "/hotel/forms",
         },

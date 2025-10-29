@@ -202,7 +202,22 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      // Allow multiple forms with the same layout - removed restriction
+      // Check if hotel already has a form (only one form allowed per hotel)
+      const existingForm = await prisma.feedbackForm.findFirst({
+        where: {
+          hotelId: hotel.id,
+          isDeleted: false,
+        },
+      });
+
+      if (existingForm) {
+        return NextResponse.json(
+          { 
+            error: 'A form already exists for this hotel. Each hotel can have only one form. Please update the existing form instead of creating a new one.',
+          },
+          { status: 400 }
+        );
+      }
 
       // Validate custom questions if provided
       if (customQuestions && Array.isArray(customQuestions)) {
@@ -284,6 +299,9 @@ export async function POST(request: NextRequest) {
         }
 
         return form;
+      }, {
+        maxWait: 10000, // Maximum time to wait for the transaction to start (10 seconds)
+        timeout: 30000, // Maximum time the transaction can run (30 seconds)
       });
 
       // Send notification to admins about new form creation

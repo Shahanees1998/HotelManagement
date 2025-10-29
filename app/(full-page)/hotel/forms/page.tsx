@@ -1,21 +1,16 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
 import { Toast } from "primereact/toast";
-import { InputText } from "primereact/inputtext";
-import { Dropdown } from "primereact/dropdown";
 import { Dialog } from "primereact/dialog";
 import { useRef } from "react";
 import QRCode from "qrcode";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import FeedbackFormBuilder from "@/components/FeedbackFormBuilder";
-import { CustomPaginator } from "@/components/CustomPaginator";
 import { apiClient } from "@/lib/apiClient";
 
 interface FeedbackForm {
@@ -34,17 +29,9 @@ interface FeedbackForm {
 export default function HotelForms() {
   const { user } = useAuth();
   const router = useRouter();
-  const [forms, setForms] = useState<FeedbackForm[]>([]);
+  const [existingForm, setExistingForm] = useState<FeedbackForm | null>(null);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [totalRecords, setTotalRecords] = useState(0);
-  const [filters, setFilters] = useState({
-    status: "",
-    search: "",
-  });
   const [showFormBuilder, setShowFormBuilder] = useState(false);
-  const [editingFormId, setEditingFormId] = useState<string | null>(null);
   const [previewFormId, setPreviewFormId] = useState<string | null>(null);
   const [previewForm, setPreviewForm] = useState<any>(null);
   const [showQrDialog, setShowQrDialog] = useState(false);
@@ -57,52 +44,44 @@ export default function HotelForms() {
     toast.current?.show({ severity, summary, detail, life: 3000 });
   }, []);
 
-  const loadForms = useCallback(async () => {
+  const loadForm = useCallback(async () => {
     setLoading(true);
     try {
       const response = await apiClient.getHotelForms({
-        status: filters.status,
-        search: filters.search,
-        page: currentPage,
-        limit: rowsPerPage,
+        status: "",
+        search: "",
+        page: 1,
+        limit: 1,
       });
 
       if (response.error) {
         throw new Error(response.error);
       }
 
-      setForms((response as any).data || []);
-      setTotalRecords(response.pagination?.total || 0);
+      const formsData = (response as any).data || [];
+      if (formsData.length > 0) {
+        setExistingForm(formsData[0]);
+      } else {
+        setExistingForm(null);
+      }
     } catch (error) {
-      console.error("Error loading forms:", error);
-      showToast("error", "Error", "Failed to load forms");
-      setForms([]);
-      setTotalRecords(0);
+      console.error("Error loading form:", error);
+      showToast("error", "Error", "Failed to load form");
+      setExistingForm(null);
     } finally {
       setLoading(false);
     }
-  }, [filters.status, filters.search, currentPage, rowsPerPage, showToast]);
+  }, [showToast]);
 
   useEffect(() => {
-    loadForms();
-  }, [loadForms]);
+    loadForm();
+  }, [loadForm]);
 
-  // Reset to page 1 when filters change
-  useEffect(() => {
-    if (currentPage !== 1) {
-      setCurrentPage(1);
+  const handleEditForm = useCallback(() => {
+    if (existingForm) {
+      setShowFormBuilder(true);
     }
-  }, [filters.status, filters.search]);
-
-  const handleCreateForm = useCallback(() => {
-    setEditingFormId(null);
-    setShowFormBuilder(true);
-  }, []);
-
-  const handleEditForm = useCallback((formId: string) => {
-    setEditingFormId(formId);
-    setShowFormBuilder(true);
-  }, []);
+  }, [existingForm]);
 
   const handlePreviewForm = useCallback(async (formId: string) => {
     try {
@@ -130,8 +109,8 @@ export default function HotelForms() {
   const handleFormSaved = useCallback(async (form: any) => {
     console.log("handleFormSaved called with:", form);
     try {
-      const url = editingFormId ? `/api/hotel/forms/${editingFormId}` : '/api/hotel/forms';
-      const method = editingFormId ? 'PUT' : 'POST';
+      const method = existingForm ? 'PUT' : 'POST';
+      const url = existingForm ? `/api/hotel/forms/${existingForm.id}` : '/api/hotel/forms';
 
       console.log("Saving form to:", url, "with method:", method);
 
@@ -148,11 +127,12 @@ export default function HotelForms() {
       console.log("Response:", response.status, data);
 
       if (response.ok) {
-        console.log("Form saved successfully, closing builder");
+        console.log("Form saved successfully");
+        // Close the form builder to show the form details view
         setShowFormBuilder(false);
-        setEditingFormId(null);
-        loadForms(); // Refresh the list
-        showToast("success", "Success", editingFormId ? "Form updated successfully" : "Form created successfully");
+        // Refresh the form data to show the newly created/updated form
+        await loadForm();
+        showToast("success", "Success", existingForm ? "Form updated successfully" : "Form created successfully");
       } else {
         // Show the actual error message from the API
         const errorMessage = data.error || 'Failed to save form';
@@ -164,7 +144,7 @@ export default function HotelForms() {
       const errorMessage = error instanceof Error ? error.message : 'Failed to save form';
       showToast("error", "Error", errorMessage);
     }
-  }, [editingFormId, showToast]);
+  }, [existingForm, showToast, loadForm]);
 
   const handleShowQrCode = useCallback(async (formId: string, formTitle: string) => {
     try {
@@ -295,30 +275,7 @@ export default function HotelForms() {
     }
   }, [qrCodeUrl, showToast]);
 
-  const handleDeleteForm = useCallback(async (formId: string) => {
-    if (confirm('Are you sure you want to delete this form? This action cannot be undone.')) {
-      try {
-        const response = await fetch(`/api/hotel/forms/${formId}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
-
-        if (response.ok) {
-          showToast("success", "Success", "Form deleted successfully");
-          loadForms();
-        } else {
-          const data = await response.json();
-          throw new Error(data.error || 'Failed to delete form');
-        }
-      } catch (error) {
-        console.error("Error deleting form:", error);
-        showToast("error", "Error", "Failed to delete form");
-      }
-    }
-  }, [showToast]);
+  // Delete functionality removed - forms cannot be deleted, only updated
 
   const getStatusSeverity = useCallback((isActive: boolean) => {
     return isActive ? "success" : "danger";
@@ -332,63 +289,14 @@ export default function HotelForms() {
     });
   }, []);
 
-  const statusBodyTemplate = useMemo(() => (rowData: FeedbackForm) => {
-    return (
-      <Tag 
-        value={rowData.isActive ? "Active" : "Inactive"} 
-        severity={getStatusSeverity(rowData.isActive) as any} 
-      />
-    );
-  }, [getStatusSeverity]);
 
-  const actionsBodyTemplate = useMemo(() => (rowData: FeedbackForm) => {
-    return (
-      <div className="flex gap-2">
-        <Button
-          icon="pi pi-eye"
-          size="small"
-          className="p-button-outlined p-button-sm"
-          onClick={() => handlePreviewForm(rowData.id)}
-          tooltip="Preview Form"
-        />
-        <Button
-          icon="pi pi-qrcode"
-          size="small"
-          className="p-button-outlined p-button-sm"
-          onClick={() => handleShowQrCode(rowData.id, rowData.title)}
-          tooltip="QR Code"
-        />
-        <Button
-          icon="pi pi-pencil"
-          size="small"
-          className="p-button-outlined p-button-sm"
-          onClick={() => handleEditForm(rowData.id)}
-          tooltip="Edit Form"
-        />
-        <Button
-          icon="pi pi-trash"
-          size="small"
-          className="p-button-outlined p-button-danger p-button-sm"
-          onClick={() => handleDeleteForm(rowData.id)}
-          tooltip="Delete Form"
-        />
-      </div>
-    );
-  }, [handleEditForm, handleDeleteForm, handleShowQrCode]);
-
-  const statusOptions = useMemo(() => [
-    { label: "All Statuses", value: "" },
-    { label: "Active", value: "true" },
-    { label: "Inactive", value: "false" },
-  ], []);
 
   if (showFormBuilder) {
     return (
       <div className="grid">
         <div className="col-12">
-     
           <FeedbackFormBuilder
-            formId={editingFormId || undefined}
+            formId={existingForm?.id || undefined}
             onSave={handleFormSaved}
             onCancel={() => setShowFormBuilder(false)}
           />
@@ -431,121 +339,105 @@ export default function HotelForms() {
     <div className="grid">
       {/* Header */}
       <div className="col-12">
-        <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-4">
+        <div className="flex flex-column gap-3 mb-4">
           <div>
-            <h1 className="text-3xl font-bold m-0">Feedback Forms</h1>
-            <p className="text-600 mt-2 mb-0">Create and manage your guest feedback forms.</p>
-          </div>
-          <div className="flex gap-2">
-            <Button
-              label="Create Form"
-              icon="pi pi-plus"
-              onClick={handleCreateForm}
-            />
-            <Button
-              label="Refresh"
-              icon="pi pi-refresh"
-              onClick={loadForms}
-              loading={loading}
-              className="p-button-outlined"
-            />
+            <h1 className="text-3xl font-bold m-0">Feedback Form</h1>
+            <p className="text-600 mt-2 mb-0">Manage your guest feedback form. You can update this form at any time.</p>
           </div>
         </div>
       </div>
 
-      {/* Filters */}
+      {/* Form Info Card */}
       <div className="col-12">
-        <Card className="mb-4">
-          <div className="grid">
-            <div className="col-12 md:col-6">
-              <div className="field">
-                <label htmlFor="search" className="block text-900 font-medium mb-2">
-                  Search Forms
-                </label>
-                <InputText
-                  id="search"
-                  value={filters.search}
-                  onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
-                  placeholder="Search by title or description..."
-                  className="w-full"
-                />
-              </div>
-            </div>
-            <div className="col-12 md:col-6">
-              <div className="field">
-                <label htmlFor="status" className="block text-900 font-medium mb-2">
-                  Status
-                </label>
-                <Dropdown
-                  id="status"
-                  value={filters.status}
-                  options={statusOptions}
-                  onChange={(e) => setFilters(prev => ({ ...prev, status: e.value }))}
-                  placeholder="Select status"
-                  className="w-full"
-                />
-              </div>
-            </div>
-          </div>
-        </Card>
-      </div>
-
-      {/* Forms Table */}
-      <div className="col-12">
-          {loading ? (
+        {loading ? (
+          <Card>
             <div className="flex align-items-center justify-content-center" style={{ height: '200px' }}>
               <div className="text-center">
                 <i className="pi pi-spinner pi-spin text-2xl mb-2"></i>
-                <p>Loading forms...</p>
+                <p className="text-600">Loading form...</p>
               </div>
             </div>
-          ) : forms.length === 0 ? (
-            <div className="text-center py-6">
-              <i className="pi pi-file-edit text-4xl text-400 mb-3"></i>
-              <h3 className="text-900 mb-2">No Forms Created Yet</h3>
-              <p className="text-600 mb-4">Create your first feedback form to start collecting guest reviews.</p>
+          </Card>
+        ) : existingForm ? (
+          <Card className="shadow-2">
+            <div className="grid">
+              <div className="col-12 md:col-6">
+                <div className="mb-4">
+                  <label className="text-600 text-sm font-semibold block mb-2" style={{ color: '#64748b' }}>Form Title</label>
+                  <p className="text-900 font-semibold text-xl m-0" style={{ color: '#1e293b' }}>{existingForm.title}</p>
+                </div>
+              </div>
+              <div className="col-12 md:col-6">
+                <div className="mb-4">
+                  <label className="text-600 text-sm font-semibold block mb-2" style={{ color: '#64748b' }}>Status</label>
+                  <div className="mt-2">
+                    <Tag 
+                      value={existingForm.isActive ? "Active" : "Inactive"} 
+                      severity={getStatusSeverity(existingForm.isActive) as any} 
+                      style={{ fontSize: '0.875rem', padding: '0.5rem 1rem' }}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 md:col-6">
+                <div className="mb-4">
+                  <label className="text-600 text-sm font-semibold block mb-2" style={{ color: '#64748b' }}>Description</label>
+                  <p className="text-600 m-0" style={{ lineHeight: '1.6', color: '#64748b' }}>
+                    {existingForm.description || 'No description provided'}
+                  </p>
+                </div>
+              </div>
+              <div className="col-12 md:col-6">
+                <div className="mb-4">
+                  <label className="text-600 text-sm font-semibold block mb-2" style={{ color: '#64748b' }}>Total Responses</label>
+                  <p className="text-900 font-bold text-2xl m-0" style={{ color: '#1e293b' }}>{existingForm.totalResponses}</p>
+                </div>
+              </div>
+              <div className="col-12">
+                <div className="flex gap-3 mt-4 pt-4 border-top-1 surface-border">
+                  <Button
+                    label="Edit Form"
+                    icon="pi pi-pencil"
+                    onClick={handleEditForm}
+                    className="p-button-primary"
+                    style={{ minWidth: '140px' }}
+                  />
+                  <Button
+                    label="Preview Form"
+                    icon="pi pi-eye"
+                    onClick={() => handlePreviewForm(existingForm.id)}
+                    className="p-button-outlined"
+                    style={{ minWidth: '140px' }}
+                  />
+                  <Button
+                    label="Show QR Code"
+                    icon="pi pi-qrcode"
+                    onClick={() => handleShowQrCode(existingForm.id, existingForm.title)}
+                    className="p-button-outlined"
+                    style={{ minWidth: '140px' }}
+                  />
+                </div>
+              </div>
+            </div>
+          </Card>
+        ) : (
+          <Card className="shadow-2">
+            <div className="text-center py-8">
+              <i className="pi pi-file-edit text-5xl text-400 mb-4" style={{ color: '#94a3b8' }}></i>
+              <h3 className="text-900 mb-2" style={{ fontSize: '1.5rem', fontWeight: '600' }}>No Form Created Yet</h3>
+              <p className="text-600 mb-5" style={{ fontSize: '1rem', maxWidth: '400px', margin: '0 auto 2rem' }}>
+                Create your feedback form to start collecting guest reviews.
+              </p>
               <Button
-                label="Create Your First Form"
+                label="Create Form"
                 icon="pi pi-plus"
-                onClick={handleCreateForm}
+                onClick={() => setShowFormBuilder(true)}
+                className="p-button-primary"
+                style={{ minWidth: '160px' }}
               />
             </div>
-          ) : (
-            <>
-              <DataTable 
-                value={forms}
-                dataKey="id"
-                emptyMessage="No Forms found"
-                className="p-datatable-sm"
-                scrollable
-                
-              >
-                <Column field="title" header="Form Title" sortable style={{ minWidth: '200px' }} />
-                <Column field="description" header="Description" style={{ minWidth: '250px' }} />
-                <Column field="questionsCount" header="Questions" sortable style={{ minWidth: '100px' }} />
-                <Column field="totalResponses" header="Responses" sortable style={{ minWidth: '100px' }} />
-                <Column field="status" header="Status" body={statusBodyTemplate} style={{ minWidth: '120px' }} />
-
-                <Column 
-                  header="Actions" 
-                  body={actionsBodyTemplate} 
-                  style={{ minWidth: '120px' }}
-                  frozen
-                  alignFrozen="right"
-                />
-              </DataTable>
-              <CustomPaginator
-                currentPage={currentPage}
-                totalRecords={totalRecords}
-                rowsPerPage={rowsPerPage}
-                onPageChange={setCurrentPage}
-                onRowsPerPageChange={(rows) => {
-                  setRowsPerPage(rows);
-                  setCurrentPage(1);
-                }}
-              />
-            </>
-          )}
+          </Card>
+        )}
       </div>
 
       {/* QR Code Dialog */}

@@ -78,11 +78,22 @@ export default function CustomerFeedbackForm() {
   const [submittedFeedback, setSubmittedFeedback] = useState<string>("");
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(SUPPORTED_LANGUAGES[0]); // Default to English
   const [translating, setTranslating] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const toast = useRef<Toast>(null);
   const { t, isTranslating: isTranslatingStatic } = useTranslation(selectedLanguage);
   
   // Combined translation state
   const isAnyTranslating = translating || isTranslatingStatic;
+
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 480);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     loadForm();
@@ -340,13 +351,24 @@ export default function CustomerFeedbackForm() {
 
   if (showSuccessPage) {
     return (
-      <div className="min-h-screen p-4">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-center">
-            <div className="mb-6">
-              <div className="flex justify-content-center gap-4 items-center" style={{alignItems:'center'}}>
-              <i className="pi pi-check-circle text-5xl text-green-500"></i>
-              <h1 className="text-3xl font-bold text-900">
+      <div className="min-h-screen" style={{ padding: '16px', boxSizing: 'border-box' }}>
+        <div className="max-w-2xl mx-auto" style={{ width: '100%', maxWidth: '100%', padding: '0 8px', boxSizing: 'border-box' }}>
+          <div className="text-center" style={{ width: '100%' }}>
+            <div className="mb-6" style={{ padding: '0 8px', boxSizing: 'border-box' }}>
+              <div className="flex justify-content-center gap-4 items-center" 
+                   style={{
+                     alignItems:'center',
+                     flexDirection: isMobile ? 'column' : 'row',
+                     gap: isMobile ? '12px' : '16px'
+                   }}>
+              <i className="pi pi-check-circle text-5xl text-green-500" style={{ fontSize: isMobile ? '2.5rem' : '3rem' }}></i>
+              <h1 className="text-3xl font-bold text-900" style={{ 
+                fontSize: isMobile ? '1.5rem' : '2rem',
+                wordWrap: 'break-word',
+                overflowWrap: 'break-word',
+                padding: '0 8px',
+                boxSizing: 'border-box'
+              }}>
                 {selectedLanguage?.code === 'en' ? 'Thank You!' : 
                  selectedLanguage?.code === 'es' ? '¡Gracias!' :
                  selectedLanguage?.code === 'fr' ? 'Merci!' :
@@ -370,21 +392,22 @@ export default function CustomerFeedbackForm() {
               </h1>
               </div>      
               {/* Average Rating Display */}
-              <div className="text-center mb-4">
+              <div className="text-center mb-4" style={{ padding: '0 8px', boxSizing: 'border-box' }}>
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '16px',
-                  maxWidth: '250px',
-                  margin: '0 auto'
+                  gap: isMobile ? '8px' : '16px',
+                  maxWidth: '100%',
+                  margin: '0 auto',
+                  flexWrap: 'wrap'
                 }}>
-                  <div style={{ display: 'flex', gap: '4px' }}>
+                  <div style={{ display: 'flex', gap: '2px' }}>
                     {Array.from({ length: 5 }).map((_, i) => (
                       <span
                         key={i}
                         style={{
-                          fontSize: '32px',
+                          fontSize: isMobile ? '24px' : '32px',
                           color: i < Math.floor(finalRating) ? '#facc15' : '#d1d5db',
                           textShadow: '0 2px 4px rgba(0,0,0,0.1)',
                         }}
@@ -394,7 +417,7 @@ export default function CustomerFeedbackForm() {
                     ))}
                   </div>
                   <span style={{
-                    fontSize: '28px',
+                    fontSize: isMobile ? '20px' : '28px',
                     fontWeight: '700',
                     color: '#333',
                     fontFamily: 'system-ui, -apple-system, sans-serif'
@@ -403,7 +426,15 @@ export default function CustomerFeedbackForm() {
                   </span>
                 </div>
               </div>
-              <p className="text-lg text-600 mb-4">
+              <p className="text-lg text-600 mb-4" style={{
+                padding: '0 12px',
+                boxSizing: 'border-box',
+                wordWrap: 'break-word',
+                overflowWrap: 'break-word',
+                textAlign: 'center',
+                fontSize: isMobile ? '14px' : '16px',
+                lineHeight: '1.6'
+              }}>
                 {finalRating >= 4 ? (
                   selectedLanguage?.code === 'en' ? 'Your feedback has been submitted successfully! We truly appreciate your positive experience.' :
                   selectedLanguage?.code === 'es' ? '¡Su comentario ha sido enviado exitosamente! Realmente apreciamos su experiencia positiva.' :
@@ -450,7 +481,15 @@ export default function CustomerFeedbackForm() {
                   'Your feedback has been submitted successfully! We will make sure to improve based on your valuable input.'
                 )}
               </p>
-              <p className="text-600 mb-6">
+              <p className="text-600 mb-6" style={{
+                padding: '0 12px',
+                boxSizing: 'border-box',
+                wordWrap: 'break-word',
+                overflowWrap: 'break-word',
+                textAlign: 'center',
+                fontSize: isMobile ? '14px' : '16px',
+                lineHeight: '1.6'
+              }}>
                 {selectedLanguage?.code === 'en' ? 'Your input helps us continue providing excellent service to all our guests.' :
                  selectedLanguage?.code === 'es' ? 'Su aporte nos ayuda a continuar brindando un excelente servicio a todos nuestros huéspedes.' :
                  selectedLanguage?.code === 'fr' ? 'Votre contribution nous aide à continuer à fournir un excellent service à tous nos invités.' :
@@ -480,15 +519,26 @@ export default function CustomerFeedbackForm() {
               <>
                 {/* Display submitted feedback text with copy button */}
                 {submittedFeedback && (
-                  <div className="mb-6">
-                    <h3 className="text-xl font-semibold mb-3">
+                  <div className="mb-6" style={{ padding: '0 12px', boxSizing: 'border-box', width: '100%' }}>
+                    <h3 className="text-xl font-semibold mb-3" style={{
+                      fontSize: isMobile ? '18px' : '20px',
+                      padding: '0 4px',
+                      boxSizing: 'border-box',
+                      wordWrap: 'break-word',
+                      overflowWrap: 'break-word'
+                    }}>
                       {selectedLanguage?.code === 'en' ? 'Your Feedback' :
                        selectedLanguage?.code === 'es' ? 'Tu Comentario' :
                        selectedLanguage?.code === 'fr' ? 'Votre Commentaire' :
                        selectedLanguage?.code === 'de' ? 'Ihr Feedback' :
                        selectedLanguage?.code === 'it' ? 'Il Tuo Feedback' : 'Your Feedback'}
                     </h3>
-                    <div className="border-1 border-300 border-round p-3 bg-gray-50">
+                    <div className="border-1 border-300 border-round p-3 bg-gray-50" style={{
+                      padding: '12px',
+                      boxSizing: 'border-box',
+                      width: '100%',
+                      maxWidth: '100%'
+                    }}>
                       <p 
                         className="text-700 mb-0 white-space-pre-wrap"
                         style={{
@@ -498,7 +548,10 @@ export default function CustomerFeedbackForm() {
                           overflow: 'hidden',
                           textOverflow: 'ellipsis',
                           lineHeight: '1.5',
-                          maxHeight: '6em' // 4 lines * 1.5 line-height
+                          maxHeight: '6em',
+                          wordWrap: 'break-word',
+                          overflowWrap: 'break-word',
+                          padding: '0'
                         }}
                       >
                         {submittedFeedback}
@@ -577,8 +630,16 @@ export default function CustomerFeedbackForm() {
                 )}
 
                 {/* Review platform buttons */}
-              <div className="mb-6">
-                <p className="text-600 mb-4">
+              <div className="mb-6" style={{ padding: '0 12px', boxSizing: 'border-box', width: '100%' }}>
+                <p className="text-600 mb-4" style={{
+                  padding: '0 4px',
+                  boxSizing: 'border-box',
+                  wordWrap: 'break-word',
+                  overflowWrap: 'break-word',
+                  textAlign: 'center',
+                  fontSize: isMobile ? '14px' : '16px',
+                  lineHeight: '1.5'
+                }}>
                   {selectedLanguage?.code === 'en' ? 'Would you like to share your experience with others?' :
                    selectedLanguage?.code === 'es' ? '¿Te gustaría compartir tu experiencia con otros?' :
                    selectedLanguage?.code === 'fr' ? 'Aimeriez-vous partager votre expérience avec d\'autres ?' :
@@ -592,7 +653,7 @@ export default function CustomerFeedbackForm() {
                    selectedLanguage?.code === 'ar' ? 'هل تريد مشاركة تجربتك مع الآخرين؟' :
                    selectedLanguage?.code === 'hi' ? 'क्या आप अपना अनुभव दूसरों के साथ साझा करना चाहेंगे?' :
                    selectedLanguage?.code === 'th' ? 'คุณต้องการแบ่งปันประสบการณ์ของคุณกับผู้อื่นหรือไม่?' :
-                   selectedLanguage?.code === 'vi' ? 'Bạn có muốn chia sẻ trải nghiệm của mình với người khác không?' :
+                   selectedLanguage?.code === 'vi' ? 'Bạn có muốn chia sẻ trải nghiệm của mình với người khácไม่?' :
                    selectedLanguage?.code === 'tr' ? 'Deneyiminizi başkalarıyla paylaşmak ister misiniz?' :
                    selectedLanguage?.code === 'nl' ? 'Wil je je ervaring delen met anderen?' :
                    selectedLanguage?.code === 'sv' ? 'Vill du dela din upplevelse med andra?' :
@@ -601,7 +662,15 @@ export default function CustomerFeedbackForm() {
                    selectedLanguage?.code === 'fi' ? 'Haluatko jakaa kokemuksesi muiden kanssa?' : 
                    'Would you like to share your experience with others?'}
                 </p>
-                <div className="flex gap-4 justify-content-center">
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: isMobile ? '12px' : '16px',
+                  width: '100%',
+                  flexWrap: 'nowrap',
+                  justifyContent: 'center'
+                }}>
                     {hotelData.googleReviewsLink && (
                     <div 
                       className="cursor-pointer"
@@ -610,13 +679,15 @@ export default function CustomerFeedbackForm() {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        padding: '20px 24px',
+                        padding: isMobile ? '16px' : '20px 24px',
                         backgroundColor: '#fafafa',
                         border: '2px solid #e8e8e8',
                         borderRadius: '12px',
                         boxShadow: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)',
-                        
-                        minWidth: '160px'
+                        minWidth: isMobile ? '140px' : '160px',
+                        flex: isMobile ? '1 1 calc(50% - 6px)' : '0 0 auto',
+                        maxWidth: isMobile ? 'calc(50% - 6px)' : '180px',
+                        boxSizing: 'border-box'
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08)';
@@ -685,13 +756,15 @@ export default function CustomerFeedbackForm() {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        padding: '20px 24px',
+                        padding: isMobile ? '16px' : '20px 24px',
                         backgroundColor: '#fafafa',
                         border: '2px solid #e8e8e8',
                         borderRadius: '12px',
                         boxShadow: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)',
-                        
-                        minWidth: '160px'
+                        minWidth: isMobile ? '140px' : '160px',
+                        flex: isMobile ? '1 1 calc(50% - 6px)' : '0 0 auto',
+                        maxWidth: isMobile ? 'calc(50% - 6px)' : '180px',
+                        boxSizing: 'border-box'
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08)';
@@ -955,7 +1028,14 @@ export default function CustomerFeedbackForm() {
 
         {/* Custom Questions */}
         {translatedForm?.questions.map((question, index) => (
-          <div key={question.id} style={{ marginBottom: "20px" }}>
+          <div 
+            key={question.id} 
+            style={{ 
+              marginBottom: "20px",
+              paddingBottom: question.id === "rate-us" ? "24px" : "0",
+              borderBottom: question.id === "rate-us" ? "1px solid #e5e7eb" : "none"
+            }}
+          >
             {/* Hide label for Custom Rating */}
             {!(question.id === "custom-rating" && question.type === "CUSTOM_RATING") && (
               <label
@@ -1016,7 +1096,8 @@ export default function CustomerFeedbackForm() {
                   style={{ 
                     display: question.id === "rate-us" ? "flex" : "block",
                     justifyContent: question.id === "rate-us" ? "center" : "flex-start",
-                    alignItems: question.id === "rate-us" ? "center" : "flex-start"
+                    alignItems: question.id === "rate-us" ? "center" : "flex-start",
+                    marginBottom: question.id === "rate-us" ? "0" : "0"
                   }}
                 >
                   <Rating
