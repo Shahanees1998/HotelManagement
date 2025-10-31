@@ -103,6 +103,10 @@ export default function RegisterHotel() {
     }
   };
 
+  const handleBackStep = () => {
+    setStep(1);
+  };
+
   const handleRegister = async () => {
     if (!validateStep2()) return;
 
@@ -222,7 +226,7 @@ export default function RegisterHotel() {
                   <label htmlFor="phone" className="text-900 font-medium mb-2">
                     Phone Number<span style={{ color: "red" }}>*</span>
                   </label>
-                  <span className="p-input-icon-left w-full mb-4">
+                  <span className="w-full mb-4">
                     <InputText
                       id="phone"
                       type="tel"
@@ -303,9 +307,9 @@ export default function RegisterHotel() {
 
                   <div className="flex align-items-center mb-3" style={{ gap: "1rem" }}>
                     <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
-                    <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
+                    {/* <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
                       or register via
-                    </span>
+                    </span> */}
                     <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
                   </div>
 
@@ -343,7 +347,6 @@ export default function RegisterHotel() {
                     Hotel Name<span style={{ color: "red" }}>*</span>
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
-                    <i className="pi pi-building"></i>
                     <InputText
                       id="hotelName"
                       type="text"
@@ -358,7 +361,6 @@ export default function RegisterHotel() {
                     Hotel Website<span style={{ color: "red" }}>*</span>
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
-                    <i className="pi pi-globe"></i>
                     <InputText
                       id="hotelWebsite"
                       type="url"
@@ -442,21 +444,35 @@ export default function RegisterHotel() {
                     </label>
                   </div>
 
-                  <Button
-                    label={loading ? "Registering..." : "Register Now"}
-                    icon="pi pi-check"
-                    iconPos="right"
-                    className="w-full"
-                    style={{
-                      backgroundColor: "#1e3a5f",
-                      border: "none",
-                      padding: "0.75rem",
-                      marginBottom: "1rem"
-                    }}
-                    onClick={handleRegister}
-                    loading={loading}
-                    disabled={loading}
-                  />
+                  <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
+                    <Button
+                      label="Back"
+                      icon="pi pi-arrow-left"
+                      iconPos="left"
+                      className="flex-1"
+                      style={{
+                        backgroundColor: "#6b7280",
+                        border: "none",
+                        padding: "0.75rem"
+                      }}
+                      onClick={handleBackStep}
+                      disabled={loading}
+                    />
+                    <Button
+                      label={loading ? "Registering..." : "Register Now"}
+                      icon="pi pi-check"
+                      iconPos="right"
+                      className="flex-1"
+                      style={{
+                        backgroundColor: "#1e3a5f",
+                        border: "none",
+                        padding: "0.75rem"
+                      }}
+                      onClick={handleRegister}
+                      loading={loading}
+                      disabled={loading}
+                    />
+                  </div>
 
                   <div className="flex align-items-center mb-3" style={{ gap: "1rem" }}>
                     <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>

@@ -274,7 +274,15 @@ export default function HotelForms() {
     });
   }, []);
 
-
+  // Prevent body scroll when preview is active
+  useEffect(() => {
+    if (previewFormId) {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }
+  }, [previewFormId]);
 
   if (showFormBuilder) {
     return (
@@ -289,16 +297,6 @@ export default function HotelForms() {
       </div>
     );
   }
-
-  // Prevent body scroll when preview is active
-  useEffect(() => {
-    if (previewFormId) {
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.body.style.overflow = '';
-      };
-    }
-  }, [previewFormId]);
 
   if (previewFormId && user?.hotelSlug) {
     const publicFormUrl = `/feedback/${user.hotelSlug}/${previewFormId}`;
