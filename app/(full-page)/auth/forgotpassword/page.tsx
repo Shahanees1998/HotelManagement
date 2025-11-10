@@ -3,12 +3,11 @@ import type { Page } from "@/types/index";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import { useContext, useState, useRef } from "react";
-import { LayoutContext } from "../../../../layout/context/layoutcontext";
+import { useState, useRef, ChangeEvent, KeyboardEvent } from "react";
 import { Toast } from "primereact/toast";
-import Image from "next/image";
 import AuthFooter from "@/components/AuthFooter";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 const ForgotPassword: Page = () => {
     const [email, setEmail] = useState("");
@@ -16,9 +15,8 @@ const ForgotPassword: Page = () => {
     const [submitted, setSubmitted] = useState(false);
     const [emailError, setEmailError] = useState("");
     const router = useRouter();
-    const { layoutConfig } = useContext(LayoutContext);
+    const { t } = useI18n();
     const toast = useRef<Toast>(null);
-    const dark = layoutConfig.colorScheme !== "light";
 
     const validateEmail = (email: string) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,23 +28,26 @@ const ForgotPassword: Page = () => {
         setEmailError("");
 
         // Validate email
+        const requiredMessage = t("auth.forgotPassword.validation.required");
+        const invalidMessage = t("auth.forgotPassword.validation.invalid");
+
         if (!email) {
-            setEmailError("Email is required");
+            setEmailError(requiredMessage);
             toast.current?.show({
                 severity: 'error',
-                summary: 'Error',
-                detail: 'Please enter your email address',
+                summary: t("common.error"),
+                detail: requiredMessage,
                 life: 3000
             });
             return;
         }
 
         if (!validateEmail(email)) {
-            setEmailError("Please enter a valid email address");
+            setEmailError(invalidMessage);
             toast.current?.show({
                 severity: 'error',
-                summary: 'Error',
-                detail: 'Please enter a valid email address',
+                summary: t("common.error"),
+                detail: invalidMessage,
                 life: 3000
             });
             return;
@@ -68,15 +69,15 @@ const ForgotPassword: Page = () => {
                 setSubmitted(true);
                 toast.current?.show({
                     severity: 'success',
-                    summary: 'Success',
-                    detail: data.message || 'Password reset email sent successfully',
+                    summary: t("common.success"),
+                    detail: data.message || t("auth.forgotPassword.toasts.success"),
                     life: 5000
                 });
             } else {
                 toast.current?.show({
                     severity: 'error',
-                    summary: 'Error',
-                    detail: data.error || 'Failed to send reset email',
+                    summary: t("common.error"),
+                    detail: data.error || t("auth.forgotPassword.toasts.error"),
                     life: 4000
                 });
             }
@@ -84,8 +85,8 @@ const ForgotPassword: Page = () => {
             console.error('Forgot password error:', error);
             toast.current?.show({
                 severity: 'error',
-                summary: 'Error',
-                detail: 'An unexpected error occurred. Please try again.',
+                summary: t("common.error"),
+                detail: t("auth.forgotPassword.toasts.unexpected"),
                 life: 4000
             });
         } finally {
@@ -93,13 +94,13 @@ const ForgotPassword: Page = () => {
         }
     };
 
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setEmail(value);
         if (emailError) setEmailError("");
     };
 
-    const handleKeyPress = (e: React.KeyboardEvent) => {
+    const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && !loading) {
             handleSubmit();
         }
@@ -128,11 +129,11 @@ const ForgotPassword: Page = () => {
                     C-Reviews
                 </div>
                 <div style={{ display: "flex", gap: "1rem" }}>
-                <li className="ml-3">
+                    <div className="ml-3">
                         <LanguageSelector className="w-full" />
-                    </li>
+                    </div>
                     <Button
-                        label="Get Started"
+                        label={t("common.getStarted")}
                         outlined
                         style={{
                             borderColor: "#1e3a5f",
@@ -141,7 +142,7 @@ const ForgotPassword: Page = () => {
                         onClick={() => router.push('/register-hotel')}
                     />
                     <Button
-                        label="Login"
+                        label={t("common.login")}
                         style={{
                             backgroundColor: "#1e3a5f",
                             border: "none",
@@ -157,26 +158,26 @@ const ForgotPassword: Page = () => {
                 <div className="surface-card border-round py-7 px-4 md:px-7 z-1" style={{ width: "100%", maxWidth: "480px", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)" }}>
                     <div className="mb-4">
                         <div className="text-[#1B2A49] text-2xl font-bold mb-3">
-                            Forgot password?
+                            {t("auth.forgotPassword.title")}
                         </div>
                         <span className="text-600 font-thin" style={{ display: "block", lineHeight: "1.5" }}>
                             {submitted 
-                                ? "Check your email for password reset instructions"
-                                : "Enter the email of username associated with your account and we'll send an email with instructions to reset your password."
+                                ? t("auth.forgotPassword.messages.instructions")
+                                : t("auth.forgotPassword.description")
                             }
                         </span>
                     </div>
                     {!submitted ? (
                         <div className="flex flex-column">
                             <label htmlFor="email" className="text-900 font-medium mb-2">
-                                Email Address<span style={{ color: "red" }}>*</span>
+                                {t("auth.forgotPassword.fields.email")}<span style={{ color: "red" }}>*</span>
                             </label>
                             <span className="p-input-icon-left w-full mb-1">
                                 <InputText
                                     id="email"
                                     type="email"
                                     className={`w-full ${emailError ? 'p-invalid' : ''}`}
-                                    placeholder="Enter your email address"
+                                    placeholder={t("auth.forgotPassword.fields.emailPlaceholder")}
                                     value={email}
                                     onChange={handleEmailChange}
                                     onKeyPress={handleKeyPress}
@@ -188,7 +189,7 @@ const ForgotPassword: Page = () => {
                                 <small className="p-error block mb-3">{emailError}</small>
                             )}
                             <Button
-                                label={loading ? "Sending..." : "Send Instructions"}
+                                label={loading ? t("auth.forgotPassword.buttons.sending") : t("auth.forgotPassword.buttons.send")}
                                 className="w-full"
                                 style={{
                                     backgroundColor: "#1e3a5f",
@@ -207,7 +208,7 @@ const ForgotPassword: Page = () => {
                                     style={{ color: "#1e3a5f", fontWeight: 600, fontSize: "0.875rem" }}
                                     onClick={() => router.push("/auth/login")}
                                 >
-                                    Back to Login
+                                    {t("auth.forgotPassword.buttons.backToLogin")}
                                 </a>
                             </div>
                         </div>
@@ -215,18 +216,17 @@ const ForgotPassword: Page = () => {
                         <div className="flex flex-column">
                             <div className="mb-4">
                                 <div className="text-[#1B2A49] text-2xl font-bold mb-3">
-                                    Check your email!
+                                    {t("auth.forgotPassword.submitted.title")}
                                 </div>
                                 <p className="text-600" style={{ marginBottom: "0.5rem", lineHeight: "1.5" }}>
-                                    We have sent an email with password reset link at{" "}
-                                    <strong>{email}</strong>
+                                    {t("auth.forgotPassword.submitted.description").replace("{email}", email)}
                                 </p>
                                 <p className="text-600" style={{ lineHeight: "1.5" }}>
-                                    Didn't receive the email? Please check your spam folder.
+                                    {t("auth.forgotPassword.submitted.hint")}
                                 </p>
                             </div>
                             <Button
-                                label="Resend Email"
+                                label={t("auth.forgotPassword.buttons.resend")}
                                 className="w-full"
                                 style={{
                                     backgroundColor: "#1e3a5f",
@@ -248,7 +248,7 @@ const ForgotPassword: Page = () => {
                                     style={{ color: "#6F522F", fontWeight: 600, fontSize: "0.875rem" }}
                                     onClick={() => router.push("/auth/login")}
                                 >
-                                    Back to Login
+                                    {t("auth.forgotPassword.buttons.backToLogin")}
                                 </a>
                             </div>
                         </div>

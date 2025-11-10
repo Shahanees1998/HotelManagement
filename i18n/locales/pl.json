@@ -1210,6 +1210,37 @@
         "error": "Rejestracja nie powiodła się. Proszę spróbować ponownie."
       }
     },
+    "forgotPassword": {
+      "title": "Zapomniałeś hasła?",
+      "description": "Podaj adres e-mail powiązany z Twoim kontem, a wyślemy wiadomość z instrukcjami resetowania hasła.",
+      "messages": {
+        "instructions": "Sprawdź swoją skrzynkę pocztową, aby znaleźć instrukcje resetowania hasła."
+      },
+      "submitted": {
+        "title": "Sprawdź swoją skrzynkę pocztową!",
+        "description": "Wysłaliśmy wiadomość z linkiem do resetowania hasła na adres {email}.",
+        "hint": "Nie otrzymałeś wiadomości? Sprawdź folder spam."
+      },
+      "fields": {
+        "email": "Adres e-mail",
+        "emailPlaceholder": "Wpisz swój adres e-mail"
+      },
+      "buttons": {
+        "send": "Wyślij instrukcje",
+        "sending": "Wysyłanie...",
+        "resend": "Wyślij ponownie e-mail",
+        "backToLogin": "Powrót do logowania"
+      },
+      "validation": {
+        "required": "Adres e-mail jest wymagany",
+        "invalid": "Podaj prawidłowy adres e-mail"
+      },
+      "toasts": {
+        "success": "Wiadomość z resetem hasła została wysłana",
+        "error": "Nie udało się wysłać wiadomości z resetem hasła",
+        "unexpected": "Wystąpił nieoczekiwany błąd. Spróbuj ponownie."
+      }
+    },
     "resetPassword": {
       "title": "Utwórz Nowe Hasło!",
       "subtitle": "Wprowadź nowe hasło poniżej, aby zaktualizować dane logowania do konta.",

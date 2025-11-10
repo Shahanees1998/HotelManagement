@@ -59,7 +59,7 @@ export default function HotelDashboard() {
     recentReviews: 0,
   });
   const [recentReviews, setRecentReviews] = useState<RecentReview[]>([]);
-  const [chartData, setChartData] = useState<any>(null);
+  const [chartDataRaw, setChartDataRaw] = useState<any>(null);
   const [customRatingData, setCustomRatingData] = useState<CustomRatingData | null>(null);
   const [loading, setLoading] = useState(true);
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -125,10 +125,12 @@ export default function HotelDashboard() {
         let csvContent = `${csvHeader}\n`;
         let htmlContent = '';
         
-        if (chartData && chartData.labels) {
-          const dates = chartData.labels;
-          const reviews = chartData.datasets[0]?.data || [];
-          const ratings = chartData.datasets[1]?.data || [];
+        const dataForExport = chartData ?? chartDataRaw;
+
+        if (dataForExport && dataForExport.labels) {
+          const dates = dataForExport.labels;
+          const reviews = dataForExport.datasets[0]?.data || [];
+          const ratings = dataForExport.datasets[1]?.data || [];
           
           // CSV Content
           for (let i = 0; i < dates.length; i++) {
@@ -272,7 +274,7 @@ export default function HotelDashboard() {
       if (response.ok && data.data) {
         setStats(data.data.stats);
         setRecentReviews(data.data.recentReviews);
-        setChartData(data.data.chartData);
+        setChartDataRaw(data.data.chartData);
       } else {
         throw new Error(data.error || 'Failed to load dashboard data');
       }
@@ -335,6 +337,33 @@ export default function HotelDashboard() {
       },
     ],
   }), [t]);
+
+  const chartData = useMemo(() => {
+    if (!chartDataRaw) return null;
+
+    const labelMap: Record<string, string> = {
+      Reviews: t("Reviews"),
+      "Average Rating": t("Average Rating"),
+      "Total Reviews": t("Total Reviews"),
+    };
+
+    const translateLabel = (label: string) => {
+      const mapped = labelMap[label];
+      if (mapped) {
+        return mapped;
+      }
+      const translated = t(label);
+      return translated ?? label;
+    };
+
+    return {
+      ...chartDataRaw,
+      datasets: chartDataRaw.datasets?.map((dataset: any) => ({
+        ...dataset,
+        label: translateLabel(dataset.label),
+      })),
+    };
+  }, [chartDataRaw, t]);
 
   const chartOptions = useMemo(() => ({
     responsive: true,

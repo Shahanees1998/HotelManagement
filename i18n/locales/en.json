@@ -1210,6 +1210,37 @@
         "error": "Registration failed. Please try again."
       }
     },
+    "forgotPassword": {
+      "title": "Forgot password?",
+      "description": "Enter the email address associated with your account and we'll send an email with instructions to reset your password.",
+      "messages": {
+        "instructions": "Check your email for password reset instructions"
+      },
+      "submitted": {
+        "title": "Check your email!",
+        "description": "We have sent an email with a password reset link to {email}.",
+        "hint": "Didn't receive the email? Please check your spam folder."
+      },
+      "fields": {
+        "email": "Email Address",
+        "emailPlaceholder": "Enter your email address"
+      },
+      "buttons": {
+        "send": "Send Instructions",
+        "sending": "Sending...",
+        "resend": "Resend Email",
+        "backToLogin": "Back to Login"
+      },
+      "validation": {
+        "required": "Email is required",
+        "invalid": "Please enter a valid email address"
+      },
+      "toasts": {
+        "success": "Password reset email sent successfully",
+        "error": "Failed to send reset email",
+        "unexpected": "An unexpected error occurred. Please try again."
+      }
+    },
     "resetPassword": {
       "title": "Create New Password!",
       "subtitle": "Enter a new password below to update your account credentials.",

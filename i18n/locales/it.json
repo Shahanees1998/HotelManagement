@@ -1210,6 +1210,37 @@
         "error": "Registrazione non riuscita. Riprova."
       }
     },
+    "forgotPassword": {
+      "title": "Hai dimenticato la password?",
+      "description": "Inserisci l'indirizzo e-mail associato al tuo account e ti invieremo un'e-mail con le istruzioni per reimpostare la password.",
+      "messages": {
+        "instructions": "Controlla la tua e-mail per le istruzioni di reimpostazione della password."
+      },
+      "submitted": {
+        "title": "Controlla la tua e-mail!",
+        "description": "Abbiamo inviato un'e-mail con un link per reimpostare la password a {email}.",
+        "hint": "Non hai ricevuto l'e-mail? Controlla la cartella spam."
+      },
+      "fields": {
+        "email": "Indirizzo e-mail",
+        "emailPlaceholder": "Inserisci il tuo indirizzo e-mail"
+      },
+      "buttons": {
+        "send": "Invia istruzioni",
+        "sending": "Invio in corso...",
+        "resend": "Invia di nuovo l'e-mail",
+        "backToLogin": "Torna al login"
+      },
+      "validation": {
+        "required": "L'e-mail è obbligatoria",
+        "invalid": "Inserisci un indirizzo e-mail valido"
+      },
+      "toasts": {
+        "success": "E-mail di reimpostazione inviata con successo",
+        "error": "Invio dell'e-mail di reimpostazione non riuscito",
+        "unexpected": "Si è verificato un errore imprevisto. Riprova."
+      }
+    },
     "resetPassword": {
       "title": "Crea una nuova password!",
       "subtitle": "Inserisci una nuova password qui sotto per aggiornare le credenziali del tuo account.",

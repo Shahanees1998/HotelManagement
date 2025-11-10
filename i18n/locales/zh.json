@@ -1210,6 +1210,37 @@
         "error": "注册失败。请重试。"
       }
     },
+    "forgotPassword": {
+      "title": "忘记密码？",
+      "description": "请输入与您的账户关联的电子邮箱，我们会发送重置密码的说明。",
+      "messages": {
+        "instructions": "请查收邮箱中的密码重置说明。"
+      },
+      "submitted": {
+        "title": "请查收邮箱！",
+        "description": "我们已向 {email} 发送包含重置密码链接的邮件。",
+        "hint": "没有收到邮件？请检查垃圾邮箱。"
+      },
+      "fields": {
+        "email": "电子邮箱地址",
+        "emailPlaceholder": "请输入您的电子邮箱"
+      },
+      "buttons": {
+        "send": "发送说明",
+        "sending": "正在发送...",
+        "resend": "重新发送邮件",
+        "backToLogin": "返回登录"
+      },
+      "validation": {
+        "required": "需要填写电子邮箱地址",
+        "invalid": "请输入有效的电子邮箱地址"
+      },
+      "toasts": {
+        "success": "密码重置邮件已成功发送",
+        "error": "无法发送密码重置邮件",
+        "unexpected": "发生意外错误，请重试。"
+      }
+    },
     "resetPassword": {
       "title": "创建新密码！",
       "subtitle": "在下方输入新密码以更新您的账户凭证。",

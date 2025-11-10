@@ -1210,6 +1210,37 @@
         "error": "El registro ha fallado. Inténtalo de nuevo."
       }
     },
+    "forgotPassword": {
+      "title": "¿Olvidaste tu contraseña?",
+      "description": "Ingresa la dirección de correo asociada con tu cuenta y te enviaremos un correo con instrucciones para restablecer tu contraseña.",
+      "messages": {
+        "instructions": "Revisa tu correo para ver las instrucciones de restablecimiento de contraseña."
+      },
+      "submitted": {
+        "title": "¡Revisa tu correo!",
+        "description": "Hemos enviado un correo con un enlace para restablecer la contraseña a {email}.",
+        "hint": "¿No recibiste el correo? Revisa la carpeta de spam."
+      },
+      "fields": {
+        "email": "Correo electrónico",
+        "emailPlaceholder": "Ingresa tu correo electrónico"
+      },
+      "buttons": {
+        "send": "Enviar instrucciones",
+        "sending": "Enviando...",
+        "resend": "Reenviar correo",
+        "backToLogin": "Volver al inicio de sesión"
+      },
+      "validation": {
+        "required": "El correo electrónico es obligatorio",
+        "invalid": "Ingresa un correo electrónico válido"
+      },
+      "toasts": {
+        "success": "El correo de restablecimiento se envió correctamente",
+        "error": "No se pudo enviar el correo de restablecimiento",
+        "unexpected": "Ocurrió un error inesperado. Inténtalo de nuevo."
+      }
+    },
     "resetPassword": {
       "title": "¡Crea una nueva contraseña!",
       "subtitle": "Introduce una nueva contraseña para actualizar las credenciales de tu cuenta.",

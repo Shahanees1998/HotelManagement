@@ -1210,6 +1210,37 @@
         "error": "Registratie mislukt. Probeer het opnieuw."
       }
     },
+    "forgotPassword": {
+      "title": "Wachtwoord vergeten?",
+      "description": "Voer het e-mailadres in dat aan je account is gekoppeld en we sturen je een e-mail met instructies om je wachtwoord te resetten.",
+      "messages": {
+        "instructions": "Controleer je e-mail voor instructies om je wachtwoord te resetten."
+      },
+      "submitted": {
+        "title": "Controleer je e-mail!",
+        "description": "We hebben een e-mail met een link om je wachtwoord te resetten gestuurd naar {email}.",
+        "hint": "Geen e-mail ontvangen? Controleer je spammap."
+      },
+      "fields": {
+        "email": "E-mailadres",
+        "emailPlaceholder": "Vul je e-mailadres in"
+      },
+      "buttons": {
+        "send": "Instructies versturen",
+        "sending": "Bezig met verzenden...",
+        "resend": "E-mail opnieuw versturen",
+        "backToLogin": "Terug naar inloggen"
+      },
+      "validation": {
+        "required": "E-mailadres is verplicht",
+        "invalid": "Voer een geldig e-mailadres in"
+      },
+      "toasts": {
+        "success": "E-mail voor wachtwoordherstel is succesvol verzonden",
+        "error": "Het verzenden van de herstel-e-mail is mislukt",
+        "unexpected": "Er is een onverwachte fout opgetreden. Probeer het opnieuw."
+      }
+    },
     "resetPassword": {
       "title": "Nieuw wachtwoord aanmaken!",
       "subtitle": "Voer hieronder een nieuw wachtwoord in om je accountgegevens bij te werken.",

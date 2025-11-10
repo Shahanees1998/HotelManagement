@@ -1210,6 +1210,37 @@
         "error": "Înregistrare eșuată. Te rugăm să încerci din nou."
       }
     },
+    "forgotPassword": {
+      "title": "Ai uitat parola?",
+      "description": "Introdu adresa de email asociată contului tău și îți vom trimite instrucțiuni pentru resetarea parolei.",
+      "messages": {
+        "instructions": "Verifică-ți emailul pentru instrucțiunile de resetare a parolei."
+      },
+      "submitted": {
+        "title": "Verifică-ți emailul!",
+        "description": "Ți-am trimis un email cu un link pentru resetarea parolei la adresa {email}.",
+        "hint": "Nu ai primit emailul? Verifică folderul de spam."
+      },
+      "fields": {
+        "email": "Adresă de email",
+        "emailPlaceholder": "Introdu adresa ta de email"
+      },
+      "buttons": {
+        "send": "Trimite instrucțiunile",
+        "sending": "Se trimit...",
+        "resend": "Retrimite emailul",
+        "backToLogin": "Înapoi la autentificare"
+      },
+      "validation": {
+        "required": "Adresa de email este obligatorie",
+        "invalid": "Introdu o adresă de email validă"
+      },
+      "toasts": {
+        "success": "Emailul pentru resetarea parolei a fost trimis cu succes",
+        "error": "Trimiterea emailului de resetare a eșuat",
+        "unexpected": "A apărut o eroare neașteptată. Te rugăm să încerci din nou."
+      }
+    },
     "resetPassword": {
       "title": "Creează Parolă Nouă!",
       "subtitle": "Introdu o parolă nouă mai jos pentru a-ți actualiza datele de conectare la cont.",

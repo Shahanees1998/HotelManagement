@@ -1210,6 +1210,37 @@
         "error": "L'inscription a échoué. Veuillez réessayer."
       }
     },
+    "forgotPassword": {
+      "title": "Mot de passe oublié ?",
+      "description": "Saisissez l’adresse e-mail associée à votre compte et nous vous enverrons un e-mail avec les instructions pour réinitialiser votre mot de passe.",
+      "messages": {
+        "instructions": "Consultez votre boîte mail pour les instructions de réinitialisation du mot de passe."
+      },
+      "submitted": {
+        "title": "Consultez votre boîte mail !",
+        "description": "Nous avons envoyé un e-mail contenant un lien de réinitialisation du mot de passe à {email}.",
+        "hint": "Vous n’avez pas reçu l’e-mail ? Vérifiez votre dossier spam."
+      },
+      "fields": {
+        "email": "Adresse e-mail",
+        "emailPlaceholder": "Saisissez votre adresse e-mail"
+      },
+      "buttons": {
+        "send": "Envoyer les instructions",
+        "sending": "Envoi en cours...",
+        "resend": "Renvoyer l’e-mail",
+        "backToLogin": "Retour à la connexion"
+      },
+      "validation": {
+        "required": "L’adresse e-mail est obligatoire",
+        "invalid": "Veuillez saisir une adresse e-mail valide"
+      },
+      "toasts": {
+        "success": "L’e-mail de réinitialisation a été envoyé avec succès",
+        "error": "Échec de l’envoi de l’e-mail de réinitialisation",
+        "unexpected": "Une erreur inattendue s’est produite. Veuillez réessayer."
+      }
+    },
     "resetPassword": {
       "title": "Créer un nouveau mot de passe !",
       "subtitle": "Saisissez un nouveau mot de passe ci-dessous pour mettre à jour vos identifiants.",
