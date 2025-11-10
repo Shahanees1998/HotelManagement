@@ -1,0 +1,1300 @@
+{
+  "languages": {
+    "en": "Engels",
+    "ar": "Arabisch",
+    "zh": "Chinees",
+    "fr": "Frans",
+    "de": "Duits",
+    "es": "Spaans",
+    "it": "Italiaans",
+    "pt": "Portugees",
+    "ru": "Russisch",
+    "pl": "Pools",
+    "nl": "Nederlands",
+    "uk": "Oekraïens",
+    "el": "Grieks",
+    "ro": "Roemeens"
+  },
+  "common": {
+    "warning": "Waarschuwing",
+    "success": "Succes",
+    "error": "Fout",
+    "info": "Info",
+    "agreeTo": "Ik ga akkoord met de",
+    "and": "en",
+    "terms": "Algemene voorwaarden",
+    "privacy": "Privacybeleid",
+    "alreadyHaveAccount": "Heb je al een account?",
+    "login": "Inloggen",
+    "logout": "Uitloggen",
+    "orRegisterVia": "of registreer via",
+    "selectLanguage": "Selecteer taal",
+    "getStarted": "Aan de slag"
+  },
+  "components": {
+    "customPaginator": {
+      "itemsPerPage": "Items per pagina",
+      "rangeInfo": "{start}-{end} van {total} vermeldingen",
+      "previousPage": "Vorige pagina",
+      "nextPage": "Volgende pagina"
+    }
+  },
+  "countries": {
+    "US": "Verenigde Staten",
+    "CA": "Canada",
+    "GB": "Verenigd Koninkrijk",
+    "AU": "Australië",
+    "DE": "Duitsland",
+    "FR": "Frankrijk",
+    "ES": "Spanje",
+    "IT": "Italië",
+    "JP": "Japan",
+    "IN": "India",
+    "CN": "China",
+    "BR": "Brazilië",
+    "MX": "Mexico",
+    "OTHER": "Overig"
+  },
+  "registerHotel": {
+    "step1": {
+      "title": "Gegevens van de eigenaar!",
+      "fields": {
+        "fullName": "Naam",
+        "email": "E-mailadres",
+        "phone": "Telefoonnummer",
+        "password": "Wachtwoord"
+      },
+      "placeholders": {
+        "fullName": "Voer je naam in",
+        "email": "Voer je e-mailadres in",
+        "phone": "Voer je telefoonnummer in",
+        "password": "Voer je wachtwoord in"
+      },
+      "cta": "Laten we doorgaan!"
+    },
+    "step2": {
+      "title": "Hotelinformatie!",
+      "subtitle": "Zijn mijn gegevens veilig?",
+      "fields": {
+        "hotelName": "Naam hotel",
+        "hotelWebsite": "Website hotel",
+        "hotelAddress": "Adres hotel",
+        "city": "Stad",
+        "country": "Land",
+        "hotelDescription": "Beschrijving hotel"
+      },
+      "placeholders": {
+        "hotelName": "Voer de naam van het hotel in",
+        "hotelWebsite": "Voer de URL van de hotelwebsite in",
+        "hotelAddress": "Voer het straatadres van het hotel in",
+        "city": "Voer de stad van het hotel in",
+        "country": "Selecteer land",
+        "hotelDescription": "Voer een korte beschrijving van je hotel in"
+      }
+    },
+    "buttons": {
+      "back": "Terug",
+      "register": "Nu registreren",
+      "registering": "Bezig met registreren..."
+    },
+    "toasts": {
+      "missingRequired": "Vul alle verplichte velden in",
+      "passwordLength": "Het wachtwoord moet minimaal 6 tekens lang zijn",
+      "acceptTerms": "Accepteer de algemene voorwaarden",
+      "acceptTermsPrivacy": "Accepteer de algemene voorwaarden en het privacybeleid",
+      "success": "Hotelregistratie geslaagd! Controleer je e-mail voor verificatie.",
+      "error": "Registratie mislukt",
+      "errorGeneric": "Registratie mislukt. Probeer het opnieuw."
+    },
+    "images": {
+      "ownerAlt": "Hotel registreren - Eigenaarinformatie",
+      "hotelAlt": "Hotel registreren - Hotelinformatie"
+    }
+  },
+  "hotel": {
+    "dashboard": {
+      "recentReviews": {
+        "title": "Recente beoordelingen",
+        "description": "Bekijk en beheer je recente beoordelingen.",
+        "states": {
+          "loading": "Recente beoordelingen laden..."
+        },
+        "table": {
+          "date": "Datum"
+        }
+      }
+    },
+    "forms": {
+      "header": {
+        "title": "Feedbackformulier",
+        "subtitle": "Beheer het feedbackformulier voor je gasten. Je kunt dit formulier op elk moment bijwerken."
+      },
+      "states": {
+        "loading": "Formulier laden..."
+      },
+      "fields": {
+        "title": "Formuliertitel",
+        "status": "Status",
+        "active": "Actief",
+        "inactive": "Inactief",
+        "description": "Beschrijving",
+        "noDescription": "Geen beschrijving opgegeven",
+        "totalResponses": "Totaal aantal reacties"
+      },
+      "buttons": {
+        "edit": "Formulier bewerken",
+        "preview": "Formulier bekijken",
+        "showQr": "QR-code tonen",
+        "create": "Formulier maken",
+        "downloadQr": "QR-code downloaden",
+        "copyUrl": "URL kopiëren"
+      },
+      "empty": {
+        "title": "Nog geen formulier aangemaakt",
+        "description": "Maak je feedbackformulier om beoordelingen van gasten te verzamelen."
+      },
+      "preview": {
+        "title": "Voorbeeld van formulier",
+        "tooltipBack": "Terug naar formulieren",
+        "tag": "Voorbeeldmodus - interacties uitgeschakeld"
+      },
+      "qrDialog": {
+        "title": "QR-code - {title}"
+      },
+      "toasts": {
+        "loadError": "Formulier laden mislukt",
+        "slugMissing": "Hotelslug niet gevonden. Voorbeeld kan niet worden weergegeven.",
+        "createSuccess": "Formulier succesvol aangemaakt",
+        "updateSuccess": "Formulier succesvol bijgewerkt",
+        "saveError": "Formulier opslaan mislukt",
+        "qrGenerated": "QR-code succesvol gegenereerd",
+        "qrExists": "Er bestaat al een QR-code voor dit formulier",
+        "qrError": "QR-code verwerken mislukt",
+        "noUrl": "Geen URL om te kopiëren",
+        "copiedDetail": "URL gekopieerd naar het klembord",
+        "copyError": "URL kopiëren mislukt"
+      },
+      "builder": {
+        "header": {
+          "edit": "Formulier bewerken",
+          "create": "Nieuw formulier maken",
+          "preview": "Formulier bekijken",
+          "livePreview": "Live voorbeeld",
+          "formBuilderToggle": "Formulierbouwer",
+          "livePreviewToggle": "Live voorbeeld",
+          "backTooltip": "Terug naar formulieren"
+        },
+        "buttons": {
+          "save": "Formulier opslaan",
+          "saveTooltip": "Sla het formulier op",
+          "addNew": "Nieuwe toevoegen",
+          "addOption": "Toevoegen",
+          "cancel": "Annuleren",
+          "update": "Bijwerken",
+          "add": "Toevoegen"
+        },
+        "sections": {
+          "settings": "Formulierinstellingen",
+          "questions": "Vragen",
+          "predefined": "Vooraf ingestelde vragen",
+          "custom": "Aangepaste vragen"
+        },
+        "fields": {
+          "titleLabel": "Formuliertitel*",
+          "titlePlaceholder": "Voer de formuliertitel in",
+          "descriptionLabel": "Formulierbeschrijving*",
+          "descriptionPlaceholder": "Voer een korte beschrijving van je formulier in"
+        },
+        "predefined": {
+          "rateUs": "Beoordeel ons* (altijd inbegrepen)",
+          "rateUsTitle": "Beoordeel ons",
+          "customRating": "Aangepaste beoordeling*",
+          "customRatingTitle": "Aangepaste beoordeling",
+          "customRatingPlaceholder": "Voer het label voor het beoordelingsitem in",
+          "customRatingEditTitle": "Klik om te bewerken",
+          "feedback": "Geef ons je eerlijke feedback?*",
+          "feedbackTitle": "Geef ons je eerlijke feedback?",
+          "feedbackPlaceholder": "Voer je gedetailleerde feedback in"
+        },
+        "tooltips": {
+          "previewDisabled": "Voorbeeldmodus - bewerken is uitgeschakeld",
+          "addQuestion": "Aangepaste vraag toevoegen",
+          "save": "Opslaan",
+          "cancel": "Annuleren",
+          "edit": "Bewerken",
+          "delete": "Verwijderen",
+          "moveUp": "Omhoog verplaatsen",
+          "moveDown": "Omlaag verplaatsen"
+        },
+        "questionTypes": {
+          "shortText": "Kort antwoord",
+          "longText": "Lang antwoord",
+          "starRating": "Sterrenbeoordeling",
+          "singleChoice": "Enkele keuze",
+          "multipleChoice": "Meerkeuze",
+          "yesNo": "Ja/nee"
+        },
+        "placeholders": {
+          "answer": "Voer je antwoord in"
+        },
+        "answers": {
+          "yes": "Ja",
+          "no": "Nee"
+        },
+        "badges": {
+          "default": "Standaard",
+          "defaultHelper": "Kan niet worden bewerkt, verwijderd of verplaatst"
+        },
+        "states": {
+          "loading": "Formuliergegevens laden...",
+          "noQuestionsTitle": "Nog geen vragen toegevoegd",
+          "noQuestionsDescription": "Gebruik de bovenstaande vragen of voeg aangepaste vragen toe om te beginnen"
+        },
+        "alerts": {
+          "ratingRequiredTitle": "Beoordeling vereist",
+          "ratingRequiredDescription": "Om het formulier op te slaan moet \"Beoordeel ons\" of \"Aangepaste beoordeling\" zijn geselecteerd."
+        },
+        "layoutInfo": {
+          "basic": {
+            "title": "Kenmerken basislay-out",
+            "description": "Alle vragen zijn beschikbaar, inclusief aangepaste vragen. Deze lay-out biedt een eenvoudig, strak ontwerp."
+          },
+          "good": {
+            "title": "Kenmerken goede lay-out",
+            "description": "Kies \"Beoordeel ons\" OF \"Aangepaste beoordeling\" (wederzijds exclusief). Alle vragen, inclusief aangepaste vragen, zijn beschikbaar."
+          },
+          "excellent": {
+            "title": "Kenmerken uitstekende lay-out",
+            "description": "Alle vooraf ingestelde vragen plus aangepaste vragen beschikbaar. Premium ontwerp met animaties voor uitgebreide feedbackformulieren."
+          }
+        },
+        "subscription": {
+          "title": "Abonnement vereist",
+          "message": "Je abonnement is {status}. Activeer je abonnement opnieuw om formulieren te maken of te bewerken.",
+          "manageButton": "Abonnement beheren",
+          "status": {
+            "cancelled": "geannuleerd",
+            "expired": "verlopen"
+          },
+          "toastTitle": "Abonnement vereist",
+          "toastMessage": "Je abonnement is geannuleerd of verlopen. Activeer je abonnement opnieuw om formulieren te maken."
+        },
+        "preview": {
+          "descriptionFallback": "Vul dit formulier in om ondersteuning aan te vragen of een probleem te melden. Ons team bekijkt je verzoek en neemt zo snel mogelijk contact op met de juiste hulp.",
+          "fullNameLabel": "Volledige naam*",
+          "fullNamePlaceholder": "Voer je volledige naam in",
+          "emailLabel": "E-mail*",
+          "emailPlaceholder": "Voer je e-mailadres in",
+          "submit": "Nu indienen"
+        },
+        "dialog": {
+          "addTitle": "Vraag toevoegen",
+          "editTitle": "Vraag bewerken",
+          "questionLabel": "Vraagtekst *",
+          "questionPlaceholder": "Voer je vraag in",
+          "typeLabel": "Vraagtype",
+          "optionsLabel": "Opties",
+          "optionPlaceholder": "Voer optie in"
+        },
+        "toasts": {
+          "formLoadSuccess": "Formuliergegevens succesvol geladen",
+          "formLoadError": "Formuliergegevens laden mislukt",
+          "questionRequired": "Vraagtekst is verplicht",
+          "optionsRequired": "Meerkeuzevragen moeten minstens 2 opties hebben",
+          "questionUpdated": "Vraag bijgewerkt",
+          "questionAdded": "Vraag toegevoegd",
+          "questionDeleted": "Vraag verwijderd",
+          "ratingLabelRequired": "Voer een label in voor het beoordelingsitem",
+          "ratingItemUpdated": "Beoordelingsitem bijgewerkt",
+          "ratingItemDeleted": "Beoordelingsitem verwijderd",
+          "ratingItemAdded": "Nieuw beoordelingsitem toegevoegd",
+          "titleRequired": "Formuliertitel is vereist",
+          "questionCountRequired": "Er is minimaal één vraag vereist"
+        }
+      }
+    },
+    "analytics": {
+      "customRatings": {
+        "title": "Analyse aangepaste beoordeling",
+        "description": "Volg gedetailleerde beoordelings-trends voor je formulier met de lay-out \"Goed\".",
+        "buttons": {
+          "exportCsv": "Exporteer CSV",
+          "exportPdf": "Exporteer PDF",
+          "refresh": "Vernieuwen"
+        },
+        "filters": {
+          "title": "Filters voor datumbereik",
+          "startDate": "Startdatum",
+          "startDatePlaceholder": "Selecteer startdatum",
+          "endDate": "Einddatum",
+          "endDatePlaceholder": "Selecteer einddatum",
+          "clear": "Filters wissen"
+        },
+        "states": {
+          "loading": "Analysetgegevens laden...",
+          "noDataTitle": "Geen gegevens beschikbaar",
+          "noDataDescription": "Geen formulieren met lay-out \"Goed\" en aangepaste beoordelingsgegevens gevonden voor je hotel."
+        },
+        "toasts": {
+          "loadError": "Aangepaste beoordelingsanalyse laden mislukt",
+          "exportSuccess": "Gegevens succesvol geëxporteerd als {format}",
+          "exportError": "Gegevens exporteren mislukt"
+        },
+        "chart": {
+          "trendPrefix": "Trendanalyse - ",
+          "summaryTitle": "Beoordelingssamenvatting",
+          "ratingsCount": "({count} beoordelingen)",
+          "averageRating": "Gemiddelde beoordeling",
+          "tooltipSuffix": "/5"
+        }
+      },
+      "overview": {
+        "title": "Analytics",
+        "description": "Volg de prestaties van je hotel en de tevredenheid van gasten.",
+        "dropdownPlaceholder": "Selecteer periode",
+        "buttons": {
+          "refresh": "Vernieuwen"
+        },
+        "timeRanges": {
+          "7": "Laatste 7 dagen",
+          "30": "Laatste 30 dagen",
+          "90": "Laatste 90 dagen",
+          "180": "Laatste 6 maanden",
+          "365": "Laatste jaar"
+        },
+        "states": {
+          "loadingSkeleton": "Laden...",
+          "noData": "Geen analysedata beschikbaar",
+          "chartLoading": "Grafiekgegevens laden...",
+          "chartEmpty": "Geen grafiekgegevens beschikbaar"
+        },
+        "cards": {
+          "change": "{change} ten opzichte van vorige periode"
+        },
+        "charts": {
+          "satisfaction": "Tevredenheidstrends",
+          "ratingDistribution": "Verdeling beoordelingen",
+          "reviewVolume": "Aantal beoordelingen"
+        },
+        "reviews": {
+          "title": "Recente beoordelingen"
+        },
+        "toasts": {
+          "loadError": "Analytics laden mislukt"
+        }
+      },
+      "responseRates": {
+        "title": "Analyse responspercentages",
+        "description": "Volg de responspercentages en betrokkenheidsstatistieken van je hotel.",
+        "charts": {
+          "reviewVolume": "Trends in aantal beoordelingen",
+          "satisfaction": "Tevredenheidstrends in de tijd"
+        }
+      },
+      "satisfaction": {
+        "title": "Analyse tevredenheid",
+        "description": "Volg trends en beoordelingen van gasttevredenheid voor je hotel.",
+        "charts": {
+          "reviewVolume": "Aantal beoordelingen & positieve beoordelingen"
+        }
+      },
+      "notificationsCenter": {
+        "title": "Meldingen",
+        "ariaLabel": "Meldingen",
+        "iconAlt": "Pictogram melding",
+        "buttons": {
+          "markAllRead": "Alles als gelezen markeren",
+          "refresh": "Vernieuwen"
+        },
+        "states": {
+          "empty": "Nog geen meldingen"
+        },
+        "types": {
+          "newReview": "Nieuwe beoordeling",
+          "reviewApproved": "Beoordeling goedgekeurd",
+          "reviewRejected": "Beoordeling afgewezen",
+          "subscriptionExpiring": "Abonnement verloopt",
+          "subscriptionCancelled": "Abonnement geannuleerd",
+          "escalationReceived": "Escalatie ontvangen",
+          "escalationResponded": "Escalatie beantwoord",
+          "systemAlert": "Systeemmelding",
+          "newHotelRegistration": "Nieuwe hotelregistratie",
+          "success": "Succes",
+          "info": "Info",
+          "warning": "Waarschuwing",
+          "error": "Fout",
+          "generic": "Melding"
+        }
+      }
+    },
+    "reviews": {
+      "title": "Gastbeoordelingen",
+      "subtitle": "Beheer en bekijk ingezonden feedback van gasten.",
+      "buttons": {
+        "refresh": "Vernieuwen",
+        "clearFilters": "Filters wissen",
+        "view": "Bekijken",
+        "reply": "Beantwoorden",
+        "delete": "Verwijderen",
+        "close": "Sluiten",
+        "markAsChecked": "Markeren als gecontroleerd",
+        "checked": "Gecontroleerd",
+        "markAsUrgent": "Markeren als urgent",
+        "urgent": "Urgent",
+        "replyToCustomer": "Aan klant antwoorden",
+        "cancel": "Annuleren",
+        "sendReply": "Antwoord verzenden"
+      },
+      "filters": {
+        "title": "Filters",
+        "searchReviews": "Beoordelingen zoeken",
+        "searchPlaceholder": "Zoek op naam van gast of feedbacktekst...",
+        "roomNumber": "Kamernummer",
+        "roomNumberPlaceholder": "Filter op kamernummer...",
+        "filter": "Filteren",
+        "allReviews": "Alle beoordelingen",
+        "replied": "Beantwoord",
+        "notReplied": "Niet beantwoord",
+        "checked": "Gecontroleerd",
+        "notChecked": "Niet gecontroleerd",
+        "urgent": "Urgent",
+        "notUrgent": "Niet urgent",
+        "starRatings": "Sterrenbeoordelingen",
+        "allRatings": "Alle beoordelingen",
+        "5Stars": "5 sterren",
+        "4Stars": "4 sterren",
+        "3Stars": "3 sterren",
+        "2Stars": "2 sterren",
+        "1Star": "1 ster",
+        "dateRange": "Datumbereik",
+        "startDate": "Startdatum",
+        "endDate": "Einddatum",
+        "fromDate": "Vanaf datum",
+        "toDate": "Tot datum"
+      },
+      "states": {
+        "loadingReviews": "Beoordelingen laden...",
+        "noReviewsFound": "Geen beoordelingen gevonden",
+        "noReviewsYet": "Er zijn nog geen beoordelingen ingediend.",
+        "noReviewsMatchFilters": "Geen beoordelingen komen overeen met je huidige filters."
+      },
+      "table": {
+        "guest": "Gast",
+        "email": "E-mail",
+        "room": "Kamer",
+        "rating": "Beoordeling",
+        "status": "Status",
+        "submitted": "Ingediend",
+        "actions": "Acties",
+        "checkedStatus": "Gecontroleerd",
+        "notCheckedStatus": "Niet gecontroleerd",
+        "repliedStatus": "Beantwoord",
+        "notRepliedStatus": "Niet beantwoord",
+        "urgentStatus": "Urgent",
+        "notUrgentStatus": "Niet urgent",
+        "public": "Openbaar",
+        "private": "Privé",
+        "shared": "Gedeeld",
+        "noEmailAvailable": "Geen e-mail beschikbaar voor deze beoordeling"
+      },
+      "detailsDialog": {
+        "header": "Details gastfeedback",
+        "guestInfo": "Gasteninformatie",
+        "name": "Naam:",
+        "anonymous": "Anoniem",
+        "email": "E-mail:",
+        "notProvided": "Niet opgegeven",
+        "phone": "Telefoon:",
+        "roomNumber": "Kamernummer:",
+        "submitted": "Ingediend:",
+        "overallRating": "Totale beoordeling",
+        "quickFeedback": "Snelle feedback",
+        "howDoYouRateUs": "Hoe beoordeel je ons?",
+        "honestFeedback": "Geef ons alsjeblieft je eerlijke feedback?",
+        "noSpecificFeedback": "Geen specifieke feedback gegeven",
+        "customRatingItem": "Aangepast beoordelingsitem ({itemId})",
+        "formInfo": "Formulierinformatie",
+        "formTitle": "Formuliertitel:",
+        "description": "Beschrijving:",
+        "layout": "Lay-out:",
+        "feedbackResponses": "Feedbackreacties",
+        "noDetailedResponses": "Geen gedetailleerde reacties beschikbaar voor deze beoordeling.",
+        "question": "Vraag:",
+        "noAnswer": "Geen antwoord gegeven",
+        "replyToCustomer": "Antwoord aan klant",
+        "replyPlaceholder": "Typ hier je antwoordbericht...",
+        "replyMessageHint": "Dit bericht wordt verzonden naar {guestEmail}",
+        "toastWarningReply": "Voer een antwoordbericht in",
+        "toastSuccessReply": "Antwoord succesvol verzonden naar {sentTo}",
+        "toastErrorReply": "Verzenden van antwoord mislukt"
+      },
+      "deleteDialog": {
+        "header": "Beoordeling verwijderen",
+        "confirmTitle": "Weet je zeker dat je deze beoordeling wilt verwijderen?",
+        "confirmMessage": "Deze actie kan niet ongedaan gemaakt worden. De beoordeling wordt permanent uit je systeem verwijderd.",
+        "reviewDetails": "Details beoordeling:",
+        "guest": "Gast:",
+        "rating": "Beoordeling:",
+        "submitted": "Ingediend:",
+        "buttons": {
+          "cancel": "Annuleren",
+          "delete": "Verwijderen"
+        },
+        "toasts": {
+          "success": "Beoordeling succesvol verwijderd",
+          "error": "Beoordeling verwijderen mislukt"
+        }
+      },
+      "toasts": {
+        "loadError": "Beoordelingen laden mislukt",
+        "detailsLoadError": "Details van beoordeling laden mislukt",
+        "statusUpdate": {
+          "checked": "Beoordeling gemarkeerd als gecontroleerd",
+          "urgent": "Beoordeling gemarkeerd als urgent",
+          "replied": "Beoordeling gemarkeerd als beantwoord"
+        },
+        "statusUpdateError": "Bijwerken van beoordelingsstatus mislukt",
+        "replyMissing": "Voer een antwoordbericht in",
+        "replySuccess": "Antwoord succesvol verzonden naar {sentTo}",
+        "replyError": "Antwoord verzenden mislukt",
+        "deleteSuccess": "Beoordeling succesvol verwijderd",
+        "deleteError": "Beoordeling verwijderen mislukt"
+      }
+    },
+    "menu": {
+      "dashboard": "Dashboard",
+      "feedbackForm": "Feedbackformulier",
+      "qrCodes": "QR-codes",
+      "allReviews": "Alle beoordelingen",
+      "notifications": "Meldingen",
+      "contactAdmin": "Contact opnemen met beheerder",
+      "settings": "Instellingen",
+      "settingsItems": {
+        "userProfile": "Gebruikersprofiel",
+        "hotelProfile": "Hotelprofiel",
+        "changePassword": "Wachtwoord wijzigen",
+        "subscriptions": "Abonnementen",
+        "paymentMethods": "Betaalmethoden"
+      }
+    },
+    "paymentMethods": {
+      "pageTitle": "Betaalmethode toevoegen",
+      "buttons": {
+        "add": "Toevoegen",
+        "addMethod": "Methode toevoegen",
+        "updateMethod": "Methode bijwerken",
+        "cancel": "Annuleren",
+        "setPrimary": "Als primair instellen",
+        "delete": "Verwijderen"
+      },
+      "badges": {
+        "primary": "Primair",
+        "expired": "Verlopen"
+      },
+      "states": {
+        "loading": "Betaalmethoden laden...",
+        "emptyTitle": "Geen betaalmethoden",
+        "emptyDescription": "Voeg een betaalmethode toe om je abonnementen te beheren."
+      },
+      "form": {
+        "paymentType": "Type betaling",
+        "paymentTypeOptions": {
+          "card": "Creditcard/debetkaart",
+          "bank": "Bankrekening"
+        },
+        "card": {
+          "number": "Kaartnummer",
+          "numberPlaceholder": "1234 5678 9012 3456",
+          "expiryMonth": "Vervalmaand",
+          "expiryYear": "Verloopjaar",
+          "monthPlaceholder": "MM",
+          "yearPlaceholder": "JJJJ",
+          "cvv": "CVV",
+          "cvvPlaceholder": "123",
+          "holder": "Naam kaarthouder",
+          "holderPlaceholder": "Jan Jansen",
+          "brand": "Kaartmerk",
+          "brandPlaceholder": "Selecteer kaartmerk"
+        },
+        "cardBrands": {
+          "visa": "Visa",
+          "mastercard": "Mastercard",
+          "amex": "American Express",
+          "discover": "Discover",
+          "unknown": "Kaart"
+        },
+        "bank": {
+          "name": "Naam bank",
+          "namePlaceholder": "ING Bank",
+          "accountNumber": "Rekeningnummer",
+          "accountPlaceholder": "Rekeningnummer",
+          "routingNumber": "Routingnummer",
+          "routingPlaceholder": "123456789",
+          "accountType": "Rekeningtype",
+          "accountTypePlaceholder": "Selecteer rekeningtype"
+        },
+        "accountTypes": {
+          "checking": "Betaalrekening",
+          "savings": "Spaarrekening",
+          "unknown": "Rekening"
+        }
+      },
+      "list": {
+        "endingIn": "eindigend op",
+        "expiryLabel": "Vervaldatum",
+        "accountTypeSuffix": "Rekening",
+        "accountTypeUnknown": "Rekening",
+        "unknownBank": "Bank",
+        "edit": "Bewerken",
+        "delete": "Verwijderen"
+      },
+      "dialogs": {
+        "add": {
+          "title": "Betaalmethode toevoegen"
+        },
+        "edit": {
+          "title": "Betaalmethode bewerken",
+          "cardLocked": "Kaartnummer kan om veiligheidsredenen niet worden gewijzigd",
+          "bankLocked": "Rekeningnummer kan om veiligheidsredenen niet worden gewijzigd"
+        },
+        "delete": {
+          "title": "Betaalmethode verwijderen",
+          "message": "Weet je zeker dat je deze betaalmethode wilt verwijderen? Deze actie kan niet ongedaan gemaakt worden."
+        }
+      },
+      "toasts": {
+        "load": {
+          "error": "Betaalmethoden laden mislukt"
+        },
+        "add": {
+          "success": "Betaalmethode succesvol toegevoegd",
+          "error": "Betaalmethode toevoegen mislukt"
+        },
+        "delete": {
+          "success": "Betaalmethode succesvol verwijderd",
+          "error": "Betaalmethode verwijderen mislukt"
+        },
+        "default": {
+          "success": "Standaard betaalmethode bijgewerkt",
+          "error": "Bijwerken van standaard betaalmethode mislukt"
+        },
+        "update": {
+          "success": "Betaalmethode succesvol bijgewerkt",
+          "error": "Betaalmethode bijwerken mislukt"
+        }
+      }
+    },
+    "subscription": {
+      "header": {
+        "title": "Abonnementsbeheer",
+        "subtitle": "Beheer het abonnement en de facturering van je hotel."
+      },
+      "buttons": {
+        "refresh": "Vernieuwen",
+        "processing": "Bezig...",
+        "upgradeNow": "Nu upgraden",
+        "currentPlan": "Huidig abonnement",
+        "reactivate": "Opnieuw activeren",
+        "cancelSubscription": "Abonnement annuleren",
+        "contactSupport": "Contact opnemen met support",
+        "cancel": "Annuleren",
+        "confirm": "Bevestigen"
+      },
+      "statuses": {
+        "trial": "Proefperiode",
+        "active": "Actief",
+        "cancelled": "Geannuleerd",
+        "expired": "Verlopen"
+      },
+      "states": {
+        "loading": "Abonnementsgegevens laden...",
+        "notFoundTitle": "Abonnement niet gevonden",
+        "notFoundDescription": "Kan abonnementsinformatie niet laden."
+      },
+      "labels": {
+        "notAvailable": "n.v.t."
+      },
+      "trial": {
+        "name": "Proefabonnement",
+        "description": "Gratis proefperiode",
+        "label": "Proefperiode:",
+        "remaining": "Nog {count} dagen"
+      },
+      "sections": {
+        "status": {
+          "title": "Huidige abonnementsstatus",
+          "statusLabel": "Status",
+          "totalReviews": "Totaal aantal beoordelingen",
+          "averageRating": "Gemiddelde beoordeling"
+        },
+        "plans": {
+          "title": "Beschikbare abonnementen",
+          "currentPlanHint": "Je gebruikt dit abonnement"
+        },
+        "actions": {
+          "title": "Abonnementsacties"
+        },
+        "billing": {
+          "title": "Facturatie-informatie",
+          "subscriptionId": "Abonnements-ID:",
+          "created": "Aangemaakt:",
+          "nextBilling": "Volgende facturatie:",
+          "trialEnds": "Einde proefperiode:"
+        }
+      },
+      "perInterval": "per {interval}",
+      "priceLabel": "{price}/{interval}",
+      "dialog": {
+        "title": "Abonnementswijziging bevestigen",
+        "upgradeTitle": "Upgraden naar {plan}",
+        "description": "Je staat op het punt je abonnement te upgraden.",
+        "planLabel": "Abonnement:",
+        "priceLabel": "Prijs:",
+        "billingLabel": "Facturatie:",
+        "noteLabel": "Opmerking:",
+        "noteDescription": "Dit is een demo-omgeving. Er wordt geen echte betaling verwerkt."
+      },
+      "toasts": {
+        "load": {
+          "error": "Abonnementsgegevens laden mislukt"
+        },
+        "update": {
+          "success": "Abonnement succesvol bijgewerkt",
+          "error": "Abonnement bijwerken mislukt"
+        }
+      },
+      "errors": {
+        "unauthorized": "Niet gemachtigd",
+        "hotelNotFound": "Hotel niet gevonden",
+        "planRequired": "Abonnements-ID en actie zijn vereist",
+        "unknownPlan": "Onbekend abonnement",
+        "fetchFailed": "Abonnementsgegevens ophalen mislukt",
+        "updateFailed": "Abonnement bijwerken mislukt"
+      },
+      "messages": {
+        "upgraded": "Succesvol geüpgraded naar {plan}",
+        "cancelled": "Abonnement succesvol geannuleerd"
+      },
+      "plans": {
+        "basic": {
+          "name": "Basic-abonnement",
+          "features": [
+            "Tot 100 beoordelingen per maand",
+            "Basisanalytics",
+            "Genereren van QR-code",
+            "Basisfeedbackformulier"
+          ]
+        },
+        "professional": {
+          "name": "Professional-abonnement",
+          "features": [
+            "Tot 500 beoordelingen per maand",
+            "Geavanceerde analytics",
+            "Genereren van QR-code",
+            "Aangepaste sterrenbeoordelingsvragen"
+          ]
+        },
+        "enterprise": {
+          "name": "Enterprise-abonnement",
+          "features": [
+            "Onbeperkte beoordelingen per maand",
+            "Enterprise-analytics",
+            "Priority support",
+            "Beheer van meerdere locaties"
+          ]
+        }
+      },
+      "intervals": {
+        "month": "maand",
+        "monthly": "maandelijks",
+        "year": "jaar",
+        "yearly": "jaarlijks",
+        "quarter": "kwartaal",
+        "quarterly": "per kwartaal"
+      }
+    },
+    "profile": {
+      "user": {
+        "title": "Persoonlijke informatie",
+        "subtitle": "Beheer de persoonlijke gegevens van je account.",
+        "buttons": {
+          "save": "Wijzigingen opslaan",
+          "changePassword": "Wachtwoord wijzigen",
+          "twoFactor": "Tweestapsverificatie",
+          "changePhoto": "Foto wijzigen",
+          "uploading": "Uploaden..."
+        },
+        "images": {
+          "cardTitle": "Profielfoto",
+          "hint": "JPG, PNG of GIF. Maximale grootte 5 MB."
+        },
+        "fields": {
+          "firstName": "Voornaam *",
+          "lastName": "Achternaam *",
+          "email": "E-mailadres *",
+          "phone": "Telefoonnummer"
+        },
+        "placeholders": {
+          "firstName": "Vul je voornaam in",
+          "lastName": "Vul je achternaam in",
+          "email": "your.email@example.com",
+          "phone": "+31 6 1234 5678"
+        },
+        "cards": {
+          "personalInfo": "Persoonlijke informatie",
+          "accountInfo": "Accountinformatie",
+          "security": "Beveiliging"
+        },
+        "account": {
+          "type": "Type account:",
+          "status": "Status:",
+          "memberSince": "Lid sinds:",
+          "lastLogin": "Laatste login:",
+          "typeValue": "Hoteleigenaar",
+          "statusActive": "Actief",
+          "notAvailable": "n.v.t."
+        },
+        "toasts": {
+          "saveSuccess": "Profiel succesvol bijgewerkt",
+          "saveError": "Profiel bijwerken mislukt",
+          "imageTypeError": "Selecteer een geldig afbeeldingsbestand (JPG, PNG, GIF of WebP)",
+          "imageSizeError": "Afbeeldingsgrootte moet kleiner zijn dan 5 MB",
+          "imageSuccess": "Profielfoto succesvol bijgewerkt",
+          "imageError": "Uploaden van foto mislukt",
+          "twoFactorInfo": "Tweestapsverificatie is binnenkort beschikbaar"
+        }
+      },
+      "hotel": {
+        "title": "Hotelprofiel",
+        "subtitle": "Beheer de gegevens en instellingen van je hotel.",
+        "buttons": {
+          "save": "Wijzigingen opslaan",
+          "uploadLogo": "Logo uploaden",
+          "uploading": "Uploaden...",
+          "viewPublic": "Openbare pagina bekijken",
+          "contactSupport": "Contact opnemen met support"
+        },
+        "images": {
+          "cardTitle": "Hotellogo",
+          "alt": "Hotellogo",
+          "hint": "JPG, PNG of GIF. Max. grootte 5 MB. Aanbevolen: 300x300px"
+        },
+        "cards": {
+          "actions": "Acties",
+          "hotelInfo": "Hotelinformatie"
+        },
+        "fields": {
+          "name": "Naam hotel *",
+          "description": "Beschrijving",
+          "address": "Adres",
+          "city": "Stad",
+          "country": "Land",
+          "phone": "Telefoon",
+          "email": "E-mail",
+          "website": "Website"
+        },
+        "placeholders": {
+          "name": "Voer de naam van het hotel in",
+          "description": "Korte beschrijving van je hotel",
+          "address": "Straat en huisnummer",
+          "city": "Stad",
+          "country": "Selecteer land",
+          "phone": "+31 10 123 4567",
+          "email": "hotel@example.com",
+          "website": "https://www.jehotel.nl"
+        },
+        "externalLinks": {
+          "title": "Externe beoordelingslinks",
+          "subtitle": "Voeg links toe naar je TripAdvisor- en Google Reviews-pagina's om gasten te helpen positieve feedback te delen.",
+          "tripAdvisor": {
+            "label": "TripAdvisor-link",
+            "placeholder": "https://www.tripadvisor.com/...",
+            "hint": "Optioneel: link naar je TripAdvisor-pagina"
+          },
+          "google": {
+            "label": "Google Reviews-link",
+            "placeholder": "https://g.page/...",
+            "hint": "Optioneel: link naar je Google Reviews-pagina"
+          }
+        },
+        "account": {
+          "notAvailable": "n.v.t."
+        },
+        "toasts": {
+          "loadError": "Hotelprofiel laden mislukt",
+          "saveSuccess": "Hotelprofiel succesvol bijgewerkt",
+          "saveError": "Hotelprofiel bijwerken mislukt",
+          "imageTypeError": "Selecteer een geldig beeldbestand (JPG, PNG, GIF of WebP)",
+          "imageSizeError": "Het logo moet kleiner zijn dan 5 MB",
+          "imageSuccess": "Hotellogo succesvol bijgewerkt",
+          "imageError": "Logo uploaden mislukt"
+        }
+      },
+      "password": {
+        "title": "Wachtwoord wijzigen",
+        "subtitle": "Werk het wachtwoord van je account bij voor meer veiligheid.",
+        "cardTitle": "Wachtwoord wijzigen",
+        "buttons": {
+          "change": "Wachtwoord wijzigen",
+          "cancel": "Annuleren",
+          "confirmChange": "Wachtwoord wijzigen"
+        },
+        "fields": {
+          "current": "Huidig wachtwoord *",
+          "new": "Nieuw wachtwoord *",
+          "confirm": "Nieuw wachtwoord bevestigen *"
+        },
+        "placeholders": {
+          "current": "Voer je huidige wachtwoord in",
+          "new": "Voer je nieuwe wachtwoord in",
+          "confirm": "Bevestig je nieuwe wachtwoord"
+        },
+        "strength": {
+          "label": "Sterkte wachtwoord:",
+          "weak": "Zwak",
+          "medium": "Gemiddeld",
+          "strong": "Sterk"
+        },
+        "requirements": {
+          "title": "Wachtwoordvereisten",
+          "minLength": "Minimaal 8 tekens lang",
+          "uppercase": "Bevat hoofdletters",
+          "lowercase": "Bevat kleine letters",
+          "numbers": "Bevat cijfers",
+          "special": "Bevat speciale tekens"
+        },
+        "tips": {
+          "title": "Beveiligingstips",
+          "tip": "Tip: Gebruik een uniek wachtwoord dat je nergens anders gebruikt.",
+          "warning": "Waarschuwing: Deel je wachtwoord nooit met iemand anders."
+        },
+        "validation": {
+          "currentRequired": "Huidig wachtwoord is verplicht",
+          "newRequired": "Nieuw wachtwoord is verplicht",
+          "minLength": "Nieuw wachtwoord moet minimaal 8 tekens lang zijn",
+          "complexity": "Nieuw wachtwoord moet hoofdletters, kleine letters, cijfers en speciale tekens bevatten",
+          "confirmMismatch": "Nieuw wachtwoord en bevestiging komen niet overeen",
+          "sameAsCurrent": "Nieuw wachtwoord moet anders zijn dan het huidige"
+        },
+        "toasts": {
+          "changeSuccess": "Wachtwoord succesvol gewijzigd",
+          "changeError": "Wachtwoord wijzigen mislukt"
+        },
+        "confirm": {
+          "title": "Wachtwoordwijziging bevestigen",
+          "message": "Weet je zeker dat je je wachtwoord wilt wijzigen?",
+          "warning": "Deze actie logt je uit op alle apparaten en je moet opnieuw inloggen."
+        },
+        "accessibility": {
+          "show": "Wachtwoord tonen",
+          "hide": "Wachtwoord verbergen"
+        }
+      },
+      "subscription": {
+        "errors": {
+          "unauthorized": "Niet gemachtigd",
+          "hotelNotFound": "Hotel niet gevonden",
+          "planRequired": "Abonnements-ID en actie zijn vereist",
+          "unknownPlan": "Onbekend abonnement",
+          "fetchFailed": "Abonnementsgegevens ophalen mislukt",
+          "updateFailed": "Abonnement bijwerken mislukt"
+        },
+        "messages": {
+          "upgraded": "Succesvol geüpgraded naar {plan}",
+          "cancelled": "Abonnement succesvol geannuleerd"
+        },
+        "plans": {
+          "basic": {
+            "name": "Basic-abonnement",
+            "features": [
+              "Tot 100 beoordelingen per maand",
+              "Basisanalytics",
+              "Genereren van QR-code",
+              "Basisfeedbackformulier"
+            ]
+          },
+          "professional": {
+            "name": "Professional-abonnement",
+            "features": [
+              "Tot 500 beoordelingen per maand",
+              "Geavanceerde analytics",
+              "Genereren van QR-code",
+              "Aangepaste sterrenbeoordelingsvragen"
+            ]
+          },
+          "enterprise": {
+            "name": "Enterprise-abonnement",
+            "features": [
+              "Onbeperkte beoordelingen",
+              "Volledige analytics-suite",
+              "Genereren van QR-code",
+              "Alle soorten vragen"
+            ]
+          }
+        }
+      },
+      "notificationsCenter": {
+        "title": "Meldingen",
+        "ariaLabel": "Meldingen",
+        "iconAlt": "Pictogram melding",
+        "buttons": {
+          "markAllRead": "Alles als gelezen markeren",
+          "refresh": "Vernieuwen"
+        },
+        "states": {
+          "empty": "Nog geen meldingen"
+        },
+        "types": {
+          "newReview": "Nieuwe beoordeling",
+          "reviewApproved": "Beoordeling goedgekeurd",
+          "reviewRejected": "Beoordeling afgewezen",
+          "subscriptionExpiring": "Abonnement verloopt",
+          "subscriptionCancelled": "Abonnement geannuleerd",
+          "escalationReceived": "Escalatie ontvangen",
+          "escalationResponded": "Escalatie beantwoord",
+          "systemAlert": "Systeemmelding",
+          "newHotelRegistration": "Nieuwe hotelregistratie",
+          "newFormCreated": "Nieuw formulier aangemaakt",
+          "success": "Succes",
+          "info": "Info",
+          "warning": "Waarschuwing",
+          "error": "Fout",
+          "generic": "Melding"
+        }
+      },
+      "profileSidebar": {
+        "greeting": {
+          "title": "Welkom",
+          "fallbackName": "Beheerder"
+        },
+        "actions": {
+          "profile": {
+            "title": "Profiel",
+            "description": "Beheer je accountinstellingen"
+          },
+          "signOut": {
+            "title": "Uitloggen",
+            "description": "Log uit bij je account"
+          }
+        },
+        "notifications": {
+          "title": "Recente meldingen",
+          "loading": "Meldingen laden...",
+          "summary": "Je hebt {count} ongelezen meldingen",
+          "empty": "Geen nieuwe meldingen"
+        },
+        "time": {
+          "justNow": "Zojuist"
+        }
+      }
+    },
+    "communications": {
+      "notifications": {
+        "title": "Meldingen",
+        "subtitle": "Beheer systeemmeldingen en waarschuwingen",
+        "buttons": {
+          "deleteSelected": "Selectie verwijderen ({count})",
+          "markAllAsRead": "Alles als gelezen markeren",
+          "refresh": "Vernieuwen"
+        },
+        "filters": {
+          "title": "Filters",
+          "searchLabel": "Meldingen zoeken",
+          "searchPlaceholder": "Zoek op titel, bericht of gebruiker...",
+          "type": "Type",
+          "allTypes": "Alle typen",
+          "status": {
+            "label": "Status",
+            "all": "Alle statussen",
+            "unread": "Ongelezen",
+            "read": "Gelezen"
+          },
+          "types": {
+            "newReview": "Nieuwe beoordeling",
+            "reviewApproved": "Beoordeling goedgekeurd",
+            "reviewRejected": "Beoordeling afgewezen",
+            "subscriptionExpiring": "Abonnement verloopt",
+            "subscriptionCancelled": "Abonnement geannuleerd",
+            "escalationReceived": "Escalatie ontvangen",
+            "escalationResponded": "Escalatie beantwoord",
+            "systemAlert": "Systeemmelding",
+            "newHotelRegistration": "Nieuwe hotelregistratie",
+            "newFormCreated": "Nieuw formulier aangemaakt",
+            "success": "Succes",
+            "info": "Info",
+            "warning": "Waarschuwing",
+            "error": "Fout"
+          }
+        },
+        "states": {
+          "loading": "Meldingen laden...",
+          "empty": "Geen meldingen gevonden"
+        },
+        "table": {
+          "type": "Type",
+          "message": "Bericht",
+          "date": "Datum",
+          "actions": "Acties",
+          "status": {
+            "label": "Status",
+            "read": "Gelezen",
+            "new": "Nieuw"
+          }
+        },
+        "tooltips": {
+          "markAsRead": "Markeren als gelezen",
+          "view": "Bekijken",
+          "delete": "Verwijderen"
+        },
+        "dates": {
+          "justNow": "Zojuist",
+          "hoursAgo": "{hours} u geleden",
+          "yesterday": "Gisteren"
+        },
+        "types": {
+          "NEW_REVIEW": "Nieuwe beoordeling",
+          "REVIEW_APPROVED": "Beoordeling goedgekeurd",
+          "REVIEW_REJECTED": "Beoordeling afgewezen",
+          "SUBSCRIPTION_EXPIRING": "Abonnement verloopt",
+          "SUBSCRIPTION_CANCELLED": "Abonnement geannuleerd",
+          "ESCALATION_RECEIVED": "Escalatie ontvangen",
+          "ESCALATION_RESPONDED": "Escalatie beantwoord",
+          "SYSTEM_ALERT": "Systeemmelding",
+          "NEW_HOTEL_REGISTRATION": "Nieuwe hotelregistratie",
+          "NEW_FORM_CREATED": "Nieuw formulier aangemaakt",
+          "SUCCESS": "Succes",
+          "INFO": "Info",
+          "WARNING": "Waarschuwing",
+          "ERROR": "Fout"
+        },
+        "toasts": {
+          "loadError": "Meldingen laden mislukt",
+          "markReadSuccess": "Melding gemarkeerd als gelezen",
+          "markReadError": "Melding als gelezen markeren mislukt",
+          "markAllReadSuccess": "Alle meldingen gemarkeerd als gelezen",
+          "markAllReadError": "Alle meldingen als gelezen markeren mislukt",
+          "deleteSuccess": "Melding succesvol verwijderd",
+          "deleteError": "Melding verwijderen mislukt",
+          "bulkDeleteSuccess": "{count} melding(en) succesvol verwijderd",
+          "bulkDeleteError": "Verwijderen van sommige meldingen mislukt"
+        },
+        "confirm": {
+          "deleteMessage": "Weet je zeker dat je deze melding wilt verwijderen?",
+          "deleteHeader": "Verwijderen bevestigen",
+          "bulkDeleteMessage": "Weet je zeker dat je {count} geselecteerde melding(en) wilt verwijderen?",
+          "bulkDeleteHeader": "Bulkverwijdering bevestigen"
+        }
+      }
+    }
+  },
+  "auth": {
+    "register": {
+      "title": "Registreren",
+      "subtitle": "Laten we beginnen",
+      "placeholders": {
+        "firstName": "Voornaam",
+        "lastName": "Achternaam",
+        "email": "E-mail",
+        "phone": "Telefoon (optioneel)",
+        "password": "Wachtwoord"
+      },
+      "buttons": {
+        "signUp": "Registreren",
+        "signingUp": "Bezig met registreren..."
+      },
+      "agreementPrefix": "Ik heb de",
+      "toasts": {
+        "acceptTerms": "Accepteer de algemene voorwaarden",
+        "missingFields": "Vul alle verplichte velden in",
+        "success": "Registratie geslaagd! Controleer je e-mail.",
+        "error": "Registratie mislukt. Probeer het opnieuw."
+      }
+    },
+    "resetPassword": {
+      "title": "Nieuw wachtwoord aanmaken!",
+      "subtitle": "Voer hieronder een nieuw wachtwoord in om je accountgegevens bij te werken.",
+      "fields": {
+        "newPassword": "Nieuw wachtwoord",
+        "confirmPassword": "Wachtwoord bevestigen"
+      },
+      "placeholders": {
+        "password": "Voer je wachtwoord in",
+        "confirmPassword": "Bevestig je wachtwoord"
+      },
+      "buttons": {
+        "reset": "Wachtwoord resetten",
+        "resetting": "Bezig met resetten..."
+      },
+      "link": {
+        "backToLogin": "Terug naar inloggen"
+      },
+      "states": {
+        "validating": "Resetlink valideren...",
+        "loading": "Laden..."
+      },
+      "errors": {
+        "passwordMin": "Wachtwoord moet minimaal 6 tekens lang zijn",
+        "passwordMax": "Wachtwoord moet korter zijn dan 128 tekens",
+        "confirmRequired": "Bevestig je wachtwoord",
+        "mismatch": "Wachtwoorden komen niet overeen"
+      },
+      "toasts": {
+        "invalidLink": "Ongeldige resetlink",
+        "invalidOrExpired": "Ongeldige of verlopen resetlink",
+        "failedValidation": "Resetlink valideren mislukt",
+        "success": "Wachtwoord succesvol gereset. Je kunt nu inloggen met je nieuwe wachtwoord.",
+        "failure": "Wachtwoord resetten mislukt",
+        "unexpected": "Er is een onverwachte fout opgetreden"
+      },
+      "accessibility": {
+        "showPassword": "Wachtwoord tonen",
+        "hidePassword": "Wachtwoord verbergen"
+      }
+    }
+  },
+  "authFooter": {
+    "brand": {
+      "title": "C-Reviews",
+      "description": "We helpen hotels verbinding maken met hun gasten via naadloze feedbackoplossingen. Ons platform maakt het eenvoudig om formulieren te maken, inzichten te verzamelen en de gastervaring te verbeteren met integriteit en professionaliteit als kernwaarden.",
+      "footerImageAlt": "Decoratieve footer van C-Reviews"
+    },
+    "quickLinks": {
+      "title": "Snelle links",
+      "items": {
+        "home": "Home",
+        "about": "Over ons",
+        "features": "Functies",
+        "contact": "Contact"
+      }
+    },
+    "resources": {
+      "title": "Bronnen",
+      "items": {
+        "dashboard": "Dashboard",
+        "feedbacks": "Feedback",
+        "hotelProfile": "Hotelprofiel",
+        "support": "Support",
+        "ownerProfile": "Eigenarenprofiel"
+      }
+    },
+    "legal": {
+      "title": "Juridisch",
+      "items": {
+        "privacyPolicy": "Privacybeleid",
+        "companyPolicy": "Bedrijfsbeleid",
+        "terms": "Algemene voorwaarden"
+      }
+    },
+    "connect": {
+      "title": "Blijf op de hoogte",
+      "emailPlaceholder": "E-mailadres",
+      "submitLabel": "Aanmelden",
+      "social": {
+        "facebook": "Volg ons op Facebook",
+        "instagram": "Volg ons op Instagram",
+        "linkedin": "Verbind met ons op LinkedIn"
+      }
+    },
+    "copyright": "© 2024 C-Reviews LLC. Alle rechten voorbehouden!"
+  }
+}

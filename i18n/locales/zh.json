@@ -1,0 +1,1301 @@
+{
+  "languages": {
+    "en": "英语",
+    "ar": "阿拉伯语",
+    "zh": "中文",
+    "fr": "法语",
+    "de": "德语",
+    "es": "西班牙语",
+    "it": "意大利语",
+    "pt": "葡萄牙语",
+    "ru": "俄语",
+    "pl": "波兰语",
+    "nl": "荷兰语",
+    "uk": "乌克兰语",
+    "el": "希腊语",
+    "ro": "罗马尼亚语"
+  },
+  "common": {
+    "warning": "警告",
+    "success": "成功",
+    "error": "错误",
+    "info": "提示",
+    "agreeTo": "我同意",
+    "and": "和",
+    "terms": "条款与条件",
+    "privacy": "隐私政策",
+    "alreadyHaveAccount": "已经有账号了？",
+    "login": "登录",
+    "logout": "退出登录",
+    "orRegisterVia": "或通过以下方式注册",
+    "selectLanguage": "选择语言",
+    "getStarted": "开始使用"
+  },
+  "components": {
+    "customPaginator": {
+      "itemsPerPage": "每页条数",
+      "rangeInfo": "{start}-{end}，共 {total} 条记录",
+      "previousPage": "上一页",
+      "nextPage": "下一页"
+    }
+  },
+  "countries": {
+    "US": "美国",
+    "CA": "加拿大",
+    "GB": "英国",
+    "AU": "澳大利亚",
+    "DE": "德国",
+    "FR": "法国",
+    "ES": "西班牙",
+    "IT": "意大利",
+    "JP": "日本",
+    "IN": "印度",
+    "CN": "中国",
+    "BR": "巴西",
+    "MX": "墨西哥",
+    "OTHER": "其他"
+  },
+  "registerHotel": {
+    "step1": {
+      "title": "业主信息！",
+      "fields": {
+        "fullName": "全名",
+        "email": "电子邮箱地址",
+        "phone": "电话号码",
+        "password": "密码"
+      },
+      "placeholders": {
+        "fullName": "请输入您的全名",
+        "email": "请输入您的电子邮箱地址",
+        "phone": "请输入您的电话号码",
+        "password": "请输入密码"
+      },
+      "cta": "继续下一步！"
+    },
+    "step2": {
+      "title": "酒店信息！",
+      "subtitle": "我的数据安全吗？",
+      "fields": {
+        "hotelName": "酒店名称",
+        "hotelWebsite": "酒店网站",
+        "hotelAddress": "酒店地址",
+        "city": "城市",
+        "country": "国家",
+        "hotelDescription": "酒店描述"
+      },
+      "placeholders": {
+        "hotelName": "请输入酒店名称",
+        "hotelWebsite": "请输入酒店网站链接",
+        "hotelAddress": "请输入酒店街道地址",
+        "city": "请输入酒店所在城市",
+        "country": "选择国家",
+        "hotelDescription": "请输入酒店的简要描述"
+      }
+    },
+    "buttons": {
+      "back": "返回",
+      "register": "立即注册",
+      "registering": "正在注册..."
+    },
+    "toasts": {
+      "missingRequired": "请填写所有必填字段",
+      "passwordLength": "密码长度至少为 6 个字符",
+      "acceptTerms": "请接受条款与条件",
+      "acceptTermsPrivacy": "请接受条款与条件和隐私政策",
+      "success": "酒店注册成功！请检查您的邮箱以完成验证。",
+      "error": "注册失败",
+      "errorGeneric": "注册失败。请重试。"
+    },
+    "images": {
+      "ownerAlt": "酒店注册 - 业主信息",
+      "hotelAlt": "酒店注册 - 酒店信息"
+    }
+  },
+  "hotel": {
+    "dashboard": {
+      "recentReviews": {
+        "title": "最新评价",
+        "description": "查看并管理您的最新评价。",
+        "states": {
+          "loading": "正在加载最新评价..."
+        },
+        "table": {
+          "date": "日期"
+        }
+      }
+    },
+    "forms": {
+      "header": {
+        "title": "反馈表单",
+        "subtitle": "管理您的宾客反馈表单，您可以随时更新。"
+      },
+      "states": {
+        "loading": "正在加载表单..."
+      },
+      "fields": {
+        "title": "表单标题",
+        "status": "状态",
+        "active": "启用",
+        "inactive": "停用",
+        "description": "描述",
+        "noDescription": "未提供描述",
+        "totalResponses": "总回复数"
+      },
+      "buttons": {
+        "edit": "编辑表单",
+        "preview": "预览表单",
+        "showQr": "显示二维码",
+        "create": "创建表单",
+        "downloadQr": "下载二维码",
+        "copyUrl": "复制链接"
+      },
+      "empty": {
+        "title": "尚未创建表单",
+        "description": "创建反馈表单，开始收集宾客评价。"
+      },
+      "preview": {
+        "title": "表单预览",
+        "tooltipBack": "返回表单",
+        "tag": "预览模式 - 已禁用互动"
+      },
+      "qrDialog": {
+        "title": "二维码 - {title}"
+      },
+      "toasts": {
+        "loadError": "表单加载失败",
+        "slugMissing": "未找到酒店标识，无法预览表单。",
+        "createSuccess": "表单创建成功",
+        "updateSuccess": "表单更新成功",
+        "saveError": "表单保存失败",
+        "qrGenerated": "二维码生成成功",
+        "qrExists": "此表单已存在二维码",
+        "qrError": "处理二维码失败",
+        "noUrl": "没有可复制的链接",
+        "copiedDetail": "链接已复制到剪贴板",
+        "copyError": "链接复制失败"
+      },
+      "builder": {
+        "header": {
+          "edit": "编辑表单",
+          "create": "创建新表单",
+          "preview": "预览表单",
+          "livePreview": "实时预览",
+          "formBuilderToggle": "表单构建器",
+          "livePreviewToggle": "实时预览",
+          "backTooltip": "返回表单"
+        },
+        "buttons": {
+          "save": "保存表单",
+          "saveTooltip": "保存表单",
+          "addNew": "添加新的",
+          "addOption": "添加",
+          "cancel": "取消",
+          "update": "更新",
+          "add": "添加"
+        },
+        "sections": {
+          "settings": "表单设置",
+          "questions": "问题",
+          "predefined": "预设问题",
+          "custom": "自定义问题"
+        },
+        "fields": {
+          "titleLabel": "表单标题*",
+          "titlePlaceholder": "请输入表单标题",
+          "descriptionLabel": "表单描述*",
+          "descriptionPlaceholder": "请输入表单简介"
+        },
+        "predefined": {
+          "rateUs": "为我们评分*（始终包含）",
+          "rateUsTitle": "为我们评分",
+          "customRating": "自定义评分*",
+          "customRatingTitle": "自定义评分",
+          "customRatingPlaceholder": "请输入评分项名称",
+          "customRatingEditTitle": "点击编辑",
+          "feedback": "请给出您真实的反馈？*",
+          "feedbackTitle": "请给出您真实的反馈？",
+          "feedbackPlaceholder": "请输入详细反馈"
+        },
+        "tooltips": {
+          "previewDisabled": "预览模式 - 已禁用编辑",
+          "addQuestion": "添加自定义问题",
+          "save": "保存",
+          "cancel": "取消",
+          "edit": "编辑",
+          "delete": "删除",
+          "moveUp": "上移",
+          "moveDown": "下移"
+        },
+        "questionTypes": {
+          "shortText": "单行文本",
+          "longText": "多行文本",
+          "starRating": "星级评分",
+          "singleChoice": "单选",
+          "multipleChoice": "多选",
+          "yesNo": "是/否"
+        },
+        "placeholders": {
+          "answer": "请输入答案"
+        },
+        "answers": {
+          "yes": "是",
+          "no": "否"
+        },
+        "badges": {
+          "default": "默认",
+          "defaultHelper": "无法编辑、删除或移动"
+        },
+        "states": {
+          "loading": "正在加载表单数据...",
+          "noQuestionsTitle": "尚未添加问题",
+          "noQuestionsDescription": "请使用上方的预设问题或添加自定义问题开始配置"
+        },
+        "alerts": {
+          "ratingRequiredTitle": "需要选择评分",
+          "ratingRequiredDescription": "必须选择“为我们评分”或“自定义评分”才能保存表单。"
+        },
+        "layoutInfo": {
+          "basic": {
+            "title": "基础布局功能",
+            "description": "提供简单干净的设计，支持所有问题类型（包含自定义问题）。"
+          },
+          "good": {
+            "title": "进阶布局功能",
+            "description": "可选择“为我们评分”或“自定义评分”其一，支持全部问题和自定义问题。"
+          },
+          "excellent": {
+            "title": "高级布局功能",
+            "description": "包含所有预设与自定义问题，具备高级设计及动画效果，适合全面反馈表单。"
+          }
+        },
+        "subscription": {
+          "title": "需要订阅",
+          "message": "您的订阅已{status}。请重新激活以创建或编辑表单。",
+          "manageButton": "管理订阅",
+          "status": {
+            "cancelled": "被取消",
+            "expired": "过期"
+          },
+          "toastTitle": "需要订阅",
+          "toastMessage": "您的订阅已取消或过期，请重新激活以创建表单。"
+        },
+        "preview": {
+          "descriptionFallback": "填写此表单以请求支持或报告问题。我们会尽快回复并提供适当协助。",
+          "fullNameLabel": "姓名*",
+          "fullNamePlaceholder": "请输入姓名",
+          "emailLabel": "邮箱*",
+          "emailPlaceholder": "请输入电子邮箱",
+          "submit": "立即提交"
+        },
+        "dialog": {
+          "addTitle": "添加问题",
+          "editTitle": "编辑问题",
+          "questionLabel": "问题内容 *",
+          "questionPlaceholder": "请输入问题",
+          "typeLabel": "问题类型",
+          "optionsLabel": "选项",
+          "optionPlaceholder": "请输入选项"
+        },
+        "toasts": {
+          "formLoadSuccess": "表单数据加载成功",
+          "formLoadError": "表单数据加载失败",
+          "questionRequired": "问题内容为必填项",
+          "optionsRequired": "多选/单选问题至少需要两个选项",
+          "questionUpdated": "问题已更新",
+          "questionAdded": "问题已添加",
+          "questionDeleted": "问题已删除",
+          "ratingLabelRequired": "请输入评分项名称",
+          "ratingItemUpdated": "评分项已更新",
+          "ratingItemDeleted": "评分项已删除",
+          "ratingItemAdded": "已添加新的评分项",
+          "titleRequired": "表单标题为必填项",
+          "questionCountRequired": "至少需要一个问题"
+        }
+      }
+    },
+    "analytics": {
+      "customRatings": {
+        "title": "自定义评分分析",
+        "description": "跟踪 \"Good\" 布局表单的详细评分趋势。",
+        "buttons": {
+          "exportCsv": "导出 CSV",
+          "exportPdf": "导出 PDF",
+          "refresh": "刷新"
+        },
+        "filters": {
+          "title": "日期范围筛选",
+          "startDate": "开始日期",
+          "startDatePlaceholder": "选择开始日期",
+          "endDate": "结束日期",
+          "endDatePlaceholder": "选择结束日期",
+          "clear": "清除筛选"
+        },
+        "states": {
+          "loading": "正在加载分析数据...",
+          "noDataTitle": "暂无可用数据",
+          "noDataDescription": "未找到包含自定义评分数据的 \"Good\" 布局表单。"
+        },
+        "toasts": {
+          "loadError": "自定义评分分析加载失败",
+          "exportSuccess": "数据已成功导出为 {format}",
+          "exportError": "数据导出失败"
+        },
+        "chart": {
+          "trendPrefix": "趋势分析 - ",
+          "summaryTitle": "评分概览",
+          "ratingsCount": "（{count} 条评分）",
+          "averageRating": "平均评分",
+          "tooltipSuffix": "/5"
+        }
+      },
+      "overview": {
+        "title": "分析",
+        "description": "追踪酒店表现与住客满意度。",
+        "dropdownPlaceholder": "选择时间范围",
+        "buttons": {
+          "refresh": "刷新"
+        },
+        "timeRanges": {
+          "7": "过去 7 天",
+          "30": "过去 30 天",
+          "90": "过去 90 天",
+          "180": "过去 6 个月",
+          "365": "过去 1 年"
+        },
+        "states": {
+          "loadingSkeleton": "加载中...",
+          "noData": "暂无分析数据",
+          "chartLoading": "正在加载图表数据...",
+          "chartEmpty": "暂无图表数据"
+        },
+        "cards": {
+          "change": "{change}，较上一周期"
+        },
+        "charts": {
+          "satisfaction": "满意度趋势",
+          "ratingDistribution": "评分分布",
+          "reviewVolume": "评价数量"
+        },
+        "reviews": {
+          "title": "最新评价"
+        },
+        "toasts": {
+          "loadError": "分析数据加载失败"
+        }
+      },
+      "responseRates": {
+        "title": "回复率分析",
+        "description": "跟踪酒店的回复率和互动指标。",
+        "charts": {
+          "reviewVolume": "回复量趋势",
+          "satisfaction": "满意度随时间的变化趋势"
+        }
+      },
+      "satisfaction": {
+        "title": "满意度分析",
+        "description": "跟踪酒店的住客满意度趋势和评分。",
+        "charts": {
+          "reviewVolume": "评价数量与积极评价"
+        }
+      },
+      "notificationsCenter": {
+        "title": "通知",
+        "ariaLabel": "通知",
+        "iconAlt": "通知图标",
+        "buttons": {
+          "markAllRead": "全部设为已读",
+          "refresh": "刷新"
+        },
+        "states": {
+          "empty": "暂时没有通知"
+        },
+        "types": {
+          "newReview": "新评价",
+          "reviewApproved": "评价已通过",
+          "reviewRejected": "评价被拒绝",
+          "subscriptionExpiring": "订阅即将到期",
+          "subscriptionCancelled": "订阅已取消",
+          "escalationReceived": "收到升级请求",
+          "escalationResponded": "升级请求已回复",
+          "systemAlert": "系统提醒",
+          "newHotelRegistration": "新的酒店注册",
+          "success": "成功",
+          "info": "提示",
+          "warning": "警告",
+          "error": "错误",
+          "generic": "通知"
+        }
+      }
+    },
+    "reviews": {
+      "title": "住客评价",
+      "subtitle": "管理并查看住客提交的反馈。",
+      "buttons": {
+        "refresh": "刷新",
+        "clearFilters": "清除筛选",
+        "view": "查看",
+        "reply": "回复",
+        "delete": "删除",
+        "close": "关闭",
+        "markAsChecked": "标记为已查看",
+        "checked": "已查看",
+        "markAsUrgent": "标记为紧急",
+        "urgent": "紧急",
+        "replyToCustomer": "回复住客",
+        "cancel": "取消",
+        "sendReply": "发送回复"
+      },
+      "filters": {
+        "title": "筛选",
+        "searchReviews": "搜索评价",
+        "searchPlaceholder": "按住客姓名或反馈内容搜索...",
+        "roomNumber": "房间号",
+        "roomNumberPlaceholder": "按房间号筛选...",
+        "filter": "筛选",
+        "allReviews": "全部评价",
+        "replied": "已回复",
+        "notReplied": "未回复",
+        "checked": "已查看",
+        "notChecked": "未查看",
+        "urgent": "紧急",
+        "notUrgent": "非紧急",
+        "starRatings": "星级评分",
+        "allRatings": "全部评分",
+        "5Stars": "5 星",
+        "4Stars": "4 星",
+        "3Stars": "3 星",
+        "2Stars": "2 星",
+        "1Star": "1 星",
+        "dateRange": "日期范围",
+        "startDate": "开始日期",
+        "endDate": "结束日期",
+        "fromDate": "起始日期",
+        "toDate": "结束日期"
+      },
+      "states": {
+        "loadingReviews": "正在加载评价...",
+        "noReviewsFound": "未找到评价",
+        "noReviewsYet": "暂无提交的评价。",
+        "noReviewsMatchFilters": "没有符合当前筛选条件的评价。"
+      },
+      "table": {
+        "guest": "住客",
+        "email": "邮箱",
+        "room": "房间",
+        "rating": "评分",
+        "status": "状态",
+        "submitted": "提交时间",
+        "actions": "操作",
+        "checkedStatus": "已查看",
+        "notCheckedStatus": "未查看",
+        "repliedStatus": "已回复",
+        "notRepliedStatus": "未回复",
+        "urgentStatus": "紧急",
+        "notUrgentStatus": "非紧急",
+        "public": "公开",
+        "private": "私有",
+        "shared": "共享",
+        "noEmailAvailable": "该评价没有可用的邮箱"
+      },
+      "detailsDialog": {
+        "header": "住客反馈详情",
+        "guestInfo": "住客信息",
+        "name": "姓名：",
+        "anonymous": "匿名",
+        "email": "邮箱：",
+        "notProvided": "未提供",
+        "phone": "电话：",
+        "roomNumber": "房间号：",
+        "submitted": "提交时间：",
+        "overallRating": "总体评分",
+        "quickFeedback": "快捷反馈",
+        "howDoYouRateUs": "您如何评价我们？",
+        "honestFeedback": "请给出真实反馈？",
+        "noSpecificFeedback": "未提供具体反馈",
+        "customRatingItem": "自定义评分项目 ({itemId})",
+        "formInfo": "表单信息",
+        "formTitle": "表单标题：",
+        "description": "描述：",
+        "layout": "布局：",
+        "feedbackResponses": "反馈回答",
+        "noDetailedResponses": "此评价暂无详细回答。",
+        "question": "问题：",
+        "noAnswer": "未作答",
+        "replyToCustomer": "回复住客",
+        "replyPlaceholder": "在此输入您的回复...",
+        "replyMessageHint": "该消息将发送至 {guestEmail}",
+        "toastWarningReply": "请输入回复内容",
+        "toastSuccessReply": "已成功发送回复至 {sentTo}",
+        "toastErrorReply": "回复发送失败"
+      },
+      "deleteDialog": {
+        "header": "删除评价",
+        "confirmTitle": "确定要删除此评价吗？",
+        "confirmMessage": "此操作无法撤销，评价将被永久删除。",
+        "reviewDetails": "评价详情：",
+        "guest": "住客：",
+        "rating": "评分：",
+        "submitted": "提交时间：",
+        "buttons": {
+          "cancel": "取消",
+          "delete": "删除"
+        },
+        "toasts": {
+          "success": "评价已成功删除",
+          "error": "删除评价失败"
+        }
+      },
+      "toasts": {
+        "loadError": "加载评价失败",
+        "detailsLoadError": "加载评价详情失败",
+        "statusUpdate": {
+          "checked": "已将评价标记为已查看",
+          "urgent": "已将评价标记为紧急",
+          "replied": "已将评价标记为已回复"
+        },
+        "statusUpdateError": "更新评价状态失败",
+        "replyMissing": "请输入回复内容",
+        "replySuccess": "已成功发送回复至 {sentTo}",
+        "replyError": "发送回复失败",
+        "deleteSuccess": "评价删除成功",
+        "deleteError": "评价删除失败"
+      }
+    },
+    "menu": {
+      "dashboard": "仪表板",
+      "feedbackForm": "反馈表单",
+      "qrCodes": "二维码",
+      "allReviews": "所有评价",
+      "notifications": "通知",
+      "contactAdmin": "联系管理员",
+      "settings": "设置",
+      "settingsItems": {
+        "userProfile": "用户资料",
+        "hotelProfile": "酒店资料",
+        "changePassword": "修改密码",
+        "subscriptions": "订阅",
+        "paymentMethods": "支付方式"
+      }
+    },
+    "paymentMethods": {
+      "pageTitle": "添加支付方式",
+      "buttons": {
+        "add": "新增",
+        "addMethod": "新增方式",
+        "updateMethod": "更新方式",
+        "cancel": "取消",
+        "setPrimary": "设为默认",
+        "delete": "删除"
+      },
+      "badges": {
+        "primary": "默认",
+        "expired": "已过期"
+      },
+      "states": {
+        "loading": "正在加载支付方式...",
+        "emptyTitle": "暂无支付方式",
+        "emptyDescription": "添加支付方式以管理订阅。"
+      },
+      "form": {
+        "paymentType": "支付类型",
+        "paymentTypeOptions": {
+          "card": "信用卡/借记卡",
+          "bank": "银行账户"
+        },
+        "card": {
+          "number": "卡号",
+          "numberPlaceholder": "1234 5678 9012 3456",
+          "expiryMonth": "到期月份",
+          "expiryYear": "到期年份",
+          "monthPlaceholder": "MM",
+          "yearPlaceholder": "YYYY",
+          "cvv": "安全码",
+          "cvvPlaceholder": "123",
+          "holder": "持卡人姓名",
+          "holderPlaceholder": "张三",
+          "brand": "卡品牌",
+          "brandPlaceholder": "选择卡品牌"
+        },
+        "cardBrands": {
+          "visa": "Visa",
+          "mastercard": "Mastercard",
+          "amex": "美国运通",
+          "discover": "Discover",
+          "unknown": "银行卡"
+        },
+        "bank": {
+          "name": "银行名称",
+          "namePlaceholder": "中国银行",
+          "accountNumber": "账户号码",
+          "accountPlaceholder": "账户号码",
+          "routingNumber": "路由号码",
+          "routingPlaceholder": "123456789",
+          "accountType": "账户类型",
+          "accountTypePlaceholder": "选择账户类型"
+        },
+        "accountTypes": {
+          "checking": "支票账户",
+          "savings": "储蓄账户",
+          "unknown": "账户"
+        }
+      },
+      "list": {
+        "endingIn": "尾号",
+        "expiryLabel": "到期日",
+        "accountTypeSuffix": "账户",
+        "accountTypeUnknown": "账户",
+        "unknownBank": "银行",
+        "edit": "编辑",
+        "delete": "删除"
+      },
+      "dialogs": {
+        "add": {
+          "title": "添加支付方式"
+        },
+        "edit": {
+          "title": "编辑支付方式",
+          "cardLocked": "出于安全原因，无法修改卡号",
+          "bankLocked": "出于安全原因，无法修改账户号码"
+        },
+        "delete": {
+          "title": "删除支付方式",
+          "message": "确定要删除此支付方式吗？此操作无法撤销。"
+        }
+      },
+      "toasts": {
+        "load": {
+          "error": "加载支付方式失败"
+        },
+        "add": {
+          "success": "支付方式添加成功",
+          "error": "添加支付方式失败"
+        },
+        "delete": {
+          "success": "支付方式删除成功",
+          "error": "删除支付方式失败"
+        },
+        "default": {
+          "success": "默认支付方式已更新",
+          "error": "更新默认支付方式失败"
+        },
+        "update": {
+          "success": "支付方式更新成功",
+          "error": "更新支付方式失败"
+        }
+      }
+    },
+    "subscription": {
+      "header": {
+        "title": "订阅管理",
+        "subtitle": "管理您的酒店订阅和结算。"
+      },
+      "buttons": {
+        "refresh": "刷新",
+        "processing": "处理中...",
+        "upgradeNow": "立即升级",
+        "currentPlan": "当前套餐",
+        "reactivate": "重新激活",
+        "cancelSubscription": "取消订阅",
+        "contactSupport": "联系支持",
+        "cancel": "取消",
+        "confirm": "确认"
+      },
+      "statuses": {
+        "trial": "试用",
+        "active": "生效",
+        "cancelled": "已取消",
+        "expired": "已过期"
+      },
+      "states": {
+        "loading": "正在加载订阅数据...",
+        "notFoundTitle": "找不到订阅",
+        "notFoundDescription": "无法加载订阅信息。"
+      },
+      "labels": {
+        "notAvailable": "暂无"
+      },
+      "trial": {
+        "name": "试用套餐",
+        "description": "免费试用",
+        "label": "试用期：",
+        "remaining": "剩余 {count} 天"
+      },
+      "sections": {
+        "status": {
+          "title": "当前订阅状态",
+          "statusLabel": "状态",
+          "totalReviews": "评价总数",
+          "averageRating": "平均评分"
+        },
+        "plans": {
+          "title": "可选套餐",
+          "currentPlanHint": "您当前使用的是该套餐"
+        },
+        "actions": {
+          "title": "订阅操作"
+        },
+        "billing": {
+          "title": "账单信息",
+          "subscriptionId": "订阅编号：",
+          "created": "创建时间：",
+          "nextBilling": "下次结算：",
+          "trialEnds": "试用结束："
+        }
+      },
+      "perInterval": "每 {interval}",
+      "priceLabel": "{price}/{interval}",
+      "dialog": {
+        "title": "确认更改订阅",
+        "upgradeTitle": "升级到 {plan}",
+        "description": "您即将升级您的订阅套餐。",
+        "planLabel": "套餐：",
+        "priceLabel": "价格：",
+        "billingLabel": "结算：",
+        "noteLabel": "提示：",
+        "noteDescription": "这是演示环境，不会产生真实付款。"
+      },
+      "toasts": {
+        "load": {
+          "error": "加载订阅数据失败"
+        },
+        "update": {
+          "success": "订阅更新成功",
+          "error": "更新订阅失败"
+        }
+      },
+      "errors": {
+        "unauthorized": "未授权",
+        "hotelNotFound": "未找到酒店",
+        "planRequired": "需要提供计划 ID 和操作类型",
+        "unknownPlan": "未知的套餐",
+        "fetchFailed": "获取订阅详情失败",
+        "updateFailed": "更新订阅失败"
+      },
+      "messages": {
+        "upgraded": "成功升级至 {plan}",
+        "cancelled": "成功取消订阅"
+      },
+      "plans": {
+        "basic": {
+          "name": "基础套餐",
+          "features": [
+            "每月最多 100 条评价",
+            "基础分析",
+            "二维码生成",
+            "基础反馈表单"
+          ]
+        },
+        "professional": {
+          "name": "专业套餐",
+          "features": [
+            "每月最多 500 条评价",
+            "高级分析",
+            "二维码生成",
+            "自定义星级评价问题"
+          ]
+        },
+        "enterprise": {
+          "name": "企业套餐",
+          "features": [
+            "每月无限评价",
+            "企业级分析",
+            "优先支持",
+            "多酒店管理"
+          ]
+        }
+      },
+      "intervals": {
+        "month": "月",
+        "monthly": "每月",
+        "year": "年",
+        "yearly": "每年",
+        "quarter": "季度",
+        "quarterly": "每季度"
+      }
+    },
+    "profile": {
+      "user": {
+        "title": "个人信息",
+        "subtitle": "管理您的个人账户信息。",
+        "buttons": {
+          "save": "保存更改",
+          "changePassword": "修改密码",
+          "twoFactor": "双重验证",
+          "changePhoto": "更换照片",
+          "uploading": "正在上传..."
+        },
+        "images": {
+          "cardTitle": "头像",
+          "hint": "支持 JPG、PNG 或 GIF，最大 5MB。"
+        },
+        "fields": {
+          "firstName": "名字 *",
+          "lastName": "姓氏 *",
+          "email": "电子邮箱地址 *",
+          "phone": "电话号码"
+        },
+        "placeholders": {
+          "firstName": "请输入名字",
+          "lastName": "请输入姓氏",
+          "email": "your.email@example.com",
+          "phone": "+86 138 0000 0000"
+        },
+        "cards": {
+          "personalInfo": "个人信息",
+          "accountInfo": "账户信息",
+          "security": "安全设置"
+        },
+        "account": {
+          "type": "账户类型：",
+          "status": "状态：",
+          "memberSince": "加入时间：",
+          "lastLogin": "上次登录：",
+          "typeValue": "酒店所有者",
+          "statusActive": "已激活",
+          "notAvailable": "暂无"
+        },
+        "toasts": {
+          "saveSuccess": "个人资料已成功更新",
+          "saveError": "更新个人资料失败",
+          "imageTypeError": "请选择有效的图片文件（JPG、PNG、GIF 或 WebP）",
+          "imageSizeError": "图片大小需小于 5MB",
+          "imageSuccess": "头像已成功更新",
+          "imageError": "上传图片失败",
+          "twoFactorInfo": "双重验证功能即将上线"
+        }
+      },
+      "hotel": {
+        "title": "酒店资料",
+        "subtitle": "管理您的酒店信息和设置。",
+        "buttons": {
+          "save": "保存更改",
+          "uploadLogo": "上传 Logo",
+          "uploading": "正在上传...",
+          "viewPublic": "查看公开页面",
+          "contactSupport": "联系支持团队"
+        },
+        "images": {
+          "cardTitle": "酒店 Logo",
+          "alt": "酒店 Logo",
+          "hint": "支持 JPG、PNG 或 GIF，最大 5MB。推荐尺寸：300x300 像素"
+        },
+        "cards": {
+          "actions": "操作",
+          "hotelInfo": "酒店信息"
+        },
+        "fields": {
+          "name": "酒店名称 *",
+          "description": "酒店简介",
+          "address": "地址",
+          "city": "城市",
+          "country": "国家",
+          "phone": "电话",
+          "email": "邮箱",
+          "website": "网站"
+        },
+        "placeholders": {
+          "name": "请输入酒店名称",
+          "description": "酒店的简要介绍",
+          "address": "街道地址",
+          "city": "城市",
+          "country": "选择国家",
+          "phone": "+86 138 0000 0000",
+          "email": "hotel@example.com",
+          "website": "https://www.yourhotel.com"
+        },
+        "externalLinks": {
+          "title": "外部评价链接",
+          "subtitle": "添加 TripAdvisor 和 Google Reviews 的链接，方便住客分享反馈。",
+          "tripAdvisor": {
+            "label": "TripAdvisor 链接",
+            "placeholder": "https://www.tripadvisor.com/...",
+            "hint": "可选：跳转至您在 TripAdvisor 的页面"
+          },
+          "google": {
+            "label": "Google Reviews 链接",
+            "placeholder": "https://g.page/...",
+            "hint": "可选：跳转至您在 Google Reviews 的页面"
+          }
+        },
+        "account": {
+          "notAvailable": "暂无"
+        },
+        "toasts": {
+          "loadError": "加载酒店资料失败",
+          "saveSuccess": "酒店资料已成功更新",
+          "saveError": "更新酒店资料失败",
+          "imageTypeError": "请选择有效的图片文件（JPG、PNG、GIF 或 WebP）",
+          "imageSizeError": "图片大小需小于 5MB",
+          "imageSuccess": "酒店 Logo 已成功更新",
+          "imageError": "上传 Logo 失败"
+        }
+      },
+      "password": {
+        "title": "修改密码",
+        "subtitle": "更新账户密码以提升安全性。",
+        "cardTitle": "密码修改",
+        "buttons": {
+          "change": "修改密码",
+          "cancel": "取消",
+          "confirmChange": "修改密码"
+        },
+        "fields": {
+          "current": "当前密码 *",
+          "new": "新密码 *",
+          "confirm": "确认新密码 *"
+        },
+        "placeholders": {
+          "current": "请输入当前密码",
+          "new": "请输入新密码",
+          "confirm": "请确认新密码"
+        },
+        "strength": {
+          "label": "密码强度：",
+          "weak": "弱",
+          "medium": "中",
+          "strong": "强"
+        },
+        "requirements": {
+          "title": "密码要求",
+          "minLength": "至少 8 个字符",
+          "uppercase": "包含大写字母",
+          "lowercase": "包含小写字母",
+          "numbers": "包含数字",
+          "special": "包含特殊字符"
+        },
+        "tips": {
+          "title": "安全提示",
+          "tip": "提示：使用一个未在其他地方使用过的独特密码。",
+          "warning": "警告：请勿与他人共享您的密码。"
+        },
+        "validation": {
+          "currentRequired": "当前密码为必填项",
+          "newRequired": "新密码为必填项",
+          "minLength": "新密码长度至少为 8 个字符",
+          "complexity": "新密码必须包含大写字母、小写字母、数字和特殊字符",
+          "confirmMismatch": "新密码与确认密码不匹配",
+          "sameAsCurrent": "新密码不能与当前密码相同"
+        },
+        "toasts": {
+          "changeSuccess": "密码已成功修改",
+          "changeError": "修改密码失败"
+        },
+        "confirm": {
+          "title": "确认修改密码",
+          "message": "确定要修改密码吗？",
+          "warning": "此操作会让您在所有设备上退出登录，您需要重新登录。"
+        },
+        "accessibility": {
+          "show": "显示密码",
+          "hide": "隐藏密码"
+        }
+      },
+      "subscription": {
+        "errors": {
+          "unauthorized": "未授权",
+          "hotelNotFound": "未找到酒店",
+          "planRequired": "需要提供计划 ID 和操作类型",
+          "unknownPlan": "未知的套餐",
+          "fetchFailed": "获取订阅详情失败",
+          "updateFailed": "更新订阅失败"
+        },
+        "messages": {
+          "upgraded": "成功升级至 {plan}",
+          "cancelled": "成功取消订阅"
+        },
+        "plans": {
+          "basic": {
+            "name": "基础套餐",
+            "features": [
+              "每月最多 100 条评价",
+              "基础分析",
+              "二维码生成",
+              "基础反馈表单"
+            ]
+          },
+          "professional": {
+            "name": "专业套餐",
+            "features": [
+              "每月最多 500 条评价",
+              "高级分析",
+              "二维码生成",
+              "自定义星级问题"
+            ]
+          },
+          "enterprise": {
+            "name": "企业套餐",
+            "features": [
+              "无限量评价",
+              "完整分析套件",
+              "二维码生成",
+              "支持所有问题类型"
+            ]
+          }
+        }
+      },
+      "notificationsCenter": {
+        "title": "通知",
+        "ariaLabel": "通知",
+        "iconAlt": "通知图标",
+        "buttons": {
+          "markAllRead": "全部设为已读",
+          "refresh": "刷新"
+        },
+        "states": {
+          "empty": "暂时没有通知"
+        },
+        "types": {
+          "newReview": "新评价",
+          "reviewApproved": "评价已通过",
+          "reviewRejected": "评价被拒绝",
+          "subscriptionExpiring": "订阅即将到期",
+          "subscriptionCancelled": "订阅已取消",
+          "escalationReceived": "收到升级请求",
+          "escalationResponded": "升级请求已回复",
+          "systemAlert": "系统提醒",
+          "newHotelRegistration": "新的酒店注册",
+          "newFormCreated": "新表单已创建",
+          "success": "成功",
+          "info": "提示",
+          "warning": "警告",
+          "error": "错误",
+          "generic": "通知"
+        }
+      },
+      "profileSidebar": {
+        "greeting": {
+          "title": "欢迎",
+          "fallbackName": "管理员用户"
+        },
+        "actions": {
+          "profile": {
+            "title": "个人资料",
+            "description": "管理您的帐户设置"
+          },
+          "signOut": {
+            "title": "退出登录",
+            "description": "退出您的帐户"
+          }
+        },
+        "notifications": {
+          "title": "最新通知",
+          "loading": "正在加载通知...",
+          "summary": "您有 {count} 条未读通知",
+          "empty": "暂无新通知"
+        },
+        "time": {
+          "justNow": "刚刚"
+        }
+      }
+    },
+    "communications": {
+      "notifications": {
+        "title": "系统通知",
+        "subtitle": "管理系统通知和提醒信息",
+        "buttons": {
+          "deleteSelected": "删除所选 ({count})",
+          "markAllAsRead": "全部标记为已读",
+          "refresh": "刷新"
+        },
+        "filters": {
+          "title": "筛选",
+          "searchLabel": "搜索通知",
+          "searchPlaceholder": "按标题、内容或用户搜索...",
+          "type": "类型",
+          "allTypes": "全部类型",
+          "status": {
+            "label": "状态",
+            "all": "全部状态",
+            "unread": "未读",
+            "read": "已读"
+          },
+          "types": {
+            "newReview": "新评价",
+            "reviewApproved": "评价已通过",
+            "reviewRejected": "评价被拒绝",
+            "subscriptionExpiring": "订阅即将到期",
+            "subscriptionCancelled": "订阅已取消",
+            "escalationReceived": "收到升级请求",
+            "escalationResponded": "升级请求已回复",
+            "systemAlert": "系统警报",
+            "newHotelRegistration": "新的酒店注册",
+            "newFormCreated": "已创建新表单",
+            "success": "成功",
+            "info": "信息",
+            "warning": "警告",
+            "error": "错误"
+          }
+        },
+        "states": {
+          "loading": "正在加载通知...",
+          "empty": "没有找到通知"
+        },
+        "table": {
+          "type": "类型",
+          "message": "内容",
+          "date": "日期",
+          "actions": "操作",
+          "status": {
+            "label": "状态",
+            "read": "已读",
+            "new": "新"
+          }
+        },
+        "tooltips": {
+          "markAsRead": "标记为已读",
+          "view": "查看",
+          "delete": "删除"
+        },
+        "dates": {
+          "justNow": "刚刚",
+          "hoursAgo": "{hours} 小时前",
+          "yesterday": "昨天"
+        },
+        "types": {
+          "NEW_REVIEW": "新评价",
+          "REVIEW_APPROVED": "评价已通过",
+          "REVIEW_REJECTED": "评价被拒绝",
+          "SUBSCRIPTION_EXPIRING": "订阅即将到期",
+          "SUBSCRIPTION_CANCELLED": "订阅已取消",
+          "ESCALATION_RECEIVED": "收到升级请求",
+          "ESCALATION_RESPONDED": "升级请求已回复",
+          "SYSTEM_ALERT": "系统警报",
+          "NEW_HOTEL_REGISTRATION": "新的酒店注册",
+          "NEW_FORM_CREATED": "已创建新表单",
+          "SUCCESS": "成功",
+          "INFO": "信息",
+          "WARNING": "警告",
+          "ERROR": "错误"
+        },
+        "toasts": {
+          "loadError": "加载通知失败",
+          "markReadSuccess": "通知已标记为已读",
+          "markReadError": "通知标记为已读失败",
+          "markAllReadSuccess": "所有通知已标记为已读",
+          "markAllReadError": "全部标记为已读失败",
+          "deleteSuccess": "通知已成功删除",
+          "deleteError": "删除通知失败",
+          "bulkDeleteSuccess": "成功删除 {count} 条通知",
+          "bulkDeleteError": "部分通知删除失败"
+        },
+        "confirm": {
+          "deleteMessage": "确定要删除此通知吗？",
+          "deleteHeader": "删除确认",
+          "bulkDeleteMessage": "确定要删除所选的 {count} 条通知吗？",
+          "bulkDeleteHeader": "批量删除确认"
+        }
+      }
+    }
+  },
+  "auth": {
+    "register": {
+      "title": "注册",
+      "subtitle": "让我们开始吧",
+      "placeholders": {
+        "firstName": "名字",
+        "lastName": "姓氏",
+        "email": "电子邮箱",
+        "phone": "电话（可选）",
+        "password": "密码"
+      },
+      "buttons": {
+        "signUp": "注册",
+        "signingUp": "正在注册..."
+      },
+      "agreementPrefix": "我已阅读",
+      "toasts": {
+        "acceptTerms": "请接受条款与条件",
+        "missingFields": "请填写所有必填字段",
+        "success": "注册成功！请检查您的电子邮箱。",
+        "error": "注册失败。请重试。"
+      }
+    },
+    "resetPassword": {
+      "title": "创建新密码！",
+      "subtitle": "在下方输入新密码以更新您的账户凭证。",
+      "fields": {
+        "newPassword": "新密码",
+        "confirmPassword": "确认密码"
+      },
+      "placeholders": {
+        "password": "请输入密码",
+        "confirmPassword": "请确认密码"
+      },
+      "buttons": {
+        "reset": "重置密码",
+        "resetting": "正在重置..."
+      },
+      "link": {
+        "backToLogin": "返回登录"
+      },
+      "states": {
+        "validating": "正在验证重置链接...",
+        "loading": "加载中..."
+      },
+      "errors": {
+        "passwordMin": "密码长度至少为 6 个字符",
+        "passwordMax": "密码长度需少于 128 个字符",
+        "confirmRequired": "请确认您的密码",
+        "mismatch": "两次输入的密码不一致"
+      },
+      "toasts": {
+        "invalidLink": "重置链接无效",
+        "invalidOrExpired": "重置链接无效或已过期",
+        "failedValidation": "验证重置链接失败",
+        "success": "密码重置成功。您现在可以使用新密码登录。",
+        "failure": "密码重置失败",
+        "unexpected": "发生意外错误"
+      },
+      "accessibility": {
+        "showPassword": "显示密码",
+        "hidePassword": "隐藏密码"
+      }
+    }
+  },
+  "authFooter": {
+    "brand": {
+      "title": "C-Reviews",
+      "description": "我们帮助酒店通过顺畅的反馈解决方案与住客建立联系。平台让您轻松创建表单、收集洞察，并以诚信和专业精神不断提升住客体验。",
+      "footerImageAlt": "C-Reviews 页脚装饰图"
+    },
+    "quickLinks": {
+      "title": "快捷链接",
+      "items": {
+        "home": "首页",
+        "about": "关于我们",
+        "features": "功能",
+        "contact": "联系我们"
+      }
+    },
+    "resources": {
+      "title": "资源",
+      "items": {
+        "dashboard": "仪表板",
+        "feedbacks": "反馈",
+        "hotelProfile": "酒店资料",
+        "support": "支持",
+        "ownerProfile": "业主资料"
+      }
+    },
+    "legal": {
+      "title": "法律信息",
+      "items": {
+        "privacyPolicy": "隐私政策",
+        "companyPolicy": "公司政策",
+        "terms": "条款与条件"
+      }
+    },
+    "connect": {
+      "title": "联系我们",
+      "emailPlaceholder": "电子邮箱地址",
+      "submitLabel": "订阅",
+      "social": {
+        "facebook": "在 Facebook 关注我们",
+        "instagram": "在 Instagram 关注我们",
+        "linkedin": "在 LinkedIn 与我们联系"
+      }
+    },
+    "copyright": "© 2024 C-Reviews LLC. 保留所有权利！"
+  }
+}
+

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
@@ -10,6 +10,7 @@ import { Toast } from "primereact/toast";
 import { useRequireAdmin } from "@/hooks/useAuth";
 import { Skeleton } from "primereact/skeleton";
 import { canAccessSection } from "@/lib/rolePermissions";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 interface SettingsForm {
     siteName: string;
@@ -37,7 +38,7 @@ const defaultSettings: SettingsForm = {
     enableDocuments: true,
 };
 
-const SettingsSkeleton = () => (
+const SettingsSkeleton = ({ t }: { t: (key: string) => string }) => (
     <div className="grid">
         <div className="col-12">
             <div className="card">
@@ -108,18 +109,19 @@ const SettingsSkeleton = () => (
 
 export default function SettingsPage() {
     const { user, loading: authLoading } = useRequireAdmin();
+    const { t } = useI18n();
     const [loading, setLoading] = useState(false);
     const [fetching, setFetching] = useState(true);
     const [settings, setSettings] = useState<SettingsForm>(defaultSettings);
     const [error, setError] = useState<string | null>(null);
     const toast = useRef<Toast>(null);
 
-    const roleOptions = [
-        { label: "Member", value: "MEMBER" },
-        { label: "Admin", value: "ADMIN" },
-        { label: "Admin Level Two", value: "ADMINLEVELTWO" },
-        { label: "Admin Level Three", value: "ADMINLEVELTHREE" },
-    ];
+    const roleOptions = useMemo(() => [
+        { label: t("Member"), value: "MEMBER" },
+        { label: t("Admin"), value: "ADMIN" },
+        { label: t("Admin Level Two"), value: "ADMINLEVELTWO" },
+        { label: t("Admin Level Three"), value: "ADMINLEVELTHREE" },
+    ], [t]);
 
     useEffect(() => {
         const fetchSettings = async () => {
@@ -128,7 +130,7 @@ export default function SettingsPage() {
             try {
                 const res = await fetch("/api/admin/settings");
                 if (!res.ok) {
-                    throw new Error((await res.json()).error || "Failed to fetch settings");
+                    throw new Error((await res.json()).error || t("Failed to fetch settings"));
                 }
                 const data = await res.json();
                 setSettings({
@@ -136,14 +138,14 @@ export default function SettingsPage() {
                     ...data,
                 });
             } catch (err: any) {
-                setError(err.message || "Failed to fetch settings");
-                showToast("error", "Error", err.message || "Failed to fetch settings");
+                setError(err.message || t("Failed to fetch settings"));
+                showToast("error", t("Error"), err.message || t("Failed to fetch settings"));
             } finally {
                 setFetching(false);
             }
         };
         fetchSettings();
-    }, []);
+    }, [t]);
 
     const handleSave = async () => {
         setLoading(true);
@@ -156,12 +158,12 @@ export default function SettingsPage() {
             });
             const data = await res.json();
             if (!res.ok) {
-                throw new Error(data.error || "Failed to save settings");
+                throw new Error(data.error || t("Failed to save settings"));
             }
-            showToast("success", "Success", "Settings saved successfully");
+            showToast("success", t("Success"), t("Settings saved successfully"));
         } catch (err: any) {
-            setError(err.message || "Failed to save settings");
-            showToast("error", "Error", err.message || "Failed to save settings");
+            setError(err.message || t("Failed to save settings"));
+            showToast("error", t("Error"), err.message || t("Failed to save settings"));
         } finally {
             setLoading(false);
         }
@@ -172,10 +174,10 @@ export default function SettingsPage() {
     };
 
     if (authLoading || fetching) {
-        return <SettingsSkeleton />;
+        return <SettingsSkeleton t={t} />;
     }
     if (!user || !canAccessSection(user.role, 'canAccessSettings')) {
-        return <div className="flex justify-content-center align-items-center min-h-screen text-red-600">Access denied. Admins only.</div>;
+        return <div className="flex justify-content-center align-items-center min-h-screen text-red-600">{t("Access denied. Admins only.")}</div>;
     }
 
     return (
@@ -183,14 +185,14 @@ export default function SettingsPage() {
             <div className="col-12">
                 <div className="card">
                     <Toast ref={toast} />
-                    <h5 className="mb-4">System Settings</h5>
+                    <h5 className="mb-4">{t("System Settings")}</h5>
                     {error && <div className="p-error mb-3">{error}</div>}
                     <div className="grid">
                         <div className="col-12 lg:col-6">
-                            <Card title="General Settings" className="mb-4">
+                            <Card title={t("General Settings")} className="mb-4">
                                 <div className="field mb-4">
                                     <label htmlFor="siteName" className="block text-900 font-medium mb-2">
-                                        Site Name
+                                        {t("Site Name")}
                                     </label>
                                     <InputText
                                         id="siteName"
@@ -202,7 +204,7 @@ export default function SettingsPage() {
 
                                 <div className="field mb-4">
                                     <label htmlFor="siteDescription" className="block text-900 font-medium mb-2">
-                                        Site Description
+                                        {t("Site Description")}
                                     </label>
                                     <InputTextarea
                                         id="siteDescription"
@@ -215,7 +217,7 @@ export default function SettingsPage() {
 
                                 <div className="field mb-4">
                                     <label htmlFor="contactEmail" className="block text-900 font-medium mb-2">
-                                        Contact Email
+                                        {t("Contact Email")}
                                     </label>
                                     <InputText
                                         id="contactEmail"
@@ -228,7 +230,7 @@ export default function SettingsPage() {
 
                                 <div className="field mb-4">
                                     <label htmlFor="defaultRole" className="block text-900 font-medium mb-2">
-                                        Default User Role
+                                        {t("Default User Role")}
                                     </label>
                                     <Dropdown
                                         id="defaultRole"
@@ -243,10 +245,10 @@ export default function SettingsPage() {
                         </div>
 
                         <div className="col-12 lg:col-6">
-                            <Card title="File Upload Settings" className="mb-4">
+                            <Card title={t("File Upload Settings")} className="mb-4">
                                 <div className="field mb-4">
                                     <label htmlFor="maxFileSize" className="block text-900 font-medium mb-2">
-                                        Maximum File Size (MB)
+                                        {t("Maximum File Size (MB)")}
                                     </label>
                                     <InputText
                                         id="maxFileSize"
@@ -272,7 +274,7 @@ export default function SettingsPage() {
                                 </div> */}
                             </Card>
 
-                            <Card title="Feature Toggles" className="mb-4">
+                            <Card title={t("Feature Toggles")} className="mb-4">
                                 <div className="field-checkbox mb-3">
                                     <input
                                         type="checkbox"
@@ -282,7 +284,7 @@ export default function SettingsPage() {
                                         className="mr-2"
                                     />
                                     <label htmlFor="enableNotifications" className="text-900">
-                                        Enable Notifications
+                                        {t("Enable Notifications")}
                                     </label>
                                 </div>
 
@@ -295,7 +297,7 @@ export default function SettingsPage() {
                                         className="mr-2"
                                     />
                                     <label htmlFor="enableChat" className="text-900">
-                                        Enable Chat System
+                                        {t("Enable Chat System")}
                                     </label>
                                 </div>
 
@@ -308,7 +310,7 @@ export default function SettingsPage() {
                                         className="mr-2"
                                     />
                                     <label htmlFor="enableEvents" className="text-900">
-                                        Enable Events Management
+                                        {t("Enable Events Management")}
                                     </label>
                                 </div>
 
@@ -321,7 +323,7 @@ export default function SettingsPage() {
                                         className="mr-2"
                                     />
                                     <label htmlFor="enableDocuments" className="text-900">
-                                        Enable Document Management
+                                        {t("Enable Document Management")}
                                     </label>
                                 </div>
                             </Card>
@@ -330,7 +332,7 @@ export default function SettingsPage() {
 
                     <div className="flex justify-content-end">
                         <Button
-                            label={loading ? "Saving..." : "Save Settings"}
+                            label={loading ? t("Saving...") : t("Save Settings")}
                             icon="pi pi-check"
                             onClick={handleSave}
                             loading={loading}

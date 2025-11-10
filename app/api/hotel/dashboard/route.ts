@@ -2,6 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withAuth, AuthenticatedRequest } from '@/lib/authMiddleware';
 import { prisma } from '@/lib/prisma';
 
+function parseDateParam(value: string | null): Date | null {
+  if (!value) return null;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+interface DateRange {
+  startDate: Date | null;
+  endDate: Date | null;
+}
+
 // Helper function to get rate-us rating from predefined answers
 function getRateUsRating(predefinedAnswers: string | null): number | null {
   if (!predefinedAnswers) return null;
@@ -29,23 +40,15 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
 
+      const searchParams = request.nextUrl.searchParams;
+      const startDate = parseDateParam(searchParams.get('startDate'));
+      const endDate = parseDateParam(searchParams.get('endDate'));
+      const dateRange: DateRange = { startDate, endDate };
+
       // Get hotel data
       const hotel = await prisma.hotels.findUnique({
         where: { ownerId: user.userId },
         include: {
-          reviews: {
-            select: {
-              id: true,
-              guestName: true,
-              guestEmail: true,
-              overallRating: true,
-              predefinedAnswers: true,
-              submittedAt: true,
-              status: true,
-            },
-            orderBy: { submittedAt: 'desc' },
-            take: 10,
-          },
           feedbackForms: {
             select: {
               id: true,
@@ -69,28 +72,55 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Hotel not found' }, { status: 404 });
       }
 
+      const submittedAtFilter: Record<string, Date> = {};
+      if (startDate) {
+        submittedAtFilter.gte = startDate;
+      }
+      if (endDate) {
+        submittedAtFilter.lte = endDate;
+      }
+
+      const reviewWhereClause = {
+        hotelId: hotel.id,
+        ...(startDate || endDate ? { submittedAt: submittedAtFilter } : {}),
+      };
+
+      const reviews = await prisma.review.findMany({
+        where: reviewWhereClause,
+        select: {
+          id: true,
+          guestName: true,
+          guestEmail: true,
+          overallRating: true,
+          predefinedAnswers: true,
+          submittedAt: true,
+          status: true,
+        },
+        orderBy: { submittedAt: 'desc' },
+      });
+
       // Calculate dashboard stats
-      const totalReviews = hotel.reviews.length;
+      const totalReviews = reviews.length;
       const averageRating = totalReviews > 0 
-        ? hotel.reviews.reduce((sum, review) => sum + getEffectiveRating(review), 0) / totalReviews 
+        ? reviews.reduce((sum, review) => sum + getEffectiveRating(review), 0) / totalReviews 
         : 0;
       
-      const positiveReviews = hotel.reviews.filter(review => getEffectiveRating(review) >= 4).length;
-      const negativeReviews = hotel.reviews.filter(review => getEffectiveRating(review) <= 2).length;
+      const positiveReviews = reviews.filter(review => getEffectiveRating(review) >= 4).length;
+      const negativeReviews = reviews.filter(review => getEffectiveRating(review) <= 2).length;
       
       // Calculate response rate (reviews with responses)
-      const reviewsWithResponses = hotel.reviews.filter(review => review.status === 'APPROVED').length;
+      const reviewsWithResponses = reviews.filter(review => review.status === 'APPROVED').length;
       const responseRate = totalReviews > 0 ? (reviewsWithResponses / totalReviews) * 100 : 0;
 
       // Recent reviews (last 7 days)
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-      const recentReviews = hotel.reviews.filter(review => 
+      const recentReviewsCount = reviews.filter(review => 
         new Date(review.submittedAt) >= sevenDaysAgo
       ).length;
 
-      // Generate chart data (last 6 months)
-      const chartData = await generateChartData(hotel.id);
+      // Generate chart data (respecting filters)
+      const chartData = await generateChartData(hotel.id, dateRange);
 
       const dashboardData = {
         stats: {
@@ -99,9 +129,9 @@ export async function GET(request: NextRequest) {
           positiveReviews,
           negativeReviews,
           responseRate: Math.round(responseRate * 10) / 10,
-          recentReviews,
+          recentReviews: recentReviewsCount,
         },
-        recentReviews: hotel.reviews.slice(0, 5).map(review => ({
+        recentReviews: reviews.slice(0, 5).map(review => ({
           id: review.id,
           guestName: review.guestName,
           guestEmail: review.guestEmail,
@@ -128,16 +158,32 @@ export async function GET(request: NextRequest) {
   });
 }
 
-async function generateChartData(hotelId: string) {
-  const sixMonthsAgo = new Date();
-  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+async function generateChartData(hotelId: string, dateRange: DateRange) {
+  const now = new Date();
+  const defaultStart = new Date();
+  defaultStart.setMonth(defaultStart.getMonth() - 6);
+
+  let rangeStart = dateRange.startDate ? new Date(dateRange.startDate) : defaultStart;
+  let rangeEnd = dateRange.endDate ? new Date(dateRange.endDate) : now;
+
+  if (rangeStart > rangeEnd) {
+    const temp = rangeStart;
+    rangeStart = rangeEnd;
+    rangeEnd = temp;
+  }
+
+  const submittedAt: Record<string, Date> = {};
+  if (rangeStart) {
+    submittedAt.gte = rangeStart;
+  }
+  if (rangeEnd) {
+    submittedAt.lte = rangeEnd;
+  }
 
   const reviews = await prisma.review.findMany({
     where: {
       hotelId,
-      submittedAt: {
-        gte: sixMonthsAgo,
-      },
+      submittedAt,
     },
     select: {
       overallRating: true,
@@ -147,7 +193,6 @@ async function generateChartData(hotelId: string) {
     orderBy: { submittedAt: 'asc' },
   });
 
-  // Group by month
   const monthlyData: { [key: string]: { reviews: number; ratings: number[] } } = {};
   
   reviews.forEach(review => {
@@ -159,16 +204,26 @@ async function generateChartData(hotelId: string) {
     monthlyData[month].ratings.push(getEffectiveRating(review));
   });
 
-  // Generate labels for last 6 months
   const labels: string[] = [];
   const reviewCounts: number[] = [];
   const avgRatings: number[] = [];
 
-  for (let i = 5; i >= 0; i--) {
-    const date = new Date();
-    date.setMonth(date.getMonth() - i);
-    const monthKey = date.toISOString().substring(0, 7);
-    const monthName = date.toLocaleDateString('en-US', { month: 'short' });
+  const labelStart = new Date(rangeStart);
+  labelStart.setHours(0, 0, 0, 0);
+  const labelEnd = new Date(rangeEnd);
+  labelEnd.setHours(0, 0, 0, 0);
+
+  const totalMonths =
+    (labelEnd.getFullYear() - labelStart.getFullYear()) * 12 +
+    (labelEnd.getMonth() - labelStart.getMonth());
+
+  const monthsToIterate = Math.max(totalMonths, 0);
+
+  for (let i = 0; i <= monthsToIterate; i++) {
+    const current = new Date(labelStart);
+    current.setMonth(labelStart.getMonth() + i);
+    const monthKey = current.toISOString().substring(0, 7);
+    const monthName = current.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
     
     labels.push(monthName);
     

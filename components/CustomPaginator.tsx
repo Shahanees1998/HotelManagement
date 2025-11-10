@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 interface CustomPaginatorProps {
   currentPage: number;
@@ -21,6 +22,7 @@ export const CustomPaginator: React.FC<CustomPaginatorProps> = ({
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { t } = useI18n();
   
   const totalPages = Math.ceil(totalRecords / rowsPerPage);
   const startRecord = totalRecords === 0 ? 0 : (currentPage - 1) * rowsPerPage + 1;
@@ -76,13 +78,19 @@ export const CustomPaginator: React.FC<CustomPaginatorProps> = ({
   };
 
   const pageNumbers = getPageNumbers();
+  const rangeInfo = t("components.customPaginator.rangeInfo")
+    .replace("{start}", startRecord.toString())
+    .replace("{end}", endRecord.toString())
+    .replace("{total}", formatNumber(totalRecords));
 
   return (
     <div className="custom-paginator">
       {/* Left side */}
       <div className="custom-paginator-left">
         <div className="custom-paginator-items">
-          <span className="custom-paginator-label">Items per page</span>
+          <span className="custom-paginator-label">
+            {t("components.customPaginator.itemsPerPage")}
+          </span>
           
           {/* Custom Dropdown */}
           <div className="custom-dropdown" ref={dropdownRef}>
@@ -118,9 +126,7 @@ export const CustomPaginator: React.FC<CustomPaginatorProps> = ({
             )}
           </div>
         </div>
-        <span className="custom-paginator-info">
-          {startRecord}-{endRecord} of {formatNumber(totalRecords)} entries
-        </span>
+        <span className="custom-paginator-info">{rangeInfo}</span>
       </div>
 
       {/* Right side */}
@@ -130,7 +136,7 @@ export const CustomPaginator: React.FC<CustomPaginatorProps> = ({
           className="custom-paginator-btn"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          aria-label="Previous page"
+          aria-label={t("components.customPaginator.previousPage")}
         >
           <i className="pi pi-angle-left"></i>
         </button>
@@ -159,7 +165,7 @@ export const CustomPaginator: React.FC<CustomPaginatorProps> = ({
           className="custom-paginator-btn"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          aria-label="Next page"
+          aria-label={t("components.customPaginator.nextPage")}
         >
           <i className="pi pi-angle-right"></i>
         </button>

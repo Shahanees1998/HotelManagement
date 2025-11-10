@@ -13,12 +13,14 @@ import { getProfileImageUrl } from "@/lib/cloudinary-client";
 import { Avatar } from "primereact/avatar";
 import NotificationCenter from "@/components/NotificationCenter";
 import { usePathname } from "next/navigation";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     const { onMenuToggle, showProfileSidebar, showConfigSidebar } =
         useContext(LayoutContext);
     const menubuttonRef = useRef(null);
     const { user } = useAuth();
+    const isAdmin = user?.role === "ADMIN";
     const [profile, setProfile] = useState<any | null>(null);
     const toast = useRef<Toast>(null);
     const pathname = usePathname();
@@ -156,6 +158,13 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
 
             <div className="topbar-end">
                 <ul className="topbar-menu">
+                    {/* Language Selector */}
+                    {!isAdmin && (
+                        <li className="ml-3">
+                            <LanguageSelector className="w-full" />
+                        </li>
+                    )}
+
                     {/* Notification Bell */}
                     <li className="ml-3">
                         <NotificationCenter />

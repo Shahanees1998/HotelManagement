@@ -16,6 +16,7 @@ import AppProfileSidebar from "./AppProfileSidebar";
 import AppSidebar from "./AppSidebar";
 import AppTopbar from "./AppTopbar";
 import { LayoutContext } from "./context/layoutcontext";
+import { AutoTranslator } from "@/components/AutoTranslator";
 
 const LayoutInner = (props: ChildContainerProps) => {
     const {
@@ -195,6 +196,7 @@ const LayoutInner = (props: ChildContainerProps) => {
 
     return (
         <React.Fragment>
+            <AutoTranslator enabledLocales={["ar", "zh"]} />
             <div className={classNames("layout-container", containerClass)} style={{backgroundColor: 'rgb(253, 252, 249) !important'}}>
                 <div
                     ref={sidebarRef}

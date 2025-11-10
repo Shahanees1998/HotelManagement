@@ -26,12 +26,16 @@ export async function GET(request: NextRequest) {
       const startDate = searchParams.get('startDate');
       const endDate = searchParams.get('endDate');
 
-      // Find the "Good" layout form
-      const goodForm = await prisma.feedbackForm.findFirst({
+      // Find a form with custom ratings enabled
+      const customRatingForm = await prisma.feedbackForm.findFirst({
         where: {
           hotelId: hotel.id,
-          layout: 'good',
           isDeleted: false,
+          predefinedQuestions: {
+            is: {
+              hasCustomRating: true,
+            },
+          },
         },
         include: {
           predefinedQuestions: {
@@ -45,9 +49,9 @@ export async function GET(request: NextRequest) {
         },
       });
 
-      if (!goodForm || !goodForm.predefinedQuestions?.hasCustomRating) {
+      if (!customRatingForm || !customRatingForm.predefinedQuestions?.hasCustomRating) {
         return NextResponse.json(
-          { error: 'No "Good" layout form with custom ratings found' },
+          { error: 'No form with custom ratings found' },
           { status: 404 }
         );
       }
@@ -65,7 +69,7 @@ export async function GET(request: NextRequest) {
       const reviews = await prisma.review.findMany({
         where: {
           hotelId: hotel.id,
-          formId: goodForm.id,
+          formId: customRatingForm.id,
           submittedAt: Object.keys(dateFilter).length > 0 ? dateFilter : undefined,
         },
         select: {
@@ -82,7 +86,7 @@ export async function GET(request: NextRequest) {
         },
       });
 
-      const customRatingItems = goodForm.predefinedQuestions.customRatingItems;
+      const customRatingItems = customRatingForm.predefinedQuestions.customRatingItems;
 
       if (format === 'csv') {
         // Generate CSV
@@ -170,7 +174,7 @@ export async function GET(request: NextRequest) {
           </head>
           <body>
             <h1>Custom Rating Analytics - ${hotel.name}</h1>
-            <h2>${goodForm.title}</h2>
+            <h2>${customRatingForm.title}</h2>
             <p>Generated: ${new Date().toLocaleString()}</p>
             
             <table>

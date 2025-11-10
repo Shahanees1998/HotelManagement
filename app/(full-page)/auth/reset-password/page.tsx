@@ -3,11 +3,10 @@ import type { Page } from "@/types/index";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import { useContext, useState, useRef, useEffect, Suspense } from "react";
-import { LayoutContext } from "../../../../layout/context/layoutcontext";
+import { useState, useRef, useEffect, useCallback, Suspense } from "react";
 import { Toast } from "primereact/toast";
-import Image from "next/image";
 import AuthFooter from "@/components/AuthFooter";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 const ResetPasswordContent = () => {
     const [password, setPassword] = useState("");
@@ -21,28 +20,10 @@ const ResetPasswordContent = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
-    const { layoutConfig } = useContext(LayoutContext);
     const toast = useRef<Toast>(null);
-    const dark = layoutConfig.colorScheme !== "light";
+    const { t } = useI18n();
 
-    useEffect(() => {
-        const tokenParam = searchParams.get('token');
-        if (tokenParam) {
-            setToken(tokenParam);
-            // Validate token
-            validateToken(tokenParam);
-        } else {
-            toast.current?.show({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Invalid reset link',
-                life: 3000
-            });
-            router.push('/auth/login');
-        }
-    }, [searchParams]);
-
-    const validateToken = async (resetToken: string) => {
+    const validateToken = useCallback(async (resetToken: string) => {
         try {
             const response = await fetch('/api/auth/validate-reset-token', {
                 method: 'POST',
@@ -55,11 +36,11 @@ const ResetPasswordContent = () => {
             if (response.ok) {
                 setTokenValid(true);
             } else {
-                const data = await response.json();
+                const data = await response.json().catch(() => undefined);
                 toast.current?.show({
                     severity: 'error',
-                    summary: 'Error',
-                    detail: data.error || 'Invalid or expired reset link',
+                    summary: t("common.error"),
+                    detail: data?.error || t("auth.resetPassword.toasts.invalidOrExpired"),
                     life: 4000
                 });
                 router.push('/auth/login');
@@ -68,20 +49,36 @@ const ResetPasswordContent = () => {
             console.error('Token validation error:', error);
             toast.current?.show({
                 severity: 'error',
-                summary: 'Error',
-                detail: 'Failed to validate reset link',
+                summary: t("common.error"),
+                detail: t("auth.resetPassword.toasts.failedValidation"),
                 life: 4000
             });
             router.push('/auth/login');
         }
-    };
+    }, [router, t]);
+
+    useEffect(() => {
+        const tokenParam = searchParams.get('token');
+        if (tokenParam) {
+            setToken(tokenParam);
+            validateToken(tokenParam);
+        } else {
+            toast.current?.show({
+                severity: 'error',
+                summary: t("common.error"),
+                detail: t("auth.resetPassword.toasts.invalidLink"),
+                life: 3000
+            });
+            router.push('/auth/login');
+        }
+    }, [searchParams, validateToken, router, t]);
 
     const validatePassword = (password: string) => {
         if (password.length < 6) {
-            return "Password must be at least 6 characters long";
+            return t("auth.resetPassword.errors.passwordMin");
         }
         if (password.length > 128) {
-            return "Password must be less than 128 characters";
+            return t("auth.resetPassword.errors.passwordMax");
         }
         return "";
     };
@@ -114,7 +111,7 @@ const ResetPasswordContent = () => {
             setPasswordError(passwordValidation);
             toast.current?.show({
                 severity: 'error',
-                summary: 'Error',
+                summary: t("common.error"),
                 detail: passwordValidation,
                 life: 4000
             });
@@ -123,22 +120,24 @@ const ResetPasswordContent = () => {
 
         // Validate confirm password
         if (!confirmPassword) {
-            setConfirmPasswordError("Please confirm your password");
+            const message = t("auth.resetPassword.errors.confirmRequired");
+            setConfirmPasswordError(message);
             toast.current?.show({
                 severity: 'error',
-                summary: 'Error',
-                detail: 'Please confirm your password',
+                summary: t("common.error"),
+                detail: message,
                 life: 4000
             });
             return;
         }
 
         if (password !== confirmPassword) {
-            setConfirmPasswordError("Passwords do not match");
+            const message = t("auth.resetPassword.errors.mismatch");
+            setConfirmPasswordError(message);
             toast.current?.show({
                 severity: 'error',
-                summary: 'Error',
-                detail: 'Passwords do not match',
+                summary: t("common.error"),
+                detail: message,
                 life: 4000
             });
             return;
@@ -162,8 +161,8 @@ const ResetPasswordContent = () => {
             if (response.ok) {
                 toast.current?.show({
                     severity: 'success',
-                    summary: 'Success',
-                    detail: 'Password reset successfully. You can now log in with your new password.',
+                    summary: t("common.success"),
+                    detail: t("auth.resetPassword.toasts.success"),
                     life: 5000
                 });
                 setTimeout(() => {
@@ -172,8 +171,8 @@ const ResetPasswordContent = () => {
             } else {
                 toast.current?.show({
                     severity: 'error',
-                    summary: 'Error',
-                    detail: data.error || 'Failed to reset password',
+                    summary: t("common.error"),
+                    detail: data.error || t("auth.resetPassword.toasts.failure"),
                     life: 4000
                 });
             }
@@ -181,8 +180,8 @@ const ResetPasswordContent = () => {
             console.error('Reset password error:', error);
             toast.current?.show({
                 severity: 'error',
-                summary: 'Error',
-                detail: 'An unexpected error occurred',
+                summary: t("common.error"),
+                detail: t("auth.resetPassword.toasts.unexpected"),
                 life: 4000
             });
         } finally {
@@ -201,7 +200,7 @@ const ResetPasswordContent = () => {
             <div className="px-5 min-h-screen flex justify-content-center align-items-center">
                 <div className="text-center">
                     <i className="pi pi-spinner pi-spin text-4xl mb-3"></i>
-                    <p>Validating reset link...</p>
+                    <p>{t("auth.resetPassword.states.validating")}</p>
                 </div>
             </div>
         );
@@ -231,7 +230,7 @@ const ResetPasswordContent = () => {
                 </div>
                 <div style={{ display: "flex", gap: "1rem" }}>
                     <Button
-                        label="Get Started"
+                        label={t("common.getStarted")}
                         outlined
                         style={{
                             borderColor: "#1e3a5f",
@@ -240,7 +239,7 @@ const ResetPasswordContent = () => {
                         onClick={() => router.push('/register-hotel')}
                     />
                     <Button
-                        label="Login"
+                        label={t("common.login")}
                         style={{
                             backgroundColor: "#1e3a5f",
                             border: "none",
@@ -256,15 +255,15 @@ const ResetPasswordContent = () => {
                 <div className="surface-card border-round py-7 px-4 md:px-7 z-1" style={{ width: "100%", maxWidth: "480px", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)" }}>
                     <div className="mb-4">
                         <div className="text-[#1B2A49] text-2xl font-bold mb-3">
-                            Create New Password!
+                            {t("auth.resetPassword.title")}
                         </div>
                         <span className="text-600 font-thin" style={{ display: "block", lineHeight: "1.5" }}>
-                            Enter a new password below to update your account credentials.
+                            {t("auth.resetPassword.subtitle")}
                         </span>
                     </div>
                     <div className="flex flex-column">
                         <label htmlFor="password" className="text-900 font-medium mb-2">
-                            New Password<span style={{ color: "red" }}>*</span>
+                            {t("auth.resetPassword.fields.newPassword")}<span style={{ color: "red" }}>*</span>
                         </label>
                         <div style={{ position: "relative" }} className="w-full mb-1">
                             <span className="p-input-icon-left w-full">
@@ -273,7 +272,7 @@ const ResetPasswordContent = () => {
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     className={`w-full ${passwordError ? 'p-invalid' : ''}`}
-                                    placeholder="Enter your password"
+                                    placeholder={t("auth.resetPassword.placeholders.password")}
                                     value={password}
                                     onChange={handlePasswordChange}
                                     onKeyPress={handleKeyPress}
@@ -296,7 +295,7 @@ const ResetPasswordContent = () => {
                                     padding: 0,
                                     zIndex: 2,
                                 }}
-                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                aria-label={showPassword ? t("auth.resetPassword.accessibility.hidePassword") : t("auth.resetPassword.accessibility.showPassword")}
                             >
                                 <i className={`pi ${showPassword ? "pi-eye-slash" : "pi-eye"}`}></i>
                             </button>
@@ -306,7 +305,7 @@ const ResetPasswordContent = () => {
                         )}
                         
                         <label htmlFor="confirmPassword" className="text-900 font-medium mb-2 mt-3">
-                            Confirm Password<span style={{ color: "red" }}>*</span>
+                            {t("auth.resetPassword.fields.confirmPassword")}<span style={{ color: "red" }}>*</span>
                         </label>
                         <div style={{ position: "relative" }} className="w-full mb-1">
                             <span className="p-input-icon-left w-full">
@@ -315,7 +314,7 @@ const ResetPasswordContent = () => {
                                     id="confirmPassword"
                                     type={showConfirmPassword ? "text" : "password"}
                                     className={`w-full ${confirmPasswordError ? 'p-invalid' : ''}`}
-                                    placeholder="Confirm your password"
+                                    placeholder={t("auth.resetPassword.placeholders.confirmPassword")}
                                     value={confirmPassword}
                                     onChange={handleConfirmPasswordChange}
                                     onKeyPress={handleKeyPress}
@@ -338,7 +337,7 @@ const ResetPasswordContent = () => {
                                     padding: 0,
                                     zIndex: 2,
                                 }}
-                                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                                aria-label={showConfirmPassword ? t("auth.resetPassword.accessibility.hidePassword") : t("auth.resetPassword.accessibility.showPassword")}
                             >
                                 <i className={`pi ${showConfirmPassword ? "pi-eye-slash" : "pi-eye"}`}></i>
                             </button>
@@ -348,7 +347,7 @@ const ResetPasswordContent = () => {
                         )}
                         
                         <Button
-                            label={loading ? "Resetting..." : "Reset Password"}
+                            label={loading ? t("auth.resetPassword.buttons.resetting") : t("auth.resetPassword.buttons.reset")}
                             className="w-full"
                             style={{
                                 backgroundColor: "#1e3a5f",
@@ -368,7 +367,7 @@ const ResetPasswordContent = () => {
                                 style={{ color: "#6F522F", fontWeight: 600, fontSize: "0.875rem" }}
                                 onClick={() => router.push("/auth/login")}
                             >
-                                Back to Login
+                                {t("auth.resetPassword.link.backToLogin")}
                             </a>
                         </div>
                     </div>
@@ -382,12 +381,13 @@ const ResetPasswordContent = () => {
 };
 
 const ResetPassword: Page = () => {
+    const { t } = useI18n();
     return (
         <Suspense fallback={
             <div className="min-h-screen flex justify-content-center align-items-center">
                 <div className="text-center">
                     <i className="pi pi-spinner pi-spin text-4xl mb-3"></i>
-                    <p>Loading...</p>
+                    <p>{t("auth.resetPassword.states.loading")}</p>
                 </div>
             </div>
         }>

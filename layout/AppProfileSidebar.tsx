@@ -1,12 +1,10 @@
-import { Badge } from "primereact/badge";
 import { Sidebar } from "primereact/sidebar";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useMemo, useCallback } from "react";
 import { LayoutContext } from "./context/layoutcontext";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { Avatar } from "primereact/avatar";
 import { Skeleton } from "primereact/skeleton";
-import { apiClient } from "@/lib/apiClient";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 interface Notification {
     id: string;
@@ -33,10 +31,23 @@ const AppProfileSidebar = () => {
     const { layoutState, setLayoutState } = useContext(LayoutContext);
     const { user, logout } = useAuth();
     const router = useRouter();
+    const { t, locale } = useI18n();
     
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [messages, setMessages] = useState<Message[]>([]);
     const [loading, setLoading] = useState(true);
+
+    const LOCALE_MAP: Record<string, string> = {
+        en: "en-US",
+        ar: "ar-EG",
+        zh: "zh-CN",
+    };
+
+    const localeFormat = useMemo(() => LOCALE_MAP[locale] ?? locale, [locale]);
+    const relativeTimeFormatter = useMemo(
+        () => new Intl.RelativeTimeFormat(localeFormat, { numeric: "auto" }),
+        [localeFormat]
+    );
 
     const onProfileSidebarHide = () => {
         setLayoutState((prevState) => ({
@@ -49,7 +60,7 @@ const AppProfileSidebar = () => {
         if (layoutState.profileSidebarVisible && user?.id) {
             loadSidebarData();
         }
-    }, [layoutState.profileSidebarVisible, user?.id]);
+    }, [layoutState.profileSidebarVisible, user?.id, locale]);
 
     // Listen for notification updates
     useEffect(() => {
@@ -64,7 +75,7 @@ const AppProfileSidebar = () => {
         return () => {
             window.removeEventListener('notification-updated', handleNotificationUpdate);
         };
-    }, [layoutState.profileSidebarVisible, user?.id]);
+    }, [layoutState.profileSidebarVisible, user?.id, locale]);
 
     const loadSidebarData = async () => {
         setLoading(true);
@@ -74,6 +85,7 @@ const AppProfileSidebar = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept-Language': locale,
                 },
             });
 
@@ -121,6 +133,7 @@ const AppProfileSidebar = () => {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept-Language': locale,
                 },
             });
         } catch (error) {
@@ -138,16 +151,33 @@ const AppProfileSidebar = () => {
         onProfileSidebarHide();
     };
 
-    const formatRelativeTime = (dateString: string) => {
-        const date = new Date(dateString);
-        const now = new Date();
-        const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
-        
-        if (diffInMinutes < 1) return 'Just now';
-        if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-        if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h ago`;
-        return `${Math.floor(diffInMinutes / 1440)}d ago`;
-    };
+    const formatRelativeTime = useCallback((dateString: string) => {
+        const timestamp = new Date(dateString).getTime();
+        if (Number.isNaN(timestamp)) {
+            return "";
+        }
+
+        const now = Date.now();
+        let diffInSeconds = Math.round((timestamp - now) / 1000);
+        const absSeconds = Math.abs(diffInSeconds);
+
+        if (absSeconds < 60) {
+            return t("hotel.profile.profileSidebar.time.justNow");
+        }
+
+        const diffInMinutes = Math.round(diffInSeconds / 60);
+        if (Math.abs(diffInMinutes) < 60) {
+            return relativeTimeFormatter.format(diffInMinutes, "minute");
+        }
+
+        const diffInHours = Math.round(diffInMinutes / 60);
+        if (Math.abs(diffInHours) < 24) {
+            return relativeTimeFormatter.format(diffInHours, "hour");
+        }
+
+        const diffInDays = Math.round(diffInHours / 24);
+        return relativeTimeFormatter.format(diffInDays, "day");
+    }, [relativeTimeFormatter, t]);
 
     const getNotificationIcon = (type: string) => {
         switch (type) {
@@ -177,9 +207,9 @@ const AppProfileSidebar = () => {
             className="layout-profile-sidebar w-full sm:w-25rem"
         >
             <div className="flex flex-column mx-auto md:mx-0">
-                <span className="mb-2 font-semibold">Welcome</span>
+                <span className="mb-2 font-semibold">{t("hotel.profile.profileSidebar.greeting.title")}</span>
                 <span className="text-color-secondary font-medium mb-5">
-                    {user ? `${user.firstName}` : 'Admin User'}
+                    {user?.firstName ?? t("hotel.profile.profileSidebar.greeting.fallbackName")}
                 </span>
 
                 <ul className="list-none m-0 p-0">
@@ -193,10 +223,10 @@ const AppProfileSidebar = () => {
                             </span>
                             <div className="ml-3">
                                 <span className="mb-2 font-semibold">
-                                    Profile
+                                    {t("hotel.profile.profileSidebar.actions.profile.title")}
                                 </span>
                                 <p className="text-color-secondary m-0">
-                                    Manage your account settings
+                                    {t("hotel.profile.profileSidebar.actions.profile.description")}
                                 </p>
                             </div>
                         </button>
@@ -229,10 +259,10 @@ const AppProfileSidebar = () => {
                             </span>
                             <div className="ml-3">
                                 <span className="mb-2 font-semibold">
-                                    Sign Out
+                                    {t("hotel.profile.profileSidebar.actions.signOut.title")}
                                 </span>
                                 <p className="text-color-secondary m-0">
-                                    Logout from your account
+                                    {t("hotel.profile.profileSidebar.actions.signOut.description")}
                                 </p>
                             </div>
                         </button>
@@ -241,12 +271,12 @@ const AppProfileSidebar = () => {
             </div>
 
             <div className="flex flex-column mt-5 mx-auto md:mx-0">
-                <span className="mb-2 font-semibold">Recent Notifications</span>
+                <span className="mb-2 font-semibold">{t("hotel.profile.profileSidebar.notifications.title")}</span>
                 <span className="text-color-secondary font-medium mb-5">
                     {loading ? (
                         <Skeleton width="60%" height="1rem" />
                     ) : (
-                        `You have ${notifications.length} unread notifications`
+                        t("hotel.profile.profileSidebar.notifications.summary").replace("{count}", notifications.length.toString())
                     )}
                 </span>
 
@@ -288,7 +318,7 @@ const AppProfileSidebar = () => {
                 ) : (
                     <div className="text-center p-3 text-color-secondary">
                         <i className="pi pi-bell text-2xl mb-2"></i>
-                        <p className="m-0">No new notifications</p>
+                        <p className="m-0">{t("hotel.profile.profileSidebar.notifications.empty")}</p>
                     </div>
                 )}
             </div>

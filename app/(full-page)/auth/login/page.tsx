@@ -12,6 +12,8 @@ import { useRef } from "react";
 import { getDefaultRedirectPath } from "@/lib/rolePermissions";
 import Image from "next/image";
 import AuthFooter from "@/components/AuthFooter";
+import { useI18n } from "@/i18n/TranslationProvider";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 const LoginContent = () => {
     const [rememberMe, setRememberMe] = useState(false);
@@ -27,6 +29,7 @@ const LoginContent = () => {
     const toast = useRef<Toast>(null);
     const dark = layoutConfig.colorScheme !== "light";
     const [showPassword, setShowPassword] = useState(false);
+    const { t, setLocale } = useI18n();
 
     // Redirect if already logged in
     if (user) {
@@ -43,15 +46,15 @@ const LoginContent = () => {
         // Validate inputs
         let hasError = false;
         if (!email) {
-            setEmailError("Email is required");
+            setEmailError(t("Email is required"));
             hasError = true;
         } else if (!email.includes('@')) {
-            setEmailError("Please enter a valid email address");
+            setEmailError(t("Please enter a valid email address"));
             hasError = true;
         }
 
         if (!password) {
-            setPasswordError("Password is required");
+            setPasswordError(t("Password is required"));
             hasError = true;
         }
 
@@ -61,29 +64,37 @@ const LoginContent = () => {
 
         setLoading(true);
         try {
-            const user = await login(email, password);
-            const callbackUrl = searchParams.get('callbackUrl') || getDefaultRedirectPath(user.role);
+            const loggedInUser = await login(email, password);
+
+            if (loggedInUser?.role === "ADMIN") {
+                if (typeof window !== "undefined") {
+                    window.localStorage.removeItem("hotel-management-locale");
+                }
+                setLocale("en");
+            }
+
+            const callbackUrl = searchParams.get('callbackUrl') || getDefaultRedirectPath(loggedInUser.role);
             router.push(callbackUrl);
         } catch (error) {
             console.error('Login error:', error);
-            let errorMessage = 'An unexpected error occurred. Please try again.';
+            let errorMessage = t('An unexpected error occurred. Please try again.');
 
             if (error instanceof Error) {
                 errorMessage = error.message;
                 if (error.message === 'Invalid email or password') {
-                    setPasswordError('Invalid email or password');
+                    setPasswordError(t('Invalid email or password'));
                 } else if (error.message === 'No account found with this email address') {
-                    setEmailError('No account found with this email address');
+                    setEmailError(t('No account found with this email address'));
                 } else if (error.message === 'Incorrect password') {
-                    setPasswordError('Incorrect password');
+                    setPasswordError(t('Incorrect password'));
                 } else if (error.message === 'Account is not active. Please contact admin.') {
-                    errorMessage = 'Account is not active. Please contact admin.';
+                    errorMessage = t('Account is not active. Please contact admin.');
                 }
             }
 
             toast.current?.show({
                 severity: 'error',
-                summary: 'Login Failed',
+                summary: t('Login Failed'),
                 detail: errorMessage,
                 life: 4000
             });
@@ -116,8 +127,11 @@ const LoginContent = () => {
                     C-Reviews
                 </div>
                 <div style={{ display: "flex", gap: "1rem" }}>
+                <li className="ml-3">
+                        <LanguageSelector className="w-full" />
+                    </li>
                     <Button
-                        label="Get Started"
+                        label={t("Get Started")}
                         outlined
                         style={{
                             borderColor: "#6F522F",
@@ -126,7 +140,7 @@ const LoginContent = () => {
                         onClick={() => router.push('/register-hotel')}
                     />
                     <Button
-                        label="Login"
+                        label={t("Login")}
                         style={{
                             backgroundColor: "#1e3a5f",
                             border: "none",
@@ -142,22 +156,22 @@ const LoginContent = () => {
                 <div className="surface-card border-round py-7 px-4 md:px-7 z-1 animate-fade-in" style={{ width: "100%", maxWidth: "480px", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)" }}>
                     <div className="mb-4 animate-slide-in-left">
                         <div className="text-[#1B2A49] text-3xl font-bold mb-2 flex align-items-center gap-2">
-                            Welcome back!
+                            {t("Welcome back!")}
                         </div>
                         <span className="text-600 font-thin flex align-items-center gap-2">
-                            Thank you for getting back to C-Reviews, the easiest way for hotels to collect and improve through guest feedback.
+                            {t("Thank you for getting back to C-Reviews, the easiest way for hotels to collect and improve through guest feedback.")}
                         </span>
                     </div>
                     <div className="flex flex-column">
                         <label htmlFor="email" className="text-900 font-medium mb-2 flex align-items-center gap-2">
-                            Email Address<span style={{ color: "red" }}>*</span>
+                            {t("Email Address")}<span style={{ color: "red" }}>*</span>
                         </label>
                         <span className="p-input-icon-left w-full mb-1">
                             <InputText
                                 id="email"
                                 type="email"
                                 className={`w-full ${emailError ? 'p-invalid' : ''}`}
-                                placeholder="Enter your email address"
+                                placeholder={t("Enter your email address")}
                                 value={email}
                                 onChange={(e) => {
                                     setEmail(e.target.value);
@@ -171,7 +185,7 @@ const LoginContent = () => {
                         )}
                         
                         <label htmlFor="password" className="text-900 font-medium mb-2 mt-3 flex align-items-center gap-2">
-                            Password<span style={{ color: "red" }}>*</span>
+                            {t("Password")}<span style={{ color: "red" }}>*</span>
                         </label>
                         <div style={{ position: "relative" }} className="w-full mb-1">
                             <span className="p-input-icon-left w-full">
@@ -179,7 +193,7 @@ const LoginContent = () => {
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     className={`w-full ${passwordError ? 'p-invalid' : ''}`}
-                                    placeholder="Enter your password"
+                                    placeholder={t("Enter your password")}
                                     value={password}
                                     onChange={(e) => {
                                         setPassword(e.target.value);
@@ -205,7 +219,7 @@ const LoginContent = () => {
                                     padding: 0,
                                     zIndex: 2,
                                 }}
-                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                aria-label={showPassword ? t("Hide password") : t("Show password")}
                             >
                                 <i className={`pi ${showPassword ? "pi-eye-slash" : "pi-eye"}`}></i>
                             </button>
@@ -227,7 +241,7 @@ const LoginContent = () => {
                                     className="text-900 font-medium mb-0"
                                     style={{ cursor: "pointer" }}
                                 >
-                                    Remember me
+                                    {t("Remember me")}
                                 </label>
                             </div>
                             <a
@@ -235,12 +249,12 @@ const LoginContent = () => {
                                 style={{ color: "#d97706", fontWeight: 500 }}
                                 onClick={() => router.push('/auth/forgotpassword')}
                             >
-                                Forgot Password?
+                                {t("Forgot Password?")}
                             </a>
                         </div>
                         
                         <Button
-                            label={loading || authLoading ? "Logging In..." : "Login"}
+                            label={loading || authLoading ? t("Logging In...") : t("Login")}
                             icon={loading || authLoading ? "pi pi-spinner pi-spin" : "pi pi-sign-in"}
                             className="w-full hover-lift animate-scale-in"
                             style={{
@@ -257,20 +271,20 @@ const LoginContent = () => {
                        <div className="flex align-items-center mb-3" style={{ gap: "1rem" }}>
                            <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
                            <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
-                               or create account.
+                               {t("or create account.")}
                            </span>
                            <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
                        </div>
                        
                        <div className="text-center">
                            <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
-                               Own a Hotel?{" "}
+                               {t("Own a Hotel?")}{" "}
                                <a
                                    className="cursor-pointer"
                                    style={{ color: "#6F522F", fontWeight: 600, textDecoration: "underline" }}
                                    onClick={() => router.push('/register-hotel')}
                                >
-                                   Join C-Reviews Now!
+                                   {t("Join C-Reviews Now!")}
                                </a>
                            </span>
                        </div>
@@ -285,12 +299,13 @@ const LoginContent = () => {
 };
 
 const Login: Page = () => {
+    const { t } = useI18n();
     return (
         <Suspense fallback={
             <div className="min-h-screen flex justify-content-center align-items-center">
                 <div className="text-center">
                     <i className="pi pi-spinner pi-spin text-4xl mb-3"></i>
-                    <p>Loading...</p>
+                    <p>{t("Loading...")}</p>
                 </div>
             </div>
         }>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
@@ -9,9 +9,9 @@ import { Dialog } from "primereact/dialog";
 import { useRef } from "react";
 import QRCode from "qrcode";
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
 import FeedbackFormBuilder from "@/components/FeedbackFormBuilder";
 import { apiClient } from "@/lib/apiClient";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 interface FeedbackForm {
   id: string;
@@ -28,7 +28,7 @@ interface FeedbackForm {
 
 export default function HotelForms() {
   const { user } = useAuth();
-  const router = useRouter();
+  const { t, locale } = useI18n();
   const [existingForm, setExistingForm] = useState<FeedbackForm | null>(null);
   const [loading, setLoading] = useState(true);
   const [showFormBuilder, setShowFormBuilder] = useState(false);
@@ -65,12 +65,12 @@ export default function HotelForms() {
       }
     } catch (error) {
       console.error("Error loading form:", error);
-      showToast("error", "Error", "Failed to load form");
+      showToast("error", t("common.error"), t("hotel.forms.toasts.loadError"));
       setExistingForm(null);
     } finally {
       setLoading(false);
     }
-  }, [showToast]);
+  }, [showToast, t]);
 
   useEffect(() => {
     loadForm();
@@ -87,9 +87,9 @@ export default function HotelForms() {
     if (user?.hotelSlug) {
       setPreviewFormId(formId);
     } else {
-      showToast("error", "Error", "Hotel slug not found. Cannot preview form.");
+      showToast("error", t("common.error"), t("hotel.forms.toasts.slugMissing"));
     }
-  }, [user?.hotelSlug, showToast]);
+  }, [user?.hotelSlug, showToast, t]);
 
   const handleFormSaved = useCallback(async (form: any) => {
     console.log("handleFormSaved called with:", form);
@@ -117,19 +117,22 @@ export default function HotelForms() {
         setShowFormBuilder(false);
         // Refresh the form data to show the newly created/updated form
         await loadForm();
-        showToast("success", "Success", existingForm ? "Form updated successfully" : "Form created successfully");
+        const successMessage = existingForm
+          ? t("hotel.forms.toasts.updateSuccess")
+          : t("hotel.forms.toasts.createSuccess");
+        showToast("success", t("common.success"), successMessage);
       } else {
         // Show the actual error message from the API
-        const errorMessage = data.error || 'Failed to save form';
+        const errorMessage = data.error || t("hotel.forms.toasts.saveError");
         throw new Error(errorMessage);
       }
     } catch (error) {
       console.error("Error saving form:", error);
       // Extract and show the actual error message
-      const errorMessage = error instanceof Error ? error.message : 'Failed to save form';
-      showToast("error", "Error", errorMessage);
+      const errorMessage = error instanceof Error ? error.message : t("hotel.forms.toasts.saveError");
+      showToast("error", t("common.error"), errorMessage);
     }
-  }, [existingForm, showToast, loadForm]);
+  }, [existingForm, showToast, loadForm, t]);
 
   const handleShowQrCode = useCallback(async (formId: string, formTitle: string) => {
     try {
@@ -182,7 +185,7 @@ export default function HotelForms() {
           });
           setQrCodeDataUrl(qrDataUrl);
           setShowQrDialog(true);
-          showToast("success", "Success", "QR code generated successfully");
+          showToast("success", t("common.success"), t("hotel.forms.toasts.qrGenerated"));
         } else {
           const errorData = await response.json();
           if (response.status === 409 && errorData.existingQrCode) {
@@ -200,17 +203,17 @@ export default function HotelForms() {
             });
             setQrCodeDataUrl(qrDataUrl);
             setShowQrDialog(true);
-            showToast("info", "Info", "QR code already exists for this form");
+            showToast("info", t("common.info"), t("hotel.forms.toasts.qrExists"));
           } else {
-            throw new Error(errorData.error || "Failed to generate QR code");
+            throw new Error(errorData.error || t("hotel.forms.toasts.qrError"));
           }
         }
       }
     } catch (error) {
       console.error("Error handling QR code:", error);
-      showToast("error", "Error", "Failed to handle QR code");
+      showToast("error", t("common.error"), t("hotel.forms.toasts.qrError"));
     }
-  }, [user?.hotelId, showToast]);
+  }, [user?.hotelId, showToast, t]);
 
   const downloadQrCode = useCallback(() => {
     if (qrCodeDataUrl) {
@@ -223,7 +226,7 @@ export default function HotelForms() {
 
   const copyQrUrl = useCallback(async () => {
     if (!qrCodeUrl) {
-      showToast("warn", "Warning", "No URL to copy");
+      showToast("warn", t("common.warning"), t("hotel.forms.toasts.noUrl"));
       return;
     }
 
@@ -231,7 +234,7 @@ export default function HotelForms() {
       // Try modern clipboard API first
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(qrCodeUrl);
-        showToast("success", "Copied!", "URL copied to clipboard");
+        showToast("success", t("common.success"), t("hotel.forms.toasts.copiedDetail"));
       } else {
         // Fallback for older browsers or non-secure contexts
         const textArea = document.createElement("textarea");
@@ -246,7 +249,7 @@ export default function HotelForms() {
         try {
           const successful = document.execCommand('copy');
           if (successful) {
-            showToast("success", "Copied!", "URL copied to clipboard");
+            showToast("success", t("common.success"), t("hotel.forms.toasts.copiedDetail"));
           } else {
             throw new Error('Copy command failed');
           }
@@ -256,9 +259,9 @@ export default function HotelForms() {
       }
     } catch (error) {
       console.error("Failed to copy:", error);
-      showToast("error", "Error", "Failed to copy URL to clipboard");
+      showToast("error", t("common.error"), t("hotel.forms.toasts.copyError"));
     }
-  }, [qrCodeUrl, showToast]);
+  }, [qrCodeUrl, showToast, t]);
 
   // Delete functionality removed - forms cannot be deleted, only updated
 
@@ -266,13 +269,22 @@ export default function HotelForms() {
     return isActive ? "success" : "danger";
   }, []);
 
-  const formatDate = useCallback((dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
+  const dateFormatter = useMemo(() => {
+    const localeMap: Record<string, string> = {
+      en: "en-US",
+      ar: "ar-EG",
+      zh: "zh-CN",
+    };
+    return new Intl.DateTimeFormat(localeMap[locale] ?? locale, {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
     });
-  }, []);
+  }, [locale]);
+
+  const formatDate = useCallback((dateString: string) => {
+    return dateFormatter.format(new Date(dateString));
+  }, [dateFormatter]);
 
   // Prevent body scroll when preview is active
   useEffect(() => {
@@ -323,10 +335,10 @@ export default function HotelForms() {
             onClick={() => {
               setPreviewFormId(null);
             }}
-            tooltip="Back to Forms"
+            tooltip={t("hotel.forms.preview.tooltipBack")}
           />
-          <h1 className="text-3xl font-bold m-0">Form Preview</h1>
-          <Tag value="Preview Mode - Interactions Disabled" severity="info" className="ml-auto" />
+          <h1 className="text-3xl font-bold m-0">{t("hotel.forms.preview.title")}</h1>
+          <Tag value={t("hotel.forms.preview.tag")} severity="info" className="ml-auto" />
         </div>
         <div style={{ flex: 1, position: 'relative', overflow: 'hidden', padding: '0 1rem 1rem 1rem' }}>
             <iframe
@@ -394,8 +406,8 @@ export default function HotelForms() {
       <div className="col-12">
         <div className="flex flex-column gap-3 mb-4">
           <div>
-            <h1 className="text-3xl font-bold m-0">Feedback Form</h1>
-            <p className="text-600 mt-2 mb-0">Manage your guest feedback form. You can update this form at any time.</p>
+            <h1 className="text-3xl font-bold m-0">{t("hotel.forms.header.title")}</h1>
+            <p className="text-600 mt-2 mb-0">{t("hotel.forms.header.subtitle")}</p>
           </div>
         </div>
       </div>
@@ -407,7 +419,7 @@ export default function HotelForms() {
             <div className="flex align-items-center justify-content-center" style={{ height: '200px' }}>
               <div className="text-center">
                 <i className="pi pi-spinner pi-spin text-2xl mb-2"></i>
-                <p className="text-600">Loading form...</p>
+                <p className="text-600">{t("hotel.forms.states.loading")}</p>
               </div>
             </div>
           </Card>
@@ -416,16 +428,16 @@ export default function HotelForms() {
             <div className="grid">
               <div className="col-12 md:col-6">
                 <div className="mb-4">
-                  <label className="text-600 text-sm font-semibold block mb-2" style={{ color: '#64748b' }}>Form Title</label>
+                  <label className="text-600 text-sm font-semibold block mb-2" style={{ color: '#64748b' }}>{t("hotel.forms.fields.title")}</label>
                   <p className="text-900 font-semibold text-xl m-0" style={{ color: '#1e293b' }}>{existingForm.title}</p>
                 </div>
               </div>
               <div className="col-12 md:col-6">
                 <div className="mb-4">
-                  <label className="text-600 text-sm font-semibold block mb-2" style={{ color: '#64748b' }}>Status</label>
+                  <label className="text-600 text-sm font-semibold block mb-2" style={{ color: '#64748b' }}>{t("hotel.forms.fields.status")}</label>
                   <div className="mt-2">
                     <Tag 
-                      value={existingForm.isActive ? "Active" : "Inactive"} 
+                      value={existingForm.isActive ? t("hotel.forms.fields.active") : t("hotel.forms.fields.inactive")} 
                       severity={getStatusSeverity(existingForm.isActive) as any} 
                       style={{ fontSize: '0.875rem', padding: '0.5rem 1rem' }}
                     />
@@ -434,36 +446,36 @@ export default function HotelForms() {
               </div>
               <div className="col-12 md:col-6">
                 <div className="mb-4">
-                  <label className="text-600 text-sm font-semibold block mb-2" style={{ color: '#64748b' }}>Description</label>
+                  <label className="text-600 text-sm font-semibold block mb-2" style={{ color: '#64748b' }}>{t("hotel.forms.fields.description")}</label>
                   <p className="text-600 m-0" style={{ lineHeight: '1.6', color: '#64748b' }}>
-                    {existingForm.description || 'No description provided'}
+                    {existingForm.description || t("hotel.forms.fields.noDescription")}
                   </p>
                 </div>
               </div>
               <div className="col-12 md:col-6">
                 <div className="mb-4">
-                  <label className="text-600 text-sm font-semibold block mb-2" style={{ color: '#64748b' }}>Total Responses</label>
+                  <label className="text-600 text-sm font-semibold block mb-2" style={{ color: '#64748b' }}>{t("hotel.forms.fields.totalResponses")}</label>
                   <p className="text-900 font-bold text-2xl m-0" style={{ color: '#1e293b' }}>{existingForm.totalResponses}</p>
                 </div>
               </div>
               <div className="col-12">
                 <div className="flex gap-3 mt-4 pt-4 border-top-1 surface-border">
                   <Button
-                    label="Edit Form"
+                    label={t("hotel.forms.buttons.edit")}
                     icon="pi pi-pencil"
                     onClick={handleEditForm}
                     className="p-button-primary"
                     style={{ minWidth: '140px' }}
                   />
                   <Button
-                    label="Preview Form"
+                    label={t("hotel.forms.buttons.preview")}
                     icon="pi pi-eye"
                     onClick={() => handlePreviewForm(existingForm.id)}
                     className="p-button-outlined"
                     style={{ minWidth: '140px' }}
                   />
                   <Button
-                    label="Show QR Code"
+                    label={t("hotel.forms.buttons.showQr")}
                     icon="pi pi-qrcode"
                     onClick={() => handleShowQrCode(existingForm.id, existingForm.title)}
                     className="p-button-outlined"
@@ -477,12 +489,12 @@ export default function HotelForms() {
           <Card className="shadow-2">
             <div className="text-center py-8">
               <i className="pi pi-file-edit text-5xl text-400 mb-4" style={{ color: '#94a3b8' }}></i>
-              <h3 className="text-900 mb-2" style={{ fontSize: '1.5rem', fontWeight: '600' }}>No Form Created Yet</h3>
+              <h3 className="text-900 mb-2" style={{ fontSize: '1.5rem', fontWeight: '600' }}>{t("hotel.forms.empty.title")}</h3>
               <p className="text-600 mb-5" style={{ fontSize: '1rem', maxWidth: '400px', margin: '0 auto 2rem' }}>
-                Create your feedback form to start collecting guest reviews.
+                {t("hotel.forms.empty.description")}
               </p>
               <Button
-                label="Create Form"
+                label={t("hotel.forms.buttons.create")}
                 icon="pi pi-plus"
                 onClick={() => setShowFormBuilder(true)}
                 className="p-button-primary"
@@ -495,7 +507,7 @@ export default function HotelForms() {
 
       {/* QR Code Dialog */}
       <Dialog
-        header={`QR Code - ${qrFormTitle}`}
+        header={t("hotel.forms.qrDialog.title").replace("{title}", qrFormTitle)}
         visible={showQrDialog}
         style={{ width: '400px' }}
         onHide={() => setShowQrDialog(false)}
@@ -516,13 +528,13 @@ export default function HotelForms() {
               />
               <div className="flex flex-column gap-2">
                 <Button
-                  label="Download QR Code"
+                  label={t("hotel.forms.buttons.downloadQr")}
                   icon="pi pi-download"
                   onClick={downloadQrCode}
                   className="w-full"
                 />
                 <Button
-                  label="Copy URL"
+                  label={t("hotel.forms.buttons.copyUrl")}
                   icon="pi pi-copy"
                   onClick={copyQrUrl}
                   className="p-button-outlined w-full"

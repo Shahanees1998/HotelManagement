@@ -1,15 +1,80 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withAuth, AuthenticatedRequest } from '@/lib/authMiddleware';
 import { prisma } from '@/lib/prisma';
+import en from "@/i18n/locales/en.json";
+import ar from "@/i18n/locales/ar.json";
+import zh from "@/i18n/locales/zh.json";
+
+const AVAILABLE_LOCALES = ["en", "ar", "zh"] as const;
+type Locale = typeof AVAILABLE_LOCALES[number];
+
+const TRANSLATIONS = {
+  en,
+  ar,
+  zh,
+} as const;
+
+function resolveLocale(request: NextRequest): Locale {
+  const acceptLanguage = request.headers.get("accept-language") ?? "en";
+  const parsed = acceptLanguage.split(",")[0]?.split("-")[0]?.trim().toLowerCase();
+  if (parsed && AVAILABLE_LOCALES.includes(parsed as Locale)) {
+    return parsed as Locale;
+  }
+  return "en";
+}
+
+function getTranslationValue(locale: Locale, key: string): unknown {
+  const segments = key.split(".");
+  let value: any = TRANSLATIONS[locale];
+  for (const segment of segments) {
+    if (value && typeof value === "object" && segment in value) {
+      value = value[segment];
+    } else {
+      return undefined;
+    }
+  }
+  return value;
+}
+
+function translate(locale: Locale, key: string): string {
+  const value = getTranslationValue(locale, key);
+  if (typeof value === "string") {
+    return value;
+  }
+  if (locale !== "en") {
+    const fallback = getTranslationValue("en", key);
+    if (typeof fallback === "string") {
+      return fallback;
+    }
+  }
+  return key;
+}
+
+function translateArray(locale: Locale, key: string): string[] {
+  const value = getTranslationValue(locale, key);
+  if (Array.isArray(value)) {
+    return value as string[];
+  }
+  if (locale !== "en") {
+    const fallback = getTranslationValue("en", key);
+    if (Array.isArray(fallback)) {
+      return fallback as string[];
+    }
+  }
+  return [];
+}
 
 // GET /api/hotel/subscription - Get hotel subscription details
 export async function GET(request: NextRequest) {
+  const locale = resolveLocale(request);
+  const t = (key: string) => translate(locale, key);
+
   return withAuth(request, async (authenticatedReq: AuthenticatedRequest) => {
     try {
       const user = authenticatedReq.user;
       
       if (!user || user.role !== 'HOTEL') {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        return NextResponse.json({ error: t("hotel.subscription.errors.unauthorized") }, { status: 401 });
       }
 
       // Get hotel with subscription details
@@ -28,7 +93,7 @@ export async function GET(request: NextRequest) {
       });
 
       if (!hotel) {
-        return NextResponse.json({ error: 'Hotel not found' }, { status: 404 });
+        return NextResponse.json({ error: t("hotel.subscription.errors.hotelNotFound") }, { status: 404 });
       }
 
       // Calculate trial days remaining
@@ -66,42 +131,27 @@ export async function GET(request: NextRequest) {
         plans: [
           {
             id: 'basic',
-            name: 'Basic Plan',
+            name: t("hotel.subscription.plans.basic.name"),
             price: 29,
             currency: 'USD',
             interval: 'month',
-            features: [
-              'Up to 100 reviews per month',
-              'Basic analytics',
-              'QR code generation',
-              'Basic Feedback Form',
-            ],
+            features: translateArray(locale, "hotel.subscription.plans.basic.features"),
           },
           {
             id: 'professional',
-            name: 'Professional Plan',
+            name: t("hotel.subscription.plans.professional.name"),
             price: 79,
             currency: 'USD',
             interval: 'month',
-            features: [
-              'Up to 500 reviews per month',
-              'Advanced analytics',
-              'QR code generation',
-              'Customized Star Rating Questions',
-            ],
+            features: translateArray(locale, "hotel.subscription.plans.professional.features"),
           },
           {
             id: 'enterprise',
-            name: 'Enterprise Plan',
+            name: t("hotel.subscription.plans.enterprise.name"),
             price: 199,
             currency: 'USD',
             interval: 'month',
-            features: [
-              'Unlimited reviews',
-              'Full analytics suite',
-              'QR code generation',
-              'All type of questions',
-            ],
+            features: translateArray(locale, "hotel.subscription.plans.enterprise.features"),
           },
         ],
       };
@@ -110,7 +160,7 @@ export async function GET(request: NextRequest) {
     } catch (error) {
       console.error('Error fetching subscription:', error);
       return NextResponse.json(
-        { error: 'Failed to fetch subscription details' },
+        { error: t("hotel.subscription.errors.fetchFailed") },
         { status: 500 }
       );
     }
@@ -119,12 +169,15 @@ export async function GET(request: NextRequest) {
 
 // POST /api/hotel/subscription - Update subscription (upgrade/downgrade)
 export async function POST(request: NextRequest) {
+  const locale = resolveLocale(request);
+  const t = (key: string) => translate(locale, key);
+
   return withAuth(request, async (authenticatedReq: AuthenticatedRequest) => {
     try {
       const user = authenticatedReq.user;
       
       if (!user || user.role !== 'HOTEL') {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        return NextResponse.json({ error: t("hotel.subscription.errors.unauthorized") }, { status: 401 });
       }
 
       const body = await request.json();
@@ -132,7 +185,7 @@ export async function POST(request: NextRequest) {
 
       if (!planId || !action) {
         return NextResponse.json(
-          { error: 'Plan ID and action are required' },
+          { error: t("hotel.subscription.errors.planRequired") },
           { status: 400 }
         );
       }
@@ -144,7 +197,7 @@ export async function POST(request: NextRequest) {
       });
 
       if (!hotel) {
-        return NextResponse.json({ error: 'Hotel not found' }, { status: 404 });
+        return NextResponse.json({ error: t("hotel.subscription.errors.hotelNotFound") }, { status: 404 });
       }
 
       // For now, simulate subscription changes (in real app, integrate with Stripe)
@@ -158,11 +211,11 @@ export async function POST(request: NextRequest) {
         
         // Map plan ID to plan name for display
         const planMap: { [key: string]: string } = {
-          'basic': 'Basic Plan',
-          'professional': 'Professional Plan', 
-          'enterprise': 'Enterprise Plan'
+          'basic': t("hotel.subscription.plans.basic.name"),
+          'professional': t("hotel.subscription.plans.professional.name"), 
+          'enterprise': t("hotel.subscription.plans.enterprise.name")
         };
-        planName = planMap[planId] || 'Unknown Plan';
+        planName = planMap[planId] || t("hotel.subscription.errors.unknownPlan");
       } else if (action === 'cancel') {
         newStatus = 'CANCELLED';
       }
@@ -179,7 +232,10 @@ export async function POST(request: NextRequest) {
       });
 
       return NextResponse.json({
-        message: `Successfully ${action === 'upgrade' ? 'upgraded to' : 'cancelled'} ${planName || 'subscription'}`,
+        message:
+          action === 'upgrade'
+            ? t("hotel.subscription.messages.upgraded").replace("{plan}", planName)
+            : t("hotel.subscription.messages.cancelled"),
         data: {
           subscriptionStatus: updatedHotel.subscriptionStatus,
           subscriptionEndsAt: updatedHotel.subscriptionEndsAt?.toISOString(),
@@ -189,7 +245,7 @@ export async function POST(request: NextRequest) {
     } catch (error) {
       console.error('Error updating subscription:', error);
       return NextResponse.json(
-        { error: 'Failed to update subscription' },
+        { error: t("hotel.subscription.errors.updateFailed") },
         { status: 500 }
       );
     }

@@ -1,61 +1,66 @@
 "use client";
 
+import { useMemo } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Badge } from "primereact/badge";
-import { Tag } from "primereact/tag";
 import { useRouter } from "next/navigation";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 export default function CommunicationsPage() {
     const router = useRouter();
+    const { t } = useI18n();
 
-    const communicationModules = [
+    const communicationModules = useMemo(() => [
         {
-            title: "Chat Messages",
-            description: "Real-time messaging system with chat rooms and user conversations",
+            title: t("Chat Messages"),
+            description: t("Real-time messaging system with chat rooms and user conversations"),
             icon: "pi pi-comments",
             color: "blue",
-            badge: "Live",
+            badgeKey: "live",
+            badgeLabel: t("Live"),
             route: "/admin/communications/chat",
             features: [
-                "Real-time messaging",
-                "Chat rooms & groups",
-                "File sharing",
-                "Read receipts",
-                "Typing indicators"
+                t("Real-time messaging"),
+                t("Chat rooms & groups"),
+                t("File sharing"),
+                t("Read receipts"),
+                t("Typing indicators")
             ]
         },
         {
-            title: "Notifications",
-            description: "System notifications and alerts management",
+            title: t("Notifications"),
+            description: t("System notifications and alerts management"),
             icon: "pi pi-bell",
             color: "orange",
-            badge: "Active",
+            badgeKey: "active",
+            badgeLabel: t("Active"),
             route: "/admin/communications/notifications",
             features: [
-                "System notifications",
-                "Read/unread status",
-                "Type filtering",
-                "Bulk actions",
-                "Status management"
+                t("System notifications"),
+                t("Read/unread status"),
+                t("Type filtering"),
+                t("Bulk actions"),
+                t("Status management")
             ]
         },
         {
-            title: "Announcements",
-            description: "Create and manage system-wide announcements and broadcasts",
+            title: t("Announcements"),
+            description: t("Create and manage system-wide announcements and broadcasts"),
             icon: "pi pi-megaphone",
             color: "green",
-            badge: "New",
+            badgeKey: "new",
+            badgeLabel: t("New"),
             route: "/admin/communications/announcements",
             features: [
-                "Create announcements",
-                "Target audience",
-                "Scheduling",
-                "Status management",
-                "Content editing"
+                t("Create announcements"),
+                t("Target audience"),
+                t("Scheduling"),
+                t("Status management"),
+                t("Content editing")
             ]
         }
-    ];
+    ], [t]);
 
     const getColorClass = (color: string) => {
         switch (color) {
@@ -67,12 +72,12 @@ export default function CommunicationsPage() {
         }
     };
 
-    const getBadgeSeverity = (badge: string) => {
-        switch (badge) {
-            case 'Live': return 'success';
-            case 'Active': return 'info';
-            case 'New': return 'warning';
-            default: return 'secondary';
+    const getBadgeSeverity = (badgeKey: string) => {
+        switch (badgeKey) {
+            case "live": return "success";
+            case "active": return "info";
+            case "new": return "warning";
+            default: return "secondary";
         }
     };
 
@@ -81,8 +86,8 @@ export default function CommunicationsPage() {
             <div className="col-12">
                 <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-4">
                     <div className="flex flex-column">
-                        <h1 className="text-3xl font-bold m-0">Communications Center</h1>
-                        <span className="text-600 text-lg">Manage all communication channels and messaging systems</span>
+                        <h1 className="text-3xl font-bold m-0">{t("Communications Center")}</h1>
+                        <span className="text-600 text-lg">{t("Manage all communication channels and messaging systems")}</span>
                     </div>
                 </div>
 
@@ -94,7 +99,7 @@ export default function CommunicationsPage() {
                                 <i className="pi pi-comments text-3xl text-blue-500 mr-3"></i>
                                 <div>
                                     <div className="text-2xl font-bold text-blue-500">24</div>
-                                    <div className="text-600">Active Chats</div>
+                                    <div className="text-600">{t("Active Chats")}</div>
                                 </div>
                             </div>
                         </Card>
@@ -105,7 +110,7 @@ export default function CommunicationsPage() {
                                 <i className="pi pi-bell text-3xl text-orange-500 mr-3"></i>
                                 <div>
                                     <div className="text-2xl font-bold text-orange-500">156</div>
-                                    <div className="text-600">Unread Notifications</div>
+                                    <div className="text-600">{t("Unread Notifications")}</div>
                                 </div>
                             </div>
                         </Card>
@@ -116,7 +121,7 @@ export default function CommunicationsPage() {
                                 <i className="pi pi-megaphone text-3xl text-green-500 mr-3"></i>
                                 <div>
                                     <div className="text-2xl font-bold text-green-500">12</div>
-                                    <div className="text-600">Published Announcements</div>
+                                    <div className="text-600">{t("Published Announcements")}</div>
                                 </div>
                             </div>
                         </Card>
@@ -138,8 +143,8 @@ export default function CommunicationsPage() {
                                             <h3 className="text-xl font-bold m-0">{module.title}</h3>
                                         </div>
                                         <Badge 
-                                            value={module.badge} 
-                                            severity={getBadgeSeverity(module.badge) as any}
+                                            value={module.badgeLabel} 
+                                            severity={getBadgeSeverity(module.badgeKey) as any}
                                         />
                                     </div>
                                     
@@ -148,7 +153,7 @@ export default function CommunicationsPage() {
                                     </p>
 
                                     <div className="mb-4">
-                                        <h4 className="font-semibold mb-2">Features:</h4>
+                                        <h4 className="font-semibold mb-2">{t("Features:")}</h4>
                                         <ul className="list-none p-0 m-0">
                                             {module.features.map((feature, featureIndex) => (
                                                 <li key={featureIndex} className="flex align-items-center mb-1">
@@ -160,7 +165,7 @@ export default function CommunicationsPage() {
                                     </div>
 
                                     <Button 
-                                        label="Open Module" 
+                                        label={t("Open Module")} 
                                         icon="pi pi-arrow-right" 
                                         iconPos="right"
                                         className={`w-full bg-${module.color}-500 border-${module.color}-500 hover:bg-${module.color}-600`}
@@ -179,28 +184,28 @@ export default function CommunicationsPage() {
                 <div className="grid mt-6">
                     <div className="col-12">
                         <Card>
-                            <h3 className="text-xl font-bold mb-3">Quick Actions</h3>
+                            <h3 className="text-xl font-bold mb-3">{t("Quick Actions")}</h3>
                             <div className="flex flex-wrap gap-3">
                                 <Button 
-                                    label="Send Broadcast" 
+                                    label={t("Send Broadcast")} 
                                     icon="pi pi-megaphone" 
                                     severity="success"
                                     onClick={() => router.push('/admin/communications/announcements')}
                                 />
                                 <Button 
-                                    label="View All Notifications" 
+                                    label={t("View All Notifications")} 
                                     icon="pi pi-bell" 
                                     severity="info"
                                     onClick={() => router.push('/admin/communications/notifications')}
                                 />
                                 <Button 
-                                    label="Open Chat" 
+                                    label={t("Open Chat")} 
                                     icon="pi pi-comments" 
                                     severity="info"
                                     onClick={() => router.push('/admin/communications/chat')}
                                 />
                                 <Button 
-                                    label="System Status" 
+                                    label={t("System Status")} 
                                     icon="pi pi-info-circle" 
                                     severity="secondary"
                                     onClick={() => {

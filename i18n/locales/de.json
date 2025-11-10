@@ -1,0 +1,1300 @@
+{
+  "languages": {
+    "en": "Englisch",
+    "ar": "Arabisch",
+    "zh": "Chinesisch",
+    "fr": "Französisch",
+    "de": "Deutsch",
+    "es": "Spanisch",
+    "it": "Italienisch",
+    "pt": "Portugiesisch",
+    "ru": "Russisch",
+    "pl": "Polnisch",
+    "nl": "Niederländisch",
+    "uk": "Ukrainisch",
+    "el": "Griechisch",
+    "ro": "Rumänisch"
+  },
+  "common": {
+    "warning": "Warnung",
+    "success": "Erfolg",
+    "error": "Fehler",
+    "info": "Info",
+    "agreeTo": "Ich stimme den",
+    "and": "und",
+    "terms": "Allgemeinen Geschäftsbedingungen",
+    "privacy": "Datenschutzbestimmungen",
+    "alreadyHaveAccount": "Bereits ein Konto?",
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "orRegisterVia": "oder registrieren über",
+    "selectLanguage": "Sprache auswählen",
+    "getStarted": "Loslegen"
+  },
+  "components": {
+    "customPaginator": {
+      "itemsPerPage": "Elemente pro Seite",
+      "rangeInfo": "{start}-{end} von {total} Einträgen",
+      "previousPage": "Vorherige Seite",
+      "nextPage": "Nächste Seite"
+    }
+  },
+  "countries": {
+    "US": "Vereinigte Staaten",
+    "CA": "Kanada",
+    "GB": "Vereinigtes Königreich",
+    "AU": "Australien",
+    "DE": "Deutschland",
+    "FR": "Frankreich",
+    "ES": "Spanien",
+    "IT": "Italien",
+    "JP": "Japan",
+    "IN": "Indien",
+    "CN": "China",
+    "BR": "Brasilien",
+    "MX": "Mexiko",
+    "OTHER": "Andere"
+  },
+  "registerHotel": {
+    "step1": {
+      "title": "Informationen zum Eigentümer!",
+      "fields": {
+        "fullName": "Name",
+        "email": "E-Mail-Adresse",
+        "phone": "Telefonnummer",
+        "password": "Passwort"
+      },
+      "placeholders": {
+        "fullName": "Geben Sie Ihren Namen ein",
+        "email": "Geben Sie Ihre E-Mail-Adresse ein",
+        "phone": "Geben Sie Ihre Telefonnummer ein",
+        "password": "Geben Sie Ihr Passwort ein"
+      },
+      "cta": "Weiter geht's!"
+    },
+    "step2": {
+      "title": "Hotelinformationen!",
+      "subtitle": "Sind meine Daten sicher?",
+      "fields": {
+        "hotelName": "Name des Hotels",
+        "hotelWebsite": "Hotel-Webseite",
+        "hotelAddress": "Adresse des Hotels",
+        "city": "Stadt",
+        "country": "Land",
+        "hotelDescription": "Hotelbeschreibung"
+      },
+      "placeholders": {
+        "hotelName": "Hotelname eingeben",
+        "hotelWebsite": "URL der Hotel-Website eingeben",
+        "hotelAddress": "Straßenadresse des Hotels eingeben",
+        "city": "Stadt des Hotels eingeben",
+        "country": "Land auswählen",
+        "hotelDescription": "Kurze Beschreibung Ihres Hotels eingeben"
+      }
+    },
+    "buttons": {
+      "back": "Zurück",
+      "register": "Jetzt registrieren",
+      "registering": "Registrierung läuft..."
+    },
+    "toasts": {
+      "missingRequired": "Bitte füllen Sie alle Pflichtfelder aus",
+      "passwordLength": "Das Passwort muss mindestens 6 Zeichen lang sein",
+      "acceptTerms": "Bitte akzeptieren Sie die allgemeinen Geschäftsbedingungen",
+      "acceptTermsPrivacy": "Bitte akzeptieren Sie die AGB und die Datenschutzbestimmungen",
+      "success": "Hotel erfolgreich registriert! Bitte prüfen Sie Ihre E-Mails zur Bestätigung.",
+      "error": "Registrierung fehlgeschlagen",
+      "errorGeneric": "Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut."
+    },
+    "images": {
+      "ownerAlt": "Hotel registrieren – Informationen zum Eigentümer",
+      "hotelAlt": "Hotel registrieren – Hotelinformationen"
+    }
+  },
+  "hotel": {
+    "dashboard": {
+      "recentReviews": {
+        "title": "Neueste Bewertungen",
+        "description": "Sehen und verwalten Sie Ihre aktuellsten Bewertungen.",
+        "states": {
+          "loading": "Neueste Bewertungen werden geladen..."
+        },
+        "table": {
+          "date": "Datum"
+        }
+      }
+    },
+    "forms": {
+      "header": {
+        "title": "Feedback-Formular",
+        "subtitle": "Verwalten Sie das Feedback-Formular Ihrer Gäste. Sie können es jederzeit aktualisieren."
+      },
+      "states": {
+        "loading": "Formular wird geladen..."
+      },
+      "fields": {
+        "title": "Formulartitel",
+        "status": "Status",
+        "active": "Aktiv",
+        "inactive": "Inaktiv",
+        "description": "Beschreibung",
+        "noDescription": "Keine Beschreibung vorhanden",
+        "totalResponses": "Gesamtanzahl Antworten"
+      },
+      "buttons": {
+        "edit": "Formular bearbeiten",
+        "preview": "Formular ansehen",
+        "showQr": "QR-Code anzeigen",
+        "create": "Formular erstellen",
+        "downloadQr": "QR-Code herunterladen",
+        "copyUrl": "URL kopieren"
+      },
+      "empty": {
+        "title": "Noch kein Formular erstellt",
+        "description": "Erstellen Sie Ihr Feedback-Formular, um Bewertungen von Gästen zu sammeln."
+      },
+      "preview": {
+        "title": "Formularvorschau",
+        "tooltipBack": "Zurück zu den Formularen",
+        "tag": "Vorschau-Modus – Interaktionen deaktiviert"
+      },
+      "qrDialog": {
+        "title": "QR-Code – {title}"
+      },
+      "toasts": {
+        "loadError": "Formular konnte nicht geladen werden",
+        "slugMissing": "Hotel-Slug nicht gefunden. Vorschau des Formulars nicht möglich.",
+        "createSuccess": "Formular erfolgreich erstellt",
+        "updateSuccess": "Formular erfolgreich aktualisiert",
+        "saveError": "Formular konnte nicht gespeichert werden",
+        "qrGenerated": "QR-Code erfolgreich erstellt",
+        "qrExists": "Für dieses Formular existiert bereits ein QR-Code",
+        "qrError": "Fehler beim Verarbeiten des QR-Codes",
+        "noUrl": "Keine URL zum Kopieren",
+        "copiedDetail": "URL in die Zwischenablage kopiert",
+        "copyError": "URL konnte nicht kopiert werden"
+      },
+      "builder": {
+        "header": {
+          "edit": "Formular bearbeiten",
+          "create": "Neues Formular erstellen",
+          "preview": "Formular ansehen",
+          "livePreview": "Live-Vorschau",
+          "formBuilderToggle": "Formular-Builder",
+          "livePreviewToggle": "Live-Vorschau",
+          "backTooltip": "Zurück zu den Formularen"
+        },
+        "buttons": {
+          "save": "Formular speichern",
+          "saveTooltip": "Formular speichern",
+          "addNew": "Neu hinzufügen",
+          "addOption": "Hinzufügen",
+          "cancel": "Abbrechen",
+          "update": "Aktualisieren",
+          "add": "Hinzufügen"
+        },
+        "sections": {
+          "settings": "Formulareinstellungen",
+          "questions": "Fragen",
+          "predefined": "Vordefinierte Fragen",
+          "custom": "Eigene Fragen"
+        },
+        "fields": {
+          "titleLabel": "Formulartitel*",
+          "titlePlaceholder": "Titel des Formulars eingeben",
+          "descriptionLabel": "Formularbeschreibung*",
+          "descriptionPlaceholder": "Kurze Beschreibung des Formulars eingeben"
+        },
+        "predefined": {
+          "rateUs": "Bewerten Sie uns* (immer enthalten)",
+          "rateUsTitle": "Bewerten Sie uns",
+          "customRating": "Eigene Bewertung*",
+          "customRatingTitle": "Eigene Bewertung",
+          "customRatingPlaceholder": "Bezeichnung des Bewertungselements eingeben",
+          "customRatingEditTitle": "Zum Bearbeiten klicken",
+          "feedback": "Bitte geben Sie uns ehrliches Feedback?*",
+          "feedbackTitle": "Bitte geben Sie uns ehrliches Feedback?",
+          "feedbackPlaceholder": "Geben Sie Ihr ausführliches Feedback ein"
+        },
+        "tooltips": {
+          "previewDisabled": "Vorschau-Modus – Bearbeitung deaktiviert",
+          "addQuestion": "Eigene Frage hinzufügen",
+          "save": "Speichern",
+          "cancel": "Abbrechen",
+          "edit": "Bearbeiten",
+          "delete": "Löschen",
+          "moveUp": "Nach oben bewegen",
+          "moveDown": "Nach unten bewegen"
+        },
+        "questionTypes": {
+          "shortText": "Kurztext",
+          "longText": "Langtext",
+          "starRating": "Sternebewertung",
+          "singleChoice": "Einfachauswahl",
+          "multipleChoice": "Mehrfachauswahl",
+          "yesNo": "Ja/Nein"
+        },
+        "placeholders": {
+          "answer": "Antwort eingeben"
+        },
+        "answers": {
+          "yes": "Ja",
+          "no": "Nein"
+        },
+        "badges": {
+          "default": "Standard",
+          "defaultHelper": "Kann nicht bearbeitet, gelöscht oder verschoben werden"
+        },
+        "states": {
+          "loading": "Formulardaten werden geladen...",
+          "noQuestionsTitle": "Noch keine Fragen hinzugefügt",
+          "noQuestionsDescription": "Nutzen Sie die oben verfügbaren Fragen oder fügen Sie eigene hinzu, um zu starten"
+        },
+        "alerts": {
+          "ratingRequiredTitle": "Bewertung erforderlich",
+          "ratingRequiredDescription": "Zum Speichern des Formulars muss entweder „Bewerten Sie uns“ oder „Eigene Bewertung“ ausgewählt werden."
+        },
+        "layoutInfo": {
+          "basic": {
+            "title": "Funktionen Layout „Basic“",
+            "description": "Alle Fragen, inklusive eigener Fragen, stehen zur Verfügung. Dieses Layout bietet ein einfaches, klares Design."
+          },
+          "good": {
+            "title": "Funktionen Layout „Good“",
+            "description": "Wählen Sie entweder „Bewerten Sie uns“ ODER „Eigene Bewertung“ (wechselseitig ausschließend). Alle Fragen, inklusive eigener Fragen, stehen zur Verfügung."
+          },
+          "excellent": {
+            "title": "Funktionen Layout „Excellent“",
+            "description": "Alle vordefinierten sowie eigene Fragen sind verfügbar. Premium-Design mit Animationen für umfassende Feedback-Formulare."
+          }
+        },
+        "subscription": {
+          "title": "Abonnement erforderlich",
+          "message": "Ihr Abonnement ist {status}. Bitte reaktivieren Sie es, um Formulare zu erstellen oder zu bearbeiten.",
+          "manageButton": "Abonnement verwalten",
+          "status": {
+            "cancelled": "gekündigt",
+            "expired": "abgelaufen"
+          },
+          "toastTitle": "Abonnement erforderlich",
+          "toastMessage": "Ihr Abonnement wurde gekündigt oder ist abgelaufen. Bitte reaktivieren Sie es, um Formulare zu erstellen."
+        },
+        "preview": {
+          "descriptionFallback": "Füllen Sie dieses Formular aus, um Unterstützung anzufordern oder ein Problem zu melden. Unser Team prüft Ihre Anfrage und meldet sich schnellstmöglich mit der passenden Hilfe.",
+          "fullNameLabel": "Vollständiger Name*",
+          "fullNamePlaceholder": "Geben Sie Ihren vollständigen Namen ein",
+          "emailLabel": "E-Mail*",
+          "emailPlaceholder": "Geben Sie Ihre E-Mail-Adresse ein",
+          "submit": "Jetzt absenden"
+        },
+        "dialog": {
+          "addTitle": "Frage hinzufügen",
+          "editTitle": "Frage bearbeiten",
+          "questionLabel": "Fragetext *",
+          "questionPlaceholder": "Geben Sie Ihre Frage ein",
+          "typeLabel": "Fragetyp",
+          "optionsLabel": "Optionen",
+          "optionPlaceholder": "Option eingeben"
+        },
+        "toasts": {
+          "formLoadSuccess": "Formulardaten erfolgreich geladen",
+          "formLoadError": "Formulardaten konnten nicht geladen werden",
+          "questionRequired": "Fragetext ist erforderlich",
+          "optionsRequired": "Fragen mit Mehrfachauswahl benötigen mindestens 2 Optionen",
+          "questionUpdated": "Frage aktualisiert",
+          "questionAdded": "Frage hinzugefügt",
+          "questionDeleted": "Frage gelöscht",
+          "ratingLabelRequired": "Bitte geben Sie eine Bezeichnung für das Bewertungselement ein",
+          "ratingItemUpdated": "Bewertungselement aktualisiert",
+          "ratingItemDeleted": "Bewertungselement gelöscht",
+          "ratingItemAdded": "Neues Bewertungselement hinzugefügt",
+          "titleRequired": "Formulartitel ist erforderlich",
+          "questionCountRequired": "Es muss mindestens eine Frage vorhanden sein"
+        }
+      }
+    },
+    "analytics": {
+      "customRatings": {
+        "title": "Analyse benutzerdefinierter Bewertungen",
+        "description": "Verfolgen Sie detaillierte Bewertungstrends für Ihr Formular mit dem Layout „Gut“.",
+        "buttons": {
+          "exportCsv": "CSV exportieren",
+          "exportPdf": "PDF exportieren",
+          "refresh": "Aktualisieren"
+        },
+        "filters": {
+          "title": "Datumsfilter",
+          "startDate": "Startdatum",
+          "startDatePlaceholder": "Startdatum auswählen",
+          "endDate": "Enddatum",
+          "endDatePlaceholder": "Enddatum auswählen",
+          "clear": "Filter zurücksetzen"
+        },
+        "states": {
+          "loading": "Analysedaten werden geladen...",
+          "noDataTitle": "Keine Daten verfügbar",
+          "noDataDescription": "Für Ihr Hotel wurden keine „Gut“-Layouts mit benutzerdefinierten Bewertungsdaten gefunden."
+        },
+        "toasts": {
+          "loadError": "Benutzerdefinierte Bewertungsanalyse konnte nicht geladen werden",
+          "exportSuccess": "Daten erfolgreich als {format} exportiert",
+          "exportError": "Daten konnten nicht exportiert werden"
+        },
+        "chart": {
+          "trendPrefix": "Trend-Analyse - ",
+          "summaryTitle": "Bewertungsübersicht",
+          "ratingsCount": "({count} Bewertungen)",
+          "averageRating": "Durchschnittsbewertung",
+          "tooltipSuffix": "/5"
+        }
+      },
+      "overview": {
+        "title": "Analysen",
+        "description": "Verfolgen Sie die Leistung Ihres Hotels und die Zufriedenheit der Gäste.",
+        "dropdownPlaceholder": "Zeitraum wählen",
+        "buttons": {
+          "refresh": "Aktualisieren"
+        },
+        "timeRanges": {
+          "7": "Letzte 7 Tage",
+          "30": "Letzte 30 Tage",
+          "90": "Letzte 90 Tage",
+          "180": "Letzte 6 Monate",
+          "365": "Letztes Jahr"
+        },
+        "states": {
+          "loadingSkeleton": "Wird geladen...",
+          "noData": "Keine Analysedaten verfügbar",
+          "chartLoading": "Diagrammdaten werden geladen...",
+          "chartEmpty": "Keine Diagrammdaten verfügbar"
+        },
+        "cards": {
+          "change": "{change} zur letzten Periode"
+        },
+        "charts": {
+          "satisfaction": "Zufriedenheitstrends",
+          "ratingDistribution": "Bewertungsverteilung",
+          "reviewVolume": "Bewertungsvolumen"
+        },
+        "reviews": {
+          "title": "Neueste Bewertungen"
+        },
+        "toasts": {
+          "loadError": "Analysen konnten nicht geladen werden"
+        }
+      },
+      "responseRates": {
+        "title": "Analyse der Rücklaufquoten",
+        "description": "Verfolgen Sie Rücklaufquoten und Engagement-Kennzahlen Ihres Hotels.",
+        "charts": {
+          "reviewVolume": "Trends beim Bewertungsvolumen",
+          "satisfaction": "Zufriedenheitstrends im Zeitverlauf"
+        }
+      },
+      "satisfaction": {
+        "title": "Zufriedenheitsanalyse",
+        "description": "Verfolgen Sie die Zufriedenheitstrends und Bewertungen Ihrer Gäste.",
+        "charts": {
+          "reviewVolume": "Bewertungsvolumen & positive Bewertungen"
+        }
+      },
+      "notificationsCenter": {
+        "title": "Benachrichtigungen",
+        "ariaLabel": "Benachrichtigungen",
+        "iconAlt": "Benachrichtigungssymbol",
+        "buttons": {
+          "markAllRead": "Alles als gelesen markieren",
+          "refresh": "Aktualisieren"
+        },
+        "states": {
+          "empty": "Noch keine Benachrichtigungen"
+        },
+        "types": {
+          "newReview": "Neue Bewertung",
+          "reviewApproved": "Bewertung genehmigt",
+          "reviewRejected": "Bewertung abgelehnt",
+          "subscriptionExpiring": "Abonnement läuft ab",
+          "subscriptionCancelled": "Abonnement gekündigt",
+          "escalationReceived": "Eskalation eingegangen",
+          "escalationResponded": "Eskalation beantwortet",
+          "systemAlert": "Systemwarnung",
+          "newHotelRegistration": "Neue Hotelregistrierung",
+          "success": "Erfolg",
+          "info": "Info",
+          "warning": "Warnung",
+          "error": "Fehler",
+          "generic": "Benachrichtigung"
+        }
+      }
+    },
+    "reviews": {
+      "title": "Gästebewertungen",
+      "subtitle": "Verwalten und prüfen Sie das Feedback Ihrer Gäste.",
+      "buttons": {
+        "refresh": "Aktualisieren",
+        "clearFilters": "Filter zurücksetzen",
+        "view": "Ansehen",
+        "reply": "Antworten",
+        "delete": "Löschen",
+        "close": "Schließen",
+        "markAsChecked": "Als geprüft markieren",
+        "checked": "Geprüft",
+        "markAsUrgent": "Als dringend markieren",
+        "urgent": "Dringend",
+        "replyToCustomer": "Kunde antworten",
+        "cancel": "Abbrechen",
+        "sendReply": "Antwort senden"
+      },
+      "filters": {
+        "title": "Filter",
+        "searchReviews": "Bewertungen durchsuchen",
+        "searchPlaceholder": "Nach Gastname oder Feedbacktext suchen...",
+        "roomNumber": "Zimmernummer",
+        "roomNumberPlaceholder": "Nach Zimmernummer filtern...",
+        "filter": "Filtern",
+        "allReviews": "Alle Bewertungen",
+        "replied": "Beantwortet",
+        "notReplied": "Nicht beantwortet",
+        "checked": "Geprüft",
+        "notChecked": "Nicht geprüft",
+        "urgent": "Dringend",
+        "notUrgent": "Nicht dringend",
+        "starRatings": "Sternebewertungen",
+        "allRatings": "Alle Bewertungen",
+        "5Stars": "5 Sterne",
+        "4Stars": "4 Sterne",
+        "3Stars": "3 Sterne",
+        "2Stars": "2 Sterne",
+        "1Star": "1 Stern",
+        "dateRange": "Zeitraum",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "fromDate": "Von",
+        "toDate": "Bis"
+      },
+      "states": {
+        "loadingReviews": "Bewertungen werden geladen...",
+        "noReviewsFound": "Keine Bewertungen gefunden",
+        "noReviewsYet": "Es wurden noch keine Bewertungen eingereicht.",
+        "noReviewsMatchFilters": "Keine Bewertungen entsprechen Ihren aktuellen Filtern."
+      },
+      "table": {
+        "guest": "Gast",
+        "email": "Email",
+        "room": "Zimmer",
+        "rating": "Bewertung",
+        "status": "Status",
+        "submitted": "Eingereicht",
+        "actions": "Aktionen",
+        "checkedStatus": "Geprüft",
+        "notCheckedStatus": "Nicht geprüft",
+        "repliedStatus": "Beantwortet",
+        "notRepliedStatus": "Nicht beantwortet",
+        "urgentStatus": "Dringend",
+        "notUrgentStatus": "Nicht dringend",
+        "public": "Öffentlich",
+        "private": "Privat",
+        "shared": "Geteilt",
+        "noEmailAvailable": "Für diese Bewertung ist keine E-Mail verfügbar"
+      },
+      "detailsDialog": {
+        "header": "Details zum Gästefeedback",
+        "guestInfo": "Informationen zum Gast",
+        "name": "Name:",
+        "anonymous": "Anonym",
+        "email": "Email:",
+        "notProvided": "Nicht angegeben",
+        "phone": "Telefon:",
+        "roomNumber": "Zimmernummer:",
+        "submitted": "Eingereicht:",
+        "overallRating": "Gesamtbewertung",
+        "quickFeedback": "Schnelles Feedback",
+        "howDoYouRateUs": "Wie bewerten Sie uns?",
+        "honestFeedback": "Bitte geben Sie uns ehrliches Feedback?",
+        "noSpecificFeedback": "Kein spezifisches Feedback vorhanden",
+        "customRatingItem": "Benutzerdefiniertes Bewertungselement ({itemId})",
+        "formInfo": "Formularinformationen",
+        "formTitle": "Formulartitel:",
+        "description": "Beschreibung:",
+        "layout": "Layout:",
+        "feedbackResponses": "Feedbackantworten",
+        "noDetailedResponses": "Für diese Bewertung liegen keine detaillierten Antworten vor.",
+        "question": "Frage:",
+        "noAnswer": "Keine Antwort vorhanden",
+        "replyToCustomer": "Kunde antworten",
+        "replyPlaceholder": "Geben Sie hier Ihre Antwort ein...",
+        "replyMessageHint": "Diese Nachricht wird an {guestEmail} gesendet",
+        "toastWarningReply": "Bitte geben Sie eine Antwort ein",
+        "toastSuccessReply": "Antwort erfolgreich an {sentTo} gesendet",
+        "toastErrorReply": "Antwort konnte nicht gesendet werden"
+      },
+      "deleteDialog": {
+        "header": "Bewertung löschen",
+        "confirmTitle": "Sind Sie sicher, dass Sie diese Bewertung löschen möchten?",
+        "confirmMessage": "Diese Aktion kann nicht rückgängig gemacht werden. Die Bewertung wird dauerhaft entfernt.",
+        "reviewDetails": "Bewertungsdetails:",
+        "guest": "Gast:",
+        "rating": "Bewertung:",
+        "submitted": "Eingereicht:",
+        "buttons": {
+          "cancel": "Abbrechen",
+          "delete": "Löschen"
+        },
+        "toasts": {
+          "success": "Bewertung erfolgreich gelöscht",
+          "error": "Bewertung konnte nicht gelöscht werden"
+        }
+      },
+      "toasts": {
+        "loadError": "Bewertungen konnten nicht geladen werden",
+        "detailsLoadError": "Bewertungsdetails konnten nicht geladen werden",
+        "statusUpdate": {
+          "checked": "Bewertung als geprüft markiert",
+          "urgent": "Bewertung als dringend markiert",
+          "replied": "Bewertung als beantwortet markiert"
+        },
+        "statusUpdateError": "Der Bewertungsstatus konnte nicht aktualisiert werden",
+        "replyMissing": "Bitte geben Sie eine Antwort ein",
+        "replySuccess": "Antwort erfolgreich an {sentTo} gesendet",
+        "replyError": "Antwort konnte nicht gesendet werden",
+        "deleteSuccess": "Bewertung erfolgreich gelöscht",
+        "deleteError": "Bewertung konnte nicht gelöscht werden"
+      }
+    },
+    "menu": {
+      "dashboard": "Dashboard",
+      "feedbackForm": "Feedback-Formular",
+      "qrCodes": "QR-Codes",
+      "allReviews": "Alle Bewertungen",
+      "notifications": "Benachrichtigungen",
+      "contactAdmin": "Admin kontaktieren",
+      "settings": "Einstellungen",
+      "settingsItems": {
+        "userProfile": "Benutzerprofil",
+        "hotelProfile": "Hotelprofil",
+        "changePassword": "Passwort ändern",
+        "subscriptions": "Abonnements",
+        "paymentMethods": "Zahlungsmethoden"
+      }
+    },
+    "paymentMethods": {
+      "pageTitle": "Zahlungsmethode hinzufügen",
+      "buttons": {
+        "add": "Hinzufügen",
+        "addMethod": "Methode hinzufügen",
+        "updateMethod": "Methode aktualisieren",
+        "cancel": "Abbrechen",
+        "setPrimary": "Als primär festlegen",
+        "delete": "Löschen"
+      },
+      "badges": {
+        "primary": "Primär",
+        "expired": "Abgelaufen"
+      },
+      "states": {
+        "loading": "Zahlungsmethoden werden geladen...",
+        "emptyTitle": "Keine Zahlungsmethoden",
+        "emptyDescription": "Fügen Sie eine Zahlungsmethode hinzu, um Ihre Abonnements zu verwalten."
+      },
+      "form": {
+        "paymentType": "Zahlungsart",
+        "paymentTypeOptions": {
+          "card": "Kredit-/Debitkarte",
+          "bank": "Bankkonto"
+        },
+        "card": {
+          "number": "Kartennummer",
+          "numberPlaceholder": "1234 5678 9012 3456",
+          "expiryMonth": "Ablaufmonat",
+          "expiryYear": "Ablaufjahr",
+          "monthPlaceholder": "MM",
+          "yearPlaceholder": "JJJJ",
+          "cvv": "CVV",
+          "cvvPlaceholder": "123",
+          "holder": "Name des Karteninhabers",
+          "holderPlaceholder": "Max Mustermann",
+          "brand": "Kartentyp",
+          "brandPlaceholder": "Kartentyp auswählen"
+        },
+        "cardBrands": {
+          "visa": "Visa",
+          "mastercard": "Mastercard",
+          "amex": "American Express",
+          "discover": "Discover",
+          "unknown": "Karte"
+        },
+        "bank": {
+          "name": "Name der Bank",
+          "namePlaceholder": "Bank of America",
+          "accountNumber": "Kontonummer",
+          "accountPlaceholder": "Kontonummer",
+          "routingNumber": "Bankleitzahl",
+          "routingPlaceholder": "123456789",
+          "accountType": "Kontotyp",
+          "accountTypePlaceholder": "Kontotyp auswählen"
+        },
+        "accountTypes": {
+          "checking": "Girokonto",
+          "savings": "Sparkonto",
+          "unknown": "Konto"
+        }
+      },
+      "list": {
+        "endingIn": "endet auf",
+        "expiryLabel": "Ablaufdatum",
+        "accountTypeSuffix": "Konto",
+        "accountTypeUnknown": "Konto",
+        "unknownBank": "Bank",
+        "edit": "Bearbeiten",
+        "delete": "Löschen"
+      },
+      "dialogs": {
+        "add": {
+          "title": "Zahlungsmethode hinzufügen"
+        },
+        "edit": {
+          "title": "Zahlungsmethode bearbeiten",
+          "cardLocked": "Aus Sicherheitsgründen kann die Kartennummer nicht geändert werden",
+          "bankLocked": "Aus Sicherheitsgründen kann die Kontonummer nicht geändert werden"
+        },
+        "delete": {
+          "title": "Zahlungsmethode löschen",
+          "message": "Möchten Sie diese Zahlungsmethode wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+        }
+      },
+      "toasts": {
+        "load": {
+          "error": "Zahlungsmethoden konnten nicht geladen werden"
+        },
+        "add": {
+          "success": "Zahlungsmethode erfolgreich hinzugefügt",
+          "error": "Zahlungsmethode konnte nicht hinzugefügt werden"
+        },
+        "delete": {
+          "success": "Zahlungsmethode erfolgreich gelöscht",
+          "error": "Zahlungsmethode konnte nicht gelöscht werden"
+        },
+        "default": {
+          "success": "Standard-Zahlungsmethode aktualisiert",
+          "error": "Standard-Zahlungsmethode konnte nicht aktualisiert werden"
+        },
+        "update": {
+          "success": "Zahlungsmethode erfolgreich aktualisiert",
+          "error": "Zahlungsmethode konnte nicht aktualisiert werden"
+        }
+      }
+    },
+    "subscription": {
+      "header": {
+        "title": "Abonnementverwaltung",
+        "subtitle": "Verwalten Sie das Abonnement und die Abrechnung Ihres Hotels."
+      },
+      "buttons": {
+        "refresh": "Aktualisieren",
+        "processing": "In Bearbeitung...",
+        "upgradeNow": "Jetzt upgraden",
+        "currentPlan": "Aktueller Tarif",
+        "reactivate": "Reaktivieren",
+        "cancelSubscription": "Abonnement kündigen",
+        "contactSupport": "Support kontaktieren",
+        "cancel": "Abbrechen",
+        "confirm": "Bestätigen"
+      },
+      "statuses": {
+        "trial": "Testphase",
+        "active": "Aktiv",
+        "cancelled": "Gekündigt",
+        "expired": "Abgelaufen"
+      },
+      "states": {
+        "loading": "Abonnementdaten werden geladen...",
+        "notFoundTitle": "Abonnement nicht gefunden",
+        "notFoundDescription": "Abonnementinformationen konnten nicht geladen werden."
+      },
+      "labels": {
+        "notAvailable": "k. A."
+      },
+      "trial": {
+        "name": "Testtarif",
+        "description": "Kostenlose Testphase",
+        "label": "Testzeitraum:",
+        "remaining": "{count} Tage verbleibend"
+      },
+      "sections": {
+        "status": {
+          "title": "Aktueller Abonnementstatus",
+          "statusLabel": "Status",
+          "totalReviews": "Bewertungen insgesamt",
+          "averageRating": "Durchschnittsbewertung"
+        },
+        "plans": {
+          "title": "Verfügbare Tarife",
+          "currentPlanHint": "Sie nutzen derzeit diesen Tarif"
+        },
+        "actions": {
+          "title": "Abonnementaktionen"
+        },
+        "billing": {
+          "title": "Abrechnungsinformationen",
+          "subscriptionId": "Abonnement-ID:",
+          "created": "Erstellt am:",
+          "nextBilling": "Nächste Abrechnung:",
+          "trialEnds": "Test endet:"
+        }
+      },
+      "perInterval": "pro {interval}",
+      "priceLabel": "{price}/{interval}",
+      "dialog": {
+        "title": "Änderung des Abonnements bestätigen",
+        "upgradeTitle": "Upgrade auf {plan}",
+        "description": "Sie sind dabei, Ihr Abonnement zu aktualisieren.",
+        "planLabel": "Tarif:",
+        "priceLabel": "Preis:",
+        "billingLabel": "Abrechnung:",
+        "noteLabel": "Hinweis:",
+        "noteDescription": "Dies ist eine Demo-Umgebung. Es wird keine reale Zahlung verarbeitet."
+      },
+      "toasts": {
+        "load": {
+          "error": "Abonnementdaten konnten nicht geladen werden"
+        },
+        "update": {
+          "success": "Abonnement erfolgreich aktualisiert",
+          "error": "Abonnement konnte nicht aktualisiert werden"
+        }
+      },
+      "errors": {
+        "unauthorized": "Nicht autorisiert",
+        "hotelNotFound": "Hotel nicht gefunden",
+        "planRequired": "Tarif-ID und Aktion sind erforderlich",
+        "unknownPlan": "Unbekannter Tarif",
+        "fetchFailed": "Abonnementdetails konnten nicht abgerufen werden",
+        "updateFailed": "Abonnement konnte nicht aktualisiert werden"
+      },
+      "messages": {
+        "upgraded": "Upgrade auf {plan} erfolgreich",
+        "cancelled": "Abonnement erfolgreich gekündigt"
+      },
+      "plans": {
+        "basic": {
+          "name": "Basic-Tarif",
+          "features": [
+            "Bis zu 100 Bewertungen pro Monat",
+            "Basisanalysen",
+            "QR-Code-Erstellung",
+            "Einfaches Feedback-Formular"
+          ]
+        },
+        "professional": {
+          "name": "Professional-Tarif",
+          "features": [
+            "Bis zu 500 Bewertungen pro Monat",
+            "Erweiterte Analysen",
+            "QR-Code-Erstellung",
+            "Individuelle Sternebewertungsfragen"
+          ]
+        },
+        "enterprise": {
+          "name": "Enterprise-Tarif",
+          "features": [
+            "Unbegrenzte Bewertungen pro Monat",
+            "Enterprise-Analysen",
+            "Priorisierter Support",
+            "Verwaltung mehrerer Standorte"
+          ]
+        }
+      },
+      "intervals": {
+        "month": "Monat",
+        "monthly": "monatlich",
+        "year": "Jahr",
+        "yearly": "jährlich",
+        "quarter": "Quartal",
+        "quarterly": "vierteljährlich"
+      }
+    },
+    "profile": {
+      "user": {
+        "title": "Persönliche Informationen",
+        "subtitle": "Verwalten Sie die Details Ihres persönlichen Kontos.",
+        "buttons": {
+          "save": "Änderungen speichern",
+          "changePassword": "Passwort ändern",
+          "twoFactor": "Zwei-Faktor-Authentifizierung",
+          "changePhoto": "Foto ändern",
+          "uploading": "Upload läuft..."
+        },
+        "images": {
+          "cardTitle": "Profilbild",
+          "hint": "JPG, PNG oder GIF. Max. 5 MB."
+        },
+        "fields": {
+          "firstName": "Vorname *",
+          "lastName": "Nachname *",
+          "email": "E-Mail-Adresse *",
+          "phone": "Telefonnummer"
+        },
+        "placeholders": {
+          "firstName": "Geben Sie Ihren Vornamen ein",
+          "lastName": "Geben Sie Ihren Nachnamen ein",
+          "email": "ihre.email@beispiel.de",
+          "phone": "+49 30 1234567"
+        },
+        "cards": {
+          "personalInfo": "Persönliche Informationen",
+          "accountInfo": "Kontoinformationen",
+          "security": "Sicherheit"
+        },
+        "account": {
+          "type": "Kontotyp:",
+          "status": "Status:",
+          "memberSince": "Mitglied seit:",
+          "lastLogin": "Letzte Anmeldung:",
+          "typeValue": "Hotelbesitzer",
+          "statusActive": "Aktiv",
+          "notAvailable": "k. A."
+        },
+        "toasts": {
+          "saveSuccess": "Profil erfolgreich aktualisiert",
+          "saveError": "Profil konnte nicht aktualisiert werden",
+          "imageTypeError": "Bitte wählen Sie eine gültige Bilddatei (JPG, PNG, GIF oder WebP)",
+          "imageSizeError": "Das Bild darf nicht größer als 5 MB sein",
+          "imageSuccess": "Profilbild erfolgreich aktualisiert",
+          "imageError": "Bild konnte nicht hochgeladen werden",
+          "twoFactorInfo": "Zwei-Faktor-Authentifizierung steht bald zur Verfügung"
+        }
+      },
+      "hotel": {
+        "title": "Hotelprofil",
+        "subtitle": "Verwalten Sie die Informationen und Einstellungen Ihres Hotels.",
+        "buttons": {
+          "save": "Änderungen speichern",
+          "uploadLogo": "Logo hochladen",
+          "uploading": "Upload läuft...",
+          "viewPublic": "Öffentliche Seite anzeigen",
+          "contactSupport": "Support kontaktieren"
+        },
+        "images": {
+          "cardTitle": "Hotellogo",
+          "alt": "Hotellogo",
+          "hint": "JPG, PNG oder GIF. Max. 5 MB. Empfehlung: 300x300 px"
+        },
+        "cards": {
+          "actions": "Aktionen",
+          "hotelInfo": "Hotelinformationen"
+        },
+        "fields": {
+          "name": "Name des Hotels *",
+          "description": "Beschreibung",
+          "address": "Adresse",
+          "city": "Stadt",
+          "country": "Land",
+          "phone": "Telefon",
+          "email": "E-Mail",
+          "website": "Webseite"
+        },
+        "placeholders": {
+          "name": "Hotelname eingeben",
+          "description": "Kurze Beschreibung Ihres Hotels",
+          "address": "Straßenadresse",
+          "city": "Stadt",
+          "country": "Land auswählen",
+          "phone": "+49 30 1234567",
+          "email": "hotel@beispiel.de",
+          "website": "https://www.ihrhotel.de"
+        },
+        "externalLinks": {
+          "title": "Externe Bewertungslinks",
+          "subtitle": "Fügen Sie Links zu Ihren TripAdvisor- und Google-Reviews-Seiten hinzu, damit Gäste positives Feedback teilen können.",
+          "tripAdvisor": {
+            "label": "TripAdvisor-Link",
+            "placeholder": "https://www.tripadvisor.com/...",
+            "hint": "Optional: Link zu Ihrer TripAdvisor-Seite"
+          },
+          "google": {
+            "label": "Google-Reviews-Link",
+            "placeholder": "https://g.page/...",
+            "hint": "Optional: Link zu Ihrer Google-Reviews-Seite"
+          }
+        },
+        "account": {
+          "notAvailable": "k. A."
+        },
+        "toasts": {
+          "loadError": "Hotelprofil konnte nicht geladen werden",
+          "saveSuccess": "Hotelprofil erfolgreich aktualisiert",
+          "saveError": "Hotelprofil konnte nicht aktualisiert werden",
+          "imageTypeError": "Bitte wählen Sie eine gültige Bilddatei (JPG, PNG, GIF oder WebP)",
+          "imageSizeError": "Das Bild darf nicht größer als 5 MB sein",
+          "imageSuccess": "Hotellogo erfolgreich aktualisiert",
+          "imageError": "Logo konnte nicht hochgeladen werden"
+        }
+      },
+      "password": {
+        "title": "Passwort ändern",
+        "subtitle": "Aktualisieren Sie das Passwort Ihres Kontos für mehr Sicherheit.",
+        "cardTitle": "Passwort ändern",
+        "buttons": {
+          "change": "Passwort ändern",
+          "cancel": "Abbrechen",
+          "confirmChange": "Passwort ändern"
+        },
+        "fields": {
+          "current": "Aktuelles Passwort *",
+          "new": "Neues Passwort *",
+          "confirm": "Neues Passwort bestätigen *"
+        },
+        "placeholders": {
+          "current": "Geben Sie Ihr aktuelles Passwort ein",
+          "new": "Geben Sie Ihr neues Passwort ein",
+          "confirm": "Bestätigen Sie Ihr neues Passwort"
+        },
+        "strength": {
+          "label": "Passwortstärke:",
+          "weak": "Schwach",
+          "medium": "Mittel",
+          "strong": "Stark"
+        },
+        "requirements": {
+          "title": "Passwortanforderungen",
+          "minLength": "Mindestens 8 Zeichen lang",
+          "uppercase": "Enthält Großbuchstaben",
+          "lowercase": "Enthält Kleinbuchstaben",
+          "numbers": "Enthält Zahlen",
+          "special": "Enthält Sonderzeichen"
+        },
+        "tips": {
+          "title": "Sicherheitstipps",
+          "tip": "Tipp: Verwenden Sie ein einzigartiges Passwort, das Sie nirgends sonst verwenden.",
+          "warning": "Achtung: Geben Sie Ihr Passwort niemals an andere weiter."
+        },
+        "validation": {
+          "currentRequired": "Aktuelles Passwort ist erforderlich",
+          "newRequired": "Neues Passwort ist erforderlich",
+          "minLength": "Das neue Passwort muss mindestens 8 Zeichen lang sein",
+          "complexity": "Das neue Passwort muss Groß- und Kleinbuchstaben, Zahlen und Sonderzeichen enthalten",
+          "confirmMismatch": "Neues Passwort und Bestätigung stimmen nicht überein",
+          "sameAsCurrent": "Das neue Passwort muss sich vom aktuellen unterscheiden"
+        },
+        "toasts": {
+          "changeSuccess": "Passwort erfolgreich geändert",
+          "changeError": "Passwort konnte nicht geändert werden"
+        },
+        "confirm": {
+          "title": "Passwortänderung bestätigen",
+          "message": "Sind Sie sicher, dass Sie Ihr Passwort ändern möchten?",
+          "warning": "Diese Aktion meldet Sie auf allen Geräten ab und Sie müssen sich erneut anmelden."
+        },
+        "accessibility": {
+          "show": "Passwort anzeigen",
+          "hide": "Passwort verbergen"
+        }
+      },
+      "subscription": {
+        "errors": {
+          "unauthorized": "Nicht autorisiert",
+          "hotelNotFound": "Hotel nicht gefunden",
+          "planRequired": "Tarif-ID und Aktion sind erforderlich",
+          "unknownPlan": "Unbekannter Tarif",
+          "fetchFailed": "Abonnementdetails konnten nicht abgerufen werden",
+          "updateFailed": "Abonnement konnte nicht aktualisiert werden"
+        },
+        "messages": {
+          "upgraded": "Upgrade auf {plan} erfolgreich",
+          "cancelled": "Abonnement erfolgreich gekündigt"
+        },
+        "plans": {
+          "basic": {
+            "name": "Basic-Tarif",
+            "features": [
+              "Bis zu 100 Bewertungen pro Monat",
+              "Basisanalysen",
+              "QR-Code-Erstellung",
+              "Einfaches Feedback-Formular"
+            ]
+          },
+          "professional": {
+            "name": "Professional-Tarif",
+            "features": [
+              "Bis zu 500 Bewertungen pro Monat",
+              "Erweiterte Analysen",
+              "QR-Code-Erstellung",
+              "Individuelle Sternebewertungsfragen"
+            ]
+          },
+          "enterprise": {
+            "name": "Enterprise-Tarif",
+            "features": [
+              "Unbegrenzte Bewertungen",
+              "Umfassende Analysesuite",
+              "QR-Code-Erstellung",
+              "Alle Fragetypen"
+            ]
+          }
+        }
+      },
+      "notificationsCenter": {
+        "title": "Benachrichtigungen",
+        "ariaLabel": "Benachrichtigungen",
+        "iconAlt": "Benachrichtigungssymbol",
+        "buttons": {
+          "markAllRead": "Alles als gelesen markieren",
+          "refresh": "Aktualisieren"
+        },
+        "states": {
+          "empty": "Noch keine Benachrichtigungen"
+        },
+        "types": {
+          "newReview": "Neue Bewertung",
+          "reviewApproved": "Bewertung genehmigt",
+          "reviewRejected": "Bewertung abgelehnt",
+          "subscriptionExpiring": "Abonnement läuft ab",
+          "subscriptionCancelled": "Abonnement gekündigt",
+          "escalationReceived": "Eskalation eingegangen",
+          "escalationResponded": "Eskalation beantwortet",
+          "systemAlert": "Systemwarnung",
+          "newHotelRegistration": "Neue Hotelregistrierung",
+          "newFormCreated": "Neues Formular erstellt",
+          "success": "Erfolg",
+          "info": "Info",
+          "warning": "Warnung",
+          "error": "Fehler",
+          "generic": "Benachrichtigung"
+        }
+      },
+      "profileSidebar": {
+        "greeting": {
+          "title": "Willkommen",
+          "fallbackName": "Admin-Benutzer"
+        },
+        "actions": {
+          "profile": {
+            "title": "Profil",
+            "description": "Kontoeinstellungen verwalten"
+          },
+          "signOut": {
+            "title": "Abmelden",
+            "description": "Von Ihrem Konto abmelden"
+          }
+        },
+        "notifications": {
+          "title": "Neueste Benachrichtigungen",
+          "loading": "Benachrichtigungen werden geladen...",
+          "summary": "Sie haben {count} ungelesene Benachrichtigungen",
+          "empty": "Keine neuen Benachrichtigungen"
+        },
+        "time": {
+          "justNow": "Gerade eben"
+        }
+      }
+    },
+    "communications": {
+      "notifications": {
+        "title": "Benachrichtigungen",
+        "subtitle": "Verwalten Sie Systembenachrichtigungen und Warnungen",
+        "buttons": {
+          "deleteSelected": "Ausgewählte löschen ({count})",
+          "markAllAsRead": "Alles als gelesen markieren",
+          "refresh": "Aktualisieren"
+        },
+        "filters": {
+          "title": "Filter",
+          "searchLabel": "Benachrichtigungen durchsuchen",
+          "searchPlaceholder": "Nach Titel, Nachricht oder Benutzer suchen...",
+          "type": "Typ",
+          "allTypes": "Alle Typen",
+          "status": {
+            "label": "Status",
+            "all": "Alle Status",
+            "unread": "Ungelesen",
+            "read": "Gelesen"
+          },
+          "types": {
+            "newReview": "Neue Bewertung",
+            "reviewApproved": "Bewertung genehmigt",
+            "reviewRejected": "Bewertung abgelehnt",
+            "subscriptionExpiring": "Abonnement läuft ab",
+            "subscriptionCancelled": "Abonnement gekündigt",
+            "escalationReceived": "Eskalation eingegangen",
+            "escalationResponded": "Eskalation bearbeitet",
+            "systemAlert": "Systemwarnung",
+            "newHotelRegistration": "Neue Hotelregistrierung",
+            "newFormCreated": "Neues Formular erstellt",
+            "success": "Erfolg",
+            "info": "Info",
+            "warning": "Warnung",
+            "error": "Fehler"
+          }
+        },
+        "states": {
+          "loading": "Benachrichtigungen werden geladen...",
+          "empty": "Keine Benachrichtigungen gefunden"
+        },
+        "table": {
+          "type": "Typ",
+          "message": "Nachricht",
+          "date": "Datum",
+          "actions": "Aktionen",
+          "status": {
+            "label": "Status",
+            "read": "Gelesen",
+            "new": "Neu"
+          }
+        },
+        "tooltips": {
+          "markAsRead": "Als gelesen markieren",
+          "view": "Ansehen",
+          "delete": "Löschen"
+        },
+        "dates": {
+          "justNow": "Gerade eben",
+          "hoursAgo": "Vor {hours} Std.",
+          "yesterday": "Gestern"
+        },
+        "types": {
+          "NEW_REVIEW": "Neue Bewertung",
+          "REVIEW_APPROVED": "Bewertung genehmigt",
+          "REVIEW_REJECTED": "Bewertung abgelehnt",
+          "SUBSCRIPTION_EXPIRING": "Abonnement läuft ab",
+          "SUBSCRIPTION_CANCELLED": "Abonnement gekündigt",
+          "ESCALATION_RECEIVED": "Eskalation eingegangen",
+          "ESCALATION_RESPONDED": "Eskalation beantwortet",
+          "SYSTEM_ALERT": "Systemwarnung",
+          "NEW_HOTEL_REGISTRATION": "Neue Hotelregistrierung",
+          "NEW_FORM_CREATED": "Neues Formular erstellt",
+          "SUCCESS": "Erfolg",
+          "INFO": "Info",
+          "WARNING": "Warnung",
+          "ERROR": "Fehler"
+        },
+        "toasts": {
+          "loadError": "Benachrichtigungen konnten nicht geladen werden",
+          "markReadSuccess": "Benachrichtigung als gelesen markiert",
+          "markReadError": "Benachrichtigung konnte nicht als gelesen markiert werden",
+          "markAllReadSuccess": "Alle Benachrichtigungen als gelesen markiert",
+          "markAllReadError": "Benachrichtigungen konnten nicht als gelesen markiert werden",
+          "deleteSuccess": "Benachrichtigung erfolgreich gelöscht",
+          "deleteError": "Benachrichtigung konnte nicht gelöscht werden",
+          "bulkDeleteSuccess": "{count} Benachrichtigung(en) erfolgreich gelöscht",
+          "bulkDeleteError": "Einige Benachrichtigungen konnten nicht gelöscht werden"
+        },
+        "confirm": {
+          "deleteMessage": "Möchten Sie diese Benachrichtigung wirklich löschen?",
+          "deleteHeader": "Löschbestätigung",
+          "bulkDeleteMessage": "Möchten Sie {count} ausgewählte Benachrichtigungen wirklich löschen?",
+          "bulkDeleteHeader": "Bestätigung Mehrfachlöschung"
+        }
+      }
+    }
+  },
+  "auth": {
+    "register": {
+      "title": "Registrierung",
+      "subtitle": "Fangen wir an",
+      "placeholders": {
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "email": "E-Mail",
+        "phone": "Telefon (optional)",
+        "password": "Passwort"
+      },
+      "buttons": {
+        "signUp": "Registrieren",
+        "signingUp": "Registrierung läuft..."
+      },
+      "agreementPrefix": "Ich habe die",
+      "toasts": {
+        "acceptTerms": "Bitte akzeptieren Sie die allgemeinen Geschäftsbedingungen",
+        "missingFields": "Bitte füllen Sie alle Pflichtfelder aus",
+        "success": "Registrierung erfolgreich! Bitte prüfen Sie Ihre E-Mails.",
+        "error": "Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut."
+      }
+    },
+    "resetPassword": {
+      "title": "Neues Passwort erstellen!",
+      "subtitle": "Geben Sie unten ein neues Passwort ein, um Ihre Zugangsdaten zu aktualisieren.",
+      "fields": {
+        "newPassword": "Neues Passwort",
+        "confirmPassword": "Passwort bestätigen"
+      },
+      "placeholders": {
+        "password": "Geben Sie Ihr Passwort ein",
+        "confirmPassword": "Bestätigen Sie Ihr Passwort"
+      },
+      "buttons": {
+        "reset": "Passwort zurücksetzen",
+        "resetting": "Wird zurückgesetzt..."
+      },
+      "link": {
+        "backToLogin": "Zurück zur Anmeldung"
+      },
+      "states": {
+        "validating": "Zurücksetzungslink wird überprüft...",
+        "loading": "Laden..."
+      },
+      "errors": {
+        "passwordMin": "Das Passwort muss mindestens 6 Zeichen haben",
+        "passwordMax": "Das Passwort muss weniger als 128 Zeichen haben",
+        "confirmRequired": "Bitte bestätigen Sie Ihr Passwort",
+        "mismatch": "Die Passwörter stimmen nicht überein"
+      },
+      "toasts": {
+        "invalidLink": "Ungültiger Link zum Zurücksetzen",
+        "invalidOrExpired": "Ungültiger oder abgelaufener Link zum Zurücksetzen",
+        "failedValidation": "Zurücksetzungslink konnte nicht validiert werden",
+        "success": "Passwort erfolgreich zurückgesetzt. Sie können sich jetzt mit Ihrem neuen Passwort anmelden.",
+        "failure": "Passwort konnte nicht zurückgesetzt werden",
+        "unexpected": "Es ist ein unerwarteter Fehler aufgetreten"
+      },
+      "accessibility": {
+        "showPassword": "Passwort anzeigen",
+        "hidePassword": "Passwort verbergen"
+      }
+    }
+  },
+  "authFooter": {
+    "brand": {
+      "title": "C-Reviews",
+      "description": "Wir helfen Hotels, sich über nahtlose Feedbacklösungen mit ihren Gästen zu verbinden. Unsere Plattform erleichtert das Erstellen von Formularen, das Sammeln von Erkenntnissen und die Verbesserung der Gästeerfahrung – mit Integrität und Professionalität im Mittelpunkt all unseres Handelns.",
+      "footerImageAlt": "Dekorativer C-Reviews-Footer"
+    },
+    "quickLinks": {
+      "title": "Schnellzugriff",
+      "items": {
+        "home": "Startseite",
+        "about": "Über uns",
+        "features": "Funktionen",
+        "contact": "Kontakt"
+      }
+    },
+    "resources": {
+      "title": "Ressourcen",
+      "items": {
+        "dashboard": "Dashboard",
+        "feedbacks": "Feedback",
+        "hotelProfile": "Hotelprofil",
+        "support": "Support",
+        "ownerProfile": "Eigentümerprofil"
+      }
+    },
+    "legal": {
+      "title": "Rechtliches",
+      "items": {
+        "privacyPolicy": "Datenschutzrichtlinie",
+        "companyPolicy": "Unternehmensrichtlinie",
+        "terms": "AGB"
+      }
+    },
+    "connect": {
+      "title": "Bleiben Sie in Kontakt",
+      "emailPlaceholder": "E-Mail-Adresse",
+      "submitLabel": "Abonnieren",
+      "social": {
+        "facebook": "Folgen Sie uns auf Facebook",
+        "instagram": "Folgen Sie uns auf Instagram",
+        "linkedin": "Vernetzen Sie sich mit uns auf LinkedIn"
+      }
+    },
+    "copyright": "© 2024 C-Reviews LLC. Alle Rechte vorbehalten."
+  }
+}

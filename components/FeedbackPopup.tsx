@@ -197,10 +197,6 @@ export default function FeedbackPopup({ visible, onHide, reviewId }: FeedbackPop
                 </div>
                 <div className="col-12 md:col-6">
                   <div className="mb-2 flex align-items-center gap-2">
-                    <i className="pi pi-phone text-gray-500"></i>
-                    <strong>Phone:</strong> {feedback.guestPhone || 'Not provided'}
-                  </div>
-                  <div className="mb-2 flex align-items-center gap-2">
                     <i className="pi pi-calendar text-gray-500"></i>
                     <strong>Submitted:</strong> {formatDate(feedback.submittedAt)}
                   </div>

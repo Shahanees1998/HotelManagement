@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
@@ -8,6 +8,7 @@ import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import QRCode from "qrcode";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 interface FeedbackForm {
   id: string;
@@ -26,6 +27,7 @@ interface FeedbackForm {
 
 export default function HotelQRCodes() {
   const { user } = useAuth();
+  const { t } = useI18n();
   const toast = useRef<Toast>(null);
   const [forms, setForms] = useState<FeedbackForm[]>([]);
   const [loading, setLoading] = useState(true);
@@ -82,13 +84,13 @@ export default function HotelQRCodes() {
     }
   };
 
-  const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+  const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
     toast.current?.show({ severity, summary, detail, life: 3000 });
-  };
+  }, []);
 
   const generateQRCode = async () => {
     if (!selectedForm) {
-      showToast("warn", "Warning", "Please select a feedback form");
+      showToast("warn", t("Warning"), t("Please select a feedback form"));
       return;
     }
 
@@ -109,7 +111,7 @@ export default function HotelQRCodes() {
       });
       setQrCodeDataUrl(qrDataUrl);
       
-      showToast("info", "Info", "Showing existing QR code for this form");
+        showToast("info", t("Info"), t("Showing existing QR code for this form"));
       return;
     }
 
@@ -141,7 +143,7 @@ export default function HotelQRCodes() {
         });
         setQrCodeDataUrl(qrDataUrl);
         
-        showToast("success", "Success", "QR code generated successfully");
+        showToast("success", t("Success"), t("QR code generated successfully"));
         loadForms(); // Refresh forms to update QR code status
       } else {
         const errorData = await response.json();
@@ -159,15 +161,15 @@ export default function HotelQRCodes() {
           });
           setQrCodeDataUrl(qrDataUrl);
           
-          showToast("info", "Info", "QR code already exists for this form");
+          showToast("info", t("Info"), t("QR code already exists for this form"));
           loadForms(); // Refresh forms to update QR code status
         } else {
-          showToast("error", "Error", errorData.error || "Failed to generate QR code");
+          showToast("error", t("Error"), errorData.error || t("Failed to generate QR code"));
         }
       }
     } catch (error) {
       console.error("Error generating QR code:", error);
-      showToast("error", "Error", "Failed to generate QR code");
+      showToast("error", t("Error"), t("Failed to generate QR code"));
     } finally {
       setGenerating(false);
     }
@@ -186,23 +188,23 @@ export default function HotelQRCodes() {
     if (!qrCodeUrl) return;
     try {
       await navigator.clipboard.writeText(qrCodeUrl);
-      showToast("success", "Copied", "QR URL copied to clipboard");
+      showToast("success", t("Copied"), t("QR URL copied to clipboard"));
     } catch (e) {
-      showToast("error", "Error", "Failed to copy URL");
+      showToast("error", t("Error"), t("Failed to copy URL"));
     }
   };
 
-  const formOptions = forms.map(form => ({
-    label: `${form.title}${form.hasQrCode ? ' (QR Code Generated)' : ''}`,
+  const formOptions = useMemo(() => forms.map(form => ({
+    label: `${form.title}${form.hasQrCode ? ` (${t("QR Code Generated")})` : ''}`,
     value: form.id,
-  }));
+  })), [forms, t]);
 
   return (
     <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh', padding: '2rem' }}>
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-4xl font-bold m-0 mb-2" style={{ color: '#333333' }}>Your QR Codes</h1>
-        <p className="text-lg m-0" style={{ color: '#4a4a4a' }}>Generate QR codes for your feedback forms.</p>
+        <h1 className="text-4xl font-bold m-0 mb-2" style={{ color: '#333333' }}>{t("Your QR Codes")}</h1>
+        <p className="text-lg m-0" style={{ color: '#4a4a4a' }}>{t("Generate QR codes for your feedback forms.")}</p>
       </div>
 
       <div className="grid">
@@ -218,11 +220,11 @@ export default function HotelQRCodes() {
             }}
           >
             <div className="p-4">
-              <h2 className="text-2xl font-bold m-0 mb-4" style={{ color: '#333333' }}>Generate QR Code</h2>
+              <h2 className="text-2xl font-bold m-0 mb-4" style={{ color: '#333333' }}>{t("Generate QR Code")}</h2>
               
               <div className="mb-4">
                 <label className="block text-900 font-medium mb-2" style={{ color: '#333333' }}>
-                  Select Feedback Form*
+                  {t("Select Feedback Form*")}
                 </label>
                 <Dropdown
                   value={selectedForm}
@@ -249,7 +251,7 @@ export default function HotelQRCodes() {
                       setQrCodeDataUrl("");
                     }
                   }}
-                  placeholder="Select form from the list"
+                  placeholder={t("Select form from the list")}
                   className="w-full"
                   style={{
                     border: '1px solid #e0e0e0',
@@ -264,19 +266,19 @@ export default function HotelQRCodes() {
                   {forms.find(f => f.id === selectedForm)?.hasQrCode ? (
                     <div className="flex align-items-center gap-2 p-3" style={{ backgroundColor: '#d4edda', borderRadius: '8px', border: '1px solid #c3e6cb' }}>
                       <i className="pi pi-check-circle text-green-600"></i>
-                      <span className="text-green-700 font-medium">QR Code already generated for this form</span>
+                      <span className="text-green-700 font-medium">{t("QR Code already generated for this form")}</span>
                     </div>
                   ) : (
                     <div className="flex align-items-center gap-2 p-3" style={{ backgroundColor: '#fff3cd', borderRadius: '8px', border: '1px solid #ffeaa7' }}>
                       <i className="pi pi-info-circle text-yellow-600"></i>
-                      <span className="text-yellow-700 font-medium">No QR code generated yet. Click "Generate QR Code" to create one.</span>
+                      <span className="text-yellow-700 font-medium">{t(`No QR code generated yet. Click "Generate QR Code" to create one.`)}</span>
                     </div>
                   )}
                 </div>
               )}
               
               <Button
-                label={selectedForm && forms.find(f => f.id === selectedForm)?.hasQrCode ? "Show QR Code" : "Generate QR Code"}
+                label={selectedForm && forms.find(f => f.id === selectedForm)?.hasQrCode ? t("Show QR Code") : t("Generate QR Code")}
                 onClick={generateQRCode}
                 loading={generating}
                 disabled={!selectedForm || generating}
@@ -306,7 +308,7 @@ export default function HotelQRCodes() {
             }}
           >
             <div className="p-4">
-              <h2 className="text-2xl font-bold m-0 mb-4" style={{ color: '#333333' }}>Your QR Code</h2>
+              <h2 className="text-2xl font-bold m-0 mb-4" style={{ color: '#333333' }}>{t("Your QR Code")}</h2>
               
               {qrCodeDataUrl ? (
                 <div className="text-center">
@@ -321,7 +323,7 @@ export default function HotelQRCodes() {
                     }}
                   />
                   <Button
-                    label="Download QR Code"
+                    label={t("Download QR Code")}
                     onClick={downloadQRCode}
                     className="w-full"
                     style={{
@@ -361,7 +363,7 @@ export default function HotelQRCodes() {
                             fontSize: '0.875rem',
                             fontWeight: '600'
                           }}
-                          aria-label="Copy URL"
+                          aria-label={t("Copy URL")}
                         />
                       </div>
                     </div>
@@ -370,7 +372,7 @@ export default function HotelQRCodes() {
               ) : (
                 <div className="text-center py-8">
                   <i className="pi pi-qrcode text-6xl mb-4" style={{ color: '#e0e0e0' }}></i>
-                  <p className="text-lg" style={{ color: '#a0a0a0' }}>Generate a QR code to see it here</p>
+                  <p className="text-lg" style={{ color: '#a0a0a0' }}>{t("Generate a QR code to see it here")}</p>
                 </div>
               )}
             </div>

@@ -1,0 +1,1300 @@
+{
+  "languages": {
+    "en": "Engleză",
+    "ar": "Arabă",
+    "zh": "Chineză",
+    "fr": "Franceză",
+    "de": "Germană",
+    "es": "Spaniolă",
+    "it": "Italiană",
+    "pt": "Portugheză",
+    "ru": "Rusă",
+    "pl": "Poloneză",
+    "nl": "Olandeză",
+    "uk": "Ucraineană",
+    "el": "Greacă",
+    "ro": "Română"
+  },
+  "common": {
+    "warning": "Atenție",
+    "success": "Succes",
+    "error": "Eroare",
+    "info": "Informații",
+    "agreeTo": "Sunt de acord cu",
+    "and": "și",
+    "terms": "Termeni și Condiții",
+    "privacy": "Politica de Confidențialitate",
+    "alreadyHaveAccount": "Ai deja cont?",
+    "login": "Autentificare",
+    "logout": "Deconectare",
+    "orRegisterVia": "sau înregistrează-te prin",
+    "selectLanguage": "Selectează limba",
+    "getStarted": "Începe"
+  },
+  "components": {
+    "customPaginator": {
+      "itemsPerPage": "Elemente pe pagină",
+      "rangeInfo": "{start}-{end} din {total} intrări",
+      "previousPage": "Pagina anterioară",
+      "nextPage": "Pagina următoare"
+    }
+  },
+  "countries": {
+    "US": "Statele Unite",
+    "CA": "Canada",
+    "GB": "Regatul Unit",
+    "AU": "Australia",
+    "DE": "Germania",
+    "FR": "Franța",
+    "ES": "Spania",
+    "IT": "Italia",
+    "JP": "Japonia",
+    "IN": "India",
+    "CN": "China",
+    "BR": "Brazilia",
+    "MX": "Mexic",
+    "OTHER": "Altul"
+  },
+  "registerHotel": {
+    "step1": {
+      "title": "Informații Proprietar!",
+      "fields": {
+        "fullName": "Nume",
+        "email": "Adresă de Email",
+        "phone": "Număr de Telefon",
+        "password": "Parolă"
+      },
+      "placeholders": {
+        "fullName": "Introdu numele tău",
+        "email": "Introdu adresa de email",
+        "phone": "Introdu numărul de telefon",
+        "password": "Introdu parola"
+      },
+      "cta": "Să Continuăm!"
+    },
+    "step2": {
+      "title": "Informații Hotel!",
+      "subtitle": "Sunt datele mele în siguranță?",
+      "fields": {
+        "hotelName": "Nume Hotel",
+        "hotelWebsite": "Site-ul Hotelului",
+        "hotelAddress": "Adresa Hotelului",
+        "city": "Oraș",
+        "country": "Țară",
+        "hotelDescription": "Descrierea Hotelului"
+      },
+      "placeholders": {
+        "hotelName": "Introdu numele hotelului",
+        "hotelWebsite": "Introdu adresa URL a site-ului hotelului",
+        "hotelAddress": "Introdu adresa străzii hotelului",
+        "city": "Introdu orașul hotelului",
+        "country": "Selectează Țara",
+        "hotelDescription": "Introdu o scurtă descriere a hotelului tău"
+      }
+    },
+    "buttons": {
+      "back": "Înapoi",
+      "register": "Înregistrează-te Acum",
+      "registering": "Se înregistrează..."
+    },
+    "toasts": {
+      "missingRequired": "Te rugăm să completezi toate câmpurile obligatorii",
+      "passwordLength": "Parola trebuie să aibă cel puțin 6 caractere",
+      "acceptTerms": "Te rugăm să accepți termenii și condițiile",
+      "acceptTermsPrivacy": "Te rugăm să accepți termenii și condițiile și politica de confidențialitate",
+      "success": "Înregistrarea hotelului a reușit! Te rugăm să verifici email-ul pentru verificare.",
+      "error": "Înregistrarea a eșuat",
+      "errorGeneric": "Înregistrarea a eșuat. Te rugăm să încerci din nou."
+    },
+    "images": {
+      "ownerAlt": "Înregistrare Hotel - Informații Proprietar",
+      "hotelAlt": "Înregistrare Hotel - Informații Hotel"
+    }
+  },
+  "hotel": {
+    "dashboard": {
+      "recentReviews": {
+        "title": "Recenzii Recente",
+        "description": "Vizualizează și gestionează recenziile tale recente.",
+        "states": {
+          "loading": "Se încarcă recenziile recente..."
+        },
+        "table": {
+          "date": "Data"
+        }
+      }
+    },
+    "forms": {
+      "header": {
+        "title": "Formular de Feedback",
+        "subtitle": "Gestionează formularul de feedback pentru oaspeți. Poți actualiza acest formular în orice moment."
+      },
+      "states": {
+        "loading": "Se încarcă formularul..."
+      },
+      "fields": {
+        "title": "Titlu Formular",
+        "status": "Stare",
+        "active": "Activ",
+        "inactive": "Inactiv",
+        "description": "Descriere",
+        "noDescription": "Nicio descriere furnizată",
+        "totalResponses": "Răspunsuri Totale"
+      },
+      "buttons": {
+        "edit": "Editează Formular",
+        "preview": "Previzualizează Formular",
+        "showQr": "Afișează Cod QR",
+        "create": "Creează Formular",
+        "downloadQr": "Descarcă Cod QR",
+        "copyUrl": "Copiază URL"
+      },
+      "empty": {
+        "title": "Niciun Formular Creat Încă",
+        "description": "Creează formularul tău de feedback pentru a începe să colectezi recenzii de la oaspeți."
+      },
+      "preview": {
+        "title": "Previzualizare Formular",
+        "tooltipBack": "Înapoi la Formulare",
+        "tag": "Mod Previzualizare - Interacțiuni Dezactivate"
+      },
+      "qrDialog": {
+        "title": "Cod QR - {title}"
+      },
+      "toasts": {
+        "loadError": "Nu s-a putut încărca formularul",
+        "slugMissing": "Slug-ul hotelului nu a fost găsit. Nu se poate previzualiza formularul.",
+        "createSuccess": "Formular creat cu succes",
+        "updateSuccess": "Formular actualizat cu succes",
+        "saveError": "Nu s-a putut salva formularul",
+        "qrGenerated": "Cod QR generat cu succes",
+        "qrExists": "Cod QR există deja pentru acest formular",
+        "qrError": "Nu s-a putut procesa codul QR",
+        "noUrl": "Niciun URL de copiat",
+        "copiedDetail": "URL copiat în clipboard",
+        "copyError": "Nu s-a putut copia URL-ul în clipboard"
+      },
+      "builder": {
+        "header": {
+          "edit": "Editează Formular",
+          "create": "Creează Formular Nou",
+          "preview": "Previzualizează Formular",
+          "livePreview": "Previzualizare Live",
+          "formBuilderToggle": "Constructor Formular",
+          "livePreviewToggle": "Previzualizare Live",
+          "backTooltip": "Înapoi la Formulare"
+        },
+        "buttons": {
+          "save": "Salvează Formular",
+          "saveTooltip": "Salvează formularul",
+          "addNew": "Adaugă Nou",
+          "addOption": "Adaugă",
+          "cancel": "Anulează",
+          "update": "Actualizează",
+          "add": "Adaugă"
+        },
+        "sections": {
+          "settings": "Setări Formular",
+          "questions": "Întrebări",
+          "predefined": "Întrebări Predefinite",
+          "custom": "Întrebări Personalizate"
+        },
+        "fields": {
+          "titleLabel": "Titlu Formular*",
+          "titlePlaceholder": "Introdu titlul formularului",
+          "descriptionLabel": "Descriere Formular*",
+          "descriptionPlaceholder": "Introdu o scurtă descriere a formularului tău"
+        },
+        "predefined": {
+          "rateUs": "Notează-ne* (Întotdeauna inclus)",
+          "rateUsTitle": "Notează-ne",
+          "customRating": "Rating Personalizat*",
+          "customRatingTitle": "Rating Personalizat",
+          "customRatingPlaceholder": "Introdu eticheta elementului de rating",
+          "customRatingEditTitle": "Click pentru a edita",
+          "feedback": "Te rugăm să ne oferi feedback-ul tău sincer?*",
+          "feedbackTitle": "Te rugăm să ne oferi feedback-ul tău sincer?",
+          "feedbackPlaceholder": "Introdu feedback-ul tău detaliat"
+        },
+        "tooltips": {
+          "previewDisabled": "Mod previzualizare - editare dezactivată",
+          "addQuestion": "Adaugă întrebare personalizată",
+          "save": "Salvează",
+          "cancel": "Anulează",
+          "edit": "Editează",
+          "delete": "Șterge",
+          "moveUp": "Mută în Sus",
+          "moveDown": "Mută în Jos"
+        },
+        "questionTypes": {
+          "shortText": "Text Scurt",
+          "longText": "Text Lung",
+          "starRating": "Rating cu Stele",
+          "singleChoice": "Opțiune Simplă",
+          "multipleChoice": "Opțiuni Multiple",
+          "yesNo": "Da/Nu"
+        },
+        "placeholders": {
+          "answer": "Introdu răspunsul tău"
+        },
+        "answers": {
+          "yes": "Da",
+          "no": "Nu"
+        },
+        "badges": {
+          "default": "Implicit",
+          "defaultHelper": "Nu poate fi editat, șters sau mutat"
+        },
+        "states": {
+          "loading": "Se încarcă datele formularului...",
+          "noQuestionsTitle": "Nicio întrebare adăugată încă",
+          "noQuestionsDescription": "Folosește întrebările predefinite de mai sus sau adaugă întrebări personalizate pentru a începe"
+        },
+        "alerts": {
+          "ratingRequiredTitle": "Rating Obligatoriu",
+          "ratingRequiredDescription": "Fie \"Notează-ne\" fie \"Rating Personalizat\" trebuie selectat pentru a salva formularul."
+        },
+        "layoutInfo": {
+          "basic": {
+            "title": "Caracteristici Layout de Bază",
+            "description": "Toate întrebările sunt disponibile, inclusiv întrebările personalizate. Acest layout oferă un design simplu și curat."
+          },
+          "good": {
+            "title": "Caracteristici Layout Bun",
+            "description": "Alege fie \"Notează-ne\" SAU \"Rating Personalizat\" (se exclud reciproc). Toate întrebările, inclusiv cele personalizate, sunt disponibile."
+          },
+          "excellent": {
+            "title": "Caracteristici Layout Excelent",
+            "description": "Toate întrebările predefinite disponibile plus întrebări personalizate. Design premium cu animații pentru formulare de feedback cuprinzătoare."
+          }
+        },
+        "subscription": {
+          "title": "Abonament Necesar",
+          "message": "Abonamentul tău a fost {status}. Te rugăm să reactivezi abonamentul pentru a crea sau edita formulare.",
+          "manageButton": "Gestionează Abonament",
+          "status": {
+            "cancelled": "anulat",
+            "expired": "expirat"
+          },
+          "toastTitle": "Abonament Necesar",
+          "toastMessage": "Abonamentul tău a fost anulat sau a expirat. Te rugăm să reactivezi abonamentul pentru a crea formulare."
+        },
+        "preview": {
+          "descriptionFallback": "Completează acest formular pentru a solicita suport sau a raporta o problemă. Echipa noastră va examina solicitarea ta și te va contacta cât mai curând posibil cu asistența potrivită.",
+          "fullNameLabel": "Nume Complet*",
+          "fullNamePlaceholder": "Introdu numele tău complet",
+          "emailLabel": "Email*",
+          "emailPlaceholder": "Introdu adresa ta de email",
+          "submit": "Trimite Acum"
+        },
+        "dialog": {
+          "addTitle": "Adaugă Întrebare",
+          "editTitle": "Editează Întrebare",
+          "questionLabel": "Text Întrebare *",
+          "questionPlaceholder": "Introdu întrebarea ta",
+          "typeLabel": "Tip Întrebare",
+          "optionsLabel": "Opțiuni",
+          "optionPlaceholder": "Introdu opțiunea"
+        },
+        "toasts": {
+          "formLoadSuccess": "Datele formularului au fost încărcate cu succes",
+          "formLoadError": "Nu s-au putut încărca datele formularului",
+          "questionRequired": "Textul întrebării este obligatoriu",
+          "optionsRequired": "Întrebările cu opțiuni multiple trebuie să aibă cel puțin 2 opțiuni",
+          "questionUpdated": "Întrebare actualizată",
+          "questionAdded": "Întrebare adăugată",
+          "questionDeleted": "Întrebare ștearsă",
+          "ratingLabelRequired": "Te rugăm să introduci o etichetă pentru elementul de rating",
+          "ratingItemUpdated": "Element de rating actualizat",
+          "ratingItemDeleted": "Element de rating șters",
+          "ratingItemAdded": "Element de rating nou adăugat",
+          "titleRequired": "Titlul formularului este obligatoriu",
+          "questionCountRequired": "Este necesară cel puțin o întrebare"
+        }
+      }
+    },
+    "analytics": {
+      "customRatings": {
+        "title": "Analitică Rating Personalizat",
+        "description": "Urmărește tendințele detaliate de rating pentru formularul tău cu layout \"Bun\".",
+        "buttons": {
+          "exportCsv": "Exportă CSV",
+          "exportPdf": "Exportă PDF",
+          "refresh": "Reîmprospătează"
+        },
+        "filters": {
+          "title": "Filtre Interval Dată",
+          "startDate": "Data de Început",
+          "startDatePlaceholder": "Selectează data de început",
+          "endDate": "Data de Sfârșit",
+          "endDatePlaceholder": "Selectează data de sfârșit",
+          "clear": "Șterge Filtrele"
+        },
+        "states": {
+          "loading": "Se încarcă datele analitice...",
+          "noDataTitle": "Nicio Date Disponibilă",
+          "noDataDescription": "Nu s-au găsit formulare cu layout \"Bun\" cu date de rating personalizat pentru hotelul tău."
+        },
+        "toasts": {
+          "loadError": "Nu s-a putut încărca analitica ratingului personalizat",
+          "exportSuccess": "Datele au fost exportate cu succes ca {format}",
+          "exportError": "Nu s-au putut exporta datele"
+        },
+        "chart": {
+          "trendPrefix": "Analiză Trend - ",
+          "summaryTitle": "Rezumat Rating",
+          "ratingsCount": "({count} rating-uri)",
+          "averageRating": "Rating Mediu",
+          "tooltipSuffix": "/5"
+        }
+      },
+      "overview": {
+        "title": "Analitică",
+        "description": "Urmărește performanța hotelului tău și satisfacția oaspeților.",
+        "dropdownPlaceholder": "Selectează intervalul de timp",
+        "buttons": {
+          "refresh": "Reîmprospătează"
+        },
+        "timeRanges": {
+          "7": "Ultimele 7 zile",
+          "30": "Ultimele 30 de zile",
+          "90": "Ultimele 90 de zile",
+          "180": "Ultimele 6 luni",
+          "365": "Ultimul an"
+        },
+        "states": {
+          "loadingSkeleton": "Se încarcă...",
+          "noData": "Nicio date analitică disponibilă",
+          "chartLoading": "Se încarcă datele graficului...",
+          "chartEmpty": "Nicio date disponibilă pentru grafic"
+        },
+        "cards": {
+          "change": "{change} față de perioada anterioară"
+        },
+        "charts": {
+          "satisfaction": "Tendințe Satisfacție",
+          "ratingDistribution": "Distribuția Ratingurilor",
+          "reviewVolume": "Volumul Recenziilor"
+        },
+        "reviews": {
+          "title": "Recenzii Recente"
+        },
+        "toasts": {
+          "loadError": "Nu s-a putut încărca analitica"
+        }
+      },
+      "responseRates": {
+        "title": "Analitică Rata de Răspuns",
+        "description": "Urmărește ratele de răspuns și metricile de angajament ale hotelului tău.",
+        "charts": {
+          "reviewVolume": "Tendințe Volum Recenzii",
+          "satisfaction": "Tendințe Satisfacție în Timp"
+        }
+      },
+      "satisfaction": {
+        "title": "Analitică Satisfacție",
+        "description": "Urmărește tendințele de satisfacție a oaspeților și ratingurile hotelului tău.",
+        "charts": {
+          "reviewVolume": "Volum Recenzii și Recenzii Pozitive"
+        }
+      },
+      "notificationsCenter": {
+        "title": "Notificări",
+        "ariaLabel": "Notificări",
+        "iconAlt": "Pictogramă notificare",
+        "buttons": {
+          "markAllRead": "Marchează Toate ca Citite",
+          "refresh": "Reîmprospătează"
+        },
+        "states": {
+          "empty": "Nicio notificare încă"
+        },
+        "types": {
+          "newReview": "Recenzie Nouă",
+          "reviewApproved": "Recenzie Aprobată",
+          "reviewRejected": "Recenzie Respinsă",
+          "subscriptionExpiring": "Abonament Expiră",
+          "subscriptionCancelled": "Abonament Anulat",
+          "escalationReceived": "Escaladare Primită",
+          "escalationResponded": "Escaladare Răspunsă",
+          "systemAlert": "Alertă Sistem",
+          "newHotelRegistration": "Înregistrare Hotel Nou",
+          "success": "Succes",
+          "info": "Informații",
+          "warning": "Atenționare",
+          "error": "Eroare",
+          "generic": "Notificare"
+        }
+      }
+    },
+    "reviews": {
+      "title": "Recenzii Oaspeți",
+      "subtitle": "Gestionează și verifică trimiterile de feedback de la oaspeți.",
+      "buttons": {
+        "refresh": "Reîmprospătează",
+        "clearFilters": "Șterge Filtrele",
+        "view": "Vizualizează",
+        "reply": "Răspunde",
+        "delete": "Șterge",
+        "close": "Închide",
+        "markAsChecked": "Marchează ca Verificat",
+        "checked": "Verificat",
+        "markAsUrgent": "Marchează ca Urgent",
+        "urgent": "Urgent",
+        "replyToCustomer": "Răspunde Clientului",
+        "cancel": "Anulează",
+        "sendReply": "Trimite Răspuns"
+      },
+      "filters": {
+        "title": "Filtre",
+        "searchReviews": "Caută Recenzii",
+        "searchPlaceholder": "Caută după nume oaspete sau text feedback...",
+        "roomNumber": "Număr Cameră",
+        "roomNumberPlaceholder": "Filtrează după număr cameră...",
+        "filter": "Filtru",
+        "allReviews": "Toate Recenziile",
+        "replied": "Cu Răspuns",
+        "notReplied": "Fără Răspuns",
+        "checked": "Verificate",
+        "notChecked": "Neverificate",
+        "urgent": "Urgente",
+        "notUrgent": "Neurgente",
+        "starRatings": "Ratinguri Stele",
+        "allRatings": "Toate Ratingurile",
+        "5Stars": "5 Stele",
+        "4Stars": "4 Stele",
+        "3Stars": "3 Stele",
+        "2Stars": "2 Stele",
+        "1Star": "1 Stea",
+        "dateRange": "Interval Dată",
+        "startDate": "Data de Început",
+        "endDate": "Data de Sfârșit",
+        "fromDate": "De la data",
+        "toDate": "Până la data"
+      },
+      "states": {
+        "loadingReviews": "Se încarcă recenziile...",
+        "noReviewsFound": "Nicio Recenzie Găsită",
+        "noReviewsYet": "Încă nu au fost trimise recenzii.",
+        "noReviewsMatchFilters": "Nicio recenzie nu se potrivește cu filtrele tale curente."
+      },
+      "table": {
+        "guest": "Oaspete",
+        "email": "Email",
+        "room": "Cameră",
+        "rating": "Rating",
+        "status": "Stare",
+        "submitted": "Trimis",
+        "actions": "Acțiuni",
+        "checkedStatus": "Verificat",
+        "notCheckedStatus": "Neverificat",
+        "repliedStatus": "Cu Răspuns",
+        "notRepliedStatus": "Fără Răspuns",
+        "urgentStatus": "Urgent",
+        "notUrgentStatus": "Neurgent",
+        "public": "Public",
+        "private": "Privat",
+        "shared": "Partajat",
+        "noEmailAvailable": "Niciun email disponibil pentru această recenzie"
+      },
+      "detailsDialog": {
+        "header": "Detalii Feedback Oaspete",
+        "guestInfo": "Informații Oaspete",
+        "name": "Nume:",
+        "anonymous": "Anonim",
+        "email": "Email:",
+        "notProvided": "Necompletat",
+        "phone": "Telefon:",
+        "roomNumber": "Număr Cameră:",
+        "submitted": "Trimis:",
+        "overallRating": "Rating General",
+        "quickFeedback": "Feedback Rapid",
+        "howDoYouRateUs": "Cum ne evaluezi?",
+        "honestFeedback": "Te rugăm să ne oferi feedback-ul tău sincer?",
+        "noSpecificFeedback": "Niciun feedback specific furnizat",
+        "customRatingItem": "Element Rating Personalizat ({itemId})",
+        "formInfo": "Informații Formular",
+        "formTitle": "Titlu Formular:",
+        "description": "Descriere:",
+        "layout": "Layout:",
+        "feedbackResponses": "Răspunsuri Feedback",
+        "noDetailedResponses": "Niciun răspuns detaliat disponibil pentru această recenzie.",
+        "question": "Întrebare:",
+        "noAnswer": "Niciun răspuns furnizat",
+        "replyToCustomer": "Răspunde Clientului",
+        "replyPlaceholder": "Scrie mesajul tău de răspuns aici...",
+        "replyMessageHint": "Acest mesaj va fi trimis către {guestEmail}",
+        "toastWarningReply": "Te rugăm să introduci un mesaj de răspuns",
+        "toastSuccessReply": "Răspuns trimis cu succes către {sentTo}",
+        "toastErrorReply": "Nu s-a putut trimite răspunsul"
+      },
+      "deleteDialog": {
+        "header": "Șterge Recenzie",
+        "confirmTitle": "Ești sigur că vrei să ștergi această recenzie?",
+        "confirmMessage": "Această acțiune nu poate fi anulată. Recenzia va fi eliminată permanent din sistemul tău.",
+        "reviewDetails": "Detalii Recenzie:",
+        "guest": "Oaspete:",
+        "rating": "Rating:",
+        "submitted": "Trimis:",
+        "buttons": {
+          "cancel": "Anulează",
+          "delete": "Șterge"
+        },
+        "toasts": {
+          "success": "Recenzie ștearsă cu succes",
+          "error": "Nu s-a putut șterge recenzia"
+        }
+      },
+      "toasts": {
+        "loadError": "Nu s-au putut încărca recenziile",
+        "detailsLoadError": "Nu s-au putut încărca detaliile recenziei",
+        "statusUpdate": {
+          "checked": "Recenzie marcată ca verificată",
+          "urgent": "Recenzie marcată ca urgentă",
+          "replied": "Recenzie marcată ca cu răspuns"
+        },
+        "statusUpdateError": "Nu s-a putut actualiza starea recenziei",
+        "replyMissing": "Te rugăm să introduci un mesaj de răspuns",
+        "replySuccess": "Răspuns trimis cu succes către {sentTo}",
+        "replyError": "Nu s-a putut trimite răspunsul",
+        "deleteSuccess": "Recenzie ștearsă cu succes",
+        "deleteError": "Nu s-a putut șterge recenzia"
+      }
+    },
+    "menu": {
+      "dashboard": "Panou Control",
+      "feedbackForm": "Formular Feedback",
+      "qrCodes": "Coduri QR",
+      "allReviews": "Toate Recenziile",
+      "notifications": "Notificări",
+      "contactAdmin": "Contactează Admin",
+      "settings": "Setări",
+      "settingsItems": {
+        "userProfile": "Profil Utilizator",
+        "hotelProfile": "Profil Hotel",
+        "changePassword": "Schimbă Parola",
+        "subscriptions": "Abonamente",
+        "paymentMethods": "Metode de Plată"
+      }
+    },
+    "paymentMethods": {
+      "pageTitle": "Adaugă Metodă de Plată",
+      "buttons": {
+        "add": "Adaugă",
+        "addMethod": "Adaugă Metodă",
+        "updateMethod": "Actualizează Metodă",
+        "cancel": "Anulează",
+        "setPrimary": "Setează ca Principală",
+        "delete": "Șterge"
+      },
+      "badges": {
+        "primary": "Principală",
+        "expired": "Expirată"
+      },
+      "states": {
+        "loading": "Se încarcă metodele de plată...",
+        "emptyTitle": "Nicio Metodă de Plată",
+        "emptyDescription": "Adaugă o metodă de plată pentru a-ți gestiona abonamentele."
+      },
+      "form": {
+        "paymentType": "Tip Plată",
+        "paymentTypeOptions": {
+          "card": "Card Credit/Debit",
+          "bank": "Cont Bancar"
+        },
+        "card": {
+          "number": "Număr Card",
+          "numberPlaceholder": "1234 5678 9012 3456",
+          "expiryMonth": "Lună Expirare",
+          "expiryYear": "An Expirare",
+          "monthPlaceholder": "LL",
+          "yearPlaceholder": "AAAA",
+          "cvv": "CVV",
+          "cvvPlaceholder": "123",
+          "holder": "Nume Deținător Card",
+          "holderPlaceholder": "John Doe",
+          "brand": "Brand Card",
+          "brandPlaceholder": "Selectează brand card"
+        },
+        "cardBrands": {
+          "visa": "Visa",
+          "mastercard": "Mastercard",
+          "amex": "American Express",
+          "discover": "Discover",
+          "unknown": "Card"
+        },
+        "bank": {
+          "name": "Nume Bancă",
+          "namePlaceholder": "Bank of America",
+          "accountNumber": "Număr Cont",
+          "accountPlaceholder": "Număr cont",
+          "routingNumber": "Număr Rutare",
+          "routingPlaceholder": "123456789",
+          "accountType": "Tip Cont",
+          "accountTypePlaceholder": "Selectează tip cont"
+        },
+        "accountTypes": {
+          "checking": "Curent",
+          "savings": "Economii",
+          "unknown": "Cont"
+        }
+      },
+      "list": {
+        "endingIn": "care se termină în",
+        "expiryLabel": "Data exp.",
+        "accountTypeSuffix": "Cont",
+        "accountTypeUnknown": "Cont",
+        "unknownBank": "Bancă",
+        "edit": "Editează",
+        "delete": "Șterge"
+      },
+      "dialogs": {
+        "add": {
+          "title": "Adaugă Metodă de Plată"
+        },
+        "edit": {
+          "title": "Editează Metodă de Plată",
+          "cardLocked": "Numărul cardului nu poate fi schimbat din motive de securitate",
+          "bankLocked": "Numărul contului nu poate fi schimbat din motive de securitate"
+        },
+        "delete": {
+          "title": "Șterge Metodă de Plată",
+          "message": "Ești sigur că vrei să ștergi această metodă de plată? Această acțiune nu poate fi anulată."
+        }
+      },
+      "toasts": {
+        "load": {
+          "error": "Nu s-au putut încărca metodele de plată"
+        },
+        "add": {
+          "success": "Metodă de plată adăugată cu succes",
+          "error": "Nu s-a putut adăuga metoda de plată"
+        },
+        "delete": {
+          "success": "Metodă de plată ștearsă cu succes",
+          "error": "Nu s-a putut șterge metoda de plată"
+        },
+        "default": {
+          "success": "Metoda de plată implicită actualizată",
+          "error": "Nu s-a putut actualiza metoda de plată implicită"
+        },
+        "update": {
+          "success": "Metodă de plată actualizată cu succes",
+          "error": "Nu s-a putut actualiza metoda de plată"
+        }
+      }
+    },
+    "subscription": {
+      "header": {
+        "title": "Gestionare Abonament",
+        "subtitle": "Gestionează abonamentul și facturarea hotelului tău."
+      },
+      "buttons": {
+        "refresh": "Reîmprospătează",
+        "processing": "Se procesează...",
+        "upgradeNow": "Upgrade Acum",
+        "currentPlan": "Plan Curent",
+        "reactivate": "Reactivează",
+        "cancelSubscription": "Anulează Abonament",
+        "contactSupport": "Contactează Suport",
+        "cancel": "Anulează",
+        "confirm": "Confirmă"
+      },
+      "statuses": {
+        "trial": "Trial",
+        "active": "Activ",
+        "cancelled": "Anulat",
+        "expired": "Expirat"
+      },
+      "states": {
+        "loading": "Se încarcă datele abonamentului...",
+        "notFoundTitle": "Abonament Negăsit",
+        "notFoundDescription": "Nu s-au putut încărca informațiile despre abonament."
+      },
+      "labels": {
+        "notAvailable": "N/A"
+      },
+      "trial": {
+        "name": "Plan Trial",
+        "description": "Trial Gratuit",
+        "label": "Perioadă Trial:",
+        "remaining": "{count} zile rămase"
+      },
+      "sections": {
+        "status": {
+          "title": "Stare Abonament Curent",
+          "statusLabel": "Stare",
+          "totalReviews": "Recenzii Totale",
+          "averageRating": "Rating Mediu"
+        },
+        "plans": {
+          "title": "Planuri Disponibile",
+          "currentPlanHint": "Ești momentan pe acest plan"
+        },
+        "actions": {
+          "title": "Acțiuni Abonament"
+        },
+        "billing": {
+          "title": "Informații Facturare",
+          "subscriptionId": "ID Abonament:",
+          "created": "Creat:",
+          "nextBilling": "Următoarea Facturare:",
+          "trialEnds": "Trial Expiră:"
+        }
+      },
+      "perInterval": "pe {interval}",
+      "priceLabel": "{price}/{interval}",
+      "dialog": {
+        "title": "Confirmă Schimbarea Abonamentului",
+        "upgradeTitle": "Upgrade la {plan}",
+        "description": "Ești pe cale să îți upgradezi planul de abonament.",
+        "planLabel": "Plan:",
+        "priceLabel": "Preț:",
+        "billingLabel": "Facturare:",
+        "noteLabel": "Notă:",
+        "noteDescription": "Acesta este un mediu demo. Nu se va procesa nicio plată reală."
+      },
+      "toasts": {
+        "load": {
+          "error": "Nu s-au putut încărca datele abonamentului"
+        },
+        "update": {
+          "success": "Abonament actualizat cu succes",
+          "error": "Nu s-a putut actualiza abonamentul"
+        }
+      },
+      "errors": {
+        "unauthorized": "Neautorizat",
+        "hotelNotFound": "Hotel negăsit",
+        "planRequired": "ID Plan și acțiunea sunt necesare",
+        "unknownPlan": "Plan Necunoscut",
+        "fetchFailed": "Nu s-au putut prelua detaliile abonamentului",
+        "updateFailed": "Nu s-a putut actualiza abonamentul"
+      },
+      "messages": {
+        "upgraded": "Upgrade efectuat cu succes la {plan}",
+        "cancelled": "Abonament anulat cu succes"
+      },
+      "plans": {
+        "basic": {
+          "name": "Plan de Bază",
+          "features": [
+            "Până la 100 de recenzii pe lună",
+            "Analitică de bază",
+            "Generare cod QR",
+            "Formular Feedback de Bază"
+          ]
+        },
+        "professional": {
+          "name": "Plan Profesional",
+          "features": [
+            "Până la 500 de recenzii pe lună",
+            "Analitică avansată",
+            "Generare cod QR",
+            "Întrebări Personalizate cu Rating Stele"
+          ]
+        },
+        "enterprise": {
+          "name": "Plan Enterprise",
+          "features": [
+            "Recenzii nelimitate pe lună",
+            "Analitică enterprise",
+            "Suport prioritar",
+            "Gestionare multi-proprietate"
+          ]
+        }
+      },
+      "intervals": {
+        "month": "lună",
+        "monthly": "lunar",
+        "year": "an",
+        "yearly": "anual",
+        "quarter": "trimestru",
+        "quarterly": "trimestrial"
+      }
+    },
+    "profile": {
+      "user": {
+        "title": "Informații Personale",
+        "subtitle": "Gestionează detaliile contului tău personal.",
+        "buttons": {
+          "save": "Salvează Modificările",
+          "changePassword": "Schimbă Parola",
+          "twoFactor": "Autentificare cu Doi Factori",
+          "changePhoto": "Schimbă Fotografia",
+          "uploading": "Se încarcă..."
+        },
+        "images": {
+          "cardTitle": "Imagine Profil",
+          "hint": "JPG, PNG sau GIF. Dimensiune maximă 5MB."
+        },
+        "fields": {
+          "firstName": "Prenume *",
+          "lastName": "Nume *",
+          "email": "Adresă Email *",
+          "phone": "Număr Telefon"
+        },
+        "placeholders": {
+          "firstName": "Introdu prenumele tău",
+          "lastName": "Introdu numele tău",
+          "email": "emailul.tau@exemplu.com",
+          "phone": "+40 (755) 123-456"
+        },
+        "cards": {
+          "personalInfo": "Informații Personale",
+          "accountInfo": "Informații Cont",
+          "security": "Securitate"
+        },
+        "account": {
+          "type": "Tip Cont:",
+          "status": "Stare:",
+          "memberSince": "Membru din:",
+          "lastLogin": "Ultima Autentificare:",
+          "typeValue": "Proprietar Hotel",
+          "statusActive": "Activ",
+          "notAvailable": "N/A"
+        },
+        "toasts": {
+          "saveSuccess": "Profil actualizat cu succes",
+          "saveError": "Nu s-a putut actualiza profilul",
+          "imageTypeError": "Te rugăm să selectezi un fișier imagine valid (JPG, PNG, GIF sau WebP)",
+          "imageSizeError": "Dimensiunea imaginii trebuie să fie mai mică de 5MB",
+          "imageSuccess": "Imagine de profil actualizată cu succes",
+          "imageError": "Nu s-a putut încărca imaginea",
+          "twoFactorInfo": "Autentificarea cu doi factori va fi disponibilă în curând"
+        }
+      },
+      "hotel": {
+        "title": "Profil Hotel",
+        "subtitle": "Gestionează informațiile și setările hotelului tău.",
+        "buttons": {
+          "save": "Salvează Modificările",
+          "uploadLogo": "Încarcă Siglă",
+          "uploading": "Se încarcă...",
+          "viewPublic": "Vezi Pagina Publică",
+          "contactSupport": "Contactează Suport"
+        },
+        "images": {
+          "cardTitle": "Siglă Hotel",
+          "alt": "Siglă Hotel",
+          "hint": "JPG, PNG sau GIF. Dimensiune maximă 5MB. Recomandat: 300x300px"
+        },
+        "cards": {
+          "actions": "Acțiuni",
+          "hotelInfo": "Informații Hotel"
+        },
+        "fields": {
+          "name": "Nume Hotel *",
+          "description": "Descriere",
+          "address": "Adresă",
+          "city": "Oraș",
+          "country": "Țară",
+          "phone": "Telefon",
+          "email": "Email",
+          "website": "Site Web"
+        },
+        "placeholders": {
+          "name": "Introdu numele hotelului",
+          "description": "Scurtă descriere a hotelului tău",
+          "address": "Adresă stradă",
+          "city": "Oraș",
+          "country": "Selectează țara",
+          "phone": "+40 (755) 123-456",
+          "email": "hotel@exemplu.com",
+          "website": "https://www.hotelultau.com"
+        },
+        "externalLinks": {
+          "title": "Linkuri Externe Recenzii",
+          "subtitle": "Adaugă linkuri către paginile tale de recenzii TripAdvisor și Google pentru a ajuta oaspeții să împărtășească feedback pozitiv.",
+          "tripAdvisor": {
+            "label": "Link TripAdvisor",
+            "placeholder": "https://www.tripadvisor.com/...",
+            "hint": "Opțional: Link către pagina ta TripAdvisor"
+          },
+          "google": {
+            "label": "Link Google Reviews",
+            "placeholder": "https://g.page/...",
+            "hint": "Opțional: Link către pagina ta Google Reviews"
+          }
+        },
+        "account": {
+          "notAvailable": "N/A"
+        },
+        "toasts": {
+          "loadError": "Nu s-a putut încărca profilul hotelului",
+          "saveSuccess": "Profil hotel actualizat cu succes",
+          "saveError": "Nu s-a putut actualiza profilul hotelului",
+          "imageTypeError": "Te rugăm să selectezi un fișier imagine valid (JPG, PNG, GIF sau WebP)",
+          "imageSizeError": "Dimensiunea imaginii trebuie să fie mai mică de 5MB",
+          "imageSuccess": "Siglă hotel actualizată cu succes",
+          "imageError": "Nu s-a putut încărca sigla"
+        }
+      },
+      "password": {
+        "title": "Schimbă Parola",
+        "subtitle": "Actualizează parola contului tău pentru o securitate mai bună.",
+        "cardTitle": "Schimbare Parolă",
+        "buttons": {
+          "change": "Schimbă Parola",
+          "cancel": "Anulează",
+          "confirmChange": "Schimbă Parola"
+        },
+        "fields": {
+          "current": "Parola Curentă *",
+          "new": "Parola Nouă *",
+          "confirm": "Confirmă Parola Nouă *"
+        },
+        "placeholders": {
+          "current": "Introdu parola curentă",
+          "new": "Introdu parola nouă",
+          "confirm": "Confirmă parola nouă"
+        },
+        "strength": {
+          "label": "Putere Parolă:",
+          "weak": "Slabă",
+          "medium": "Medie",
+          "strong": "Puternică"
+        },
+        "requirements": {
+          "title": "Cerințe Parolă",
+          "minLength": "Cel puțin 8 caractere lungime",
+          "uppercase": "Conține litere mari",
+          "lowercase": "Conține litere mici",
+          "numbers": "Conține numere",
+          "special": "Conține caractere speciale"
+        },
+        "tips": {
+          "title": "Sfaturi Securitate",
+          "tip": "Sfat: Folosește o parolă unică pe care nu o folosești în altă parte.",
+          "warning": "Atenție: Nu împărtăși niciodată parola cu nimeni."
+        },
+        "validation": {
+          "currentRequired": "Parola curentă este obligatorie",
+          "newRequired": "Parola nouă este obligatorie",
+          "minLength": "Parola nouă trebuie să aibă cel puțin 8 caractere",
+          "complexity": "Parola nouă trebuie să conțină litere mari, litere mici, numere și caractere speciale",
+          "confirmMismatch": "Parola nouă și confirmarea nu se potrivesc",
+          "sameAsCurrent": "Parola nouă trebuie să fie diferită de parola curentă"
+        },
+        "toasts": {
+          "changeSuccess": "Parolă schimbată cu succes",
+          "changeError": "Nu s-a putut schimba parola"
+        },
+        "confirm": {
+          "title": "Confirmă Schimbarea Parolei",
+          "message": "Ești sigur că vrei să îți schimbi parola?",
+          "warning": "Această acțiune te va deconecta de pe toate dispozitivele și va trebui să te autentifici din nou."
+        },
+        "accessibility": {
+          "show": "Afișează parola",
+          "hide": "Ascunde parola"
+        }
+      },
+      "subscription": {
+        "errors": {
+          "unauthorized": "Neautorizat",
+          "hotelNotFound": "Hotel negăsit",
+          "planRequired": "ID Plan și acțiunea sunt necesare",
+          "unknownPlan": "Plan Necunoscut",
+          "fetchFailed": "Nu s-au putut prelua detaliile abonamentului",
+          "updateFailed": "Nu s-a putut actualiza abonamentul"
+        },
+        "messages": {
+          "upgraded": "Upgrade efectuat cu succes la {plan}",
+          "cancelled": "Abonament anulat cu succes"
+        },
+        "plans": {
+          "basic": {
+            "name": "Plan de Bază",
+            "features": [
+              "Până la 100 de recenzii pe lună",
+              "Analitică de bază",
+              "Generare cod QR",
+              "Formular Feedback de Bază"
+            ]
+          },
+          "professional": {
+            "name": "Plan Profesional",
+            "features": [
+              "Până la 500 de recenzii pe lună",
+              "Analitică avansată",
+              "Generare cod QR",
+              "Întrebări Personalizate cu Rating Stele"
+            ]
+          },
+          "enterprise": {
+            "name": "Plan Enterprise",
+            "features": [
+              "Recenzii nelimitate",
+              "Suite completă analitică",
+              "Generare cod QR",
+              "Toate tipurile de întrebări"
+            ]
+          }
+        }
+      },
+      "notificationsCenter": {
+        "title": "Notificări",
+        "ariaLabel": "Notificări",
+        "iconAlt": "Pictogramă notificare",
+        "buttons": {
+          "markAllRead": "Marchează Toate ca Citite",
+          "refresh": "Reîmprospătează"
+        },
+        "states": {
+          "empty": "Nicio notificare încă"
+        },
+        "types": {
+          "newReview": "Recenzie Nouă",
+          "reviewApproved": "Recenzie Aprobată",
+          "reviewRejected": "Recenzie Respinsă",
+          "subscriptionExpiring": "Abonament Expiră",
+          "subscriptionCancelled": "Abonament Anulat",
+          "escalationReceived": "Escaladare Primită",
+          "escalationResponded": "Escaladare Răspunsă",
+          "systemAlert": "Alertă Sistem",
+          "newHotelRegistration": "Înregistrare Hotel Nou",
+          "newFormCreated": "Formular Nou Creat",
+          "success": "Succes",
+          "info": "Informații",
+          "warning": "Atenționare",
+          "error": "Eroare",
+          "generic": "Notificare"
+        }
+      },
+      "profileSidebar": {
+        "greeting": {
+          "title": "Bine ai venit",
+          "fallbackName": "Utilizator Admin"
+        },
+        "actions": {
+          "profile": {
+            "title": "Profil",
+            "description": "Gestionează setările contului tău"
+          },
+          "signOut": {
+            "title": "Deconectare",
+            "description": "Deconectează-te din contul tău"
+          }
+        },
+        "notifications": {
+          "title": "Notificări Recente",
+          "loading": "Se încarcă notificările...",
+          "summary": "Ai {count} notificări necitite",
+          "empty": "Nicio notificare nouă"
+        },
+        "time": {
+          "justNow": "Chiar acum"
+        }
+      }
+    },
+    "communications": {
+      "notifications": {
+        "title": "Notificări",
+        "subtitle": "Gestionează notificările și alertele sistemului",
+        "buttons": {
+          "deleteSelected": "Șterge Selectate ({count})",
+          "markAllAsRead": "Marchează Toate ca Citite",
+          "refresh": "Reîmprospătează"
+        },
+        "filters": {
+          "title": "Filtre",
+          "searchLabel": "Caută Notificări",
+          "searchPlaceholder": "Caută după titlu, mesaj sau utilizator...",
+          "type": "Tip",
+          "allTypes": "Toate Tipurile",
+          "status": {
+            "label": "Stare",
+            "all": "Toate Stările",
+            "unread": "Necitite",
+            "read": "Citite"
+          },
+          "types": {
+            "newReview": "Recenzie Nouă",
+            "reviewApproved": "Recenzie Aprobată",
+            "reviewRejected": "Recenzie Respinsă",
+            "subscriptionExpiring": "Abonament Expiră",
+            "subscriptionCancelled": "Abonament Anulat",
+            "escalationReceived": "Escaladare Primită",
+            "escalationResponded": "Escaladare Răspunsă",
+            "systemAlert": "Alertă Sistem",
+            "newHotelRegistration": "Înregistrare Hotel Nou",
+            "newFormCreated": "Formular Nou Creat",
+            "success": "Succes",
+            "info": "Informații",
+            "warning": "Atenționare",
+            "error": "Eroare"
+          }
+        },
+        "states": {
+          "loading": "Se încarcă notificările...",
+          "empty": "Nicio notificare găsită"
+        },
+        "table": {
+          "type": "Tip",
+          "message": "Mesaj",
+          "date": "Data",
+          "actions": "Acțiuni",
+          "status": {
+            "label": "Stare",
+            "read": "Citită",
+            "new": "Nouă"
+          }
+        },
+        "tooltips": {
+          "markAsRead": "Marchează ca Citită",
+          "view": "Vizualizează",
+          "delete": "Șterge"
+        },
+        "dates": {
+          "justNow": "Chiar acum",
+          "hoursAgo": "{hours}h în urmă",
+          "yesterday": "Ieri"
+        },
+        "types": {
+          "NEW_REVIEW": "Recenzie Nouă",
+          "REVIEW_APPROVED": "Recenzie Aprobată",
+          "REVIEW_REJECTED": "Recenzie Respinsă",
+          "SUBSCRIPTION_EXPIRING": "Abonament Expiră",
+          "SUBSCRIPTION_CANCELLED": "Abonament Anulat",
+          "ESCALATION_RECEIVED": "Escaladare Primită",
+          "ESCALATION_RESPONDED": "Escaladare Răspunsă",
+          "SYSTEM_ALERT": "Alertă Sistem",
+          "NEW_HOTEL_REGISTRATION": "Înregistrare Hotel Nou",
+          "NEW_FORM_CREATED": "Formular Nou Creat",
+          "SUCCESS": "Succes",
+          "INFO": "Informații",
+          "WARNING": "Atenționare",
+          "ERROR": "Eroare"
+        },
+        "toasts": {
+          "loadError": "Nu s-au putut încărca notificările",
+          "markReadSuccess": "Notificare marcată ca citită",
+          "markReadError": "Nu s-a putut marca notificarea ca citită",
+          "markAllReadSuccess": "Toate notificările au fost marcate ca citite",
+          "markAllReadError": "Nu s-au putut marca toate notificările ca citite",
+          "deleteSuccess": "Notificare ștearsă cu succes",
+          "deleteError": "Nu s-a putut șterge notificarea",
+          "bulkDeleteSuccess": "{count} notificări șterse cu succes",
+          "bulkDeleteError": "Nu s-au putut șterge unele notificări"
+        },
+        "confirm": {
+          "deleteMessage": "Ești sigur că vrei să ștergi această notificare?",
+          "deleteHeader": "Confirmare Ștergere",
+          "bulkDeleteMessage": "Ești sigur că vrei să ștergi {count} notificări selectate?",
+          "bulkDeleteHeader": "Confirmare Ștergere în Masă"
+        }
+      }
+    }
+  },
+  "auth": {
+    "register": {
+      "title": "Înregistrare",
+      "subtitle": "Să începem",
+      "placeholders": {
+        "firstName": "Prenume",
+        "lastName": "Nume",
+        "email": "Email",
+        "phone": "Telefon (Opțional)",
+        "password": "Parolă"
+      },
+      "buttons": {
+        "signUp": "Înregistrează-te",
+        "signingUp": "Se înregistrează..."
+      },
+      "agreementPrefix": "Am citit",
+      "toasts": {
+        "acceptTerms": "Te rugăm să accepți termenii și condițiile",
+        "missingFields": "Te rugăm să completezi toate câmpurile obligatorii",
+        "success": "Înregistrare reușită! Te rugăm să verifici email-ul.",
+        "error": "Înregistrare eșuată. Te rugăm să încerci din nou."
+      }
+    },
+    "resetPassword": {
+      "title": "Creează Parolă Nouă!",
+      "subtitle": "Introdu o parolă nouă mai jos pentru a-ți actualiza datele de conectare la cont.",
+      "fields": {
+        "newPassword": "Parolă Nouă",
+        "confirmPassword": "Confirmă Parola"
+      },
+      "placeholders": {
+        "password": "Introdu parola",
+        "confirmPassword": "Confirmă parola"
+      },
+      "buttons": {
+        "reset": "Resetează Parola",
+        "resetting": "Se resetează..."
+      },
+      "link": {
+        "backToLogin": "Înapoi la Autentificare"
+      },
+      "states": {
+        "validating": "Se validează linkul de resetare...",
+        "loading": "Se încarcă..."
+      },
+      "errors": {
+        "passwordMin": "Parola trebuie să aibă cel puțin 6 caractere",
+        "passwordMax": "Parola trebuie să aibă mai puțin de 128 de caractere",
+        "confirmRequired": "Te rugăm să confirmi parola",
+        "mismatch": "Parolele nu se potrivesc"
+      },
+      "toasts": {
+        "invalidLink": "Link de resetare invalid",
+        "invalidOrExpired": "Link de resetare invalid sau expirat",
+        "failedValidation": "Nu s-a putut valida linkul de resetare",
+        "success": "Parola a fost resetată cu succes. Acum te poți autentifica cu noua parolă.",
+        "failure": "Nu s-a putut reseta parola",
+        "unexpected": "A apărut o eroare neașteptată"
+      },
+      "accessibility": {
+        "showPassword": "Afișează parola",
+        "hidePassword": "Ascunde parola"
+      }
+    }
+  },
+  "authFooter": {
+    "brand": {
+      "title": "C-Reviews",
+      "description": "Ajutăm hotelurile să se conecteze cu oaspeții lor prin soluții de feedback fără efort. Platforma noastră facilitează crearea de formulare, colectarea de informații și îmbunătățirea experienței oaspeților, având integritatea și profesionalismul în centrul a tot ceea ce facem.",
+      "footerImageAlt": "C-Reviews subsol decorativ"
+    },
+    "quickLinks": {
+      "title": "Linkuri Rapide",
+      "items": {
+        "home": "Acasă",
+        "about": "Despre Noi",
+        "features": "Caracteristici",
+        "contact": "Contactează-ne"
+      }
+    },
+    "resources": {
+      "title": "Resurse",
+      "items": {
+        "dashboard": "Panou Control",
+        "feedbacks": "Feedback-uri",
+        "hotelProfile": "Profil Hotel",
+        "support": "Suport",
+        "ownerProfile": "Profil Proprietar"
+      }
+    },
+    "legal": {
+      "title": "Legal",
+      "items": {
+        "privacyPolicy": "Politica de Confidențialitate",
+        "companyPolicy": "Politica Companiei",
+        "terms": "Termeni și Condiții"
+      }
+    },
+    "connect": {
+      "title": "Conectează-te cu Noi",
+      "emailPlaceholder": "Adresă Email",
+      "submitLabel": "Abonează-te",
+      "social": {
+        "facebook": "Urmărește-ne pe Facebook",
+        "instagram": "Urmărește-ne pe Instagram",
+        "linkedin": "Conectează-te cu noi pe LinkedIn"
+      }
+    },
+    "copyright": "© 2024 C-Reviews LLC. Toate Drepturile Rezervate!"
+  }
+}

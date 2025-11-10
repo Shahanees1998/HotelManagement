@@ -14,6 +14,7 @@ import { Toast } from "primereact/toast";
 import { useAuth } from "@/hooks/useAuth";
 import { CustomPaginator } from "@/components/CustomPaginator";
 import { apiClient } from "@/lib/apiClient";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 interface SupportRequest {
     id: string;
@@ -28,6 +29,7 @@ interface SupportRequest {
 
 export default function HotelSupportPage() {
     const { user } = useAuth();
+    const { t, locale } = useI18n();
     const [requests, setRequests] = useState<SupportRequest[]>([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -70,13 +72,13 @@ export default function HotelSupportPage() {
             setTotalRecords(response.pagination?.total || 0);
         } catch (error) {
             console.error("Error loading support requests:", error);
-            showToast("error", "Error", "Failed to load support requests");
+            showToast("error", t("Error"), t("Failed to load support requests"));
             setRequests([]);
             setTotalRecords(0);
         } finally {
             setLoading(false);
         }
-    }, [filters.status, filters.priority, filters.search, currentPage, rowsPerPage, showToast]);
+    }, [filters.status, filters.priority, filters.search, currentPage, rowsPerPage, showToast, t]);
 
     useEffect(() => {
         loadSupportRequests();
@@ -101,7 +103,7 @@ export default function HotelSupportPage() {
 
     const createSupportRequest = async () => {
         if (!createForm.subject.trim() || !createForm.message.trim()) {
-            showToast("error", "Error", "Please fill in all required fields");
+            showToast("error", t("Error"), t("Please fill in all required fields"));
             return;
         }
 
@@ -120,16 +122,16 @@ export default function HotelSupportPage() {
             });
 
             if (response.ok) {
-                showToast("success", "Success", "Support request created successfully! We'll get back to you soon.");
+                showToast("success", t("Success"), t("Support request created successfully! We'll get back to you soon."));
                 setShowCreateDialog(false);
                 loadSupportRequests(); // Reload the list
             } else {
                 const errorData = await response.json();
-                showToast("error", "Error", errorData.error || "Failed to create support request");
+                showToast("error", t("Error"), errorData.error || t("Failed to create support request"));
             }
         } catch (error) {
             console.error("Error creating support request:", error);
-            showToast("error", "Error", "Failed to create support request");
+            showToast("error", t("Error"), t("Failed to create support request"));
         } finally {
             setSubmitting(false);
         }
@@ -155,6 +157,20 @@ export default function HotelSupportPage() {
         }
     };
 
+    const statusLabels = useMemo(() => ({
+        OPEN: t("Open"),
+        IN_PROGRESS: t("In Progress"),
+        RESOLVED: t("Resolved"),
+        CLOSED: t("Closed"),
+    }), [t]);
+
+    const priorityLabels = useMemo(() => ({
+        LOW: t("Low"),
+        MEDIUM: t("Medium"),
+        HIGH: t("High"),
+        URGENT: t("Urgent"),
+    }), [t]);
+
     const messageBodyTemplate = useMemo(() => (rowData: SupportRequest) => {
         return (
             <div className="max-w-xs">
@@ -179,44 +195,53 @@ export default function HotelSupportPage() {
                 </div>
             </div>
         ) : (
-            <span className="text-600">No response yet</span>
+            <span className="text-600">{t("No response yet")}</span>
         );
-    }, []);
+    }, [t]);
 
-    const statusBodyTemplate = useMemo(() => (rowData: SupportRequest) => (
-        <Tag value={rowData.status.replace('_', ' ')} severity={getStatusSeverity(rowData.status)} />
-    ), []);
+    const statusBodyTemplate = useCallback((rowData: SupportRequest) => (
+        <Tag value={statusLabels[rowData.status as keyof typeof statusLabels] ?? rowData.status} severity={getStatusSeverity(rowData.status)} />
+    ), [statusLabels]);
 
-    const priorityBodyTemplate = useMemo(() => (rowData: SupportRequest) => (
-        <Tag value={rowData.priority} severity={getPrioritySeverity(rowData.priority)} />
-    ), []);
+    const priorityBodyTemplate = useCallback((rowData: SupportRequest) => (
+        <Tag value={priorityLabels[rowData.priority as keyof typeof priorityLabels] ?? rowData.priority} severity={getPrioritySeverity(rowData.priority)} />
+    ), [priorityLabels]);
+
+    const dateFormatter = useMemo(() => {
+        const localeMap: Record<string, string> = {
+            en: "en-US",
+            ar: "ar-EG",
+            zh: "zh-CN",
+        };
+        return new Intl.DateTimeFormat(localeMap[locale] ?? "en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    }, [locale]);
 
     const dateBodyTemplate = useMemo(() => (rowData: SupportRequest) => (
-        new Date(rowData.createdAt).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-        })
-    ), []);
+        dateFormatter.format(new Date(rowData.createdAt))
+    ), [dateFormatter]);
 
 
     const statusOptions = useMemo(() => [
-        { label: "All Statuses", value: "" },
-        { label: "Open", value: "OPEN" },
-        { label: "In Progress", value: "IN_PROGRESS" },
-        { label: "Resolved", value: "RESOLVED" },
-        { label: "Closed", value: "CLOSED" },
-    ], []);
+        { label: t("All Statuses"), value: "" },
+        { label: t("Open"), value: "OPEN" },
+        { label: t("In Progress"), value: "IN_PROGRESS" },
+        { label: t("Resolved"), value: "RESOLVED" },
+        { label: t("Closed"), value: "CLOSED" },
+    ], [t]);
 
     const priorityOptions = useMemo(() => [
-        { label: "All Priorities", value: "" },
-        { label: "Low", value: "LOW" },
-        { label: "Medium", value: "MEDIUM" },
-        { label: "High", value: "HIGH" },
-        { label: "Urgent", value: "URGENT" },
-    ], []);
+        { label: t("All Priorities"), value: "" },
+        { label: t("Low"), value: "LOW" },
+        { label: t("Medium"), value: "MEDIUM" },
+        { label: t("High"), value: "HIGH" },
+        { label: t("Urgent"), value: "URGENT" },
+    ], [t]);
 
     return (
         <div className="grid">
@@ -224,18 +249,18 @@ export default function HotelSupportPage() {
             <div className="col-12">
                 <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-4">
                     <div>
-                        <h1 className="text-3xl font-bold m-0">Support Requests</h1>
-                        <p className="text-600 mt-2 mb-0">Create and track your support requests with our team.</p>
+                        <h1 className="text-3xl font-bold m-0">{t("Support Requests")}</h1>
+                        <p className="text-600 mt-2 mb-0">{t("Create and track your support requests with our team.")}</p>
                     </div>
                     <div className="flex gap-2">
                         <Button
-                            label="Create Request"
+                            label={t("Create Request")}
                             icon="pi pi-plus"
                             onClick={openCreateDialog}
                             severity="success"
                         />
                         <Button
-                            label="Refresh"
+                            label={t("Refresh")}
                             icon="pi pi-refresh"
                             onClick={loadSupportRequests}
                             loading={loading}
@@ -247,34 +272,34 @@ export default function HotelSupportPage() {
 
             {/* Filters */}
             <div className="col-12">
-                <Card title="Filters" className="mb-4">
+                <Card title={t("Filters")} className="mb-4">
                     <div className="grid">
                         <div className="col-12 md:col-4">
-                            <label className="block text-900 font-medium mb-2">Search Subject</label>
+                            <label className="block text-900 font-medium mb-2">{t("Search Subject")}</label>
                             <InputText
                                 value={filters.search}
                                 onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
-                                placeholder="Search by subject..."
+                                placeholder={t("Search by subject...")}
                                 className="w-full"
                             />
                         </div>
                         <div className="col-12 md:col-4">
-                            <label className="block text-900 font-medium mb-2">Status</label>
+                            <label className="block text-900 font-medium mb-2">{t("Status")}</label>
                             <Dropdown
                                 value={filters.status}
                                 options={statusOptions}
                                 onChange={(e) => setFilters(prev => ({ ...prev, status: e.value }))}
-                                placeholder="All Statuses"
+                                placeholder={t("All Statuses")}
                                 className="w-full"
                             />
                         </div>
                         <div className="col-12 md:col-4">
-                            <label className="block text-900 font-medium mb-2">Priority</label>
+                            <label className="block text-900 font-medium mb-2">{t("Priority")}</label>
                             <Dropdown
                                 value={filters.priority}
                                 options={priorityOptions}
                                 onChange={(e) => setFilters(prev => ({ ...prev, priority: e.value }))}
-                                placeholder="All Priorities"
+                                placeholder={t("All Priorities")}
                                 className="w-full"
                             />
                         </div>
@@ -288,21 +313,21 @@ export default function HotelSupportPage() {
                     <div className="flex align-items-center justify-content-center" style={{ height: '200px' }}>
                         <div className="text-center">
                             <i className="pi pi-spinner pi-spin text-2xl mb-2"></i>
-                            <p>Loading support requests...</p>
+                            <p>{t("Loading support requests...")}</p>
                         </div>
                     </div>
                 ) : requests.length === 0 ? (
                     <div className="text-center py-6">
                         <i className="pi pi-life-ring text-4xl text-400 mb-3"></i>
-                        <h3 className="text-900 mb-2">No Support Requests Found</h3>
+                        <h3 className="text-900 mb-2">{t("No Support Requests Found")}</h3>
                         <p className="text-600 mb-4">
                             {requests.length === 0 
-                                ? "No support requests have been created yet." 
-                                : "No requests match your current filters."
+                                ? t("No support requests have been created yet.") 
+                                : t("No requests match your current filters.")
                             }
                         </p>
                         <Button
-                            label="Create Your First Request"
+                            label={t("Create Your First Request")}
                             icon="pi pi-plus"
                             onClick={openCreateDialog}
                         />
@@ -310,12 +335,12 @@ export default function HotelSupportPage() {
                 ) : (
                     <>
                         <DataTable value={requests}>
-                            <Column field="subject" header="Subject" sortable />
-                            <Column field="message" header="Message" body={messageBodyTemplate} />
-                            <Column field="status" header="Status" body={statusBodyTemplate} sortable />
-                            <Column field="priority" header="Priority" body={priorityBodyTemplate} sortable />
-                            <Column field="adminResponse" header="Response" body={responseBodyTemplate} />
-                            <Column field="createdAt" header="Created" body={dateBodyTemplate} sortable />
+                            <Column field="subject" header={t("Subject")} sortable />
+                            <Column field="message" header={t("Message")} body={messageBodyTemplate} />
+                            <Column field="status" header={t("Status")} body={statusBodyTemplate} sortable />
+                            <Column field="priority" header={t("Priority")} body={priorityBodyTemplate} sortable />
+                            <Column field="adminResponse" header={t("Response")} body={responseBodyTemplate} />
+                            <Column field="createdAt" header={t("Created")} body={dateBodyTemplate} sortable />
                         </DataTable>
                         <CustomPaginator
                             currentPage={currentPage}
@@ -335,20 +360,20 @@ export default function HotelSupportPage() {
             <Dialog
                 visible={showCreateDialog}
                 style={{ width: "600px" }}
-                header="Create Support Request"
+                header={t("Create Support Request")}
                 modal
                 onHide={() => setShowCreateDialog(false)}
                 footer={
                     <div className="flex gap-2 justify-content-end">
                         <Button 
-                            label="Cancel" 
+                            label={t("Cancel")} 
                             icon="pi pi-times" 
                             onClick={() => setShowCreateDialog(false)} 
                             text 
                             disabled={submitting}
                         />
                         <Button 
-                            label="Create Request" 
+                            label={t("Create Request")} 
                             icon="pi pi-check" 
                             onClick={createSupportRequest}
                             loading={submitting}
@@ -359,36 +384,36 @@ export default function HotelSupportPage() {
             >
                 <div className="grid">
                     <div className="col-12">
-                        <label className="block text-sm font-medium mb-2">Subject *</label>
+                        <label className="block text-sm font-medium mb-2">{t("Subject *")}</label>
                         <InputText
                             value={createForm.subject}
                             onChange={(e) => setCreateForm(prev => ({ ...prev, subject: e.target.value }))}
-                            placeholder="Brief description of your issue..."
+                            placeholder={t("Brief description of your issue...")}
                             className="w-full"
                         />
                     </div>
                     <div className="col-12">
-                        <label className="block text-sm font-medium mb-2">Priority</label>
+                        <label className="block text-sm font-medium mb-2">{t("Priority")}</label>
                         <Dropdown
                             value={createForm.priority}
                             options={[
-                                { label: "Low", value: "LOW" },
-                                { label: "Medium", value: "MEDIUM" },
-                                { label: "High", value: "HIGH" },
-                                { label: "Urgent", value: "URGENT" },
+                                { label: t("Low"), value: "LOW" },
+                                { label: t("Medium"), value: "MEDIUM" },
+                                { label: t("High"), value: "HIGH" },
+                                { label: t("Urgent"), value: "URGENT" },
                             ]}
                             onChange={(e) => setCreateForm(prev => ({ ...prev, priority: e.value }))}
-                            placeholder="Select Priority"
+                            placeholder={t("Select Priority")}
                             className="w-full"
                         />
                     </div>
                     <div className="col-12">
-                        <label className="block text-sm font-medium mb-2">Message *</label>
+                        <label className="block text-sm font-medium mb-2">{t("Message *")}</label>
                         <InputTextarea
                             value={createForm.message}
                             onChange={(e) => setCreateForm(prev => ({ ...prev, message: e.target.value }))}
                             rows={5}
-                            placeholder="Please describe your issue in detail..."
+                            placeholder={t("Please describe your issue in detail...")}
                             className="w-full"
                         />
                     </div>
@@ -397,8 +422,7 @@ export default function HotelSupportPage() {
                             <div className="flex align-items-center gap-2">
                                 <i className="pi pi-info-circle text-blue-500"></i>
                                 <span className="text-blue-700 text-sm">
-                                    <strong>Note:</strong> We'll send you an email confirmation and notify our support team. 
-                                    You'll receive updates via email as we work on your request.
+                                    <strong>{t("Note:")}</strong> {t("We'll send you an email confirmation and notify our support team. You'll receive updates via email as we work on your request.")}
                                 </span>
                             </div>
                         </div>

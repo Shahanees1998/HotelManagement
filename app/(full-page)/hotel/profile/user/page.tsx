@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -8,9 +8,11 @@ import { Toast } from "primereact/toast";
 import { FileUpload } from "primereact/fileupload";
 import { Avatar } from "primereact/avatar";
 import { useAuth } from "@/hooks/useAuth";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 export default function UserProfilePage() {
   const { user } = useAuth();
+  const { t, locale } = useI18n();
   const [loading, setLoading] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [userData, setUserData] = useState({
@@ -38,6 +40,24 @@ export default function UserProfilePage() {
     toast.current?.show({ severity, summary, detail, life: 3000 });
   };
 
+  const formatDate = useCallback(
+    (dateString?: string | null) => {
+      if (!dateString) {
+        return t("hotel.profile.user.account.notAvailable");
+      }
+      try {
+        return new Intl.DateTimeFormat(locale, {
+          year: "numeric",
+          month: "short",
+          day: "numeric"
+        }).format(new Date(dateString));
+      } catch {
+        return new Date(dateString).toLocaleDateString();
+      }
+    },
+    [locale, t]
+  );
+
   const handleInputChange = (field: string, value: string) => {
     setUserData(prev => ({
       ...prev,
@@ -57,14 +77,14 @@ export default function UserProfilePage() {
       });
 
       if (response.ok) {
-        showToast("success", "Success", "Profile updated successfully");
+        showToast("success", t("common.success"), t("hotel.profile.user.toasts.saveSuccess"));
       } else {
         const errorData = await response.json();
-        showToast("error", "Error", errorData.error || "Failed to update profile");
+        showToast("error", t("common.error"), errorData.error || t("hotel.profile.user.toasts.saveError"));
       }
     } catch (error) {
       console.error("Error saving user data:", error);
-      showToast("error", "Error", "Failed to update profile");
+      showToast("error", t("common.error"), t("hotel.profile.user.toasts.saveError"));
     } finally {
       setLoading(false);
     }
@@ -77,12 +97,12 @@ export default function UserProfilePage() {
     // Validate file type and size
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
     if (!allowedTypes.includes(file.type)) {
-      showToast("error", "Error", "Please select a valid image file (JPG, PNG, GIF, or WebP)");
+      showToast("error", t("common.error"), t("hotel.profile.user.toasts.imageTypeError"));
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) { // 5MB
-      showToast("error", "Error", "Image size must be less than 5MB");
+      showToast("error", t("common.error"), t("hotel.profile.user.toasts.imageSizeError"));
       return;
     }
 
@@ -107,14 +127,14 @@ export default function UserProfilePage() {
         // Dispatch custom event to update topbar
         window.dispatchEvent(new CustomEvent('profile-updated'));
         
-        showToast("success", "Success", "Profile image updated successfully");
+        showToast("success", t("common.success"), t("hotel.profile.user.toasts.imageSuccess"));
       } else {
         const errorData = await response.json();
-        showToast("error", "Error", errorData.error || "Failed to upload image");
+        showToast("error", t("common.error"), errorData.error || t("hotel.profile.user.toasts.imageError"));
       }
     } catch (error) {
       console.error("Error uploading image:", error);
-      showToast("error", "Error", "Failed to upload image");
+      showToast("error", t("common.error"), t("hotel.profile.user.toasts.imageError"));
     } finally {
       setUploadingImage(false);
     }
@@ -126,12 +146,12 @@ export default function UserProfilePage() {
       <div className="col-12">
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-4">
           <div>
-            <h1 className="text-3xl font-bold m-0">Personal Information</h1>
-            <p className="text-600 mt-2 mb-0">Manage your personal account details.</p>
+            <h1 className="text-3xl font-bold m-0">{t("hotel.profile.user.title")}</h1>
+            <p className="text-600 mt-2 mb-0">{t("hotel.profile.user.subtitle")}</p>
           </div>
           <div className="flex gap-2">
             <Button
-              label="Save Changes"
+              label={t("hotel.profile.user.buttons.save")}
               icon="pi pi-save"
               onClick={handleSave}
               loading={loading}
@@ -143,7 +163,7 @@ export default function UserProfilePage() {
 
       {/* Profile Image */}
       <div className="col-12 lg:col-4">
-        <Card title="Profile Image" className="mb-4 p-4">
+        <Card title={t("hotel.profile.user.images.cardTitle")} className="mb-4 p-4">
           <div className="flex flex-column align-items-center gap-3">
             <Avatar
               image={userData.profileImage}
@@ -159,13 +179,13 @@ export default function UserProfilePage() {
               maxFileSize={5000000}
               customUpload
               uploadHandler={handleImageUpload}
-              chooseLabel={uploadingImage ? "Uploading..." : "Change Photo"}
+              chooseLabel={uploadingImage ? t("hotel.profile.user.buttons.uploading") : t("hotel.profile.user.buttons.changePhoto")}
               className="w-full"
               auto
               disabled={uploadingImage}
             />
             <small className="text-600 text-center">
-              JPG, PNG or GIF. Max size 5MB.
+              {t("hotel.profile.user.images.hint")}
             </small>
           </div>
         </Card>
@@ -173,45 +193,45 @@ export default function UserProfilePage() {
 
       {/* Personal Information */}
       <div className="col-12 lg:col-8">
-        <Card title="Personal Information" className="mb-4 p-4">
+        <Card title={t("hotel.profile.user.cards.personalInfo")} className="mb-4 p-4">
           <div className="grid">
             <div className="col-12 md:col-6">
-              <label className="block text-900 font-medium mb-2">First Name *</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.user.fields.firstName")}</label>
               <InputText
                 value={userData.firstName}
                 onChange={(e) => handleInputChange('firstName', e.target.value)}
-                placeholder="Enter your first name"
+                placeholder={t("hotel.profile.user.placeholders.firstName")}
                 className="w-full"
               />
             </div>
 
             <div className="col-12 md:col-6">
-              <label className="block text-900 font-medium mb-2">Last Name *</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.user.fields.lastName")}</label>
               <InputText
                 value={userData.lastName}
                 onChange={(e) => handleInputChange('lastName', e.target.value)}
-                placeholder="Enter your last name"
+                placeholder={t("hotel.profile.user.placeholders.lastName")}
                 className="w-full"
               />
             </div>
 
             <div className="col-12 md:col-6">
-              <label className="block text-900 font-medium mb-2">Email Address *</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.user.fields.email")}</label>
               <InputText
                 value={userData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
-                placeholder="your.email@example.com"
+                placeholder={t("hotel.profile.user.placeholders.email")}
                 type="email"
                 className="w-full"
               />
             </div>
 
             <div className="col-12 md:col-6">
-              <label className="block text-900 font-medium mb-2">Phone Number</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.user.fields.phone")}</label>
               <InputText
                 value={userData.phone}
                 onChange={(e) => handleInputChange('phone', e.target.value)}
-                placeholder="+1 (555) 123-4567"
+                placeholder={t("hotel.profile.user.placeholders.phone")}
                 className="w-full"
               />
             </div>
@@ -221,26 +241,26 @@ export default function UserProfilePage() {
 
       {/* Account Info */}
       <div className="col-12 lg:col-6">
-        <Card title="Account Information" className="mb-4 p-4">
+        <Card title={t("hotel.profile.user.cards.accountInfo")} className="mb-4 p-4">
           <div className="flex flex-column gap-3">
             <div className="flex justify-content-between">
-              <span className="text-600">Account Type:</span>
-              <span className="font-semibold">Hotel Owner</span>
+              <span className="text-600">{t("hotel.profile.user.account.type")}</span>
+              <span className="font-semibold">{t("hotel.profile.user.account.typeValue")}</span>
             </div>
             <div className="flex justify-content-between">
-              <span className="text-600">Status:</span>
-              <span className="font-semibold text-green-500">Active</span>
+              <span className="text-600">{t("hotel.profile.user.account.status")}</span>
+              <span className="font-semibold text-green-500">{t("hotel.profile.user.account.statusActive")}</span>
             </div>
             <div className="flex justify-content-between">
-              <span className="text-600">Member Since:</span>
+              <span className="text-600">{t("hotel.profile.user.account.memberSince")}</span>
               <span className="font-semibold">
-                {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
+                {formatDate(user?.createdAt)}
               </span>
             </div>
             <div className="flex justify-content-between">
-              <span className="text-600">Last Login:</span>
+              <span className="text-600">{t("hotel.profile.user.account.lastLogin")}</span>
               <span className="font-semibold">
-                {user?.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : 'N/A'}
+                {formatDate(user?.lastLogin)}
               </span>
             </div>
           </div>
@@ -248,19 +268,19 @@ export default function UserProfilePage() {
 </div>
 <div className="col-12 lg:col-6">
 
-        <Card title="Security" className="mb-4 p-5">
+        <Card title={t("hotel.profile.user.cards.security")} className="mb-4 p-5">
           <div className="flex flex-column gap-2">
             <Button
-              label="Change Password"
+              label={t("hotel.profile.user.buttons.changePassword")}
               icon="pi pi-key"
               className="p-button-outlined"
               onClick={() => window.location.href = '/hotel/profile/password'}
             />
             <Button
-              label="Two-Factor Authentication"
+              label={t("hotel.profile.user.buttons.twoFactor")}
               icon="pi pi-shield"
               className="p-button-outlined mt-3"
-              onClick={() => showToast("info", "Coming Soon", "Two-factor authentication will be available soon")}
+              onClick={() => showToast("info", t("common.info"), t("hotel.profile.user.toasts.twoFactorInfo"))}
             />
           </div>
         </Card>

@@ -50,7 +50,6 @@ interface FeedbackForm {
 interface FormSubmission {
   guestName?: string;
   guestEmail?: string;
-  guestPhone?: string;
   roomNumber?: string;
   answers: { [questionId: string]: any };
 }
@@ -58,7 +57,7 @@ interface FormSubmission {
 export default function CustomerFeedbackForm() {
   const params = useParams();
   const { hotelSlug, formId } = params;
-  
+
   const [form, setForm] = useState<FeedbackForm | null>(null);
   const [translatedForm, setTranslatedForm] = useState<FeedbackForm | null>(null);
   const [submission, setSubmission] = useState<FormSubmission>({
@@ -81,7 +80,7 @@ export default function CustomerFeedbackForm() {
   const [isMobile, setIsMobile] = useState(false);
   const toast = useRef<Toast>(null);
   const { t, isTranslating: isTranslatingStatic } = useTranslation(selectedLanguage);
-  
+
   // Combined translation state
   const isAnyTranslating = translating || isTranslatingStatic;
 
@@ -154,7 +153,7 @@ export default function CustomerFeedbackForm() {
 
   const translateForm = async () => {
     if (!form) return;
-    
+
     setTranslating(true);
     try {
       const translated = await translationService.translateObject(form, selectedLanguage?.code);
@@ -211,7 +210,7 @@ export default function CustomerFeedbackForm() {
 
       // Validate Custom Rating questions
       if (translatedForm.predefinedQuestions.hasCustomRating && translatedForm.predefinedQuestions.customRatingItems) {
-        const hasAnyCustomRating = translatedForm.predefinedQuestions.customRatingItems.some(item => 
+        const hasAnyCustomRating = translatedForm.predefinedQuestions.customRatingItems.some(item =>
           submission.answers[`custom-rating-${item.id}`]
         );
         if (!hasAnyCustomRating) {
@@ -226,7 +225,7 @@ export default function CustomerFeedbackForm() {
       if (question.isRequired) {
         if (question.type === 'CUSTOM_RATING' && question.customRatingItems) {
           // For custom rating, check if at least one rating item has been answered
-          const hasAnyRating = question.customRatingItems.some(item => 
+          const hasAnyRating = question.customRatingItems.some(item =>
             submission.answers[`${question.id}-${item.id}`]
           );
           if (!hasAnyRating) {
@@ -256,7 +255,7 @@ export default function CustomerFeedbackForm() {
       const ratings = form.predefinedQuestions.customRatingItems
         .map(item => submission.answers[`custom-rating-${item.id}`])
         .filter(rating => rating && rating > 0);
-      
+
       if (ratings.length > 0) {
         const average = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
         return average;
@@ -291,38 +290,32 @@ export default function CustomerFeedbackForm() {
         // Calculate average rating
         const averageRating = calculateAverageRating();
         const isHighRating = averageRating >= 4; // 4+ stars considered positive
-        
+
         // Store the final rating for success page
         setFinalRating(averageRating);
-        
+
         // Collect feedback text for display (answers only, no questions)
         let feedbackText = "";
         if (form) {
-          const feedbackQuestion = form.questions.find(q => q.question === "Feedback");
-          if (feedbackQuestion && submission.answers[feedbackQuestion.id]) {
-            feedbackText = submission.answers[feedbackQuestion.id];
-          }
-          
-          // If no specific "Feedback" question, collect all text answers (without question labels)
-          if (!feedbackText) {
-            const textAnswers = form.questions
-              .filter(q => (q.type === "LONG_TEXT" || q.type === "SHORT_TEXT") && submission.answers[q.id])
-              .map(q => submission.answers[q.id])
-              .join("\n\n");
-            feedbackText = textAnswers;
+          const honestFeedbackQuestion = form.questions.find(
+            (q) => q.question === "Please give us your honest feedback?"
+          );
+
+          if (honestFeedbackQuestion && submission.answers[honestFeedbackQuestion.id]) {
+            feedbackText = submission.answers[honestFeedbackQuestion.id];
           }
         }
         setSubmittedFeedback(feedbackText);
-        
+
         if (isHighRating) {
           showToast("success", "Thank You!", "Your feedback has been submitted successfully! We truly appreciate your positive experience.");
         } else {
           showToast("success", "Thank You!", "Your feedback has been submitted successfully! We will make sure to improve based on your valuable input.");
         }
-        
+
         // Reset form
         setSubmission({ answers: {} });
-        
+
         // Always show success page
         setShowSuccessPage(true);
       } else {
@@ -355,42 +348,42 @@ export default function CustomerFeedbackForm() {
         <div className="max-w-2xl mx-auto" style={{ width: '100%', maxWidth: '100%', padding: '0 8px', boxSizing: 'border-box' }}>
           <div className="text-center" style={{ width: '100%' }}>
             <div className="mb-6" style={{ padding: '0 8px', boxSizing: 'border-box' }}>
-              <div className="flex justify-content-center gap-4 items-center" 
-                   style={{
-                     alignItems:'center',
-                     flexDirection: isMobile ? 'column' : 'row',
-                     gap: isMobile ? '12px' : '16px'
-                   }}>
-              <i className="pi pi-check-circle text-5xl text-green-500" style={{ fontSize: isMobile ? '2.5rem' : '3rem' }}></i>
-              <h1 className="text-3xl font-bold text-900" style={{ 
-                fontSize: isMobile ? '1.5rem' : '2rem',
-                wordWrap: 'break-word',
-                overflowWrap: 'break-word',
-                padding: '0 8px',
-                boxSizing: 'border-box'
-              }}>
-                {selectedLanguage?.code === 'en' ? 'Thank You!' : 
-                 selectedLanguage?.code === 'es' ? '¡Gracias!' :
-                 selectedLanguage?.code === 'fr' ? 'Merci!' :
-                 selectedLanguage?.code === 'de' ? 'Danke!' :
-                 selectedLanguage?.code === 'it' ? 'Grazie!' :
-                 selectedLanguage?.code === 'pt' ? 'Obrigado!' :
-                 selectedLanguage?.code === 'ru' ? 'Спасибо!' :
-                 selectedLanguage?.code === 'ja' ? 'ありがとうございます！' :
-                 selectedLanguage?.code === 'ko' ? '감사합니다!' :
-                 selectedLanguage?.code === 'zh' ? '谢谢！' :
-                 selectedLanguage?.code === 'ar' ? 'شكراً لك!' :
-                 selectedLanguage?.code === 'hi' ? 'धन्यवाद!' :
-                 selectedLanguage?.code === 'th' ? 'ขอบคุณ!' :
-                 selectedLanguage?.code === 'vi' ? 'Cảm ơn!' :
-                 selectedLanguage?.code === 'tr' ? 'Teşekkürler!' :
-                 selectedLanguage?.code === 'nl' ? 'Dank je!' :
-                 selectedLanguage?.code === 'sv' ? 'Tack!' :
-                 selectedLanguage?.code === 'da' ? 'Tak!' :
-                 selectedLanguage?.code === 'no' ? 'Takk!' :
-                 selectedLanguage?.code === 'fi' ? 'Kiitos!' : 'Thank You!'}
-              </h1>
-              </div>      
+              <div className="flex justify-content-center gap-4 items-center"
+                style={{
+                  alignItems: 'center',
+                  flexDirection: isMobile ? 'column' : 'row',
+                  gap: isMobile ? '12px' : '16px'
+                }}>
+                <i className="pi pi-check-circle text-5xl text-green-500" style={{ fontSize: isMobile ? '2.5rem' : '3rem' }}></i>
+                <h1 className="text-3xl font-bold text-900" style={{
+                  fontSize: isMobile ? '1.5rem' : '2rem',
+                  wordWrap: 'break-word',
+                  overflowWrap: 'break-word',
+                  padding: '0 8px',
+                  boxSizing: 'border-box'
+                }}>
+                  {selectedLanguage?.code === 'en' ? 'Thank You!' :
+                    selectedLanguage?.code === 'es' ? '¡Gracias!' :
+                      selectedLanguage?.code === 'fr' ? 'Merci!' :
+                        selectedLanguage?.code === 'de' ? 'Danke!' :
+                          selectedLanguage?.code === 'it' ? 'Grazie!' :
+                            selectedLanguage?.code === 'pt' ? 'Obrigado!' :
+                              selectedLanguage?.code === 'ru' ? 'Спасибо!' :
+                                selectedLanguage?.code === 'ja' ? 'ありがとうございます！' :
+                                  selectedLanguage?.code === 'ko' ? '감사합니다!' :
+                                    selectedLanguage?.code === 'zh' ? '谢谢！' :
+                                      selectedLanguage?.code === 'ar' ? 'شكراً لك!' :
+                                        selectedLanguage?.code === 'hi' ? 'धन्यवाद!' :
+                                          selectedLanguage?.code === 'th' ? 'ขอบคุณ!' :
+                                            selectedLanguage?.code === 'vi' ? 'Cảm ơn!' :
+                                              selectedLanguage?.code === 'tr' ? 'Teşekkürler!' :
+                                                selectedLanguage?.code === 'nl' ? 'Dank je!' :
+                                                  selectedLanguage?.code === 'sv' ? 'Tack!' :
+                                                    selectedLanguage?.code === 'da' ? 'Tak!' :
+                                                      selectedLanguage?.code === 'no' ? 'Takk!' :
+                                                        selectedLanguage?.code === 'fi' ? 'Kiitos!' : 'Thank You!'}
+                </h1>
+              </div>
               {/* Average Rating Display */}
               <div className="text-center mb-4" style={{ padding: '0 8px', boxSizing: 'border-box' }}>
                 <div style={{
@@ -426,7 +419,7 @@ export default function CustomerFeedbackForm() {
                   </span>
                 </div>
               </div>
-              <p className="text-lg text-600 mb-4" style={{
+              {/* <p className="text-lg text-600 mb-4" style={{
                 padding: '0 12px',
                 boxSizing: 'border-box',
                 wordWrap: 'break-word',
@@ -480,7 +473,7 @@ export default function CustomerFeedbackForm() {
                   selectedLanguage?.code === 'fi' ? 'Palautteesi on lähetetty onnistuneesti! Parannamme palvelua arvokkaiden palautteesi perusteella.' : 
                   'Your feedback has been submitted successfully! We will make sure to improve based on your valuable input.'
                 )}
-              </p>
+              </p> */}
               <p className="text-600 mb-6" style={{
                 padding: '0 12px',
                 boxSizing: 'border-box',
@@ -491,30 +484,228 @@ export default function CustomerFeedbackForm() {
                 lineHeight: '1.6'
               }}>
                 {selectedLanguage?.code === 'en' ? 'Your input helps us continue providing excellent service to all our guests.' :
-                 selectedLanguage?.code === 'es' ? 'Su aporte nos ayuda a continuar brindando un excelente servicio a todos nuestros huéspedes.' :
-                 selectedLanguage?.code === 'fr' ? 'Votre contribution nous aide à continuer à fournir un excellent service à tous nos invités.' :
-                 selectedLanguage?.code === 'de' ? 'Ihr Beitrag hilft uns, weiterhin exzellenten Service für alle unsere Gäste zu bieten.' :
-                 selectedLanguage?.code === 'it' ? 'Il tuo contributo ci aiuta a continuare a fornire un servizio eccellente a tutti i nostri ospiti.' :
-                 selectedLanguage?.code === 'pt' ? 'Sua contribuição nos ajuda a continuar fornecendo excelente serviço a todos os nossos hóspedes.' :
-                 selectedLanguage?.code === 'ru' ? 'Ваш вклад помогает нам продолжать предоставлять отличный сервис всем нашим гостям.' :
-                 selectedLanguage?.code === 'ja' ? 'あなたのご意見は、すべてのゲストに優れたサービスを提供し続けるのに役立ちます。' :
-                 selectedLanguage?.code === 'ko' ? '귀하의 의견은 모든 게스트에게 훌륭한 서비스를 계속 제공하는 데 도움이 됩니다.' :
-                 selectedLanguage?.code === 'zh' ? '您的意见帮助我们继续为所有客人提供优质服务。' :
-                 selectedLanguage?.code === 'ar' ? 'مساهمتك تساعدنا على الاستمرار في تقديم خدمة ممتازة لجميع ضيوفنا.' :
-                 selectedLanguage?.code === 'hi' ? 'आपका योगदान हमें अपने सभी मेहमानों को उत्कृष्ट सेवा प्रदान करना जारी रखने में मदद करता है।' :
-                 selectedLanguage?.code === 'th' ? 'ข้อมูลของคุณช่วยให้เราสามารถให้บริการที่ดีเยี่ยมแก่แขกทุกท่านต่อไป' :
-                 selectedLanguage?.code === 'vi' ? 'Đóng góp của bạn giúp chúng tôi tiếp tục cung cấp dịch vụ tuyệt vời cho tất cả khách hàng.' :
-                 selectedLanguage?.code === 'tr' ? 'Katkınız, tüm misafirlerimize mükemmel hizmet sunmaya devam etmemize yardımcı oluyor.' :
-                 selectedLanguage?.code === 'nl' ? 'Uw bijdrage helpt ons om uitstekende service te blijven bieden aan al onze gasten.' :
-                 selectedLanguage?.code === 'sv' ? 'Ditt bidrag hjälper oss att fortsätta ge utmärkt service till alla våra gäster.' :
-                 selectedLanguage?.code === 'da' ? 'Dit bidrag hjælper os med at fortsætte med at levere fremragende service til alle vores gæster.' :
-                 selectedLanguage?.code === 'no' ? 'Ditt bidrag hjelper oss med å fortsette å levere utmerket service til alle våre gjester.' :
-                 selectedLanguage?.code === 'fi' ? 'Panoksesi auttaa meitä jatkamaan erinomaista palvelua kaikille vieraillamme.' : 
-                 'Your input helps us continue providing excellent service to all our guests.'}
+                  selectedLanguage?.code === 'es' ? 'Su aporte nos ayuda a continuar brindando un excelente servicio a todos nuestros huéspedes.' :
+                    selectedLanguage?.code === 'fr' ? 'Votre contribution nous aide à continuer à fournir un excellent service à tous nos invités.' :
+                      selectedLanguage?.code === 'de' ? 'Ihr Beitrag hilft uns, weiterhin exzellenten Service für alle unsere Gäste zu bieten.' :
+                        selectedLanguage?.code === 'it' ? 'Il tuo contributo ci aiuta a continuare a fornire un servizio eccellente a tutti i nostri ospiti.' :
+                          selectedLanguage?.code === 'pt' ? 'Sua contribuição nos ajuda a continuar fornecendo excelente serviço a todos os nossos hóspedes.' :
+                            selectedLanguage?.code === 'ru' ? 'Ваш вклад помогает нам продолжать предоставлять отличный сервис всем нашим гостям.' :
+                              selectedLanguage?.code === 'ja' ? 'あなたのご意見は、すべてのゲストに優れたサービスを提供し続けるのに役立ちます。' :
+                                selectedLanguage?.code === 'ko' ? '귀하의 의견은 모든 게스트에게 훌륭한 서비스를 계속 제공하는 데 도움이 됩니다.' :
+                                  selectedLanguage?.code === 'zh' ? '您的意见帮助我们继续为所有客人提供优质服务。' :
+                                    selectedLanguage?.code === 'ar' ? 'مساهمتك تساعدنا على الاستمرار في تقديم خدمة ممتازة لجميع ضيوفنا.' :
+                                      selectedLanguage?.code === 'hi' ? 'आपका योगदान हमें अपने सभी मेहमानों को उत्कृष्ट सेवा प्रदान करना जारी रखने में मदद करता है।' :
+                                        selectedLanguage?.code === 'th' ? 'ข้อมูลของคุณช่วยให้เราสามารถให้บริการที่ดีเยี่ยมแก่แขกทุกท่านต่อไป' :
+                                          selectedLanguage?.code === 'vi' ? 'Đóng góp của bạn giúp chúng tôi tiếp tục cung cấp dịch vụ tuyệt vời cho tất cả khách hàng.' :
+                                            selectedLanguage?.code === 'tr' ? 'Katkınız, tüm misafirlerimize mükemmel hizmet sunmaya devam etmemize yardımcı oluyor.' :
+                                              selectedLanguage?.code === 'nl' ? 'Uw bijdrage helpt ons om uitstekende service te blijven bieden aan al onze gasten.' :
+                                                selectedLanguage?.code === 'sv' ? 'Ditt bidrag hjälper oss att fortsätta ge utmärkt service till alla våra gäster.' :
+                                                  selectedLanguage?.code === 'da' ? 'Dit bidrag hjælper os med at fortsætte med at levere fremragende service til alle vores gæster.' :
+                                                    selectedLanguage?.code === 'no' ? 'Ditt bidrag hjelper oss med å fortsette å levere utmerket service til alle våre gjester.' :
+                                                      selectedLanguage?.code === 'fi' ? 'Panoksesi auttaa meitä jatkamaan erinomaista palvelua kaikille vieraillamme.' :
+                                                        'Your input helps us continue providing excellent service to all our guests.'}
               </p>
 
             </div>
-            
+
+            {/* Review platform buttons */}
+            <div className="mb-6" style={{ padding: '0 12px', boxSizing: 'border-box', width: '100%' }}>
+              <p className="text-600 mb-4" style={{
+                padding: '0 4px',
+                boxSizing: 'border-box',
+                wordWrap: 'break-word',
+                overflowWrap: 'break-word',
+                textAlign: 'center',
+                fontSize: isMobile ? '14px' : '16px',
+                lineHeight: '1.5'
+              }}>
+                {selectedLanguage?.code === 'en' ? 'Would you like to share your experience with others?' :
+                  selectedLanguage?.code === 'es' ? '¿Te gustaría compartir tu experiencia con otros?' :
+                    selectedLanguage?.code === 'fr' ? 'Aimeriez-vous partager votre expérience avec d\'autres ?' :
+                      selectedLanguage?.code === 'de' ? 'Möchten Sie Ihre Erfahrung mit anderen teilen?' :
+                        selectedLanguage?.code === 'it' ? 'Vorresti condividere la tua esperienza con altri?' :
+                          selectedLanguage?.code === 'pt' ? 'Gostaria de compartilhar sua experiência com outros?' :
+                            selectedLanguage?.code === 'ru' ? 'Хотели бы вы поделиться своим опытом с другими?' :
+                              selectedLanguage?.code === 'ja' ? '他の人とあなたの経験を共有しますか？' :
+                                selectedLanguage?.code === 'ko' ? '다른 사람들과 경험을 공유하시겠습니까?' :
+                                  selectedLanguage?.code === 'zh' ? '您想与他人分享您的体验吗？' :
+                                    selectedLanguage?.code === 'ar' ? 'هل تريد مشاركة تجربتك مع الآخرين؟' :
+                                      selectedLanguage?.code === 'hi' ? 'क्या आप अपना अनुभव दूसरों के साथ साझा करना चाहेंगे?' :
+                                        selectedLanguage?.code === 'th' ? 'คุณต้องการแบ่งปันประสบการณ์ของคุณกับผู้อื่นหรือไม่?' :
+                                          selectedLanguage?.code === 'vi' ? 'Bạn có muốn chia sẻ trải nghiệm của mình với người khácไม่?' :
+                                            selectedLanguage?.code === 'tr' ? 'Deneyiminizi başkalarıyla paylaşmak ister misiniz?' :
+                                              selectedLanguage?.code === 'nl' ? 'Wil je je ervaring delen met anderen?' :
+                                                selectedLanguage?.code === 'sv' ? 'Vill du dela din upplevelse med andra?' :
+                                                  selectedLanguage?.code === 'da' ? 'Vil du dele din oplevelse med andre?' :
+                                                    selectedLanguage?.code === 'no' ? 'Vil du dele din opplevelse med andre?' :
+                                                      selectedLanguage?.code === 'fi' ? 'Haluatko jakaa kokemuksesi muiden kanssa?' :
+                                                        'Would you like to share your experience with others?'}
+              </p>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: isMobile ? '12px' : '16px',
+                width: '100%',
+                flexWrap: 'nowrap',
+                justifyContent: 'center'
+              }}>
+                {hotelData.googleReviewsLink && (
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => window.open(hotelData.googleReviewsLink, '_blank')}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      padding: isMobile ? '16px' : '20px 24px',
+                      backgroundColor: '#fafafa',
+                      border: '2px solid #e8e8e8',
+                      borderRadius: '12px',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)',
+                      minWidth: isMobile ? '140px' : '160px',
+                      flex: isMobile ? '1 1 calc(50% - 6px)' : '0 0 auto',
+                      maxWidth: isMobile ? 'calc(50% - 6px)' : '180px',
+                      boxSizing: 'border-box'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08)';
+                      e.currentTarget.style.transform = 'translateY(-3px)';
+                      e.currentTarget.style.borderColor = '#d0d0d0';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.borderColor = '#e8e8e8';
+                    }}
+                  >
+                    <img
+                      src="/images/google.png"
+                      alt="Google"
+                      style={{
+                        height: '88px',
+                        marginBottom: '12px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                    <div style={{ textAlign: 'center' }}>
+                      <p style={{
+                        fontSize: '12px',
+                        color: '#666',
+                        margin: '0 0 6px 0',
+                        fontWeight: '400'
+                      }}>
+                        {selectedLanguage?.code === 'en' ? 'review us on' :
+                          selectedLanguage?.code === 'es' ? 'reséñanos en' :
+                            selectedLanguage?.code === 'fr' ? 'évaluez-nous sur' :
+                              selectedLanguage?.code === 'de' ? 'bewerten Sie uns auf' :
+                                selectedLanguage?.code === 'it' ? 'recensiscici su' :
+                                  selectedLanguage?.code === 'pt' ? 'avalie-nos no' :
+                                    selectedLanguage?.code === 'ru' ? 'оцените нас на' :
+                                      selectedLanguage?.code === 'ja' ? 'でレビューしてください' :
+                                        selectedLanguage?.code === 'ko' ? '에서 리뷰해주세요' :
+                                          selectedLanguage?.code === 'zh' ? '在评价我们' :
+                                            selectedLanguage?.code === 'ar' ? 'قيمنا على' :
+                                              selectedLanguage?.code === 'hi' ? 'पर हमारी समीक्षा करें' :
+                                                selectedLanguage?.code === 'th' ? 'รีวิวเราบน' :
+                                                  selectedLanguage?.code === 'vi' ? 'đánh giá chúng tôi trên' :
+                                                    selectedLanguage?.code === 'tr' ? 'bizi değerlendirin' :
+                                                      selectedLanguage?.code === 'nl' ? 'beoordeel ons op' :
+                                                        selectedLanguage?.code === 'sv' ? 'recensera oss på' :
+                                                          selectedLanguage?.code === 'da' ? 'bedøm os på' :
+                                                            selectedLanguage?.code === 'no' ? 'vurder oss på' :
+                                                              selectedLanguage?.code === 'fi' ? 'arvostele meitä' : 'review us on'}
+                      </p>
+                      <p style={{
+                        fontSize: '16px',
+                        color: '#333',
+                        margin: '0',
+                        fontWeight: '600'
+                      }}>
+                        Google
+                      </p>
+                    </div>
+                  </div>
+                )}
+                {hotelData.tripAdvisorLink && (
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => window.open(hotelData.tripAdvisorLink, '_blank')}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      padding: isMobile ? '16px' : '20px 24px',
+                      backgroundColor: '#fafafa',
+                      border: '2px solid #e8e8e8',
+                      borderRadius: '12px',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)',
+                      minWidth: isMobile ? '140px' : '160px',
+                      flex: isMobile ? '1 1 calc(50% - 6px)' : '0 0 auto',
+                      maxWidth: isMobile ? 'calc(50% - 6px)' : '180px',
+                      boxSizing: 'border-box'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08)';
+                      e.currentTarget.style.transform = 'translateY(-3px)';
+                      e.currentTarget.style.borderColor = '#d0d0d0';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.borderColor = '#e8e8e8';
+                    }}
+                  >
+                    <img
+                      src="/images/trip.png"
+                      alt="TripAdvisor"
+                      style={{
+                        height: '88px',
+                        marginBottom: '12px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                    <div style={{ textAlign: 'center' }}>
+                      <p style={{
+                        fontSize: '12px',
+                        color: '#666',
+                        margin: '0 0 6px 0',
+                        fontWeight: '400'
+                      }}>
+                        {selectedLanguage?.code === 'en' ? 'review us on' :
+                          selectedLanguage?.code === 'es' ? 'reséñanos en' :
+                            selectedLanguage?.code === 'fr' ? 'évaluez-nous sur' :
+                              selectedLanguage?.code === 'de' ? 'bewerten Sie uns auf' :
+                                selectedLanguage?.code === 'it' ? 'recensiscici su' :
+                                  selectedLanguage?.code === 'pt' ? 'avalie-nos no' :
+                                    selectedLanguage?.code === 'ru' ? 'оцените нас на' :
+                                      selectedLanguage?.code === 'ja' ? 'でレビューしてください' :
+                                        selectedLanguage?.code === 'ko' ? '에서 리뷰해주세요' :
+                                          selectedLanguage?.code === 'zh' ? '在评价我们' :
+                                            selectedLanguage?.code === 'ar' ? 'قيمنا على' :
+                                              selectedLanguage?.code === 'hi' ? 'पर हमारी समीक्षा करें' :
+                                                selectedLanguage?.code === 'th' ? 'รีวิวเราบน' :
+                                                  selectedLanguage?.code === 'vi' ? 'đánh giá chúng tôi trên' :
+                                                    selectedLanguage?.code === 'tr' ? 'bizi değerlendirin' :
+                                                      selectedLanguage?.code === 'nl' ? 'beoordeel ons op' :
+                                                        selectedLanguage?.code === 'sv' ? 'recensera oss på' :
+                                                          selectedLanguage?.code === 'da' ? 'bedøm os på' :
+                                                            selectedLanguage?.code === 'no' ? 'vurder oss på' :
+                                                              selectedLanguage?.code === 'fi' ? 'arvostele meitä' : 'review us on'}
+                      </p>
+                      <p style={{
+                        fontSize: '16px',
+                        color: '#333',
+                        margin: '0',
+                        fontWeight: '600'
+                      }}>
+                        TripAdvisor
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
             {finalRating >= 4 && (
               <>
                 {/* Display submitted feedback text with copy button */}
@@ -528,10 +719,10 @@ export default function CustomerFeedbackForm() {
                       overflowWrap: 'break-word'
                     }}>
                       {selectedLanguage?.code === 'en' ? 'Your Feedback' :
-                       selectedLanguage?.code === 'es' ? 'Tu Comentario' :
-                       selectedLanguage?.code === 'fr' ? 'Votre Commentaire' :
-                       selectedLanguage?.code === 'de' ? 'Ihr Feedback' :
-                       selectedLanguage?.code === 'it' ? 'Il Tuo Feedback' : 'Your Feedback'}
+                        selectedLanguage?.code === 'es' ? 'Tu Comentario' :
+                          selectedLanguage?.code === 'fr' ? 'Votre Commentaire' :
+                            selectedLanguage?.code === 'de' ? 'Ihr Feedback' :
+                              selectedLanguage?.code === 'it' ? 'Il Tuo Feedback' : 'Your Feedback'}
                     </h3>
                     <div className="border-1 border-300 border-round p-3 bg-gray-50" style={{
                       padding: '12px',
@@ -539,7 +730,7 @@ export default function CustomerFeedbackForm() {
                       width: '100%',
                       maxWidth: '100%'
                     }}>
-                      <p 
+                      <p
                         className="text-700 mb-0 white-space-pre-wrap"
                         style={{
                           display: '-webkit-box',
@@ -557,276 +748,78 @@ export default function CustomerFeedbackForm() {
                         {submittedFeedback}
                       </p>
                     </div>
-                      <Button
-                        label={selectedLanguage?.code === 'en' ? 'Copy Full Review' :
-                               selectedLanguage?.code === 'es' ? 'Copiar Comentario Completo' :
-                               selectedLanguage?.code === 'fr' ? 'Copier Commentaire Complet' :
-                               selectedLanguage?.code === 'de' ? 'Vollständiges Feedback Kopieren' :
-                               selectedLanguage?.code === 'it' ? 'Copia Feedback Completo' :
-                               selectedLanguage?.code === 'pt' ? 'Copiar Feedback Completo' :
-                               selectedLanguage?.code === 'ru' ? 'Скопировать Полный Отзыв' :
-                               selectedLanguage?.code === 'ja' ? '完全なレビューをコピー' :
-                               selectedLanguage?.code === 'ko' ? '전체 피드백 복사' :
-                               selectedLanguage?.code === 'zh' ? '复制完整评论' :
-                               selectedLanguage?.code === 'ar' ? 'استنساخ التعليق الكامل' :
-                               selectedLanguage?.code === 'hi' ? 'पूरी समीक्षा कॉपी करें' :
-                               selectedLanguage?.code === 'th' ? 'คัดลอกความคิดเห็นทั้งหมด' :
-                               selectedLanguage?.code === 'vi' ? 'Sao chép toàn bộ phản hồi' :
-                               selectedLanguage?.code === 'tr' ? 'Tam Yorumu Kopyala' :
-                               selectedLanguage?.code === 'nl' ? 'Kopieer Volledige Beoordeling' :
-                               selectedLanguage?.code === 'sv' ? 'Kopiera Fullständig Recension' :
-                               selectedLanguage?.code === 'da' ? 'Kopier Fuld Feedback' :
-                               selectedLanguage?.code === 'no' ? 'Kopier Fullstendig Tilbakemelding' :
-                               selectedLanguage?.code === 'fi' ? 'Kopioi Täydellinen Palaute' : 'Copy Full Review'}
-                        icon="pi pi-copy"
-                        size="small"
-                        style={{
-                          backgroundColor: '#fafafa !important',
-                          color:'black !important',
-                          border: '2px solid #e8e8e8',
-                          borderRadius: '8px',
-                          boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-                        }}
-                        className="feedback-button mt-2"
-                        onClick={async () => {
-                          try {
-                            // Try modern clipboard API first
-                            if (navigator.clipboard && window.isSecureContext) {
-                              await navigator.clipboard.writeText(submittedFeedback);
-                              showToast("success", t('Copied!'), t('Full feedback copied to clipboard'));
-                            } else {
-                              // Fallback for older browsers or non-secure contexts
-                              const textArea = document.createElement("textarea");
-                              textArea.value = submittedFeedback;
-                              textArea.style.position = "fixed";
-                              textArea.style.left = "-999999px";
-                              textArea.style.top = "-999999px";
-                              document.body.appendChild(textArea);
-                              textArea.focus();
-                              textArea.select();
-                              
-                              try {
-                                const successful = document.execCommand('copy');
-                                if (successful) {
-                                  showToast("success", t('Copied!'), t('Full feedback copied to clipboard'));
-                                } else {
-                                  throw new Error('Copy command failed');
-                                }
-                              } finally {
-                                document.body.removeChild(textArea);
+                    <Button
+                      label={selectedLanguage?.code === 'en' ? 'Copy Your Review' :
+                        selectedLanguage?.code === 'es' ? 'Copiar Comentario Completo' :
+                          selectedLanguage?.code === 'fr' ? 'Copier Commentaire Complet' :
+                            selectedLanguage?.code === 'de' ? 'Vollständiges Feedback Kopieren' :
+                              selectedLanguage?.code === 'it' ? 'Copia Feedback Completo' :
+                                selectedLanguage?.code === 'pt' ? 'Copiar Feedback Completo' :
+                                  selectedLanguage?.code === 'ru' ? 'Скопировать Полный Отзыв' :
+                                    selectedLanguage?.code === 'ja' ? '完全なレビューをコピー' :
+                                      selectedLanguage?.code === 'ko' ? '전체 피드백 복사' :
+                                        selectedLanguage?.code === 'zh' ? '复制完整评论' :
+                                          selectedLanguage?.code === 'ar' ? 'استنساخ التعليق الكامل' :
+                                            selectedLanguage?.code === 'hi' ? 'पूरी समीक्षा कॉपी करें' :
+                                              selectedLanguage?.code === 'th' ? 'คัดลอกความคิดเห็นทั้งหมด' :
+                                                selectedLanguage?.code === 'vi' ? 'Sao chép toàn bộ phản hồi' :
+                                                  selectedLanguage?.code === 'tr' ? 'Tam Yorumu Kopyala' :
+                                                    selectedLanguage?.code === 'nl' ? 'Kopieer Volledige Beoordeling' :
+                                                      selectedLanguage?.code === 'sv' ? 'Kopiera Fullständig Recension' :
+                                                        selectedLanguage?.code === 'da' ? 'Kopier Fuld Feedback' :
+                                                          selectedLanguage?.code === 'no' ? 'Kopier Fullstendig Tilbakemelding' :
+                                                            selectedLanguage?.code === 'fi' ? 'Kopioi Täydellinen Palaute' : 'Copy Your Review'}
+                      icon="pi pi-copy"
+                      size="small"
+                      style={{
+                        backgroundColor: '#fafafa !important',
+                        color: 'black !important',
+                        border: '2px solid #e8e8e8',
+                        borderRadius: '8px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                      }}
+                      className="feedback-button mt-2"
+                      onClick={async () => {
+                        try {
+                          // Try modern clipboard API first
+                          if (navigator.clipboard && window.isSecureContext) {
+                            await navigator.clipboard.writeText(submittedFeedback);
+                            showToast("success", t('Copied!'), t('Full feedback copied to clipboard'));
+                          } else {
+                            // Fallback for older browsers or non-secure contexts
+                            const textArea = document.createElement("textarea");
+                            textArea.value = submittedFeedback;
+                            textArea.style.position = "fixed";
+                            textArea.style.left = "-999999px";
+                            textArea.style.top = "-999999px";
+                            document.body.appendChild(textArea);
+                            textArea.focus();
+                            textArea.select();
+
+                            try {
+                              const successful = document.execCommand('copy');
+                              if (successful) {
+                                showToast("success", t('Copied!'), t('Full feedback copied to clipboard'));
+                              } else {
+                                throw new Error('Copy command failed');
                               }
+                            } finally {
+                              document.body.removeChild(textArea);
                             }
-                          } catch (error) {
-                            console.error("Failed to copy:", error);
-                            showToast("error", t('Error'), t('Failed to copy to clipboard'));
                           }
-                        }}
-                      />
-                      <small className="text-500">
-                        {submittedFeedback.split('\n').length > 4 ? '...' : ''}
-                      </small>
-            
+                        } catch (error) {
+                          console.error("Failed to copy:", error);
+                          showToast("error", t('Error'), t('Failed to copy to clipboard'));
+                        }
+                      }}
+                    />
+                    <small className="text-500">
+                      {submittedFeedback.split('\n').length > 4 ? '...' : ''}
+                    </small>
+
                   </div>
                 )}
 
-                {/* Review platform buttons */}
-              <div className="mb-6" style={{ padding: '0 12px', boxSizing: 'border-box', width: '100%' }}>
-                <p className="text-600 mb-4" style={{
-                  padding: '0 4px',
-                  boxSizing: 'border-box',
-                  wordWrap: 'break-word',
-                  overflowWrap: 'break-word',
-                  textAlign: 'center',
-                  fontSize: isMobile ? '14px' : '16px',
-                  lineHeight: '1.5'
-                }}>
-                  {selectedLanguage?.code === 'en' ? 'Would you like to share your experience with others?' :
-                   selectedLanguage?.code === 'es' ? '¿Te gustaría compartir tu experiencia con otros?' :
-                   selectedLanguage?.code === 'fr' ? 'Aimeriez-vous partager votre expérience avec d\'autres ?' :
-                   selectedLanguage?.code === 'de' ? 'Möchten Sie Ihre Erfahrung mit anderen teilen?' :
-                   selectedLanguage?.code === 'it' ? 'Vorresti condividere la tua esperienza con altri?' :
-                   selectedLanguage?.code === 'pt' ? 'Gostaria de compartilhar sua experiência com outros?' :
-                   selectedLanguage?.code === 'ru' ? 'Хотели бы вы поделиться своим опытом с другими?' :
-                   selectedLanguage?.code === 'ja' ? '他の人とあなたの経験を共有しますか？' :
-                   selectedLanguage?.code === 'ko' ? '다른 사람들과 경험을 공유하시겠습니까?' :
-                   selectedLanguage?.code === 'zh' ? '您想与他人分享您的体验吗？' :
-                   selectedLanguage?.code === 'ar' ? 'هل تريد مشاركة تجربتك مع الآخرين؟' :
-                   selectedLanguage?.code === 'hi' ? 'क्या आप अपना अनुभव दूसरों के साथ साझा करना चाहेंगे?' :
-                   selectedLanguage?.code === 'th' ? 'คุณต้องการแบ่งปันประสบการณ์ของคุณกับผู้อื่นหรือไม่?' :
-                   selectedLanguage?.code === 'vi' ? 'Bạn có muốn chia sẻ trải nghiệm của mình với người khácไม่?' :
-                   selectedLanguage?.code === 'tr' ? 'Deneyiminizi başkalarıyla paylaşmak ister misiniz?' :
-                   selectedLanguage?.code === 'nl' ? 'Wil je je ervaring delen met anderen?' :
-                   selectedLanguage?.code === 'sv' ? 'Vill du dela din upplevelse med andra?' :
-                   selectedLanguage?.code === 'da' ? 'Vil du dele din oplevelse med andre?' :
-                   selectedLanguage?.code === 'no' ? 'Vil du dele din opplevelse med andre?' :
-                   selectedLanguage?.code === 'fi' ? 'Haluatko jakaa kokemuksesi muiden kanssa?' : 
-                   'Would you like to share your experience with others?'}
-                </p>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: isMobile ? '12px' : '16px',
-                  width: '100%',
-                  flexWrap: 'nowrap',
-                  justifyContent: 'center'
-                }}>
-                    {hotelData.googleReviewsLink && (
-                    <div 
-                      className="cursor-pointer"
-                        onClick={() => window.open(hotelData.googleReviewsLink, '_blank')}
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        padding: isMobile ? '16px' : '20px 24px',
-                        backgroundColor: '#fafafa',
-                        border: '2px solid #e8e8e8',
-                        borderRadius: '12px',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)',
-                        minWidth: isMobile ? '140px' : '160px',
-                        flex: isMobile ? '1 1 calc(50% - 6px)' : '0 0 auto',
-                        maxWidth: isMobile ? 'calc(50% - 6px)' : '180px',
-                        boxSizing: 'border-box'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08)';
-                        e.currentTarget.style.transform = 'translateY(-3px)';
-                        e.currentTarget.style.borderColor = '#d0d0d0';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)';
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.borderColor = '#e8e8e8';
-                      }}
-                    >
-                      <img 
-                        src="/images/google.png" 
-                        alt="Google" 
-                        style={{ 
-                          height: '88px', 
-                          marginBottom: '12px',
-                          objectFit: 'contain'
-                        }}
-                      />
-                      <div style={{ textAlign: 'center' }}>
-                        <p style={{ 
-                          fontSize: '12px', 
-                          color: '#666', 
-                          margin: '0 0 6px 0',
-                          fontWeight: '400'
-                        }}>
-                          {selectedLanguage?.code === 'en' ? 'review us on' :
-                           selectedLanguage?.code === 'es' ? 'reséñanos en' :
-                           selectedLanguage?.code === 'fr' ? 'évaluez-nous sur' :
-                           selectedLanguage?.code === 'de' ? 'bewerten Sie uns auf' :
-                           selectedLanguage?.code === 'it' ? 'recensiscici su' :
-                           selectedLanguage?.code === 'pt' ? 'avalie-nos no' :
-                           selectedLanguage?.code === 'ru' ? 'оцените нас на' :
-                           selectedLanguage?.code === 'ja' ? 'でレビューしてください' :
-                           selectedLanguage?.code === 'ko' ? '에서 리뷰해주세요' :
-                           selectedLanguage?.code === 'zh' ? '在评价我们' :
-                           selectedLanguage?.code === 'ar' ? 'قيمنا على' :
-                           selectedLanguage?.code === 'hi' ? 'पर हमारी समीक्षा करें' :
-                           selectedLanguage?.code === 'th' ? 'รีวิวเราบน' :
-                           selectedLanguage?.code === 'vi' ? 'đánh giá chúng tôi trên' :
-                           selectedLanguage?.code === 'tr' ? 'bizi değerlendirin' :
-                           selectedLanguage?.code === 'nl' ? 'beoordeel ons op' :
-                           selectedLanguage?.code === 'sv' ? 'recensera oss på' :
-                           selectedLanguage?.code === 'da' ? 'bedøm os på' :
-                           selectedLanguage?.code === 'no' ? 'vurder oss på' :
-                           selectedLanguage?.code === 'fi' ? 'arvostele meitä' : 'review us on'}
-                        </p>
-                        <p style={{ 
-                          fontSize: '16px', 
-                          color: '#333', 
-                          margin: '0',
-                          fontWeight: '600'
-                        }}>
-                          Google
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                  {hotelData.tripAdvisorLink && (
-                    <div 
-                      className="cursor-pointer"
-                      onClick={() => window.open(hotelData.tripAdvisorLink, '_blank')}
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        padding: isMobile ? '16px' : '20px 24px',
-                        backgroundColor: '#fafafa',
-                        border: '2px solid #e8e8e8',
-                        borderRadius: '12px',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)',
-                        minWidth: isMobile ? '140px' : '160px',
-                        flex: isMobile ? '1 1 calc(50% - 6px)' : '0 0 auto',
-                        maxWidth: isMobile ? 'calc(50% - 6px)' : '180px',
-                        boxSizing: 'border-box'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08)';
-                        e.currentTarget.style.transform = 'translateY(-3px)';
-                        e.currentTarget.style.borderColor = '#d0d0d0';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)';
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.borderColor = '#e8e8e8';
-                      }}
-                    >
-                      <img 
-                        src="/images/trip.png" 
-                        alt="TripAdvisor" 
-                        style={{ 
-                          height: '88px', 
-                          marginBottom: '12px',
-                          objectFit: 'contain'
-                        }}
-                      />
-                      <div style={{ textAlign: 'center' }}>
-                        <p style={{ 
-                          fontSize: '12px', 
-                          color: '#666', 
-                          margin: '0 0 6px 0',
-                          fontWeight: '400'
-                        }}>
-                          {selectedLanguage?.code === 'en' ? 'review us on' :
-                           selectedLanguage?.code === 'es' ? 'reséñanos en' :
-                           selectedLanguage?.code === 'fr' ? 'évaluez-nous sur' :
-                           selectedLanguage?.code === 'de' ? 'bewerten Sie uns auf' :
-                           selectedLanguage?.code === 'it' ? 'recensiscici su' :
-                           selectedLanguage?.code === 'pt' ? 'avalie-nos no' :
-                           selectedLanguage?.code === 'ru' ? 'оцените нас на' :
-                           selectedLanguage?.code === 'ja' ? 'でレビューしてください' :
-                           selectedLanguage?.code === 'ko' ? '에서 리뷰해주세요' :
-                           selectedLanguage?.code === 'zh' ? '在评价我们' :
-                           selectedLanguage?.code === 'ar' ? 'قيمنا على' :
-                           selectedLanguage?.code === 'hi' ? 'पर हमारी समीक्षा करें' :
-                           selectedLanguage?.code === 'th' ? 'รีวิวเราบน' :
-                           selectedLanguage?.code === 'vi' ? 'đánh giá chúng tôi trên' :
-                           selectedLanguage?.code === 'tr' ? 'bizi değerlendirin' :
-                           selectedLanguage?.code === 'nl' ? 'beoordeel ons op' :
-                           selectedLanguage?.code === 'sv' ? 'recensera oss på' :
-                           selectedLanguage?.code === 'da' ? 'bedøm os på' :
-                           selectedLanguage?.code === 'no' ? 'vurder oss på' :
-                           selectedLanguage?.code === 'fi' ? 'arvostele meitä' : 'review us on'}
-                        </p>
-                        <p style={{ 
-                          fontSize: '16px', 
-                          color: '#333', 
-                          margin: '0',
-                          fontWeight: '600'
-                        }}>
-                          TripAdvisor
-                        </p>
-                      </div>
-                    </div>
-                    )}
-              </div>
-                </div>
               </>
             )}
           </div>
@@ -859,8 +852,8 @@ export default function CustomerFeedbackForm() {
       }}
     >
       {/* Language Selector - Outside and above the form */}
-      <div style={{ 
-        marginBottom: "20px", 
+      <div style={{
+        marginBottom: "20px",
         textAlign: "center",
         width: "100%",
         maxWidth: "500px"
@@ -985,26 +978,6 @@ export default function CustomerFeedbackForm() {
             <label htmlFor="guestEmail">{t('Email')} *</label>
           </div>
         </div>
-
-        {/* Phone Number */}
-        <div className="p-float-label" style={{ marginBottom: "20px" }}>
-          <InputText
-            id="guestPhone"
-            value={submission.guestPhone || ''}
-            onChange={(e) => setSubmission({ ...submission, guestPhone: e.target.value })}
-            className={submission.guestPhone ? 'p-filled' : ''}
-            style={{
-              width: "100%",
-              padding: "1rem 0.75rem",
-              borderRadius: "6px",
-              border: "2px solid #ced4da",
-              fontSize: "14px",
-              backgroundColor: "#fff",
-            }}
-          />
-          <label htmlFor="guestPhone">{t('Phone Number')}</label>
-        </div>
-
         {/* Room Number */}
         <div className="p-float-label" style={{ marginBottom: "20px" }}>
           <InputText
@@ -1028,9 +1001,9 @@ export default function CustomerFeedbackForm() {
 
         {/* Custom Questions */}
         {translatedForm?.questions.map((question, index) => (
-          <div 
-            key={question.id} 
-            style={{ 
+          <div
+            key={question.id}
+            style={{
               marginBottom: "20px",
               paddingBottom: question.id === "rate-us" ? "24px" : "0",
               borderBottom: question.id === "rate-us" ? "1px solid #e5e7eb" : "none"
@@ -1053,7 +1026,7 @@ export default function CustomerFeedbackForm() {
               </label>
             )}
 
-            <div style={{ 
+            <div style={{
               display: question.id === "rate-us" ? "flex" : "block",
               justifyContent: question.id === "rate-us" ? "center" : "flex-start",
               alignItems: question.id === "rate-us" ? "center" : "flex-start"
@@ -1091,9 +1064,9 @@ export default function CustomerFeedbackForm() {
               )}
 
               {question.type === "STAR_RATING" && (
-                <div 
+                <div
                   className={question.id === "rate-us" ? "rate-us-rating-large" : ""}
-                  style={{ 
+                  style={{
                     display: question.id === "rate-us" ? "flex" : "block",
                     justifyContent: question.id === "rate-us" ? "center" : "flex-start",
                     alignItems: question.id === "rate-us" ? "center" : "flex-start",
@@ -1120,7 +1093,7 @@ export default function CustomerFeedbackForm() {
                         value={option}
                         checked={submission.answers[question.id] === option}
                         onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                        style={{ 
+                        style={{
                           marginRight: "8px",
                           width: "16px",
                           height: "16px",
@@ -1170,7 +1143,7 @@ export default function CustomerFeedbackForm() {
                       value="Yes"
                       checked={submission.answers[question.id] === "Yes"}
                       onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                      style={{ 
+                      style={{
                         marginRight: "8px",
                         width: "16px",
                         height: "16px",
@@ -1187,7 +1160,7 @@ export default function CustomerFeedbackForm() {
                       value="No"
                       checked={submission.answers[question.id] === "No"}
                       onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                      style={{ 
+                      style={{
                         marginRight: "8px",
                         width: "16px",
                         height: "16px",

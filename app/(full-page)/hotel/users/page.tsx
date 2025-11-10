@@ -22,6 +22,7 @@ import { apiClient } from "@/lib/apiClient";
 import { CustomPaginator } from "@/components/CustomPaginator";
 import { getProfileImageUrl } from "@/lib/cloudinary-client";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 interface User {
     id: string;
@@ -104,16 +105,17 @@ export default function MembersPage() {
     const [sortField, setSortField] = useState<string | undefined>(undefined);
     const [sortOrder, setSortOrder] = useState<number | undefined>(undefined);
     const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+    const { t } = useI18n();
 
     // Use debounce hook for search
     const debouncedFilterValue = useDebounce(globalFilterValue, 500);
 
-    const statusOptions = [
-        { label: "Active", value: "ACTIVE" },
-        { label: "Pending", value: "PENDING" },
-        { label: "Inactive", value: "INACTIVE" },
-        { label: "Deactivated", value: "DEACTIVATED" },
-    ];
+    const statusOptions = useMemo(() => [
+        { label: t("Active"), value: "ACTIVE" },
+        { label: t("Pending"), value: "PENDING" },
+        { label: t("Inactive"), value: "INACTIVE" },
+        { label: t("Deactivated"), value: "DEACTIVATED" },
+    ], [t]);
 
     useEffect(() => {
         loadMembers();
@@ -138,8 +140,9 @@ export default function MembersPage() {
             setUsers((response as any).data || []);
             setTotalRecords(response.pagination?.total || 0);
         } catch (error) {
-            setError("Failed to load members. Please check your connection or try again later.");
-            showToast("error", "Error", "Failed to load members");
+            const loadErrorMessage = t("Failed to load members. Please check your connection or try again later.");
+            setError(loadErrorMessage);
+            showToast("error", t("Error"), t("Failed to load members"));
         } finally {
             setLoading(false);
         }
@@ -224,15 +227,16 @@ export default function MembersPage() {
                     user.id === editingUser.id ? response.data : user
                 );
                 setUsers(updatedUsers);
-                showToast("success", "Success", "Member updated successfully");
+                showToast("success", t("Success"), t("Member updated successfully"));
             } else {
                 setUsers([response.data, ...users]);
-                showToast("success", "Success", "Member created successfully");
+                showToast("success", t("Success"), t("Member created successfully"));
             }
 
             setShowUserDialog(false);
         } catch (error) {
-            showToast("error", "Error", error instanceof Error ? error.message : "Failed to save member");
+            const detail = error instanceof Error ? error.message : t("Failed to save member");
+            showToast("error", t("Error"), detail);
         } finally {
             setSaveLoading(false);
         }
@@ -240,8 +244,8 @@ export default function MembersPage() {
 
     const confirmDeleteUser = (user: User) => {
         confirmDialog({
-            message: `Are you sure you want to delete ${user.firstName} ${user.lastName}?`,
-            header: "Delete Confirmation",
+            message: t("Are you sure you want to delete {name}?").replace("{name}", `${user.firstName} ${user.lastName}`),
+            header: t("Delete confirmation"),
             icon: "pi pi-exclamation-triangle",
             acceptClassName: "p-button-danger",
             accept: () => deleteUser(user.id),
@@ -252,8 +256,8 @@ export default function MembersPage() {
         if (selectedUsers.length === 0) return;
 
         confirmDialog({
-            message: `Are you sure you want to delete ${selectedUsers.length} selected user(s)?`,
-            header: "Bulk Delete Confirmation",
+            message: t("Are you sure you want to delete {count} selected user(s)?").replace("{count}", selectedUsers.length.toString()),
+            header: t("Bulk delete confirmation"),
             icon: "pi pi-exclamation-triangle",
             acceptClassName: "p-button-danger",
             accept: () => bulkDeleteUsers(),
@@ -268,10 +272,11 @@ export default function MembersPage() {
             await Promise.all(deletePromises);
 
             setSelectedUsers([]);
-            showToast("success", "Success", `${selectedUsers.length} user(s) deleted successfully`);
+            const successMessage = t("{count} user(s) deleted successfully").replace("{count}", selectedUsers.length.toString());
+            showToast("success", t("Success"), successMessage);
             loadMembers(); // Reload the list
         } catch (error) {
-            showToast("error", "Error", "Failed to delete some users");
+            showToast("error", t("Error"), t("Failed to delete some users"));
         }
     };
 
@@ -284,9 +289,9 @@ export default function MembersPage() {
             }
 
             setUsers(users.filter(user => user.id !== userId));
-            showToast("success", "Success", "Member deleted successfully");
+            showToast("success", t("Success"), t("Member deleted successfully"));
         } catch (error) {
-            showToast("error", "Error", "Failed to delete member");
+            showToast("error", t("Error"), t("Failed to delete member"));
         }
     };
 
@@ -297,6 +302,21 @@ export default function MembersPage() {
             case "INACTIVE": return "danger";
             case "DEACTIVATED": return "danger";
             default: return "info";
+        }
+    };
+
+    const getStatusLabel = (status: string) => {
+        switch (status) {
+            case "ACTIVE":
+                return t("Active");
+            case "PENDING":
+                return t("Pending");
+            case "INACTIVE":
+                return t("Inactive");
+            case "DEACTIVATED":
+                return t("Deactivated");
+            default:
+                return status;
         }
     };
 
@@ -313,7 +333,7 @@ export default function MembersPage() {
 
             const values = line.split(',').map(v => v.trim());
             if (values.length !== headers.length) {
-                errors.push(`Row ${i + 1}: Column count mismatch`);
+                errors.push(t("Row {row}: Column count mismatch").replace("{row}", (i + 1).toString()));
                 continue;
             }
 
@@ -324,14 +344,14 @@ export default function MembersPage() {
 
             // Validate required fields
             if (!row.firstname || !row.lastname || !row.email) {
-                errors.push(`Row ${i + 1}: Missing required fields (firstName, lastName, email)`);
+                errors.push(t("Row {row}: Missing required fields (firstName, lastName, email)").replace("{row}", (i + 1).toString()));
                 continue;
             }
 
             // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(row.email)) {
-                errors.push(`Row ${i + 1}: Invalid email format`);
+                errors.push(t("Row {row}: Invalid email format").replace("{row}", (i + 1).toString()));
                 continue;
             }
 
@@ -380,13 +400,13 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
 
     const processBulkUpload = async () => {
         if (csvData.length === 0) {
-            showToast("error", "Error", "No valid data to upload");
+            showToast("error", t("Error"), t("No valid data to upload"));
             return;
         }
 
         setBulkUploadLoading(true);
         setBulkUploadProgress(0);
-        setBulkUploadStatus("Starting bulk upload...");
+        setBulkUploadStatus(t("Starting bulk upload..."));
 
         let successCount = 0;
         let errorCount = 0;
@@ -394,7 +414,12 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
 
         for (let i = 0; i < csvData.length; i++) {
             const userData = csvData[i];
-            setBulkUploadStatus(`Processing ${userData.firstName} ${userData.lastName} (${i + 1}/${csvData.length})`);
+            setBulkUploadStatus(
+                t("Processing {name} ({index}/{total})")
+                    .replace("{name}", `${userData.firstName} ${userData.lastName}`)
+                    .replace("{index}", (i + 1).toString())
+                    .replace("{total}", csvData.length.toString())
+            );
 
             try {
                 const response = await apiClient.createUser({
@@ -422,15 +447,20 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
             setBulkUploadProgress(((i + 1) / csvData.length) * 100);
         }
 
-        setBulkUploadStatus(`Upload completed. ${successCount} successful, ${errorCount} failed.`);
+        setBulkUploadStatus(
+            t("Upload completed. {success} successful, {failed} failed.")
+                .replace("{success}", successCount.toString())
+                .replace("{failed}", errorCount.toString())
+        );
 
         if (successCount > 0) {
-            showToast("success", "Bulk Upload Complete", `${successCount} members added successfully`);
+            showToast("success", t("Bulk upload complete"), t("{count} members added successfully").replace("{count}", successCount.toString()));
             loadMembers(); // Refresh the list
         }
 
         if (errorCount > 0) {
-            showToast("warn", "Bulk Upload Issues", `${errorCount} members failed to upload. Check the console for details.`);
+        const warnMessage = t("{count} members failed to upload. Check the console for details.").replace("{count}", errorCount.toString());
+        showToast("warn", t("Bulk upload issues"), warnMessage);
             console.error("Bulk upload errors:", errors);
         }
 
@@ -480,7 +510,7 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                     size="small"
                     text
                     severity="secondary"
-                    tooltip="Edit Member"
+                    tooltip={t("Edit Member")}
                     onClick={() => openEditUserDialog(rowData)}
                 />}
                 {rowData.role !== "ADMIN" && <Button
@@ -488,60 +518,59 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                     size="small"
                     text
                     severity="danger"
-                    tooltip="Delete Member"
+                    tooltip={t("Delete Member")}
                         onClick={() => confirmDeleteUser(rowData)}
                     />}
                 </div>
             );
         };
 
-        const header = useMemo(() => (
-            <>
-                <div className="w-full flex justify-content-end">
-                    {selectedUsers.length > 0 && (
-                        <Button
-                            label={`Delete Selected (${selectedUsers.length})`}
-                            icon="pi pi-trash"
-                            onClick={confirmBulkDeleteUsers}
-                            severity="danger"
-                            className="p-button-raised mb-4"
-                        />
-                    )}
-                </div>
-                <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3">
-
-                    <div className="flex flex-column">
-                        <h2 className="text-2xl font-bold m-0">Member Management</h2>
-                        <span className="text-600">Manage all registered members</span>
-                    </div>
-                    <div className="flex gap-2">
-                    <span className="p-input-icon-left">
-                        <i className="pi pi-search" />
-                        <InputText
-                            value={globalFilterValue}
-                            onChange={onGlobalFilterChange}
-                            placeholder="Search members..."
-                            className="w-full"
-                        />
-                    </span>
-
+    const header = (
+        <>
+            <div className="w-full flex justify-content-end">
+                {selectedUsers.length > 0 && (
                     <Button
-                        label="Bulk Upload"
-                        icon="pi pi-upload"
-                        onClick={() => setShowBulkUploadDialog(true)}
-                        severity="info"
+                        label={t("Delete Selected ({count})").replace("{count}", selectedUsers.length.toString())}
+                        icon="pi pi-trash"
+                        onClick={confirmBulkDeleteUsers}
+                        severity="danger"
+                        className="p-button-raised mb-4"
                     />
-                    <Button
-                        label="Add Member"
-                        icon="pi pi-plus"
-                        onClick={openNewMemberDialog}
-                        severity="success"
-                    />
-                </div>
+                )}
             </div>
-        </>
+            <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3">
 
-    ), [globalFilterValue]);
+                <div className="flex flex-column">
+                    <h2 className="text-2xl font-bold m-0">{t("Member Management")}</h2>
+                    <span className="text-600">{t("Manage all registered members")}</span>
+                </div>
+                <div className="flex gap-2">
+                <span className="p-input-icon-left">
+                    <i className="pi pi-search" />
+                    <InputText
+                        value={globalFilterValue}
+                        onChange={onGlobalFilterChange}
+                        placeholder={t("Search members...")}
+                        className="w-full"
+                    />
+                </span>
+
+                <Button
+                    label={t("Bulk Upload")}
+                    icon="pi pi-upload"
+                    onClick={() => setShowBulkUploadDialog(true)}
+                    severity="info"
+                />
+                <Button
+                    label={t("Add Member")}
+                    icon="pi pi-plus"
+                    onClick={openNewMemberDialog}
+                    severity="success"
+                />
+            </div>
+        </div>
+    </>
+    );
 
     return (
         <div className="grid">
@@ -564,7 +593,7 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                                 />
                                 <Column
                                     field="firstName"
-                                    header="Name"
+                                    header={t("Name")}
                                     body={() => (
                                         <div className="flex align-items-center gap-2">
                                             <Skeleton shape="circle" size="2rem" />
@@ -578,30 +607,30 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                                 />
                                 <Column
                                     field="email"
-                                    header="Email"
+                                    header={t("Email")}
                                     body={() => <Skeleton width="200px" height="16px" />}
                                     style={{ minWidth: "200px" }}
                                 />
                                 <Column
                                     field="phone"
-                                    header="Phone"
+                                    header={t("Phone")}
                                     body={() => <Skeleton width="120px" height="16px" />}
                                     style={{ minWidth: "150px" }}
                                 />
                                 <Column
                                     field="paidDate"
-                                    header="Paid Date"
+                                    header={t("Paid Date")}
                                     body={() => <Skeleton width="100px" height="16px" />}
                                     style={{ minWidth: "120px" }}
                                 />
                                 <Column
                                     field="role"
-                                    header="Role"
+                                    header={t("Role")}
                                     body={() => <Skeleton width="80px" height="24px" />}
                                     style={{ minWidth: "100px" }}
                                 />
                                 <Column
-                                    header="Actions"
+                                    header={t("Actions")}
                                     body={() => (
                                         <div className="flex gap-2">
                                             <Skeleton width="32px" height="32px" />
@@ -639,7 +668,7 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                                 filterDisplay="menu"
                                 globalFilterFields={["firstName", "lastName", "email", "membershipNumber"]}
                                 header={header}
-                                emptyMessage={error ? "Unable to load members. Please check your connection or try again later." : "No members found."}
+                                emptyMessage={error ? t("Unable to load members. Please check your connection or try again later.") : t("No members found.")}
                                 responsiveLayout="scroll"
                                 onSort={(e) => {
                                     setSortField(e.sortField);
@@ -656,16 +685,16 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                                     headerStyle={{ width: '3rem' }}
                                     style={{ width: '3rem' }}
                                 />
-                                <Column field="firstName" header="Name" body={nameBodyTemplate} style={{ minWidth: "200px" }} />
-                                <Column field="email" header="Email" style={{ minWidth: "200px" }} />
-                                <Column field="phone" header="Phone" style={{ minWidth: "150px" }} />
-                                <Column field="paidDate" header="Paid Date" body={(rowData) => (
-                                    rowData.paidDate ? new Date(rowData.paidDate).toLocaleDateString() : "Not paid"
+                                <Column field="firstName" header={t("Name")} body={nameBodyTemplate} style={{ minWidth: "200px" }} />
+                                <Column field="email" header={t("Email")} style={{ minWidth: "200px" }} />
+                                <Column field="phone" header={t("Phone")} style={{ minWidth: "150px" }} />
+                                <Column field="paidDate" header={t("Paid Date")} body={(rowData) => (
+                                    rowData.paidDate ? new Date(rowData.paidDate).toLocaleDateString() : t("Not paid")
                                 )} style={{ minWidth: "120px" }} />
-                                <Column field="status" header="Status" body={(rowData) => (
+                                <Column field="status" header={t("Status")} body={(rowData) => (
                                     <div className="flex align-items-center gap-2">
-                                        <Tag value={rowData.status} severity={getStatusSeverity(rowData.status)} />
-                                        {rowData.isDeleted && <Tag value="Deleted" severity="danger" />}
+                                        <Tag value={getStatusLabel(rowData.status)} severity={getStatusSeverity(rowData.status)} />
+                                        {rowData.isDeleted && <Tag value={t("Deleted")} severity="danger" />}
                                     </div>
                                 )} style={{ minWidth: "150px" }} />
                                 {/* <Column field="joinDate" header="Join Date" body={(rowData) => (
@@ -691,15 +720,15 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
             <Dialog
                 visible={showUserDialog}
                 style={{ width: "820px", maxWidth: "95vw", zIndex: 2000, borderRadius: 12 }}
-                header={editingUser ? "Edit Member" : "Add New Member"}
+                header={editingUser ? t("Edit Member") : t("Add New Member")}
                 modal
                 className=""
                 onHide={() => setShowUserDialog(false)}
                 footer={
                     <div className="flex gap-2 justify-content-end">
-                        <Button label="Cancel" icon="pi pi-times" text onClick={() => setShowUserDialog(false)} disabled={saveLoading} />
+                        <Button label={t("Cancel")} icon="pi pi-times" text onClick={() => setShowUserDialog(false)} disabled={saveLoading} />
                         <Button
-                            label={saveLoading ? "Saving..." : "Save"}
+                            label={saveLoading ? t("Saving...") : t("Save")}
                             icon={saveLoading ? "pi pi-spin pi-spinner" : "pi pi-check"}
                             onClick={saveUser}
                             disabled={saveLoading}
@@ -709,95 +738,95 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
             >
                 <div className="grid">
                     <div className="col-12 md:col-6">
-                        <label htmlFor="firstName" className="block font-bold mb-2">First Name *</label>
+                        <label htmlFor="firstName" className="block font-bold mb-2">{t("First Name *")}</label>
                         <InputText
                             id="firstName"
                             value={userForm.firstName}
                             onChange={(e) => setUserForm({ ...userForm, firstName: e.target.value })}
-                            placeholder="Enter first name"
+                            placeholder={t("Enter first name")}
                             required
                             className="w-full"
                         />
                     </div>
                     <div className="col-12 md:col-6">
-                        <label htmlFor="lastName" className="block font-bold mb-2">Last Name *</label>
+                        <label htmlFor="lastName" className="block font-bold mb-2">{t("Last Name *")}</label>
                         <InputText
                             id="lastName"
                             value={userForm.lastName}
                             onChange={(e) => setUserForm({ ...userForm, lastName: e.target.value })}
-                            placeholder="Enter last name"
+                            placeholder={t("Enter last name")}
                             required
                             className="w-full"
                         />
                     </div>
                     <div className="col-12 md:col-6">
-                        <label htmlFor="email" className="block font-bold mb-2">Email *</label>
+                        <label htmlFor="email" className="block font-bold mb-2">{t("Email *")}</label>
                         <InputText
                             id="email"
                             type="email"
                             value={userForm.email}
                             onChange={(e) => setUserForm({ ...userForm, email: e.target.value })}
-                            placeholder="Enter email address"
+                            placeholder={t("Enter email address")}
                             required
                             className="w-full"
                         />
                     </div>
                     <div className="col-12 md:col-6">
-                        <label htmlFor="phone" className="block font-bold mb-2">Phone</label>
+                        <label htmlFor="phone" className="block font-bold mb-2">{t("Phone")}</label>
                         <InputText
                             id="phone"
                             value={userForm.phone}
                             onChange={(e) => setUserForm({ ...userForm, phone: e.target.value })}
-                            placeholder="Enter phone number"
+                            placeholder={t("Enter phone number")}
                             className="w-full"
                         />
                     </div>
                     <div className="col-12 md:col-6">
-                        <label htmlFor="membershipNumber" className="block font-bold mb-2">Member ID</label>
+                        <label htmlFor="membershipNumber" className="block font-bold mb-2">{t("Member ID")}</label>
                         <InputText
                             id="membershipNumber"
                             value={userForm.membershipNumber}
                             onChange={(e) => setUserForm({ ...userForm, membershipNumber: e.target.value })}
-                            placeholder="Enter member ID (leave blank for auto-generation)"
+                            placeholder={t("Enter member ID (leave blank for auto-generation)")}
                             className="w-full"
                         />
                     </div>
                     <div className="col-12 md:col-6">
-                        <label htmlFor="status" className="block font-bold mb-2">Status *</label>
+                        <label htmlFor="status" className="block font-bold mb-2">{t("Status *")}</label>
                         <Dropdown
                             id="status"
                             value={userForm.status}
                             options={statusOptions}
                             onChange={(e) => setUserForm({ ...userForm, status: e.value })}
-                            placeholder="Select member status"
+                            placeholder={t("Select member status")}
                             className="w-full"
                             style={{ minWidth: 0 }}
                         />
                     </div>
 
                     <div className="col-12 md:col-6">
-                        <label htmlFor="joinDate" className="block font-bold mb-2">Join Date</label>
+                        <label htmlFor="joinDate" className="block font-bold mb-2">{t("Join Date")}</label>
                         <Calendar
                             id="joinDate"
                             value={userForm.joinDate}
                             onChange={(e) => setUserForm({ ...userForm, joinDate: e.value as Date })}
                             showIcon
                             dateFormat="dd/mm/yy"
-                            placeholder="Select join date"
+                            placeholder={t("Select join date")}
                             className="w-full"
                             style={{ minWidth: 0 }}
                         />
                     </div>
                     {editingUser && (
                         <div className="col-12 md:col-6">
-                            <label htmlFor="paidDate" className="block font-bold mb-2">Paid Date</label>
+                            <label htmlFor="paidDate" className="block font-bold mb-2">{t("Paid Date")}</label>
                             <Calendar
                                 id="paidDate"
                                 value={userForm.paidDate}
                                 onChange={(e) => setUserForm({ ...userForm, paidDate: e.value as Date })}
                                 showIcon
                                 dateFormat="dd/mm/yy"
-                                placeholder="Select paid date"
+                                placeholder={t("Select paid date")}
                                 className="w-full"
                                 style={{ minWidth: 0 }}
                             />
@@ -805,14 +834,14 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                     )}
                     {!editingUser && (
                         <div className="col-12">
-                            <label htmlFor="password" className="font-bold">Password</label>
+                            <label htmlFor="password" className="font-bold">{t("Password")}</label>
                             <div className="p-input-icon-right w-full">
                                 <InputText
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     value={userForm.password}
                                     onChange={e => setUserForm({ ...userForm, password: e.target.value })}
-                                    placeholder="Set password (leave blank for default)"
+                                    placeholder={t("Set password (leave blank for default)")}
                                     className="w-full"
                                 />
                                 <i
@@ -830,26 +859,26 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
             <Dialog
                 visible={showBulkUploadDialog}
                 style={{ width: "600px", maxWidth: "95vw", zIndex: 2000, borderRadius: 12 }}
-                header="Bulk Upload Members"
+                header={t("Bulk Upload Members")}
                 modal
                 className=""
                 onHide={() => setShowBulkUploadDialog(false)}
                 footer={
                     <div className="flex gap-2 justify-content-end">
                         <Button
-                            label="Download Template"
+                            label={t("Download Template")}
                             icon="pi pi-download"
                             text
                             onClick={downloadCSVTemplate}
                         />
                         <Button
-                            label="Cancel"
+                            label={t("Cancel")}
                             icon="pi pi-times"
                             text
                             onClick={() => setShowBulkUploadDialog(false)}
                         />
                         <Button
-                            label={bulkUploadLoading ? "Uploading..." : "Upload Members"}
+                            label={bulkUploadLoading ? t("Uploading...") : t("Upload Members")}
                             icon={bulkUploadLoading ? "pi pi-spin pi-spinner" : "pi pi-upload"}
                             onClick={processBulkUpload}
                             disabled={csvData.length === 0 || csvErrors.length > 0 || bulkUploadLoading}
@@ -859,10 +888,9 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
             >
                 <div className="flex flex-column gap-4">
                     <div>
-                        <h3 className="text-lg font-semibold mb-2">Upload CSV File</h3>
+                        <h3 className="text-lg font-semibold mb-2">{t("Upload CSV File")}</h3>
                         <p className="text-600 mb-3">
-                            Upload a CSV file with member data. The file should include the following columns:
-                            firstname, lastname, email, phone (optional), status (optional), membershipnumber (optional), joindate (optional), paiddate (optional)
+                            {t("Upload a CSV file with member data. The file should include the following columns: firstname, lastname, email, phone (optional), status (optional), membershipnumber (optional), joindate (optional), paiddate (optional)")}
                         </p>
                         <FileUpload
                             mode="basic"
@@ -872,13 +900,13 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                             customUpload
                             uploadHandler={handleCSVUpload}
                             auto
-                            chooseLabel="Choose CSV File"
+                            chooseLabel={t("Choose CSV File")}
                         />
                     </div>
 
                     {csvData.length > 0 && (
                         <div>
-                            <h4 className="font-semibold mb-2">Preview ({csvData.length} members)</h4>
+                            <h4 className="font-semibold mb-2">{t("Preview ({count} members)").replace("{count}", csvData.length.toString())}</h4>
                             <div className="max-h-40 overflow-y-auto border-1 border-round p-3">
                                 {csvData.slice(0, 5).map((user, index) => (
                                     <div key={index} className="text-sm mb-1">
@@ -886,7 +914,7 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
                                     </div>
                                 ))}
                                 {csvData.length > 5 && (
-                                    <div className="text-sm text-600">... and {csvData.length - 5} more</div>
+                                    <div className="text-sm text-600">{t("... and {count} more").replace("{count}", (csvData.length - 5).toString())}</div>
                                 )}
                             </div>
                         </div>
@@ -894,7 +922,7 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
 
                     {csvErrors.length > 0 && (
                         <div>
-                            <h4 className="font-semibold text-red-600 mb-2">Validation Errors ({csvErrors.length})</h4>
+                            <h4 className="font-semibold text-red-600 mb-2">{t("Validation Errors ({count})").replace("{count}", csvErrors.length.toString())}</h4>
                             <div className="max-h-32 overflow-y-auto border-1 border-round p-3 bg-red-50">
                                 {csvErrors.map((error, index) => (
                                     <div key={index} className="text-sm text-red-600 mb-1">{error}</div>
@@ -905,7 +933,7 @@ Jane,Smith,jane.smith@example.com,+1234567891,ACTIVE,primo1235,2024-01-16,2024-0
 
                     {bulkUploadStatus && (
                         <div>
-                            <h4 className="font-semibold mb-2">Upload Progress</h4>
+                            <h4 className="font-semibold mb-2">{t("Upload Progress")}</h4>
                             <ProgressBar value={bulkUploadProgress} />
                             <p className="text-sm mt-2">{bulkUploadStatus}</p>
                         </div>

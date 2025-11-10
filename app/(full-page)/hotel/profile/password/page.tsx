@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { ProgressBar } from "primereact/progressbar";
 import { Dialog } from "primereact/dialog";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 export default function ChangePasswordPage() {
   const [loading, setLoading] = useState(false);
@@ -23,10 +24,11 @@ export default function ChangePasswordPage() {
     confirm: false,
   });
   const toast = useRef<Toast>(null);
+  const { t } = useI18n();
 
-  const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+  const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
     toast.current?.show({ severity, summary, detail, life: 3000 });
-  };
+  }, []);
 
   const handleInputChange = (field: string, value: string) => {
     setPasswordData(prev => ({
@@ -59,9 +61,9 @@ export default function ChangePasswordPage() {
   };
 
   const getPasswordStrengthLabel = () => {
-    if (passwordStrength < 40) return 'Weak';
-    if (passwordStrength < 80) return 'Medium';
-    return 'Strong';
+    if (passwordStrength < 40) return t("hotel.profile.password.strength.weak");
+    if (passwordStrength < 80) return t("hotel.profile.password.strength.medium");
+    return t("hotel.profile.password.strength.strong");
   };
 
   const getPasswordStrengthColor = () => {
@@ -72,17 +74,17 @@ export default function ChangePasswordPage() {
 
   const validatePassword = () => {
     if (!passwordData.currentPassword) {
-      showToast("error", "Error", "Current password is required");
+      showToast("error", t("common.error"), t("hotel.profile.password.validation.currentRequired"));
       return false;
     }
 
     if (!passwordData.newPassword) {
-      showToast("error", "Error", "New password is required");
+      showToast("error", t("common.error"), t("hotel.profile.password.validation.newRequired"));
       return false;
     }
 
     if (passwordData.newPassword.length < 8) {
-      showToast("error", "Error", "New password must be at least 8 characters long");
+      showToast("error", t("common.error"), t("hotel.profile.password.validation.minLength"));
       return false;
     }
 
@@ -93,17 +95,17 @@ export default function ChangePasswordPage() {
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(passwordData.newPassword);
 
     if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecialChar) {
-      showToast("error", "Error", "New password must contain uppercase, lowercase, numbers, and special characters");
+      showToast("error", t("common.error"), t("hotel.profile.password.validation.complexity"));
       return false;
     }
 
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      showToast("error", "Error", "New password and confirmation do not match");
+      showToast("error", t("common.error"), t("hotel.profile.password.validation.confirmMismatch"));
       return false;
     }
 
     if (passwordData.currentPassword === passwordData.newPassword) {
-      showToast("error", "Error", "New password must be different from current password");
+      showToast("error", t("common.error"), t("hotel.profile.password.validation.sameAsCurrent"));
       return false;
     }
 
@@ -132,7 +134,7 @@ export default function ChangePasswordPage() {
       });
 
       if (response.ok) {
-        showToast("success", "Success", "Password changed successfully");
+        showToast("success", t("common.success"), t("hotel.profile.password.toasts.changeSuccess"));
         
         // Reset form
         setPasswordData({
@@ -143,11 +145,11 @@ export default function ChangePasswordPage() {
         setPasswordStrength(0);
       } else {
         const errorData = await response.json();
-        showToast("error", "Error", errorData.error || "Failed to change password");
+        showToast("error", t("common.error"), errorData.error || t("hotel.profile.password.toasts.changeError"));
       }
     } catch (error) {
       console.error("Error changing password:", error);
-      showToast("error", "Error", "Failed to change password");
+      showToast("error", t("common.error"), t("hotel.profile.password.toasts.changeError"));
     } finally {
       setLoading(false);
     }
@@ -159,12 +161,12 @@ export default function ChangePasswordPage() {
       <div className="col-12">
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-4">
           <div>
-            <h1 className="text-3xl font-bold m-0">Change Password</h1>
-            <p className="text-600 mt-2 mb-0">Update your account password for better security.</p>
+            <h1 className="text-3xl font-bold m-0">{t("hotel.profile.password.title")}</h1>
+            <p className="text-600 mt-2 mb-0">{t("hotel.profile.password.subtitle")}</p>
           </div>
           <div className="flex gap-2">
             <Button
-              label="Change Password"
+              label={t("hotel.profile.password.buttons.change")}
               icon="pi pi-key"
               onClick={handleSave}
               loading={loading}
@@ -176,17 +178,17 @@ export default function ChangePasswordPage() {
 
       {/* Password Change Form */}
       <div className="col-12 lg:col-8">
-        <Card title="Password Change" className="mb-4">
+        <Card title={t("hotel.profile.password.cardTitle")} className="mb-4">
           <div className="grid">
             <div className="col-12">
-              <label className="block text-900 font-medium mb-2">Current Password *</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.password.fields.current")}</label>
               <div style={{ position: "relative" }} className="w-full mb-1">
                 <span className="p-input-icon-left w-full">
                   <i className="pi pi-lock"></i>
                   <InputText
                     type={showPasswords.current ? "text" : "password"}
                     className="w-full"
-                    placeholder="Enter your current password"
+                    placeholder={t("hotel.profile.password.placeholders.current")}
                     value={passwordData.currentPassword}
                     onChange={(e) => handleInputChange('currentPassword', e.target.value)}
                     style={{ paddingRight: "2.5rem" }}
@@ -207,7 +209,7 @@ export default function ChangePasswordPage() {
                     padding: 0,
                     zIndex: 2,
                   }}
-                  aria-label={showPasswords.current ? "Hide password" : "Show password"}
+                aria-label={showPasswords.current ? t("hotel.profile.password.accessibility.hide") : t("hotel.profile.password.accessibility.show")}
                 >
                   <i className={`pi ${showPasswords.current ? "pi-eye-slash" : "pi-eye"}`}></i>
                 </button>
@@ -215,14 +217,14 @@ export default function ChangePasswordPage() {
             </div>
 
             <div className="col-12">
-              <label className="block text-900 font-medium mb-2">New Password *</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.password.fields.new")}</label>
               <div style={{ position: "relative" }} className="w-full mb-1">
                 <span className="p-input-icon-left w-full">
                   <i className="pi pi-lock"></i>
                   <InputText
                     type={showPasswords.new ? "text" : "password"}
                     className="w-full"
-                    placeholder="Enter your new password"
+                    placeholder={t("hotel.profile.password.placeholders.new")}
                     value={passwordData.newPassword}
                     onChange={(e) => handleInputChange('newPassword', e.target.value)}
                     style={{ paddingRight: "2.5rem" }}
@@ -243,7 +245,7 @@ export default function ChangePasswordPage() {
                     padding: 0,
                     zIndex: 2,
                   }}
-                  aria-label={showPasswords.new ? "Hide password" : "Show password"}
+                aria-label={showPasswords.new ? t("hotel.profile.password.accessibility.hide") : t("hotel.profile.password.accessibility.show")}
                 >
                   <i className={`pi ${showPasswords.new ? "pi-eye-slash" : "pi-eye"}`}></i>
                 </button>
@@ -251,7 +253,7 @@ export default function ChangePasswordPage() {
               {passwordData.newPassword && (
                 <div className="mt-2">
                   <div className="flex justify-content-between align-items-center mb-1">
-                    <span className="text-sm text-600">Password Strength:</span>
+                    <span className="text-sm text-600">{t("hotel.profile.password.strength.label")}</span>
                     <span 
                       className="text-sm font-semibold"
                       style={{ color: getPasswordStrengthColor() }}
@@ -269,14 +271,14 @@ export default function ChangePasswordPage() {
             </div>
 
             <div className="col-12">
-              <label className="block text-900 font-medium mb-2">Confirm New Password *</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.password.fields.confirm")}</label>
               <div style={{ position: "relative" }} className="w-full mb-1">
                 <span className="p-input-icon-left w-full">
                   <i className="pi pi-lock"></i>
                   <InputText
                     type={showPasswords.confirm ? "text" : "password"}
                     className="w-full"
-                    placeholder="Confirm your new password"
+                    placeholder={t("hotel.profile.password.placeholders.confirm")}
                     value={passwordData.confirmPassword}
                     onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                     style={{ paddingRight: "2.5rem" }}
@@ -297,7 +299,7 @@ export default function ChangePasswordPage() {
                     padding: 0,
                     zIndex: 2,
                   }}
-                  aria-label={showPasswords.confirm ? "Hide password" : "Show password"}
+                aria-label={showPasswords.confirm ? t("hotel.profile.password.accessibility.hide") : t("hotel.profile.password.accessibility.show")}
                 >
                   <i className={`pi ${showPasswords.confirm ? "pi-eye-slash" : "pi-eye"}`}></i>
                 </button>
@@ -309,48 +311,48 @@ export default function ChangePasswordPage() {
 
       {/* Security Tips */}
       <div className="col-12 lg:col-4">
-        <Card title="Password Requirements" className="mb-4">
+        <Card title={t("hotel.profile.password.requirements.title")} className="mb-4">
           <div className="flex flex-column gap-3">
             <div className="flex align-items-center gap-2">
               <i className={`pi ${passwordData.newPassword.length >= 8 ? 'pi-check text-green-500' : 'pi-times text-red-500'}`}></i>
               <span className={`text-sm ${passwordData.newPassword.length >= 8 ? 'text-green-600' : 'text-600'}`}>
-                At least 8 characters long
+                {t("hotel.profile.password.requirements.minLength")}
               </span>
             </div>
             <div className="flex align-items-center gap-2">
               <i className={`pi ${/[A-Z]/.test(passwordData.newPassword) ? 'pi-check text-green-500' : 'pi-times text-red-500'}`}></i>
               <span className={`text-sm ${/[A-Z]/.test(passwordData.newPassword) ? 'text-green-600' : 'text-600'}`}>
-                Contains uppercase letters
+                {t("hotel.profile.password.requirements.uppercase")}
               </span>
             </div>
             <div className="flex align-items-center gap-2">
               <i className={`pi ${/[a-z]/.test(passwordData.newPassword) ? 'pi-check text-green-500' : 'pi-times text-red-500'}`}></i>
               <span className={`text-sm ${/[a-z]/.test(passwordData.newPassword) ? 'text-green-600' : 'text-600'}`}>
-                Contains lowercase letters
+                {t("hotel.profile.password.requirements.lowercase")}
               </span>
             </div>
             <div className="flex align-items-center gap-2">
               <i className={`pi ${/\d/.test(passwordData.newPassword) ? 'pi-check text-green-500' : 'pi-times text-red-500'}`}></i>
               <span className={`text-sm ${/\d/.test(passwordData.newPassword) ? 'text-green-600' : 'text-600'}`}>
-                Contains numbers
+                {t("hotel.profile.password.requirements.numbers")}
               </span>
             </div>
             <div className="flex align-items-center gap-2">
               <i className={`pi ${/[!@#$%^&*(),.?":{}|<>]/.test(passwordData.newPassword) ? 'pi-check text-green-500' : 'pi-times text-red-500'}`}></i>
               <span className={`text-sm ${/[!@#$%^&*(),.?":{}|<>]/.test(passwordData.newPassword) ? 'text-green-600' : 'text-600'}`}>
-                Contains special characters
+                {t("hotel.profile.password.requirements.special")}
               </span>
             </div>
           </div>
         </Card>
 
-        <Card title="Security Tips">
+        <Card title={t("hotel.profile.password.tips.title")}>
           <div className="flex flex-column gap-3">
             <div className="p-3 border-1 border-blue-200 border-round bg-blue-50">
               <div className="flex align-items-center gap-2">
                 <i className="pi pi-info-circle text-blue-500"></i>
                 <span className="text-blue-700 text-sm">
-                  <strong>Tip:</strong> Use a unique password that you don't use elsewhere.
+                  {t("hotel.profile.password.tips.tip")}
                 </span>
               </div>
             </div>
@@ -358,7 +360,7 @@ export default function ChangePasswordPage() {
               <div className="flex align-items-center gap-2">
                 <i className="pi pi-exclamation-triangle text-orange-500"></i>
                 <span className="text-orange-700 text-sm">
-                  <strong>Warning:</strong> Never share your password with anyone.
+                  {t("hotel.profile.password.tips.warning")}
                 </span>
               </div>
             </div>
@@ -368,20 +370,20 @@ export default function ChangePasswordPage() {
 
       {/* Confirmation Dialog */}
       <Dialog
-        header="Confirm Password Change"
+        header={t("hotel.profile.password.confirm.title")}
         visible={showConfirmDialog}
         style={{ width: '25vw' }}
         onHide={() => setShowConfirmDialog(false)}
         footer={
           <div className="flex justify-content-end gap-2">
             <Button
-              label="Cancel"
+              label={t("hotel.profile.password.buttons.cancel")}
               icon="pi pi-times"
               className="p-button-text"
               onClick={() => setShowConfirmDialog(false)}
             />
             <Button
-              label="Change Password"
+              label={t("hotel.profile.password.buttons.confirmChange")}
               icon="pi pi-key"
               className="p-button-danger"
               onClick={confirmPasswordChange}
@@ -393,9 +395,9 @@ export default function ChangePasswordPage() {
         <div className="flex align-items-center gap-3 mb-3">
           <i className="pi pi-exclamation-triangle text-2xl text-orange-500"></i>
           <div>
-            <p className="m-0 font-semibold">Are you sure you want to change your password?</p>
+            <p className="m-0 font-semibold">{t("hotel.profile.password.confirm.message")}</p>
             <p className="m-0 text-600 text-sm mt-1">
-              This action will log you out of all devices and you'll need to log in again.
+              {t("hotel.profile.password.confirm.warning")}
             </p>
           </div>
         </div>

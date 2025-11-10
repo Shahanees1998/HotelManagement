@@ -9,6 +9,7 @@ import { Toast } from "primereact/toast";
 import { useContext, useState, useRef } from "react";
 import { LayoutContext } from "../../../../layout/context/layoutcontext";
 import AuthFooter from "@/components/AuthFooter";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 const Register: Page = () => {
     const [confirmed, setConfirmed] = useState(false);
@@ -24,6 +25,7 @@ const Register: Page = () => {
     const toast = useRef<Toast>(null);
     const { layoutConfig } = useContext(LayoutContext);
     const dark = layoutConfig.colorScheme !== "light";
+    const { t } = useI18n();
 
     const handleInputChange = (field: string, value: string) => {
         setFormData(prev => ({
@@ -38,12 +40,12 @@ const Register: Page = () => {
 
     const handleRegister = async () => {
         if (!confirmed) {
-            showToast("warn", "Warning", "Please accept the terms and conditions");
+            showToast("warn", t("common.warning"), t("auth.register.toasts.acceptTerms"));
             return;
         }
 
         if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
-            showToast("error", "Error", "Please fill in all required fields");
+            showToast("error", t("common.error"), t("auth.register.toasts.missingFields"));
             return;
         }
 
@@ -60,15 +62,15 @@ const Register: Page = () => {
             const data = await response.json();
 
             if (response.ok) {
-                showToast("success", "Success", data.message);
+                showToast("success", t("common.success"), data?.message ?? t("auth.register.toasts.success"));
                 setTimeout(() => {
                     router.push('/auth/login');
                 }, 2000);
             } else {
-                showToast("error", "Error", data.error);
+                showToast("error", t("common.error"), data?.error ?? t("auth.register.toasts.error"));
             }
         } catch (error) {
-            showToast("error", "Error", "Registration failed. Please try again.");
+            showToast("error", t("common.error"), t("auth.register.toasts.error"));
         } finally {
             setLoading(false);
         }
@@ -98,7 +100,7 @@ const Register: Page = () => {
                 </div>
                 <div style={{ display: "flex", gap: "1rem" }}>
                     <Button
-                        label="Get Started"
+                        label={t("common.getStarted")}
                         outlined
                         style={{
                             borderColor: "#1e3a5f",
@@ -107,7 +109,7 @@ const Register: Page = () => {
                         onClick={() => router.push('/register-hotel')}
                     />
                     <Button
-                        label="Login"
+                        label={t("common.login")}
                         style={{
                             backgroundColor: "#1e3a5f",
                             border: "none",
@@ -123,10 +125,10 @@ const Register: Page = () => {
                 <div className="surface-card border-round py-7 px-4 md:px-7 z-1" style={{ width: "100%", maxWidth: "480px", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)" }}>
                     <div className="mb-4">
                         <div className="text-900 text-xl font-bold mb-2">
-                            Register
+                            {t("auth.register.title")}
                         </div>
                         <span className="text-600 font-medium">
-                            Let&lsquo;s get started
+                            {t("auth.register.subtitle")}
                         </span>
                     </div>
                     <div className="flex flex-column">
@@ -136,7 +138,7 @@ const Register: Page = () => {
                                 id="firstName"
                                 type="text"
                                 className="w-full"
-                                placeholder="First Name"
+                                placeholder={t("auth.register.placeholders.firstName")}
                                 value={formData.firstName}
                                 onChange={(e) => handleInputChange('firstName', e.target.value)}
                             />
@@ -147,7 +149,7 @@ const Register: Page = () => {
                                 id="lastName"
                                 type="text"
                                 className="w-full"
-                                placeholder="Last Name"
+                                placeholder={t("auth.register.placeholders.lastName")}
                                 value={formData.lastName}
                                 onChange={(e) => handleInputChange('lastName', e.target.value)}
                             />
@@ -158,7 +160,7 @@ const Register: Page = () => {
                                 id="email"
                                 type="email"
                                 className="w-full"
-                                placeholder="Email"
+                                placeholder={t("auth.register.placeholders.email")}
                                 value={formData.email}
                                 onChange={(e) => handleInputChange('email', e.target.value)}
                             />
@@ -169,7 +171,7 @@ const Register: Page = () => {
                                 id="phone"
                                 type="tel"
                                 className="w-full"
-                                placeholder="Phone (Optional)"
+                                placeholder={t("auth.register.placeholders.phone")}
                                 value={formData.phone}
                                 onChange={(e) => handleInputChange('phone', e.target.value)}
                             />
@@ -181,7 +183,7 @@ const Register: Page = () => {
                                 type="password"
                                 className="w-full"
                                 inputClassName="w-full"
-                                placeholder="Password"
+                                placeholder={t("auth.register.placeholders.password")}
                                 toggleMask
                                 inputStyle={{ paddingLeft: "2.5rem" }}
                                 value={formData.password}
@@ -201,14 +203,14 @@ const Register: Page = () => {
                                 htmlFor="checkbox"
                                 className="text-900 font-medium mr-2"
                             >
-                                I have read the
+                                {t("auth.register.agreementPrefix")}
                             </label>
                             <a className="text-600 cursor-pointer hover:text-primary cursor-pointer">
-                                Terms and Conditions
+                                {t("common.terms")}
                             </a>
                         </div>
                         <Button
-                            label="Sign Up"
+                            label={loading ? t("auth.register.buttons.signingUp") : t("auth.register.buttons.signUp")}
                             className="w-full mb-4"
                             style={{
                                 backgroundColor: "#1e3a5f",
@@ -220,12 +222,12 @@ const Register: Page = () => {
                             disabled={loading}
                         ></Button>
                         <span className="font-medium text-600">
-                            Already have an account?{" "}
+                            {t("common.alreadyHaveAccount")}{" "}
                             <a 
                                 className="font-semibold cursor-pointer text-900 hover:text-primary transition-colors transition-duration-300"
                                 onClick={() => router.push('/auth/login')}
                             >
-                                Login
+                                {t("common.login")}
                             </a>
                         </span>
                     </div>

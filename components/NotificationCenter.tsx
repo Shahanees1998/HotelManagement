@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo, useCallback } from 'react';
 import { Badge } from 'primereact/badge';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
 import { useAuth } from '@/hooks/useAuth';
 import { useNotifications } from '@/hooks/useNotifications';
+import { useI18n } from '@/i18n/TranslationProvider';
 
 interface Notification {
   id: string;
@@ -20,14 +21,44 @@ interface Notification {
   createdAt: string;
 }
 
+const LOCALE_MAP: Record<string, string> = {
+  en: "en-US",
+  ar: "ar-EG",
+  zh: "zh-CN",
+};
+
+const NOTIFICATION_TYPE_KEYS: Record<string, string> = {
+  NEW_REVIEW: "hotel.analytics.notificationsCenter.types.newReview",
+  REVIEW_APPROVED: "hotel.analytics.notificationsCenter.types.reviewApproved",
+  REVIEW_REJECTED: "hotel.analytics.notificationsCenter.types.reviewRejected",
+  SUBSCRIPTION_EXPIRING: "hotel.analytics.notificationsCenter.types.subscriptionExpiring",
+  SUBSCRIPTION_CANCELLED: "hotel.analytics.notificationsCenter.types.subscriptionCancelled",
+  ESCALATION_RECEIVED: "hotel.analytics.notificationsCenter.types.escalationReceived",
+  ESCALATION_RESPONDED: "hotel.analytics.notificationsCenter.types.escalationResponded",
+  SYSTEM_ALERT: "hotel.analytics.notificationsCenter.types.systemAlert",
+  NEW_HOTEL_REGISTRATION: "hotel.analytics.notificationsCenter.types.newHotelRegistration",
+  NEW_FORM_CREATED: "hotel.analytics.notificationsCenter.types.newFormCreated",
+  SUCCESS: "hotel.analytics.notificationsCenter.types.success",
+  INFO: "hotel.analytics.notificationsCenter.types.info",
+  WARNING: "hotel.analytics.notificationsCenter.types.warning",
+  ERROR: "hotel.analytics.notificationsCenter.types.error",
+};
+
 export default function NotificationCenter() {
   const { user } = useAuth();
   const { notifications, unreadCount, loading, markAsRead, markAllAsRead, deleteNotification } = useNotifications();
   const overlayRef = useRef<OverlayPanel>(null);
+  const { t, locale } = useI18n();
   
   // Individual loading states for different actions
   const [markAllLoading, setMarkAllLoading] = useState(false);
   const [deletingNotifications, setDeletingNotifications] = useState<Set<string>>(new Set());
+
+  const localeFormat = useMemo(() => LOCALE_MAP[locale] ?? locale, [locale]);
+  const relativeTimeFormatter = useMemo(
+    () => new Intl.RelativeTimeFormat(localeFormat, { numeric: "auto" }),
+    [localeFormat]
+  );
 
   const getSeverity = (type: string) => {
     switch (type) {
@@ -49,43 +80,43 @@ export default function NotificationCenter() {
     }
   };
 
-  const getTypeLabel = (type: string) => {
-    switch (type) {
-      case 'NEW_REVIEW': return 'New Review';
-      case 'REVIEW_APPROVED': return 'Review Approved';
-      case 'REVIEW_REJECTED': return 'Review Rejected';
-      case 'SUBSCRIPTION_EXPIRING': return 'Subscription Expiring';
-      case 'SUBSCRIPTION_CANCELLED': return 'Subscription Cancelled';
-      case 'ESCALATION_RECEIVED': return 'Escalation Received';
-      case 'ESCALATION_RESPONDED': return 'Escalation Responded';
-      case 'SYSTEM_ALERT': return 'System Alert';
-      case 'NEW_HOTEL_REGISTRATION': return 'New Hotel Registration';
-      case 'SUCCESS': return 'Success';
-      case 'INFO': return 'Info';
-      case 'WARNING': return 'Warning';
-      case 'ERROR': return 'Error';
-      default: return type;
+  const getTypeLabel = useCallback((type: string) => {
+    const key = NOTIFICATION_TYPE_KEYS[type];
+    if (!key) {
+      return type;
     }
-  };
+    const translated = t(key);
+    return translated === key ? type : translated;
+  }, [t]);
 
-  const formatTime = (timestamp: string) => {
-    const now = new Date();
-    const time = new Date(timestamp);
-    const diffInSeconds = Math.floor((now.getTime() - time.getTime()) / 1000);
-
-    if (diffInSeconds < 60) {
-      return `${diffInSeconds}s ago`;
-    } else if (diffInSeconds < 3600) {
-      const minutes = Math.floor(diffInSeconds / 60);
-      return `${minutes}m ago`;
-    } else if (diffInSeconds < 86400) {
-      const hours = Math.floor(diffInSeconds / 3600);
-      return `${hours}h ago`;
-    } else {
-      const days = Math.floor(diffInSeconds / 86400);
-      return `${days}d ago`;
+  const formatTime = useCallback((timestamp: string) => {
+    if (!timestamp) return "";
+    const time = new Date(timestamp).getTime();
+    if (Number.isNaN(time)) {
+      return "";
     }
-  };
+
+    const now = Date.now();
+    let diffInSeconds = Math.round((time - now) / 1000);
+    const absSeconds = Math.abs(diffInSeconds);
+
+    if (absSeconds < 60) {
+      return relativeTimeFormatter.format(diffInSeconds, "second");
+    }
+
+    const diffInMinutes = Math.round(diffInSeconds / 60);
+    if (Math.abs(diffInMinutes) < 60) {
+      return relativeTimeFormatter.format(diffInMinutes, "minute");
+    }
+
+    const diffInHours = Math.round(diffInMinutes / 60);
+    if (Math.abs(diffInHours) < 24) {
+      return relativeTimeFormatter.format(diffInHours, "hour");
+    }
+
+    const diffInDays = Math.round(diffInHours / 24);
+    return relativeTimeFormatter.format(diffInDays, "day");
+  }, [relativeTimeFormatter]);
 
   const handleNotificationClick = async (notification: Notification) => {
     if (!notification.isRead) {
@@ -152,7 +183,7 @@ export default function NotificationCenter() {
       <div
         className="p-button-text p-button-rounded relative flex align-items-center"
         onClick={(e) => overlayRef.current?.toggle(e)}
-        aria-label="Notifications"
+        aria-label={t("hotel.analytics.notificationsCenter.ariaLabel")}
         style={{backgroundColor:'white !important'}}
       >
         {unreadCount > 0 && (
@@ -163,7 +194,7 @@ export default function NotificationCenter() {
             style={{ fontSize: '0.7rem' }}
           />
         )}
-        <img className='pt-1 cursor-pointer' src='/images/notification.svg' alt='notification' style={{width:'20px', height:'20px'}} />
+        <img className='pt-1 cursor-pointer' src='/images/notification.svg' alt={t("hotel.analytics.notificationsCenter.iconAlt")} style={{width:'20px', height:'20px'}} />
       </div>
 
       <OverlayPanel 
@@ -172,11 +203,11 @@ export default function NotificationCenter() {
         style={{ width: '400px', maxWidth: '90vw' }}
       >
         <div className="flex justify-content-between align-items-center mb-3">
-          <h3 className="m-0">Notifications</h3>
+          <h3 className="m-0">{t("hotel.analytics.notificationsCenter.title")}</h3>
           <div className="flex gap-2">
             {unreadCount > 0 && (
               <Button
-                label="Mark All Read"
+                label={t("hotel.analytics.notificationsCenter.buttons.markAllRead")}
                 size="small"
                 className="p-button-outlined p-button-sm"
                 onClick={handleMarkAllAsRead}
@@ -189,6 +220,7 @@ export default function NotificationCenter() {
               size="small"
               className="p-button-outlined p-button-sm"
               loading={loading}
+              aria-label={t("hotel.analytics.notificationsCenter.buttons.refresh")}
             />
           </div>
         </div>
@@ -196,7 +228,7 @@ export default function NotificationCenter() {
         {!notifications || notifications.length === 0 ? (
           <div className="text-center py-4">
             <i className="pi pi-bell-slash text-4xl text-400 mb-3"></i>
-            <p className="text-600 m-0">No notifications yet</p>
+            <p className="text-600 m-0">{t("hotel.analytics.notificationsCenter.states.empty")}</p>
           </div>
         ) : (
           <div 
@@ -227,7 +259,6 @@ export default function NotificationCenter() {
                       value={getTypeLabel(notification.type)} 
                       severity={getSeverity(notification.type)}
                       className="text-xs"
-                      style={{width:'100px'}}
                     />
                     {!notification.isRead && (
                       <div className="w-2 h-2 bg-blue-500 border-round"></div>

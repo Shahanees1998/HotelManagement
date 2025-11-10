@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -13,22 +13,11 @@ import { Image } from "primereact/image";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import SubscriptionManager from "@/components/SubscriptionManager";
-
-const countries = [
-  { label: "United States", value: "US" },
-  { label: "Canada", value: "CA" },
-  { label: "United Kingdom", value: "GB" },
-  { label: "Australia", value: "AU" },
-  { label: "Germany", value: "DE" },
-  { label: "France", value: "FR" },
-  { label: "Spain", value: "ES" },
-  { label: "Italy", value: "IT" },
-  { label: "Japan", value: "JP" },
-  { label: "Other", value: "OTHER" },
-];
+import { useI18n } from "@/i18n/TranslationProvider";
 
 export default function HotelProfile() {
   const { user } = useAuth();
+  const { t, locale } = useI18n();
   const [loading, setLoading] = useState(false);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [showSubscriptionManager, setShowSubscriptionManager] = useState(false);
@@ -54,12 +43,25 @@ export default function HotelProfile() {
   });
   const toast = useRef<Toast>(null);
 
+  const countries = useMemo(() => [
+    { label: t("countries.US"), value: "US" },
+    { label: t("countries.CA"), value: "CA" },
+    { label: t("countries.GB"), value: "GB" },
+    { label: t("countries.AU"), value: "AU" },
+    { label: t("countries.DE"), value: "DE" },
+    { label: t("countries.FR"), value: "FR" },
+    { label: t("countries.ES"), value: "ES" },
+    { label: t("countries.IT"), value: "IT" },
+    { label: t("countries.JP"), value: "JP" },
+    { label: t("countries.OTHER"), value: "OTHER" },
+  ], [t]);
+
   useEffect(() => {
     loadHotelData();
     loadSubscriptionData();
   }, []);
 
-  const loadHotelData = async () => {
+  const loadHotelData = useCallback(async () => {
     try {
       const response = await fetch('/api/hotel/profile');
       if (response.ok) {
@@ -80,15 +82,15 @@ export default function HotelProfile() {
         });
       } else {
         const errorData = await response.json();
-        showToast("error", "Error", errorData.error || "Failed to load hotel profile");
+        showToast("error", t("common.error"), errorData.error || t("hotel.profile.hotel.toasts.loadError"));
       }
     } catch (error) {
       console.error("Error loading hotel data:", error);
-      showToast("error", "Error", "Failed to load hotel profile");
+      showToast("error", t("common.error"), t("hotel.profile.hotel.toasts.loadError"));
     }
-  };
+  }, [t]);
 
-  const loadSubscriptionData = async () => {
+  const loadSubscriptionData = useCallback(async () => {
     try {
       const response = await fetch('/api/hotel/subscription');
       if (response.ok) {
@@ -104,20 +106,42 @@ export default function HotelProfile() {
     } catch (error) {
       console.error("Error loading subscription data:", error);
     }
-  };
+  }, []);
 
-  const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+  const showToast = useCallback((
+    severity: "success" | "error" | "warn" | "info",
+    summary: string,
+    detail: string
+  ) => {
     toast.current?.show({ severity, summary, detail, life: 3000 });
-  };
+  }, []);
 
-  const handleInputChange = (field: string, value: string) => {
+  const formatDate = useCallback(
+    (dateString?: string | null) => {
+      if (!dateString) {
+        return t("hotel.profile.hotel.account.notAvailable");
+      }
+      try {
+        return new Intl.DateTimeFormat(locale, {
+          year: "numeric",
+          month: "short",
+          day: "numeric"
+        }).format(new Date(dateString));
+      } catch {
+        return new Date(dateString).toLocaleDateString();
+      }
+    },
+    [locale, t]
+  );
+
+  const handleInputChange = useCallback((field: string, value: string) => {
     setHotelData(prev => ({
       ...prev,
       [field]: value
     }));
-  };
+  }, []);
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch('/api/hotel/profile', {
@@ -129,32 +153,32 @@ export default function HotelProfile() {
       });
 
       if (response.ok) {
-        showToast("success", "Success", "Hotel profile updated successfully");
+        showToast("success", t("common.success"), t("hotel.profile.hotel.toasts.saveSuccess"));
       } else {
         const errorData = await response.json();
-        showToast("error", "Error", errorData.error || "Failed to update hotel profile");
+        showToast("error", t("common.error"), errorData.error || t("hotel.profile.hotel.toasts.saveError"));
       }
     } catch (error) {
       console.error("Error saving hotel data:", error);
-      showToast("error", "Error", "Failed to update hotel profile");
+      showToast("error", t("common.error"), t("hotel.profile.hotel.toasts.saveError"));
     } finally {
       setLoading(false);
     }
-  };
+  }, [hotelData, showToast, t]);
 
-  const handleLogoUpload = async (event: any) => {
+  const handleLogoUpload = useCallback(async (event: any) => {
     const file = event.files[0];
     if (!file) return;
 
     // Validate file type and size
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
     if (!allowedTypes.includes(file.type)) {
-      showToast("error", "Error", "Please select a valid image file (JPG, PNG, GIF, or WebP)");
+      showToast("error", t("common.error"), t("hotel.profile.hotel.toasts.imageTypeError"));
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) { // 5MB
-      showToast("error", "Error", "Image size must be less than 5MB");
+      showToast("error", t("common.error"), t("hotel.profile.hotel.toasts.imageSizeError"));
       return;
     }
 
@@ -178,18 +202,18 @@ export default function HotelProfile() {
         // Dispatch custom event to update topbar (in case user profile image is used)
         window.dispatchEvent(new CustomEvent('profile-updated'));
         
-        showToast("success", "Success", "Hotel logo updated successfully");
+        showToast("success", t("common.success"), t("hotel.profile.hotel.toasts.imageSuccess"));
       } else {
         const errorData = await response.json();
-        showToast("error", "Error", errorData.error || "Failed to upload logo");
+        showToast("error", t("common.error"), errorData.error || t("hotel.profile.hotel.toasts.imageError"));
       }
     } catch (error) {
       console.error("Error uploading logo:", error);
-      showToast("error", "Error", "Failed to upload logo");
+      showToast("error", t("common.error"), t("hotel.profile.hotel.toasts.imageError"));
     } finally {
       setUploadingLogo(false);
     }
-  };
+  }, [showToast, t]);
 
   return (
     <div className="grid">
@@ -197,12 +221,12 @@ export default function HotelProfile() {
       <div className="col-12">
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-4">
           <div>
-            <h1 className="text-3xl font-bold m-0">Hotel Profile</h1>
-            <p className="text-600 mt-2 mb-0">Manage your hotel information and settings.</p>
+            <h1 className="text-3xl font-bold m-0">{t("hotel.profile.hotel.title")}</h1>
+            <p className="text-600 mt-2 mb-0">{t("hotel.profile.hotel.subtitle")}</p>
           </div>
           <div className="flex gap-2">
             <Button
-              label="Save Changes"
+              label={t("hotel.profile.hotel.buttons.save")}
               icon="pi pi-save"
               onClick={handleSave}
               loading={loading}
@@ -215,7 +239,7 @@ export default function HotelProfile() {
       {/* Hotel Logo */}
       <div className="col-12 lg:col-4">
         <div className="col-12">
-        <Card title="Hotel Logo" className="mb-4">
+        <Card title={t("hotel.profile.hotel.images.cardTitle")} className="mb-4">
           <div className="flex flex-column align-items-center gap-3">
             <div className="border-1 border-300 border-round p-3" style={{ width: '150px', height: '150px' }}>
               {uploadingLogo ? (
@@ -225,7 +249,7 @@ export default function HotelProfile() {
               ) : hotelData.logo ? (
                 <Image
                   src={hotelData.logo}
-                  alt="Hotel Logo"
+                  alt={t("hotel.profile.hotel.images.alt")}
                   width="100%"
                   height="100%"
                   className="border-round"
@@ -244,22 +268,22 @@ export default function HotelProfile() {
               maxFileSize={5000000}
               customUpload
               uploadHandler={handleLogoUpload}
-              chooseLabel={uploadingLogo ? "Uploading..." : "Upload Logo"}
+              chooseLabel={uploadingLogo ? t("hotel.profile.hotel.buttons.uploading") : t("hotel.profile.hotel.buttons.uploadLogo")}
               className="w-full"
               auto
               disabled={uploadingLogo}
             />
             <small className="text-600 text-center">
-              JPG, PNG or GIF. Max size 5MB. Recommended: 300x300px
+              {t("hotel.profile.hotel.images.hint")}
             </small>
           </div>
         </Card>
         </div>
         <div className="col-12">
-        <Card title="Actions">
+        <Card title={t("hotel.profile.hotel.cards.actions")}>
           <div className="flex flex-column gap-2">
             <Button
-              label="View Public Page"
+              label={t("hotel.profile.hotel.buttons.viewPublic")}
               icon="pi pi-external-link"
               className="p-button-outlined"
               onClick={() => window.open(`/feedback/${hotelData.slug}`, '_blank')}
@@ -271,7 +295,7 @@ export default function HotelProfile() {
               onClick={() => setShowSubscriptionManager(true)}
             /> */}
             <Button
-              label="Contact Support"
+              label={t("hotel.profile.hotel.buttons.contactSupport")}
               icon="pi pi-envelope"
               className="p-button-outlined"
             />
@@ -282,14 +306,14 @@ export default function HotelProfile() {
 
       {/* Hotel Information */}
       <div className="col-12 lg:col-8">
-        <Card title="Hotel Information" className="mb-4">
+        <Card title={t("hotel.profile.hotel.cards.hotelInfo")} className="mb-4">
           <div className="grid">
             <div className="col-12">
-              <label className="block text-900 font-medium mb-2">Hotel Name *</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.hotel.fields.name")}</label>
               <InputText
                 value={hotelData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
-                placeholder="Enter hotel name"
+                placeholder={t("hotel.profile.hotel.placeholders.name")}
                 className="w-full"
               />
             </div>
@@ -309,74 +333,74 @@ export default function HotelProfile() {
             </div> */}
 
             <div className="col-12">
-              <label className="block text-900 font-medium mb-2">Description</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.hotel.fields.description")}</label>
               <InputTextarea
                 value={hotelData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
-                placeholder="Brief description of your hotel"
+                placeholder={t("hotel.profile.hotel.placeholders.description")}
                 rows={3}
                 className="w-full"
               />
             </div>
 
             <div className="col-12 md:col-6">
-              <label className="block text-900 font-medium mb-2">Address</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.hotel.fields.address")}</label>
               <InputText
                 value={hotelData.address}
                 onChange={(e) => handleInputChange('address', e.target.value)}
-                placeholder="Street address"
+                placeholder={t("hotel.profile.hotel.placeholders.address")}
                 className="w-full"
               />
             </div>
 
             <div className="col-12 md:col-6">
-              <label className="block text-900 font-medium mb-2">City</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.hotel.fields.city")}</label>
               <InputText
                 value={hotelData.city}
                 onChange={(e) => handleInputChange('city', e.target.value)}
-                placeholder="City"
+                placeholder={t("hotel.profile.hotel.placeholders.city")}
                 className="w-full"
               />
             </div>
 
             <div className="col-12 md:col-6">
-              <label className="block text-900 font-medium mb-2">Country</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.hotel.fields.country")}</label>
               <Dropdown
                 value={hotelData.country}
                 options={countries}
                 onChange={(e) => handleInputChange('country', e.value)}
-                placeholder="Select country"
+                placeholder={t("hotel.profile.hotel.placeholders.country")}
                 className="w-full"
               />
             </div>
 
             <div className="col-12 md:col-6">
-              <label className="block text-900 font-medium mb-2">Phone</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.hotel.fields.phone")}</label>
               <InputText
                 value={hotelData.phone}
                 onChange={(e) => handleInputChange('phone', e.target.value)}
-                placeholder="+1 (555) 123-4567"
+                placeholder={t("hotel.profile.hotel.placeholders.phone")}
                 className="w-full"
               />
             </div>
 
             <div className="col-12 md:col-6">
-              <label className="block text-900 font-medium mb-2">Email</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.hotel.fields.email")}</label>
               <InputText
                 value={hotelData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
-                placeholder="hotel@example.com"
+                placeholder={t("hotel.profile.hotel.placeholders.email")}
                 type="email"
                 className="w-full"
               />
             </div>
 
             <div className="col-12 md:col-6">
-              <label className="block text-900 font-medium mb-2">Website</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.profile.hotel.fields.website")}</label>
               <InputText
                 value={hotelData.website}
                 onChange={(e) => handleInputChange('website', e.target.value)}
-                placeholder="https://www.yourhotel.com"
+                placeholder={t("hotel.profile.hotel.placeholders.website")}
                 className="w-full"
               />
             </div>
@@ -384,8 +408,8 @@ export default function HotelProfile() {
         </Card>
 
         {/* External Links Card */}
-        <Card title="External Review Links" className="mb-4">
-          <p className="text-600 mb-3">Add links to your TripAdvisor and Google Reviews pages to help guests share positive feedback.</p>
+        <Card title={t("hotel.profile.hotel.externalLinks.title")} className="mb-4">
+          <p className="text-600 mb-3">{t("hotel.profile.hotel.externalLinks.subtitle")}</p>
           <div className="grid">
             <div className="col-12">
               <label className="block text-900 font-medium mb-2">
@@ -395,16 +419,16 @@ export default function HotelProfile() {
                     <path d="M12 6C8.686 6 6 8.686 6 12C6 15.314 8.686 18 12 18C15.314 18 18 15.314 18 12C18 8.686 15.314 6 12 6ZM12 16.5C9.519 16.5 7.5 14.481 7.5 12C7.5 9.519 9.519 7.5 12 7.5C14.481 7.5 16.5 9.519 16.5 12C16.5 14.481 14.481 16.5 12 16.5Z" fill="white"/>
                     <circle cx="12" cy="12" r="2.5" fill="white"/>
                   </svg>
-                  <span>TripAdvisor Link</span>
+                  <span>{t("hotel.profile.hotel.externalLinks.tripAdvisor.label")}</span>
                 </div>
               </label>
               <InputText
                 value={hotelData.tripAdvisorLink}
                 onChange={(e) => handleInputChange('tripAdvisorLink', e.target.value)}
-                placeholder="https://www.tripadvisor.com/..."
+                placeholder={t("hotel.profile.hotel.externalLinks.tripAdvisor.placeholder")}
                 className="w-full"
               />
-              <small className="text-600">Optional: Link to your TripAdvisor page</small>
+              <small className="text-600">{t("hotel.profile.hotel.externalLinks.tripAdvisor.hint")}</small>
             </div>
 
             <div className="col-12 mt-3">
@@ -416,16 +440,16 @@ export default function HotelProfile() {
                     <path d="M5.26 14.2L4.46 14.82L2 17C3.96 20.92 7.7 23.5 12 23.5C14.43 23.5 16.47 22.72 18.02 21.42L15.26 19.21C14.39 19.77 13.3 20.14 12 20.14C9.69 20.14 7.71 18.49 7 16.31L5.26 14.2Z" fill="#FBBC05"/>
                     <path d="M2 7C1.38 8.25 1 9.59 1 11C1 12.41 1.38 13.75 2 15L5.26 12.81C4.86 11.63 4.86 10.37 5.26 9.19L2 7Z" fill="#EA4335"/>
                   </svg>
-                  <span>Google Reviews Link</span>
+                  <span>{t("hotel.profile.hotel.externalLinks.google.label")}</span>
                 </div>
               </label>
               <InputText
                 value={hotelData.googleReviewsLink}
                 onChange={(e) => handleInputChange('googleReviewsLink', e.target.value)}
-                placeholder="https://g.page/..."
+                placeholder={t("hotel.profile.hotel.externalLinks.google.placeholder")}
                 className="w-full"
               />
-              <small className="text-600">Optional: Link to your Google Reviews page</small>
+              <small className="text-600">{t("hotel.profile.hotel.externalLinks.google.hint")}</small>
             </div>
           </div>
         </Card>

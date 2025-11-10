@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
+import { LanguageSelector } from "./LanguageSelector";
 
 const AuthHeader = () => {
     const router = useRouter();
@@ -29,6 +30,10 @@ const AuthHeader = () => {
                 C-Reviews
             </div>
             <div style={{ display: "flex", gap: "1rem" }}>
+                     {/* Language Selector */}
+                     <li className="ml-3">
+                        <LanguageSelector className="w-full" />
+                    </li>
                 <Button
                     label="Get Started"
                     outlined

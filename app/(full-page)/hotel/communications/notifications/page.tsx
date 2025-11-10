@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Card } from "primereact/card";
 import { DataTable, DataTableStateEvent } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -15,6 +15,7 @@ import { Skeleton } from "primereact/skeleton";
 import { apiClient } from "@/lib/apiClient";
 import { CustomPaginator } from "@/components/CustomPaginator";
 import { useRouter } from "next/navigation";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 interface Notification {
     id: string;
@@ -30,6 +31,7 @@ interface Notification {
 
 export default function NotificationsPage() {
     const router = useRouter();
+    const { t, locale } = useI18n();
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -42,29 +44,34 @@ export default function NotificationsPage() {
     const [sortOrder, setSortOrder] = useState<string | undefined>(undefined);
     const [selectedNotifications, setSelectedNotifications] = useState<Notification[]>([]);
     const toast = useRef<Toast>(null);
+    const typeOptions = useMemo(
+        () => [
+            { label: t("hotel.communications.notifications.filters.types.newReview"), value: "NEW_REVIEW" },
+            { label: t("hotel.communications.notifications.filters.types.reviewApproved"), value: "REVIEW_APPROVED" },
+            { label: t("hotel.communications.notifications.filters.types.reviewRejected"), value: "REVIEW_REJECTED" },
+            { label: t("hotel.communications.notifications.filters.types.subscriptionExpiring"), value: "SUBSCRIPTION_EXPIRING" },
+            { label: t("hotel.communications.notifications.filters.types.subscriptionCancelled"), value: "SUBSCRIPTION_CANCELLED" },
+            { label: t("hotel.communications.notifications.filters.types.escalationReceived"), value: "ESCALATION_RECEIVED" },
+            { label: t("hotel.communications.notifications.filters.types.escalationResponded"), value: "ESCALATION_RESPONDED" },
+            { label: t("hotel.communications.notifications.filters.types.systemAlert"), value: "SYSTEM_ALERT" },
+            { label: t("hotel.communications.notifications.filters.types.newHotelRegistration"), value: "NEW_HOTEL_REGISTRATION" },
+            { label: t("hotel.communications.notifications.filters.types.newFormCreated"), value: "NEW_FORM_CREATED" },
+            { label: t("hotel.communications.notifications.filters.types.success"), value: "SUCCESS" },
+            { label: t("hotel.communications.notifications.filters.types.info"), value: "INFO" },
+            { label: t("hotel.communications.notifications.filters.types.warning"), value: "WARNING" },
+            { label: t("hotel.communications.notifications.filters.types.error"), value: "ERROR" },
+        ],
+        [t]
+    );
 
-    const typeOptions = [
-        { label: "New Review", value: "NEW_REVIEW" },
-        { label: "Review Approved", value: "REVIEW_APPROVED" },
-        { label: "Review Rejected", value: "REVIEW_REJECTED" },
-        { label: "Subscription Expiring", value: "SUBSCRIPTION_EXPIRING" },
-        { label: "Subscription Cancelled", value: "SUBSCRIPTION_CANCELLED" },
-        { label: "Escalation Received", value: "ESCALATION_RECEIVED" },
-        { label: "Escalation Responded", value: "ESCALATION_RESPONDED" },
-        { label: "System Alert", value: "SYSTEM_ALERT" },
-        { label: "New Hotel Registration", value: "NEW_HOTEL_REGISTRATION" },
-        { label: "New Form Created", value: "NEW_FORM_CREATED" },
-        { label: "Success", value: "SUCCESS" },
-        { label: "Info", value: "INFO" },
-        { label: "Warning", value: "WARNING" },
-        { label: "Error", value: "ERROR" },
-    ];
-
-    const statusOptions = [
-        { label: "All Status", value: "" },
-        { label: "Unread", value: "unread" },
-        { label: "Read", value: "read" },
-    ];
+    const statusOptions = useMemo(
+        () => [
+            { label: t("hotel.communications.notifications.filters.status.all"), value: "" },
+            { label: t("hotel.communications.notifications.filters.status.unread"), value: "unread" },
+            { label: t("hotel.communications.notifications.filters.status.read"), value: "read" },
+        ],
+        [t]
+    );
 
     useEffect(() => {
         loadNotifications();
@@ -88,7 +95,7 @@ export default function NotificationsPage() {
             setNotifications((response as any).data || []);
             setTotalRecords(response.pagination?.total || 0);
         } catch (error) {
-            showToast("error", "Error", "Failed to load notifications");
+            showToast("error", t("common.error"), t("hotel.communications.notifications.toasts.loadError"));
         } finally {
             setLoading(false);
         }
@@ -124,9 +131,9 @@ export default function NotificationsPage() {
                         : notification
                 )
             );
-            showToast("success", "Success", "Notification marked as read");
+            showToast("success", t("common.success"), t("hotel.communications.notifications.toasts.markReadSuccess"));
         } catch (error) {
-            showToast("error", "Error", "Failed to mark notification as read");
+            showToast("error", t("common.error"), t("hotel.communications.notifications.toasts.markReadError"));
         }
     };
 
@@ -140,9 +147,9 @@ export default function NotificationsPage() {
             setNotifications(prev =>
                 prev.map(notification => ({ ...notification, isRead: true }))
             );
-            showToast("success", "Success", "All notifications marked as read");
+            showToast("success", t("common.success"), t("hotel.communications.notifications.toasts.markAllReadSuccess"));
         } catch (error) {
-            showToast("error", "Error", "Failed to mark all notifications as read");
+            showToast("error", t("common.error"), t("hotel.communications.notifications.toasts.markAllReadError"));
         }
     };
 
@@ -163,9 +170,9 @@ export default function NotificationsPage() {
                 prev.filter(notification => notification.id !== notificationId)
             );
             setTotalRecords(prev => prev - 1);
-            showToast("success", "Success", "Notification deleted successfully");
+            showToast("success", t("common.success"), t("hotel.communications.notifications.toasts.deleteSuccess"));
         } catch (error) {
-            showToast("error", "Error", "Failed to delete notification");
+            showToast("error", t("common.error"), t("hotel.communications.notifications.toasts.deleteError"));
         }
     };
 
@@ -173,8 +180,8 @@ export default function NotificationsPage() {
         if (selectedNotifications.length === 0) return;
 
         confirmDialog({
-            message: `Are you sure you want to delete ${selectedNotifications.length} selected notification(s)?`,
-            header: 'Bulk Delete Confirmation',
+            message: t("hotel.communications.notifications.confirm.bulkDeleteMessage").replace("{count}", String(selectedNotifications.length)),
+            header: t("hotel.communications.notifications.confirm.bulkDeleteHeader"),
             icon: 'pi pi-exclamation-triangle',
             accept: () => bulkDeleteNotifications(),
         });
@@ -196,24 +203,24 @@ export default function NotificationsPage() {
 
             setTotalRecords(prev => prev - selectedNotifications.length);
             setSelectedNotifications([]);
-            showToast("success", "Success", `${selectedNotifications.length} notification(s) deleted successfully`);
+            showToast("success", t("common.success"), t("hotel.communications.notifications.toasts.bulkDeleteSuccess").replace("{count}", String(selectedNotifications.length)));
         } catch (error) {
-            showToast("error", "Error", "Failed to delete some notifications");
+            showToast("error", t("common.error"), t("hotel.communications.notifications.toasts.bulkDeleteError"));
         }
     };
 
     const confirmDelete = (notificationId: string) => {
         confirmDialog({
-            message: 'Are you sure you want to delete this notification?',
-            header: 'Delete Confirmation',
+            message: t("hotel.communications.notifications.confirm.deleteMessage"),
+            header: t("hotel.communications.notifications.confirm.deleteHeader"),
             icon: 'pi pi-exclamation-triangle',
             accept: () => deleteNotification(notificationId),
         });
     };
 
-    const showToast = (severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
+    const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
         toast.current?.show({ severity, summary, detail, life: 3000 });
-    };
+    }, []);
 
     const getTypeSeverity = (type: string) => {
         switch (type) {
@@ -235,41 +242,43 @@ export default function NotificationsPage() {
         }
     };
 
-    const getTypeLabel = (type: string) => {
-        switch (type) {
-            case 'NEW_REVIEW': return 'New Review';
-            case 'REVIEW_APPROVED': return 'Review Approved';
-            case 'REVIEW_REJECTED': return 'Review Rejected';
-            case 'SUBSCRIPTION_EXPIRING': return 'Subscription Expiring';
-            case 'SUBSCRIPTION_CANCELLED': return 'Subscription Cancelled';
-            case 'ESCALATION_RECEIVED': return 'Escalation Received';
-            case 'ESCALATION_RESPONDED': return 'Escalation Responded';
-            case 'SYSTEM_ALERT': return 'System Alert';
-            case 'NEW_HOTEL_REGISTRATION': return 'New Hotel Registration';
-            case 'NEW_FORM_CREATED': return 'New Form Created';
-            case 'SUCCESS': return 'Success';
-            case 'INFO': return 'Info';
-            case 'WARNING': return 'Warning';
-            case 'ERROR': return 'Error';
-            default: return type;
-        }
-    };
+    const getTypeLabel = useCallback(
+        (type: string) => {
+            const key = `hotel.communications.notifications.types.${type}`;
+            const translated = t(key);
+            return translated === key ? type : translated;
+        },
+        [t]
+    );
 
-    const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
-        const now = new Date();
-        const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
+    const formatDate = useCallback(
+        (dateString: string) => {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
 
-        if (diffInHours < 1) {
-            return 'Just now';
-        } else if (diffInHours < 24) {
-            return `${Math.floor(diffInHours)}h ago`;
-        } else if (diffInHours < 48) {
-            return 'Yesterday';
-        } else {
-            return date.toLocaleDateString();
-        }
-    };
+            if (diffInHours < 1) {
+                return t("hotel.communications.notifications.dates.justNow");
+            } else if (diffInHours < 24) {
+                return t("hotel.communications.notifications.dates.hoursAgo").replace("{hours}", String(Math.floor(diffInHours)));
+            } else if (diffInHours < 48) {
+                return t("hotel.communications.notifications.dates.yesterday");
+            } else {
+                try {
+                    return new Intl.DateTimeFormat(locale, {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }).format(date);
+                } catch {
+                    return date.toLocaleDateString();
+                }
+            }
+        },
+        [locale, t]
+    );
 
     const actionBodyTemplate = (rowData: Notification) => {
         return (
@@ -281,7 +290,7 @@ export default function NotificationsPage() {
                         text
                         severity="success"
                         onClick={() => markAsRead(rowData.id)}
-                        tooltip="Mark as Read"
+                        tooltip={t("hotel.communications.notifications.tooltips.markAsRead")}
                     />
                 )}
                 {(rowData.relatedType === 'review' && rowData.relatedId) && (
@@ -290,7 +299,7 @@ export default function NotificationsPage() {
                         size="small"
                         text
                         onClick={() => handleView(rowData)}
-                        tooltip="View"
+                        tooltip={t("hotel.communications.notifications.tooltips.view")}
                     />
                 )}
                 <Button
@@ -299,7 +308,7 @@ export default function NotificationsPage() {
                     text
                     severity="danger"
                     onClick={() => confirmDelete(rowData.id)}
-                    tooltip="Delete"
+                    tooltip={t("hotel.communications.notifications.tooltips.delete")}
                 />
             </div>
         );
@@ -315,9 +324,9 @@ export default function NotificationsPage() {
 
     const statusBodyTemplate = (rowData: Notification) => {
         return rowData.isRead ? (
-            <Tag value="Read" severity="success" />
+            <Tag value={t("hotel.communications.notifications.table.status.read")} severity="success" />
         ) : (
-            <Badge value="New" severity="danger" />
+            <Badge value={t("hotel.communications.notifications.table.status.new")} severity="danger" />
         );
     };
 
@@ -370,13 +379,13 @@ export default function NotificationsPage() {
                 <div>
                     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3 mb-4">
                         <div>
-                            <h1 className="text-3xl font-bold m-0">Notifications</h1>
-                            <p className="text-600 mt-2 mb-0">Manage system notifications and alerts</p>
+                            <h1 className="text-3xl font-bold m-0">{t("hotel.communications.notifications.title")}</h1>
+                            <p className="text-600 mt-2 mb-0">{t("hotel.communications.notifications.subtitle")}</p>
                         </div>
                         <div className="flex gap-2">
                             {selectedNotifications.length > 0 && (
                                 <Button
-                                    label={`Delete Selected (${selectedNotifications.length})`}
+                                    label={t("hotel.communications.notifications.buttons.deleteSelected").replace("{count}", String(selectedNotifications.length))}
                                     icon="pi pi-trash"
                                     onClick={confirmBulkDeleteNotifications}
                                     severity="danger"
@@ -384,7 +393,7 @@ export default function NotificationsPage() {
                                 />
                             )}
                             <Button
-                                label="Mark All as Read"
+                                label={t("hotel.communications.notifications.buttons.markAllAsRead")}
                                 icon="pi pi-check-double"
                                 onClick={markAllAsRead}
                                 severity="success"
@@ -392,7 +401,7 @@ export default function NotificationsPage() {
                                 className="p-button-outlined"
                             />
                             <Button
-                                label="Refresh"
+                                label={t("hotel.communications.notifications.buttons.refresh")}
                                 icon="pi pi-refresh"
                                 onClick={loadNotifications}
                                 loading={loading}
@@ -403,35 +412,35 @@ export default function NotificationsPage() {
 
                     {/* Filters */}
                     <div className="col-12">
-                        <Card title="Filters" className="mb-4">
+                        <Card title={t("hotel.communications.notifications.filters.title")} className="mb-4">
                             <div className="grid">
                                 <div className="col-12 md:col-4">
-                                    <label className="block text-900 font-medium mb-2">Search Notifications</label>
+                                    <label className="block text-900 font-medium mb-2">{t("hotel.communications.notifications.filters.searchLabel")}</label>
                                     <InputText
                                         value={globalFilterValue}
                                         onChange={onGlobalFilterChange}
-                                        placeholder="Search by title, message, or user..."
+                                        placeholder={t("hotel.communications.notifications.filters.searchPlaceholder")}
                                         className="w-full"
                                     />
                                 </div>
                                 <div className="col-12 md:col-4">
-                                    <label className="block text-900 font-medium mb-2">Type</label>
+                                    <label className="block text-900 font-medium mb-2">{t("hotel.communications.notifications.filters.type")}</label>
                                     <Dropdown
                                         value={selectedType}
                                         options={typeOptions}
                                         onChange={onTypeFilterChange}
-                                        placeholder="All Types"
+                                        placeholder={t("hotel.communications.notifications.filters.allTypes")}
                                         className="w-full"
                                         showClear
                                     />
                                 </div>
                                 <div className="col-12 md:col-4">
-                                    <label className="block text-900 font-medium mb-2">Status</label>
+                                    <label className="block text-900 font-medium mb-2">{t("hotel.communications.notifications.filters.status.label")}</label>
                                     <Dropdown
                                         value={selectedStatus}
                                         options={statusOptions}
                                         onChange={onStatusFilterChange}
-                                        placeholder="All Status"
+                                        placeholder={t("hotel.communications.notifications.filters.status.all")}
                                         className="w-full"
                                         showClear
                                     />
@@ -452,7 +461,7 @@ export default function NotificationsPage() {
                         sortField={sortField}
                         sortOrder={sortOrder as any}
                         onSort={onSortChange}
-                        emptyMessage={loading ? "Loading..." : "No notifications found"}
+                        emptyMessage={loading ? t("hotel.communications.notifications.states.loading") : t("hotel.communications.notifications.states.empty")}
                         className="p-datatable-sm"
                         selectionMode="multiple"
                         selection={selectedNotifications}
@@ -465,33 +474,33 @@ export default function NotificationsPage() {
                         />
                         <Column
                             field="type"
-                            header="Type"
+                            header={t("hotel.communications.notifications.table.type")}
                             body={typeBodyTemplate}
                             sortable
                             style={{ width: '120px' }}
                         />
                         <Column
                             field="message"
-                            header="Message"
+                            header={t("hotel.communications.notifications.table.message")}
                             body={messageBodyTemplate}
                             sortable={false}
                         />
                         <Column
                             field="isRead"
-                            header="Status"
+                            header={t("hotel.communications.notifications.table.status.label")}
                             body={statusBodyTemplate}
                             sortable
                             style={{ width: '100px' }}
                         />
                         <Column
                             field="createdAt"
-                            header="Date"
+                            header={t("hotel.communications.notifications.table.date")}
                             body={dateBodyTemplate}
                             sortable
                             style={{ width: '120px' }}
                         />
                         <Column
-                            header="Actions"
+                            header={t("hotel.communications.notifications.table.actions")}
                             body={actionBodyTemplate}
                             style={{ width: '140px' }}
                         />

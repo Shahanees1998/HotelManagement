@@ -1,0 +1,1301 @@
+{
+  "languages": {
+    "en": "الإنجليزية",
+    "ar": "العربية",
+    "zh": "الصينية",
+    "fr": "الفرنسية",
+    "de": "الألمانية",
+    "es": "الإسبانية",
+    "it": "الإيطالية",
+    "pt": "البرتغالية",
+    "ru": "الروسية",
+    "pl": "البولندية",
+    "nl": "الهولندية",
+    "uk": "الأوكرانية",
+    "el": "اليونانية",
+    "ro": "الرومانية"
+  },
+  "common": {
+    "warning": "تحذير",
+    "success": "نجاح",
+    "error": "خطأ",
+    "info": "معلومة",
+    "agreeTo": "أوافق على",
+    "and": "و",
+    "terms": "الشروط والأحكام",
+    "privacy": "سياسة الخصوصية",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "orRegisterVia": "أو سجّل عبر",
+    "selectLanguage": "اختر اللغة",
+    "getStarted": "ابدأ الآن"
+  },
+  "components": {
+    "customPaginator": {
+      "itemsPerPage": "عدد العناصر لكل صفحة",
+      "rangeInfo": "{start}-{end} من {total} إدخالات",
+      "previousPage": "الصفحة السابقة",
+      "nextPage": "الصفحة التالية"
+    }
+  },
+  "countries": {
+    "US": "الولايات المتحدة",
+    "CA": "كندا",
+    "GB": "المملكة المتحدة",
+    "AU": "أستراليا",
+    "DE": "ألمانيا",
+    "FR": "فرنسا",
+    "ES": "إسبانيا",
+    "IT": "إيطاليا",
+    "JP": "اليابان",
+    "IN": "الهند",
+    "CN": "الصين",
+    "BR": "البرازيل",
+    "MX": "المكسيك",
+    "OTHER": "أخرى"
+  },
+  "registerHotel": {
+    "step1": {
+      "title": "معلومات المالك!",
+      "fields": {
+        "fullName": "الاسم الكامل",
+        "email": "عنوان البريد الإلكتروني",
+        "phone": "رقم الهاتف",
+        "password": "كلمة المرور"
+      },
+      "placeholders": {
+        "fullName": "أدخل اسمك الكامل",
+        "email": "أدخل بريدك الإلكتروني",
+        "phone": "أدخل رقم هاتفك",
+        "password": "أدخل كلمة المرور"
+      },
+      "cta": "لنواصل التقدم!"
+    },
+    "step2": {
+      "title": "معلومات الفندق!",
+      "subtitle": "هل بياناتي آمنة؟",
+      "fields": {
+        "hotelName": "اسم الفندق",
+        "hotelWebsite": "موقع الفندق",
+        "hotelAddress": "عنوان الفندق",
+        "city": "المدينة",
+        "country": "الدولة",
+        "hotelDescription": "وصف الفندق"
+      },
+      "placeholders": {
+        "hotelName": "أدخل اسم الفندق",
+        "hotelWebsite": "أدخل رابط موقع الفندق",
+        "hotelAddress": "أدخل العنوان التفصيلي للفندق",
+        "city": "أدخل مدينة الفندق",
+        "country": "اختر الدولة",
+        "hotelDescription": "أدخل وصفاً مختصراً لفندقك"
+      }
+    },
+    "buttons": {
+      "back": "رجوع",
+      "register": "سجّل الآن",
+      "registering": "جاري التسجيل..."
+    },
+    "toasts": {
+      "missingRequired": "يرجى تعبئة جميع الحقول المطلوبة",
+      "passwordLength": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+      "acceptTerms": "يرجى قبول الشروط والأحكام",
+      "acceptTermsPrivacy": "يرجى قبول الشروط والأحكام وسياسة الخصوصية",
+      "success": "تم تسجيل الفندق بنجاح! يرجى التحقق من بريدك الإلكتروني للتفعيل.",
+      "error": "فشل التسجيل",
+      "errorGeneric": "فشل التسجيل. يرجى المحاولة مرة أخرى."
+    },
+    "images": {
+      "ownerAlt": "تسجيل الفندق - معلومات المالك",
+      "hotelAlt": "تسجيل الفندق - معلومات الفندق"
+    }
+  },
+  "hotel": {
+    "dashboard": {
+      "recentReviews": {
+        "title": "المراجعات الأخيرة",
+        "description": "اعرض وادِر تعليقاتك الأخيرة.",
+        "states": {
+          "loading": "جارٍ تحميل المراجعات الأخيرة..."
+        },
+        "table": {
+          "date": "التاريخ"
+        }
+      }
+    },
+    "forms": {
+      "header": {
+        "title": "نموذج الملاحظات",
+        "subtitle": "أدِر نموذج ملاحظات الضيوف لديك. يمكنك تحديث هذا النموذج في أي وقت."
+      },
+      "states": {
+        "loading": "جارٍ تحميل النموذج..."
+      },
+      "fields": {
+        "title": "عنوان النموذج",
+        "status": "الحالة",
+        "active": "نشط",
+        "inactive": "غير نشط",
+        "description": "الوصف",
+        "noDescription": "لا يوجد وصف",
+        "totalResponses": "إجمالي الردود"
+      },
+      "buttons": {
+        "edit": "تعديل النموذج",
+        "preview": "معاينة النموذج",
+        "showQr": "إظهار رمز الاستجابة السريعة",
+        "create": "إنشاء نموذج",
+        "downloadQr": "تنزيل رمز الاستجابة السريعة",
+        "copyUrl": "نسخ الرابط"
+      },
+      "empty": {
+        "title": "لم يتم إنشاء نموذج بعد",
+        "description": "أنشئ نموذج الملاحظات الخاص بك لبدء جمع تعليقات الضيوف."
+      },
+      "preview": {
+        "title": "معاينة النموذج",
+        "tooltipBack": "العودة إلى النماذج",
+        "tag": "وضع المعاينة - التفاعلات معطلة"
+      },
+      "qrDialog": {
+        "title": "رمز الاستجابة السريعة - {title}"
+      },
+      "toasts": {
+        "loadError": "فشل في تحميل النموذج",
+        "slugMissing": "لم يتم العثور على مُعرف الفندق. لا يمكن معاينة النموذج.",
+        "createSuccess": "تم إنشاء النموذج بنجاح",
+        "updateSuccess": "تم تحديث النموذج بنجاح",
+        "saveError": "فشل في حفظ النموذج",
+        "qrGenerated": "تم إنشاء رمز الاستجابة السريعة بنجاح",
+        "qrExists": "رمز الاستجابة السريعة موجود بالفعل لهذا النموذج",
+        "qrError": "فشل في معالجة رمز الاستجابة السريعة",
+        "noUrl": "لا يوجد رابط لنسخه",
+        "copiedDetail": "تم نسخ الرابط إلى الحافظة",
+        "copyError": "فشل في نسخ الرابط إلى الحافظة"
+      },
+      "builder": {
+        "header": {
+          "edit": "تعديل النموذج",
+          "create": "إنشاء نموذج جديد",
+          "preview": "معاينة النموذج",
+          "livePreview": "معاينة مباشرة",
+          "formBuilderToggle": "منشئ النماذج",
+          "livePreviewToggle": "معاينة مباشرة",
+          "backTooltip": "العودة إلى النماذج"
+        },
+        "buttons": {
+          "save": "حفظ النموذج",
+          "saveTooltip": "حفظ النموذج",
+          "addNew": "إضافة جديد",
+          "addOption": "إضافة",
+          "cancel": "إلغاء",
+          "update": "تحديث",
+          "add": "إضافة"
+        },
+        "sections": {
+          "settings": "إعدادات النموذج",
+          "questions": "الأسئلة",
+          "predefined": "الأسئلة المسبقة",
+          "custom": "الأسئلة المخصصة"
+        },
+        "fields": {
+          "titleLabel": "عنوان النموذج*",
+          "titlePlaceholder": "أدخل عنوان النموذج",
+          "descriptionLabel": "وصف النموذج*",
+          "descriptionPlaceholder": "أدخل وصفاً موجزاً للنموذج"
+        },
+        "predefined": {
+          "rateUs": "قيّمنا* (موجود دائماً)",
+          "rateUsTitle": "قيّمنا",
+          "customRating": "تقييم مخصص*",
+          "customRatingTitle": "تقييم مخصص",
+          "customRatingPlaceholder": "أدخل اسم عنصر التقييم",
+          "customRatingEditTitle": "انقر للتحرير",
+          "feedback": "يرجى تزويدنا بملاحظاتك الصادقة؟*",
+          "feedbackTitle": "يرجى تزويدنا بملاحظاتك الصادقة؟",
+          "feedbackPlaceholder": "أدخل ملاحظاتك التفصيلية"
+        },
+        "tooltips": {
+          "previewDisabled": "وضع المعاينة - تم تعطيل التحرير",
+          "addQuestion": "إضافة سؤال مخصص",
+          "save": "حفظ",
+          "cancel": "إلغاء",
+          "edit": "تعديل",
+          "delete": "حذف",
+          "moveUp": "تحريك للأعلى",
+          "moveDown": "تحريك للأسفل"
+        },
+        "questionTypes": {
+          "shortText": "نص قصير",
+          "longText": "نص طويل",
+          "starRating": "تقييم بالنجوم",
+          "singleChoice": "اختيار واحد",
+          "multipleChoice": "اختيار متعدد",
+          "yesNo": "نعم/لا"
+        },
+        "placeholders": {
+          "answer": "أدخل إجابتك"
+        },
+        "answers": {
+          "yes": "نعم",
+          "no": "لا"
+        },
+        "badges": {
+          "default": "افتراضي",
+          "defaultHelper": "لا يمكن تعديله أو حذفه أو نقله"
+        },
+        "states": {
+          "loading": "جارٍ تحميل بيانات النموذج...",
+          "noQuestionsTitle": "لم يتم إضافة أسئلة بعد",
+          "noQuestionsDescription": "استخدم الأسئلة المسبقة أعلاه أو أضف أسئلة مخصصة للبدء"
+        },
+        "alerts": {
+          "ratingRequiredTitle": "التقييم مطلوب",
+          "ratingRequiredDescription": "يجب اختيار \"قيّمنا\" أو \"تقييم مخصص\" لحفظ النموذج."
+        },
+        "layoutInfo": {
+          "basic": {
+            "title": "ميزات التصميم الأساسي",
+            "description": "جميع الأسئلة متاحة بما في ذلك المخصصة. يوفر هذا التصميم مظهراً بسيطاً ونظيفاً."
+          },
+          "good": {
+            "title": "ميزات تصميم جيد",
+            "description": "اختر إما \"قيّمنا\" أو \"تقييم مخصص\" (اختيار متبادل). جميع الأسئلة بما فيها المخصصة متاحة."
+          },
+          "excellent": {
+            "title": "ميزات تصميم ممتاز",
+            "description": "جميع الأسئلة المسبقة والمخصصة متاحة. تصميم مميز مع مؤثرات لإنشاء نماذج شاملة."
+          }
+        },
+        "subscription": {
+          "title": "الاشتراك مطلوب",
+          "message": "اشتراكك {status}. يرجى إعادة تفعيله لإنشاء أو تعديل النماذج.",
+          "manageButton": "إدارة الاشتراك",
+          "status": {
+            "cancelled": "ملغى",
+            "expired": "منتهٍ"
+          },
+          "toastTitle": "الاشتراك مطلوب",
+          "toastMessage": "تم إلغاء اشتراكك أو انتهت صلاحيته. يرجى إعادة تفعيله لإنشاء النماذج."
+        },
+        "preview": {
+          "descriptionFallback": "املأ هذا النموذج لطلب الدعم أو الإبلاغ عن مشكلة. سيقوم فريقنا بمراجعة طلبك والرد عليك في أقرب وقت ممكن بالتوجيه المناسب.",
+          "fullNameLabel": "الاسم الكامل*",
+          "fullNamePlaceholder": "أدخل اسمك الكامل",
+          "emailLabel": "البريد الإلكتروني*",
+          "emailPlaceholder": "أدخل عنوان بريدك الإلكتروني",
+          "submit": "إرسال الآن"
+        },
+        "dialog": {
+          "addTitle": "إضافة سؤال",
+          "editTitle": "تعديل السؤال",
+          "questionLabel": "نص السؤال *",
+          "questionPlaceholder": "أدخل سؤالك",
+          "typeLabel": "نوع السؤال",
+          "optionsLabel": "الخيارات",
+          "optionPlaceholder": "أدخل خياراً"
+        },
+        "toasts": {
+          "formLoadSuccess": "تم تحميل بيانات النموذج بنجاح",
+          "formLoadError": "فشل في تحميل بيانات النموذج",
+          "questionRequired": "نص السؤال مطلوب",
+          "optionsRequired": "يجب أن يحتوي سؤال الاختيار المتعدد على خيارين على الأقل",
+          "questionUpdated": "تم تحديث السؤال",
+          "questionAdded": "تمت إضافة السؤال",
+          "questionDeleted": "تم حذف السؤال",
+          "ratingLabelRequired": "يرجى إدخال تسمية لعنصر التقييم",
+          "ratingItemUpdated": "تم تحديث عنصر التقييم",
+          "ratingItemDeleted": "تم حذف عنصر التقييم",
+          "ratingItemAdded": "تمت إضافة عنصر تقييم جديد",
+          "titleRequired": "عنوان النموذج مطلوب",
+          "questionCountRequired": "يلزم وجود سؤال واحد على الأقل"
+        }
+      }
+    },
+    "analytics": {
+      "customRatings": {
+        "title": "تحليلات التقييمات المخصصة",
+        "description": "تتبَّع اتجاهات التقييم التفصيلية لنموذج التخطيط \"جيد\" لديك.",
+        "buttons": {
+          "exportCsv": "تصدير CSV",
+          "exportPdf": "تصدير PDF",
+          "refresh": "تحديث"
+        },
+        "filters": {
+          "title": "مرشحات نطاق التاريخ",
+          "startDate": "تاريخ البدء",
+          "startDatePlaceholder": "اختر تاريخ البدء",
+          "endDate": "تاريخ الانتهاء",
+          "endDatePlaceholder": "اختر تاريخ الانتهاء",
+          "clear": "مسح المرشحات"
+        },
+        "states": {
+          "loading": "جاري تحميل بيانات التحليلات...",
+          "noDataTitle": "لا توجد بيانات متاحة",
+          "noDataDescription": "لم يتم العثور على نماذج تخطيط \"جيد\" تحتوي على بيانات تقييم مخصصة لفندقك."
+        },
+        "toasts": {
+          "loadError": "تعذر تحميل تحليلات التقييمات المخصصة",
+          "exportSuccess": "تم تصدير البيانات بنجاح بصيغة {format}",
+          "exportError": "تعذر تصدير البيانات"
+        },
+        "chart": {
+          "trendPrefix": "تحليل الاتجاهات - ",
+          "summaryTitle": "ملخص التقييمات",
+          "ratingsCount": "({count} تقييمًا)",
+          "averageRating": "متوسط التقييم",
+          "tooltipSuffix": "/5"
+        }
+      },
+      "overview": {
+        "title": "التحليلات",
+        "description": "تابع أداء فندقك ورضا الضيوف.",
+        "dropdownPlaceholder": "اختر نطاقًا زمنيًا",
+        "buttons": {
+          "refresh": "تحديث"
+        },
+        "timeRanges": {
+          "7": "آخر 7 أيام",
+          "30": "آخر 30 يومًا",
+          "90": "آخر 90 يومًا",
+          "180": "آخر 6 أشهر",
+          "365": "آخر سنة"
+        },
+        "states": {
+          "loadingSkeleton": "جاري التحميل...",
+          "noData": "لا تتوفر بيانات تحليلات",
+          "chartLoading": "جاري تحميل بيانات المخطط...",
+          "chartEmpty": "لا توجد بيانات مخطط متاحة"
+        },
+        "cards": {
+          "change": "{change} مقارنة بالفترة السابقة"
+        },
+        "charts": {
+          "satisfaction": "اتجاهات الرضا",
+          "ratingDistribution": "توزيع التقييمات",
+          "reviewVolume": "حجم المراجعات"
+        },
+        "reviews": {
+          "title": "أحدث المراجعات"
+        },
+        "toasts": {
+          "loadError": "تعذر تحميل بيانات التحليلات"
+        }
+      },
+      "responseRates": {
+        "title": "تحليلات معدلات الاستجابة",
+        "description": "تابع معدلات استجابة فندقك ومؤشرات التفاعل.",
+        "charts": {
+          "reviewVolume": "اتجاهات حجم الردود",
+          "satisfaction": "اتجاهات الرضا عبر الزمن"
+        }
+      },
+      "satisfaction": {
+        "title": "تحليلات الرضا",
+        "description": "تابع اتجاهات رضا ضيوف فندقك وتقييماتهم.",
+        "charts": {
+          "reviewVolume": "حجم المراجعات والتقييمات الإيجابية"
+        }
+      },
+      "notificationsCenter": {
+        "title": "الإشعارات",
+        "ariaLabel": "الإشعارات",
+        "iconAlt": "أيقونة الإشعارات",
+        "buttons": {
+          "markAllRead": "تحديد الكل كمقروء",
+          "refresh": "تحديث"
+        },
+        "states": {
+          "empty": "لا توجد إشعارات بعد"
+        },
+        "types": {
+          "newReview": "مراجعة جديدة",
+          "reviewApproved": "تمت الموافقة على المراجعة",
+          "reviewRejected": "تم رفض المراجعة",
+          "subscriptionExpiring": "الاشتراك على وشك الانتهاء",
+          "subscriptionCancelled": "تم إلغاء الاشتراك",
+          "escalationReceived": "تم استلام تصعيد",
+          "escalationResponded": "تم الرد على التصعيد",
+          "systemAlert": "تنبيه النظام",
+          "newHotelRegistration": "تسجيل فندق جديد",
+          "success": "نجاح",
+          "info": "معلومة",
+          "warning": "تحذير",
+          "error": "خطأ",
+          "generic": "إشعار"
+        }
+      }
+    },
+    "reviews": {
+      "title": "مراجعات الضيوف",
+      "subtitle": "قم بإدارة ومراجعة ملاحظات الضيوف المرسلة.",
+      "buttons": {
+        "refresh": "تحديث",
+        "clearFilters": "مسح المرشحات",
+        "view": "عرض",
+        "reply": "رد",
+        "delete": "حذف",
+        "close": "إغلاق",
+        "markAsChecked": "تعيين كمراجع",
+        "checked": "مراجع",
+        "markAsUrgent": "تعيين كعاجل",
+        "urgent": "عاجل",
+        "replyToCustomer": "الرد على الضيف",
+        "cancel": "إلغاء",
+        "sendReply": "إرسال الرد"
+      },
+      "filters": {
+        "title": "المرشحات",
+        "searchReviews": "البحث في المراجعات",
+        "searchPlaceholder": "ابحث بالاسم أو نص التعليق...",
+        "roomNumber": "رقم الغرفة",
+        "roomNumberPlaceholder": "تصفية حسب رقم الغرفة...",
+        "filter": "التصفية",
+        "allReviews": "جميع المراجعات",
+        "replied": "تم الرد عليها",
+        "notReplied": "لم يتم الرد عليها",
+        "checked": "مراجعة",
+        "notChecked": "غير مراجع",
+        "urgent": "عاجل",
+        "notUrgent": "غير عاجل",
+        "starRatings": "تقييمات النجوم",
+        "allRatings": "جميع التقييمات",
+        "5Stars": "5 نجوم",
+        "4Stars": "4 نجوم",
+        "3Stars": "3 نجوم",
+        "2Stars": "نجمتان",
+        "1Star": "نجمة واحدة",
+        "dateRange": "نطاق التاريخ",
+        "startDate": "تاريخ البدء",
+        "endDate": "تاريخ الانتهاء",
+        "fromDate": "من التاريخ",
+        "toDate": "إلى التاريخ"
+      },
+      "states": {
+        "loadingReviews": "جاري تحميل المراجعات...",
+        "noReviewsFound": "لم يتم العثور على مراجعات",
+        "noReviewsYet": "لم يتم إرسال أي مراجعات بعد.",
+        "noReviewsMatchFilters": "لا توجد مراجعات تطابق مرشحاتك الحالية."
+      },
+      "table": {
+        "guest": "الضيف",
+        "email": "البريد الإلكتروني",
+        "room": "الغرفة",
+        "rating": "التقييم",
+        "status": "الحالة",
+        "submitted": "تاريخ الإرسال",
+        "actions": "الإجراءات",
+        "checkedStatus": "مراجَع",
+        "notCheckedStatus": "غير مراجَع",
+        "repliedStatus": "تم الرد",
+        "notRepliedStatus": "لم يتم الرد",
+        "urgentStatus": "عاجل",
+        "notUrgentStatus": "غير عاجل",
+        "public": "عام",
+        "private": "خاص",
+        "shared": "مشترك",
+        "noEmailAvailable": "لا يوجد بريد إلكتروني لهذه المراجعة"
+      },
+      "detailsDialog": {
+        "header": "تفاصيل ملاحظات الضيف",
+        "guestInfo": "معلومات الضيف",
+        "name": "الاسم:",
+        "anonymous": "مجهول",
+        "email": "البريد الإلكتروني:",
+        "notProvided": "غير متوفر",
+        "phone": "الهاتف:",
+        "roomNumber": "رقم الغرفة:",
+        "submitted": "تاريخ الإرسال:",
+        "overallRating": "التقييم العام",
+        "quickFeedback": "ملاحظات سريعة",
+        "howDoYouRateUs": "كيف تقيمنا؟",
+        "honestFeedback": "الرجاء تقديم ملاحظاتك الصادقة؟",
+        "noSpecificFeedback": "لم يتم تقديم ملاحظات محددة",
+        "customRatingItem": "عنصر تقييم مخصص ({itemId})",
+        "formInfo": "معلومات النموذج",
+        "formTitle": "عنوان النموذج:",
+        "description": "الوصف:",
+        "layout": "التخطيط:",
+        "feedbackResponses": "استجابات الملاحظات",
+        "noDetailedResponses": "لا توجد استجابات تفصيلية لهذه المراجعة.",
+        "question": "السؤال:",
+        "noAnswer": "لم يتم تقديم إجابة",
+        "replyToCustomer": "الرد على الضيف",
+        "replyPlaceholder": "أدخل رسالة ردك هنا...",
+        "replyMessageHint": "سيتم إرسال هذه الرسالة إلى {guestEmail}",
+        "toastWarningReply": "يرجى إدخال رسالة الرد",
+        "toastSuccessReply": "تم إرسال الرد بنجاح إلى {sentTo}",
+        "toastErrorReply": "فشل إرسال الرد"
+      },
+      "deleteDialog": {
+        "header": "حذف المراجعة",
+        "confirmTitle": "هل أنت متأكد أنك تريد حذف هذه المراجعة؟",
+        "confirmMessage": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف المراجعة نهائيًا من نظامك.",
+        "reviewDetails": "تفاصيل المراجعة:",
+        "guest": "الضيف:",
+        "rating": "التقييم:",
+        "submitted": "تاريخ الإرسال:",
+        "buttons": {
+          "cancel": "إلغاء",
+          "delete": "حذف"
+        },
+        "toasts": {
+          "success": "تم حذف المراجعة بنجاح",
+          "error": "فشل حذف المراجعة"
+        }
+      },
+      "toasts": {
+        "loadError": "فشل تحميل المراجعات",
+        "detailsLoadError": "فشل تحميل تفاصيل المراجعة",
+        "statusUpdate": {
+          "checked": "تم تحديد المراجعة كمراجعة",
+          "urgent": "تم تحديد المراجعة كعاجلة",
+          "replied": "تم تحديد المراجعة كمردود عليها"
+        },
+        "statusUpdateError": "فشل تحديث حالة المراجعة",
+        "replyMissing": "يرجى إدخال رسالة الرد",
+        "replySuccess": "تم إرسال الرد بنجاح إلى {sentTo}",
+        "replyError": "فشل إرسال الرد",
+        "deleteSuccess": "تم حذف المراجعة بنجاح",
+        "deleteError": "فشل حذف المراجعة"
+      }
+    },
+    "menu": {
+      "dashboard": "لوحة التحكم",
+      "feedbackForm": "نموذج التعليقات",
+      "qrCodes": "رموز QR",
+      "allReviews": "جميع المراجعات",
+      "notifications": "الإشعارات",
+      "contactAdmin": "الاتصال بالإدارة",
+      "settings": "الإعدادات",
+      "settingsItems": {
+        "userProfile": "ملف المستخدم",
+        "hotelProfile": "ملف الفندق",
+        "changePassword": "تغيير كلمة المرور",
+        "subscriptions": "الاشتراكات",
+        "paymentMethods": "طرق الدفع"
+      }
+    },
+    "paymentMethods": {
+      "pageTitle": "إضافة طريقة دفع",
+      "buttons": {
+        "add": "إضافة",
+        "addMethod": "إضافة طريقة",
+        "updateMethod": "تحديث الطريقة",
+        "cancel": "إلغاء",
+        "setPrimary": "تعيين كطريقة أساسية",
+        "delete": "حذف"
+      },
+      "badges": {
+        "primary": "أساسية",
+        "expired": "منتهية"
+      },
+      "states": {
+        "loading": "جارٍ تحميل طرق الدفع...",
+        "emptyTitle": "لا توجد طرق دفع",
+        "emptyDescription": "أضف طريقة دفع لإدارة اشتراكاتك."
+      },
+      "form": {
+        "paymentType": "نوع الدفع",
+        "paymentTypeOptions": {
+          "card": "بطاقة ائتمان/خصم",
+          "bank": "حساب بنكي"
+        },
+        "card": {
+          "number": "رقم البطاقة",
+          "numberPlaceholder": "1234 5678 9012 3456",
+          "expiryMonth": "شهر الانتهاء",
+          "expiryYear": "سنة الانتهاء",
+          "monthPlaceholder": "MM",
+          "yearPlaceholder": "YYYY",
+          "cvv": "رمز التحقق CVV",
+          "cvvPlaceholder": "123",
+          "holder": "اسم صاحب البطاقة",
+          "holderPlaceholder": "محمد أحمد",
+          "brand": "نوع البطاقة",
+          "brandPlaceholder": "اختر نوع البطاقة"
+        },
+        "cardBrands": {
+          "visa": "فيزا",
+          "mastercard": "ماستركارد",
+          "amex": "أمريكان إكسبريس",
+          "discover": "ديسكفر",
+          "unknown": "بطاقة"
+        },
+        "bank": {
+          "name": "اسم البنك",
+          "namePlaceholder": "بنك البلاد",
+          "accountNumber": "رقم الحساب",
+          "accountPlaceholder": "رقم الحساب",
+          "routingNumber": "رقم التوجيه",
+          "routingPlaceholder": "123456789",
+          "accountType": "نوع الحساب",
+          "accountTypePlaceholder": "اختر نوع الحساب"
+        },
+        "accountTypes": {
+          "checking": "جاري",
+          "savings": "توفير",
+          "unknown": "حساب"
+        }
+      },
+      "list": {
+        "endingIn": "المنتهية بـ",
+        "expiryLabel": "تاريخ الانتهاء",
+        "accountTypeSuffix": "حساب",
+        "accountTypeUnknown": "حساب",
+        "unknownBank": "بنك",
+        "edit": "تعديل",
+        "delete": "حذف"
+      },
+      "dialogs": {
+        "add": {
+          "title": "إضافة طريقة دفع"
+        },
+        "edit": {
+          "title": "تعديل طريقة الدفع",
+          "cardLocked": "لا يمكن تغيير رقم البطاقة لأسباب أمنية",
+          "bankLocked": "لا يمكن تغيير رقم الحساب لأسباب أمنية"
+        },
+        "delete": {
+          "title": "حذف طريقة الدفع",
+          "message": "هل أنت متأكد أنك تريد حذف طريقة الدفع هذه؟ هذا الإجراء لا يمكن التراجع عنه."
+        }
+      },
+      "toasts": {
+        "load": {
+          "error": "فشل تحميل طرق الدفع"
+        },
+        "add": {
+          "success": "تمت إضافة طريقة الدفع بنجاح",
+          "error": "فشل في إضافة طريقة الدفع"
+        },
+        "delete": {
+          "success": "تم حذف طريقة الدفع بنجاح",
+          "error": "فشل في حذف طريقة الدفع"
+        },
+        "default": {
+          "success": "تم تحديث الطريقة الأساسية بنجاح",
+          "error": "فشل تحديث الطريقة الأساسية"
+        },
+        "update": {
+          "success": "تم تحديث طريقة الدفع بنجاح",
+          "error": "فشل تحديث طريقة الدفع"
+        }
+      }
+    },
+    "subscription": {
+      "header": {
+        "title": "إدارة الاشتراك",
+        "subtitle": "قم بإدارة اشتراك وفوترة فندقك."
+      },
+      "buttons": {
+        "refresh": "تحديث",
+        "processing": "جارٍ المعالجة...",
+        "upgradeNow": "ترقية الآن",
+        "currentPlan": "الخطة الحالية",
+        "reactivate": "إعادة التفعيل",
+        "cancelSubscription": "إلغاء الاشتراك",
+        "contactSupport": "الاتصال بالدعم",
+        "cancel": "إلغاء",
+        "confirm": "تأكيد"
+      },
+      "statuses": {
+        "trial": "تجريبي",
+        "active": "نشط",
+        "cancelled": "ملغى",
+        "expired": "منتهي"
+      },
+      "states": {
+        "loading": "جارٍ تحميل بيانات الاشتراك...",
+        "notFoundTitle": "الاشتراك غير موجود",
+        "notFoundDescription": "تعذر تحميل معلومات الاشتراك."
+      },
+      "labels": {
+        "notAvailable": "غير متاح"
+      },
+      "trial": {
+        "name": "الخطة التجريبية",
+        "description": "تجربة مجانية",
+        "label": "الفترة التجريبية:",
+        "remaining": "متبقي {count} يوم"
+      },
+      "sections": {
+        "status": {
+          "title": "حالة الاشتراك الحالية",
+          "statusLabel": "الحالة",
+          "totalReviews": "إجمالي المراجعات",
+          "averageRating": "متوسط التقييم"
+        },
+        "plans": {
+          "title": "الخطط المتاحة",
+          "currentPlanHint": "أنت على هذه الخطة حاليًا"
+        },
+        "actions": {
+          "title": "إجراءات الاشتراك"
+        },
+        "billing": {
+          "title": "معلومات الفوترة",
+          "subscriptionId": "رقم الاشتراك:",
+          "created": "تم الإنشاء:",
+          "nextBilling": "الفوترة القادمة:",
+          "trialEnds": "نهاية الفترة التجريبية:"
+        }
+      },
+      "perInterval": "لكل {interval}",
+      "priceLabel": "{price}/{interval}",
+      "dialog": {
+        "title": "تأكيد تغيير الاشتراك",
+        "upgradeTitle": "ترقية إلى {plan}",
+        "description": "أنت على وشك ترقية خطة الاشتراك الخاصة بك.",
+        "planLabel": "الخطة:",
+        "priceLabel": "السعر:",
+        "billingLabel": "الفوترة:",
+        "noteLabel": "ملاحظة:",
+        "noteDescription": "هذا بيئة تجريبية. لن تتم معالجة أي دفعات فعلية."
+      },
+      "toasts": {
+        "load": {
+          "error": "فشل تحميل بيانات الاشتراك"
+        },
+        "update": {
+          "success": "تم تحديث الاشتراك بنجاح",
+          "error": "فشل تحديث الاشتراك"
+        }
+      },
+      "errors": {
+        "unauthorized": "غير مصرح",
+        "hotelNotFound": "لم يتم العثور على الفندق",
+        "planRequired": "مطلوب رقم الخطة والإجراء",
+        "unknownPlan": "خطة غير معروفة",
+        "fetchFailed": "تعذر جلب تفاصيل الاشتراك",
+        "updateFailed": "فشل تحديث الاشتراك"
+      },
+      "messages": {
+        "upgraded": "تمت الترقية بنجاح إلى {plan}",
+        "cancelled": "تم إلغاء الاشتراك بنجاح"
+      },
+      "plans": {
+        "basic": {
+          "name": "الخطة الأساسية",
+          "features": [
+            "حتى 100 مراجعة شهريًا",
+            "تحليلات أساسية",
+            "إنشاء رمز QR",
+            "نموذج ملاحظات أساسي"
+          ]
+        },
+        "professional": {
+          "name": "الخطة الاحترافية",
+          "features": [
+            "حتى 500 مراجعة شهريًا",
+            "تحليلات متقدمة",
+            "إنشاء رمز QR",
+            "أسئلة تقييم مخصصة بنظام النجوم"
+          ]
+        },
+        "enterprise": {
+          "name": "خطة المؤسسات",
+          "features": [
+            "عدد غير محدود من المراجعات شهريًا",
+            "تحليلات للمؤسسات",
+            "دعم أولوية",
+            "إدارة متعددة للفنادق"
+          ]
+        }
+      },
+      "intervals": {
+        "month": "شهر",
+        "monthly": "شهريًا",
+        "year": "سنة",
+        "yearly": "سنويًا",
+        "quarter": "ربع سنوي",
+        "quarterly": "ربع سنويًا"
+      }
+    },
+    "profile": {
+      "user": {
+        "title": "المعلومات الشخصية",
+        "subtitle": "قم بإدارة تفاصيل حسابك الشخصية.",
+        "buttons": {
+          "save": "حفظ التغييرات",
+          "changePassword": "تغيير كلمة المرور",
+          "twoFactor": "المصادقة الثنائية",
+          "changePhoto": "تغيير الصورة",
+          "uploading": "جارٍ الرفع..."
+        },
+        "images": {
+          "cardTitle": "صورة الملف الشخصي",
+          "hint": "ملفات JPG أو PNG أو GIF. الحد الأقصى 5MB."
+        },
+        "fields": {
+          "firstName": "الاسم الأول *",
+          "lastName": "اسم العائلة *",
+          "email": "عنوان البريد الإلكتروني *",
+          "phone": "رقم الهاتف"
+        },
+        "placeholders": {
+          "firstName": "أدخل اسمك الأول",
+          "lastName": "أدخل اسم العائلة",
+          "email": "your.email@example.com",
+          "phone": "+966 5 5555 5555"
+        },
+        "cards": {
+          "personalInfo": "المعلومات الشخصية",
+          "accountInfo": "معلومات الحساب",
+          "security": "الأمان"
+        },
+        "account": {
+          "type": "نوع الحساب:",
+          "status": "الحالة:",
+          "memberSince": "عضو منذ:",
+          "lastLogin": "آخر تسجيل دخول:",
+          "typeValue": "مالك الفندق",
+          "statusActive": "نشط",
+          "notAvailable": "غير متاح"
+        },
+        "toasts": {
+          "saveSuccess": "تم تحديث الملف الشخصي بنجاح",
+          "saveError": "فشل تحديث الملف الشخصي",
+          "imageTypeError": "يرجى اختيار ملف صورة صالح (JPG أو PNG أو GIF أو WebP)",
+          "imageSizeError": "يجب أن يكون حجم الصورة أقل من 5MB",
+          "imageSuccess": "تم تحديث صورة الملف الشخصي بنجاح",
+          "imageError": "تعذر رفع الصورة",
+          "twoFactorInfo": "ستتوفر المصادقة الثنائية قريبًا"
+        }
+      },
+      "hotel": {
+        "title": "ملف الفندق",
+        "subtitle": "قم بإدارة معلومات فندقك وإعداداته.",
+        "buttons": {
+          "save": "حفظ التغييرات",
+          "uploadLogo": "رفع الشعار",
+          "uploading": "جارٍ الرفع...",
+          "viewPublic": "عرض الصفحة العامة",
+          "contactSupport": "الاتصال بالدعم"
+        },
+        "images": {
+          "cardTitle": "شعار الفندق",
+          "alt": "شعار الفندق",
+          "hint": "يدعم ملفات JPG أو PNG أو GIF. الحد الأقصى 5MB. الحجم الموصى به: 300x300 بكسل"
+        },
+        "cards": {
+          "actions": "إجراءات",
+          "hotelInfo": "معلومات الفندق"
+        },
+        "fields": {
+          "name": "اسم الفندق *",
+          "description": "الوصف",
+          "address": "العنوان",
+          "city": "المدينة",
+          "country": "الدولة",
+          "phone": "الهاتف",
+          "email": "البريد الإلكتروني",
+          "website": "الموقع الإلكتروني"
+        },
+        "placeholders": {
+          "name": "أدخل اسم الفندق",
+          "description": "وصف مختصر لفندقك",
+          "address": "العنوان التفصيلي",
+          "city": "المدينة",
+          "country": "اختر الدولة",
+          "phone": "+966 5 5555 5555",
+          "email": "hotel@example.com",
+          "website": "https://www.yourhotel.com"
+        },
+        "externalLinks": {
+          "title": "روابط التقييم الخارجية",
+          "subtitle": "أضف روابط لصفحاتك على TripAdvisor وGoogle Reviews لمساعدة الضيوف على مشاركة المراجعات.",
+          "tripAdvisor": {
+            "label": "رابط TripAdvisor",
+            "placeholder": "https://www.tripadvisor.com/...",
+            "hint": "اختياري: رابط لصفحة فندقك على TripAdvisor"
+          },
+          "google": {
+            "label": "رابط Google Reviews",
+            "placeholder": "https://g.page/...",
+            "hint": "اختياري: رابط لصفحة فندقك على Google Reviews"
+          }
+        },
+        "account": {
+          "notAvailable": "غير متاح"
+        },
+        "toasts": {
+          "loadError": "تعذر تحميل ملف الفندق",
+          "saveSuccess": "تم تحديث ملف الفندق بنجاح",
+          "saveError": "فشل تحديث ملف الفندق",
+          "imageTypeError": "يرجى اختيار ملف صورة صالح (JPG أو PNG أو GIF أو WebP)",
+          "imageSizeError": "يجب أن يكون حجم الصورة أقل من 5MB",
+          "imageSuccess": "تم تحديث شعار الفندق بنجاح",
+          "imageError": "تعذر رفع الشعار"
+        }
+      },
+      "password": {
+        "title": "تغيير كلمة المرور",
+        "subtitle": "قم بتحديث كلمة مرور حسابك لمزيد من الأمان.",
+        "cardTitle": "تغيير كلمة المرور",
+        "buttons": {
+          "change": "تغيير كلمة المرور",
+          "cancel": "إلغاء",
+          "confirmChange": "تغيير كلمة المرور"
+        },
+        "fields": {
+          "current": "كلمة المرور الحالية *",
+          "new": "كلمة المرور الجديدة *",
+          "confirm": "تأكيد كلمة المرور الجديدة *"
+        },
+        "placeholders": {
+          "current": "أدخل كلمة المرور الحالية",
+          "new": "أدخل كلمة المرور الجديدة",
+          "confirm": "أكد كلمة المرور الجديدة"
+        },
+        "strength": {
+          "label": "قوة كلمة المرور:",
+          "weak": "ضعيفة",
+          "medium": "متوسطة",
+          "strong": "قوية"
+        },
+        "requirements": {
+          "title": "متطلبات كلمة المرور",
+          "minLength": "يجب ألا تقل عن 8 أحرف",
+          "uppercase": "تحتوي على أحرف كبيرة",
+          "lowercase": "تحتوي على أحرف صغيرة",
+          "numbers": "تحتوي على أرقام",
+          "special": "تحتوي على رموز خاصة"
+        },
+        "tips": {
+          "title": "نصائح الأمان",
+          "tip": "نصيحة: استخدم كلمة مرور فريدة لا تستعملها في أي مكان آخر.",
+          "warning": "تحذير: لا تشارك كلمة مرورك مع أي شخص."
+        },
+        "validation": {
+          "currentRequired": "كلمة المرور الحالية مطلوبة",
+          "newRequired": "كلمة المرور الجديدة مطلوبة",
+          "minLength": "يجب أن تتكون كلمة المرور الجديدة من 8 أحرف على الأقل",
+          "complexity": "يجب أن تحتوي كلمة المرور الجديدة على أحرف كبيرة وصغيرة وأرقام ورموز خاصة",
+          "confirmMismatch": "كلمة المرور الجديدة وتأكيدها غير متطابقين",
+          "sameAsCurrent": "يجب أن تكون كلمة المرور الجديدة مختلفة عن الحالية"
+        },
+        "toasts": {
+          "changeSuccess": "تم تغيير كلمة المرور بنجاح",
+          "changeError": "تعذر تغيير كلمة المرور"
+        },
+        "confirm": {
+          "title": "تأكيد تغيير كلمة المرور",
+          "message": "هل أنت متأكد أنك تريد تغيير كلمة المرور؟",
+          "warning": "سيتم تسجيل خروجك من جميع الأجهزة، وستحتاج إلى تسجيل الدخول مرة أخرى."
+        },
+        "accessibility": {
+          "show": "إظهار كلمة المرور",
+          "hide": "إخفاء كلمة المرور"
+        }
+      },
+      "subscription": {
+        "errors": {
+          "unauthorized": "غير مصرح",
+          "hotelNotFound": "لم يتم العثور على الفندق",
+          "planRequired": "رقم الخطة والإجراء مطلوبان",
+          "unknownPlan": "خطة غير معروفة",
+          "fetchFailed": "تعذر جلب تفاصيل الاشتراك",
+          "updateFailed": "فشل تحديث الاشتراك"
+        },
+        "messages": {
+          "upgraded": "تمت الترقية بنجاح إلى {plan}",
+          "cancelled": "تم إلغاء الاشتراك بنجاح"
+        },
+        "plans": {
+          "basic": {
+            "name": "الخطة الأساسية",
+            "features": [
+              "حتى 100 مراجعة شهريًا",
+              "تحليلات أساسية",
+              "إنشاء رمز QR",
+              "نموذج ملاحظات أساسي"
+            ]
+          },
+          "professional": {
+            "name": "الخطة الاحترافية",
+            "features": [
+              "حتى 500 مراجعة شهريًا",
+              "تحليلات متقدمة",
+              "إنشاء رمز QR",
+              "أسئلة تقييم مخصصة بنظام النجوم"
+            ]
+          },
+          "enterprise": {
+            "name": "خطة المؤسسات",
+            "features": [
+              "مراجعات غير محدودة",
+              "مجموعة تحليلات متكاملة",
+              "إنشاء رمز QR",
+              "جميع أنواع الأسئلة"
+            ]
+          }
+        }
+      },
+      "notificationsCenter": {
+        "title": "الإشعارات",
+        "ariaLabel": "الإشعارات",
+        "iconAlt": "أيقونة الإشعارات",
+        "buttons": {
+          "markAllRead": "تحديد الكل كمقروء",
+          "refresh": "تحديث"
+        },
+        "states": {
+          "empty": "لا توجد إشعارات بعد"
+        },
+        "types": {
+          "newReview": "مراجعة جديدة",
+          "reviewApproved": "تمت الموافقة على المراجعة",
+          "reviewRejected": "تم رفض المراجعة",
+          "subscriptionExpiring": "الاشتراك على وشك الانتهاء",
+          "subscriptionCancelled": "تم إلغاء الاشتراك",
+          "escalationReceived": "تم استلام تصعيد",
+          "escalationResponded": "تم الرد على التصعيد",
+          "systemAlert": "تنبيه النظام",
+          "newHotelRegistration": "تسجيل فندق جديد",
+          "newFormCreated": "تم إنشاء نموذج جديد",
+          "success": "نجاح",
+          "info": "معلومة",
+          "warning": "تحذير",
+          "error": "خطأ",
+          "generic": "إشعار"
+        }
+      },
+      "profileSidebar": {
+        "greeting": {
+          "title": "مرحبًا",
+          "fallbackName": "مستخدم النظام"
+        },
+        "actions": {
+          "profile": {
+            "title": "الملف الشخصي",
+            "description": "إدارة إعدادات حسابك"
+          },
+          "signOut": {
+            "title": "تسجيل الخروج",
+            "description": "تسجيل الخروج من حسابك"
+          }
+        },
+        "notifications": {
+          "title": "أحدث الإشعارات",
+          "loading": "جارٍ تحميل الإشعارات...",
+          "summary": "لديك {count} إشعارات غير مقروءة",
+          "empty": "لا توجد إشعارات جديدة"
+        },
+        "time": {
+          "justNow": "الآن"
+        }
+      }
+    },
+    "communications": {
+      "notifications": {
+        "title": "الإشعارات",
+        "subtitle": "قم بإدارة إشعارات النظام والتنبيهات",
+        "buttons": {
+          "deleteSelected": "حذف المحدد ({count})",
+          "markAllAsRead": "تعيين الكل كمقروء",
+          "refresh": "تحديث"
+        },
+        "filters": {
+          "title": "المرشحات",
+          "searchLabel": "البحث في الإشعارات",
+          "searchPlaceholder": "ابحث بالعنوان أو الرسالة أو المستخدم...",
+          "type": "النوع",
+          "allTypes": "جميع الأنواع",
+          "status": {
+            "label": "الحالة",
+            "all": "كل الحالات",
+            "unread": "غير مقروء",
+            "read": "مقروء"
+          },
+          "types": {
+            "newReview": "مراجعة جديدة",
+            "reviewApproved": "تمت الموافقة على المراجعة",
+            "reviewRejected": "تم رفض المراجعة",
+            "subscriptionExpiring": "الاشتراك على وشك الانتهاء",
+            "subscriptionCancelled": "تم إلغاء الاشتراك",
+            "escalationReceived": "تم استلام تصعيد",
+            "escalationResponded": "تم الرد على التصعيد",
+            "systemAlert": "تنبيه النظام",
+            "newHotelRegistration": "تسجيل فندق جديد",
+            "newFormCreated": "تم إنشاء نموذج جديد",
+            "success": "نجاح",
+            "info": "معلومة",
+            "warning": "تحذير",
+            "error": "خطأ"
+          }
+        },
+        "states": {
+          "loading": "جاري تحميل الإشعارات...",
+          "empty": "لا توجد إشعارات"
+        },
+        "table": {
+          "type": "النوع",
+          "message": "الرسالة",
+          "date": "التاريخ",
+          "actions": "الإجراءات",
+          "status": {
+            "label": "الحالة",
+            "read": "مقروء",
+            "new": "جديد"
+          }
+        },
+        "tooltips": {
+          "markAsRead": "تعيين كمقروء",
+          "view": "عرض",
+          "delete": "حذف"
+        },
+        "dates": {
+          "justNow": "الآن",
+          "hoursAgo": "منذ {hours} ساعة",
+          "yesterday": "أمس"
+        },
+        "types": {
+          "NEW_REVIEW": "مراجعة جديدة",
+          "REVIEW_APPROVED": "تمت الموافقة على المراجعة",
+          "REVIEW_REJECTED": "تم رفض المراجعة",
+          "SUBSCRIPTION_EXPIRING": "الاشتراك على وشك الانتهاء",
+          "SUBSCRIPTION_CANCELLED": "تم إلغاء الاشتراك",
+          "ESCALATION_RECEIVED": "تم استلام تصعيد",
+          "ESCALATION_RESPONDED": "تم الرد على التصعيد",
+          "SYSTEM_ALERT": "تنبيه النظام",
+          "NEW_HOTEL_REGISTRATION": "تسجيل فندق جديد",
+          "NEW_FORM_CREATED": "تم إنشاء نموذج جديد",
+          "SUCCESS": "نجاح",
+          "INFO": "معلومة",
+          "WARNING": "تحذير",
+          "ERROR": "خطأ"
+        },
+        "toasts": {
+          "loadError": "تعذر تحميل الإشعارات",
+          "markReadSuccess": "تم تعيين الإشعار كمقروء",
+          "markReadError": "فشل تعيين الإشعار كمقروء",
+          "markAllReadSuccess": "تم تعيين جميع الإشعارات كمقروءة",
+          "markAllReadError": "فشل تعيين جميع الإشعارات كمقروءة",
+          "deleteSuccess": "تم حذف الإشعار بنجاح",
+          "deleteError": "فشل حذف الإشعار",
+          "bulkDeleteSuccess": "تم حذف {count} إشعار/إشعارات بنجاح",
+          "bulkDeleteError": "تعذر حذف بعض الإشعارات"
+        },
+        "confirm": {
+          "deleteMessage": "هل أنت متأكد أنك تريد حذف هذا الإشعار؟",
+          "deleteHeader": "تأكيد الحذف",
+          "bulkDeleteMessage": "هل أنت متأكد أنك تريد حذف {count} إشعار/إشعارات محددة؟",
+          "bulkDeleteHeader": "تأكيد الحذف الجماعي"
+        }
+      }
+    }
+  },
+  "auth": {
+    "register": {
+      "title": "إنشاء حساب",
+      "subtitle": "لنبدأ",
+      "placeholders": {
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "email": "البريد الإلكتروني",
+        "phone": "الهاتف (اختياري)",
+        "password": "كلمة المرور"
+      },
+      "buttons": {
+        "signUp": "إنشاء حساب",
+        "signingUp": "جارٍ إنشاء الحساب..."
+      },
+      "agreementPrefix": "لقد قرأت",
+      "toasts": {
+        "acceptTerms": "يرجى قبول الشروط والأحكام",
+        "missingFields": "يرجى تعبئة جميع الحقول المطلوبة",
+        "success": "تم التسجيل بنجاح! يرجى التحقق من بريدك الإلكتروني.",
+        "error": "فشل التسجيل. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "resetPassword": {
+      "title": "إنشاء كلمة مرور جديدة!",
+      "subtitle": "أدخل كلمة مرور جديدة أدناه لتحديث بيانات حسابك.",
+      "fields": {
+        "newPassword": "كلمة المرور الجديدة",
+        "confirmPassword": "تأكيد كلمة المرور"
+      },
+      "placeholders": {
+        "password": "أدخل كلمة المرور",
+        "confirmPassword": "أكد كلمة المرور"
+      },
+      "buttons": {
+        "reset": "إعادة تعيين كلمة المرور",
+        "resetting": "جارٍ إعادة التعيين..."
+      },
+      "link": {
+        "backToLogin": "العودة إلى تسجيل الدخول"
+      },
+      "states": {
+        "validating": "جارٍ التحقق من رابط إعادة التعيين...",
+        "loading": "جارٍ التحميل..."
+      },
+      "errors": {
+        "passwordMin": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+        "passwordMax": "يجب أن تكون كلمة المرور أقل من 128 حرفًا",
+        "confirmRequired": "يرجى تأكيد كلمة المرور",
+        "mismatch": "كلمات المرور غير متطابقة"
+      },
+      "toasts": {
+        "invalidLink": "رابط إعادة التعيين غير صالح",
+        "invalidOrExpired": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية",
+        "failedValidation": "تعذر التحقق من رابط إعادة التعيين",
+        "success": "تمت إعادة تعيين كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة.",
+        "failure": "فشلت إعادة تعيين كلمة المرور",
+        "unexpected": "حدث خطأ غير متوقع"
+      },
+      "accessibility": {
+        "showPassword": "إظهار كلمة المرور",
+        "hidePassword": "إخفاء كلمة المرور"
+      }
+    }
+  },
+  "authFooter": {
+    "brand": {
+      "title": "C-Reviews",
+      "description": "نساعد الفنادق على التواصل مع ضيوفها من خلال حلول ميسّرة للتغذية الراجعة. منصتنا تجعل إنشاء النماذج وجمع الرؤى وتحسين تجربة الضيف أمرًا سهلاً مع الالتزام بالنزاهة والاحترافية في كل ما نقوم به.",
+      "footerImageAlt": "تذييل زخرفي لـ C-Reviews"
+    },
+    "quickLinks": {
+      "title": "روابط سريعة",
+      "items": {
+        "home": "الرئيسية",
+        "about": "من نحن",
+        "features": "المزايا",
+        "contact": "تواصل معنا"
+      }
+    },
+    "resources": {
+      "title": "الموارد",
+      "items": {
+        "dashboard": "لوحة التحكم",
+        "feedbacks": "التغذية الراجعة",
+        "hotelProfile": "ملف الفندق",
+        "support": "الدعم",
+        "ownerProfile": "ملف المالك"
+      }
+    },
+    "legal": {
+      "title": "الشؤون القانونية",
+      "items": {
+        "privacyPolicy": "سياسة الخصوصية",
+        "companyPolicy": "سياسة الشركة",
+        "terms": "الشروط والأحكام"
+      }
+    },
+    "connect": {
+      "title": "تواصل معنا",
+      "emailPlaceholder": "عنوان البريد الإلكتروني",
+      "submitLabel": "اشترك",
+      "social": {
+        "facebook": "تابعنا على فيسبوك",
+        "instagram": "تابعنا على إنستغرام",
+        "linkedin": "تواصل معنا عبر لينكدإن"
+      }
+    },
+    "copyright": "© 2024 C-Reviews LLC. جميع الحقوق محفوظة!"
+  }
+}
+

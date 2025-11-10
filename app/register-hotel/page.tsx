@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
@@ -10,25 +10,28 @@ import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
 import AuthHeader from "@/components/AuthHeader";
 import AuthFooter from "@/components/AuthFooter";
+import { useI18n } from "@/i18n/TranslationProvider";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
-const countries = [
-  { label: "United States", value: "US" },
-  { label: "Canada", value: "CA" },
-  { label: "United Kingdom", value: "GB" },
-  { label: "Australia", value: "AU" },
-  { label: "Germany", value: "DE" },
-  { label: "France", value: "FR" },
-  { label: "Spain", value: "ES" },
-  { label: "Italy", value: "IT" },
-  { label: "Japan", value: "JP" },
-  { label: "India", value: "IN" },
-  { label: "China", value: "CN" },
-  { label: "Brazil", value: "BR" },
-  { label: "Mexico", value: "MX" },
-  { label: "Other", value: "OTHER" },
-];
+const COUNTRY_CODES = [
+  "US",
+  "CA",
+  "GB",
+  "AU",
+  "DE",
+  "FR",
+  "ES",
+  "IT",
+  "JP",
+  "IN",
+  "CN",
+  "BR",
+  "MX",
+  "OTHER",
+] as const;
 
 export default function RegisterHotel() {
+  const { t, direction } = useI18n();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [confirmedStep1, setConfirmedStep1] = useState(false);
@@ -53,6 +56,15 @@ export default function RegisterHotel() {
   const router = useRouter();
   const toast = useRef<Toast>(null);
 
+  const countryOptions = useMemo(
+    () =>
+      COUNTRY_CODES.map(code => ({
+        label: t(`countries.${code}`),
+        value: code,
+      })),
+    [t]
+  );
+
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
@@ -66,17 +78,17 @@ export default function RegisterHotel() {
 
   const validateStep1 = () => {
     if (!formData.fullName || !formData.email || !formData.phone || !formData.password) {
-      showToast("warn", "Warning", "Please fill in all required fields");
+      showToast("warn", t("common.warning"), t("registerHotel.toasts.missingRequired"));
       return false;
     }
 
     if (formData.password.length < 6) {
-      showToast("warn", "Warning", "Password must be at least 6 characters long");
+      showToast("warn", t("common.warning"), t("registerHotel.toasts.passwordLength"));
       return false;
     }
 
     if (!confirmedStep1) {
-      showToast("warn", "Warning", "Please accept the terms and conditions");
+      showToast("warn", t("common.warning"), t("registerHotel.toasts.acceptTerms"));
       return false;
     }
 
@@ -85,12 +97,12 @@ export default function RegisterHotel() {
 
   const validateStep2 = () => {
     if (!formData.hotelName || !formData.hotelAddress || !formData.city || !formData.country) {
-      showToast("warn", "Warning", "Please fill in all required fields");
+      showToast("warn", t("common.warning"), t("registerHotel.toasts.missingRequired"));
       return false;
     }
 
     if (!confirmedStep2) {
-      showToast("warn", "Warning", "Please accept the terms and conditions and privacy policy");
+      showToast("warn", t("common.warning"), t("registerHotel.toasts.acceptTermsPrivacy"));
       return false;
     }
 
@@ -151,22 +163,32 @@ export default function RegisterHotel() {
       const data = await response.json();
 
       if (response.ok) {
-        showToast("success", "Success", "Hotel registration successful! Please check your email for verification.");
+        showToast("success", t("common.success"), t("registerHotel.toasts.success"));
         setTimeout(() => {
           router.push('/auth/login');
         }, 2000);
       } else {
-        showToast("error", "Error", data.error || "Registration failed");
+        showToast("error", t("common.error"), data.error || t("registerHotel.toasts.error"));
       }
     } catch (error) {
-      showToast("error", "Error", "Registration failed. Please try again.");
+      showToast("error", t("common.error"), t("registerHotel.toasts.errorGeneric"));
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ backgroundColor: "#FDFCF9", display: "flex", flexDirection: "column", minHeight: "100vh" }} className="animate-fade-in">
+    <div
+      dir={direction}
+      style={{
+        backgroundColor: "#FDFCF9",
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        direction,
+      }}
+      className="animate-fade-in"
+    >
       <Toast ref={toast} />
 
       {/* Header */}
@@ -174,14 +196,31 @@ export default function RegisterHotel() {
 
       {/* Main Content */}
       <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", padding: "2rem 1rem" }}>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "2rem",
-          width: "100%",
-          maxWidth: "1200px",
-          alignItems: "center"
-        }}>
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "1200px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1.5rem",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: direction === "rtl" ? "flex-start" : "flex-end",
+            }}
+          >
+            <LanguageSelector style={{ minWidth: "180px" }} />
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "2rem",
+              alignItems: "center",
+            }}
+          >
           {/* Left Side - Form */}
           <div className="py-7 px-4 md:px-7">
             {step === 1 ? (
@@ -190,55 +229,55 @@ export default function RegisterHotel() {
                 <div className="mb-4 animate-slide-in-left">
                   <div className="text-[#1B2A49] text-2xl font-bold mb-2 flex align-items-center gap-2">
                     <i className="pi pi-user text-blue-500"></i>
-                    Owner Information!
+                    {t("registerHotel.step1.title")}
                   </div>
                 </div>
 
                 <div className="flex flex-column">
                   <label htmlFor="fullName" className="text-900 font-medium mb-2 flex align-items-center gap-2">
-                    Full Name<span style={{ color: "red" }}>*</span>
+                    {t("registerHotel.step1.fields.fullName")}<span style={{ color: "red" }}>*</span>
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
                     <InputText
                       id="fullName"
                       type="text"
                       className="w-full"
-                      placeholder="Enter your full name"
+                      placeholder={t("registerHotel.step1.placeholders.fullName")}
                       value={formData.fullName}
                       onChange={(e) => handleInputChange('fullName', e.target.value)}
                     />
                   </span>
 
                   <label htmlFor="email" className="text-900 font-medium mb-2 flex align-items-center gap-2">
-                    Email Address<span style={{ color: "red" }}>*</span>
+                    {t("registerHotel.step1.fields.email")}<span style={{ color: "red" }}>*</span>
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
                     <InputText
                       id="email"
                       type="email"
                       className="w-full"
-                      placeholder="Enter your email address"
+                      placeholder={t("registerHotel.step1.placeholders.email")}
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
                     />
                   </span>
 
                   <label htmlFor="phone" className="text-900 font-medium mb-2">
-                    Phone Number<span style={{ color: "red" }}>*</span>
+                    {t("registerHotel.step1.fields.phone")}<span style={{ color: "red" }}>*</span>
                   </label>
                   <span className="w-full mb-4">
                     <InputText
                       id="phone"
                       type="tel"
                       className="w-full"
-                      placeholder="Enter your phone number"
+                      placeholder={t("registerHotel.step1.placeholders.phone")}
                       value={formData.phone}
                       onChange={(e) => handleInputChange('phone', e.target.value)}
                     />
                   </span>
 
                   <label htmlFor="password" className="text-900 font-medium mb-2">
-                    Password<span style={{ color: "red" }}>*</span>
+                    {t("registerHotel.step1.fields.password")}<span style={{ color: "red" }}>*</span>
                   </label>
                   <div style={{ position: "relative" }} className="w-full mb-4">
                     <span className="p-input-icon-left w-full">
@@ -246,7 +285,7 @@ export default function RegisterHotel() {
                         id="password"
                         type={showPassword ? "text" : "password"}
                         className="w-full"
-                        placeholder="Enter your password"
+                        placeholder={t("registerHotel.step1.placeholders.password")}
                         value={formData.password}
                         onChange={(e) => handleInputChange('password', e.target.value)}
                         style={{ paddingRight: "2.5rem" }}
@@ -280,19 +319,19 @@ export default function RegisterHotel() {
                       className="mr-2"
                     />
                     <label htmlFor="terms1" style={{ fontSize: "0.875rem", lineHeight: "1.4" }}>
-                      I agree to the{" "}
+                      {t("common.agreeTo")}{" "}
                       <a href="#" style={{ color: "#6F522F", textDecoration: "underline" }}>
-                        Terms & Conditions
+                        {t("common.terms")}
                       </a>{" "}
-                      and{" "}
+                      {t("common.and")}{" "}
                       <a href="#" style={{ color: "#6F522F", textDecoration: "underline" }}>
-                        Privacy Policy
+                        {t("common.privacy")}
                       </a>
                     </label>
                   </div>
 
                   <Button
-                    label="Let's Keep Going!"
+                    label={t("registerHotel.step1.cta")}
                     icon="pi pi-arrow-right"
                     iconPos="right"
                     className="w-full hover-lift animate-scale-in"
@@ -315,13 +354,13 @@ export default function RegisterHotel() {
 
                   <div className="text-center">
                     <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
-                      Already have an account?{" "}
+                      {t("common.alreadyHaveAccount")} {" "}
                       <a
                         className="cursor-pointer"
                         style={{ color: "#1e3a5f", fontWeight: 600 }}
                         onClick={() => router.push('/auth/login')}
                       >
-                        Login
+                        {t("common.login")}
                       </a>
                     </span>
                   </div>
@@ -332,53 +371,51 @@ export default function RegisterHotel() {
                 {/* Step 2: Hotel Information */}
                 <div className="mb-4">
                   <div className="text-[#1B2A49] text-2xl font-bold mb-2">
-                    Hotel Information!
+                    {t("registerHotel.step2.title")}
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
-                    <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
-                      Is my data safe?
-                    </span>
+                    <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>{t("registerHotel.step2.subtitle")}</span>
                     <i className="pi pi-info-circle" style={{ fontSize: "1rem", color: "#6b7280" }}></i>
                   </div>
                 </div>
 
                 <div className="flex flex-column">
                   <label htmlFor="hotelName" className="text-900 font-medium mb-2">
-                    Hotel Name<span style={{ color: "red" }}>*</span>
+                    {t("registerHotel.step2.fields.hotelName")}<span style={{ color: "red" }}>*</span>
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
                     <InputText
                       id="hotelName"
                       type="text"
                       className="w-full"
-                      placeholder="Enter hotel name"
+                      placeholder={t("registerHotel.step2.placeholders.hotelName")}
                       value={formData.hotelName}
                       onChange={(e) => handleInputChange('hotelName', e.target.value)}
                     />
                   </span>
 
                   <label htmlFor="hotelWebsite" className="text-900 font-medium mb-2">
-                    Hotel Website<span style={{ color: "red" }}>*</span>
+                    {t("registerHotel.step2.fields.hotelWebsite")}<span style={{ color: "red" }}>*</span>
                   </label>
                   <span className="p-input-icon-left w-full mb-4">
                     <InputText
                       id="hotelWebsite"
                       type="url"
                       className="w-full"
-                      placeholder="Enter hotel website url"
+                      placeholder={t("registerHotel.step2.placeholders.hotelWebsite")}
                       value={formData.hotelWebsite}
                       onChange={(e) => handleInputChange('hotelWebsite', e.target.value)}
                     />
                   </span>
 
                   <label htmlFor="hotelAddress" className="text-900 font-medium mb-2">
-                    Hotel Address<span style={{ color: "red" }}>*</span>
+                    {t("registerHotel.step2.fields.hotelAddress")}<span style={{ color: "red" }}>*</span>
                   </label>
                   <InputText
                     id="hotelAddress"
                     type="text"
                     className="w-full mb-4"
-                    placeholder="Enter hotel street address"
+                    placeholder={t("registerHotel.step2.placeholders.hotelAddress")}
                     value={formData.hotelAddress}
                     onChange={(e) => handleInputChange('hotelAddress', e.target.value)}
                   />
@@ -386,13 +423,13 @@ export default function RegisterHotel() {
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
                     <div>
                       <label htmlFor="city" className="text-900 font-medium mb-2" style={{ display: "block" }}>
-                        City<span style={{ color: "red" }}>*</span>
+                        {t("registerHotel.step2.fields.city")}<span style={{ color: "red" }}>*</span>
                       </label>
                       <InputText
                         id="city"
                         type="text"
                         className="w-full"
-                        placeholder="Enter hotel city"
+                        placeholder={t("registerHotel.step2.placeholders.city")}
                         value={formData.city}
                         onChange={(e) => handleInputChange('city', e.target.value)}
                       />
@@ -400,26 +437,26 @@ export default function RegisterHotel() {
 
                     <div>
                       <label htmlFor="country" className="text-900 font-medium mb-2" style={{ display: "block" }}>
-                        Country<span style={{ color: "red" }}>*</span>
+                        {t("registerHotel.step2.fields.country")}<span style={{ color: "red" }}>*</span>
                       </label>
                       <Dropdown
                         id="country"
                         value={formData.country}
-                        options={countries}
+                        options={countryOptions}
                         onChange={(e) => handleInputChange('country', e.value)}
-                        placeholder="Select Country"
+                        placeholder={t("registerHotel.step2.placeholders.country")}
                         className="w-full"
                       />
                     </div>
                   </div>
 
                   <label htmlFor="hotelDescription" className="text-900 font-medium mb-2">
-                    Hotel Description<span style={{ color: "red" }}>*</span>
+                    {t("registerHotel.step2.fields.hotelDescription")}<span style={{ color: "red" }}>*</span>
                   </label>
                   <InputTextarea
                     id="hotelDescription"
                     className="w-full mb-4"
-                    placeholder="Enter brief description of your hotel"
+                    placeholder={t("registerHotel.step2.placeholders.hotelDescription")}
                     rows={4}
                     value={formData.hotelDescription}
                     onChange={(e) => handleInputChange('hotelDescription', e.target.value)}
@@ -433,20 +470,20 @@ export default function RegisterHotel() {
                       className="mr-2"
                     />
                     <label htmlFor="terms2" style={{ fontSize: "0.875rem", lineHeight: "1.4" }}>
-                      I agree to the{" "}
+                      {t("common.agreeTo")}{" "}
                       <a href="#" style={{ color: "#6F522F", textDecoration: "underline" }}>
-                        Terms & Conditions
+                        {t("common.terms")}
                       </a>{" "}
-                      and{" "}
+                      {t("common.and")}{" "}
                       <a href="#" style={{ color: "#6F522F", textDecoration: "underline" }}>
-                        Privacy Policy
+                        {t("common.privacy")}
                       </a>
                     </label>
                   </div>
 
                   <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
                     <Button
-                      label="Back"
+                      label={t("registerHotel.buttons.back")}
                       icon="pi pi-arrow-left"
                       iconPos="left"
                       className="flex-1"
@@ -459,7 +496,7 @@ export default function RegisterHotel() {
                       disabled={loading}
                     />
                     <Button
-                      label={loading ? "Registering..." : "Register Now"}
+                      label={loading ? t("registerHotel.buttons.registering") : t("registerHotel.buttons.register")}
                       icon="pi pi-check"
                       iconPos="right"
                       className="flex-1"
@@ -476,21 +513,19 @@ export default function RegisterHotel() {
 
                   <div className="flex align-items-center mb-3" style={{ gap: "1rem" }}>
                     <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
-                    <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
-                      or register via
-                    </span>
+                    <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>{t("common.orRegisterVia")}</span>
                     <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }}></div>
                   </div>
 
                   <div className="text-center">
                     <span style={{ fontSize: "0.875rem", color: "#6b7280" }}>
-                      Already have an account?{" "}
+                      {t("common.alreadyHaveAccount")} {" "}
                       <a
                         className="cursor-pointer"
                         style={{ color: "#1e3a5f", fontWeight: 600 }}
                         onClick={() => router.push('/auth/login')}
                       >
-                        Login
+                        {t("common.login")}
                       </a>
                     </span>
                   </div>
@@ -502,11 +537,14 @@ export default function RegisterHotel() {
           {/* Right Side - Illustration */}
           <div>
             {step === 1 ? (
-              <img src="/images/owner-information.svg" alt="Register Hotel" style={{ width: "100%", height: "100%" }} />
+              <img src="/images/owner-information.svg" alt={t("registerHotel.images.ownerAlt")}
+                style={{ width: "100%", height: "100%" }} />
             ) : (
-              <img src="/images/hotel-information.svg" alt="Register Hotel" style={{ width: "100%", height: "100%" }} />
+              <img src="/images/hotel-information.svg" alt={t("registerHotel.images.hotelAlt")}
+                style={{ width: "100%", height: "100%" }} />
 
             )}
+          </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -16,6 +16,7 @@ import { Rating } from "primereact/rating";
 import { Panel } from "primereact/panel";
 import { useAuth } from "@/hooks/useAuth";
 import { useCurrentPlan } from "@/hooks/useCurrentPlan";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 interface Question {
   id?: string;
@@ -55,21 +56,6 @@ interface FeedbackForm {
   }>;
 }
 
-const questionTypes = [
-  { label: "Short Text", value: "SHORT_TEXT" },
-  { label: "Long Text", value: "LONG_TEXT" },
-  { label: "Star Rating", value: "STAR_RATING" },
-  { label: "Single Choice", value: "MULTIPLE_CHOICE_SINGLE" },
-  { label: "Multiple Choice", value: "MULTIPLE_CHOICE_MULTIPLE" },
-  { label: "Yes/No", value: "YES_NO" },
-];
-
-const layoutOptions = [
-  { label: "Basic", value: "basic", description: "Simple, clean design" },
-  { label: "Good", value: "good", description: "Enhanced with colors and icons" },
-  { label: "Excellent", value: "excellent", description: "Premium design with animations" },
-];
-
 export default function FeedbackFormBuilder({
   formId,
   onSave,
@@ -83,6 +69,15 @@ export default function FeedbackFormBuilder({
 }) {
   const { user } = useAuth();
   const { currentPlan, loading: planLoading, subscriptionStatus } = useCurrentPlan();
+  const { t } = useI18n();
+  const questionTypes = useMemo(() => [
+    { label: t("hotel.forms.builder.questionTypes.shortText"), value: "SHORT_TEXT" },
+    { label: t("hotel.forms.builder.questionTypes.longText"), value: "LONG_TEXT" },
+    { label: t("hotel.forms.builder.questionTypes.starRating"), value: "STAR_RATING" },
+    { label: t("hotel.forms.builder.questionTypes.singleChoice"), value: "MULTIPLE_CHOICE_SINGLE" },
+    { label: t("hotel.forms.builder.questionTypes.multipleChoice"), value: "MULTIPLE_CHOICE_MULTIPLE" },
+    { label: t("hotel.forms.builder.questionTypes.yesNo"), value: "YES_NO" },
+  ], [t]);
   const [form, setForm] = useState<FeedbackForm>({
     title: "",
     description: "",
@@ -288,13 +283,13 @@ export default function FeedbackFormBuilder({
           }))]
         });
 
-        showToast("success", "Success", "Form data loaded successfully");
+        showToast("success", t("common.success"), t("hotel.forms.builder.toasts.formLoadSuccess"));
       } else {
         throw new Error('Failed to load form data');
       }
     } catch (error) {
       console.error("Error loading form data:", error);
-      showToast("error", "Error", "Failed to load form data");
+      showToast("error", t("common.error"), t("hotel.forms.builder.toasts.formLoadError"));
     } finally {
       setLoading(false);
     }
@@ -319,13 +314,13 @@ export default function FeedbackFormBuilder({
 
   const saveQuestion = () => {
     if (!questionForm.question.trim()) {
-      showToast("warn", "Warning", "Question text is required");
+      showToast("warn", t("common.warning"), t("hotel.forms.builder.toasts.questionRequired"));
       return;
     }
 
     if ((questionForm.type === "MULTIPLE_CHOICE_SINGLE" || questionForm.type === "MULTIPLE_CHOICE_MULTIPLE") &&
       questionForm.options.length < 2) {
-      showToast("warn", "Warning", "Multiple choice questions must have at least 2 options");
+      showToast("warn", t("common.warning"), t("hotel.forms.builder.toasts.optionsRequired"));
       return;
     }
 
@@ -346,13 +341,19 @@ export default function FeedbackFormBuilder({
     });
     setNewOption("");
 
-    showToast("success", "Success", editingQuestion ? "Question updated" : "Question added");
+    showToast(
+      "success",
+      t("common.success"),
+      editingQuestion
+        ? t("hotel.forms.builder.toasts.questionUpdated")
+        : t("hotel.forms.builder.toasts.questionAdded")
+    );
   };
 
   const deleteQuestion = (question: Question) => {
     const updatedQuestions = form.questions.filter(q => q !== question);
     setForm({ ...form, questions: updatedQuestions });
-    showToast("success", "Success", "Question deleted");
+    showToast("success", t("common.success"), t("hotel.forms.builder.toasts.questionDeleted"));
   };
 
   const addOption = () => {
@@ -364,6 +365,39 @@ export default function FeedbackFormBuilder({
       setNewOption("");
     }
   };
+
+  const headerTitle = previewMode
+    ? t("hotel.forms.builder.header.preview")
+    : showPreview
+      ? t("hotel.forms.builder.header.livePreview")
+      : formId
+        ? t("hotel.forms.builder.header.edit")
+        : t("hotel.forms.builder.header.create");
+
+  const toggleLabel = showPreview
+    ? t("hotel.forms.builder.header.formBuilderToggle")
+    : t("hotel.forms.builder.header.livePreviewToggle");
+
+  const subscriptionStatusLabel = subscriptionStatus
+    ? t(`hotel.forms.builder.subscription.status.${subscriptionStatus.toLowerCase()}`)
+    : "";
+
+  const getPredefinedQuestionLabel = useCallback((questionText: string) => {
+    switch (questionText) {
+      case "Rate Us":
+        return t("hotel.forms.builder.predefined.rateUsTitle");
+      case "Custom Rating":
+        return t("hotel.forms.builder.predefined.customRatingTitle");
+      case "Please give us your honest feedback?":
+        return t("hotel.forms.builder.predefined.feedbackTitle");
+      default:
+        return questionText;
+    }
+  }, [t]);
+
+  const getQuestionLabel = useCallback((question: Question) => {
+    return question.isDefault ? getPredefinedQuestionLabel(question.question) : question.question;
+  }, [getPredefinedQuestionLabel]);
 
   const removeOption = (index: number) => {
     const updatedOptions = questionForm.options.filter((_, i) => i !== index);
@@ -391,7 +425,7 @@ export default function FeedbackFormBuilder({
 
   const saveRatingItemEdit = (itemId: string) => {
     if (!newRatingItemLabel.trim()) {
-      showToast("warn", "Warning", "Rating item label cannot be empty");
+      showToast("warn", t("common.warning"), t("hotel.forms.builder.toasts.ratingLabelRequired"));
       return;
     }
 
@@ -404,7 +438,7 @@ export default function FeedbackFormBuilder({
     );
     setEditingRatingItem(null);
     setNewRatingItemLabel("");
-    showToast("success", "Success", "Rating item updated");
+    showToast("success", t("common.success"), t("hotel.forms.builder.toasts.ratingItemUpdated"));
   };
 
   const cancelRatingItemEdit = () => {
@@ -414,12 +448,12 @@ export default function FeedbackFormBuilder({
 
   const deleteRatingItem = (itemId: string) => {
     setCustomRatingItems(items => items.filter(item => item.id !== itemId));
-    showToast("success", "Success", "Rating item deleted");
+    showToast("success", t("common.success"), t("hotel.forms.builder.toasts.ratingItemDeleted"));
   };
 
   const addNewRatingItem = () => {
     if (!newRatingItemLabel.trim()) {
-      showToast("warn", "Warning", "Please enter a label for the new rating item");
+      showToast("warn", t("common.warning"), t("hotel.forms.builder.toasts.ratingLabelRequired"));
       return;
     }
 
@@ -431,17 +465,17 @@ export default function FeedbackFormBuilder({
 
     setCustomRatingItems(items => [...items, newItem]);
     setNewRatingItemLabel("");
-    showToast("success", "Success", "New rating item added");
+    showToast("success", t("common.success"), t("hotel.forms.builder.toasts.ratingItemAdded"));
   };
 
   const handleSave = async () => {
     if (!form.title.trim()) {
-      showToast("warn", "Warning", "Form title is required");
+      showToast("warn", t("common.warning"), t("hotel.forms.builder.toasts.titleRequired"));
       return;
     }
 
     if (form.questions.length === 0) {
-      showToast("warn", "Warning", "At least one question is required");
+      showToast("warn", t("common.warning"), t("hotel.forms.builder.toasts.questionCountRequired"));
       return;
     }
 
@@ -494,11 +528,14 @@ export default function FeedbackFormBuilder({
       
       // Check if it's a subscription-related error
       if (error?.response?.status === 403 || errorMessage?.includes('subscription')) {
-        showToast("error", "Subscription Required", 
-          "Your subscription has been cancelled or expired. Please reactivate your subscription to create forms.");
+        showToast(
+          "error",
+          t("hotel.forms.builder.subscription.toastTitle"),
+          t("hotel.forms.builder.subscription.toastMessage")
+        );
       } else {
         // Show the actual error message from the API
-        showToast("error", "Error", errorMessage);
+        showToast("error", t("common.error"), errorMessage);
       }
     }
   };
@@ -511,19 +548,19 @@ export default function FeedbackFormBuilder({
       <div key={question.id || index} className={`question-item ${layoutClass}`}>
         <div className="question-header">
           <label className="question-label">
-            {question.question}
+            {getQuestionLabel(question)}
             {question.isRequired && <span className="required"> *</span>}
           </label>
         </div>
 
         <div className="question-input">
           {question.type === "SHORT_TEXT" && (
-            <InputText placeholder="Enter your answer" className="w-full" disabled />
+            <InputText placeholder={t("hotel.forms.builder.placeholders.answer")} className="w-full" disabled />
           )}
 
           {question.type === "LONG_TEXT" && (
             <InputTextarea
-              placeholder="Enter your answer"
+              placeholder={t("hotel.forms.builder.placeholders.answer")}
               rows={3}
               className="w-full"
               disabled
@@ -580,7 +617,7 @@ export default function FeedbackFormBuilder({
                     accentColor: "#007bff"
                   }}
                 />
-                <label>Yes</label>
+                <label>{t("hotel.forms.builder.answers.yes")}</label>
               </div>
               <div className="radio-option">
                 <input
@@ -594,7 +631,7 @@ export default function FeedbackFormBuilder({
                     accentColor: "#007bff"
                   }}
                 />
-                <label>No</label>
+                <label>{t("hotel.forms.builder.answers.no")}</label>
               </div>
             </div>
           )}
@@ -603,8 +640,8 @@ export default function FeedbackFormBuilder({
         <div className="question-actions">
           {question.isDefault ? (
             <div className="flex align-items-center gap-2">
-              <Badge value="Default" severity="info" />
-              <span className="text-500 text-sm">Cannot be edited, deleted, or moved</span>
+              <Badge value={t("hotel.forms.builder.badges.default")} severity="info" />
+              <span className="text-500 text-sm">{t("hotel.forms.builder.badges.defaultHelper")}</span>
             </div>
           ) : (
             <>
@@ -612,27 +649,27 @@ export default function FeedbackFormBuilder({
                 icon="pi pi-pencil"
                 className="p-button-text p-button-sm"
                 onClick={() => editQuestion(question)}
-                tooltip="Edit"
+                tooltip={t("hotel.forms.builder.tooltips.edit")}
               />
               <Button
                 icon="pi pi-trash"
                 className="p-button-text p-button-sm p-button-danger"
                 onClick={() => deleteQuestion(question)}
-                tooltip="Delete"
+                tooltip={t("hotel.forms.builder.tooltips.delete")}
               />
               <Button
                 icon="pi pi-arrow-up"
                 className="p-button-text p-button-sm"
                 onClick={() => moveQuestion(index, 'up')}
                 disabled={index === 0}
-                tooltip="Move Up"
+                tooltip={t("hotel.forms.builder.tooltips.moveUp")}
               />
               <Button
                 icon="pi pi-arrow-down"
                 className="p-button-text p-button-sm"
                 onClick={() => moveQuestion(index, 'down')}
                 disabled={index === form.questions.length - 1}
-                tooltip="Move Down"
+                tooltip={t("hotel.forms.builder.tooltips.moveDown")}
               />
             </>
           )}
@@ -648,13 +685,12 @@ export default function FeedbackFormBuilder({
         <div className="flex justify-content-center align-items-center" style={{ minHeight: '400px' }}>
           <div className="text-center">
             <i className="pi pi-exclamation-triangle text-4xl text-red-500 mb-3"></i>
-            <h2 className="text-900 mb-2">Subscription Required</h2>
+            <h2 className="text-900 mb-2">{t("hotel.forms.builder.subscription.title")}</h2>
             <p className="text-600 mb-4">
-              Your subscription has been {subscriptionStatus.toLowerCase()}. 
-              Please reactivate your subscription to create or edit forms.
+              {t("hotel.forms.builder.subscription.message").replace("{status}", subscriptionStatusLabel)}
             </p>
             <Button
-              label="Manage Subscription"
+              label={t("hotel.forms.builder.subscription.manageButton")}
               icon="pi pi-credit-card"
               className="p-button-primary"
               onClick={() => window.open('/hotel/subscription', '_blank')}
@@ -672,7 +708,7 @@ export default function FeedbackFormBuilder({
         <div className="flex justify-content-center align-items-center" style={{ minHeight: '400px' }}>
           <div className="text-center">
             <i className="pi pi-spin pi-spinner text-4xl text-primary mb-3"></i>
-            <p className="text-600">Loading form data...</p>
+            <p className="text-600">{t("hotel.forms.builder.states.loading")}</p>
           </div>
         </div>
       </div>
@@ -685,32 +721,30 @@ export default function FeedbackFormBuilder({
       <div className="form-builder-header">
         <div className="header-left">
           <div style={{ backgroundColor: '#6F522F', borderRadius: '5px' }}>
-
             <Button
               icon="pi pi-arrow-left"
               className="p-button-text header-back-btn"
               onClick={onCancel}
-
+              tooltip={t("hotel.forms.builder.header.backTooltip")}
+              aria-label={t("hotel.forms.builder.header.backTooltip")}
             />
           </div>
-          <h1 className="header-title">
-            {previewMode ? 'Preview Form' : showPreview ? 'Live Preview' : formId ? "Edit Form" : "Create New Form"}
-          </h1>
+          <h1 className="header-title">{headerTitle}</h1>
         </div>
         <div className="header-actions">
           <Button
-            label={showPreview ? 'Form Builder' : 'Live Preview'}
+            label={toggleLabel}
             className="p-button-outlined live-preview-btn"
             onClick={() => setShowPreview(!showPreview)}
           />
           {!previewMode && (
             <Button
-              label="Save Form"
+              label={t("hotel.forms.builder.buttons.save")}
               className="p-button-primary save-form-btn"
               onClick={handleSave}
               loading={loading}
               disabled={loading}
-              tooltip="Save the form"
+              tooltip={t("hotel.forms.builder.buttons.saveTooltip")}
             />
           )}
         </div>
@@ -721,16 +755,16 @@ export default function FeedbackFormBuilder({
         <div className="form-builder-content">
           {/* Form Settings Card - Exact Figma Design */}
           <div className="form-settings-card">
-            <h3 className="card-title">Form Settings</h3>
+            <h3 className="card-title">{t("hotel.forms.builder.sections.settings")}</h3>
             <div className="form-settings-content">
               <div className="grid">
                 <div className="col-12">
                   <div className="form-field">
-                    <label className="field-label">Form Title*</label>
+                    <label className="field-label">{t("hotel.forms.builder.fields.titleLabel")}</label>
                     <InputText
                       value={form.title}
                       onChange={(e) => setForm({ ...form, title: e.target.value })}
-                      placeholder="Enter form title"
+                      placeholder={t("hotel.forms.builder.fields.titlePlaceholder")}
                       className="form-input"
                       disabled={previewMode}
                     />
@@ -773,11 +807,11 @@ export default function FeedbackFormBuilder({
 
 
               <div className="form-field">
-                <label className="field-label">Form Description*</label>
+                <label className="field-label">{t("hotel.forms.builder.fields.descriptionLabel")}</label>
                 <InputTextarea
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
-                  placeholder="Enter brief description of your form"
+                  placeholder={t("hotel.forms.builder.fields.descriptionPlaceholder")}
                   rows={3}
                   className="form-textarea"
                   disabled={previewMode}
@@ -827,20 +861,20 @@ export default function FeedbackFormBuilder({
           {/* Questions Card - Exact Figma Design */}
           <div className="questions-card">
             <div className="questions-header">
-              <h3 className="card-title">Questions</h3>
+              <h3 className="card-title">{t("hotel.forms.builder.sections.questions")}</h3>
               <Button
-                label="Add New"
+                label={t("hotel.forms.builder.buttons.addNew")}
                 className="add-new-btn"
                 onClick={addQuestion}
                 disabled={previewMode}
-                tooltip={previewMode ? "Preview mode - editing disabled" : "Add custom question"}
+                tooltip={previewMode ? t("hotel.forms.builder.tooltips.previewDisabled") : t("hotel.forms.builder.tooltips.addQuestion")}
               />
             </div>
 
             <div className="questions-content">
               {/* Predefined Questions Section */}
               <div className="predefined-questions">
-                <h4 className="section-subtitle">Predefined Questions</h4>
+                <h4 className="section-subtitle">{t("hotel.forms.builder.sections.predefined")}</h4>
 
                 {/* Rate Us Question - Always included */}
                 <div className="question-item">
@@ -848,7 +882,7 @@ export default function FeedbackFormBuilder({
                     <div className="flex align-items-center gap-2">
                       <i className="pi pi-check-circle text-green-500"></i>
                       <label className="question-label">
-                        Rate Us* (Always included)
+                        {t("hotel.forms.builder.predefined.rateUs")}
                       </label>
                     </div>
                   </div>
@@ -891,7 +925,7 @@ export default function FeedbackFormBuilder({
                       }}
                     />
                     <label className="question-label">
-                      Custom Rating*
+                      {t("hotel.forms.builder.predefined.customRating")}
                     </label>
                   </div>
                   {form.questions.some(q => q.question === "Custom Rating") && (
@@ -903,7 +937,7 @@ export default function FeedbackFormBuilder({
                               <InputText
                                 value={newRatingItemLabel}
                                 onChange={(e) => setNewRatingItemLabel(e.target.value)}
-                                placeholder="Enter rating item label"
+                                placeholder={t("hotel.forms.builder.predefined.customRatingPlaceholder")}
                                 className="rating-item-input"
                                 onKeyPress={(e) => e.key === 'Enter' && saveRatingItemEdit(item.id)}
                                 autoFocus
@@ -913,13 +947,13 @@ export default function FeedbackFormBuilder({
                                   icon="pi pi-check"
                                   className="p-button-text p-button-sm p-button-success"
                                   onClick={() => saveRatingItemEdit(item.id)}
-                                  tooltip="Save"
+                                  tooltip={t("hotel.forms.builder.tooltips.save")}
                                 />
                                 <Button
                                   icon="pi pi-times"
                                   className="p-button-text p-button-sm p-button-danger"
                                   onClick={cancelRatingItemEdit}
-                                  tooltip="Cancel"
+                                  tooltip={t("hotel.forms.builder.tooltips.cancel")}
                                 />
                               </div>
                             </div>
@@ -929,7 +963,7 @@ export default function FeedbackFormBuilder({
                                 className="rating-item-label"
                                 onClick={() => startEditingRatingItem(item.id)}
                                 style={{ cursor: 'pointer' }}
-                                title="Click to edit"
+                                title={t("hotel.forms.builder.predefined.customRatingEditTitle")}
                               >
                                 {item.label}
                               </span>
@@ -940,7 +974,7 @@ export default function FeedbackFormBuilder({
                                 icon="pi pi-pencil"
                                 className="p-button-text p-button-sm"
                                 onClick={() => startEditingRatingItem(item.id)}
-                                tooltip="Edit"
+                                tooltip={t("hotel.forms.builder.tooltips.edit")}
                               />
                             </>
                           )}
@@ -980,13 +1014,13 @@ export default function FeedbackFormBuilder({
                       }}
                     />
                     <label className="question-label">
-                      Please give us your honest feedback?*
+                      {t("hotel.forms.builder.predefined.feedback")}
                     </label>
                   </div>
                   {form.questions.some(q => q.question === "Please give us your honest feedback?") && (
                     <div className="feedback-textarea">
                       <InputTextarea
-                        placeholder="Enter your detail feedback"
+                        placeholder={t("hotel.forms.builder.predefined.feedbackPlaceholder")}
                         rows={3}
                         className="form-textarea w-full"
                         disabled
@@ -999,7 +1033,7 @@ export default function FeedbackFormBuilder({
               {/* Custom Questions Section */}
               {form.questions.filter(q => !q.isDefault).length > 0 && (
                 <div className="custom-questions">
-                  <h4 className="section-subtitle">Custom Questions</h4>
+                  <h4 className="section-subtitle">{t("hotel.forms.builder.sections.custom")}</h4>
                   {form.questions
                     .filter(q => !q.isDefault)
                     .map((question, index) => (
@@ -1016,12 +1050,12 @@ export default function FeedbackFormBuilder({
 
                         <div className="question-preview">
                           {question.type === "SHORT_TEXT" && (
-                            <InputText placeholder="Enter your answer" className="w-full" disabled />
+                            <InputText placeholder={t("hotel.forms.builder.placeholders.answer")} className="w-full" disabled />
                           )}
 
                           {question.type === "LONG_TEXT" && (
                             <InputTextarea
-                              placeholder="Enter your answer"
+                              placeholder={t("hotel.forms.builder.placeholders.answer")}
                               rows={3}
                               className="w-full"
                               disabled
@@ -1103,14 +1137,14 @@ export default function FeedbackFormBuilder({
                             icon="pi pi-pencil"
                             className="p-button-text p-button-sm"
                             onClick={() => editQuestion(question)}
-                            tooltip="Edit"
+                              tooltip={t("hotel.forms.builder.tooltips.edit")}
                             disabled={previewMode}
                           />
                           <Button
                             icon="pi pi-trash"
                             className="p-button-text p-button-sm p-button-danger"
                             onClick={() => deleteQuestion(question)}
-                            tooltip="Delete"
+                              tooltip={t("hotel.forms.builder.tooltips.delete")}
                             disabled={previewMode}
                           />
                           <Button
@@ -1118,14 +1152,14 @@ export default function FeedbackFormBuilder({
                             className="p-button-text p-button-sm"
                             onClick={() => moveQuestion(index, 'up')}
                             disabled={previewMode || index === 0}
-                            tooltip="Move Up"
+                              tooltip={t("hotel.forms.builder.tooltips.moveUp")}
                           />
                           <Button
                             icon="pi pi-arrow-down"
                             className="p-button-text p-button-sm"
                             onClick={() => moveQuestion(index, 'down')}
                             disabled={previewMode || index === form.questions.filter(q => !q.isDefault).length - 1}
-                            tooltip="Move Down"
+                              tooltip={t("hotel.forms.builder.tooltips.moveDown")}
                           />
                         </div>
                       </div>
@@ -1139,8 +1173,8 @@ export default function FeedbackFormBuilder({
                   <div className="flex align-items-center gap-2 p-3 bg-blue-50 border-round mb-3">
                     <i className="pi pi-info-circle text-blue-500"></i>
                     <div>
-                      <p className="text-600 text-sm mb-1 font-medium">Basic Layout Features</p>
-                      <p className="text-500 text-xs">All questions are available including custom questions. This layout provides a simple, clean design.</p>
+                      <p className="text-600 text-sm mb-1 font-medium">{t("hotel.forms.builder.layoutInfo.basic.title")}</p>
+                      <p className="text-500 text-xs">{t("hotel.forms.builder.layoutInfo.basic.description")}</p>
                     </div>
                   </div>
                 </div>
@@ -1152,8 +1186,8 @@ export default function FeedbackFormBuilder({
                   <div className="flex align-items-center gap-2 p-3 bg-orange-50 border-round mb-3">
                     <i className="pi pi-exclamation-triangle text-orange-500"></i>
                     <div>
-                      <p className="text-600 text-sm mb-1 font-medium">Rating Required</p>
-                      <p className="text-500 text-xs">Either "Rate Us" or "Custom Rating" must be selected to save the form.</p>
+                      <p className="text-600 text-sm mb-1 font-medium">{t("hotel.forms.builder.alerts.ratingRequiredTitle")}</p>
+                      <p className="text-500 text-xs">{t("hotel.forms.builder.alerts.ratingRequiredDescription")}</p>
                     </div>
                   </div>
                 </div>
@@ -1164,8 +1198,8 @@ export default function FeedbackFormBuilder({
                   <div className="flex align-items-center gap-2 p-3 bg-green-50 border-round mb-3">
                     <i className="pi pi-info-circle text-green-500"></i>
                     <div>
-                      <p className="text-600 text-sm mb-1 font-medium">Good Layout Features</p>
-                      <p className="text-500 text-xs">Choose either "Rate Us" OR "Custom Rating" (mutually exclusive - selecting one will uncheck the other). All questions including custom questions are available.</p>
+                      <p className="text-600 text-sm mb-1 font-medium">{t("hotel.forms.builder.layoutInfo.good.title")}</p>
+                      <p className="text-500 text-xs">{t("hotel.forms.builder.layoutInfo.good.description")}</p>
                     </div>
                   </div>
                 </div>
@@ -1176,8 +1210,8 @@ export default function FeedbackFormBuilder({
                   <div className="flex align-items-center gap-2 p-3 bg-purple-50 border-round mb-3">
                     <i className="pi pi-info-circle text-purple-500"></i>
                     <div>
-                      <p className="text-600 text-sm mb-1 font-medium">Excellent Layout Features</p>
-                      <p className="text-500 text-xs">All predefined questions available plus custom questions. Full flexibility for creating comprehensive feedback forms with premium design and animations.</p>
+                      <p className="text-600 text-sm mb-1 font-medium">{t("hotel.forms.builder.layoutInfo.excellent.title")}</p>
+                      <p className="text-500 text-xs">{t("hotel.forms.builder.layoutInfo.excellent.description")}</p>
                     </div>
                   </div>
                 </div>
@@ -1187,9 +1221,9 @@ export default function FeedbackFormBuilder({
               {form.questions.length === 0 && (
                 <div className="no-questions-state">
                   <i className="pi pi-question-circle text-4xl text-400 mb-3"></i>
-                  <p className="text-600">No questions added yet</p>
+                  <p className="text-600">{t("hotel.forms.builder.states.noQuestionsTitle")}</p>
                   <p className="text-500 text-sm">
-                    Use the predefined questions above or add custom questions to get started
+                    {t("hotel.forms.builder.states.noQuestionsDescription")}
                   </p>
                 </div>
               )}
@@ -1238,7 +1272,7 @@ export default function FeedbackFormBuilder({
                   lineHeight: 1.5,
                 }}
               >
-                {form.description || "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance."}
+                {form.description || t("hotel.forms.builder.preview.descriptionFallback")}
               </p>
             </div>
 
@@ -1254,11 +1288,11 @@ export default function FeedbackFormBuilder({
                     marginBottom: "6px",
                   }}
                 >
-                  Full Name*
+                  {t("hotel.forms.builder.preview.fullNameLabel")}
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter your full name"
+                  placeholder={t("hotel.forms.builder.preview.fullNamePlaceholder")}
                   disabled
                   style={{
                     width: "100%",
@@ -1281,11 +1315,11 @@ export default function FeedbackFormBuilder({
                     marginBottom: "6px",
                   }}
                 >
-                  Email*
+                  {t("hotel.forms.builder.preview.emailLabel")}
                 </label>
                 <input
                   type="email"
-                  placeholder="Enter your email address"
+                  placeholder={t("hotel.forms.builder.preview.emailPlaceholder")}
                   disabled
                   style={{
                     width: "100%",
@@ -1312,7 +1346,7 @@ export default function FeedbackFormBuilder({
                     marginBottom: "6px",
                   }}
                 >
-                  Rate Us
+                  {t("hotel.forms.builder.predefined.rateUsTitle")}
                 </label>
                 <div style={{ display: "flex", gap: "4px" }}>
                   {Array.from({ length: 5 }).map((_, i) => (
@@ -1379,11 +1413,11 @@ export default function FeedbackFormBuilder({
                     marginBottom: "6px",
                   }}
                 >
-                  Please give us your honest feedback?
+                  {t("hotel.forms.builder.predefined.feedbackTitle")}
                 </label>
                 <textarea
                   rows={3}
-                  placeholder="Enter your detail feedback"
+                  placeholder={t("hotel.forms.builder.predefined.feedbackPlaceholder")}
                   disabled
                   style={{
                     width: "100%",
@@ -1421,7 +1455,7 @@ export default function FeedbackFormBuilder({
                     {question.type === "SHORT_TEXT" && (
                       <input
                         type="text"
-                        placeholder="Enter your answer"
+                        placeholder={t("hotel.forms.builder.placeholders.answer")}
                         disabled
                         style={{
                           width: "100%",
@@ -1437,7 +1471,7 @@ export default function FeedbackFormBuilder({
 
                     {question.type === "LONG_TEXT" && (
                       <textarea
-                        placeholder="Enter your answer"
+                        placeholder={t("hotel.forms.builder.placeholders.answer")}
                         rows={3}
                         disabled
                         style={{
@@ -1509,7 +1543,7 @@ export default function FeedbackFormBuilder({
                             disabled
                             style={{ marginRight: "8px" }}
                           />
-                          <label style={{ fontSize: "14px", color: "#6c757d" }}>Yes</label>
+                          <label style={{ fontSize: "14px", color: "#6c757d" }}>{t("hotel.forms.builder.answers.yes")}</label>
                         </div>
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <input
@@ -1518,7 +1552,7 @@ export default function FeedbackFormBuilder({
                             disabled
                             style={{ marginRight: "8px" }}
                           />
-                          <label style={{ fontSize: "14px", color: "#6c757d" }}>No</label>
+                          <label style={{ fontSize: "14px", color: "#6c757d" }}>{t("hotel.forms.builder.answers.no")}</label>
                         </div>
                       </div>
                     )}
@@ -1542,7 +1576,7 @@ export default function FeedbackFormBuilder({
                 boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
               }}
             >
-              Submit Now
+              {t("hotel.forms.builder.preview.submit")}
             </button>
           </div>
         </div>
@@ -1550,7 +1584,7 @@ export default function FeedbackFormBuilder({
 
       {/* Question Dialog */}
       <Dialog
-        header={editingQuestion ? "Edit Question" : "Add Question"}
+        header={editingQuestion ? t("hotel.forms.builder.dialog.editTitle") : t("hotel.forms.builder.dialog.addTitle")}
         visible={showQuestionDialog}
         onHide={() => {
           setShowQuestionDialog(false);
@@ -1568,17 +1602,17 @@ export default function FeedbackFormBuilder({
       >
         <div className="grid">
           <div className="col-12">
-            <label className="block text-900 font-medium mb-2">Question Text *</label>
+            <label className="block text-900 font-medium mb-2">{t("hotel.forms.builder.dialog.questionLabel")}</label>
             <InputTextarea
               value={questionForm.question}
               onChange={(e) => setQuestionForm({ ...questionForm, question: e.target.value })}
-              placeholder="Enter your question"
+              placeholder={t("hotel.forms.builder.dialog.questionPlaceholder")}
               rows={3}
               className="w-full"
             />
           </div>
           <div className="col-12">
-            <label className="block text-900 font-medium mb-2">Question Type</label>
+            <label className="block text-900 font-medium mb-2">{t("hotel.forms.builder.dialog.typeLabel")}</label>
             <Dropdown
               value={questionForm.type}
               options={questionTypes}
@@ -1601,17 +1635,17 @@ export default function FeedbackFormBuilder({
           {(questionForm.type === "MULTIPLE_CHOICE_SINGLE" || questionForm.type === "MULTIPLE_CHOICE_MULTIPLE") && (
             <div className="col-12">
               <Divider />
-              <label className="block text-900 font-medium mb-2">Options</label>
+              <label className="block text-900 font-medium mb-2">{t("hotel.forms.builder.dialog.optionsLabel")}</label>
               <div className="flex gap-2 mb-3">
                 <InputText
                   value={newOption}
                   onChange={(e) => setNewOption(e.target.value)}
-                  placeholder="Enter option"
+                  placeholder={t("hotel.forms.builder.dialog.optionPlaceholder")}
                   className="flex-1"
                   onKeyPress={(e) => e.key === 'Enter' && addOption()}
                 />
                 <Button
-                  label="Add"
+                  label={t("hotel.forms.builder.buttons.addOption")}
                   icon="pi pi-plus"
                   onClick={addOption}
                   disabled={!newOption.trim()}
@@ -1643,7 +1677,7 @@ export default function FeedbackFormBuilder({
           <div className="col-12">
             <div className="flex justify-content-end gap-3 mt-4">
               <Button
-                label="Cancel"
+                label={t("hotel.forms.builder.buttons.cancel")}
                 icon="pi pi-times"
                 onClick={() => {
                   setShowQuestionDialog(false);
@@ -1659,7 +1693,7 @@ export default function FeedbackFormBuilder({
                 className="p-button-outlined"
               />
               <Button
-                label={editingQuestion ? "Update" : "Add"}
+                label={editingQuestion ? t("hotel.forms.builder.buttons.update") : t("hotel.forms.builder.buttons.add")}
                 icon="pi pi-check"
                 onClick={saveQuestion}
               />

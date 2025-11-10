@@ -8,6 +8,7 @@ import { LayoutContext } from "../../../../layout/context/layoutcontext";
 import { Toast } from "primereact/toast";
 import Image from "next/image";
 import AuthFooter from "@/components/AuthFooter";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 const ForgotPassword: Page = () => {
     const [email, setEmail] = useState("");
@@ -127,6 +128,9 @@ const ForgotPassword: Page = () => {
                     C-Reviews
                 </div>
                 <div style={{ display: "flex", gap: "1rem" }}>
+                <li className="ml-3">
+                        <LanguageSelector className="w-full" />
+                    </li>
                     <Button
                         label="Get Started"
                         outlined
@@ -168,7 +172,6 @@ const ForgotPassword: Page = () => {
                                 Email Address<span style={{ color: "red" }}>*</span>
                             </label>
                             <span className="p-input-icon-left w-full mb-1">
-                                <i className="pi pi-envelope"></i>
                                 <InputText
                                     id="email"
                                     type="email"

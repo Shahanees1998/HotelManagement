@@ -7,11 +7,13 @@ import { useContext } from "react";
 import { LayoutContext } from "../../../../layout/context/layoutcontext";
 import AuthHeader from "@/components/AuthHeader";
 import AuthFooter from "@/components/AuthFooter";
+import { useI18n } from "@/i18n/TranslationProvider";
 
 const NewPassword: Page = () => {
     const router = useRouter();
     const { layoutConfig } = useContext(LayoutContext);
     const dark = layoutConfig.colorScheme !== "light";
+    const { t } = useI18n();
 
     return (
         <div style={{ backgroundColor: "#FDFCF9", display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -24,10 +26,10 @@ const NewPassword: Page = () => {
                 <div className="surface-card border-round py-7 px-4 md:px-7 z-1" style={{ width: "100%", maxWidth: "480px", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)" }}>
                     <div className="mb-4">
                         <div className="text-900 text-xl font-bold mb-2">
-                            New Password
+                            {t("New Password")}
                         </div>
                         <span className="text-600 font-medium">
-                            Enter your new password
+                            {t("Enter your new password")}
                         </span>
                     </div>
                     <div className="flex flex-column">
@@ -38,7 +40,7 @@ const NewPassword: Page = () => {
                                 className="w-full"
                                 type="text"
                                 inputClassName="w-full"
-                                placeholder="Password"
+                                placeholder={t("Password")}
                                 toggleMask
                                 inputStyle={{ paddingLeft: "2.5rem" }}
                             />
@@ -50,7 +52,7 @@ const NewPassword: Page = () => {
                                 className="w-full"
                                 type="text"
                                 inputClassName="w-full"
-                                placeholder="Repeat Password"
+                                placeholder={t("Repeat Password")}
                                 toggleMask
                                 feedback={false}
                                 inputStyle={{ paddingLeft: "2.5rem" }}
@@ -58,13 +60,13 @@ const NewPassword: Page = () => {
                         </span>
                         <div className="flex flex-wrap gap-2 justify-content-between">
                             <Button
-                                label="Cancel"
+                                label={t("Cancel")}
                                 outlined
                                 className="flex-auto"
                                 onClick={() => router.push("/")}
                             ></Button>
                             <Button
-                                label="Submit"
+                                label={t("Submit")}
                                 className="flex-auto"
                                 style={{
                                     backgroundColor: "#1e3a5f",
