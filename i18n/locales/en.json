@@ -518,6 +518,9 @@
         "description": "Description:",
         "layout": "Layout:",
         "feedbackResponses": "Feedback Responses",
+        "languageSelectorLabel": "View content in",
+        "languageSelectorPlaceholder": "Select language",
+        "translating": "Translating...",
         "noDetailedResponses": "No detailed responses available for this review.",
         "question": "Question:",
         "noAnswer": "No answer provided",
@@ -557,6 +560,7 @@
         "replyMissing": "Please enter a reply message",
         "replySuccess": "Reply sent successfully to {sentTo}",
         "replyError": "Failed to send reply",
+        "translationError": "Failed to translate review content",
         "deleteSuccess": "Review deleted successfully",
         "deleteError": "Failed to delete review"
       }

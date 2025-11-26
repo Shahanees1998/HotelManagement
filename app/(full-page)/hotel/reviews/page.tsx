@@ -20,6 +20,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { CustomPaginator } from "@/components/CustomPaginator";
 import { apiClient } from "@/lib/apiClient";
 import { useI18n } from "@/i18n/TranslationProvider";
+import { SUPPORTED_LANGUAGES, Language, translationService } from "@/lib/translationService";
 
 interface Review {
   id: string;
@@ -121,6 +122,12 @@ export default function HotelReviews() {
   const [reviewToDelete, setReviewToDelete] = useState<Review | null>(null);
   const [deletingReview, setDeletingReview] = useState(false);
   const toast = useRef<Toast>(null);
+  const [detailLanguage, setDetailLanguage] = useState<Language>(() => {
+    const matched = SUPPORTED_LANGUAGES.find(lang => lang.code === locale);
+    return matched ?? SUPPORTED_LANGUAGES[0];
+  });
+  const [detailTranslating, setDetailTranslating] = useState(false);
+  const [detailTranslationMap, setDetailTranslationMap] = useState<Record<string, string>>({});
 
 
   const showToast = useCallback((severity: "success" | "error" | "warn" | "info", summary: string, detail: string) => {
@@ -160,6 +167,13 @@ export default function HotelReviews() {
   useEffect(() => {
     loadReviews();
   }, [loadReviews]);
+
+  useEffect(() => {
+    const matched = SUPPORTED_LANGUAGES.find(lang => lang.code === locale);
+    if (matched) {
+      setDetailLanguage(prev => (prev.code === matched.code ? prev : matched));
+    }
+  }, [locale]);
 
   // Check for reviewId URL parameter to auto-open detailed review
   useEffect(() => {
@@ -372,25 +386,229 @@ export default function HotelReviews() {
     ));
   };
 
-  const renderAnswer = (answer: any, type: string) => {
-    if (typeof answer === 'string') {
+  const canonicalizeText = (text: string) => text.trim();
+
+  const translateDynamicText = useCallback(
+    (text?: string | null) => {
+      if (text == null) {
+        return "";
+      }
+      if (detailLanguage.code === "en") {
+        return text;
+      }
+      const key = canonicalizeText(text);
+      if (!key) {
+        return text;
+      }
+      return detailTranslationMap[key] ?? text;
+    },
+    [detailLanguage.code, detailTranslationMap]
+  );
+
+  const getAnswerDisplayValue = useCallback((answer: any, type: string): string => {
+    if (answer === null || answer === undefined) {
+      return "";
+    }
+    if (type === "STAR_RATING" || type === "CUSTOM_RATING") {
+      return "";
+    }
+    if (type === "MULTIPLE_CHOICE_MULTIPLE") {
+      if (Array.isArray(answer)) {
+        return answer.map(item => (typeof item === "string" ? item : String(item))).join(", ");
+      }
+      return typeof answer === "string" ? answer : String(answer);
+    }
+    if (type === "YES_NO") {
+      if (typeof answer === "string") {
+        return answer;
+      }
+      return answer ? "Yes" : "No";
+    }
+    if (typeof answer === "string") {
       try {
         const parsed = JSON.parse(answer);
         if (Array.isArray(parsed)) {
-          return parsed.join(', ');
+          return parsed.map(item => (typeof item === "string" ? item : String(item))).join(", ");
         }
-        return parsed;
+        if (typeof parsed === "string") {
+          return parsed;
+        }
+        if (typeof parsed === "number" || typeof parsed === "boolean") {
+          return String(parsed);
+        }
+        if (parsed && typeof parsed === "object") {
+          return Object.values(parsed)
+            .map(value => (typeof value === "string" ? value : String(value)))
+            .join(", ");
+        }
       } catch {
-        // If it's not JSON, clean up repetitive text
-        if (answer.includes('Please give us your honest feed')) {
-          const cleanAnswer = answer.replace(/Please give us your honest feed/g, '').trim();
-          return cleanAnswer.length > 0 ? cleanAnswer : t("hotel.reviews.detailsDialog.noSpecificFeedback");
+        if (answer.includes("Please give us your honest feed")) {
+          const cleaned = answer.replace(/Please give us your honest feed/g, "").trim();
+          return cleaned;
         }
         return answer;
       }
     }
-    return answer;
-  };
+    if (Array.isArray(answer)) {
+      return answer.map(item => (typeof item === "string" ? item : String(item))).join(", ");
+    }
+    return String(answer);
+  }, []);
+
+  const renderAnswer = useCallback(
+    (answer: any, type: string) => {
+      const displayValue = getAnswerDisplayValue(answer, type);
+      if (!displayValue || !displayValue.trim()) {
+        if (typeof answer === "string" && answer.includes("Please give us your honest feed")) {
+          return t("hotel.reviews.detailsDialog.noSpecificFeedback");
+        }
+        return t("hotel.reviews.detailsDialog.noAnswer");
+      }
+      return translateDynamicText(displayValue);
+    },
+    [getAnswerDisplayValue, t, translateDynamicText]
+  );
+
+  const collectDetailedReviewTexts = useCallback(
+    (review: DetailedReview): string[] => {
+      const seen = new Set<string>();
+      const texts: string[] = [];
+
+      const add = (value?: string | null) => {
+        if (!value) {
+          return;
+        }
+        const key = canonicalizeText(value);
+        if (!key || seen.has(key)) {
+          return;
+        }
+        seen.add(key);
+        texts.push(key);
+      };
+
+      if (review.form?.title) {
+        add(review.form.title);
+      }
+      if (review.form?.description) {
+        add(review.form.description);
+      }
+      review.form?.predefinedQuestions?.customRatingItems?.forEach(item => add(item.label));
+
+      if (review.predefinedAnswers) {
+        try {
+          const parsed = JSON.parse(review.predefinedAnswers);
+          Object.entries(parsed).forEach(([questionId, rawValue]) => {
+            if (questionId === "feedback" && typeof rawValue === "string") {
+              const cleaned = rawValue.replace(/Please give us your honest feed/g, "").trim();
+              add(cleaned);
+            } else if (typeof rawValue === "string" && questionId !== "rate-us" && !questionId.startsWith("custom-rating-")) {
+              add(rawValue);
+            } else if (Array.isArray(rawValue)) {
+              rawValue.forEach(item => {
+                if (typeof item === "string") {
+                  add(item);
+                }
+              });
+            }
+          });
+        } catch (error) {
+          console.warn("Failed to parse predefined answers for translation", error);
+        }
+      }
+
+      review.answers.forEach(answer => {
+        if (answer?.question?.question) {
+          add(answer.question.question);
+        }
+
+        if (answer?.question?.type === "CUSTOM_RATING" && Array.isArray(answer.customRatingItems)) {
+          answer.customRatingItems.forEach(item => add(item.label));
+        }
+
+        if (answer?.question?.type === "MULTIPLE_CHOICE_MULTIPLE" && Array.isArray(answer.answer)) {
+          answer.answer.forEach(option => {
+            if (typeof option === "string") {
+              add(option);
+            } else if (option != null) {
+              add(String(option));
+            }
+          });
+          return;
+        }
+
+        if (answer?.question?.type === "YES_NO" && typeof answer.answer === "string") {
+          add(answer.answer);
+          return;
+        }
+
+        if (answer?.question?.type === "STAR_RATING" || answer?.question?.type === "CUSTOM_RATING") {
+          return;
+        }
+
+        const displayValue = getAnswerDisplayValue(answer.answer, answer.question.type);
+        add(displayValue);
+      });
+
+      return texts;
+    },
+    [getAnswerDisplayValue]
+  );
+
+  useEffect(() => {
+    if (!detailedReview) {
+      setDetailTranslationMap({});
+      setDetailTranslating(false);
+      return;
+    }
+
+    if (detailLanguage.code === "en") {
+      setDetailTranslationMap({});
+      setDetailTranslating(false);
+      return;
+    }
+
+    const texts = collectDetailedReviewTexts(detailedReview);
+    if (!texts.length) {
+      setDetailTranslationMap({});
+      setDetailTranslating(false);
+      return;
+    }
+
+    let cancelled = false;
+    setDetailTranslating(true);
+
+    translationService
+      .translateBatch(texts, detailLanguage.code)
+      .then(translated => {
+        if (cancelled) {
+          return;
+        }
+        const map: Record<string, string> = {};
+        translated.forEach((value, index) => {
+          const key = texts[index];
+          if (key) {
+            map[key] = value;
+          }
+        });
+        setDetailTranslationMap(map);
+      })
+      .catch(error => {
+        console.error("Error translating review details:", error);
+        if (!cancelled) {
+          showToast("warn", t("common.warning"), t("hotel.reviews.toasts.translationError"));
+          setDetailTranslationMap({});
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setDetailTranslating(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [collectDetailedReviewTexts, detailLanguage.code, detailedReview, showToast, t]);
 
   const ratingBodyTemplate = useMemo(() => (rowData: Review) => {
     // Try to get the "rate-us" rating from predefined answers first
@@ -754,6 +972,127 @@ export default function HotelReviews() {
       >
         {detailedReview && (
           <div className="space-y-6">
+            <div className="flex flex-column md:flex-row md:justify-content-end md:align-items-center gap-3">
+              <div
+                style={{
+                  width: "100%",
+                  maxWidth: "440px",
+                  background: "linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%)",
+                  border: "1px solid #e0e7ff",
+                  borderRadius: "18px",
+                  padding: "16px 20px",
+                  boxShadow: "0 20px 45px -28px rgba(30, 64, 175, 0.55)",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "16px",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <div
+                      style={{
+                        width: "42px",
+                        height: "42px",
+                        borderRadius: "14px",
+                        background: "linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)",
+                        color: "#fff",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        boxShadow: "0 10px 22px -12px rgba(79, 70, 229, 0.55)",
+                      }}
+                    >
+                      <i className="pi pi-globe" style={{ fontSize: "1.1rem" }}></i>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                      <span style={{ fontWeight: 600, color: "#1f2937", fontSize: "0.95rem" }}>
+                        {t("hotel.reviews.detailsDialog.languageSelectorLabel")}
+                      </span>
+                      <span style={{ fontSize: "0.78rem", color: "#4f46e5", fontWeight: 500 }}>
+                        {detailLanguage?.name}
+                      </span>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                    <Dropdown
+                      value={detailLanguage}
+                      options={SUPPORTED_LANGUAGES}
+                      onChange={(e) => {
+                        if (e.value) {
+                          setDetailLanguage(e.value);
+                        }
+                      }}
+                      optionLabel="name"
+                      placeholder={t("hotel.reviews.detailsDialog.languageSelectorPlaceholder")}
+                      filter
+                      filterBy="name,code"
+                      dropdownIcon="pi pi-chevron-down"
+                      style={{
+                        minWidth: "220px",
+                        borderRadius: "12px",
+                        border: "1px solid #c7d2fe",
+                        background: "#ffffff",
+                        boxShadow: "0 18px 40px -25px rgba(59, 130, 246, 0.55)",
+                      }}
+                      panelStyle={{
+                        borderRadius: "14px",
+                        border: "1px solid #c7d2fe",
+                        boxShadow: "0 28px 48px -24px rgba(79, 70, 229, 0.45)",
+                      }}
+                      disabled={detailTranslating}
+                      itemTemplate={(option: Language) =>
+                        option ? (
+                          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                            <span style={{ fontSize: "18px" }}>{option.flag}</span>
+                            <span style={{ fontWeight: 500 }}>{option.name}</span>
+                            <span style={{ fontSize: "12px", color: "#6b7280", marginLeft: "auto" }}>
+                              ({option.code})
+                            </span>
+                          </div>
+                        ) : null
+                      }
+                      valueTemplate={(option: Language | undefined) =>
+                        option ? (
+                          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                            <span style={{ fontSize: "18px" }}>{option.flag}</span>
+                            <span style={{ fontWeight: 600, color: "#1f2937" }}>{option.name}</span>
+                          </div>
+                        ) : (
+                          <span style={{ color: "#6b7280", fontWeight: 500 }}>
+                            {t("hotel.reviews.detailsDialog.languageSelectorPlaceholder")}
+                          </span>
+                        )
+                      }
+                    />
+                    {detailTranslating && (
+                      <span
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          padding: "6px 10px",
+                          borderRadius: "999px",
+                          background: "#e0e7ff",
+                          color: "#4338ca",
+                          fontSize: "0.75rem",
+                          fontWeight: 600,
+                          letterSpacing: "0.02em",
+                        }}
+                      >
+                        <i className="pi pi-spinner pi-spin" style={{ fontSize: "0.75rem" }}></i>
+                        {t("hotel.reviews.detailsDialog.translating")}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Guest Information */}
             <div className="border-1 border-200 border-round p-4 animate-slide-in-left">
               <h3 className="text-lg font-semibold mb-3 flex align-items-center gap-2">
@@ -805,38 +1144,38 @@ export default function HotelReviews() {
                 <h3 className="text-lg font-semibold mb-3">{t("hotel.reviews.detailsDialog.quickFeedback")}</h3>
                 <div className="space-y-3">
                   {Object.entries(JSON.parse(detailedReview.predefinedAnswers)).map(([questionId, answer]) => {
-                    // Handle different question types
-                    let questionLabel = '';
-                    let displayAnswer = answer;
-                    
-                    if (questionId === 'rate-us') {
+                    let questionLabel = "";
+                    let displayAnswer: string = "";
+                    let translateLabel = false;
+                    let translateAnswerValue = false;
+
+                    if (questionId === "rate-us") {
                       questionLabel = t("hotel.reviews.detailsDialog.howDoYouRateUs");
-                      // Show visual stars instead of text
-                      const rating = parseInt(String(answer));
-                      displayAnswer = Array.from({ length: 5 }, (_, i) => 
-                        i < rating ? '★' : '☆'
-                      ).join('');
-                    } else if (questionId === 'feedback') {
+                      const rating = parseInt(String(answer), 10);
+                      displayAnswer = Array.from({ length: 5 }, (_, i) => (i < rating ? "★" : "☆")).join("");
+                    } else if (questionId === "feedback") {
                       questionLabel = t("hotel.reviews.detailsDialog.honestFeedback");
-                      // Clean up repetitive placeholder text
-                      let cleanAnswer = String(answer);
-                      if (cleanAnswer.includes('Please give us your honest feed')) {
-                        // Remove repetitive placeholder text
-                        cleanAnswer = cleanAnswer.replace(/Please give us your honest feed/g, '').trim();
-                        if (cleanAnswer.length === 0) {
-                          cleanAnswer = t("hotel.reviews.detailsDialog.noSpecificFeedback");
-                        }
+                      let cleanAnswer = String(answer ?? "");
+                      if (cleanAnswer.includes("Please give us your honest feed")) {
+                        cleanAnswer = cleanAnswer.replace(/Please give us your honest feed/g, "").trim();
                       }
-                      displayAnswer = cleanAnswer;
-                    } else if (questionId.startsWith('custom-rating-')) {
-                      // This is a custom rating item - get the actual label from form data
-                      const customRatingItemId = questionId.replace('custom-rating-', '');
+                      if (!cleanAnswer) {
+                        displayAnswer = t("hotel.reviews.detailsDialog.noSpecificFeedback");
+                      } else {
+                        displayAnswer = cleanAnswer;
+                        translateAnswerValue = true;
+                      }
+                    } else if (questionId.startsWith("custom-rating-")) {
+                      const customRatingItemId = questionId.replace("custom-rating-", "");
                       let customRatingItem = detailedReview.form?.predefinedQuestions?.customRatingItems?.find(
                         item => item.id === customRatingItemId
                       );
-                      
-                      // If not found by ID, try to match by order/index
-                      if (!customRatingItem && detailedReview.form?.predefinedQuestions?.customRatingItems && detailedReview.predefinedAnswers) {
+
+                      if (
+                        !customRatingItem &&
+                        detailedReview.form?.predefinedQuestions?.customRatingItems &&
+                        detailedReview.predefinedAnswers
+                      ) {
                         const items = detailedReview.form.predefinedQuestions.customRatingItems;
                         const predefinedAnswersKeys = Object.keys(JSON.parse(detailedReview.predefinedAnswers));
                         const index = predefinedAnswersKeys.indexOf(questionId);
@@ -844,35 +1183,48 @@ export default function HotelReviews() {
                           customRatingItem = items[index];
                         }
                       }
-                      
-                      questionLabel = customRatingItem?.label || t("hotel.reviews.detailsDialog.customRatingItem").replace("{itemId}", customRatingItemId);
-                      // Show visual stars instead of text
-                      const rating = parseInt(String(answer));
-                      displayAnswer = Array.from({ length: 5 }, (_, i) => 
-                        i < rating ? '★' : '☆'
-                      ).join('');
-                    } else if (questionId === 'custom-rating') {
+
+                      questionLabel =
+                        customRatingItem?.label ||
+                        t("hotel.reviews.detailsDialog.customRatingItem").replace("{itemId}", customRatingItemId);
+                      translateLabel = !!customRatingItem?.label;
+                      const rating = parseInt(String(answer), 10);
+                      displayAnswer = Array.from({ length: 5 }, (_, i) => (i < rating ? "★" : "☆")).join("");
+                    } else if (questionId === "custom-rating") {
                       questionLabel = t("hotel.reviews.detailsDialog.customRatingItem").replace("{itemId}", "custom-rating");
-                      displayAnswer = String(answer);
+                      displayAnswer = String(answer ?? "");
+                      translateAnswerValue = !!displayAnswer.trim();
                     } else {
-                      questionLabel = questionId;
-                      displayAnswer = typeof answer === 'object' ? JSON.stringify(answer) : String(answer);
+                      questionLabel = typeof questionId === "string" ? questionId : String(questionId);
+                      const stringValue =
+                        typeof answer === "object" && answer !== null ? JSON.stringify(answer) : String(answer ?? "");
+                      displayAnswer = stringValue;
+                      translateLabel = true;
+                      translateAnswerValue = !!displayAnswer.trim();
                     }
-                    
+
+                    const resolvedLabel = translateLabel ? translateDynamicText(questionLabel) : questionLabel;
+                    const resolvedAnswer =
+                      translateAnswerValue && displayAnswer
+                        ? translateDynamicText(displayAnswer)
+                        : displayAnswer || t("hotel.reviews.detailsDialog.noAnswer");
+
                     return (
                       <div key={questionId} className="border-bottom-1 border-200 pb-3">
-                        <div className="font-semibold mb-1">{questionLabel}</div>
+                        <div className="font-semibold mb-1">{resolvedLabel}</div>
                         <div className="text-600">
-                          {questionId === 'rate-us' || questionId.startsWith('custom-rating-') ? (
-                            <span style={{ 
-                              fontSize: '18px', 
-                              color: '#facc15',
-                              letterSpacing: '2px'
-                            }}>
-                              {String(displayAnswer)}
+                          {questionId === "rate-us" || questionId.startsWith("custom-rating-") ? (
+                            <span
+                              style={{
+                                fontSize: "18px",
+                                color: "#facc15",
+                                letterSpacing: "2px"
+                              }}
+                            >
+                              {displayAnswer}
                             </span>
                           ) : (
-                            String(displayAnswer)
+                            resolvedAnswer
                           )}
                         </div>
                       </div>
@@ -891,11 +1243,15 @@ export default function HotelReviews() {
                 <div className="grid">
                   <div className="col-12">
                   <div className="mb-2">
-                    <strong>{t("hotel.reviews.detailsDialog.formTitle")}</strong> {detailedReview.form?.title || t("hotel.reviews.detailsDialog.notProvided")}
+                    <strong>{t("hotel.reviews.detailsDialog.formTitle")}</strong>{" "}
+                    {detailedReview.form?.title
+                      ? translateDynamicText(detailedReview.form.title)
+                      : t("hotel.reviews.detailsDialog.notProvided")}
                   </div>
                   {detailedReview.form?.description && (
                     <div className="mb-2">
-                      <strong>{t("hotel.reviews.detailsDialog.description")}</strong> {detailedReview.form.description}
+                      <strong>{t("hotel.reviews.detailsDialog.description")}</strong>{" "}
+                      {translateDynamicText(detailedReview.form.description)}
                     </div>
                   )}
                   <div className="mb-2">
@@ -927,7 +1283,7 @@ export default function HotelReviews() {
                     <div key={answer.id} className="border-bottom-1 border-200 pb-3">
                       <div className="font-semibold mb-2 flex align-items-center gap-2">
                         <i className="pi pi-question-circle text-blue-500"></i>
-                              {answer.question.question}
+                              {translateDynamicText(answer.question.question)}
                               {answer.question.isRequired && <span className="text-red-500 ml-1">*</span>}
                       </div>
                       <div className="text-600 ml-4">
@@ -948,7 +1304,7 @@ export default function HotelReviews() {
                           <div className="space-y-2">
                             {answer.customRatingItems.map((item: any) => (
                               <div key={item.id} className="flex align-items-center justify-content-between p-2 border-1 border-200 border-round">
-                                <span className="text-900 font-medium">{item.label}</span>
+                                <span className="text-900 font-medium">{translateDynamicText(item.label)}</span>
                                 <div className="flex align-items-center gap-2">
                                   <span style={{ 
                                     fontSize: '16px', 
@@ -968,7 +1324,7 @@ export default function HotelReviews() {
                           <div className="flex flex-wrap gap-1">
                             {Array.isArray(answer.answer) && answer.answer.length > 0 ? (
                               answer.answer.map((item: string, idx: number) => (
-                                <Tag key={idx} value={item} severity="info" />
+                                <Tag key={idx} value={translateDynamicText(item)} severity="info" />
                               ))
                             ) : (
                               <span className="text-600">{t("hotel.reviews.detailsDialog.noAnswer")}</span>
@@ -976,7 +1332,11 @@ export default function HotelReviews() {
                           </div>
                         ) : answer.question.type === 'YES_NO' ? (
                           <Tag 
-                            value={answer.answer || t("hotel.reviews.detailsDialog.noAnswer")} 
+                            value={
+                              answer.answer
+                                ? translateDynamicText(String(answer.answer))
+                                : t("hotel.reviews.detailsDialog.noAnswer")
+                            } 
                             severity={answer.answer === 'Yes' ? 'success' : answer.answer === 'No' ? 'danger' : 'info'} 
                           />
                         ) : (

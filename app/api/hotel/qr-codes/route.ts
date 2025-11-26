@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
 
       // Generate unique QR code
       const code = `QR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      const baseUrl = 'https://hotel-management-xmr3.vercel.app';
+      const baseUrl = 'http://142.93.20.6';
       const url = formId 
         ? `${baseUrl}/feedback/${hotel.slug}/${formId}`
         : `${baseUrl}/feedback/${hotel.slug}`;

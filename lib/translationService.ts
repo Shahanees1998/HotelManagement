@@ -104,32 +104,34 @@ export class TranslationService {
   }
 
   // Using a free translation service (MyMemory API)
-  async translateText(text: string, targetLanguage: string): Promise<string> {
+  async translateText(text: string, targetLanguage: string, depth = 0): Promise<string> {
     if (!text || targetLanguage === 'en') {
       return text;
     }
 
     const cacheKey = `${text}-${targetLanguage}`;
-    
-    // Return cached result if available
+
     if (this.cache.has(cacheKey)) {
       return this.cache.get(cacheKey)!;
     }
 
-    // Return existing pending request if one exists for this text
     if (this.pendingRequests.has(cacheKey)) {
       return this.pendingRequests.get(cacheKey)!;
     }
 
-    // Create new translation request
-    const translationPromise = this.performTranslation(text, targetLanguage, cacheKey);
+    const translationPromise = (async () => {
+      const rawTranslation = await this.performTranslation(text, targetLanguage, cacheKey);
+      const processed = await this.postProcessTranslation(text, rawTranslation, targetLanguage, depth);
+      const finalValue = processed && processed.trim().length > 0 ? processed : text;
+      this.cache.set(cacheKey, finalValue);
+      return finalValue;
+    })();
+
     this.pendingRequests.set(cacheKey, translationPromise);
 
     try {
-      const result = await translationPromise;
-      return result;
+      return await translationPromise;
     } finally {
-      // Clean up pending request
       this.pendingRequests.delete(cacheKey);
     }
   }
@@ -145,7 +147,6 @@ export class TranslationService {
       
       if (data.responseStatus === 200 && data.responseData) {
         const translatedText = data.responseData.translatedText;
-        this.cache.set(cacheKey, translatedText);
         return translatedText;
       }
       
@@ -300,6 +301,85 @@ export class TranslationService {
     }
 
     return obj;
+  }
+
+  private async postProcessTranslation(original: string, translated: string, targetLanguage: string, depth: number): Promise<string> {
+    if (!translated) {
+      return original;
+    }
+
+    let result = this.stripOriginalFromTranslation(original, translated, targetLanguage);
+    const trimmedOriginal = original.trim();
+    const trimmedResult = result.trim();
+
+    if (
+      targetLanguage !== 'en' &&
+      trimmedOriginal &&
+      trimmedResult &&
+      trimmedResult.toLowerCase() === trimmedOriginal.toLowerCase() &&
+      depth === 0 &&
+      this.shouldAttemptSegmentedTranslation(trimmedOriginal)
+    ) {
+      const segmented = await this.translateInSegments(trimmedOriginal, targetLanguage, depth);
+      if (segmented && segmented.trim().length > 0) {
+        return this.stripOriginalFromTranslation(trimmedOriginal, segmented, targetLanguage);
+      }
+    }
+
+    return result;
+  }
+
+  private stripOriginalFromTranslation(original: string, translated: string, targetLanguage: string): string {
+    if (targetLanguage === 'en') {
+      return translated;
+    }
+
+    const trimmedOriginal = original.trim();
+    if (!trimmedOriginal) {
+      return translated;
+    }
+
+    const regex = new RegExp(this.escapeRegExp(trimmedOriginal), 'gi');
+    const cleaned = translated.replace(regex, '').replace(/\s+/g, ' ').trim();
+    if (!cleaned) {
+      return translated;
+    }
+
+    return cleaned;
+  }
+
+  private shouldAttemptSegmentedTranslation(text: string): boolean {
+    return text.length > 160 || text.includes('\n') || /[.!?]\s/.test(text);
+  }
+
+  private async translateInSegments(text: string, targetLanguage: string, depth: number): Promise<string | null> {
+    const newlineSegments = text.split(/\r?\n/);
+    if (newlineSegments.length > 1) {
+      const translatedLines = await Promise.all(
+        newlineSegments.map(segment => {
+          const trimmed = segment.trim();
+          if (!trimmed) {
+            return Promise.resolve('');
+          }
+          return this.translateText(trimmed, targetLanguage, depth + 1);
+        })
+      );
+      return translatedLines.join('\n');
+    }
+
+    const sentenceSegments = text.split(/(?<=[.!?])\s+/).filter(Boolean);
+    if (sentenceSegments.length <= 1) {
+      return null;
+    }
+
+    const translatedSentences = await Promise.all(
+      sentenceSegments.map(segment => this.translateText(segment, targetLanguage, depth + 1))
+    );
+    return translatedSentences.join(' ');
+  }
+
+  private escapeRegExp(text: string): string {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
   clearCache(): void {
