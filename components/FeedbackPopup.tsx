@@ -43,6 +43,12 @@ interface FeedbackDetails {
       question: string;
       type: string;
     };
+    customRatingItems?: Array<{
+      id: string;
+      label: string;
+      order: number;
+      rating?: number;
+    }>;
   }>;
   answers?: Array<{
     id: string;
@@ -54,6 +60,12 @@ interface FeedbackDetails {
       isRequired: boolean;
       options: string[];
     };
+    customRatingItems?: Array<{
+      id: string;
+      label: string;
+      order: number;
+      rating?: number;
+    }>;
   }>;
 }
 
