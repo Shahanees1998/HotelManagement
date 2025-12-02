@@ -297,12 +297,18 @@ export default function CustomerFeedbackForm() {
         // Collect feedback text for display (answers only, no questions)
         let feedbackText = "";
         if (form) {
-          const honestFeedbackQuestion = form.questions.find(
-            (q) => q.question === "Please give us your honest feedback?"
-          );
+          // Check predefined feedback question first
+          if (submission.answers['feedback']) {
+            feedbackText = submission.answers['feedback'];
+          } else {
+            // Check custom questions
+            const honestFeedbackQuestion = form.questions.find(
+              (q) => q.question === "Please give us your honest feedback?" || q.type === 'LONG_TEXT'
+            );
 
-          if (honestFeedbackQuestion && submission.answers[honestFeedbackQuestion.id]) {
-            feedbackText = submission.answers[honestFeedbackQuestion.id];
+            if (honestFeedbackQuestion && submission.answers[honestFeedbackQuestion.id]) {
+              feedbackText = submission.answers[honestFeedbackQuestion.id];
+            }
           }
         }
         setSubmittedFeedback(feedbackText);
@@ -508,49 +514,50 @@ export default function CustomerFeedbackForm() {
 
             </div>
 
-            {/* Review platform buttons */}
-            <div className="mb-6" style={{ padding: '0 12px', boxSizing: 'border-box', width: '100%' }}>
-              <p className="text-600 mb-4" style={{
-                padding: '0 4px',
-                boxSizing: 'border-box',
-                wordWrap: 'break-word',
-                overflowWrap: 'break-word',
-                textAlign: 'center',
-                fontSize: isMobile ? '14px' : '16px',
-                lineHeight: '1.5'
-              }}>
-                {selectedLanguage?.code === 'en' ? 'Would you like to share your experience with others?' :
-                  selectedLanguage?.code === 'es' ? '¿Te gustaría compartir tu experiencia con otros?' :
-                    selectedLanguage?.code === 'fr' ? 'Aimeriez-vous partager votre expérience avec d\'autres ?' :
-                      selectedLanguage?.code === 'de' ? 'Möchten Sie Ihre Erfahrung mit anderen teilen?' :
-                        selectedLanguage?.code === 'it' ? 'Vorresti condividere la tua esperienza con altri?' :
-                          selectedLanguage?.code === 'pt' ? 'Gostaria de compartilhar sua experiência com outros?' :
-                            selectedLanguage?.code === 'ru' ? 'Хотели бы вы поделиться своим опытом с другими?' :
-                              selectedLanguage?.code === 'ja' ? '他の人とあなたの経験を共有しますか？' :
-                                selectedLanguage?.code === 'ko' ? '다른 사람들과 경험을 공유하시겠습니까?' :
-                                  selectedLanguage?.code === 'zh' ? '您想与他人分享您的体验吗？' :
-                                    selectedLanguage?.code === 'ar' ? 'هل تريد مشاركة تجربتك مع الآخرين؟' :
-                                      selectedLanguage?.code === 'hi' ? 'क्या आप अपना अनुभव दूसरों के साथ साझा करना चाहेंगे?' :
-                                        selectedLanguage?.code === 'th' ? 'คุณต้องการแบ่งปันประสบการณ์ของคุณกับผู้อื่นหรือไม่?' :
-                                          selectedLanguage?.code === 'vi' ? 'Bạn có muốn chia sẻ trải nghiệm của mình với người khácไม่?' :
-                                            selectedLanguage?.code === 'tr' ? 'Deneyiminizi başkalarıyla paylaşmak ister misiniz?' :
-                                              selectedLanguage?.code === 'nl' ? 'Wil je je ervaring delen met anderen?' :
-                                                selectedLanguage?.code === 'sv' ? 'Vill du dela din upplevelse med andra?' :
-                                                  selectedLanguage?.code === 'da' ? 'Vil du dele din oplevelse med andre?' :
-                                                    selectedLanguage?.code === 'no' ? 'Vil du dele din opplevelse med andre?' :
-                                                      selectedLanguage?.code === 'fi' ? 'Haluatko jakaa kokemuksesi muiden kanssa?' :
-                                                        'Would you like to share your experience with others?'}
-              </p>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: isMobile ? '12px' : '16px',
-                width: '100%',
-                flexWrap: 'nowrap',
-                justifyContent: 'center'
-              }}>
-                {hotelData.googleReviewsLink && (
+            {/* Review platform buttons - Only show for good ratings (>=4) with feedback text */}
+            {finalRating >= 4 && submittedFeedback && submittedFeedback.trim() !== "" && (
+              <div className="mb-6" style={{ padding: '0 12px', boxSizing: 'border-box', width: '100%' }}>
+                <p className="text-600 mb-4" style={{
+                  padding: '0 4px',
+                  boxSizing: 'border-box',
+                  wordWrap: 'break-word',
+                  overflowWrap: 'break-word',
+                  textAlign: 'center',
+                  fontSize: isMobile ? '14px' : '16px',
+                  lineHeight: '1.5'
+                }}>
+                  {selectedLanguage?.code === 'en' ? 'Would you like to share your experience with others?' :
+                    selectedLanguage?.code === 'es' ? '¿Te gustaría compartir tu experiencia con otros?' :
+                      selectedLanguage?.code === 'fr' ? 'Aimeriez-vous partager votre expérience avec d\'autres ?' :
+                        selectedLanguage?.code === 'de' ? 'Möchten Sie Ihre Erfahrung mit anderen teilen?' :
+                          selectedLanguage?.code === 'it' ? 'Vorresti condividere la tua esperienza con altri?' :
+                            selectedLanguage?.code === 'pt' ? 'Gostaria de compartilhar sua experiência com outros?' :
+                              selectedLanguage?.code === 'ru' ? 'Хотели бы вы поделиться своим опытом с другими?' :
+                                selectedLanguage?.code === 'ja' ? '他の人とあなたの経験を共有しますか？' :
+                                  selectedLanguage?.code === 'ko' ? '다른 사람들과 경험을 공유하시겠습니까?' :
+                                    selectedLanguage?.code === 'zh' ? '您想与他人分享您的体验吗？' :
+                                      selectedLanguage?.code === 'ar' ? 'هل تريد مشاركة تجربتك مع الآخرين؟' :
+                                        selectedLanguage?.code === 'hi' ? 'क्या आप अपना अनुभव दूसरों के साथ साझा करना चाहेंगे?' :
+                                          selectedLanguage?.code === 'th' ? 'คุณต้องการแบ่งปันประสบการณ์ของคุณกับผู้อื่นหรือไม่?' :
+                                            selectedLanguage?.code === 'vi' ? 'Bạn có muốn chia sẻ trải nghiệm của mình với người khácไม่?' :
+                                              selectedLanguage?.code === 'tr' ? 'Deneyiminizi başkalarıyla paylaşmak ister misiniz?' :
+                                                selectedLanguage?.code === 'nl' ? 'Wil je je ervaring delen met anderen?' :
+                                                  selectedLanguage?.code === 'sv' ? 'Vill du dela din upplevelse med andra?' :
+                                                    selectedLanguage?.code === 'da' ? 'Vil du dele din oplevelse med andre?' :
+                                                      selectedLanguage?.code === 'no' ? 'Vil du dele din opplevelse med andre?' :
+                                                        selectedLanguage?.code === 'fi' ? 'Haluatko jakaa kokemuksesi muiden kanssa?' :
+                                                          'Would you like to share your experience with others?'}
+                </p>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: isMobile ? '12px' : '16px',
+                  width: '100%',
+                  flexWrap: 'nowrap',
+                  justifyContent: 'center'
+                }}>
+                  {hotelData.googleReviewsLink && (
                   <div
                     className="cursor-pointer"
                     onClick={() => window.open(hotelData.googleReviewsLink, '_blank')}
@@ -704,8 +711,9 @@ export default function CustomerFeedbackForm() {
                     </div>
                   </div>
                 )}
+                </div>
               </div>
-            </div>
+            )}
             {finalRating >= 4 && (
               <>
                 {/* Display submitted feedback text with copy button */}

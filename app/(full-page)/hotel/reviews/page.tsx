@@ -629,18 +629,12 @@ export default function HotelReviews() {
   }, [collectDetailedReviewTexts, detailLanguage.code, detailedReview, showToast, t]);
 
   const ratingBodyTemplate = useMemo(() => (rowData: Review) => {
-    // Try to get the "rate-us" rating from predefined answers first
-    const rateUsRating = getRateUsRating(rowData.predefinedAnswers);
-    const displayRating = rateUsRating !== null ? rateUsRating : rowData.overallRating;
-    
+    // Use overallRating directly, same as detail view
     return (
       <div className="flex align-items-center gap-2">
         <div className="flex align-items-center gap-1">
-          {renderStars(displayRating)}
+          {renderStars(rowData.overallRating)}
         </div>
-        {/* <span className={`font-bold ${getRatingColor(displayRating)}`}>
-          {displayRating}/5
-        </span> */}
       </div>
     );
   }, []);
