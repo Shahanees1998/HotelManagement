@@ -122,6 +122,14 @@
         "table": {
           "date": "Date"
         }
+      },
+      "comparisonChart": {
+        "title": "Review Comparison",
+        "period": "Period",
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "loading": "Loading comparison data...",
+        "noData": "No comparison data available"
       }
     },
     "forms": {
@@ -439,8 +447,10 @@
         "close": "Close",
         "markAsChecked": "Mark as Checked",
         "checked": "Checked",
+        "uncheck": "Uncheck",
         "markAsUrgent": "Mark as Urgent",
         "urgent": "Urgent",
+        "removeUrgent": "Remove Urgent",
         "replyToCustomer": "Reply to Customer",
         "cancel": "Cancel",
         "sendReply": "Send Reply"
@@ -518,6 +528,7 @@
         "description": "Description:",
         "layout": "Layout:",
         "feedbackResponses": "Feedback Responses",
+        "reviewReplies": "Review Replies",
         "languageSelectorLabel": "View content in",
         "languageSelectorPlaceholder": "Select language",
         "translating": "Translating...",
@@ -553,7 +564,9 @@
         "detailsLoadError": "Failed to load review details",
         "statusUpdate": {
           "checked": "Review marked as checked",
+          "unchecked": "Review unmarked as checked",
           "urgent": "Review marked as urgent",
+          "notUrgent": "Review unmarked as urgent",
           "replied": "Review marked as replied"
         },
         "statusUpdateError": "Failed to update review status",

@@ -226,6 +226,7 @@ model Review {
   hotel         Hotels            @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   form          FeedbackForm     @relation(fields: [formId], references: [id], onDelete: Cascade)
   answers       QuestionAnswer[]
+  responses     ReviewResponse[]
 
   @@map("reviews")
 }
@@ -242,6 +243,20 @@ model QuestionAnswer {
   question   FormQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
   @@map("question_answers")
+}
+
+model ReviewResponse {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  reviewId    String   @db.ObjectId
+  replyText   String   // The reply message text
+  sentTo      String?  // Email address the reply was sent to
+  sentAt      DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  // Relations
+  review      Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@map("review_responses")
 }
 
 model QRCode {

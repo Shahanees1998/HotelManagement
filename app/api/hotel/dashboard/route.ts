@@ -119,6 +119,125 @@ export async function GET(request: NextRequest) {
         new Date(review.submittedAt) >= sevenDaysAgo
       ).length;
 
+      // Calculate previous period stats for comparison
+      let previousStats = {
+        totalReviews: 0,
+        averageRating: 0,
+        positiveReviews: 0,
+        negativeReviews: 0,
+        responseRate: 0,
+        recentReviews: 0,
+      };
+
+      // Determine previous period based on current filters
+      let previousStartDate: Date | null = null;
+      let previousEndDate: Date | null = null;
+      let currentPeriodStart: Date | null = null;
+      let currentPeriodEnd: Date | null = null;
+
+      if (startDate && endDate) {
+        // If filters are set, compare with same duration before
+        currentPeriodStart = startDate;
+        currentPeriodEnd = endDate;
+        const periodDuration = endDate.getTime() - startDate.getTime();
+        previousEndDate = new Date(startDate.getTime() - 1); // Day before current start
+        previousStartDate = new Date(previousEndDate.getTime() - periodDuration);
+      } else if (endDate) {
+        // Only end date is set, compare last 30 days with previous 30 days
+        currentPeriodEnd = endDate;
+        currentPeriodStart = new Date(endDate.getTime() - 30 * 24 * 60 * 60 * 1000);
+        previousEndDate = new Date(currentPeriodStart.getTime() - 1);
+        previousStartDate = new Date(previousEndDate.getTime() - 30 * 24 * 60 * 60 * 1000);
+      } else if (startDate) {
+        // Only start date is set, compare from start to now with same duration before
+        currentPeriodStart = startDate;
+        currentPeriodEnd = new Date();
+        const periodDuration = Date.now() - startDate.getTime();
+        previousEndDate = new Date(startDate.getTime() - 1);
+        previousStartDate = new Date(previousEndDate.getTime() - periodDuration);
+      } else {
+        // No filters: compare last 30 days with previous 30 days
+        const now = new Date();
+        currentPeriodEnd = now;
+        currentPeriodStart = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        previousEndDate = new Date(currentPeriodStart.getTime() - 1);
+        previousStartDate = new Date(previousEndDate.getTime() - 30 * 24 * 60 * 60 * 1000);
+      }
+
+      // Calculate current period stats for comparison (use same period logic as previous)
+      const currentPeriodFilter: Record<string, Date> = {};
+      if (currentPeriodStart) {
+        currentPeriodFilter.gte = currentPeriodStart;
+      }
+      if (currentPeriodEnd) {
+        currentPeriodFilter.lte = currentPeriodEnd;
+      }
+
+      // Get reviews for current comparison period
+      const currentPeriodReviews = await prisma.review.findMany({
+        where: {
+          hotelId: hotel.id,
+          submittedAt: currentPeriodFilter,
+        },
+        select: {
+          overallRating: true,
+          predefinedAnswers: true,
+          submittedAt: true,
+          status: true,
+        },
+      });
+
+      // Calculate current period stats for comparison
+      const currentPeriodStats = {
+        totalReviews: currentPeriodReviews.length,
+        averageRating: currentPeriodReviews.length > 0 
+          ? currentPeriodReviews.reduce((sum, review) => sum + getEffectiveRating(review), 0) / currentPeriodReviews.length 
+          : 0,
+        positiveReviews: currentPeriodReviews.filter(review => getEffectiveRating(review) >= 4).length,
+        negativeReviews: currentPeriodReviews.filter(review => getEffectiveRating(review) <= 2).length,
+        responseRate: currentPeriodReviews.length > 0 
+          ? (currentPeriodReviews.filter(review => review.status === 'APPROVED').length / currentPeriodReviews.length) * 100 
+          : 0,
+        recentReviews: 0,
+      };
+
+      // Fetch previous period reviews
+      const previousSubmittedAtFilter: Record<string, Date> = {};
+      if (previousStartDate) {
+        previousSubmittedAtFilter.gte = previousStartDate;
+      }
+      if (previousEndDate) {
+        previousSubmittedAtFilter.lte = previousEndDate;
+      }
+
+      const previousReviews = await prisma.review.findMany({
+        where: {
+          hotelId: hotel.id,
+          ...(previousStartDate || previousEndDate ? { submittedAt: previousSubmittedAtFilter } : {}),
+        },
+        select: {
+          overallRating: true,
+          predefinedAnswers: true,
+          submittedAt: true,
+          status: true,
+        },
+      });
+
+      if (previousReviews.length > 0) {
+        previousStats.totalReviews = previousReviews.length;
+        previousStats.averageRating = previousReviews.reduce((sum, review) => sum + getEffectiveRating(review), 0) / previousReviews.length;
+        previousStats.positiveReviews = previousReviews.filter(review => getEffectiveRating(review) >= 4).length;
+        previousStats.negativeReviews = previousReviews.filter(review => getEffectiveRating(review) <= 2).length;
+        const previousReviewsWithResponses = previousReviews.filter(review => review.status === 'APPROVED').length;
+        previousStats.responseRate = (previousReviewsWithResponses / previousReviews.length) * 100;
+        
+        const previousSevenDaysAgo = new Date(previousEndDate);
+        previousSevenDaysAgo.setDate(previousSevenDaysAgo.getDate() - 7);
+        previousStats.recentReviews = previousReviews.filter(review => 
+          new Date(review.submittedAt) >= previousSevenDaysAgo
+        ).length;
+      }
+
       // Generate chart data (respecting filters)
       const chartData = await generateChartData(hotel.id, dateRange);
 
@@ -130,6 +249,24 @@ export async function GET(request: NextRequest) {
           negativeReviews,
           responseRate: Math.round(responseRate * 10) / 10,
           recentReviews: recentReviewsCount,
+        },
+        // Use current period stats for comparison (not the displayed stats)
+        previousStats: {
+          totalReviews: previousStats.totalReviews,
+          averageRating: Math.round(previousStats.averageRating * 10) / 10,
+          positiveReviews: previousStats.positiveReviews,
+          negativeReviews: previousStats.negativeReviews,
+          responseRate: Math.round(previousStats.responseRate * 10) / 10,
+          recentReviews: previousStats.recentReviews,
+        },
+        // Current period stats for comparison
+        currentPeriodStats: {
+          totalReviews: currentPeriodStats.totalReviews,
+          averageRating: Math.round(currentPeriodStats.averageRating * 10) / 10,
+          positiveReviews: currentPeriodStats.positiveReviews,
+          negativeReviews: currentPeriodStats.negativeReviews,
+          responseRate: Math.round(currentPeriodStats.responseRate * 10) / 10,
+          recentReviews: currentPeriodStats.recentReviews,
         },
         recentReviews: reviews.slice(0, 5).map(review => ({
           id: review.id,

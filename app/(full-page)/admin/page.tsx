@@ -21,6 +21,10 @@ interface DashboardStats {
     totalEarnings: number;
     pendingApprovals: number;
     supportRequests: number;
+    trialAccounts: number;
+    basicPlanAccounts: number;
+    professionalPlanAccounts: number;
+    enterprisePlanAccounts: number;
 }
 
 interface RecentActivity {
@@ -36,6 +40,7 @@ interface RecentActivity {
 interface GrowthData {
     labels: string[];
     newHotels: number[];
+    deactivatedHotels: number[];
     newReviews: number[];
     earnings: number[];
 }
@@ -50,12 +55,17 @@ export default function AdminDashboard() {
         totalReviews: 0,
         totalEarnings: 0,
         pendingApprovals: 0,
-        supportRequests: 0
+        supportRequests: 0,
+        trialAccounts: 0,
+        basicPlanAccounts: 0,
+        professionalPlanAccounts: 0,
+        enterprisePlanAccounts: 0
     });
     const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
     const [growthData, setGrowthData] = useState<GrowthData>({
         labels: [],
         newHotels: [],
+        deactivatedHotels: [],
         newReviews: [],
         earnings: []
     });
@@ -101,12 +111,17 @@ export default function AdminDashboard() {
                 totalReviews: 0,
                 totalEarnings: 0,
                 pendingApprovals: 0,
-                supportRequests: 0
+                supportRequests: 0,
+                trialAccounts: 0,
+                basicPlanAccounts: 0,
+                professionalPlanAccounts: 0,
+                enterprisePlanAccounts: 0
             });
             setRecentActivity([]);
             setGrowthData({
                 labels: [],
                 newHotels: [],
+                deactivatedHotels: [],
                 newReviews: [],
                 earnings: []
             });
@@ -146,6 +161,13 @@ export default function AdminDashboard() {
                 data: growthData.newHotels,
                 borderColor: '#4CAF50',
                 backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                tension: 0.4,
+            },
+            {
+                label: 'Deactivated Hotels',
+                data: growthData.deactivatedHotels || [],
+                borderColor: '#ef4444',
+                backgroundColor: 'rgba(239, 68, 68, 0.1)',
                 tension: 0.4,
             },
             {
@@ -333,6 +355,42 @@ export default function AdminDashboard() {
             route: "/admin/support",
             canAccess: true,
         },
+        {
+            value: stats.trialAccounts,
+            label: "Trial Accounts",
+            icon: "pi pi-clock",
+            bgColor: "bg-gray-50",
+            iconColor: "text-gray-600",
+            route: "/admin/hotels",
+            canAccess: true,
+        },
+        {
+            value: stats.basicPlanAccounts,
+            label: "Basic Plan",
+            icon: "pi pi-star",
+            bgColor: "bg-blue-50",
+            iconColor: "text-blue-600",
+            route: "/admin/hotels",
+            canAccess: true,
+        },
+        {
+            value: stats.professionalPlanAccounts,
+            label: "Professional Plan",
+            icon: "pi pi-star-fill",
+            bgColor: "bg-purple-50",
+            iconColor: "text-purple-600",
+            route: "/admin/hotels",
+            canAccess: true,
+        },
+        {
+            value: stats.enterprisePlanAccounts,
+            label: "Enterprise Plan",
+            icon: "pi pi-crown",
+            bgColor: "bg-amber-50",
+            iconColor: "text-amber-600",
+            route: "/admin/hotels",
+            canAccess: true,
+        },
     ];
 
     return (
@@ -379,8 +437,8 @@ export default function AdminDashboard() {
             {loading ? (
                 // Loading skeleton for stats cards
                 <>
-                    {Array.from({ length: 6 }).map((_, index) => (
-                        <div key={index} className="col-12 md:col-6 lg:col-4">
+                    {Array.from({ length: 8 }).map((_, index) => (
+                        <div key={index} className="col-12 md:col-6 lg:col-3">
                             <Card className="text-center">
                                 <div className="text-3xl font-bold text-gray-300 animate-pulse">--</div>
                                 <div className="text-600 animate-pulse">Loading...</div>
@@ -430,7 +488,7 @@ export default function AdminDashboard() {
                         <div className="flex align-items-center justify-content-center" style={{ height: '300px' }}>
                             <div className="text-600">Loading chart data...</div>
                         </div>
-                    ) : growthData.newHotels.every(val => val === 0) ? (
+                    ) : growthData.newHotels.every(val => val === 0) && (growthData.deactivatedHotels?.every(val => val === 0) ?? true) ? (
                         <div className="flex align-items-center justify-content-center flex-column" style={{ height: '300px' }}>
                             <i className="pi pi-chart-line text-4xl text-gray-400 mb-3"></i>
                             <div className="text-600 text-center">No growth data available</div>

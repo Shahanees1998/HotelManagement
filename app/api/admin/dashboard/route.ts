@@ -18,6 +18,10 @@ export async function GET(request: NextRequest) {
         totalEarnings,
         pendingApprovals,
         supportRequests,
+        trialAccounts,
+        basicPlanAccounts,
+        professionalPlanAccounts,
+        enterprisePlanAccounts,
       ] = await Promise.all([
         prisma.hotels.count(),
         prisma.hotels.count({ where: { subscriptionStatus: 'ACTIVE' } }),
@@ -26,6 +30,11 @@ export async function GET(request: NextRequest) {
         prisma.hotels.count({ where: { subscriptionStatus: 'ACTIVE' } }),
         prisma.user.count({ where: { status: 'PENDING' } }),
         prisma.supportRequest.count({ where: { status: 'OPEN' } }),
+        // Count by subscription plans
+        prisma.hotels.count({ where: { subscriptionStatus: 'TRIAL' } }),
+        prisma.hotels.count({ where: { currentPlan: 'basic' } }),
+        prisma.hotels.count({ where: { currentPlan: 'professional' } }),
+        prisma.hotels.count({ where: { currentPlan: 'enterprise' } }),
       ]);
 
       // Get recent activity - mix of users, hotels, and reviews
@@ -123,10 +132,19 @@ export async function GET(request: NextRequest) {
         const monthStart = new Date(date.getFullYear(), date.getMonth(), 1);
         const monthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-        const [newHotels, newReviews, monthlyEarnings] = await Promise.all([
+        const [newHotels, deactivatedHotels, newReviews, monthlyEarnings] = await Promise.all([
           prisma.hotels.count({
             where: {
               createdAt: {
+                gte: monthStart,
+                lte: monthEnd,
+              },
+            },
+          }),
+          prisma.hotels.count({
+            where: {
+              isActive: false,
+              updatedAt: {
                 gte: monthStart,
                 lte: monthEnd,
               },
@@ -152,13 +170,14 @@ export async function GET(request: NextRequest) {
           }), // Count of active subscriptions
         ]);
 
-        monthlyData.push({ newHotels, newReviews, monthlyEarnings });
+        monthlyData.push({ newHotels, deactivatedHotels, newReviews, monthlyEarnings });
         labels.push(date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }));
       }
 
       const growthData = {
         labels,
         newHotels: monthlyData.map(d => d.newHotels),
+        deactivatedHotels: monthlyData.map(d => d.deactivatedHotels),
         newReviews: monthlyData.map(d => d.newReviews),
         earnings: monthlyData.map(d => d.monthlyEarnings * 99.99),
       };
@@ -174,6 +193,10 @@ export async function GET(request: NextRequest) {
           totalEarnings: calculatedTotalEarnings,
           pendingApprovals,
           supportRequests,
+          trialAccounts,
+          basicPlanAccounts,
+          professionalPlanAccounts,
+          enterprisePlanAccounts,
         },
         recentActivity: transformedActivity,
         growthData,

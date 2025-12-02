@@ -91,6 +91,13 @@ interface DetailedReview {
       rating?: number;
     }>;
   }>;
+  responses?: Array<{
+    id: string;
+    replyText: string;
+    sentTo?: string;
+    sentAt: string;
+    createdAt: string;
+  }>;
 }
 
 export default function HotelReviews() {
@@ -228,14 +235,15 @@ export default function HotelReviews() {
       });
 
       if (response.ok) {
+        const updatedValue = (response as any).data?.[field] ?? value;
         setReviews(prev => prev.map(review => 
-          review.id === reviewId ? { ...review, [field]: value } : review
+          review.id === reviewId ? { ...review, [field]: updatedValue } : review
         ));
         // Also update the detailed review if it's the same review
         setDetailedReview(prev => 
-          prev && prev.id === reviewId ? { ...prev, [field]: value } : prev
+          prev && prev.id === reviewId ? { ...prev, [field]: updatedValue } : prev
         );
-        const statusKey = field === "isChecked" ? "checked" : field === "isUrgent" ? "urgent" : "replied";
+        const statusKey = field === "isChecked" ? (updatedValue ? "checked" : "unchecked") : field === "isUrgent" ? (updatedValue ? "urgent" : "notUrgent") : "replied";
         showToast("success", t("common.success"), t(`hotel.reviews.toasts.statusUpdate.${statusKey}`));
       } else {
         const errorData = await response.json();
@@ -276,11 +284,18 @@ export default function HotelReviews() {
         showToast("success", t("common.success"), t("hotel.reviews.toasts.replySuccess").replace("{sentTo}", data.sentTo ?? ""));
         setShowReplyDialog(false);
         setReplyText("");
-        setSelectedReview(null);
+        
         // Update the review to mark as replied
         setReviews(prev => prev.map(review => 
           review.id === selectedReview.id ? { ...review, isReplied: true } : review
         ));
+        
+        // Reload detailed review if it's open and matches the replied review
+        if (detailedReview && detailedReview.id === selectedReview.id) {
+          await loadDetailedReview(selectedReview.id);
+        }
+        
+        setSelectedReview(null);
       } else {
         showToast("error", t("common.error"), data.error || t("hotel.reviews.toasts.replyError"));
       }
@@ -322,6 +337,9 @@ export default function HotelReviews() {
         ));
         // Update detailed review
         setDetailedReview(prev => prev ? { ...prev, isReplied: true } : null);
+        
+        // Reload detailed review to get updated responses
+        await loadDetailedReview(detailedReview.id);
       } else {
         showToast("error", t("common.error"), data.error || t("hotel.reviews.toasts.replyError"));
       }
@@ -972,53 +990,8 @@ export default function HotelReviews() {
       >
         {detailedReview && (
           <div className="space-y-6">
-            <div className="flex flex-column md:flex-row md:justify-content-end md:align-items-center gap-3">
-              <div
-                style={{
-                  width: "100%",
-                  maxWidth: "440px",
-                  background: "linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%)",
-                  border: "1px solid #e0e7ff",
-                  borderRadius: "18px",
-                  padding: "16px 20px",
-                  boxShadow: "0 20px 45px -28px rgba(30, 64, 175, 0.55)",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: "16px",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    <div
-                      style={{
-                        width: "42px",
-                        height: "42px",
-                        borderRadius: "14px",
-                        background: "linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)",
-                        color: "#fff",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        boxShadow: "0 10px 22px -12px rgba(79, 70, 229, 0.55)",
-                      }}
-                    >
-                      <i className="pi pi-globe" style={{ fontSize: "1.1rem" }}></i>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                      <span style={{ fontWeight: 600, color: "#1f2937", fontSize: "0.95rem" }}>
-                        {t("hotel.reviews.detailsDialog.languageSelectorLabel")}
-                      </span>
-                      <span style={{ fontSize: "0.78rem", color: "#4f46e5", fontWeight: 500 }}>
-                        {detailLanguage?.name}
-                      </span>
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap",                           marginBottom:"1rem"
+ }}>
                     <Dropdown
                       value={detailLanguage}
                       options={SUPPORTED_LANGUAGES}
@@ -1081,7 +1054,7 @@ export default function HotelReviews() {
                           color: "#4338ca",
                           fontSize: "0.75rem",
                           fontWeight: 600,
-                          letterSpacing: "0.02em",
+                          letterSpacing: "0.02em"
                         }}
                       >
                         <i className="pi pi-spinner pi-spin" style={{ fontSize: "0.75rem" }}></i>
@@ -1089,9 +1062,6 @@ export default function HotelReviews() {
                       </span>
                     )}
                   </div>
-                </div>
-              </div>
-            </div>
 
             {/* Guest Information */}
             <div className="border-1 border-200 border-round p-4 animate-slide-in-left">
@@ -1131,10 +1101,7 @@ export default function HotelReviews() {
                   {renderStars(detailedReview.overallRating)}
                 </div>
                 <span className="text-xl font-bold">{detailedReview.overallRating}/5</span>
-                <Tag
-                  value={detailedReview.status}
-                  severity={getStatusSeverity(detailedReview.status)}
-                />
+         
               </div>
             </div>
 
@@ -1351,22 +1318,55 @@ export default function HotelReviews() {
                 )}
             </div>
 
+            {/* Review Responses/Replies */}
+            {detailedReview.responses && detailedReview.responses.length > 0 && (
+              <div className="border-1 border-200 border-round p-4">
+                <h3 className="text-lg font-semibold mb-3 flex align-items-center gap-2">
+                  <i className="pi pi-envelope text-blue-500"></i>
+                  {t("hotel.reviews.detailsDialog.reviewReplies")}
+                </h3>
+                <div className="space-y-3">
+                  {detailedReview.responses.map((response) => (
+                    <div key={response.id} className="border-bottom-1 border-200 pb-3 last:border-bottom-0">
+                      <div className="flex justify-content-between align-items-start mb-2">
+                        <div className="flex align-items-center gap-2">
+                          <i className="pi pi-calendar text-gray-500"></i>
+                          <span className="text-sm text-600">
+                            {formatDate(response.sentAt || response.createdAt)}
+                          </span>
+                        </div>
+                        {response.sentTo && (
+                          <div className="flex align-items-center gap-2">
+                            <i className="pi pi-envelope text-gray-500"></i>
+                            <span className="text-sm text-600">{response.sentTo}</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="bg-blue-50 border-left-3 border-blue-500 p-3 border-round">
+                        <p className="text-900 m-0" style={{ whiteSpace: 'pre-wrap' }}>
+                          {response.replyText}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Actions */}
             <div className="flex justify-content-between align-items-center pt-4 border-top-1 border-200">
               <div className="flex gap-2">
                 <Button
-                  label={detailedReview.isChecked ? t("hotel.reviews.buttons.checked") : t("hotel.reviews.buttons.markAsChecked")}
+                  label={detailedReview.isChecked ? t("hotel.reviews.buttons.uncheck") : t("hotel.reviews.buttons.markAsChecked")}
                   icon={detailedReview.isChecked ? "pi pi-check-circle" : "pi pi-check-circle"}
-                  onClick={() => handleStatusUpdate(detailedReview.id, 'isChecked', true)}
+                  onClick={() => handleStatusUpdate(detailedReview.id, 'isChecked', !detailedReview.isChecked)}
                   className={detailedReview.isChecked ? "p-button-success" : "p-button-outlined p-button-success"}
-                  disabled={detailedReview.isChecked}
                 />
                 <Button
-                  label={detailedReview.isUrgent ? t("hotel.reviews.buttons.urgent") : t("hotel.reviews.buttons.markAsUrgent")}
+                  label={detailedReview.isUrgent ? t("hotel.reviews.buttons.removeUrgent") : t("hotel.reviews.buttons.markAsUrgent")}
                   icon={detailedReview.isUrgent ? "pi pi-exclamation-triangle" : "pi pi-exclamation-triangle"}
-                  onClick={() => handleStatusUpdate(detailedReview.id, 'isUrgent', true)}
+                  onClick={() => handleStatusUpdate(detailedReview.id, 'isUrgent', !detailedReview.isUrgent)}
                   className={detailedReview.isUrgent ? "p-button-warning" : "p-button-outlined p-button-warning"}
-                  disabled={detailedReview.isUrgent}
                 />
               </div>
               <div className="flex gap-2">

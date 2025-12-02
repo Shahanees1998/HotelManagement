@@ -22,6 +22,15 @@ interface DashboardStats {
   recentReviews: number;
 }
 
+interface PreviousStats {
+  totalReviews: number;
+  averageRating: number;
+  positiveReviews: number;
+  negativeReviews: number;
+  responseRate: number;
+  recentReviews: number;
+}
+
 interface RecentReview {
   id: string;
   guestName: string;
@@ -62,9 +71,28 @@ export default function HotelDashboard() {
   const [chartDataRaw, setChartDataRaw] = useState<any>(null);
   const [customRatingData, setCustomRatingData] = useState<CustomRatingData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [previousStats, setPreviousStats] = useState<PreviousStats>({
+    totalReviews: 0,
+    averageRating: 0,
+    positiveReviews: 0,
+    negativeReviews: 0,
+    responseRate: 0,
+    recentReviews: 0,
+  });
+  const [currentPeriodStats, setCurrentPeriodStats] = useState<PreviousStats>({
+    totalReviews: 0,
+    averageRating: 0,
+    positiveReviews: 0,
+    negativeReviews: 0,
+    responseRate: 0,
+    recentReviews: 0,
+  });
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [applyingFilters, setApplyingFilters] = useState(false);
+  const [comparisonPeriod, setComparisonPeriod] = useState<'weekly' | 'monthly'>('monthly');
+  const [comparisonChartData, setComparisonChartData] = useState<any>(null);
+  const [loadingComparison, setLoadingComparison] = useState(false);
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
@@ -275,12 +303,21 @@ export default function HotelDashboard() {
         setStats(data.data.stats);
         setRecentReviews(data.data.recentReviews);
         setChartDataRaw(data.data.chartData);
+        if (data.data.previousStats) {
+          setPreviousStats(data.data.previousStats);
+        }
+        if (data.data.currentPeriodStats) {
+          setCurrentPeriodStats(data.data.currentPeriodStats);
+        }
       } else {
         throw new Error(data.error || 'Failed to load dashboard data');
       }
 
       // Load custom rating data
       await loadCustomRatingDataWithFilters(filterStartDate, filterEndDate);
+      
+      // Load comparison chart data
+      await loadComparisonChartData(comparisonPeriod, filterStartDate, filterEndDate);
     } catch (error) {
       console.error("Error loading dashboard data:", error);
       showToast("error", t("Error"), t("Failed to load dashboard data"));
@@ -316,6 +353,37 @@ export default function HotelDashboard() {
   const loadCustomRatingData = async () => {
     await loadCustomRatingDataWithFilters(startDate, endDate);
   };
+
+  const loadComparisonChartData = async (period: 'weekly' | 'monthly', filterStartDate: Date | null, filterEndDate: Date | null) => {
+    setLoadingComparison(true);
+    try {
+      const params = new URLSearchParams();
+      params.append('period', period);
+      if (filterStartDate) params.append('startDate', filterStartDate.toISOString());
+      if (filterEndDate) params.append('endDate', filterEndDate.toISOString());
+      
+      const response = await fetch(`/api/hotel/dashboard/comparison?${params.toString()}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.data) {
+          setComparisonChartData(data.data);
+        }
+      }
+    } catch (error) {
+      console.error("Error loading comparison chart data:", error);
+      // Don't show error toast for this, as it's optional data
+    } finally {
+      setLoadingComparison(false);
+    }
+  };
+
+  useEffect(() => {
+    if (comparisonPeriod) {
+      loadComparisonChartData(comparisonPeriod, startDate, endDate);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [comparisonPeriod]);
 
   const defaultChartData = useMemo(() => ({
     labels: [t("No Data")],
@@ -428,6 +496,40 @@ export default function HotelDashboard() {
     },
   }), [t]);
 
+  const comparisonChartOptions = useMemo(() => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context: any) {
+            return `${context.dataset.label}: ${context.parsed.y}`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        stacked: false,
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+        },
+        grid: {
+          color: 'rgba(0, 0, 0, 0.05)',
+        },
+      },
+    },
+  }), []);
+
   const getColorForIndex = (index: number) => {
     const colors = ['#2563eb', '#dc2626', '#16a34a', '#ca8a04', '#9333ea', '#ea580c'];
     return colors[index % colors.length];
@@ -521,43 +623,80 @@ export default function HotelDashboard() {
     },
   ], [t]);
 
-  const statsCards = useMemo(() => [
-    {
-      title: t("Total Reviews"),
-      value: stats.totalReviews.toString(),
-      icon: "pi pi-comments",
-      color: "text-blue-500",
-      image: "/images/feedback.png"
-    },
-    {
-      title: t("Average Rating"),
-      value: stats.averageRating.toFixed(1),
-      icon: "pi pi-star",
-      color: "text-yellow-500",
-      image: "/images/rating.png"
-    },
-    {
-      title: t("Positive Reviews"),
-      value: stats.positiveReviews.toString(),
-      icon: "pi pi-thumbs-up",
-      color: "text-green-500",
-      image: "/images/positive-rating.png"
-    },
-    {
-      title: t("Negative Reviews"),
-      value: stats.negativeReviews.toString(),
-      icon: "pi pi-thumbs-down",
-      color: "text-red-500",
-      image: "/images/rating.png"
-    },
-    {
-      title: t("Response Rate"),
-      value: `${stats.responseRate}%`,
-      icon: "pi pi-percentage",
-      color: "text-purple-500",
-      image: "/images/response.png"
-    },
-  ], [stats, t]);
+  // Calculate percentage change helper
+  const calculatePercentageChange = useCallback((current: number, previous: number): { value: number; isPositive: boolean } | null => {
+    // If previous is 0, we can't calculate a meaningful percentage change
+    // Return null to hide the indicator when there's no previous data
+    if (previous === 0) {
+      return null;
+    }
+    const change = ((current - previous) / previous) * 100;
+    // Only show if change is significant (more than 0.1% to avoid showing 0.0%)
+    if (Math.abs(change) < 0.1) {
+      return null;
+    }
+    // Cap percentage at 100% maximum
+    const cappedValue = Math.min(Math.abs(change), 100);
+    return {
+      value: cappedValue,
+      isPositive: change >= 0,
+    };
+  }, []);
+
+  const statsCards = useMemo(() => {
+    // Use currentPeriodStats for comparison (equivalent periods) instead of displayed stats
+    const totalReviewsChange = calculatePercentageChange(currentPeriodStats.totalReviews, previousStats.totalReviews);
+    const averageRatingChange = calculatePercentageChange(currentPeriodStats.averageRating, previousStats.averageRating);
+    const positiveReviewsChange = calculatePercentageChange(currentPeriodStats.positiveReviews, previousStats.positiveReviews);
+    const negativeReviewsChange = calculatePercentageChange(currentPeriodStats.negativeReviews, previousStats.negativeReviews);
+    const responseRateChange = calculatePercentageChange(currentPeriodStats.responseRate, previousStats.responseRate);
+
+    return [
+      {
+        title: t("Total Reviews"),
+        value: stats.totalReviews.toString(),
+        icon: "pi pi-comments",
+        color: "text-blue-500",
+        image: "/images/feedback.png",
+        percentageChange: totalReviewsChange,
+      },
+      {
+        title: t("Average Rating"),
+        value: stats.averageRating.toFixed(1),
+        icon: "pi pi-star",
+        color: "text-yellow-500",
+        image: "/images/rating.png",
+        percentageChange: averageRatingChange,
+      },
+      {
+        title: t("Positive Reviews"),
+        value: stats.positiveReviews.toString(),
+        icon: "pi pi-thumbs-up",
+        color: "text-green-500",
+        image: "/images/positive-rating.png",
+        percentageChange: positiveReviewsChange,
+      },
+      {
+        title: t("Negative Reviews"),
+        value: stats.negativeReviews.toString(),
+        icon: "pi pi-thumbs-down",
+        color: "text-red-500",
+        image: "/images/rating.png",
+        percentageChange: negativeReviewsChange ? {
+          value: negativeReviewsChange.value,
+          isPositive: !negativeReviewsChange.isPositive, // Inverted: decrease in negative reviews is good
+        } : null,
+      },
+      {
+        title: t("Response Rate"),
+        value: `${Math.round(stats.responseRate)}%`,
+        icon: "pi pi-percentage",
+        color: "text-purple-500",
+        image: "/images/response.png",
+        percentageChange: responseRateChange,
+      },
+    ];
+  }, [stats, previousStats, currentPeriodStats, t, calculatePercentageChange]);
 
   return (
     <div className="grid">
@@ -660,7 +799,8 @@ export default function HotelDashboard() {
                         border: 'none',
                         boxShadow: '0 2px 8px 0 rgba(0, 0, 0, 0.08)',
                         backgroundColor: '#FFFFFF',
-                        padding: '0 !important'
+                        padding: '0 !important',
+                        position: 'relative'
                     }}
                   >
                     <div className="flex align-items-center" style={{ gap: '1.5rem', padding: '0.5rem' }}>
@@ -670,12 +810,86 @@ export default function HotelDashboard() {
                             <div className="text-500" style={{ fontSize: '0.9rem', fontWeight: '400', color: '#666666' }}>{card.title}</div>
                         </div>
                     </div>
+                    {card.percentageChange && (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          top: '8px',
+                          right: '8px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '3px',
+                          padding: '4px 8px',
+                          borderRadius: '12px',
+                          fontSize: '0.7rem',
+                          fontWeight: '600',
+                          backgroundColor: card.percentageChange.isPositive 
+                            ? 'rgba(16, 185, 129, 0.1)' 
+                            : 'rgba(239, 68, 68, 0.1)',
+                          color: card.percentageChange.isPositive ? '#10b981' : '#ef4444',
+                          border: `1px solid ${card.percentageChange.isPositive ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)'}`,
+                          lineHeight: '1',
+                        }}
+                      >
+                        <i
+                          className={card.percentageChange.isPositive ? 'pi pi-arrow-up' : 'pi pi-arrow-down'}
+                          style={{ fontSize: '0.65rem' }}
+                        />
+                        <span>{Math.round(card.percentageChange.value)}%</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
             </>
           )}
         </div>
+      </div>
+
+      {/* Review Comparison Chart */}
+      <div className="col-12">
+        <Card className="mt-4">
+          <div className="flex justify-content-between align-items-center mb-3">
+            <h3 className="m-0">{t("hotel.dashboard.comparisonChart.title")}</h3>
+            <div className="flex align-items-center gap-3">
+              <label className="text-sm text-600">{t("hotel.dashboard.comparisonChart.period")}:</label>
+              <div className="flex gap-2">
+                <Button
+                  label={t("hotel.dashboard.comparisonChart.weekly")}
+                  icon="pi pi-calendar"
+                  onClick={() => setComparisonPeriod('weekly')}
+                  className={comparisonPeriod === 'weekly' ? '' : 'p-button-outlined'}
+                  size="small"
+                  disabled={loadingComparison}
+                />
+                <Button
+                  label={t("hotel.dashboard.comparisonChart.monthly")}
+                  icon="pi pi-calendar"
+                  onClick={() => setComparisonPeriod('monthly')}
+                  className={comparisonPeriod === 'monthly' ? '' : 'p-button-outlined'}
+                  size="small"
+                  disabled={loadingComparison}
+                />
+              </div>
+            </div>
+          </div>
+          {loadingComparison ? (
+            <div className="flex align-items-center justify-content-center" style={{ height: '400px' }}>
+              <div className="text-600">{t("hotel.dashboard.comparisonChart.loading")}</div>
+            </div>
+          ) : comparisonChartData ? (
+            <Chart 
+              type="bar" 
+              data={comparisonChartData} 
+              options={comparisonChartOptions} 
+              style={{ height: '400px' }} 
+            />
+          ) : (
+            <div className="flex align-items-center justify-content-center" style={{ height: '400px' }}>
+              <div className="text-600">{t("hotel.dashboard.comparisonChart.noData")}</div>
+            </div>
+          )}
+        </Card>
       </div>
 
       {/* Charts */}

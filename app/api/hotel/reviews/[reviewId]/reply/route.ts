@@ -74,6 +74,15 @@ export async function POST(
 
           console.log(`Reply email sent to ${review.guestEmail} for review ${review.id}`);
           
+          // Save the response to the database
+          await prisma.reviewResponse.create({
+            data: {
+              reviewId: review.id,
+              replyText: replyText.trim(),
+              sentTo: review.guestEmail,
+            }
+          });
+          
           // Update review to mark as replied
           await prisma.review.update({
             where: { id: review.id },
@@ -93,6 +102,22 @@ export async function POST(
         }
       } else {
         console.log('SendGrid not configured. Reply would be sent to:', review.guestEmail);
+        
+        // Save the response to the database even if SendGrid is not configured
+        await prisma.reviewResponse.create({
+          data: {
+            reviewId: review.id,
+            replyText: replyText.trim(),
+            sentTo: review.guestEmail,
+          }
+        });
+        
+        // Update review to mark as replied
+        await prisma.review.update({
+          where: { id: review.id },
+          data: { isReplied: true }
+        });
+        
         return NextResponse.json({
           message: 'Reply would be sent (SendGrid not configured)',
           sentTo: review.guestEmail,

@@ -46,6 +46,9 @@ export async function GET(
               },
             },
           },
+          responses: {
+            orderBy: { createdAt: 'desc' },
+          },
         },
       });
 
@@ -101,6 +104,13 @@ export async function GET(
             options: [], // Default value
           },
           answer: qa.answer,
+        })),
+        responses: (review.responses || []).map(resp => ({
+          id: resp.id,
+          replyText: resp.replyText,
+          sentTo: resp.sentTo,
+          sentAt: resp.sentAt.toISOString(),
+          createdAt: resp.createdAt.toISOString(),
         })),
       };
 
