@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
         ? reviews.reduce((sum, review) => sum + getEffectiveRating(review), 0) / totalReviews 
         : 0;
       
-      const positiveReviews = reviews.filter(review => getEffectiveRating(review) >= 4).length;
+      const positiveReviews = reviews.filter(review => getEffectiveRating(review) >= 3).length;
       const negativeReviews = reviews.filter(review => getEffectiveRating(review) <= 2).length;
       
       // Calculate response rate (reviews with responses)
@@ -193,7 +193,7 @@ export async function GET(request: NextRequest) {
         averageRating: currentPeriodReviews.length > 0 
           ? currentPeriodReviews.reduce((sum, review) => sum + getEffectiveRating(review), 0) / currentPeriodReviews.length 
           : 0,
-        positiveReviews: currentPeriodReviews.filter(review => getEffectiveRating(review) >= 4).length,
+        positiveReviews: currentPeriodReviews.filter(review => getEffectiveRating(review) >= 3).length,
         negativeReviews: currentPeriodReviews.filter(review => getEffectiveRating(review) <= 2).length,
         responseRate: currentPeriodReviews.length > 0 
           ? (currentPeriodReviews.filter(review => review.status === 'APPROVED').length / currentPeriodReviews.length) * 100 
@@ -226,7 +226,7 @@ export async function GET(request: NextRequest) {
       if (previousReviews.length > 0) {
         previousStats.totalReviews = previousReviews.length;
         previousStats.averageRating = previousReviews.reduce((sum, review) => sum + getEffectiveRating(review), 0) / previousReviews.length;
-        previousStats.positiveReviews = previousReviews.filter(review => getEffectiveRating(review) >= 4).length;
+        previousStats.positiveReviews = previousReviews.filter(review => getEffectiveRating(review) >= 3).length;
         previousStats.negativeReviews = previousReviews.filter(review => getEffectiveRating(review) <= 2).length;
         const previousReviewsWithResponses = previousReviews.filter(review => review.status === 'APPROVED').length;
         previousStats.responseRate = (previousReviewsWithResponses / previousReviews.length) * 100;

@@ -111,8 +111,8 @@ export async function GET(request: NextRequest) {
           periodData[periodKey] = { positive: 0, negative: 0 };
         }
         
-        // Positive reviews: 4-5 stars
-        if (effectiveRating >= 4) {
+        // Positive reviews: 3-5 stars
+        if (effectiveRating >= 3) {
           periodData[periodKey].positive++;
         }
         // Negative reviews: 1-2 stars
