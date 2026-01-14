@@ -108,23 +108,34 @@ export default function HotelReviews() {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
+  // Auto-set to last month by default
+  const getDefaultReviewDateRange = () => {
+    const end = new Date();
+    const start = new Date();
+    start.setMonth(start.getMonth() - 1);
+    return { start, end };
+  };
+
+  const defaultReviewRange = getDefaultReviewDateRange();
   const [filters, setFilters] = useState({
     filter: "",
     ratings: [] as string[],
     search: "",
     roomNumber: "",
-    startDate: null as Date | null,
-    endDate: null as Date | null,
+    startDate: defaultReviewRange.start as Date | null,
+    endDate: defaultReviewRange.end as Date | null,
   });
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
   const [detailedReview, setDetailedReview] = useState<DetailedReview | null>(null);
   const [loadingDetails, setLoadingDetails] = useState(false);
   const [showReplyDialog, setShowReplyDialog] = useState(false);
   const [replyText, setReplyText] = useState("");
+  const [replyTitle, setReplyTitle] = useState(""); // Custom email title
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
   const [submittingReply, setSubmittingReply] = useState(false);
   const [showInlineReply, setShowInlineReply] = useState(false);
   const [inlineReplyText, setInlineReplyText] = useState("");
+  const [inlineReplyTitle, setInlineReplyTitle] = useState(""); // Custom email title for inline reply
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [reviewToDelete, setReviewToDelete] = useState<Review | null>(null);
   const [deletingReview, setDeletingReview] = useState(false);
@@ -284,6 +295,8 @@ export default function HotelReviews() {
         showToast("success", t("common.success"), t("hotel.reviews.toasts.replySuccess").replace("{sentTo}", data.sentTo ?? ""));
         setShowReplyDialog(false);
         setReplyText("");
+        setReplyTitle("");
+        setReplyTitle("");
         
         // Update the review to mark as replied
         setReviews(prev => prev.map(review => 
@@ -331,6 +344,7 @@ export default function HotelReviews() {
         showToast("success", t("common.success"), t("hotel.reviews.toasts.replySuccess").replace("{sentTo}", data.sentTo ?? ""));
         setShowInlineReply(false);
         setInlineReplyText("");
+        setInlineReplyTitle("");
         // Update the review to mark as replied
         setReviews(prev => prev.map(review => 
           review.id === detailedReview.id ? { ...review, isReplied: true } : review
@@ -1384,6 +1398,17 @@ export default function HotelReviews() {
             {showInlineReply && (
               <div className="border-1 border-200 border-round p-4 mt-4">
                 <h4 className="text-lg font-semibold mb-3">{t("hotel.reviews.detailsDialog.replyToCustomer")}</h4>
+                <div className="mb-3">
+                  <label className="block text-900 font-medium mb-2">
+                    {t("Email Title")} ({t("Optional")})
+                  </label>
+                  <InputText
+                    value={inlineReplyTitle}
+                    onChange={(e) => setInlineReplyTitle(e.target.value)}
+                    placeholder={t("Enter email subject/title (optional)")}
+                    className="w-full"
+                  />
+                </div>
                 <InputTextarea
                   value={inlineReplyText}
                   onChange={(e) => setInlineReplyText(e.target.value)}
@@ -1462,6 +1487,15 @@ export default function HotelReviews() {
               <Divider />
               
               <div className="mb-3">
+                <label className="block text-900 font-medium mb-2">
+                  {t("Email Title")} ({t("Optional")})
+                </label>
+                <InputText
+                  value={replyTitle}
+                  onChange={(e) => setReplyTitle(e.target.value)}
+                  placeholder={t("Enter email subject/title (optional)")}
+                  className="w-full mb-3"
+                />
                 <label className="block text-900 font-medium mb-2">
                   {t("hotel.reviews.detailsDialog.replyToCustomer")}
                 </label>

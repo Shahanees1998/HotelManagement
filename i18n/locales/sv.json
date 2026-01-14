@@ -1,0 +1,1358 @@
+{
+  "languages": {
+    "en": "English",
+    "ar": "Arabic",
+    "zh": "Chinese",
+    "fr": "French",
+    "de": "German",
+    "es": "Spanish",
+    "it": "Italian",
+    "pt": "Portuguese",
+    "ru": "Russian",
+    "pl": "Polish",
+    "nl": "Dutch",
+    "uk": "Ukrainian",
+    "el": "Greek",
+    "ro": "Romanian",
+    "cs": "Czech",
+    "sk": "Slovak",
+    "lt": "Lithuanian",
+    "bg": "Bulgarian",
+    "sq": "Albanian",
+    "hu": "Hungarian",
+    "sv": "Swedish",
+    "hr": "Croatian",
+    "lv": "Latvian"
+  },
+  "common": {
+    "warning": "Warning",
+    "success": "Success",
+    "error": "Error",
+    "info": "Info",
+    "agreeTo": "I agree to the",
+    "and": "and",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Login",
+    "logout": "Logout",
+    "orRegisterVia": "or register via",
+    "selectLanguage": "Select language",
+    "getStarted": "Get Started"
+  },
+  "components": {
+    "customPaginator": {
+      "itemsPerPage": "Items per page",
+      "rangeInfo": "{start}-{end} of {total} entries",
+      "previousPage": "Previous page",
+      "nextPage": "Next page"
+    }
+  },
+  "countries": {
+    "US": "United States",
+    "CA": "Canada",
+    "GB": "United Kingdom",
+    "AU": "Australia",
+    "DE": "Germany",
+    "FR": "France",
+    "ES": "Spain",
+    "IT": "Italy",
+    "JP": "Japan",
+    "IN": "India",
+    "CN": "China",
+    "BR": "Brazil",
+    "MX": "Mexico",
+    "OTHER": "Other"
+  },
+  "registerHotel": {
+    "step1": {
+      "title": "Owner Information!",
+      "fields": {
+        "fullName": "Name",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "password": "Password"
+      },
+      "placeholders": {
+        "fullName": "Enter your name",
+        "email": "Enter your email address",
+        "phone": "Enter your phone number",
+        "password": "Enter your password"
+      },
+      "cta": "Let's Keep Going!"
+    },
+    "step2": {
+      "title": "Hotel Information!",
+      "subtitle": "Is my data safe?",
+      "fields": {
+        "hotelName": "Hotel Name",
+        "hotelWebsite": "Hotel Website",
+        "hotelAddress": "Hotel Address",
+        "city": "City",
+        "country": "Country",
+        "hotelDescription": "Hotel Description"
+      },
+      "placeholders": {
+        "hotelName": "Enter hotel name",
+        "hotelWebsite": "Enter hotel website url",
+        "hotelAddress": "Enter hotel street address",
+        "city": "Enter hotel city",
+        "country": "Select Country",
+        "hotelDescription": "Enter brief description of your hotel"
+      }
+    },
+    "buttons": {
+      "back": "Back",
+      "register": "Register Now",
+      "registering": "Registering..."
+    },
+    "toasts": {
+      "missingRequired": "Please fill in all required fields",
+      "passwordLength": "Password must be at least 6 characters long",
+      "acceptTerms": "Please accept the terms and conditions",
+      "acceptTermsPrivacy": "Please accept the terms and conditions and privacy policy",
+      "success": "Hotel registration successful! Please check your email for verification.",
+      "error": "Registration failed",
+      "errorGeneric": "Registration failed. Please try again."
+    },
+    "images": {
+      "ownerAlt": "Register Hotel - Owner Information",
+      "hotelAlt": "Register Hotel - Hotel Information"
+    }
+  },
+  "hotel": {
+    "dashboard": {
+      "recentReviews": {
+        "title": "Recent Reviews",
+        "description": "View and manage your recent reviews.",
+        "states": {
+          "loading": "Loading recent reviews..."
+        },
+        "table": {
+          "date": "Date"
+        }
+      },
+      "comparisonChart": {
+        "title": "Review Comparison",
+        "period": "Period",
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "loading": "Loading comparison data...",
+        "noData": "No comparison data available"
+      }
+    },
+    "forms": {
+      "header": {
+        "title": "Feedback Form",
+        "subtitle": "Manage your guest feedback form. You can update this form at any time."
+      },
+      "states": {
+        "loading": "Loading form..."
+      },
+      "fields": {
+        "title": "Form Title",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "description": "Description",
+        "noDescription": "No description provided",
+        "totalResponses": "Total Responses"
+      },
+      "buttons": {
+        "edit": "Edit Form",
+        "preview": "Preview Form",
+        "showQr": "Show QR Code",
+        "create": "Create Form",
+        "downloadQr": "Download QR Code",
+        "copyUrl": "Copy URL"
+      },
+      "empty": {
+        "title": "No Form Created Yet",
+        "description": "Create your feedback form to start collecting guest reviews."
+      },
+      "preview": {
+        "title": "Form Preview",
+        "tooltipBack": "Back to Forms",
+        "tag": "Preview Mode - Interactions Disabled"
+      },
+      "qrDialog": {
+        "title": "QR Code - {title}"
+      },
+      "toasts": {
+        "loadError": "Failed to load form",
+        "slugMissing": "Hotel slug not found. Cannot preview form.",
+        "createSuccess": "Form created successfully",
+        "updateSuccess": "Form updated successfully",
+        "saveError": "Failed to save form",
+        "qrGenerated": "QR code generated successfully",
+        "qrExists": "QR code already exists for this form",
+        "qrError": "Failed to handle QR code",
+        "noUrl": "No URL to copy",
+        "copiedDetail": "URL copied to clipboard",
+        "copyError": "Failed to copy URL to clipboard"
+      },
+      "builder": {
+        "header": {
+          "edit": "Edit Form",
+          "create": "Create New Form",
+          "preview": "Preview Form",
+          "livePreview": "Live Preview",
+          "formBuilderToggle": "Form Builder",
+          "livePreviewToggle": "Live Preview",
+          "backTooltip": "Back to Forms"
+        },
+        "buttons": {
+          "save": "Save Form",
+          "saveTooltip": "Save the form",
+          "addNew": "Add New",
+          "addOption": "Add",
+          "cancel": "Cancel",
+          "update": "Update",
+          "add": "Add"
+        },
+        "sections": {
+          "settings": "Form Settings",
+          "questions": "Questions",
+          "predefined": "Predefined Questions",
+          "custom": "Custom Questions"
+        },
+        "fields": {
+          "titleLabel": "Form Title*",
+          "titlePlaceholder": "Enter form title",
+          "descriptionLabel": "Form Description*",
+          "descriptionPlaceholder": "Enter brief description of your form"
+        },
+        "predefined": {
+          "rateUs": "Rate Us* (Always included)",
+          "rateUsTitle": "Rate Us",
+          "customRating": "Custom Rating*",
+          "customRatingTitle": "Custom Rating",
+          "customRatingPlaceholder": "Enter rating item label",
+          "customRatingEditTitle": "Click to edit",
+          "feedback": "Please give us your honest feedback?*",
+          "feedbackTitle": "Please give us your honest feedback?",
+          "feedbackPlaceholder": "Enter your detailed feedback"
+        },
+        "tooltips": {
+          "previewDisabled": "Preview mode - editing disabled",
+          "addQuestion": "Add custom question",
+          "save": "Save",
+          "cancel": "Cancel",
+          "edit": "Edit",
+          "delete": "Delete",
+          "moveUp": "Move Up",
+          "moveDown": "Move Down"
+        },
+        "questionTypes": {
+          "shortText": "Short Text",
+          "longText": "Long Text",
+          "starRating": "Star Rating",
+          "singleChoice": "Single Choice",
+          "multipleChoice": "Multiple Choice",
+          "yesNo": "Yes/No"
+        },
+        "placeholders": {
+          "answer": "Enter your answer"
+        },
+        "answers": {
+          "yes": "Yes",
+          "no": "No"
+        },
+        "badges": {
+          "default": "Default",
+          "defaultHelper": "Cannot be edited, deleted, or moved"
+        },
+        "states": {
+          "loading": "Loading form data...",
+          "noQuestionsTitle": "No questions added yet",
+          "noQuestionsDescription": "Use the predefined questions above or add custom questions to get started"
+        },
+        "alerts": {
+          "ratingRequiredTitle": "Rating Required",
+          "ratingRequiredDescription": "Either \"Rate Us\" or \"Custom Rating\" must be selected to save the form."
+        },
+        "layoutInfo": {
+          "basic": {
+            "title": "Basic Layout Features",
+            "description": "All questions are available including custom questions. This layout provides a simple, clean design."
+          },
+          "good": {
+            "title": "Good Layout Features",
+            "description": "Choose either \"Rate Us\" OR \"Custom Rating\" (mutually exclusive). All questions including custom questions are available."
+          },
+          "excellent": {
+            "title": "Excellent Layout Features",
+            "description": "All predefined questions available plus custom questions. Premium design with animations for comprehensive feedback forms."
+          }
+        },
+        "subscription": {
+          "title": "Subscription Required",
+          "message": "Your subscription has been {status}. Please reactivate your subscription to create or edit forms.",
+          "manageButton": "Manage Subscription",
+          "status": {
+            "cancelled": "cancelled",
+            "expired": "expired"
+          },
+          "toastTitle": "Subscription Required",
+          "toastMessage": "Your subscription has been cancelled or expired. Please reactivate your subscription to create forms."
+        },
+        "preview": {
+          "descriptionFallback": "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance.",
+          "fullNameLabel": "Name*",
+          "fullNamePlaceholder": "Enter your name",
+          "emailLabel": "Email*",
+          "emailPlaceholder": "Enter your email address",
+          "submit": "Submit Now"
+        },
+        "dialog": {
+          "addTitle": "Add Question",
+          "editTitle": "Edit Question",
+          "questionLabel": "Question Text *",
+          "questionPlaceholder": "Enter your question",
+          "typeLabel": "Question Type",
+          "optionsLabel": "Options",
+          "optionPlaceholder": "Enter option"
+        },
+        "toasts": {
+          "formLoadSuccess": "Form data loaded successfully",
+          "formLoadError": "Failed to load form data",
+          "questionRequired": "Question text is required",
+          "optionsRequired": "Multiple choice questions must have at least 2 options",
+          "questionUpdated": "Question updated",
+          "questionAdded": "Question added",
+          "questionDeleted": "Question deleted",
+          "ratingLabelRequired": "Please enter a label for the rating item",
+          "ratingItemUpdated": "Rating item updated",
+          "ratingItemDeleted": "Rating item deleted",
+          "ratingItemAdded": "New rating item added",
+          "titleRequired": "Form title is required",
+          "questionCountRequired": "At least one question is required"
+        }
+      }
+    },
+    "analytics": {
+      "customRatings": {
+        "title": "Custom Rating Analytics",
+        "description": "Track detailed rating trends for your \"Good\" layout form.",
+        "buttons": {
+          "exportCsv": "Export CSV",
+          "exportPdf": "Export PDF",
+          "refresh": "Refresh"
+        },
+        "filters": {
+          "title": "Date Range Filters",
+          "startDate": "Start Date",
+          "startDatePlaceholder": "Select start date",
+          "endDate": "End Date",
+          "endDatePlaceholder": "Select end date",
+          "clear": "Clear Filters"
+        },
+        "states": {
+          "loading": "Loading analytics data...",
+          "noDataTitle": "No Data Available",
+          "noDataDescription": "No \"Good\" layout forms with custom rating data found for your hotel."
+        },
+        "toasts": {
+          "loadError": "Failed to load custom rating analytics",
+          "exportSuccess": "Data exported successfully as {format}",
+          "exportError": "Failed to export data"
+        },
+        "chart": {
+          "trendPrefix": "Trend Analysis - ",
+          "summaryTitle": "Rating Summary",
+          "ratingsCount": "({count} ratings)",
+          "averageRating": "Average Rating",
+          "tooltipSuffix": "/5"
+        }
+      },
+      "overview": {
+        "title": "Analytics",
+        "description": "Track your hotel's performance and guest satisfaction.",
+        "dropdownPlaceholder": "Select time range",
+        "buttons": {
+          "refresh": "Refresh"
+        },
+        "timeRanges": {
+          "7": "Last 7 days",
+          "30": "Last 30 days",
+          "90": "Last 90 days",
+          "180": "Last 6 months",
+          "365": "Last year"
+        },
+        "states": {
+          "loadingSkeleton": "Loading...",
+          "noData": "No analytics data available",
+          "chartLoading": "Loading chart data...",
+          "chartEmpty": "No chart data available"
+        },
+        "cards": {
+          "change": "{change} from last period"
+        },
+        "charts": {
+          "satisfaction": "Satisfaction Trends",
+          "ratingDistribution": "Rating Distribution",
+          "reviewVolume": "Review Volume"
+        },
+        "reviews": {
+          "title": "Recent Reviews"
+        },
+        "toasts": {
+          "loadError": "Failed to load analytics"
+        }
+      },
+      "responseRates": {
+        "title": "Response Rates Analytics",
+        "description": "Track your hotel's response rates and engagement metrics.",
+        "charts": {
+          "reviewVolume": "Review Volume Trends",
+          "satisfaction": "Satisfaction Trends Over Time"
+        }
+      },
+      "satisfaction": {
+        "title": "Satisfaction Analytics",
+        "description": "Track your hotel's guest satisfaction trends and ratings.",
+        "charts": {
+          "reviewVolume": "Review Volume & Positive Reviews"
+        }
+      },
+      "notificationsCenter": {
+        "title": "Notifications",
+        "ariaLabel": "Notifications",
+        "iconAlt": "Notification icon",
+        "buttons": {
+          "markAllRead": "Mark All Read",
+          "refresh": "Refresh"
+        },
+        "states": {
+          "empty": "No notifications yet"
+        },
+        "types": {
+          "newReview": "New Review",
+          "reviewApproved": "Review Approved",
+          "reviewRejected": "Review Rejected",
+          "subscriptionExpiring": "Subscription Expiring",
+          "subscriptionCancelled": "Subscription Cancelled",
+          "escalationReceived": "Escalation Received",
+          "escalationResponded": "Escalation Responded",
+          "systemAlert": "System Alert",
+          "newHotelRegistration": "New Hotel Registration",
+          "success": "Success",
+          "info": "Info",
+          "warning": "Warning",
+          "error": "Error",
+          "generic": "Notification"
+        }
+      }
+    },
+    "reviews": {
+      "title": "Guest Reviews",
+      "subtitle": "Manage and review guest feedback submissions.",
+      "buttons": {
+        "refresh": "Refresh",
+        "clearFilters": "Clear Filters",
+        "view": "View",
+        "reply": "Reply",
+        "delete": "Delete",
+        "close": "Close",
+        "markAsChecked": "Mark as Checked",
+        "checked": "Checked",
+        "uncheck": "Uncheck",
+        "markAsUrgent": "Mark as Urgent",
+        "urgent": "Urgent",
+        "removeUrgent": "Remove Urgent",
+        "replyToCustomer": "Reply to Customer",
+        "cancel": "Cancel",
+        "sendReply": "Send Reply"
+      },
+      "filters": {
+        "title": "Filters",
+        "searchReviews": "Search Reviews",
+        "searchPlaceholder": "Search by guest name or feedback text...",
+        "roomNumber": "Room Number",
+        "roomNumberPlaceholder": "Filter by room number...",
+        "filter": "Filter",
+        "allReviews": "All Reviews",
+        "replied": "Replied",
+        "notReplied": "Not Replied",
+        "checked": "Checked",
+        "notChecked": "Not Checked",
+        "urgent": "Urgent",
+        "notUrgent": "Not Urgent",
+        "starRatings": "Star Ratings",
+        "allRatings": "All Ratings",
+        "5Stars": "5 Stars",
+        "4Stars": "4 Stars",
+        "3Stars": "3 Stars",
+        "2Stars": "2 Stars",
+        "1Star": "1 Star",
+        "dateRange": "Date Range",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "fromDate": "From date",
+        "toDate": "To date"
+      },
+      "states": {
+        "loadingReviews": "Loading reviews...",
+        "noReviewsFound": "No Reviews Found",
+        "noReviewsYet": "No reviews have been submitted yet.",
+        "noReviewsMatchFilters": "No reviews match your current filters."
+      },
+      "table": {
+        "guest": "Guest",
+        "email": "Email",
+        "room": "Room",
+        "rating": "Rating",
+        "status": "Status",
+        "submitted": "Submitted",
+        "actions": "Actions",
+        "checkedStatus": "Checked",
+        "notCheckedStatus": "Not Checked",
+        "repliedStatus": "Replied",
+        "notRepliedStatus": "Not Replied",
+        "urgentStatus": "Urgent",
+        "notUrgentStatus": "Not Urgent",
+        "public": "Public",
+        "private": "Private",
+        "shared": "Shared",
+        "noEmailAvailable": "No email available for this review"
+      },
+      "detailsDialog": {
+        "header": "Guest Feedback Details",
+        "guestInfo": "Guest Information",
+        "name": "Name:",
+        "anonymous": "Anonymous",
+        "email": "Email:",
+        "notProvided": "Not provided",
+        "phone": "Phone:",
+        "roomNumber": "Room Number:",
+        "submitted": "Submitted:",
+        "overallRating": "Overall Rating",
+        "quickFeedback": "Quick Feedback",
+        "howDoYouRateUs": "How do you rate us?",
+        "honestFeedback": "Please give us your honest feedback?",
+        "noSpecificFeedback": "No specific feedback provided",
+        "customRatingItem": "Custom Rating Item ({itemId})",
+        "formInfo": "Form Information",
+        "formTitle": "Form Title:",
+        "description": "Description:",
+        "layout": "Layout:",
+        "feedbackResponses": "Feedback Responses",
+        "reviewReplies": "Review Replies",
+        "languageSelectorLabel": "View content in",
+        "languageSelectorPlaceholder": "Select language",
+        "translating": "Translating...",
+        "noDetailedResponses": "No detailed responses available for this review.",
+        "question": "Question:",
+        "noAnswer": "No answer provided",
+        "replyToCustomer": "Reply to Customer",
+        "replyPlaceholder": "Type your reply message here...",
+        "replyMessageHint": "This message will be sent to {guestEmail}",
+        "toastWarningReply": "Please enter a reply message",
+        "toastSuccessReply": "Reply sent successfully to {sentTo}",
+        "toastErrorReply": "Failed to send reply"
+      },
+      "deleteDialog": {
+        "header": "Delete Review",
+        "confirmTitle": "Are you sure you want to delete this review?",
+        "confirmMessage": "This action cannot be undone. The review will be permanently removed from your system.",
+        "reviewDetails": "Review Details:",
+        "guest": "Guest:",
+        "rating": "Rating:",
+        "submitted": "Submitted:",
+        "buttons": {
+          "cancel": "Cancel",
+          "delete": "Delete"
+        },
+        "toasts": {
+          "success": "Review deleted successfully",
+          "error": "Failed to delete review"
+        }
+      },
+      "toasts": {
+        "loadError": "Failed to load reviews",
+        "detailsLoadError": "Failed to load review details",
+        "statusUpdate": {
+          "checked": "Review marked as checked",
+          "unchecked": "Review unmarked as checked",
+          "urgent": "Review marked as urgent",
+          "notUrgent": "Review unmarked as urgent",
+          "replied": "Review marked as replied"
+        },
+        "statusUpdateError": "Failed to update review status",
+        "replyMissing": "Please enter a reply message",
+        "replySuccess": "Reply sent successfully to {sentTo}",
+        "replyError": "Failed to send reply",
+        "translationError": "Failed to translate review content",
+        "deleteSuccess": "Review deleted successfully",
+        "deleteError": "Failed to delete review"
+      }
+    },
+    "menu": {
+      "dashboard": "Dashboard",
+      "feedbackForm": "Feedback Form",
+      "qrCodes": "QR Codes",
+      "allReviews": "All Reviews",
+      "notifications": "Notifications",
+      "contactAdmin": "Contact Admin",
+      "settings": "Settings",
+      "settingsItems": {
+        "userProfile": "User Profile",
+        "hotelProfile": "Hotel Profile",
+        "changePassword": "Change Password",
+        "subscriptions": "Subscriptions",
+        "paymentMethods": "Payment Methods"
+      }
+    },
+    "paymentMethods": {
+      "pageTitle": "Add Payment Method",
+      "buttons": {
+        "add": "Add",
+        "addMethod": "Add Method",
+        "updateMethod": "Update Method",
+        "cancel": "Cancel",
+        "setPrimary": "Set as Primary",
+        "delete": "Delete"
+      },
+      "badges": {
+        "primary": "Primary",
+        "expired": "Expired"
+      },
+      "states": {
+        "loading": "Loading payment methods...",
+        "emptyTitle": "No Payment Methods",
+        "emptyDescription": "Add a payment method to manage your subscriptions."
+      },
+      "form": {
+        "paymentType": "Payment Type",
+        "paymentTypeOptions": {
+          "card": "Credit/Debit Card",
+          "bank": "Bank Account"
+        },
+        "card": {
+          "number": "Card Number",
+          "numberPlaceholder": "1234 5678 9012 3456",
+          "expiryMonth": "Expiry Month",
+          "expiryYear": "Expiry Year",
+          "monthPlaceholder": "MM",
+          "yearPlaceholder": "YYYY",
+          "cvv": "CVV",
+          "cvvPlaceholder": "123",
+          "holder": "Cardholder Name",
+          "holderPlaceholder": "John Doe",
+          "brand": "Card Brand",
+          "brandPlaceholder": "Select card brand"
+        },
+        "cardBrands": {
+          "visa": "Visa",
+          "mastercard": "Mastercard",
+          "amex": "American Express",
+          "discover": "Discover",
+          "unknown": "Card"
+        },
+        "bank": {
+          "name": "Bank Name",
+          "namePlaceholder": "Bank of America",
+          "accountNumber": "Account Number",
+          "accountPlaceholder": "Account number",
+          "routingNumber": "Routing Number",
+          "routingPlaceholder": "123456789",
+          "accountType": "Account Type",
+          "accountTypePlaceholder": "Select account type"
+        },
+        "accountTypes": {
+          "checking": "Checking",
+          "savings": "Savings",
+          "unknown": "Account"
+        }
+      },
+      "list": {
+        "endingIn": "ending in",
+        "expiryLabel": "Exp. date",
+        "accountTypeSuffix": "Account",
+        "accountTypeUnknown": "Account",
+        "unknownBank": "Bank",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "dialogs": {
+        "add": {
+          "title": "Add Payment Method"
+        },
+        "edit": {
+          "title": "Edit Payment Method",
+          "cardLocked": "Card number cannot be changed for security reasons",
+          "bankLocked": "Account number cannot be changed for security reasons"
+        },
+        "delete": {
+          "title": "Delete Payment Method",
+          "message": "Are you sure you want to delete this payment method? This action cannot be undone."
+        }
+      },
+      "toasts": {
+        "load": {
+          "error": "Failed to load payment methods"
+        },
+        "add": {
+          "success": "Payment method added successfully",
+          "error": "Failed to add payment method"
+        },
+        "delete": {
+          "success": "Payment method deleted successfully",
+          "error": "Failed to delete payment method"
+        },
+        "default": {
+          "success": "Default payment method updated",
+          "error": "Failed to update default payment method"
+        },
+        "update": {
+          "success": "Payment method updated successfully",
+          "error": "Failed to update payment method"
+        }
+      }
+    },
+    "subscription": {
+      "header": {
+        "title": "Subscription Management",
+        "subtitle": "Manage your hotel's subscription and billing."
+      },
+      "buttons": {
+        "refresh": "Refresh",
+        "processing": "Processing...",
+        "upgradeNow": "Upgrade Now",
+        "currentPlan": "Current Plan",
+        "reactivate": "Reactivate",
+        "cancelSubscription": "Cancel Subscription",
+        "contactSupport": "Contact Support",
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+      },
+      "statuses": {
+        "trial": "Trial",
+        "active": "Active",
+        "cancelled": "Cancelled",
+        "expired": "Expired"
+      },
+      "states": {
+        "loading": "Loading subscription data...",
+        "notFoundTitle": "Subscription Not Found",
+        "notFoundDescription": "Unable to load subscription information."
+      },
+      "labels": {
+        "notAvailable": "N/A"
+      },
+      "trial": {
+        "name": "Trial Plan",
+        "description": "Free Trial",
+        "label": "Trial Period:",
+        "remaining": "{count} days remaining"
+      },
+      "sections": {
+        "status": {
+          "title": "Current Subscription Status",
+          "statusLabel": "Status",
+          "totalReviews": "Total Reviews",
+          "averageRating": "Average Rating"
+        },
+        "plans": {
+          "title": "Available Plans",
+          "currentPlanHint": "You are currently on this plan"
+        },
+        "actions": {
+          "title": "Subscription Actions"
+        },
+        "billing": {
+          "title": "Billing Information",
+          "subscriptionId": "Subscription ID:",
+          "created": "Created:",
+          "nextBilling": "Next Billing:",
+          "trialEnds": "Trial Ends:"
+        }
+      },
+      "perInterval": "per {interval}",
+      "priceLabel": "{price}/{interval}",
+      "dialog": {
+        "title": "Confirm Subscription Change",
+        "upgradeTitle": "Upgrade to {plan}",
+        "description": "You are about to upgrade your subscription plan.",
+        "planLabel": "Plan:",
+        "priceLabel": "Price:",
+        "billingLabel": "Billing:",
+        "noteLabel": "Note:",
+        "noteDescription": "This is a demo environment. No actual payment will be processed."
+      },
+      "toasts": {
+        "load": {
+          "error": "Failed to load subscription data"
+        },
+        "update": {
+          "success": "Subscription updated successfully",
+          "error": "Failed to update subscription"
+        }
+      },
+      "errors": {
+        "unauthorized": "Unauthorized",
+        "hotelNotFound": "Hotel not found",
+        "planRequired": "Plan ID and action are required",
+        "unknownPlan": "Unknown Plan",
+        "fetchFailed": "Failed to fetch subscription details",
+        "updateFailed": "Failed to update subscription"
+      },
+      "messages": {
+        "upgraded": "Successfully upgraded to {plan}",
+        "cancelled": "Successfully cancelled subscription"
+      },
+      "plans": {
+        "basic": {
+          "name": "Basic Plan",
+          "features": [
+            "Up to 100 reviews per month",
+            "Basic analytics",
+            "QR code generation",
+            "Basic Feedback Form"
+          ]
+        },
+        "professional": {
+          "name": "Professional Plan",
+          "features": [
+            "Up to 500 reviews per month",
+            "Advanced analytics",
+            "QR code generation",
+            "Customized Star Rating Questions"
+          ]
+        },
+        "enterprise": {
+          "name": "Enterprise Plan",
+          "features": [
+            "Unlimited reviews per month",
+            "Enterprise analytics",
+            "Priority support",
+            "Multi-property management"
+          ]
+        }
+      },
+      "intervals": {
+        "month": "month",
+        "monthly": "monthly",
+        "year": "year",
+        "yearly": "yearly",
+        "quarter": "quarter",
+        "quarterly": "quarterly"
+      }
+    },
+    "profile": {
+      "user": {
+        "title": "Personal Information",
+        "subtitle": "Manage your personal account details.",
+        "buttons": {
+          "save": "Save Changes",
+          "changePassword": "Change Password",
+          "twoFactor": "Two-Factor Authentication",
+          "changePhoto": "Change Photo",
+          "uploading": "Uploading..."
+        },
+        "images": {
+          "cardTitle": "Profile Image",
+          "hint": "JPG, PNG or GIF. Max size 5MB."
+        },
+        "fields": {
+          "firstName": "First Name *",
+          "lastName": "Last Name *",
+          "email": "Email Address *",
+          "phone": "Phone Number"
+        },
+        "placeholders": {
+          "firstName": "Enter your first name",
+          "lastName": "Enter your last name",
+          "email": "your.email@example.com",
+          "phone": "+1 (555) 123-4567"
+        },
+        "cards": {
+          "personalInfo": "Personal Information",
+          "accountInfo": "Account Information",
+          "security": "Security"
+        },
+        "account": {
+          "type": "Account Type:",
+          "status": "Status:",
+          "memberSince": "Member Since:",
+          "lastLogin": "Last Login:",
+          "typeValue": "Hotel Owner",
+          "statusActive": "Active",
+          "notAvailable": "N/A"
+        },
+        "toasts": {
+          "saveSuccess": "Profile updated successfully",
+          "saveError": "Failed to update profile",
+          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
+          "imageSizeError": "Image size must be less than 5MB",
+          "imageSuccess": "Profile image updated successfully",
+          "imageError": "Failed to upload image",
+          "twoFactorInfo": "Two-factor authentication will be available soon"
+        }
+      },
+      "hotel": {
+        "title": "Hotel Profile",
+        "subtitle": "Manage your hotel information and settings.",
+        "buttons": {
+          "save": "Save Changes",
+          "uploadLogo": "Upload Logo",
+          "uploading": "Uploading...",
+          "viewPublic": "View Public Page",
+          "contactSupport": "Contact Support"
+        },
+        "images": {
+          "cardTitle": "Hotel Logo",
+          "alt": "Hotel Logo",
+          "hint": "JPG, PNG or GIF. Max size 5MB. Recommended: 300x300px"
+        },
+        "cards": {
+          "actions": "Actions",
+          "hotelInfo": "Hotel Information"
+        },
+        "fields": {
+          "name": "Hotel Name *",
+          "description": "Description",
+          "address": "Address",
+          "city": "City",
+          "country": "Country",
+          "phone": "Phone",
+          "email": "Email",
+          "website": "Website"
+        },
+        "placeholders": {
+          "name": "Enter hotel name",
+          "description": "Brief description of your hotel",
+          "address": "Street address",
+          "city": "City",
+          "country": "Select country",
+          "phone": "+1 (555) 123-4567",
+          "email": "hotel@example.com",
+          "website": "https://www.yourhotel.com"
+        },
+        "externalLinks": {
+          "title": "External Review Links",
+          "subtitle": "Add links to your TripAdvisor and Google Reviews pages to help guests share positive feedback.",
+          "tripAdvisor": {
+            "label": "TripAdvisor Link",
+            "placeholder": "https://www.tripadvisor.com/...",
+            "hint": "Optional: Link to your TripAdvisor page"
+          },
+          "google": {
+            "label": "Google Reviews Link",
+            "placeholder": "https://g.page/...",
+            "hint": "Optional: Link to your Google Reviews page"
+          }
+        },
+        "account": {
+          "notAvailable": "N/A"
+        },
+        "toasts": {
+          "loadError": "Failed to load hotel profile",
+          "saveSuccess": "Hotel profile updated successfully",
+          "saveError": "Failed to update hotel profile",
+          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
+          "imageSizeError": "Image size must be less than 5MB",
+          "imageSuccess": "Hotel logo updated successfully",
+          "imageError": "Failed to upload logo"
+        }
+      },
+      "password": {
+        "title": "Change Password",
+        "subtitle": "Update your account password for better security.",
+        "cardTitle": "Password Change",
+        "buttons": {
+          "change": "Change Password",
+          "cancel": "Cancel",
+          "confirmChange": "Change Password"
+        },
+        "fields": {
+          "current": "Current Password *",
+          "new": "New Password *",
+          "confirm": "Confirm New Password *"
+        },
+        "placeholders": {
+          "current": "Enter your current password",
+          "new": "Enter your new password",
+          "confirm": "Confirm your new password"
+        },
+        "strength": {
+          "label": "Password Strength:",
+          "weak": "Weak",
+          "medium": "Medium",
+          "strong": "Strong"
+        },
+        "requirements": {
+          "title": "Password Requirements",
+          "minLength": "At least 8 characters long",
+          "uppercase": "Contains uppercase letters",
+          "lowercase": "Contains lowercase letters",
+          "numbers": "Contains numbers",
+          "special": "Contains special characters"
+        },
+        "tips": {
+          "title": "Security Tips",
+          "tip": "Tip: Use a unique password that you don't use elsewhere.",
+          "warning": "Warning: Never share your password with anyone."
+        },
+        "validation": {
+          "currentRequired": "Current password is required",
+          "newRequired": "New password is required",
+          "minLength": "New password must be at least 8 characters long",
+          "complexity": "New password must contain uppercase, lowercase, numbers, and special characters",
+          "confirmMismatch": "New password and confirmation do not match",
+          "sameAsCurrent": "New password must be different from current password"
+        },
+        "toasts": {
+          "changeSuccess": "Password changed successfully",
+          "changeError": "Failed to change password"
+        },
+        "confirm": {
+          "title": "Confirm Password Change",
+          "message": "Are you sure you want to change your password?",
+          "warning": "This action will log you out of all devices and you'll need to log in again."
+        },
+        "accessibility": {
+          "show": "Show password",
+          "hide": "Hide password"
+        }
+      },
+      "subscription": {
+        "errors": {
+          "unauthorized": "Unauthorized",
+          "hotelNotFound": "Hotel not found",
+          "planRequired": "Plan ID and action are required",
+          "unknownPlan": "Unknown Plan",
+          "fetchFailed": "Failed to fetch subscription details",
+          "updateFailed": "Failed to update subscription"
+        },
+        "messages": {
+          "upgraded": "Successfully upgraded to {plan}",
+          "cancelled": "Successfully cancelled subscription"
+        },
+        "plans": {
+          "basic": {
+            "name": "Basic Plan",
+            "features": [
+              "Up to 100 reviews per month",
+              "Basic analytics",
+              "QR code generation",
+              "Basic Feedback Form"
+            ]
+          },
+          "professional": {
+            "name": "Professional Plan",
+            "features": [
+              "Up to 500 reviews per month",
+              "Advanced analytics",
+              "QR code generation",
+              "Customized Star Rating Questions"
+            ]
+          },
+          "enterprise": {
+            "name": "Enterprise Plan",
+            "features": [
+              "Unlimited reviews",
+              "Full analytics suite",
+              "QR code generation",
+              "All type of questions"
+            ]
+          }
+        }
+      },
+      "notificationsCenter": {
+        "title": "Notifications",
+        "ariaLabel": "Notifications",
+        "iconAlt": "Notification icon",
+        "buttons": {
+          "markAllRead": "Mark All Read",
+          "refresh": "Refresh"
+        },
+        "states": {
+          "empty": "No notifications yet"
+        },
+        "types": {
+          "newReview": "New Review",
+          "reviewApproved": "Review Approved",
+          "reviewRejected": "Review Rejected",
+          "subscriptionExpiring": "Subscription Expiring",
+          "subscriptionCancelled": "Subscription Cancelled",
+          "escalationReceived": "Escalation Received",
+          "escalationResponded": "Escalation Responded",
+          "systemAlert": "System Alert",
+          "newHotelRegistration": "New Hotel Registration",
+          "newFormCreated": "New Form Created",
+          "success": "Success",
+          "info": "Info",
+          "warning": "Warning",
+          "error": "Error",
+          "generic": "Notification"
+        }
+      },
+      "profileSidebar": {
+        "greeting": {
+          "title": "Welcome",
+          "fallbackName": "Admin User"
+        },
+        "actions": {
+          "profile": {
+            "title": "Profile",
+            "description": "Manage your account settings"
+          },
+          "signOut": {
+            "title": "Sign Out",
+            "description": "Logout from your account"
+          }
+        },
+        "notifications": {
+          "title": "Recent Notifications",
+          "loading": "Loading notifications...",
+          "summary": "You have {count} unread notifications",
+          "empty": "No new notifications"
+        },
+        "time": {
+          "justNow": "Just now"
+        }
+      }
+    },
+    "communications": {
+      "notifications": {
+        "title": "Notifications",
+        "subtitle": "Manage system notifications and alerts",
+        "buttons": {
+          "deleteSelected": "Delete Selected ({count})",
+          "markAllAsRead": "Mark All as Read",
+          "refresh": "Refresh"
+        },
+        "filters": {
+          "title": "Filters",
+          "searchLabel": "Search Notifications",
+          "searchPlaceholder": "Search by title, message, or user...",
+          "type": "Type",
+          "allTypes": "All Types",
+          "status": {
+            "label": "Status",
+            "all": "All Status",
+            "unread": "Unread",
+            "read": "Read"
+          },
+          "types": {
+            "newReview": "New Review",
+            "reviewApproved": "Review Approved",
+            "reviewRejected": "Review Rejected",
+            "subscriptionExpiring": "Subscription Expiring",
+            "subscriptionCancelled": "Subscription Cancelled",
+            "escalationReceived": "Escalation Received",
+            "escalationResponded": "Escalation Responded",
+            "systemAlert": "System Alert",
+            "newHotelRegistration": "New Hotel Registration",
+            "newFormCreated": "New Form Created",
+            "success": "Success",
+            "info": "Info",
+            "warning": "Warning",
+            "error": "Error"
+          }
+        },
+        "states": {
+          "loading": "Loading notifications...",
+          "empty": "No notifications found"
+        },
+        "table": {
+          "type": "Type",
+          "message": "Message",
+          "date": "Date",
+          "actions": "Actions",
+          "status": {
+            "label": "Status",
+            "read": "Read",
+            "new": "New"
+          }
+        },
+        "tooltips": {
+          "markAsRead": "Mark as Read",
+          "view": "View",
+          "delete": "Delete"
+        },
+        "dates": {
+          "justNow": "Just now",
+          "hoursAgo": "{hours}h ago",
+          "yesterday": "Yesterday"
+        },
+        "types": {
+          "NEW_REVIEW": "New Review",
+          "REVIEW_APPROVED": "Review Approved",
+          "REVIEW_REJECTED": "Review Rejected",
+          "SUBSCRIPTION_EXPIRING": "Subscription Expiring",
+          "SUBSCRIPTION_CANCELLED": "Subscription Cancelled",
+          "ESCALATION_RECEIVED": "Escalation Received",
+          "ESCALATION_RESPONDED": "Escalation Responded",
+          "SYSTEM_ALERT": "System Alert",
+          "NEW_HOTEL_REGISTRATION": "New Hotel Registration",
+          "NEW_FORM_CREATED": "New Form Created",
+          "SUCCESS": "Success",
+          "INFO": "Info",
+          "WARNING": "Warning",
+          "ERROR": "Error"
+        },
+        "toasts": {
+          "loadError": "Failed to load notifications",
+          "markReadSuccess": "Notification marked as read",
+          "markReadError": "Failed to mark notification as read",
+          "markAllReadSuccess": "All notifications marked as read",
+          "markAllReadError": "Failed to mark all notifications as read",
+          "deleteSuccess": "Notification deleted successfully",
+          "deleteError": "Failed to delete notification",
+          "bulkDeleteSuccess": "{count} notification(s) deleted successfully",
+          "bulkDeleteError": "Failed to delete some notifications"
+        },
+        "confirm": {
+          "deleteMessage": "Are you sure you want to delete this notification?",
+          "deleteHeader": "Delete Confirmation",
+          "bulkDeleteMessage": "Are you sure you want to delete {count} selected notification(s)?",
+          "bulkDeleteHeader": "Bulk Delete Confirmation"
+        }
+      }
+    }
+  },
+  "auth": {
+    "register": {
+      "title": "Register",
+      "subtitle": "Let's get started",
+      "placeholders": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "phone": "Phone (Optional)",
+        "password": "Password"
+      },
+      "buttons": {
+        "signUp": "Sign Up",
+        "signingUp": "Signing Up..."
+      },
+      "agreementPrefix": "I have read the",
+      "toasts": {
+        "acceptTerms": "Please accept the terms and conditions",
+        "missingFields": "Please fill in all required fields",
+        "success": "Registration successful! Please check your email.",
+        "error": "Registration failed. Please try again."
+      }
+    },
+    "forgotPassword": {
+      "title": "Forgot password?",
+      "description": "Enter the email address associated with your account and we'll send an email with instructions to reset your password.",
+      "messages": {
+        "instructions": "Check your email for password reset instructions"
+      },
+      "submitted": {
+        "title": "Check your email!",
+        "description": "We have sent an email with a password reset link to {email}.",
+        "hint": "Didn't receive the email? Please check your spam folder."
+      },
+      "fields": {
+        "email": "Email Address",
+        "emailPlaceholder": "Enter your email address"
+      },
+      "buttons": {
+        "send": "Send Instructions",
+        "sending": "Sending...",
+        "resend": "Resend Email",
+        "backToLogin": "Back to Login"
+      },
+      "validation": {
+        "required": "Email is required",
+        "invalid": "Please enter a valid email address"
+      },
+      "toasts": {
+        "success": "Password reset email sent successfully",
+        "error": "Failed to send reset email",
+        "unexpected": "An unexpected error occurred. Please try again."
+      }
+    },
+    "resetPassword": {
+      "title": "Create New Password!",
+      "subtitle": "Enter a new password below to update your account credentials.",
+      "fields": {
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Password"
+      },
+      "placeholders": {
+        "password": "Enter your password",
+        "confirmPassword": "Confirm your password"
+      },
+      "buttons": {
+        "reset": "Reset Password",
+        "resetting": "Resetting..."
+      },
+      "link": {
+        "backToLogin": "Back to Login"
+      },
+      "states": {
+        "validating": "Validating reset link...",
+        "loading": "Loading..."
+      },
+      "errors": {
+        "passwordMin": "Password must be at least 6 characters long",
+        "passwordMax": "Password must be less than 128 characters",
+        "confirmRequired": "Please confirm your password",
+        "mismatch": "Passwords do not match"
+      },
+      "toasts": {
+        "invalidLink": "Invalid reset link",
+        "invalidOrExpired": "Invalid or expired reset link",
+        "failedValidation": "Failed to validate reset link",
+        "success": "Password reset successfully. You can now log in with your new password.",
+        "failure": "Failed to reset password",
+        "unexpected": "An unexpected error occurred"
+      },
+      "accessibility": {
+        "showPassword": "Show password",
+        "hidePassword": "Hide password"
+      }
+    }
+  },
+  "authFooter": {
+    "brand": {
+      "title": "C-Reviews",
+      "description": "We help hotels connect with their guests through seamless feedback solutions. Our platform makes it easy to create forms, gather insights, and elevate the guest experience with integrity and professionalism at the core of everything we do.",
+      "footerImageAlt": "C-Reviews decorative footer"
+    },
+    "quickLinks": {
+      "title": "Quick Links",
+      "items": {
+        "home": "Home",
+        "about": "About Us",
+        "features": "Features",
+        "contact": "Contact Us"
+      }
+    },
+    "resources": {
+      "title": "Resources",
+      "items": {
+        "dashboard": "Dashboard",
+        "feedbacks": "Feedbacks",
+        "hotelProfile": "Hotel Profile",
+        "support": "Support",
+        "ownerProfile": "Owner Profile"
+      }
+    },
+    "legal": {
+      "title": "Legal",
+      "items": {
+        "privacyPolicy": "Privacy Policy",
+        "companyPolicy": "Company Policy",
+        "terms": "Terms & Conditions"
+      }
+    },
+    "connect": {
+      "title": "Connect with Us",
+      "emailPlaceholder": "Email Address",
+      "submitLabel": "Subscribe",
+      "social": {
+        "facebook": "Follow us on Facebook",
+        "instagram": "Follow us on Instagram",
+        "linkedin": "Connect with us on LinkedIn"
+      }
+    },
+    "copyright": "© 2024 C-Reviews LLC. All Rights Reserved!"
+  }
+}
+

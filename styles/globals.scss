@@ -142,7 +142,7 @@ a {
 // ============================================
 
 .p-button {
-  background: #1B2A49 !important;
+  background: #2A4168 !important;
   color: white !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative !important;
@@ -163,9 +163,9 @@ a {
   }
   
   &:hover {
-    background: #2a3f5f !important;
+    background: #24385a !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 8px 25px rgba(27, 42, 73, 0.3) !important;
+    box-shadow: 0 8px 25px rgba(42, 65, 104, 0.3) !important;
     
     &::before {
       width: 300px;
@@ -175,7 +175,7 @@ a {
   
   &:active {
     transform: translateY(0) !important;
-    box-shadow: 0 4px 15px rgba(27, 42, 73, 0.2) !important;
+    box-shadow: 0 4px 15px rgba(42, 65, 104, 0.2) !important;
   }
   
   // Icon animations
@@ -190,49 +190,49 @@ a {
 
 // Primary button variants
 .p-button-primary {
-  background: linear-gradient(135deg, #1B2A49 0%, #2a3f5f 100%) !important;
+  background: linear-gradient(135deg, #2A4168 0%, #24385a 100%) !important;
   
   &:hover {
-    background: linear-gradient(135deg, #2a3f5f 0%, #1B2A49 100%) !important;
+    background: linear-gradient(135deg, #24385a 0%, #2A4168 100%) !important;
   }
 }
 
 // Outlined button enhancements
 .p-button-outlined {
-  border: 1px solid #1B2A49 !important;
+  border: 1px solid #2A4168 !important;
   background: transparent !important;
-  color: #1B2A49 !important;
+  color: #2A4168 !important;
   
   &:hover {
-    background: #1B2A49 !important;
+    background: #2A4168 !important;
     color: white !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 8px 25px rgba(27, 42, 73, 0.3) !important;
+    box-shadow: 0 8px 25px rgba(42, 65, 104, 0.3) !important;
   }
 }
 
 // Text button enhancements
 .p-button-text {
   background: transparent !important;
-  color: #1B2A49 !important;
+  color: #2A4168 !important;
   
   &:hover {
-    background: rgba(27, 42, 73, 0.1) !important;
+    background: rgba(42, 65, 104, 0.1) !important;
     transform: translateY(-1px) !important;
   }
 }
 
 // Success button
 .p-button-success {
-  border: 1px solid #1B2A49 !important;
+  border: 1px solid #2A4168 !important;
   background: transparent !important;
-  color: #1B2A49 !important;
+  color: #2A4168 !important;
   
   &:hover {
-    background: #1B2A49 !important;
+    background: #2A4168 !important;
     color: white !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 8px 25px rgba(27, 42, 73, 0.3) !important;
+    box-shadow: 0 8px 25px rgba(42, 65, 104, 0.3) !important;
   }
 }
 
@@ -307,8 +307,8 @@ a {
   &:hover {
     transform: translateY(-3px) !important;
     box-shadow: 0 8px 25px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.1) !important;
-    border-color: #1B2A49 !important;
-    color: #1B2A49 !important;
+    border-color: #2A4168 !important;
+    color: #2A4168 !important;
   }
 }
 
@@ -371,7 +371,7 @@ a {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #1B2A49, #3b82f6, #10b981);
+    background: linear-gradient(90deg, #2A4168, #C8A24A, #10b981);
     transform: scaleX(0);
     transition: transform 0.3s ease;
   }
@@ -379,7 +379,7 @@ a {
   &:hover {
     transform: translateY(-8px) !important;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
-    border-color: #1B2A49 !important;
+    border-color: #2A4168 !important;
     
     &::before {
       transform: scaleX(1);
@@ -437,22 +437,22 @@ a {
         margin: 2px 8px !important;
         
         &:hover {
-          background: rgba(27, 42, 73, 0.1) !important;
+          background: rgba(42, 65, 104, 0.1) !important;
           transform: translateX(4px) !important;
           
           .p-menuitem-icon {
             transform: scale(1.1) !important;
-            color: #1B2A49 !important;
+            color: #2A4168 !important;
           }
           
           .p-menuitem-text {
-            color: #1B2A49 !important;
+            color: #2A4168 !important;
             font-weight: 600 !important;
           }
         }
         
         &.p-menuitem-active {
-          background: linear-gradient(135deg, #1B2A49 0%, #2a3f5f 100%) !important;
+          background: linear-gradient(135deg, #2A4168 0%, #24385a 100%) !important;
           color: white !important;
           
           .p-menuitem-icon {
@@ -489,11 +489,11 @@ a {
     padding: 0.5rem !important;
     
     &:hover {
-      background: rgba(27, 42, 73, 0.1) !important;
+      background: rgba(42, 65, 104, 0.1) !important;
       transform: scale(1.05) !important;
       
       i {
-        color: #1B2A49 !important;
+        color: #2A4168 !important;
         transform: rotate(90deg) !important;
       }
     }
@@ -521,7 +521,7 @@ a {
       transition: all 0.2s ease !important;
       
       &:hover {
-        color: #1B2A49 !important;
+        color: #2A4168 !important;
         transform: translateY(-1px) !important;
       }
     }
@@ -858,7 +858,7 @@ a {
   transition: all 0.3s ease;
   
   &:hover {
-    box-shadow: 0 0 20px rgba(27, 42, 73, 0.3);
+    box-shadow: 0 0 20px rgba(42, 65, 104, 0.3);
   }
 }
 
@@ -1037,8 +1037,8 @@ textarea:focus {
     
     &:focus {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%231B2A49'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E") !important;
-      border-color: #1B2A49 !important;
-      box-shadow: 0 0 0 1px #1B2A49 !important;
+      border-color: #2A4168 !important;
+      box-shadow: 0 0 0 1px #2A4168 !important;
     }
   }
   
@@ -1163,7 +1163,7 @@ textarea:focus {
     margin-top: -0.75rem;
     padding: 0.4rem 0.5rem;
     font-size: 0.875rem;
-    color: #6366f1;
+    color: #2A4168;
     font-weight: 500;
     height: auto;
     line-height: 1.2;
@@ -1176,7 +1176,7 @@ textarea:focus {
     border: 2px solid #ced4da;
     
     &:focus {
-      border-color: #6366f1;
+      border-color: #2A4168;
       outline: none;
     }
   }
@@ -1308,12 +1308,12 @@ textarea:focus {
       height: 18px !important;
       
       &.p-highlight {
-        background: #1B2A49 !important;
-        border-color: #1B2A49 !important;
+        background: #2A4168 !important;
+        border-color: #2A4168 !important;
       }
       
       &:hover {
-        border-color: #1B2A49 !important;
+        border-color: #2A4168 !important;
       }
     }
   }
@@ -1391,7 +1391,7 @@ textarea:focus {
     transition: color 0.2s ease;
     
     &:hover {
-      color: #1B2A49;
+      color: #2A4168;
     }
   }
 
@@ -1425,14 +1425,14 @@ textarea:focus {
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(27, 42, 73, 0.1), transparent);
+        background: linear-gradient(90deg, transparent, rgba(42, 65, 104, 0.1), transparent);
         transition: left 0.5s ease;
       }
 
       &:hover {
-        border-color: #1B2A49;
+        border-color: #2A4168;
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(27, 42, 73, 0.15);
+        box-shadow: 0 4px 12px rgba(42, 65, 104, 0.15);
         
         &::before {
           left: 100%;
@@ -1442,7 +1442,7 @@ textarea:focus {
       &:focus {
         outline: none;
         border-color: #1b2a49;
-        box-shadow: 0 0 0 3px rgba(27, 42, 73, 0.1);
+        box-shadow: 0 0 0 3px rgba(42, 65, 104, 0.1);
         transform: translateY(-1px);
       }
 
@@ -1458,7 +1458,7 @@ textarea:focus {
       
       &:hover .custom-dropdown-icon {
         transform: rotate(180deg);
-        color: #1B2A49;
+        color: #2A4168;
       }
     }
 
@@ -1501,7 +1501,7 @@ textarea:focus {
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(27, 42, 73, 0.1), transparent);
+        background: linear-gradient(90deg, transparent, rgba(42, 65, 104, 0.1), transparent);
         transition: left 0.3s ease;
       }
 
@@ -1585,9 +1585,9 @@ textarea:focus {
 
     &:hover:not(:disabled):not(.custom-paginator-btn-active) {
       background: #f9fafb;
-      border-color: #1B2A49;
+      border-color: #2A4168;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(27, 42, 73, 0.15);
+      box-shadow: 0 4px 12px rgba(42, 65, 104, 0.15);
       
       &::before {
         left: 100%;
@@ -1680,10 +1680,10 @@ textarea:focus {
       }
       
       &.p-button-secondary:hover {
-        background: #1B2A49 !important;
+        background: #2A4168 !important;
         color: #ffffff !important;
         transform: scale(1.1) !important;
-        box-shadow: 0 2px 8px rgba(27, 42, 73, 0.2) !important;
+        box-shadow: 0 2px 8px rgba(42, 65, 104, 0.2) !important;
       }
       
       &.p-button-success:hover {

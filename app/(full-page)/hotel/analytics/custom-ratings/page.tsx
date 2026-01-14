@@ -6,6 +6,7 @@ import { Button } from "primereact/button";
 import { Chart } from "primereact/chart";
 import { Calendar } from "primereact/calendar";
 import { Toast } from "primereact/toast";
+import { Dropdown } from "primereact/dropdown";
 import { useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useI18n } from "@/i18n/TranslationProvider";
@@ -35,22 +36,34 @@ interface CustomRatingData {
     label: string;
     averageRating: number;
     totalRatings: number;
+    previousAverage?: number;
+    change?: number;
+    changePercent?: number;
   }>;
   totalReviews?: number;
 }
 
 export default function CustomRatingAnalytics() {
   const { user } = useAuth();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [loading, setLoading] = useState(true);
   const [ratingData, setRatingData] = useState<CustomRatingData | null>(null);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  // Default to last 3 months (weekly view)
+  const getDefaultDateRange = () => {
+    const end = new Date();
+    const start = new Date();
+    start.setMonth(start.getMonth() - 3);
+    return { start, end };
+  };
+  const defaultRange = getDefaultDateRange();
+  const [startDate, setStartDate] = useState<Date | null>(defaultRange.start);
+  const [endDate, setEndDate] = useState<Date | null>(defaultRange.end);
+  const [viewMode, setViewMode] = useState<'daily' | 'weekly' | 'monthly'>('weekly');
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
     loadCustomRatingData();
-  }, [startDate, endDate]);
+  }, [startDate, endDate, viewMode]);
 
   const loadCustomRatingData = async () => {
     setLoading(true);
@@ -58,6 +71,7 @@ export default function CustomRatingAnalytics() {
       const params = new URLSearchParams();
       if (startDate) params.append('startDate', startDate.toISOString());
       if (endDate) params.append('endDate', endDate.toISOString());
+      params.append('viewMode', viewMode); // Pass view mode to API
 
       const response = await fetch(`/api/hotel/analytics/custom-ratings?${params.toString()}`);
       
@@ -88,7 +102,11 @@ export default function CustomRatingAnalytics() {
       legend: {
         position: 'top' as const,
       },
+      datalabels: {
+        display: false, // Remove numbers under bars and charts
+      },
       tooltip: {
+        enabled: true, // Keep tooltips on hover
         callbacks: {
           label: function(context: any) {
             return `${context.dataset.label}: ${context.parsed.y?.toFixed(2) || 0}${t("hotel.analytics.customRatings.chart.tooltipSuffix")}`;
@@ -102,10 +120,11 @@ export default function CustomRatingAnalytics() {
         suggestedMax: 5.5,
         ticks: {
           stepSize: 1,
+          display: true, // Keep axis labels
         },
       },
     },
-  }), [t]);
+  }), [t, locale]);
 
   const handleExport = async (format: 'csv' | 'pdf') => {
     if (!ratingData) return;
@@ -194,11 +213,54 @@ export default function CustomRatingAnalytics() {
         <Card className="mb-4">
           <h3 className="m-0 mb-3">{t("hotel.analytics.customRatings.filters.title")}</h3>
           <div className="grid">
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-3">
+              <label className="block text-900 font-medium mb-2">{t("View Mode")}</label>
+              <Dropdown
+                value={viewMode}
+                options={[
+                  { label: t("Daily"), value: "daily" },
+                  { label: t("Weekly"), value: "weekly" },
+                  { label: t("Monthly"), value: "monthly" },
+                ]}
+                onChange={(e) => {
+                  setViewMode(e.value);
+                  const end = new Date();
+                  const start = new Date();
+                  // Limit date ranges based on view mode
+                  if (e.value === 'daily') {
+                    start.setMonth(start.getMonth() - 1); // Last month only
+                  } else if (e.value === 'weekly') {
+                    start.setMonth(start.getMonth() - 3); // Last 3 months
+                  } else if (e.value === 'monthly') {
+                    start.setFullYear(start.getFullYear() - 2); // Last 2 years
+                  }
+                  setStartDate(start);
+                  setEndDate(end);
+                }}
+                className="w-full"
+              />
+            </div>
+            <div className="col-12 md:col-3">
               <label className="block text-900 font-medium mb-2">{t("hotel.analytics.customRatings.filters.startDate")}</label>
               <Calendar
                 value={startDate}
-                onChange={(e) => setStartDate(e.value as Date | null)}
+                onChange={(e) => {
+                  const newStart = e.value as Date | null;
+                  if (newStart) {
+                    // Enforce date range limits based on view mode
+                    const end = endDate || new Date();
+                    const maxRange = viewMode === 'daily' ? 1 : viewMode === 'weekly' ? 3 : 24; // months
+                    const minStart = new Date(end);
+                    minStart.setMonth(minStart.getMonth() - maxRange);
+                    if (newStart < minStart) {
+                      setStartDate(minStart);
+                    } else {
+                      setStartDate(newStart);
+                    }
+                  } else {
+                    setStartDate(newStart);
+                  }
+                }}
                 placeholder={t("hotel.analytics.customRatings.filters.startDatePlaceholder")}
                 className="w-full"
                 showIcon
@@ -206,11 +268,23 @@ export default function CustomRatingAnalytics() {
                 maxDate={endDate || new Date()}
               />
             </div>
-            <div className="col-12 md:col-4">
+            <div className="col-12 md:col-3">
               <label className="block text-900 font-medium mb-2">{t("hotel.analytics.customRatings.filters.endDate")}</label>
               <Calendar
                 value={endDate}
-                onChange={(e) => setEndDate(e.value as Date | null)}
+                onChange={(e) => {
+                  const newEnd = e.value as Date | null;
+                  if (newEnd && startDate) {
+                    // Enforce date range limits
+                    const maxRange = viewMode === 'daily' ? 1 : viewMode === 'weekly' ? 3 : 24; // months
+                    const maxStart = new Date(newEnd);
+                    maxStart.setMonth(maxStart.getMonth() - maxRange);
+                    if (startDate < maxStart) {
+                      setStartDate(maxStart);
+                    }
+                  }
+                  setEndDate(newEnd);
+                }}
                 placeholder={t("hotel.analytics.customRatings.filters.endDatePlaceholder")}
                 className="w-full"
                 showIcon
@@ -219,13 +293,15 @@ export default function CustomRatingAnalytics() {
                 maxDate={new Date()}
               />
             </div>
-            <div className="col-12 md:col-4 flex align-items-end">
+            <div className="col-12 md:col-3 flex align-items-end">
               <Button
                 label={t("hotel.analytics.customRatings.filters.clear")}
                 icon="pi pi-filter-slash"
                 onClick={() => {
-                  setStartDate(null);
-                  setEndDate(null);
+                  const defaultRange = getDefaultDateRange();
+                  setStartDate(defaultRange.start);
+                  setEndDate(defaultRange.end);
+                  setViewMode('weekly');
                 }}
                 className="p-button-outlined p-button-secondary w-full"
               />
@@ -283,39 +359,82 @@ export default function CustomRatingAnalytics() {
           <div className="col-12">
             <Card title={t("hotel.analytics.customRatings.chart.summaryTitle")}>
               <div className="grid">
-                {ratingData.summary.map((item, index) => (
-                  <div key={item.label} className="col-12 md:col-6 lg:col-4">
-                    <div className="border-1 surface-border border-round p-3">
-                      <div className="flex align-items-center justify-content-between mb-2">
-                        <span className="text-900 font-medium">{item.label}</span>
-                        <span className="text-500 text-sm">
-                          {t("hotel.analytics.customRatings.chart.ratingsCount")
-                            .replace("{count}", item.totalRatings.toString())}
-                        </span>
-                      </div>
-                      <div className="flex align-items-center gap-2">
-                        <div 
-                          className="flex align-items-center" 
-                          style={{ 
-                            width: '20px', 
-                            height: '20px', 
-                            borderRadius: '4px',
-                            backgroundColor: getColorForIndex(index),
-                          }}
-                        >
+                {ratingData.summary.map((item, index) => {
+                  // Color coding: 1,2 - red, 3 - orange, 4,5 - green
+                  const getRatingColor = (rating: number) => {
+                    if (rating <= 2) return '#dc2626'; // red
+                    if (rating <= 3) return '#ea580c'; // orange
+                    return '#16a34a'; // green
+                  };
+
+                  const ratingColor = getRatingColor(item.averageRating);
+                  const hasChange = item.change !== undefined && item.previousAverage !== undefined && item.previousAverage > 0;
+                  const isPositiveChange = hasChange && item.change! > 0;
+                  const changePercent = item.changePercent || 0;
+
+                  return (
+                    <div key={item.label} className="col-12 md:col-6 lg:col-4">
+                      <div className="border-1 surface-border border-round p-3">
+                        <div className="flex align-items-center justify-content-between mb-2">
+                          <span className="text-900 font-medium">{item.label}</span>
+                          <span className="text-500 text-sm">
+                            {t("hotel.analytics.customRatings.chart.ratingsCount")
+                              .replace("{count}", item.totalRatings.toString())}
+                          </span>
                         </div>
-                        <div className="flex-1">
-                          <div className="text-2xl font-bold text-900">
-                            {item.averageRating.toFixed(2)}/5
+                        <div className="flex align-items-center gap-2">
+                          <div 
+                            className="flex align-items-center" 
+                            style={{ 
+                              width: '20px', 
+                              height: '20px', 
+                              borderRadius: '4px',
+                              backgroundColor: getColorForIndex(index),
+                            }}
+                          >
                           </div>
-                          <div className="text-sm text-600">
-                            {t("hotel.analytics.customRatings.chart.averageRating")}
+                          <div className="flex-1">
+                            <div className="flex align-items-center gap-2">
+                              <div 
+                                className="text-2xl font-bold"
+                                style={{ color: ratingColor }}
+                              >
+                                {item.averageRating.toFixed(2)}/5
+                              </div>
+                              {hasChange && (
+                                <div
+                                  style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '3px',
+                                    padding: '4px 8px',
+                                    borderRadius: '12px',
+                                    fontSize: '0.7rem',
+                                    fontWeight: '600',
+                                    backgroundColor: isPositiveChange 
+                                      ? 'rgba(16, 185, 129, 0.1)' 
+                                      : 'rgba(239, 68, 68, 0.1)',
+                                    color: isPositiveChange ? '#16a34a' : '#dc2626',
+                                    border: `1px solid ${isPositiveChange ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)'}`,
+                                  }}
+                                >
+                                  <i
+                                    className={isPositiveChange ? 'pi pi-arrow-up' : 'pi pi-arrow-down'}
+                                    style={{ fontSize: '0.65rem' }}
+                                  />
+                                  <span>{Math.abs(changePercent).toFixed(1)}%</span>
+                                </div>
+                              )}
+                            </div>
+                            <div className="text-sm text-600">
+                              {t("hotel.analytics.customRatings.chart.averageRating")}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </Card>
           </div>

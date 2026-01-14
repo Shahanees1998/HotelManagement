@@ -44,8 +44,22 @@ export async function GET(request: NextRequest) {
 
       // Get date range filters
       const { searchParams } = new URL(request.url);
-      const startDate = searchParams.get('startDate');
-      const endDate = searchParams.get('endDate');
+      const startDateParam = searchParams.get('startDate');
+      const endDateParam = searchParams.get('endDate');
+      const viewMode = searchParams.get('viewMode') || 'weekly'; // Default to weekly
+      
+      // Set default date range if not provided
+      let startDate: Date;
+      let endDate: Date = new Date();
+      
+      if (startDateParam && endDateParam) {
+        startDate = new Date(startDateParam);
+        endDate = new Date(endDateParam);
+      } else {
+        // Default to last 3 months for weekly view
+        startDate = new Date();
+        startDate.setMonth(startDate.getMonth() - 3);
+      }
 
       // Find the single form for this hotel (only one form allowed per hotel)
       const hotelForm = await prisma.feedbackForm.findFirst({
@@ -93,12 +107,8 @@ export async function GET(request: NextRequest) {
 
       // Build date filter
       const dateFilter: any = {};
-      if (startDate) {
-        dateFilter.gte = new Date(startDate);
-      }
-      if (endDate) {
-        dateFilter.lte = new Date(endDate);
-      }
+      dateFilter.gte = startDate;
+      dateFilter.lte = endDate;
 
       // Get all reviews for this form
       const reviews = await prisma.review.findMany({
@@ -121,8 +131,25 @@ export async function GET(request: NextRequest) {
       // Extract custom rating answers from reviews
       const ratingDataByDate = new Map<string, Map<string, number[]>>();
 
+      // Helper function to get date key based on view mode
+      const getDateKey = (date: Date): string => {
+        if (viewMode === 'daily') {
+          return date.toISOString().split('T')[0]; // YYYY-MM-DD
+        } else if (viewMode === 'weekly') {
+          // Get week number (ISO week)
+          const d = new Date(date);
+          d.setHours(0, 0, 0, 0);
+          d.setDate(d.getDate() + 3 - (d.getDay() + 6) % 7);
+          const week1 = new Date(d.getFullYear(), 0, 4);
+          const weekNum = Math.ceil((((d.getTime() - week1.getTime()) / 86400000) + 1) / 7);
+          return `${d.getFullYear()}-W${weekNum.toString().padStart(2, '0')}`;
+        } else { // monthly
+          return date.toISOString().substring(0, 7); // YYYY-MM
+        }
+      };
+
       for (const review of reviews) {
-        const reviewDate = review.submittedAt.toISOString().split('T')[0];
+        const reviewDate = getDateKey(review.submittedAt);
         
         try {
           // Try to parse predefinedAnswers field (new format)
@@ -197,8 +224,19 @@ export async function GET(request: NextRequest) {
         }
       }
 
-      // Prepare chart data
-      const sortedDates = Array.from(ratingDataByDate.keys()).sort();
+      // Prepare chart data with proper date sorting
+      const sortedDates = Array.from(ratingDataByDate.keys()).sort((a, b) => {
+        if (viewMode === 'weekly') {
+          // Sort by year-week
+          return a.localeCompare(b);
+        } else if (viewMode === 'monthly') {
+          // Sort by year-month
+          return a.localeCompare(b);
+        } else {
+          // Sort by date
+          return a.localeCompare(b);
+        }
+      });
       const colors = ['#2563eb', '#dc2626', '#16a34a', '#ca8a04', '#9333ea', '#ea580c'];
 
       const datasets = customRatingItems.map((item, index) => {
@@ -225,6 +263,75 @@ export async function GET(request: NextRequest) {
         datasets,
       };
 
+      // Calculate summary with comparison to previous period
+      const previousPeriodStart = new Date(startDate);
+      const previousPeriodEnd = new Date(endDate);
+      const periodLength = endDate.getTime() - startDate.getTime();
+      previousPeriodStart.setTime(startDate.getTime() - periodLength);
+      previousPeriodEnd.setTime(startDate.getTime());
+
+      // Get previous period data for comparison
+      const previousPeriodReviews = await prisma.review.findMany({
+        where: {
+          hotelId: hotel.id,
+          submittedAt: {
+            gte: previousPeriodStart,
+            lte: previousPeriodEnd,
+          },
+          status: { in: ['APPROVED', 'PENDING'] },
+        },
+        include: {
+          answers: {
+            include: {
+              question: true,
+            },
+          },
+        },
+      });
+
+      // Process previous period data
+      const previousRatingDataByDate = new Map<string, Map<string, number[]>>();
+      for (const review of previousPeriodReviews) {
+        const reviewDate = review.submittedAt.toISOString().split('T')[0];
+        for (const answer of review.answers) {
+          try {
+            const customRatingData = JSON.parse(answer.answer);
+            if (Array.isArray(customRatingData)) {
+              for (const item of customRatingData) {
+                if (item.label && typeof item.rating === 'number') {
+                  if (!previousRatingDataByDate.has(reviewDate)) {
+                    previousRatingDataByDate.set(reviewDate, new Map());
+                  }
+                  const dateRatings = previousRatingDataByDate.get(reviewDate)!;
+                  if (!dateRatings.has(item.label)) {
+                    dateRatings.set(item.label, []);
+                  }
+                  dateRatings.get(item.label)!.push(item.rating);
+                }
+              }
+            }
+          } catch (error) {
+            // Skip invalid data
+          }
+        }
+      }
+
+      // Calculate previous period averages
+      const previousAverages = new Map<string, number>();
+      for (const item of customRatingItems) {
+        const allRatings: number[] = [];
+        // Convert iterator to array to avoid TS downlevelIteration requirement during Next build typecheck
+        for (const dateRatings of Array.from(previousRatingDataByDate.values())) {
+          if (dateRatings.has(item.label)) {
+            allRatings.push(...dateRatings.get(item.label)!);
+          }
+        }
+        const previousAvg = allRatings.length > 0
+          ? allRatings.reduce((sum, rating) => sum + rating, 0) / allRatings.length
+          : 0;
+        previousAverages.set(item.label, previousAvg);
+      }
+
       // Calculate summary (average ratings for each label)
       const summary = customRatingItems.map(item => {
         let totalRatings = 0;
@@ -238,10 +345,18 @@ export async function GET(request: NextRequest) {
           }
         });
 
+        const currentAvg = totalRatings > 0 ? sumRatings / totalRatings : 0;
+        const previousAvg = previousAverages.get(item.label) || 0;
+        const change = previousAvg > 0 ? ((currentAvg - previousAvg) / previousAvg) * 100 : 0;
+        const changeValue = currentAvg - previousAvg;
+
         return {
           label: item.label,
-          averageRating: totalRatings > 0 ? sumRatings / totalRatings : 0,
+          averageRating: currentAvg,
           totalRatings,
+          previousAverage: previousAvg,
+          change: changeValue,
+          changePercent: change,
         };
       });
 

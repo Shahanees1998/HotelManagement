@@ -70,6 +70,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check if email is verified
+    if (!user.emailVerified) {
+      return NextResponse.json(
+        { 
+          error: 'Please verify your email address before logging in. Check your inbox for the verification email.',
+          requiresVerification: true,
+          email: user.email,
+        },
+        { status: 403 }
+      );
+    }
+
     // Check if user has valid role
     if (user.role !== 'ADMIN' && user.role !== 'HOTEL') {
       return NextResponse.json(

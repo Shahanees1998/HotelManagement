@@ -179,8 +179,26 @@ export function validateFile(file: File, options: {
     return { isValid: false, error: `File size must be less than ${Math.round(maxSize / 1024 / 1024)}MB` };
   }
 
-  if (allowedTypes && !allowedTypes.includes(file.type)) {
-    return { isValid: false, error: `File type ${file.type} is not allowed` };
+  if (allowedTypes) {
+    // Normalize MIME type (some browsers report jpg as image/jpeg, others as image/jpg)
+    const normalizedType = file.type.toLowerCase().replace(/jpg$/, 'jpeg');
+    const normalizedAllowedTypes = allowedTypes.map(t => t.toLowerCase().replace(/jpg$/, 'jpeg'));
+    
+    // Check MIME type
+    const typeMatch = normalizedAllowedTypes.some(type => 
+      normalizedType === type || 
+      normalizedType.startsWith(type.split('/')[0] + '/')
+    );
+    
+    // Also check file extension as fallback
+    const fileName = file.name.toLowerCase();
+    const extension = fileName.substring(fileName.lastIndexOf('.') + 1);
+    const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    const extensionMatch = allowedExtensions.includes(extension);
+    
+    if (!typeMatch && !extensionMatch) {
+      return { isValid: false, error: `File type ${file.type} is not allowed. Please use: ${allowedTypes.join(', ')}` };
+    }
   }
 
   return { isValid: true };

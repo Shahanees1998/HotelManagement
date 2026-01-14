@@ -70,15 +70,21 @@ export default function HotelAnalytics() {
     toast.current?.show({ severity, summary, detail, life: 3000 });
   };
 
-  const chartOptions = {
+  const chartOptions = useMemo(() => ({
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
       },
+      datalabels: {
+        display: false, // Remove numbers under bars and charts
+      },
+      tooltip: {
+        enabled: true, // Keep tooltips on hover
+      },
     },
-  };
+  }), [locale, t]);
 
   const timeRangeOptions = useMemo(() => [
     { label: t("hotel.analytics.overview.timeRanges.7"), value: "7" },

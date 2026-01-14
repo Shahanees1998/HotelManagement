@@ -90,6 +90,10 @@ export default function HotelSubscriptionPage() {
   };
 
   const handleSubscriptionAction = async (planId: string, action: string) => {
+    // TODO: Payment integration - buttons are shown but no action yet
+    showToast("info", t("hotel.subscription.buttons.processing"), "Payment integration coming soon. This feature is not yet active.");
+    return;
+    
     // Show confirmation for upgrade actions
     if (action === 'upgrade') {
       setPendingAction({ planId, action });

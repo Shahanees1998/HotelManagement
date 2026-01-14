@@ -69,7 +69,7 @@ export default function FeedbackFormBuilder({
 }) {
   const { user } = useAuth();
   const { currentPlan, loading: planLoading, subscriptionStatus } = useCurrentPlan();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const questionTypes = useMemo(() => [
     { label: t("hotel.forms.builder.questionTypes.shortText"), value: "SHORT_TEXT" },
     { label: t("hotel.forms.builder.questionTypes.longText"), value: "LONG_TEXT" },
@@ -77,7 +77,7 @@ export default function FeedbackFormBuilder({
     { label: t("hotel.forms.builder.questionTypes.singleChoice"), value: "MULTIPLE_CHOICE_SINGLE" },
     { label: t("hotel.forms.builder.questionTypes.multipleChoice"), value: "MULTIPLE_CHOICE_MULTIPLE" },
     { label: t("hotel.forms.builder.questionTypes.yesNo"), value: "YES_NO" },
-  ], [t]);
+  ], [t, locale]);
   const [form, setForm] = useState<FeedbackForm>({
     title: "",
     description: "",
@@ -88,7 +88,7 @@ export default function FeedbackFormBuilder({
       id: "rate-us",
       question: "Rate Us",
       type: "STAR_RATING",
-      isRequired: true,
+      isRequired: false, // Changed to false - answers are not obligatory
       options: [],
       isDefault: true
     }],
@@ -103,7 +103,7 @@ export default function FeedbackFormBuilder({
   const [questionForm, setQuestionForm] = useState<Question>({
     question: "",
     type: "SHORT_TEXT",
-    isRequired: true,
+    isRequired: false, // Changed default to false - answers are not obligatory
     options: [],
   });
 
@@ -657,7 +657,7 @@ export default function FeedbackFormBuilder({
                 onClick={() => deleteQuestion(question)}
                 tooltip={t("hotel.forms.builder.tooltips.delete")}
               />
-              <Button
+              {/* <Button
                 icon="pi pi-arrow-up"
                 className="p-button-text p-button-sm"
                 onClick={() => moveQuestion(index, 'up')}
@@ -670,7 +670,7 @@ export default function FeedbackFormBuilder({
                 onClick={() => moveQuestion(index, 'down')}
                 disabled={index === form.questions.length - 1}
                 tooltip={t("hotel.forms.builder.tooltips.moveDown")}
-              />
+              /> */}
             </>
           )}
         </div>
@@ -1041,7 +1041,6 @@ export default function FeedbackFormBuilder({
                         <div className="question-header">
                           <label className="question-label">
                             {question.question}
-                            {question.isRequired && <span className="required"> *</span>}
                           </label>
                           <div className="question-type-badge">
                             {questionTypes.find(t => t.value === question.type)?.label}
@@ -1147,7 +1146,7 @@ export default function FeedbackFormBuilder({
                               tooltip={t("hotel.forms.builder.tooltips.delete")}
                             disabled={previewMode}
                           />
-                          <Button
+                          {/* <Button
                             icon="pi pi-arrow-up"
                             className="p-button-text p-button-sm"
                             onClick={() => moveQuestion(index, 'up')}
@@ -1160,7 +1159,7 @@ export default function FeedbackFormBuilder({
                             onClick={() => moveQuestion(index, 'down')}
                             disabled={previewMode || index === form.questions.filter(q => !q.isDefault).length - 1}
                               tooltip={t("hotel.forms.builder.tooltips.moveDown")}
-                          />
+                          /> */}
                         </div>
                       </div>
                     ))}

@@ -485,7 +485,21 @@ export default function MembershipCardsPage() {
                             filterDisplay="menu"
                             globalFilterFields={["firstName", "lastName", "email", "membershipNumber"]}
                             header={header}
-                            emptyMessage={error ? "Unable to load users. Please check your connection or try again later." : "No users found."}
+                            emptyMessage={
+                              error 
+                                ? "Unable to load users. Please check your connection or try again later." 
+                                : totalRecords === 0 && !loading
+                                  ? (
+                                    <div className="text-center py-6">
+                                      <i className="pi pi-users text-4xl text-400 mb-3"></i>
+                                      <h3 className="text-900 mb-2">No Users Found</h3>
+                                      <p className="text-600 mb-4">
+                                        There are no users in your system yet. Users will appear here once they are added.
+                                      </p>
+                                    </div>
+                                  )
+                                  : "No users found."
+                            }
                             responsiveLayout="scroll"
                             onSort={onSort}
                             sortField={sortField}

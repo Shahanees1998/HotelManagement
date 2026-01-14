@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { InputText } from "primereact/inputtext";
-import { useContext, useState, Suspense } from "react";
+import { useContext, useState, Suspense, useEffect } from "react";
 import { LayoutContext } from "../../../../layout/context/layoutcontext";
 import { useAuth } from "@/hooks/useAuth";
 import { Toast } from "primereact/toast";
@@ -20,16 +20,58 @@ const LoginContent = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [resendingVerification, setResendingVerification] = useState(false);
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [requiresVerification, setRequiresVerification] = useState(false);
+    const [verificationEmail, setVerificationEmail] = useState("");
     const router = useRouter();
     const searchParams = useSearchParams();
     const { layoutConfig } = useContext(LayoutContext);
     const { user, login, loading: authLoading } = useAuth();
     const toast = useRef<Toast>(null);
+    const toastShownRef = useRef<string | null>(null); // Track which toast was shown
     const dark = layoutConfig.colorScheme !== "light";
     const [showPassword, setShowPassword] = useState(false);
     const { t, setLocale } = useI18n();
+
+    // Check URL params for verification messages
+    useEffect(() => {
+        const message = searchParams.get('message');
+        const error = searchParams.get('error');
+        const toastKey = message || error; // Create a unique key for this toast
+        
+        // Prevent duplicate toasts
+        if (!toastKey || toastShownRef.current === toastKey) {
+            return;
+        }
+        
+        // Mark this toast as shown
+        toastShownRef.current = toastKey;
+        
+        if (message === 'email_verified') {
+            toast.current?.show({
+                severity: 'success',
+                summary: t('Email Verified'),
+                detail: t('Your email has been verified. You can now log in.'),
+                life: 5000
+            });
+        } else if (message === 'already_verified') {
+            toast.current?.show({
+                severity: 'info',
+                summary: t('Already Verified'),
+                detail: t('Your email is already verified. You can log in now.'),
+                life: 5000
+            });
+        } else if (error === 'invalid_or_expired_token') {
+            toast.current?.show({
+                severity: 'error',
+                summary: t('Invalid Token'),
+                detail: t('The verification link is invalid or has expired. Please request a new one.'),
+                life: 5000
+            });
+        }
+    }, [searchParams, t]);
 
     // Redirect if already logged in
     if (user) {
@@ -63,7 +105,37 @@ const LoginContent = () => {
         }
 
         setLoading(true);
+        setRequiresVerification(false);
         try {
+            // First try direct API call to check for verification errors
+            const apiResponse = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const apiData = await apiResponse.json();
+
+            // Check if email verification is required
+            if (!apiResponse.ok && apiData.requiresVerification) {
+                setRequiresVerification(true);
+                setVerificationEmail(email);
+                toast.current?.show({
+                    severity: 'warn',
+                    summary: t('Email Verification Required'),
+                    detail: apiData.error || t('Please verify your email address before logging in. Check your inbox for the verification email.'),
+                    life: 6000
+                });
+                setLoading(false);
+                return;
+            }
+
+            // If API call failed with other error, throw it
+            if (!apiResponse.ok) {
+                throw new Error(apiData.error || 'Login failed');
+            }
+
+            // If API call succeeded, use NextAuth login
             const loggedInUser = await login(email, password);
 
             if (loggedInUser?.role === "ADMIN") {
@@ -96,10 +168,50 @@ const LoginContent = () => {
                 severity: 'error',
                 summary: t('Login Failed'),
                 detail: errorMessage,
-                life: 4000
+                life: 5000
             });
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleResendVerification = async () => {
+        if (!verificationEmail) return;
+        
+        setResendingVerification(true);
+        try {
+            const response = await fetch('/api/auth/resend-verification', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: verificationEmail }),
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                toast.current?.show({
+                    severity: 'success',
+                    summary: t('Email Sent'),
+                    detail: data.message || t('Verification email has been sent. Please check your inbox.'),
+                    life: 5000
+                });
+            } else {
+                toast.current?.show({
+                    severity: 'error',
+                    summary: t('Error'),
+                    detail: data.error || t('Failed to send verification email. Please try again.'),
+                    life: 5000
+                });
+            }
+        } catch (error) {
+            toast.current?.show({
+                severity: 'error',
+                summary: t('Error'),
+                detail: t('Failed to send verification email. Please try again.'),
+                life: 5000
+            });
+        } finally {
+            setResendingVerification(false);
         }
     };
 
@@ -226,6 +338,34 @@ const LoginContent = () => {
                         </div>
                         {passwordError && (
                             <small className="p-error block mb-3">{passwordError}</small>
+                        )}
+                        
+                        {requiresVerification && (
+                            <div className="mb-3 p-3 border-round" style={{ 
+                                backgroundColor: '#fff3cd', 
+                                border: '1px solid #ffc107',
+                                borderRadius: '8px'
+                            }}>
+                                <div className="flex align-items-center gap-2 mb-2">
+                                    <i className="pi pi-exclamation-triangle text-orange-500"></i>
+                                    <span className="text-900 font-medium">{t('Email Verification Required')}</span>
+                                </div>
+                                <p className="text-700 text-sm mb-2" style={{ fontSize: '0.875rem', lineHeight: '1.5' }}>
+                                    {t('Please verify your email address before logging in. Check your inbox for the verification email.')}
+                                </p>
+                                <Button
+                                    label={resendingVerification ? t('Sending...') : t('Resend Verification Email')}
+                                    icon={resendingVerification ? 'pi pi-spinner pi-spin' : 'pi pi-send'}
+                                    onClick={handleResendVerification}
+                                    disabled={resendingVerification}
+                                    className="p-button-outlined p-button-sm"
+                                    style={{ 
+                                        borderColor: '#ffc107',
+                                        color: '#856404',
+                                        fontSize: '0.875rem'
+                                    }}
+                                />
+                            </div>
                         )}
                         
                         <div className="mb-4 flex flex-wrap gap-3 align-items-center justify-content-between mt-2">

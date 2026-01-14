@@ -481,6 +481,47 @@ export default function HotelForms() {
                     className="p-button-outlined"
                     style={{ minWidth: '140px' }}
                   />
+                  <Button
+                    label={t("hotel.forms.buttons.copyUrl") || "Copy Link"}
+                    icon="pi pi-copy"
+                    onClick={async () => {
+                      if (!existingForm || !user?.hotelSlug) {
+                        showToast("warn", t("common.warning"), t("hotel.forms.toasts.noUrl"));
+                        return;
+                      }
+                      const formUrl = `${window.location.origin}/feedback/${user.hotelSlug}/${existingForm.id}`;
+                      try {
+                        if (navigator.clipboard && window.isSecureContext) {
+                          await navigator.clipboard.writeText(formUrl);
+                          showToast("success", t("common.success"), t("hotel.forms.toasts.copiedDetail") || "Form link copied to clipboard");
+                        } else {
+                          const textArea = document.createElement("textarea");
+                          textArea.value = formUrl;
+                          textArea.style.position = "fixed";
+                          textArea.style.left = "-999999px";
+                          textArea.style.top = "-999999px";
+                          document.body.appendChild(textArea);
+                          textArea.focus();
+                          textArea.select();
+                          try {
+                            const successful = document.execCommand('copy');
+                            if (successful) {
+                              showToast("success", t("common.success"), t("hotel.forms.toasts.copiedDetail") || "Form link copied to clipboard");
+                            } else {
+                              throw new Error('Copy command failed');
+                            }
+                          } finally {
+                            document.body.removeChild(textArea);
+                          }
+                        }
+                      } catch (error) {
+                        console.error("Failed to copy:", error);
+                        showToast("error", t("common.error"), t("hotel.forms.toasts.copyError") || "Failed to copy link");
+                      }
+                    }}
+                    className="p-button-outlined"
+                    style={{ minWidth: '140px' }}
+                  />
                 </div>
               </div>
             </div>

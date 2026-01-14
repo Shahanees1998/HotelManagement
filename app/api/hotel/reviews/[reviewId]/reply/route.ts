@@ -18,7 +18,7 @@ export async function POST(
 ) {
   return withAuth(request, async (authenticatedReq: AuthenticatedRequest) => {
     try {
-      const { replyText } = await request.json();
+      const { replyText, emailTitle } = await request.json();
       
       if (!replyText || !replyText.trim()) {
         return NextResponse.json(
@@ -59,16 +59,14 @@ export async function POST(
       if (SENDGRID_API_KEY) {
         try {
           const emailContent = createReplyEmail(
-            review.guestName || 'Valued Guest',
             replyText,
-            review.hotel.name,
-            review.form.title
+            emailTitle || undefined
           );
 
           await sgMail.send({
             to: review.guestEmail,
             from: FROM_EMAIL,
-            subject: `Reply from ${review.hotel.name} - Your Feedback`,
+            subject: emailTitle || `Reply from ${review.hotel.name}`,
             html: emailContent,
           });
 
@@ -134,14 +132,14 @@ export async function POST(
   });
 }
 
-function createReplyEmail(guestName: string, replyText: string, hotelName: string, formTitle: string): string {
+function createReplyEmail(replyText: string, emailTitle?: string): string {
+  // Only show what the hotel owner writes - no English boilerplate
   return `
     <!DOCTYPE html>
     <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Reply from ${hotelName}</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -150,57 +148,26 @@ function createReplyEmail(guestName: string, replyText: string, hotelName: strin
                 max-width: 600px;
                 margin: 0 auto;
                 padding: 20px;
-            }
-            .header {
                 background-color: #f8f9fa;
-                padding: 20px;
-                border-radius: 8px;
-                margin-bottom: 20px;
             }
             .content {
                 background-color: #ffffff;
-                padding: 20px;
+                padding: 30px;
                 border: 1px solid #e9ecef;
                 border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
-            .reply-box {
-                background-color: #f8f9fa;
-                padding: 15px;
-                border-left: 4px solid #007bff;
-                margin: 20px 0;
-                border-radius: 4px;
-            }
-            .footer {
-                margin-top: 20px;
-                padding-top: 20px;
-                border-top: 1px solid #e9ecef;
-                font-size: 14px;
-                color: #6c757d;
+            .reply-text {
+                white-space: pre-wrap;
+                font-size: 15px;
+                line-height: 1.8;
+                color: #333;
             }
         </style>
     </head>
     <body>
-        <div class="header">
-            <h2>Thank you for your feedback!</h2>
-            <p>Dear ${guestName},</p>
-        </div>
-        
         <div class="content">
-            <p>Thank you for taking the time to share your feedback about your experience at <strong>${hotelName}</strong> regarding "${formTitle}".</p>
-            
-            <div class="reply-box">
-                <h3>Our Response:</h3>
-                <p>${replyText.replace(/\n/g, '<br>')}</p>
-            </div>
-            
-            <p>We truly appreciate your feedback and look forward to serving you again in the future.</p>
-            
-            <p>Best regards,<br>
-            <strong>The ${hotelName} Team</strong></p>
-        </div>
-        
-        <div class="footer">
-            <p>This is an automated response from ${hotelName}. Please do not reply to this email.</p>
+            <div class="reply-text">${replyText.replace(/\n/g, '<br>')}</div>
         </div>
     </body>
     </html>

@@ -88,6 +88,172 @@ export async function GET(request: NextRequest) {
 
       const customRatingItems = customRatingForm.predefinedQuestions.customRatingItems;
 
+      // Calculate summary data with comparison to previous period
+      const actualStartDate = startDate ? new Date(startDate) : new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
+      const actualEndDate = endDate ? new Date(endDate) : new Date();
+      
+      // Calculate previous period for comparison
+      const periodLength = actualEndDate.getTime() - actualStartDate.getTime();
+      const previousPeriodStart = new Date(actualStartDate.getTime() - periodLength);
+      const previousPeriodEnd = new Date(actualStartDate.getTime());
+
+      // Get previous period reviews for comparison
+      const previousPeriodReviews = await prisma.review.findMany({
+        where: {
+          hotelId: hotel.id,
+          formId: customRatingForm.id,
+          submittedAt: {
+            gte: previousPeriodStart,
+            lte: previousPeriodEnd,
+          },
+        },
+        select: {
+          predefinedAnswers: true,
+          answers: true,
+        },
+      });
+
+      // Calculate current period summary
+      const currentSummary = customRatingItems.map(item => {
+        let totalRatings = 0;
+        let sumRatings = 0;
+
+        for (const review of reviews) {
+          let found = false;
+          if (review.predefinedAnswers) {
+            try {
+              const customRatingData = JSON.parse(review.predefinedAnswers);
+              if (typeof customRatingData === 'object' && !Array.isArray(customRatingData)) {
+                const ratingKeys = Object.entries(customRatingData)
+                  .filter(([key]) => key.startsWith('custom-rating-') && typeof customRatingData[key] === 'number')
+                  .sort(([a], [b]) => a.localeCompare(b));
+                const itemIndex = customRatingItems.findIndex(i => i.label === item.label);
+                if (itemIndex >= 0 && ratingKeys[itemIndex]) {
+                  const [, value] = ratingKeys[itemIndex];
+                  if (typeof value === 'number') {
+                    totalRatings++;
+                    sumRatings += value;
+                    found = true;
+                  }
+                }
+              } else if (Array.isArray(customRatingData)) {
+                const itemData = customRatingData.find((d: any) => d.label === item.label);
+                if (itemData && typeof itemData.rating === 'number') {
+                  totalRatings++;
+                  sumRatings += itemData.rating;
+                  found = true;
+                }
+              }
+            } catch (error) {
+              // Ignore parsing errors
+            }
+          }
+          if (!found && review.answers) {
+            const customRatingAnswer = review.answers.find(
+              (answer: any) => answer.questionId === 'custom-rating'
+            );
+            if (customRatingAnswer) {
+              try {
+                const customRatingData = JSON.parse(customRatingAnswer.answer);
+                if (Array.isArray(customRatingData)) {
+                  const itemData = customRatingData.find((d: any) => d.label === item.label);
+                  if (itemData && typeof itemData.rating === 'number') {
+                    totalRatings++;
+                    sumRatings += itemData.rating;
+                  }
+                }
+              } catch (error) {
+                // Ignore parsing errors
+              }
+            }
+          }
+        }
+
+        return {
+          label: item.label,
+          averageRating: totalRatings > 0 ? sumRatings / totalRatings : 0,
+          totalRatings,
+        };
+      });
+
+      // Calculate previous period summary
+      const previousSummary = customRatingItems.map(item => {
+        let totalRatings = 0;
+        let sumRatings = 0;
+
+        for (const review of previousPeriodReviews) {
+          let found = false;
+          if (review.predefinedAnswers) {
+            try {
+              const customRatingData = JSON.parse(review.predefinedAnswers);
+              if (typeof customRatingData === 'object' && !Array.isArray(customRatingData)) {
+                const ratingKeys = Object.entries(customRatingData)
+                  .filter(([key]) => key.startsWith('custom-rating-') && typeof customRatingData[key] === 'number')
+                  .sort(([a], [b]) => a.localeCompare(b));
+                const itemIndex = customRatingItems.findIndex(i => i.label === item.label);
+                if (itemIndex >= 0 && ratingKeys[itemIndex]) {
+                  const [, value] = ratingKeys[itemIndex];
+                  if (typeof value === 'number') {
+                    totalRatings++;
+                    sumRatings += value;
+                    found = true;
+                  }
+                }
+              } else if (Array.isArray(customRatingData)) {
+                const itemData = customRatingData.find((d: any) => d.label === item.label);
+                if (itemData && typeof itemData.rating === 'number') {
+                  totalRatings++;
+                  sumRatings += itemData.rating;
+                  found = true;
+                }
+              }
+            } catch (error) {
+              // Ignore parsing errors
+            }
+          }
+          if (!found && review.answers) {
+            const customRatingAnswer = review.answers.find(
+              (answer: any) => answer.questionId === 'custom-rating'
+            );
+            if (customRatingAnswer) {
+              try {
+                const customRatingData = JSON.parse(customRatingAnswer.answer);
+                if (Array.isArray(customRatingData)) {
+                  const itemData = customRatingData.find((d: any) => d.label === item.label);
+                  if (itemData && typeof itemData.rating === 'number') {
+                    totalRatings++;
+                    sumRatings += itemData.rating;
+                  }
+                }
+              } catch (error) {
+                // Ignore parsing errors
+              }
+            }
+          }
+        }
+
+        return {
+          label: item.label,
+          averageRating: totalRatings > 0 ? sumRatings / totalRatings : 0,
+        };
+      });
+
+      // Combine summaries with change calculations
+      const summaryWithChanges = currentSummary.map((current, index) => {
+        const previous = previousSummary[index];
+        const previousAvg = previous.averageRating;
+        const currentAvg = current.averageRating;
+        const change = previousAvg > 0 ? ((currentAvg - previousAvg) / previousAvg) * 100 : 0;
+        const isPositive = change >= 0;
+
+        return {
+          ...current,
+          previousAverage: previousAvg,
+          changePercent: change,
+          isPositive,
+        };
+      });
+
       if (format === 'csv') {
         // Generate CSV
         let csv = 'Date,Guest Name,Guest Email,Overall Rating,' + 
@@ -248,6 +414,40 @@ export async function GET(request: NextRequest) {
           html += `<td>${review.overallRating}/5</td>`;
 
           html += ratings.map(r => `<td>${r}</td>`).join('');
+          html += '</tr>';
+        }
+
+        html += `
+              </tbody>
+            </table>
+            
+            <h2 style="margin-top: 40px;">Rating Summary</h2>
+            <table style="margin-top: 20px;">
+              <thead>
+                <tr>
+                  <th>Sector</th>
+                  <th>Average Rating</th>
+                  <th>Total Ratings</th>
+                  <th>Change</th>
+                  <th>Previous Average</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        for (const item of summaryWithChanges) {
+          const changeSymbol = item.isPositive ? '↑' : '↓';
+          const changeColor = item.isPositive ? '#16a34a' : '#dc2626';
+          const changeText = item.changePercent !== undefined && item.previousAverage > 0
+            ? `${changeSymbol} ${Math.abs(item.changePercent).toFixed(1)}%`
+            : 'N/A';
+
+          html += '<tr>';
+          html += `<td><strong>${item.label}</strong></td>`;
+          html += `<td>${item.averageRating.toFixed(2)}/5</td>`;
+          html += `<td>${item.totalRatings}</td>`;
+          html += `<td style="color: ${changeColor}; font-weight: bold;">${changeText}</td>`;
+          html += `<td>${item.previousAverage > 0 ? item.previousAverage.toFixed(2) + '/5' : 'N/A'}</td>`;
           html += '</tr>';
         }
 

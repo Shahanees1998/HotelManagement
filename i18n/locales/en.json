@@ -13,7 +13,16 @@
     "nl": "Dutch",
     "uk": "Ukrainian",
     "el": "Greek",
-    "ro": "Romanian"
+    "ro": "Romanian",
+    "cs": "Czech",
+    "sk": "Slovak",
+    "lt": "Lithuanian",
+    "bg": "Bulgarian",
+    "sq": "Albanian",
+    "hu": "Hungarian",
+    "sv": "Swedish",
+    "hr": "Croatian",
+    "lv": "Latvian"
   },
   "common": {
     "warning": "Warning",
@@ -129,7 +138,9 @@
         "weekly": "Weekly",
         "monthly": "Monthly",
         "loading": "Loading comparison data...",
-        "noData": "No comparison data available"
+        "noData": "No comparison data available",
+        "positiveReviews": "Positive Reviews",
+        "negativeReviews": "Negative Reviews"
       }
     },
     "forms": {
@@ -289,8 +300,8 @@
         },
         "preview": {
           "descriptionFallback": "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance.",
-          "fullNameLabel": "Full Name*",
-          "fullNamePlaceholder": "Enter your full name",
+          "fullNameLabel": "Name*",
+          "fullNamePlaceholder": "Enter your name",
           "emailLabel": "Email*",
           "emailPlaceholder": "Enter your email address",
           "submit": "Submit Now"
@@ -699,6 +710,25 @@
           "success": "Payment method updated successfully",
           "error": "Failed to update payment method"
         }
+      },
+      "validation": {
+        "pleaseFixErrors": "Please fix the errors before submitting",
+        "cardNumberRequired": "Card number is required",
+        "cardNumberInvalid": "Invalid card number. Please check and try again.",
+        "cardNumberValid": "Valid card number",
+        "cardBrandUnsupported": "Unsupported card brand",
+        "cardBrandMismatch": "Selected brand doesn't match the card number",
+        "detectedBrand": "Detected brand",
+        "expiryMonthRequired": "Expiry month is required",
+        "expiryYearRequired": "Expiry year is required",
+        "expiryDateInvalid": "Expiry date is invalid or in the past",
+        "cvvRequired": "CVV is required",
+        "cvvInvalid": "CVV must be 3 digits (4 for American Express)",
+        "cardholderNameRequired": "Cardholder name is required",
+        "bankNameRequired": "Bank name is required",
+        "accountNumberRequired": "Account number is required",
+        "routingNumberRequired": "Routing number is required",
+        "accountTypeRequired": "Account type is required"
       }
     },
     "subscription": {
@@ -808,7 +838,7 @@
             "Up to 500 reviews per month",
             "Advanced analytics",
             "QR code generation",
-            "Customized Star Rating Questions"
+            "Customised Star Rating Questions"
           ]
         },
         "enterprise": {
@@ -1036,7 +1066,7 @@
               "Up to 500 reviews per month",
               "Advanced analytics",
               "QR code generation",
-              "Customized Star Rating Questions"
+              "Customised Star Rating Questions"
             ]
           },
           "enterprise": {

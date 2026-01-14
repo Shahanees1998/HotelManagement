@@ -16,6 +16,15 @@ import nl from "./locales/nl.json";
 import uk from "./locales/uk.json";
 import el from "./locales/el.json";
 import ro from "./locales/ro.json";
+import cs from "./locales/cs.json";
+import sk from "./locales/sk.json";
+import lt from "./locales/lt.json";
+import bg from "./locales/bg.json";
+import sq from "./locales/sq.json";
+import hu from "./locales/hu.json";
+import sv from "./locales/sv.json";
+import hr from "./locales/hr.json";
+import lv from "./locales/lv.json";
 
 const STORAGE_KEY = "hotel-management-locale";
 
@@ -34,6 +43,15 @@ const TRANSLATIONS = {
   uk,
   el,
   ro,
+  cs,
+  sk,
+  lt,
+  bg,
+  sq,
+  hu,
+  sv,
+  hr,
+  lv,
 } as const;
 
 type Locale = keyof typeof TRANSLATIONS;

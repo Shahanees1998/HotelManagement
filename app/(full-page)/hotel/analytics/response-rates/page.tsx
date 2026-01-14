@@ -77,6 +77,12 @@ export default function HotelResponseRatesAnalytics() {
       legend: {
         position: 'top' as const,
       },
+      datalabels: {
+        display: false, // Remove numbers under bars and charts
+      },
+      tooltip: {
+        enabled: true, // Keep tooltips on hover
+      },
     },
   };
 

@@ -18,7 +18,7 @@ interface LanguageOption {
 }
 
 const FLAG_MAP: Record<Locale, { src: string }> = {
-  en: { src: "/images/flags/en.svg" },
+  en: { src: "/images/flags/en.jpg" }, // Changed from en.svg to gb.svg for UK flag
   ar: { src: "/images/flags/ar.svg" },
   zh: { src: "/images/flags/zh.svg" },
   fr: { src: "/images/flags/fr.svg" },
@@ -32,6 +32,15 @@ const FLAG_MAP: Record<Locale, { src: string }> = {
   uk: { src: "/images/flags/uk.svg" },
   el: { src: "/images/flags/el.svg" },
   ro: { src: "/images/flags/ro.svg" },
+  cs: { src: "/images/flags/cz.png" },
+  sk: { src: "/images/flags/sw.png" },
+  lt: { src: "/images/flags/lt.png" },
+  bg: { src: "/images/flags/al.png" },
+  sq: { src: "/images/flags/al.png" },
+  hu: { src: "/images/flags/hg.png" },
+  sv: { src: "/images/flags/sw.png" },
+  hr: { src: "/images/flags/ct.png" },
+  lv: { src: "/images/flags/lt.png" },
 };
 
 export function LanguageSelector({ className, placeholder, style }: LanguageSelectorProps) {

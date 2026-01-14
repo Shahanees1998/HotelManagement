@@ -294,11 +294,11 @@ export default function HotelProfile() {
               className="p-button-outlined"
               onClick={() => setShowSubscriptionManager(true)}
             /> */}
-            <Button
+            {/* <Button
               label={t("hotel.profile.hotel.buttons.contactSupport")}
               icon="pi pi-envelope"
               className="p-button-outlined"
-            />
+            /> */}
           </div>
         </Card>
 </div>

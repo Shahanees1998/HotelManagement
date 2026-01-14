@@ -38,10 +38,12 @@ function getWeekNumber(date: Date): string {
 }
 
 // Helper function to get week label
-function getWeekLabel(weekKey: string): string {
+function getWeekLabel(weekKey: string, locale: string = 'en'): string {
   const [year, week] = weekKey.split('-W');
   const date = new Date(parseInt(year), 0, 1 + (parseInt(week) - 1) * 7);
-  const month = date.toLocaleDateString('en-US', { month: 'short' });
+  // Map locale codes to Intl locale format
+  const intlLocale = locale === 'en' ? 'en-US' : locale;
+  const month = date.toLocaleDateString(intlLocale, { month: 'short' });
   const day = date.getDate();
   return `W${week} (${month} ${day})`;
 }
@@ -59,6 +61,7 @@ export async function GET(request: NextRequest) {
       const period = searchParams.get('period') || 'monthly'; // 'weekly' or 'monthly'
       const startDate = parseDateParam(searchParams.get('startDate'));
       const endDate = parseDateParam(searchParams.get('endDate'));
+      const locale = searchParams.get('locale') || 'en'; // Get locale from query params
 
       // Get hotel data
       const hotel = await prisma.hotels.findUnique({
@@ -146,7 +149,7 @@ export async function GET(request: NextRequest) {
         const recentWeeks = weeks.slice(-24);
         
         recentWeeks.forEach(weekKey => {
-          labels.push(getWeekLabel(weekKey));
+          labels.push(getWeekLabel(weekKey, locale));
           positiveData.push(periodData[weekKey]?.positive || 0);
           negativeData.push(periodData[weekKey]?.negative || 0);
         });
@@ -164,26 +167,29 @@ export async function GET(request: NextRequest) {
         
         months.forEach(monthKey => {
           const monthDate = new Date(monthKey + '-01');
-          const monthLabel = monthDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+          // Map locale codes to Intl locale format
+          const intlLocale = locale === 'en' ? 'en-US' : locale;
+          const monthLabel = monthDate.toLocaleDateString(intlLocale, { month: 'short', year: 'numeric' });
           labels.push(monthLabel);
           positiveData.push(periodData[monthKey]?.positive || 0);
           negativeData.push(periodData[monthKey]?.negative || 0);
         });
       }
 
+      // Return raw data - labels will be translated on frontend
       return NextResponse.json({
         data: {
           labels,
           datasets: [
             {
-              label: 'Positive Reviews',
+              label: 'positiveReviews', // Key for translation
               data: positiveData,
               backgroundColor: '#10b981', // Green
               borderColor: '#059669',
               borderWidth: 1,
             },
             {
-              label: 'Negative Reviews',
+              label: 'negativeReviews', // Key for translation
               data: negativeData,
               backgroundColor: '#ef4444', // Red
               borderColor: '#dc2626',

@@ -87,17 +87,55 @@ export default function HotelDashboard() {
     responseRate: 0,
     recentReviews: 0,
   });
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  // Auto-set to last 12 months by default
+  const getDefaultDateRange = () => {
+    const end = new Date();
+    const start = new Date();
+    start.setMonth(start.getMonth() - 12);
+    return { start, end };
+  };
+
+  const defaultRange = getDefaultDateRange();
+  const [startDate, setStartDate] = useState<Date | null>(defaultRange.start);
+  const [endDate, setEndDate] = useState<Date | null>(defaultRange.end);
   const [applyingFilters, setApplyingFilters] = useState(false);
+  const [selectedQuickRange, setSelectedQuickRange] = useState<string | null>(null);
   const [comparisonPeriod, setComparisonPeriod] = useState<'weekly' | 'monthly'>('monthly');
   const [comparisonChartData, setComparisonChartData] = useState<any>(null);
   const [loadingComparison, setLoadingComparison] = useState(false);
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
-    loadDashboardData();
+    // Auto-load with default 12 months range
+    loadDashboardDataWithFilters(startDate, endDate);
   }, []);
+
+  const setQuickDateRange = (range: 'week' | 'month' | '3months' | '12months' | 'custom') => {
+    const end = new Date();
+    const start = new Date();
+    
+    if (range === 'week') {
+      start.setDate(start.getDate() - 7);
+      setSelectedQuickRange('week');
+    } else if (range === 'month') {
+      start.setMonth(start.getMonth() - 1);
+      setSelectedQuickRange('month');
+    } else if (range === '3months') {
+      start.setMonth(start.getMonth() - 3);
+      setSelectedQuickRange('3months');
+    } else if (range === '12months') {
+      start.setMonth(start.getMonth() - 12);
+      setSelectedQuickRange('12months');
+    } else {
+      setSelectedQuickRange(null);
+    }
+    
+    if (range !== 'custom') {
+      setStartDate(start);
+      setEndDate(end);
+      loadDashboardDataWithFilters(start, end);
+    }
+  };
 
   const applyFilters = async () => {
     setApplyingFilters(true);
@@ -107,8 +145,10 @@ export default function HotelDashboard() {
   };
 
   const clearFilters = () => {
-    setStartDate(null);
-    setEndDate(null);
+    const defaultRange = getDefaultDateRange();
+    setStartDate(defaultRange.start);
+    setEndDate(defaultRange.end);
+    setSelectedQuickRange('12months');
     // Reload with empty filters
     loadDashboardDataWithFilters(null, null);
     showToast("info", t("Info"), t("Filters cleared"));
@@ -340,13 +380,24 @@ export default function HotelDashboard() {
       
       if (response.ok) {
         const data = await response.json();
-        if (data.data) {
+        console.log('Custom rating API response:', data);
+        if (data.data && data.success !== false) {
+          console.log('Setting custom rating data:', data.data);
           setCustomRatingData(data.data);
+        } else {
+          // If no data or form not found, set to null to hide the section
+          console.log('No custom rating data found, hiding section');
+          setCustomRatingData(null);
         }
+      } else {
+        // If API returns error, set to null
+        console.log('Custom rating API error, hiding section');
+        setCustomRatingData(null);
       }
     } catch (error) {
       console.error("Error loading custom rating data:", error);
-      // Don't show error toast for this, as it's optional data
+      // Set to null on error so section doesn't show
+      setCustomRatingData(null);
     }
   };
 
@@ -359,6 +410,7 @@ export default function HotelDashboard() {
     try {
       const params = new URLSearchParams();
       params.append('period', period);
+      params.append('locale', locale); // Pass locale to API
       if (filterStartDate) params.append('startDate', filterStartDate.toISOString());
       if (filterEndDate) params.append('endDate', filterEndDate.toISOString());
       
@@ -367,7 +419,19 @@ export default function HotelDashboard() {
       if (response.ok) {
         const data = await response.json();
         if (data.data) {
-          setComparisonChartData(data.data);
+          // Translate dataset labels
+          const translatedData = {
+            ...data.data,
+            datasets: data.data.datasets.map((dataset: any) => ({
+              ...dataset,
+              label: dataset.label === 'positiveReviews' 
+                ? t('hotel.dashboard.comparisonChart.positiveReviews') 
+                : dataset.label === 'negativeReviews'
+                ? t('hotel.dashboard.comparisonChart.negativeReviews')
+                : dataset.label
+            }))
+          };
+          setComparisonChartData(translatedData);
         }
       }
     } catch (error) {
@@ -383,7 +447,7 @@ export default function HotelDashboard() {
       loadComparisonChartData(comparisonPeriod, startDate, endDate);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [comparisonPeriod]);
+  }, [comparisonPeriod, locale]); // Reload when locale changes
 
   const defaultChartData = useMemo(() => ({
     labels: [t("No Data")],
@@ -436,16 +500,70 @@ export default function HotelDashboard() {
   const chartOptions = useMemo(() => ({
     responsive: true,
     maintainAspectRatio: false,
+    interaction: {
+      mode: 'index' as const,
+      intersect: false,
+    },
     plugins: {
       legend: {
         position: 'top' as const,
+        labels: {
+          usePointStyle: true,
+          padding: 15,
+          font: {
+            size: 12,
+            weight: '500' as const,
+          },
+        },
+      },
+      datalabels: {
+        display: false, // Remove numbers under bars and charts
+      },
+      tooltip: {
+        enabled: true,
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        padding: 12,
+        titleFont: {
+          size: 14,
+          weight: 'bold' as const,
+        },
+        bodyFont: {
+          size: 13,
+        },
+        borderColor: 'rgba(255, 255, 255, 0.1)',
+        borderWidth: 1,
+        cornerRadius: 8,
       },
     },
     scales: {
+      x: {
+        grid: {
+          display: true,
+          color: 'rgba(0, 0, 0, 0.05)',
+          drawBorder: false,
+        },
+        ticks: {
+          font: {
+            size: 11,
+          },
+          color: '#6b7280',
+        },
+      },
       y: {
         type: 'linear' as const,
         display: true,
         position: 'left' as const,
+        grid: {
+          color: 'rgba(0, 0, 0, 0.05)',
+          drawBorder: false,
+        },
+        ticks: {
+          display: true,
+          font: {
+            size: 11,
+          },
+          color: '#6b7280',
+        },
       },
       y1: {
         type: 'linear' as const,
@@ -453,28 +571,66 @@ export default function HotelDashboard() {
         position: 'right' as const,
         grid: {
           drawOnChartArea: false,
+          drawBorder: false,
+        },
+        ticks: {
+          display: true,
+          font: {
+            size: 11,
+          },
+          color: '#6b7280',
         },
       },
     },
-  }), []);
+  }), [locale, t]);
 
   const customRatingChartOptions = useMemo(() => ({
     responsive: true,
     maintainAspectRatio: false,
+    interaction: {
+      mode: 'index' as const,
+      intersect: false,
+    },
     elements: {
       point: {
-        radius: 6,
-        hoverRadius: 8,
+        radius: 4,
+        hoverRadius: 6,
+        hoverBorderWidth: 2,
       },
       line: {
         tension: 0.4,
+        borderWidth: 2,
       },
     },
     plugins: {
       legend: {
         position: 'top' as const,
+        labels: {
+          usePointStyle: true,
+          padding: 15,
+          font: {
+            size: 12,
+            weight: '500' as const,
+          },
+        },
+      },
+      datalabels: {
+        display: false, // Remove numbers under bars and charts
       },
       tooltip: {
+        enabled: true,
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        padding: 12,
+        titleFont: {
+          size: 14,
+          weight: 'bold' as const,
+        },
+        bodyFont: {
+          size: 13,
+        },
+        borderColor: 'rgba(255, 255, 255, 0.1)',
+        borderWidth: 1,
+        cornerRadius: 8,
         callbacks: {
           label: function(context: any) {
             const value = context.parsed.y.toFixed(1);
@@ -486,11 +642,33 @@ export default function HotelDashboard() {
       }
     },
     scales: {
+      x: {
+        grid: {
+          display: true,
+          color: 'rgba(0, 0, 0, 0.05)',
+          drawBorder: false,
+        },
+        ticks: {
+          font: {
+            size: 11,
+          },
+          color: '#6b7280',
+        },
+      },
       y: {
         beginAtZero: true,
         suggestedMax: 5.5,
+        grid: {
+          color: 'rgba(0, 0, 0, 0.05)',
+          drawBorder: false,
+        },
         ticks: {
           stepSize: 1,
+          display: true,
+          font: {
+            size: 11,
+          },
+          color: '#6b7280',
         },
       },
     },
@@ -503,7 +681,11 @@ export default function HotelDashboard() {
       legend: {
         position: 'top' as const,
       },
+      datalabels: {
+        display: false, // Remove numbers under bars and charts
+      },
       tooltip: {
+        enabled: true, // Keep tooltips on hover
         callbacks: {
           label: function(context: any) {
             return `${context.dataset.label}: ${context.parsed.y}`;
@@ -528,7 +710,7 @@ export default function HotelDashboard() {
         },
       },
     },
-  }), []);
+  }), [t, locale]); // Update when translations or locale change
 
   const getColorForIndex = (index: number) => {
     const colors = ['#2563eb', '#dc2626', '#16a34a', '#ca8a04', '#9333ea', '#ea580c'];
@@ -685,6 +867,7 @@ export default function HotelDashboard() {
         percentageChange: negativeReviewsChange ? {
           value: negativeReviewsChange.value,
           isPositive: !negativeReviewsChange.isPositive, // Inverted: decrease in negative reviews is good
+          isNegativeReviews: true, // Flag to reverse colors
         } : null,
       },
       {
@@ -723,51 +906,107 @@ export default function HotelDashboard() {
       {/* Date Filters */}
       <div className="col-12">
         <Card className="mb-4">
-          <div className="grid">
-            <div className="col-12 md:col-3">
-              <label className="block text-900 font-medium mb-2">{t("Start Date")}</label>
-              <Calendar
-                value={startDate}
-                onChange={(e) => setStartDate(e.value as Date | null)}
-                placeholder={t("Select start date")}
-                className="w-full"
-                showIcon
-                dateFormat="yy-mm-dd"
-                maxDate={endDate || new Date()}
-              />
-            </div>
-            <div className="col-12 md:col-3">
-              <label className="block text-900 font-medium mb-2">{t("End Date")}</label>
-              <Calendar
-                value={endDate}
-                onChange={(e) => setEndDate(e.value as Date | null)}
-                placeholder={t("Select end date")}
-                className="w-full"
-                showIcon
-                dateFormat="yy-mm-dd"
-                minDate={startDate || undefined}
-                maxDate={new Date()}
-              />
-            </div>
-            <div className="col-12 md:col-3 flex align-items-end">
+          <div className="flex flex-column gap-3">
+            {/* Quick Range Buttons */}
+            <div className="flex flex-wrap gap-2">
               <Button
-                label={t("Search")}
-                icon="pi pi-search"
-                onClick={applyFilters}
-                loading={applyingFilters}
-                className="w-full"
-                disabled={applyingFilters}
+                label={t("Last Week")}
+                icon="pi pi-calendar"
+                onClick={() => setQuickDateRange('week')}
+                className={selectedQuickRange === 'week' ? '' : 'p-button-outlined'}
+                size="small"
               />
-            </div>
-            <div className="col-12 md:col-3 flex align-items-end">
               <Button
-                label={t("Clear Filters")}
-                icon="pi pi-filter-slash"
-                onClick={clearFilters}
-                className="w-full p-button-outlined p-button-secondary"
-                disabled={applyingFilters}
+                label={t("Last Month")}
+                icon="pi pi-calendar"
+                onClick={() => setQuickDateRange('month')}
+                className={selectedQuickRange === 'month' ? '' : 'p-button-outlined'}
+                size="small"
+              />
+              <Button
+                label={t("Last 3 Months")}
+                icon="pi pi-calendar"
+                onClick={() => setQuickDateRange('3months')}
+                className={selectedQuickRange === '3months' ? '' : 'p-button-outlined'}
+                size="small"
+              />
+              <Button
+                label={t("Last 12 Months")}
+                icon="pi pi-calendar"
+                onClick={() => setQuickDateRange('12months')}
+                className={selectedQuickRange === '12months' ? '' : 'p-button-outlined'}
+                size="small"
+              />
+              <Button
+                label={t("Custom Range")}
+                icon="pi pi-calendar-times"
+                onClick={() => setQuickDateRange('custom')}
+                className={selectedQuickRange === null ? '' : 'p-button-outlined'}
+                size="small"
               />
             </div>
+            
+            {/* Custom Date Pickers (only show when custom is selected) */}
+            {selectedQuickRange === null && (
+              <div className="grid">
+                <div className="col-12 md:col-4">
+                  <label className="block text-900 font-medium mb-2">{t("Start Date")}</label>
+                  <Calendar
+                    value={startDate}
+                    onChange={(e) => {
+                      setStartDate(e.value as Date | null);
+                      setSelectedQuickRange(null);
+                    }}
+                    placeholder={t("Select start date")}
+                    className="w-full"
+                    showIcon
+                    dateFormat="yy-mm-dd"
+                    maxDate={endDate || new Date()}
+                  />
+                </div>
+                <div className="col-12 md:col-4">
+                  <label className="block text-900 font-medium mb-2">{t("End Date")}</label>
+                  <Calendar
+                    value={endDate}
+                    onChange={(e) => {
+                      setEndDate(e.value as Date | null);
+                      setSelectedQuickRange(null);
+                    }}
+                    placeholder={t("Select end date")}
+                    className="w-full"
+                    showIcon
+                    dateFormat="yy-mm-dd"
+                    minDate={startDate || undefined}
+                    maxDate={new Date()}
+                  />
+                </div>
+                <div className="col-12 md:col-2 flex align-items-end">
+                  <Button
+                    label={t("Search")}
+                    icon="pi pi-search"
+                    onClick={applyFilters}
+                    loading={applyingFilters}
+                    className="w-full"
+                    disabled={applyingFilters}
+                  />
+                </div>
+                <div className="col-12 md:col-2 flex align-items-end">
+                  <Button
+                    label={t("Clear")}
+                    icon="pi pi-filter-slash"
+                    onClick={() => {
+                      const defaultRange = getDefaultDateRange();
+                      setStartDate(defaultRange.start);
+                      setEndDate(defaultRange.end);
+                      setSelectedQuickRange('12months');
+                      loadDashboardDataWithFilters(defaultRange.start, defaultRange.end);
+                    }}
+                    className="w-full p-button-outlined p-button-secondary"
+                    disabled={applyingFilters}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </Card>
       </div>
@@ -823,11 +1062,25 @@ export default function HotelDashboard() {
                           borderRadius: '12px',
                           fontSize: '0.7rem',
                           fontWeight: '600',
-                          backgroundColor: card.percentageChange.isPositive 
-                            ? 'rgba(16, 185, 129, 0.1)' 
-                            : 'rgba(239, 68, 68, 0.1)',
-                          color: card.percentageChange.isPositive ? '#10b981' : '#ef4444',
-                          border: `1px solid ${card.percentageChange.isPositive ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)'}`,
+                          // For negative reviews: red when up (bad), green when down (good)
+                          // For others: green when up (good), red when down (bad)
+                          backgroundColor: (card.percentageChange as any).isNegativeReviews
+                            ? (card.percentageChange.isPositive 
+                                ? 'rgba(239, 68, 68, 0.1)'  // Red when up (bad for negative reviews)
+                                : 'rgba(16, 185, 129, 0.1)') // Green when down (good for negative reviews)
+                            : (card.percentageChange.isPositive 
+                                ? 'rgba(16, 185, 129, 0.1)'  // Green when up (good)
+                                : 'rgba(239, 68, 68, 0.1)'), // Red when down (bad)
+                          color: (card.percentageChange as any).isNegativeReviews
+                            ? (card.percentageChange.isPositive ? '#ef4444' : '#10b981')
+                            : (card.percentageChange.isPositive ? '#10b981' : '#ef4444'),
+                          border: `1px solid ${(card.percentageChange as any).isNegativeReviews
+                            ? (card.percentageChange.isPositive 
+                                ? 'rgba(239, 68, 68, 0.2)' 
+                                : 'rgba(16, 185, 129, 0.2)')
+                            : (card.percentageChange.isPositive 
+                                ? 'rgba(16, 185, 129, 0.2)' 
+                                : 'rgba(239, 68, 68, 0.2)')}`,
                           lineHeight: '1',
                         }}
                       >
@@ -879,6 +1132,7 @@ export default function HotelDashboard() {
             </div>
           ) : comparisonChartData ? (
             <Chart 
+              key={`comparison-chart-${locale}`} // Force re-render when locale changes
               type="bar" 
               data={comparisonChartData} 
               options={comparisonChartOptions} 

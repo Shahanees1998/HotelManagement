@@ -47,7 +47,79 @@ export default function PaymentMethodsPage() {
     routingNumber: '',
     accountType: '',
   });
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const toast = useRef<Toast>(null);
+
+  // Luhn algorithm for card number validation
+  const validateCardNumber = (cardNumber: string): boolean => {
+    const cleaned = cardNumber.replace(/\s+/g, '');
+    if (cleaned.length < 13 || cleaned.length > 19) return false;
+    
+    let sum = 0;
+    let isEven = false;
+    
+    for (let i = cleaned.length - 1; i >= 0; i--) {
+      let digit = parseInt(cleaned[i]);
+      
+      if (isEven) {
+        digit *= 2;
+        if (digit > 9) {
+          digit -= 9;
+        }
+      }
+      
+      sum += digit;
+      isEven = !isEven;
+    }
+    
+    return sum % 10 === 0;
+  };
+
+  // Auto-detect card brand based on card number
+  const detectCardBrand = (cardNumber: string): string => {
+    const cleaned = cardNumber.replace(/\s+/g, '');
+    
+    if (cleaned.startsWith('4')) {
+      return 'visa';
+    } else if (cleaned.startsWith('5') || cleaned.startsWith('2')) {
+      return 'mastercard';
+    } else if (cleaned.startsWith('3')) {
+      if (cleaned.startsWith('34') || cleaned.startsWith('37')) {
+        return 'amex';
+      }
+    } else if (cleaned.startsWith('6')) {
+      if (cleaned.startsWith('6011') || cleaned.startsWith('65') || 
+          (cleaned.startsWith('622') && parseInt(cleaned.substring(3, 6)) >= 126 && parseInt(cleaned.substring(3, 6)) <= 925)) {
+        return 'discover';
+      }
+    }
+    
+    return '';
+  };
+
+  // Validate expiry date
+  const validateExpiryDate = (month: string, year: string): boolean => {
+    const monthNum = parseInt(month);
+    const yearNum = parseInt(year);
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    
+    if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) return false;
+    if (isNaN(yearNum) || yearNum < currentYear) return false;
+    if (yearNum === currentYear && monthNum < currentMonth) return false;
+    
+    return true;
+  };
+
+  // Validate CVV
+  const validateCVV = (cvv: string, brand: string): boolean => {
+    const cleaned = cvv.replace(/\s+/g, '');
+    if (brand === 'amex') {
+      return cleaned.length === 4 && /^\d{4}$/.test(cleaned);
+    }
+    return cleaned.length === 3 && /^\d{3}$/.test(cleaned);
+  };
 
   const cardBrandOptions = useMemo(() => [
     { label: t("hotel.paymentMethods.form.cardBrands.visa"), value: "visa" },
@@ -136,15 +208,90 @@ export default function PaymentMethodsPage() {
     toast.current?.show({ severity, summary, detail, life: 3000 });
   };
 
+  const validateForm = (): boolean => {
+    const errors: Record<string, string> = {};
+    
+    if (newMethod.type === 'card') {
+      const cardNumberCleaned = newMethod.cardNumber.replace(/\s+/g, '');
+      
+      // Validate card number
+      if (!cardNumberCleaned) {
+        errors.cardNumber = t("hotel.paymentMethods.validation.cardNumberRequired");
+      } else if (!validateCardNumber(newMethod.cardNumber)) {
+        errors.cardNumber = t("hotel.paymentMethods.validation.cardNumberInvalid");
+      }
+      
+      // Auto-detect and validate brand
+      const detectedBrand = detectCardBrand(newMethod.cardNumber);
+      if (cardNumberCleaned && !detectedBrand) {
+        errors.cardNumber = t("hotel.paymentMethods.validation.cardBrandUnsupported");
+      } else if (cardNumberCleaned && detectedBrand && newMethod.brand && detectedBrand !== newMethod.brand.toLowerCase()) {
+        // Warn if manually selected brand doesn't match detected brand
+        errors.brand = t("hotel.paymentMethods.validation.cardBrandMismatch");
+      }
+      
+      // Validate expiry date
+      if (!newMethod.expiryMonth || !newMethod.expiryYear) {
+        if (!newMethod.expiryMonth) errors.expiryMonth = t("hotel.paymentMethods.validation.expiryMonthRequired");
+        if (!newMethod.expiryYear) errors.expiryYear = t("hotel.paymentMethods.validation.expiryYearRequired");
+      } else if (!validateExpiryDate(newMethod.expiryMonth, newMethod.expiryYear)) {
+        errors.expiryDate = t("hotel.paymentMethods.validation.expiryDateInvalid");
+      }
+      
+      // Validate CVV
+      if (!newMethod.cvv) {
+        errors.cvv = t("hotel.paymentMethods.validation.cvvRequired");
+      } else if (!validateCVV(newMethod.cvv, detectedBrand || newMethod.brand)) {
+        errors.cvv = t("hotel.paymentMethods.validation.cvvInvalid");
+      }
+      
+      // Validate cardholder name
+      if (!newMethod.cardholderName || !newMethod.cardholderName.trim()) {
+        errors.cardholderName = t("hotel.paymentMethods.validation.cardholderNameRequired");
+      }
+    } else {
+      // Bank account validation
+      if (!newMethod.bankName || !newMethod.bankName.trim()) {
+        errors.bankName = t("hotel.paymentMethods.validation.bankNameRequired");
+      }
+      if (!newMethod.accountNumber || !newMethod.accountNumber.replace(/\s+/g, '')) {
+        errors.accountNumber = t("hotel.paymentMethods.validation.accountNumberRequired");
+      }
+      if (!newMethod.routingNumber || !newMethod.routingNumber.replace(/\s+/g, '')) {
+        errors.routingNumber = t("hotel.paymentMethods.validation.routingNumberRequired");
+      }
+      if (!newMethod.accountType) {
+        errors.accountType = t("hotel.paymentMethods.validation.accountTypeRequired");
+      }
+    }
+    
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleAddMethod = async () => {
+    // Validate form before submitting
+    if (!validateForm()) {
+      showToast("warn", t("common.warning"), t("hotel.paymentMethods.validation.pleaseFixErrors"));
+      return;
+    }
+    
     setLoading(true);
     try {
+      // Auto-set brand if detected
+      const cardNumberCleaned = newMethod.cardNumber.replace(/\s+/g, '');
+      const detectedBrand = detectCardBrand(newMethod.cardNumber);
+      const methodToSubmit = {
+        ...newMethod,
+        brand: detectedBrand || newMethod.brand,
+      };
+      
       const response = await fetch('/api/hotel/payment-methods', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newMethod),
+        body: JSON.stringify(methodToSubmit),
       });
 
       if (response.ok) {
@@ -294,6 +441,112 @@ export default function PaymentMethodsPage() {
       default: return 'pi pi-credit-card';
     }
   };
+
+  // Get card brand icon component
+  const getCardBrandIcon = (brand: string) => {
+    if (!brand) return null;
+    
+    switch (brand.toLowerCase()) {
+      case 'visa':
+        return (
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            width: '32px',
+            height: '20px',
+            backgroundColor: '#1A1F71',
+            borderRadius: '4px',
+            color: '#FFFFFF',
+            fontSize: '10px',
+            fontWeight: 'bold'
+          }}>
+            VISA
+          </div>
+        );
+      case 'mastercard':
+        return (
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            width: '32px',
+            height: '20px',
+            gap: '2px'
+          }}>
+            <div style={{ width: '10px', height: '10px', backgroundColor: '#EB001B', borderRadius: '50%' }}></div>
+            <div style={{ width: '10px', height: '10px', backgroundColor: '#F79E1B', borderRadius: '50%' }}></div>
+          </div>
+        );
+      case 'amex':
+        return (
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            width: '32px',
+            height: '20px',
+            backgroundColor: '#006FCF',
+            borderRadius: '4px',
+            color: '#FFFFFF',
+            fontSize: '8px',
+            fontWeight: 'bold'
+          }}>
+            AMEX
+          </div>
+        );
+      case 'discover':
+        return (
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            width: '32px',
+            height: '20px',
+            backgroundColor: '#FF6000',
+            borderRadius: '4px',
+            color: '#FFFFFF',
+            fontSize: '8px',
+            fontWeight: 'bold'
+          }}>
+            DISC
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  // Check if form is valid
+  const isFormValid = useMemo(() => {
+    if (newMethod.type === 'card') {
+      const cardNumberCleaned = newMethod.cardNumber.replace(/\s+/g, '');
+      const detectedBrand = detectCardBrand(newMethod.cardNumber);
+      
+      return (
+        cardNumberCleaned &&
+        validateCardNumber(newMethod.cardNumber) &&
+        detectedBrand &&
+        newMethod.expiryMonth &&
+        newMethod.expiryYear &&
+        validateExpiryDate(newMethod.expiryMonth, newMethod.expiryYear) &&
+        newMethod.cvv &&
+        validateCVV(newMethod.cvv, detectedBrand || newMethod.brand) &&
+        newMethod.cardholderName &&
+        newMethod.cardholderName.trim()
+      );
+    } else {
+      return (
+        newMethod.bankName &&
+        newMethod.bankName.trim() &&
+        newMethod.accountNumber &&
+        newMethod.accountNumber.replace(/\s+/g, '') &&
+        newMethod.routingNumber &&
+        newMethod.routingNumber.replace(/\s+/g, '') &&
+        newMethod.accountType
+      );
+    }
+  }, [newMethod]);
 
   const getBankIcon = (bankName: string) => {
     return 'pi pi-building';
@@ -573,7 +826,7 @@ export default function PaymentMethodsPage() {
               icon="pi pi-check"
               onClick={handleAddMethod}
               loading={loading}
-              disabled={loading}
+              disabled={loading || !isFormValid}
             />
           </div>
         }
@@ -592,63 +845,180 @@ export default function PaymentMethodsPage() {
           {newMethod.type === 'card' ? (
             <>
               <div className="col-12">
-                <label className="block text-900 font-medium mb-2">{t("hotel.paymentMethods.form.card.number")}</label>
-                <InputMask
-                  mask="9999 9999 9999 9999"
-                  value={newMethod.cardNumber}
-                  onChange={(e) => setNewMethod({ ...newMethod, cardNumber: e.target.value || '' })}
-                  placeholder={t("hotel.paymentMethods.form.card.numberPlaceholder")}
-                  className="w-full"
-                />
+                <label className="block text-900 font-medium mb-2">
+                  {t("hotel.paymentMethods.form.card.number")} <span className="text-red-500">*</span>
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <InputMask
+                    mask={(() => {
+                      const detectedBrand = detectCardBrand(newMethod.cardNumber);
+                      return detectedBrand === 'amex' ? "9999 999999 99999" : "9999 9999 9999 9999";
+                    })()}
+                    value={newMethod.cardNumber}
+                    onChange={(e) => {
+                      const cardNumber = e.target.value || '';
+                      const detectedBrand = detectCardBrand(cardNumber);
+                      setNewMethod({ 
+                        ...newMethod, 
+                        cardNumber,
+                        brand: detectedBrand || newMethod.brand,
+                      });
+                      // Clear validation error when user types
+                      if (validationErrors.cardNumber) {
+                        setValidationErrors({ ...validationErrors, cardNumber: '' });
+                      }
+                    }}
+                    placeholder={t("hotel.paymentMethods.form.card.numberPlaceholder")}
+                    className={`w-full ${validationErrors.cardNumber ? 'p-invalid' : ''}`}
+                    style={{ paddingRight: '45px' }}
+                    maxLength={(() => {
+                      const detectedBrand = detectCardBrand(newMethod.cardNumber);
+                      return detectedBrand === 'amex' ? 17 : 19; // Amex: 15 digits + 2 spaces, Others: 16 digits + 3 spaces
+                    })()}
+                  />
+                  {(() => {
+                    const detectedBrand = detectCardBrand(newMethod.cardNumber);
+                    const brandIcon = getCardBrandIcon(detectedBrand || newMethod.brand);
+                    if (brandIcon && newMethod.cardNumber.replace(/\s+/g, '').length > 0) {
+                      return (
+                        <div style={{
+                          position: 'absolute',
+                          right: '12px',
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          pointerEvents: 'none'
+                        }}>
+                          {brandIcon}
+                        </div>
+                      );
+                    }
+                    return null;
+                  })()}
+                </div>
+                {validationErrors.cardNumber && (
+                  <small className="p-error">{validationErrors.cardNumber}</small>
+                )}
+                {newMethod.cardNumber && !validationErrors.cardNumber && validateCardNumber(newMethod.cardNumber) && (
+                  <small className="text-green-600">
+                    <i className="pi pi-check-circle mr-1"></i>
+                    {t("hotel.paymentMethods.validation.cardNumberValid")}
+                  </small>
+                )}
               </div>
               <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">{t("hotel.paymentMethods.form.card.expiryMonth")}</label>
+                <label className="block text-900 font-medium mb-2">
+                  {t("hotel.paymentMethods.form.card.expiryMonth")} <span className="text-red-500">*</span>
+                </label>
                 <InputMask
                   mask="99"
                   value={newMethod.expiryMonth}
-                  onChange={(e) => setNewMethod({ ...newMethod, expiryMonth: e.target.value || '' })}
+                  onChange={(e) => {
+                    const month = e.target.value || '';
+                    setNewMethod({ ...newMethod, expiryMonth: month });
+                    if (validationErrors.expiryMonth || validationErrors.expiryDate) {
+                      setValidationErrors({ ...validationErrors, expiryMonth: '', expiryDate: '' });
+                    }
+                  }}
                   placeholder={t("hotel.paymentMethods.form.card.monthPlaceholder")}
-                  className="w-full"
+                  className={`w-full ${validationErrors.expiryMonth || validationErrors.expiryDate ? 'p-invalid' : ''}`}
+                  maxLength={2}
                 />
+                {validationErrors.expiryMonth && (
+                  <small className="p-error">{validationErrors.expiryMonth}</small>
+                )}
               </div>
               <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">{t("hotel.paymentMethods.form.card.expiryYear")}</label>
+                <label className="block text-900 font-medium mb-2">
+                  {t("hotel.paymentMethods.form.card.expiryYear")} <span className="text-red-500">*</span>
+                </label>
                 <InputMask
                   mask="9999"
                   value={newMethod.expiryYear}
-                  onChange={(e) => setNewMethod({ ...newMethod, expiryYear: e.target.value || '' })}
+                  onChange={(e) => {
+                    const year = e.target.value || '';
+                    setNewMethod({ ...newMethod, expiryYear: year });
+                    if (validationErrors.expiryYear || validationErrors.expiryDate) {
+                      setValidationErrors({ ...validationErrors, expiryYear: '', expiryDate: '' });
+                    }
+                  }}
                   placeholder={t("hotel.paymentMethods.form.card.yearPlaceholder")}
-                  className="w-full"
+                  className={`w-full ${validationErrors.expiryYear || validationErrors.expiryDate ? 'p-invalid' : ''}`}
+                  maxLength={4}
                 />
+                {validationErrors.expiryYear && (
+                  <small className="p-error">{validationErrors.expiryYear}</small>
+                )}
+                {validationErrors.expiryDate && (
+                  <small className="p-error">{validationErrors.expiryDate}</small>
+                )}
               </div>
               <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">{t("hotel.paymentMethods.form.card.cvv")}</label>
+                <label className="block text-900 font-medium mb-2">
+                  {t("hotel.paymentMethods.form.card.cvv")} <span className="text-red-500">*</span>
+                </label>
                 <InputMask
-                  mask="999"
+                  mask={(() => {
+                    const detectedBrand = detectCardBrand(newMethod.cardNumber) || newMethod.brand;
+                    return detectedBrand === 'amex' ? "9999" : "999";
+                  })()}
                   value={newMethod.cvv}
-                  onChange={(e) => setNewMethod({ ...newMethod, cvv: e.target.value || '' })}
-                  placeholder={t("hotel.paymentMethods.form.card.cvvPlaceholder")}
-                  className="w-full"
+                  onChange={(e) => {
+                    const cvv = e.target.value || '';
+                    setNewMethod({ ...newMethod, cvv });
+                    if (validationErrors.cvv) {
+                      setValidationErrors({ ...validationErrors, cvv: '' });
+                    }
+                  }}
+                  placeholder={(() => {
+                    const detectedBrand = detectCardBrand(newMethod.cardNumber) || newMethod.brand;
+                    return detectedBrand === 'amex' ? "1234" : "123";
+                  })()}
+                  className={`w-full ${validationErrors.cvv ? 'p-invalid' : ''}`}
+                  maxLength={(() => {
+                    const detectedBrand = detectCardBrand(newMethod.cardNumber) || newMethod.brand;
+                    return detectedBrand === 'amex' ? 4 : 3;
+                  })()}
                 />
+                {validationErrors.cvv && (
+                  <small className="p-error">{validationErrors.cvv}</small>
+                )}
               </div>
               <div className="col-12 md:col-6">
-                <label className="block text-900 font-medium mb-2">{t("hotel.paymentMethods.form.card.holder")}</label>
+                <label className="block text-900 font-medium mb-2">
+                  {t("hotel.paymentMethods.form.card.holder")} <span className="text-red-500">*</span>
+                </label>
                 <InputText
                   value={newMethod.cardholderName}
-                  onChange={(e) => setNewMethod({ ...newMethod, cardholderName: e.target.value })}
+                  onChange={(e) => {
+                    setNewMethod({ ...newMethod, cardholderName: e.target.value });
+                    if (validationErrors.cardholderName) {
+                      setValidationErrors({ ...validationErrors, cardholderName: '' });
+                    }
+                  }}
                   placeholder={t("hotel.paymentMethods.form.card.holderPlaceholder")}
-                  className="w-full"
+                  className={`w-full ${validationErrors.cardholderName ? 'p-invalid' : ''}`}
                 />
+                {validationErrors.cardholderName && (
+                  <small className="p-error">{validationErrors.cardholderName}</small>
+                )}
               </div>
               <div className="col-12">
                 <label className="block text-900 font-medium mb-2">{t("hotel.paymentMethods.form.card.brand")}</label>
                 <Dropdown
                   value={newMethod.brand}
                   options={cardBrandOptions}
-                  onChange={(e) => setNewMethod({ ...newMethod, brand: e.value })}
+                  onChange={(e) => {
+                    setNewMethod({ ...newMethod, brand: e.value });
+                    if (validationErrors.brand) {
+                      setValidationErrors({ ...validationErrors, brand: '' });
+                    }
+                  }}
                   placeholder={t("hotel.paymentMethods.form.card.brandPlaceholder")}
-                  className="w-full"
+                  className={`w-full ${validationErrors.brand ? 'p-invalid' : ''}`}
                 />
+                {validationErrors.brand && (
+                  <small className="p-error">{validationErrors.brand}</small>
+                )}
               </div>
             </>
           ) : (

@@ -266,12 +266,12 @@ export default function SubscriptionManager({ visible, onHide }: SubscriptionMan
                   onClick={() => handleSubscriptionAction('current', 'cancel')}
                   loading={actionLoading === 'current-cancel'}
                 />
-                <Button
+                {/* <Button
                   label="Contact Support"
                   icon="pi pi-envelope"
                   className="p-button-outlined"
                   onClick={() => window.open('mailto:support@example.com', '_blank')}
-                />
+                /> */}
               </div>
             </Card>
           </div>

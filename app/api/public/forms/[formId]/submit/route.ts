@@ -73,6 +73,21 @@ export async function POST(
       return NextResponse.json({ error: 'Form is not available' }, { status: 403 });
     }
 
+    // Check if this email has already submitted a review for this form
+    const existingReview = await prisma.review.findFirst({
+      where: {
+        formId: form.id,
+        guestEmail: guestEmail.trim().toLowerCase(),
+      },
+    });
+
+    if (existingReview) {
+      return NextResponse.json(
+        { error: 'You have already submitted feedback with this email address. Each email can only submit once.' },
+        { status: 400 }
+      );
+    }
+
     // Generate predefined questions for validation
     const predefinedQuestions = [];
     
@@ -99,20 +114,20 @@ export async function POST(
         id: 'feedback',
         question: 'Please give us your honest feedback?',
         type: 'LONG_TEXT',
-        isRequired: true,
+        isRequired: false, // Feedback is optional - accept empty strings
       });
     }
 
     // Combine all questions for validation
     const allQuestions = [...predefinedQuestions, ...form.customQuestions];
 
-    // Validate required questions
+    // Validate required questions (only if explicitly marked as required)
     for (const question of allQuestions) {
-      if (question.isRequired) {
+      if (question.isRequired === true) { // Only validate if explicitly required
         if (question.type === 'CUSTOM_RATING') {
           // For custom rating, check if at least one rating item has been answered
           const hasAnyRating = form.predefinedQuestions?.customRatingItems?.some(item => 
-            answers[`custom-rating-${item.id}`]
+            answers[`custom-rating-${item.id}`] && answers[`custom-rating-${item.id}`] > 0
           );
           if (!hasAnyRating) {
             return NextResponse.json(
@@ -120,7 +135,8 @@ export async function POST(
               { status: 400 }
             );
           }
-        } else if (!answers[question.id]) {
+        } else if (answers[question.id] === undefined || answers[question.id] === null) {
+          // Check if answer exists (empty string is acceptable for text fields)
           return NextResponse.json(
             { error: `Question "${question.question}" is required` },
             { status: 400 }

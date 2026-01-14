@@ -184,9 +184,9 @@ export default function CustomerFeedbackForm() {
   const validateForm = () => {
     if (!translatedForm) return false;
 
-    // Validate required fields
+    // Validate required fields (always mandatory)
     if (!submission.guestName || !submission.guestName.trim()) {
-      showToast("warn", t('Warning'), t('Please enter your full name'));
+      showToast("warn", t('Warning'), t('Please enter your name'));
       return false;
     }
 
@@ -200,42 +200,27 @@ export default function CustomerFeedbackForm() {
       return false;
     }
 
-    // Validate predefined questions
-    if (translatedForm.predefinedQuestions) {
-      // Validate Rate Us question
-      if (translatedForm.predefinedQuestions.hasRateUs && !submission.answers['rate-us']) {
-        showToast("warn", t('Warning'), 'Please rate us');
-        return false;
-      }
-
-      // Validate Custom Rating questions
-      if (translatedForm.predefinedQuestions.hasCustomRating && translatedForm.predefinedQuestions.customRatingItems) {
-        const hasAnyCustomRating = translatedForm.predefinedQuestions.customRatingItems.some(item =>
-          submission.answers[`custom-rating-${item.id}`]
-        );
-        if (!hasAnyCustomRating) {
-          showToast("warn", t('Warning'), 'Please rate at least one item');
-          return false;
-        }
-      }
-    }
-
-    // Validate custom questions
-    for (const question of translatedForm.questions) {
-      if (question.isRequired) {
-        if (question.type === 'CUSTOM_RATING' && question.customRatingItems) {
-          // For custom rating, check if at least one rating item has been answered
-          const hasAnyRating = question.customRatingItems.some(item =>
-            submission.answers[`${question.id}-${item.id}`]
-          );
-          if (!hasAnyRating) {
+    // Validate only mandatory predefined questions (ignore isRequired flag for all other questions)
+    if (translatedForm.questions) {
+      for (const question of translatedForm.questions) {
+        // Rate Us is always mandatory if it exists
+        if (question.id === 'rate-us') {
+          if (!submission.answers['rate-us'] || submission.answers['rate-us'] === 0) {
             showToast("warn", t('Warning'), `${t('Please answer:')} ${question.question}`);
             return false;
           }
-        } else if (!submission.answers[question.id]) {
-          showToast("warn", "Warning", `Please answer: ${question.question}`);
-          return false;
         }
+        // Custom Rating is always mandatory if it exists
+        else if (question.id === 'custom-rating' && question.type === 'CUSTOM_RATING' && question.customRatingItems) {
+          const hasAnyRating = question.customRatingItems.some(item =>
+            submission.answers[`custom-rating-${item.id}`] && submission.answers[`custom-rating-${item.id}`] > 0
+          );
+          if (!hasAnyRating) {
+            showToast("warn", t('Warning'), `${t('Please answer:')} ${question.question || 'Custom Rating'}`);
+            return false;
+          }
+        }
+        // All other questions are optional (ignore isRequired flag)
       }
     }
 
@@ -255,10 +240,9 @@ export default function CustomerFeedbackForm() {
       const ratings = form.predefinedQuestions.customRatingItems
         .map(item => submission.answers[`custom-rating-${item.id}`])
         .filter(rating => rating && rating > 0);
-
+      
       if (ratings.length > 0) {
-        const average = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
-        return average;
+        return ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
       }
     }
 
@@ -276,12 +260,52 @@ export default function CustomerFeedbackForm() {
 
     setSubmitting(true);
     try {
+      // Ensure all questions have answers (use empty string for unanswered questions)
+      const completeSubmission = { ...submission };
+      
+      // Handle predefined feedback question if it exists
+      if (form?.predefinedQuestions?.hasFeedback) {
+        if (!(completeSubmission.answers['feedback'] !== undefined && completeSubmission.answers['feedback'] !== null)) {
+          completeSubmission.answers['feedback'] = '';
+        }
+      }
+      
+      // Handle all questions in the form
+      if (translatedForm?.questions) {
+        translatedForm.questions.forEach((question) => {
+          // Handle feedback questions (always optional - set to empty string if not answered)
+          if (question.id === 'feedback' || question.question === "Please give us your honest feedback?") {
+            if (!(completeSubmission.answers[question.id] !== undefined && completeSubmission.answers[question.id] !== null)) {
+              completeSubmission.answers[question.id] = '';
+            }
+          }
+          // If question doesn't have an answer, set it to empty string
+          else if (!completeSubmission.answers[question.id] && completeSubmission.answers[question.id] !== 0) {
+            // For CUSTOM_RATING questions, check each item
+            if (question.type === 'CUSTOM_RATING' && question.customRatingItems) {
+              question.customRatingItems.forEach((item) => {
+                const answerKey = `${question.id === "custom-rating" ? "custom-rating" : question.id}-${item.id}`;
+                if (completeSubmission.answers[answerKey] === undefined || completeSubmission.answers[answerKey] === null) {
+                  completeSubmission.answers[answerKey] = 0;
+                }
+              });
+            } else if (question.type === 'MULTIPLE_CHOICE_MULTIPLE') {
+              // For multiple choice multiple, use empty array
+              completeSubmission.answers[question.id] = completeSubmission.answers[question.id] || [];
+            } else {
+              // For all other question types, use empty string
+              completeSubmission.answers[question.id] = completeSubmission.answers[question.id] || '';
+            }
+          }
+        });
+      }
+
       const response = await fetch(`/api/public/forms/${formId}/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(submission),
+        body: JSON.stringify(completeSubmission),
       });
 
       const data = await response.json();
@@ -314,9 +338,9 @@ export default function CustomerFeedbackForm() {
         setSubmittedFeedback(feedbackText);
 
         if (isHighRating) {
-          showToast("success", "Thank You!", "Your feedback has been submitted successfully! We truly appreciate your positive experience.");
+          showToast("success", t('Thank You!'), t('Your feedback has been submitted successfully.'));
         } else {
-          showToast("success", "Thank You!", "Your feedback has been submitted successfully! We will make sure to improve based on your valuable input.");
+          showToast("success", t('Thank You!'), t('Your feedback has been submitted successfully.'));
         }
 
         // Reset form
@@ -325,11 +349,21 @@ export default function CustomerFeedbackForm() {
         // Always show success page
         setShowSuccessPage(true);
       } else {
-        throw new Error(data.error || 'Failed to submit feedback');
+        const errorMessage = data.error || 'Failed to submit feedback';
+        // Check if it's a duplicate email error
+        if (errorMessage.includes('already submitted') || errorMessage.includes('email')) {
+          showToast("error", t('Error'), t('You have already submitted feedback with this email address. Each email can only submit once.'));
+        } else {
+          showToast("error", t('Error'), t(errorMessage));
+        }
+        throw new Error(errorMessage);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      showToast("error", t('Error'), t('Failed to submit feedback'));
+      // Only show toast if not already shown above
+      if (!(error instanceof Error && error.message.includes('already submitted'))) {
+        showToast("error", t('Error'), t('Failed to submit feedback'));
+      }
     } finally {
       setSubmitting(false);
     }
@@ -368,26 +402,7 @@ export default function CustomerFeedbackForm() {
                   padding: '0 8px',
                   boxSizing: 'border-box'
                 }}>
-                  {selectedLanguage?.code === 'en' ? 'Thank You!' :
-                    selectedLanguage?.code === 'es' ? '¡Gracias!' :
-                      selectedLanguage?.code === 'fr' ? 'Merci!' :
-                        selectedLanguage?.code === 'de' ? 'Danke!' :
-                          selectedLanguage?.code === 'it' ? 'Grazie!' :
-                            selectedLanguage?.code === 'pt' ? 'Obrigado!' :
-                              selectedLanguage?.code === 'ru' ? 'Спасибо!' :
-                                selectedLanguage?.code === 'ja' ? 'ありがとうございます！' :
-                                  selectedLanguage?.code === 'ko' ? '감사합니다!' :
-                                    selectedLanguage?.code === 'zh' ? '谢谢！' :
-                                      selectedLanguage?.code === 'ar' ? 'شكراً لك!' :
-                                        selectedLanguage?.code === 'hi' ? 'धन्यवाद!' :
-                                          selectedLanguage?.code === 'th' ? 'ขอบคุณ!' :
-                                            selectedLanguage?.code === 'vi' ? 'Cảm ơn!' :
-                                              selectedLanguage?.code === 'tr' ? 'Teşekkürler!' :
-                                                selectedLanguage?.code === 'nl' ? 'Dank je!' :
-                                                  selectedLanguage?.code === 'sv' ? 'Tack!' :
-                                                    selectedLanguage?.code === 'da' ? 'Tak!' :
-                                                      selectedLanguage?.code === 'no' ? 'Takk!' :
-                                                        selectedLanguage?.code === 'fi' ? 'Kiitos!' : 'Thank You!'}
+                  {t('Thank You!')}
                 </h1>
               </div>
               {/* Average Rating Display */}
@@ -489,27 +504,7 @@ export default function CustomerFeedbackForm() {
                 fontSize: isMobile ? '14px' : '16px',
                 lineHeight: '1.6'
               }}>
-                {selectedLanguage?.code === 'en' ? 'Your input helps us continue providing excellent service to all our guests.' :
-                  selectedLanguage?.code === 'es' ? 'Su aporte nos ayuda a continuar brindando un excelente servicio a todos nuestros huéspedes.' :
-                    selectedLanguage?.code === 'fr' ? 'Votre contribution nous aide à continuer à fournir un excellent service à tous nos invités.' :
-                      selectedLanguage?.code === 'de' ? 'Ihr Beitrag hilft uns, weiterhin exzellenten Service für alle unsere Gäste zu bieten.' :
-                        selectedLanguage?.code === 'it' ? 'Il tuo contributo ci aiuta a continuare a fornire un servizio eccellente a tutti i nostri ospiti.' :
-                          selectedLanguage?.code === 'pt' ? 'Sua contribuição nos ajuda a continuar fornecendo excelente serviço a todos os nossos hóspedes.' :
-                            selectedLanguage?.code === 'ru' ? 'Ваш вклад помогает нам продолжать предоставлять отличный сервис всем нашим гостям.' :
-                              selectedLanguage?.code === 'ja' ? 'あなたのご意見は、すべてのゲストに優れたサービスを提供し続けるのに役立ちます。' :
-                                selectedLanguage?.code === 'ko' ? '귀하의 의견은 모든 게스트에게 훌륭한 서비스를 계속 제공하는 데 도움이 됩니다.' :
-                                  selectedLanguage?.code === 'zh' ? '您的意见帮助我们继续为所有客人提供优质服务。' :
-                                    selectedLanguage?.code === 'ar' ? 'مساهمتك تساعدنا على الاستمرار في تقديم خدمة ممتازة لجميع ضيوفنا.' :
-                                      selectedLanguage?.code === 'hi' ? 'आपका योगदान हमें अपने सभी मेहमानों को उत्कृष्ट सेवा प्रदान करना जारी रखने में मदद करता है।' :
-                                        selectedLanguage?.code === 'th' ? 'ข้อมูลของคุณช่วยให้เราสามารถให้บริการที่ดีเยี่ยมแก่แขกทุกท่านต่อไป' :
-                                          selectedLanguage?.code === 'vi' ? 'Đóng góp của bạn giúp chúng tôi tiếp tục cung cấp dịch vụ tuyệt vời cho tất cả khách hàng.' :
-                                            selectedLanguage?.code === 'tr' ? 'Katkınız, tüm misafirlerimize mükemmel hizmet sunmaya devam etmemize yardımcı oluyor.' :
-                                              selectedLanguage?.code === 'nl' ? 'Uw bijdrage helpt ons om uitstekende service te blijven bieden aan al onze gasten.' :
-                                                selectedLanguage?.code === 'sv' ? 'Ditt bidrag hjälper oss att fortsätta ge utmärkt service till alla våra gäster.' :
-                                                  selectedLanguage?.code === 'da' ? 'Dit bidrag hjælper os med at fortsætte med at levere fremragende service til alle vores gæster.' :
-                                                    selectedLanguage?.code === 'no' ? 'Ditt bidrag hjelper oss med å fortsette å levere utmerket service til alle våre gjester.' :
-                                                      selectedLanguage?.code === 'fi' ? 'Panoksesi auttaa meitä jatkamaan erinomaista palvelua kaikille vieraillamme.' :
-                                                        'Your input helps us continue providing excellent service to all our guests.'}
+                {t('Your input helps us continue providing excellent service to all our guests.')}
               </p>
 
             </div>
@@ -948,7 +943,7 @@ export default function CustomerFeedbackForm() {
           </p>
         </div>
 
-        {/* Full Name & Email */}
+        {/* Name & Email */}
         <div style={{ display: "flex", gap: "12px", marginBottom: "20px" }}>
           <div className="p-float-label" style={{ flex: 1 }}>
             <InputText
@@ -965,7 +960,7 @@ export default function CustomerFeedbackForm() {
                 backgroundColor: "#fff",
               }}
             />
-            <label htmlFor="guestName">{t('Full Name')} *</label>
+            <label htmlFor="guestName">{t('Name')} *</label>
           </div>
           <div className="p-float-label" style={{ flex: 1 }}>
             <InputText
@@ -1030,7 +1025,6 @@ export default function CustomerFeedbackForm() {
                 }}
               >
                 {question.question}
-                {question.isRequired && <span style={{ color: "#dc3545" }}> *</span>}
               </label>
             )}
 

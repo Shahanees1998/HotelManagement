@@ -17,6 +17,8 @@ model User {
   id                   String     @id @default(auto()) @map("_id") @db.ObjectId
   email                String     @unique
   emailVerified        DateTime?  // NextAuth field
+  emailVerificationToken String?  // Token for email verification
+  emailVerificationTokenExpiry DateTime?  // Expiry for verification token
   password             String?    // Made optional for NextAuth compatibility
   firstName            String
   lastName             String
