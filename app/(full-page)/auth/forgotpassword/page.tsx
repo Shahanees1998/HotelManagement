@@ -8,6 +8,7 @@ import { Toast } from "primereact/toast";
 import AuthFooter from "@/components/AuthFooter";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { useI18n } from "@/i18n/TranslationProvider";
+import Image from "next/image";
 
 const ForgotPassword: Page = () => {
     const [email, setEmail] = useState("");
@@ -121,12 +122,8 @@ const ForgotPassword: Page = () => {
                 backgroundColor: "white",
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.15)"
             }}>
-                <div style={{ 
-                    fontSize: "1.5rem", 
-                    fontWeight: "600",
-                    color: "#1e3a5f"
-                }}>
-                    C-Reviews
+                <div>
+                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={80} />
                 </div>
                 <div style={{ display: "flex", gap: "1rem" }}>
                     <div className="ml-3">

@@ -38,7 +38,7 @@ const AppSidebar = () => {
                         letterSpacing: '0.5px'
                     }}
                 >
-                    C-Reviews
+                    <Image src="/images/logo.png" alt="logo" width={100} height={80} />
                 </Link>
                 <button
                     className="layout-sidebar-anchor p-link z-2"

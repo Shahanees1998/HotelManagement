@@ -231,12 +231,8 @@ const LoginContent = () => {
                 backgroundColor: "white",
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.15)"
             }}>
-                <div style={{ 
-                    fontSize: "1.5rem", 
-                    fontWeight: "600",
-                    color: "#1e3a5f"
-                }}>
-                    C-Reviews
+                <div>
+                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={80} />
                 </div>
                 <div style={{ display: "flex", gap: "1rem" }}>
                 <li className="ml-3">
