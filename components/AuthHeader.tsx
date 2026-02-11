@@ -30,7 +30,7 @@ const AuthHeader = () => {
                 }}
                 onClick={() => router.push('/')}
             >
-              <Image src="/images/logo-blue.png" alt="logo" width={100} height={120} />
+              <Image src="/images/logo-blue.png" alt="logo" width={100} height={100} />
             </div>
             <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
                      {/* Language Selector */}
