@@ -123,30 +123,32 @@ const ForgotPassword: Page = () => {
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.15)"
             }}>
                 <div>
-                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={80} />
+                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={120} />
                 </div>
-                <div style={{ display: "flex", gap: "1rem" }}>
+                <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
                     <div className="ml-3">
                         <LanguageSelector className="w-full" />
                     </div>
-                    <Button
-                        label={t("common.getStarted")}
-                        outlined
-                        style={{
-                            borderColor: "#1e3a5f",
-                            color: "#1e3a5f"
-                        }}
-                        onClick={() => router.push('/register-hotel')}
-                    />
-                    <Button
-                        label={t("common.login")}
-                        style={{
-                            backgroundColor: "#1e3a5f",
-                            border: "none",
-                            color: "white"
-                        }}
-                        onClick={() => router.push('/auth/login')}
-                    />
+                    <div className="hidden md:flex" style={{ gap: "1rem" }}>
+                        <Button
+                            label={t("common.getStarted")}
+                            outlined
+                            style={{
+                                borderColor: "#1e3a5f",
+                                color: "#1e3a5f"
+                            }}
+                            onClick={() => router.push('/register-hotel')}
+                        />
+                        <Button
+                            label={t("common.login")}
+                            style={{
+                                backgroundColor: "#1e3a5f",
+                                border: "none",
+                                color: "white"
+                            }}
+                            onClick={() => router.push('/auth/login')}
+                        />
+                    </div>
                 </div>
             </div>
 

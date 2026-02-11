@@ -251,9 +251,8 @@ export default function RegisterHotel() {
           }}
         >
           <div
+            className="grid grid-cols-1 md:grid-cols-[1.15fr_0.85fr] align-items-center"
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
               gap: "2rem",
               alignItems: "center",
             }}
@@ -562,8 +561,8 @@ export default function RegisterHotel() {
             )}
           </div>
 
-          {/* Right Side - Illustration */}
-          <div>
+          {/* Right Side - Illustration (hidden on mobile) */}
+          <div className="hidden md:block">
             {step === 1 ? (
               <img src="/images/owner-information.svg" alt={t("registerHotel.images.ownerAlt")}
                 style={{ width: "100%", height: "100%" }} />
