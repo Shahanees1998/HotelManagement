@@ -4,6 +4,7 @@ import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
 import { LanguageSelector } from "./LanguageSelector";
 import Image from "next/image";
+import { AUTH_LOGO_SRC } from "@/lib/constants";
 
 const AuthHeader = () => {
     const router = useRouter();
@@ -30,7 +31,7 @@ const AuthHeader = () => {
                 }}
                 onClick={() => router.push('/')}
             >
-              <Image src="/images/logo-blue.png" alt="logo" width={100} height={90} />
+              <Image src={AUTH_LOGO_SRC} alt="logo" width={100} height={90} />
             </div>
             <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
                      {/* Language Selector */}

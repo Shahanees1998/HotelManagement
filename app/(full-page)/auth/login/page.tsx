@@ -14,6 +14,7 @@ import Image from "next/image";
 import AuthFooter from "@/components/AuthFooter";
 import { useI18n } from "@/i18n/TranslationProvider";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { AUTH_LOGO_SRC } from "@/lib/constants";
 
 const LoginContent = () => {
     const [rememberMe, setRememberMe] = useState(false);
@@ -232,7 +233,7 @@ const LoginContent = () => {
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.15)"
             }}>
                 <div>
-                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={90}/>
+                    <Image src={AUTH_LOGO_SRC} alt="logo" width={100} height={90}/>
                 </div>
                 <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
                 <div className="ml-3">
