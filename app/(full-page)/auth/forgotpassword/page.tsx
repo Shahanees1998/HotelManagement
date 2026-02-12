@@ -113,7 +113,7 @@ const ForgotPassword: Page = () => {
             
             {/* Header */}
             <div style={{ 
-                padding: "1.5rem 2rem", 
+                padding: "1rem 2rem", 
                 display: "flex", 
                 justifyContent: "space-between", 
                 alignItems: "center",
@@ -123,7 +123,7 @@ const ForgotPassword: Page = () => {
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.15)"
             }}>
                 <div>
-                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={100} />
+                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={90} />
                 </div>
                 <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
                     <div className="ml-3">
