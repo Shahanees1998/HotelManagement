@@ -25,27 +25,27 @@
     "lv": "Latvian"
   },
   "common": {
-    "warning": "Warning",
-    "success": "Success",
-    "error": "Error",
-    "info": "Info",
-    "agreeTo": "I agree to the",
-    "and": "and",
-    "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy",
-    "alreadyHaveAccount": "Already have an account?",
-    "login": "Login",
-    "logout": "Logout",
-    "orRegisterVia": "or register via",
-    "selectLanguage": "Select language",
-    "getStarted": "Get Started"
+    "warning": "Upozornenie",
+    "success": "Úspech",
+    "error": "Chyba",
+    "info": "Informácia",
+    "agreeTo": "Súhlasím s",
+    "and": "a",
+    "terms": "obchodnými podmienkami",
+    "privacy": "zásadami ochrany osobných údajov",
+    "alreadyHaveAccount": "Už máte účet?",
+    "login": "Prihlásiť",
+    "logout": "Odhlásiť",
+    "orRegisterVia": "alebo sa zaregistrujte cez",
+    "selectLanguage": "Vyberte jazyk",
+    "getStarted": "Začať"
   },
   "components": {
     "customPaginator": {
-      "itemsPerPage": "Items per page",
-      "rangeInfo": "{start}-{end} of {total} entries",
-      "previousPage": "Previous page",
-      "nextPage": "Next page"
+      "itemsPerPage": "Položiek na stránku",
+      "rangeInfo": "{start}-{end} z {total} záznamov",
+      "previousPage": "Predchádzajúca stránka",
+      "nextPage": "Ďalšia stránka"
     }
   },
   "countries": {
@@ -66,1293 +66,1302 @@
   },
   "registerHotel": {
     "step1": {
-      "title": "Owner Information!",
+      "title": "Informácie o majiteľovi!",
       "fields": {
-        "fullName": "Name",
-        "email": "Email Address",
-        "phone": "Phone Number",
-        "password": "Password"
+        "fullName": "Meno",
+        "email": "E-mailová adresa",
+        "phone": "Telefónne číslo",
+        "password": "Heslo"
       },
       "placeholders": {
-        "fullName": "Enter your name",
-        "email": "Enter your email address",
-        "phone": "Enter your phone number",
-        "password": "Enter your password"
+        "fullName": "Zadajte svoje meno",
+        "email": "Zadajte svoj e-mail",
+        "phone": "Zadajte svoje telefónne číslo",
+        "password": "Zadajte svoje heslo"
       },
-      "cta": "Let's Keep Going!"
+      "cta": "Pokračujme!"
     },
     "step2": {
-      "title": "Hotel Information!",
-      "subtitle": "Is my data safe?",
+      "title": "Informácie o hoteli!",
+      "subtitle": "Sú moje údaje v bezpečí?",
       "fields": {
-        "hotelName": "Hotel Name",
-        "hotelWebsite": "Hotel Website",
-        "hotelAddress": "Hotel Address",
-        "city": "City",
-        "country": "Country",
-        "hotelDescription": "Hotel Description"
+        "hotelName": "Názov hotela",
+        "hotelWebsite": "Webová stránka hotela",
+        "hotelAddress": "Adresa hotela",
+        "city": "Mesto",
+        "country": "Krajina",
+        "hotelDescription": "Popis hotela"
       },
       "placeholders": {
-        "hotelName": "Enter hotel name",
-        "hotelWebsite": "Enter hotel website url",
-        "hotelAddress": "Enter hotel street address",
-        "city": "Enter hotel city",
-        "country": "Select Country",
-        "hotelDescription": "Enter brief description of your hotel"
+        "hotelName": "Zadajte názov hotela",
+        "hotelWebsite": "Zadajte URL webu hotela",
+        "hotelAddress": "Zadajte adresu hotela",
+        "city": "Zadajte mesto",
+        "country": "Vyberte krajinu",
+        "hotelDescription": "Stručný popis vášho hotela"
       }
     },
     "buttons": {
-      "back": "Back",
-      "register": "Register Now",
-      "registering": "Registering..."
+      "back": "Späť",
+      "register": "Registrovať",
+      "registering": "Registrácia..."
     },
     "toasts": {
-      "missingRequired": "Please fill in all required fields",
-      "passwordLength": "Password must be at least 6 characters long",
-      "acceptTerms": "Please accept the terms and conditions",
-      "acceptTermsPrivacy": "Please accept the terms and conditions and privacy policy",
-      "success": "Hotel registration successful! Please check your email for verification.",
-      "error": "Registration failed",
-      "errorGeneric": "Registration failed. Please try again."
+      "missingRequired": "Vyplňte prosím všetky povinné polia",
+      "passwordLength": "Heslo musí mať aspoň 6 znakov",
+      "acceptTerms": "Prijmite prosím obchodné podmienky",
+      "acceptTermsPrivacy": "Prijmite prosím obchodné podmienky a zásady ochrany osobných údajov",
+      "success": "Registrácia hotela prebehla úspešne! Skontrolujte e-mail pre overenie.",
+      "error": "Registrácia zlyhala",
+      "errorGeneric": "Registrácia zlyhala. Skúste to prosím znova."
     },
     "images": {
-      "ownerAlt": "Register Hotel - Owner Information",
-      "hotelAlt": "Register Hotel - Hotel Information"
+      "ownerAlt": "Registrácia hotela - Informácie o majiteľovi",
+      "hotelAlt": "Registrácia hotela - Informácie o hoteli"
     }
   },
   "hotel": {
     "dashboard": {
       "recentReviews": {
-        "title": "Recent Reviews",
-        "description": "View and manage your recent reviews.",
+        "title": "Nedávne recenzie",
+        "description": "Prezerajte a spravujte svoje nedávne recenzie.",
         "states": {
-          "loading": "Loading recent reviews..."
+          "loading": "Načítavanie nedávnych recenzií..."
         },
         "table": {
-          "date": "Date"
+          "date": "Dátum"
         }
       },
       "comparisonChart": {
-        "title": "Review Comparison",
-        "period": "Period",
-        "weekly": "Weekly",
-        "monthly": "Monthly",
-        "loading": "Loading comparison data...",
-        "noData": "No comparison data available"
+        "title": "Porovnanie recenzií",
+        "period": "Obdobie",
+        "weekly": "Týždenne",
+        "monthly": "Mesačne",
+        "loading": "Načítavanie porovnávacích údajov...",
+        "noData": "Žiadne údaje na porovnanie",
+        "positiveReviews": "Pozitívne recenzie",
+        "negativeReviews": "Negatívne recenzie"
+      },
+      "stats": {
+        "totalReviews": "Celkový počet recenzií",
+        "averageRating": "Priemerné hodnotenie",
+        "positiveReviews": "Pozitívne recenzie",
+        "negativeReviews": "Negatívne recenzie",
+        "responseRate": "Miera odozvy"
       }
     },
     "forms": {
       "header": {
-        "title": "Feedback Form",
-        "subtitle": "Manage your guest feedback form. You can update this form at any time."
+        "title": "Formulár spätnej väzby",
+        "subtitle": "Spravujte formulár pre spätnú väzbu od hostí. Formulár môžete kedykoľvek upraviť."
       },
       "states": {
-        "loading": "Loading form..."
+        "loading": "Načítavanie formulára..."
       },
       "fields": {
-        "title": "Form Title",
-        "status": "Status",
-        "active": "Active",
-        "inactive": "Inactive",
-        "description": "Description",
-        "noDescription": "No description provided",
-        "totalResponses": "Total Responses"
+        "title": "Názov formulára",
+        "status": "Stav",
+        "active": "Aktívny",
+        "inactive": "Neaktívny",
+        "description": "Popis",
+        "noDescription": "Bez popisu",
+        "totalResponses": "Celkom odpovedí"
       },
       "buttons": {
-        "edit": "Edit Form",
-        "preview": "Preview Form",
-        "showQr": "Show QR Code",
-        "create": "Create Form",
-        "downloadQr": "Download QR Code",
-        "copyUrl": "Copy URL"
+        "edit": "Upraviť formulár",
+        "preview": "Náhľad formulára",
+        "showQr": "Zobraziť QR kód",
+        "create": "Vytvoriť formulár",
+        "downloadQr": "Stiahnuť QR kód",
+        "copyUrl": "Kopírovať URL"
       },
       "empty": {
-        "title": "No Form Created Yet",
-        "description": "Create your feedback form to start collecting guest reviews."
+        "title": "Formulár zatiaľ nebol vytvorený",
+        "description": "Vytvorte formulár pre spätnú väzbu a začnite zbierať recenzie od hostí."
       },
       "preview": {
-        "title": "Form Preview",
-        "tooltipBack": "Back to Forms",
-        "tag": "Preview Mode - Interactions Disabled"
+        "title": "Náhľad formulára",
+        "tooltipBack": "Späť na formuláre",
+        "tag": "Režim náhľadu – interakcie vypnuté"
       },
       "qrDialog": {
-        "title": "QR Code - {title}"
+        "title": "QR kód - {title}"
       },
       "toasts": {
-        "loadError": "Failed to load form",
-        "slugMissing": "Hotel slug not found. Cannot preview form.",
-        "createSuccess": "Form created successfully",
-        "updateSuccess": "Form updated successfully",
-        "saveError": "Failed to save form",
-        "qrGenerated": "QR code generated successfully",
-        "qrExists": "QR code already exists for this form",
-        "qrError": "Failed to handle QR code",
-        "noUrl": "No URL to copy",
-        "copiedDetail": "URL copied to clipboard",
-        "copyError": "Failed to copy URL to clipboard"
+        "loadError": "Nepodarilo sa načítať formulár",
+        "slugMissing": "Identifikátor hotela nenájdený. Náhľad nie je možné zobraziť.",
+        "createSuccess": "Formulár bol úspešne vytvorený",
+        "updateSuccess": "Formulár bol úspešne aktualizovaný",
+        "saveError": "Nepodarilo sa uložiť formulár",
+        "qrGenerated": "QR kód bol úspešne vygenerovaný",
+        "qrExists": "Pre tento formulár už QR kód existuje",
+        "qrError": "Nepodarilo sa spracovať QR kód",
+        "noUrl": "Žiadne URL na skopírovanie",
+        "copiedDetail": "URL skopírované do schránky",
+        "copyError": "Nepodarilo sa skopírovať URL"
       },
       "builder": {
         "header": {
-          "edit": "Edit Form",
-          "create": "Create New Form",
-          "preview": "Preview Form",
-          "livePreview": "Live Preview",
-          "formBuilderToggle": "Form Builder",
-          "livePreviewToggle": "Live Preview",
-          "backTooltip": "Back to Forms"
+          "edit": "Upraviť formulár",
+          "create": "Vytvoriť nový formulár",
+          "preview": "Náhľad formulára",
+          "livePreview": "Živý náhľad",
+          "formBuilderToggle": "Tvorca formulárov",
+          "livePreviewToggle": "Živý náhľad",
+          "backTooltip": "Späť na formuláre"
         },
         "buttons": {
-          "save": "Save Form",
-          "saveTooltip": "Save the form",
-          "addNew": "Add New",
-          "addOption": "Add",
-          "cancel": "Cancel",
-          "update": "Update",
-          "add": "Add"
+          "save": "Uložiť formulár",
+          "saveTooltip": "Uložiť formulár",
+          "addNew": "Pridať nové",
+          "addOption": "Pridať",
+          "cancel": "Zrušiť",
+          "update": "Aktualizovať",
+          "add": "Pridať"
         },
         "sections": {
-          "settings": "Form Settings",
-          "questions": "Questions",
-          "predefined": "Predefined Questions",
-          "custom": "Custom Questions"
+          "settings": "Nastavenia formulára",
+          "questions": "Otázky",
+          "predefined": "Preddefinované otázky",
+          "custom": "Vlastné otázky"
         },
         "fields": {
-          "titleLabel": "Form Title*",
-          "titlePlaceholder": "Enter form title",
-          "descriptionLabel": "Form Description*",
-          "descriptionPlaceholder": "Enter brief description of your form"
+          "titleLabel": "Názov formulára*",
+          "titlePlaceholder": "Zadajte názov formulára",
+          "descriptionLabel": "Popis formulára*",
+          "descriptionPlaceholder": "Zadajte stručný popis formulára"
         },
         "predefined": {
-          "rateUs": "Rate Us* (Always included)",
-          "rateUsTitle": "Rate Us",
-          "customRating": "Custom Rating*",
-          "customRatingTitle": "Custom Rating",
-          "customRatingPlaceholder": "Enter rating item label",
-          "customRatingEditTitle": "Click to edit",
-          "feedback": "Please give us your honest feedback?*",
-          "feedbackTitle": "Please give us your honest feedback?",
-          "feedbackPlaceholder": "Enter your detailed feedback"
+          "rateUs": "Ohodnoťte nás* (vždy zahrnuté)",
+          "rateUsTitle": "Ohodnoťte nás",
+          "customRating": "Vlastné hodnotenie*",
+          "customRatingTitle": "Vlastné hodnotenie",
+          "customRatingPlaceholder": "Zadajte popisok položky hodnotenia",
+          "customRatingEditTitle": "Kliknite pre úpravu",
+          "feedback": "Dajte nám prosím úprimnú spätnú väzbu?*",
+          "feedbackTitle": "Dajte nám prosím úprimnú spätnú väzbu?",
+          "feedbackPlaceholder": "Zadajte podrobnú spätnú väzbu"
         },
         "tooltips": {
-          "previewDisabled": "Preview mode - editing disabled",
-          "addQuestion": "Add custom question",
-          "save": "Save",
-          "cancel": "Cancel",
-          "edit": "Edit",
-          "delete": "Delete",
-          "moveUp": "Move Up",
-          "moveDown": "Move Down"
+          "previewDisabled": "Režim náhľadu – úpravy vypnuté",
+          "addQuestion": "Pridať vlastnú otázku",
+          "save": "Uložiť",
+          "cancel": "Zrušiť",
+          "edit": "Upraviť",
+          "delete": "Zmazať",
+          "moveUp": "Hore",
+          "moveDown": "Dole"
         },
         "questionTypes": {
-          "shortText": "Short Text",
-          "longText": "Long Text",
-          "starRating": "Star Rating",
-          "singleChoice": "Single Choice",
-          "multipleChoice": "Multiple Choice",
-          "yesNo": "Yes/No"
+          "shortText": "Krátky text",
+          "longText": "Dlhý text",
+          "starRating": "Hviezdičkové hodnotenie",
+          "singleChoice": "Jeden výber",
+          "multipleChoice": "Viac výberov",
+          "yesNo": "Áno/Nie"
         },
         "placeholders": {
-          "answer": "Enter your answer"
+          "answer": "Zadajte odpoveď"
         },
         "answers": {
-          "yes": "Yes",
-          "no": "No"
+          "yes": "Áno",
+          "no": "Nie"
         },
         "badges": {
-          "default": "Default",
-          "defaultHelper": "Cannot be edited, deleted, or moved"
+          "default": "Predvolené",
+          "defaultHelper": "Nemožno upravovať, mazať ani presúvať"
         },
         "states": {
-          "loading": "Loading form data...",
-          "noQuestionsTitle": "No questions added yet",
-          "noQuestionsDescription": "Use the predefined questions above or add custom questions to get started"
+          "loading": "Načítavanie údajov formulára...",
+          "noQuestionsTitle": "Zatiaľ neboli pridané žiadne otázky",
+          "noQuestionsDescription": "Použite preddefinované otázky vyššie alebo pridajte vlastné"
         },
         "alerts": {
-          "ratingRequiredTitle": "Rating Required",
-          "ratingRequiredDescription": "Either \"Rate Us\" or \"Custom Rating\" must be selected to save the form."
+          "ratingRequiredTitle": "Vyžaduje sa hodnotenie",
+          "ratingRequiredDescription": "Pre uloženie formulára musí byť vybrané „Ohodnoťte nás“ alebo „Vlastné hodnotenie“."
         },
         "layoutInfo": {
           "basic": {
-            "title": "Basic Layout Features",
-            "description": "All questions are available including custom questions. This layout provides a simple, clean design."
+            "title": "Základné rozloženie",
+            "description": "Všetky otázky vrátane vlastných. Jednoduchý a prehľadný dizajn."
           },
           "good": {
-            "title": "Good Layout Features",
-            "description": "Choose either \"Rate Us\" OR \"Custom Rating\" (mutually exclusive). All questions including custom questions are available."
+            "title": "Rozšírené rozloženie",
+            "description": "Vyberte „Ohodnoťte nás“ ALEBO „Vlastné hodnotenie“ (vzájomne sa vylučujú). Všetky otázky vrátane vlastných sú k dispozícii."
           },
           "excellent": {
-            "title": "Excellent Layout Features",
-            "description": "All predefined questions available plus custom questions. Premium design with animations for comprehensive feedback forms."
+            "title": "Premium rozloženie",
+            "description": "Všetky preddefinované otázky plus vlastné. Premium dizajn s animáciami pre komplexné formuláre spätnej väzby."
           }
         },
         "subscription": {
-          "title": "Subscription Required",
-          "message": "Your subscription has been {status}. Please reactivate your subscription to create or edit forms.",
-          "manageButton": "Manage Subscription",
+          "title": "Vyžaduje sa predplatné",
+          "message": "Vaše predplatné bolo {status}. Pre vytváranie alebo úpravu formulárov obnovte predplatné.",
+          "manageButton": "Spravovať predplatné",
           "status": {
-            "cancelled": "cancelled",
-            "expired": "expired"
+            "cancelled": "zrušené",
+            "expired": "vypršalo"
           },
-          "toastTitle": "Subscription Required",
-          "toastMessage": "Your subscription has been cancelled or expired. Please reactivate your subscription to create forms."
+          "toastTitle": "Vyžaduje sa predplatné",
+          "toastMessage": "Vaše predplatné bolo zrušené alebo vypršalo. Obnovte predplatné pre vytváranie formulárov."
         },
         "preview": {
-          "descriptionFallback": "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance.",
-          "fullNameLabel": "Name*",
-          "fullNamePlaceholder": "Enter your name",
-          "emailLabel": "Email*",
-          "emailPlaceholder": "Enter your email address",
-          "submit": "Submit Now"
+          "descriptionFallback": "Vyplňte tento formulár pre žiadosť o podporu alebo nahlásenie problému. Náš tím vašu žiadosť preskúma a čo najskôr vás kontaktuje.",
+          "fullNameLabel": "Meno*",
+          "fullNamePlaceholder": "Zadajte svoje meno",
+          "emailLabel": "E-mail*",
+          "emailPlaceholder": "Zadajte svoj e-mail",
+          "submit": "Odoslať"
         },
         "dialog": {
-          "addTitle": "Add Question",
-          "editTitle": "Edit Question",
-          "questionLabel": "Question Text *",
-          "questionPlaceholder": "Enter your question",
-          "typeLabel": "Question Type",
-          "optionsLabel": "Options",
-          "optionPlaceholder": "Enter option"
+          "addTitle": "Pridať otázku",
+          "editTitle": "Upraviť otázku",
+          "questionLabel": "Text otázky *",
+          "questionPlaceholder": "Zadajte otázku",
+          "typeLabel": "Typ otázky",
+          "optionsLabel": "Možnosti",
+          "optionPlaceholder": "Zadajte možnosť"
         },
         "toasts": {
-          "formLoadSuccess": "Form data loaded successfully",
-          "formLoadError": "Failed to load form data",
-          "questionRequired": "Question text is required",
-          "optionsRequired": "Multiple choice questions must have at least 2 options",
-          "questionUpdated": "Question updated",
-          "questionAdded": "Question added",
-          "questionDeleted": "Question deleted",
-          "ratingLabelRequired": "Please enter a label for the rating item",
-          "ratingItemUpdated": "Rating item updated",
-          "ratingItemDeleted": "Rating item deleted",
-          "ratingItemAdded": "New rating item added",
-          "titleRequired": "Form title is required",
-          "questionCountRequired": "At least one question is required"
+          "formLoadSuccess": "Údaje formulára boli úspešne načítané",
+          "formLoadError": "Nepodarilo sa načítať údaje formulára",
+          "questionRequired": "Text otázky je povinný",
+          "optionsRequired": "Otázky s viacerými výbermi musia mať aspoň 2 možnosti",
+          "questionUpdated": "Otázka bola aktualizovaná",
+          "questionAdded": "Otázka bola pridaná",
+          "questionDeleted": "Otázka bola zmazaná",
+          "ratingLabelRequired": "Zadajte prosím popisok položky hodnotenia",
+          "ratingItemUpdated": "Položka hodnotenia bola aktualizovaná",
+          "ratingItemDeleted": "Položka hodnotenia bola zmazaná",
+          "ratingItemAdded": "Bola pridaná nová položka hodnotenia",
+          "titleRequired": "Názov formulára je povinný",
+          "questionCountRequired": "Vyžaduje sa aspoň jedna otázka"
         }
       }
     },
     "analytics": {
       "customRatings": {
-        "title": "Custom Rating Analytics",
-        "description": "Track detailed rating trends for your \"Good\" layout form.",
+        "title": "Analytika vlastného hodnotenia",
+        "description": "Sledujte trendy hodnotenia pre formulár s rozšíreným rozložením.",
         "buttons": {
-          "exportCsv": "Export CSV",
-          "exportPdf": "Export PDF",
-          "refresh": "Refresh"
+          "exportCsv": "Exportovať CSV",
+          "exportPdf": "Exportovať PDF",
+          "refresh": "Obnoviť"
         },
         "filters": {
-          "title": "Date Range Filters",
-          "startDate": "Start Date",
-          "startDatePlaceholder": "Select start date",
-          "endDate": "End Date",
-          "endDatePlaceholder": "Select end date",
-          "clear": "Clear Filters"
+          "title": "Filtre podľa obdobia",
+          "startDate": "Počiatočný dátum",
+          "startDatePlaceholder": "Vyberte počiatočný dátum",
+          "endDate": "Koncový dátum",
+          "endDatePlaceholder": "Vyberte koncový dátum",
+          "clear": "Zrušiť filtre"
         },
         "states": {
-          "loading": "Loading analytics data...",
-          "noDataTitle": "No Data Available",
-          "noDataDescription": "No \"Good\" layout forms with custom rating data found for your hotel."
+          "loading": "Načítavanie analytických údajov...",
+          "noDataTitle": "Žiadne údaje k dispozícii",
+          "noDataDescription": "Pre váš hotel neboli nájdené formuláre s rozšíreným rozložením a údajmi hodnotenia."
         },
         "toasts": {
-          "loadError": "Failed to load custom rating analytics",
-          "exportSuccess": "Data exported successfully as {format}",
-          "exportError": "Failed to export data"
+          "loadError": "Nepodarilo sa načítať analytiku hodnotenia",
+          "exportSuccess": "Údaje boli úspešne exportované ako {format}",
+          "exportError": "Export údajov zlyhal"
         },
         "chart": {
-          "trendPrefix": "Trend Analysis - ",
-          "summaryTitle": "Rating Summary",
-          "ratingsCount": "({count} ratings)",
-          "averageRating": "Average Rating",
+          "trendPrefix": "Trendová analýza - ",
+          "summaryTitle": "Zhrnutie hodnotenia",
+          "ratingsCount": "({count} hodnotení)",
+          "averageRating": "Priemerné hodnotenie",
           "tooltipSuffix": "/5"
         }
       },
       "overview": {
-        "title": "Analytics",
-        "description": "Track your hotel's performance and guest satisfaction.",
-        "dropdownPlaceholder": "Select time range",
+        "title": "Analytika",
+        "description": "Sledujte výkon hotela a spokojnosť hostí.",
+        "dropdownPlaceholder": "Vyberte časové obdobie",
         "buttons": {
-          "refresh": "Refresh"
+          "refresh": "Obnoviť"
         },
         "timeRanges": {
-          "7": "Last 7 days",
-          "30": "Last 30 days",
-          "90": "Last 90 days",
-          "180": "Last 6 months",
-          "365": "Last year"
+          "7": "Posledných 7 dní",
+          "30": "Posledných 30 dní",
+          "90": "Posledných 90 dní",
+          "180": "Posledných 6 mesiacov",
+          "365": "Minulý rok"
         },
         "states": {
-          "loadingSkeleton": "Loading...",
-          "noData": "No analytics data available",
-          "chartLoading": "Loading chart data...",
-          "chartEmpty": "No chart data available"
+          "loadingSkeleton": "Načítava sa...",
+          "noData": "Žiadne analytické údaje k dispozícii",
+          "chartLoading": "Načítavanie údajov grafu...",
+          "chartEmpty": "Žiadne údaje grafu k dispozícii"
         },
         "cards": {
-          "change": "{change} from last period"
+          "change": "{change} oproti minulému obdobiu"
         },
         "charts": {
-          "satisfaction": "Satisfaction Trends",
-          "ratingDistribution": "Rating Distribution",
-          "reviewVolume": "Review Volume"
+          "satisfaction": "Trendy spokojnosti",
+          "ratingDistribution": "Rozloženie hodnotenia",
+          "reviewVolume": "Objem recenzií"
         },
         "reviews": {
-          "title": "Recent Reviews"
+          "title": "Nedávne recenzie"
         },
         "toasts": {
-          "loadError": "Failed to load analytics"
+          "loadError": "Nepodarilo sa načítať analytiku"
         }
       },
       "responseRates": {
-        "title": "Response Rates Analytics",
-        "description": "Track your hotel's response rates and engagement metrics.",
+        "title": "Analytika miery odpovedí",
+        "description": "Sledujte mieru odpovedí a metriky zapojenia hotela.",
         "charts": {
-          "reviewVolume": "Review Volume Trends",
-          "satisfaction": "Satisfaction Trends Over Time"
+          "reviewVolume": "Trendy objemu recenzií",
+          "satisfaction": "Trendy spokojnosti v čase"
         }
       },
       "satisfaction": {
-        "title": "Satisfaction Analytics",
-        "description": "Track your hotel's guest satisfaction trends and ratings.",
+        "title": "Analytika spokojnosti",
+        "description": "Sledujte trendy spokojnosti hostí a hodnotenia.",
         "charts": {
-          "reviewVolume": "Review Volume & Positive Reviews"
+          "reviewVolume": "Objem recenzií a pozitívne recenzie"
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Oznámenia",
+        "ariaLabel": "Oznámenia",
+        "iconAlt": "Ikona oznámenia",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Označiť všetko ako prečítané",
+          "refresh": "Obnoviť"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Zatiaľ žiadne oznámenia"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "success": "Success",
-          "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "newReview": "Nová recenzia",
+          "reviewApproved": "Recenzia schválená",
+          "reviewRejected": "Recenzia zamietnutá",
+          "subscriptionExpiring": "Predplatné vyprší",
+          "subscriptionCancelled": "Predplatné zrušené",
+          "escalationReceived": "Eskalácia prijatá",
+          "escalationResponded": "Odpoveď na eskaláciu",
+          "systemAlert": "Systémové upozornenie",
+          "newHotelRegistration": "Nová registrácia hotela",
+          "success": "Úspech",
+          "info": "Informácia",
+          "warning": "Upozornenie",
+          "error": "Chyba",
+          "generic": "Oznámenie"
         }
       }
     },
     "reviews": {
-      "title": "Guest Reviews",
-      "subtitle": "Manage and review guest feedback submissions.",
+      "title": "Recenzie hostí",
+      "subtitle": "Spravujte a prezerajte recenzie a spätnú väzbu od hostí.",
       "buttons": {
-        "refresh": "Refresh",
-        "clearFilters": "Clear Filters",
-        "view": "View",
-        "reply": "Reply",
-        "delete": "Delete",
-        "close": "Close",
-        "markAsChecked": "Mark as Checked",
-        "checked": "Checked",
-        "uncheck": "Uncheck",
-        "markAsUrgent": "Mark as Urgent",
-        "urgent": "Urgent",
-        "removeUrgent": "Remove Urgent",
-        "replyToCustomer": "Reply to Customer",
-        "cancel": "Cancel",
-        "sendReply": "Send Reply"
+        "refresh": "Obnoviť",
+        "clearFilters": "Zrušiť filtre",
+        "view": "Zobraziť",
+        "reply": "Odpovedať",
+        "delete": "Zmazať",
+        "close": "Zavrieť",
+        "markAsChecked": "Označiť ako skontrolované",
+        "checked": "Skontrolované",
+        "uncheck": "Zrušiť označenie",
+        "markAsUrgent": "Označiť ako naliehavé",
+        "urgent": "Naliehavé",
+        "removeUrgent": "Odstrániť naliehavosť",
+        "replyToCustomer": "Odpovedať zákazníkovi",
+        "cancel": "Zrušiť",
+        "sendReply": "Odoslať odpoveď"
       },
       "filters": {
-        "title": "Filters",
-        "searchReviews": "Search Reviews",
-        "searchPlaceholder": "Search by guest name or feedback text...",
-        "roomNumber": "Room Number",
-        "roomNumberPlaceholder": "Filter by room number...",
+        "title": "Filtre",
+        "searchReviews": "Hľadať v recenziách",
+        "searchPlaceholder": "Hľadať podľa mena hosta alebo textu...",
+        "roomNumber": "Číslo izby",
+        "roomNumberPlaceholder": "Filtrovať podľa čísla izby...",
         "filter": "Filter",
-        "allReviews": "All Reviews",
-        "replied": "Replied",
-        "notReplied": "Not Replied",
-        "checked": "Checked",
-        "notChecked": "Not Checked",
-        "urgent": "Urgent",
-        "notUrgent": "Not Urgent",
-        "starRatings": "Star Ratings",
-        "allRatings": "All Ratings",
-        "5Stars": "5 Stars",
-        "4Stars": "4 Stars",
-        "3Stars": "3 Stars",
-        "2Stars": "2 Stars",
-        "1Star": "1 Star",
-        "dateRange": "Date Range",
-        "startDate": "Start Date",
-        "endDate": "End Date",
-        "fromDate": "From date",
-        "toDate": "To date"
+        "allReviews": "Všetky recenzie",
+        "replied": "S odpoveďou",
+        "notReplied": "Bez odpovede",
+        "checked": "Skontrolované",
+        "notChecked": "Neskontrolované",
+        "urgent": "Naliehavé",
+        "notUrgent": "Nenaliehavé",
+        "starRatings": "Hviezdičkové hodnotenie",
+        "allRatings": "Všetky hodnotenia",
+        "5Stars": "5 hviezd",
+        "4Stars": "4 hviezdy",
+        "3Stars": "3 hviezdy",
+        "2Stars": "2 hviezdy",
+        "1Star": "1 hviezda",
+        "dateRange": "Obdobie",
+        "startDate": "Počiatočný dátum",
+        "endDate": "Koncový dátum",
+        "fromDate": "Od dátumu",
+        "toDate": "Do dátumu"
       },
       "states": {
-        "loadingReviews": "Loading reviews...",
-        "noReviewsFound": "No Reviews Found",
-        "noReviewsYet": "No reviews have been submitted yet.",
-        "noReviewsMatchFilters": "No reviews match your current filters."
+        "loadingReviews": "Načítavanie recenzií...",
+        "noReviewsFound": "Recenzie nenájdené",
+        "noReviewsYet": "Zatiaľ neboli odoslané žiadne recenzie.",
+        "noReviewsMatchFilters": "Žiadne recenzie neodpovedajú aktuálnym filtrom."
       },
       "table": {
-        "guest": "Guest",
-        "email": "Email",
-        "room": "Room",
-        "rating": "Rating",
-        "status": "Status",
-        "submitted": "Submitted",
-        "actions": "Actions",
-        "checkedStatus": "Checked",
-        "notCheckedStatus": "Not Checked",
-        "repliedStatus": "Replied",
-        "notRepliedStatus": "Not Replied",
-        "urgentStatus": "Urgent",
-        "notUrgentStatus": "Not Urgent",
-        "public": "Public",
-        "private": "Private",
-        "shared": "Shared",
-        "noEmailAvailable": "No email available for this review"
+        "guest": "Host",
+        "email": "E-mail",
+        "room": "Izba",
+        "rating": "Hodnotenie",
+        "status": "Stav",
+        "submitted": "Odoslané",
+        "actions": "Akcie",
+        "checkedStatus": "Skontrolované",
+        "notCheckedStatus": "Neskontrolované",
+        "repliedStatus": "S odpoveďou",
+        "notRepliedStatus": "Bez odpovede",
+        "urgentStatus": "Naliehavé",
+        "notUrgentStatus": "Nenaliehavé",
+        "public": "Verejné",
+        "private": "Súkromné",
+        "shared": "Zdieľané",
+        "noEmailAvailable": "K tejto recenzii nie je k dispozícii e-mail"
       },
       "detailsDialog": {
-        "header": "Guest Feedback Details",
-        "guestInfo": "Guest Information",
-        "name": "Name:",
-        "anonymous": "Anonymous",
-        "email": "Email:",
-        "notProvided": "Not provided",
-        "phone": "Phone:",
-        "roomNumber": "Room Number:",
-        "submitted": "Submitted:",
-        "overallRating": "Overall Rating",
-        "quickFeedback": "Quick Feedback",
-        "howDoYouRateUs": "How do you rate us?",
-        "honestFeedback": "Please give us your honest feedback?",
-        "noSpecificFeedback": "No specific feedback provided",
-        "customRatingItem": "Custom Rating Item ({itemId})",
-        "formInfo": "Form Information",
-        "formTitle": "Form Title:",
-        "description": "Description:",
-        "layout": "Layout:",
-        "feedbackResponses": "Feedback Responses",
-        "reviewReplies": "Review Replies",
-        "languageSelectorLabel": "View content in",
-        "languageSelectorPlaceholder": "Select language",
-        "translating": "Translating...",
-        "noDetailedResponses": "No detailed responses available for this review.",
-        "question": "Question:",
-        "noAnswer": "No answer provided",
-        "replyToCustomer": "Reply to Customer",
-        "replyPlaceholder": "Type your reply message here...",
-        "replyMessageHint": "This message will be sent to {guestEmail}",
-        "toastWarningReply": "Please enter a reply message",
-        "toastSuccessReply": "Reply sent successfully to {sentTo}",
-        "toastErrorReply": "Failed to send reply"
+        "header": "Detail spätnej väzby od hosta",
+        "guestInfo": "Informácie o hostovi",
+        "name": "Meno:",
+        "anonymous": "Anonymný",
+        "email": "E-mail:",
+        "notProvided": "Neposkytnuté",
+        "phone": "Telefón:",
+        "roomNumber": "Číslo izby:",
+        "submitted": "Odoslané:",
+        "overallRating": "Celkové hodnotenie",
+        "quickFeedback": "Rýchla spätná väzba",
+        "howDoYouRateUs": "Ako nás hodnotíte?",
+        "honestFeedback": "Dajte nám prosím úprimnú spätnú väzbu?",
+        "noSpecificFeedback": "Nebola poskytnutá konkrétna spätná väzba",
+        "customRatingItem": "Vlastná položka hodnotenia ({itemId})",
+        "formInfo": "Informácie o formulári",
+        "formTitle": "Názov formulára:",
+        "description": "Popis:",
+        "layout": "Rozloženie:",
+        "feedbackResponses": "Odpovede na spätnú väzbu",
+        "reviewReplies": "Odpovede na recenzie",
+        "languageSelectorLabel": "Zobraziť obsah v",
+        "languageSelectorPlaceholder": "Vyberte jazyk",
+        "translating": "Prekladá sa...",
+        "noDetailedResponses": "K tejto recenzii nie sú k dispozícii podrobné odpovede.",
+        "question": "Otázka:",
+        "noAnswer": "Odpoveď nebola poskytnutá",
+        "replyToCustomer": "Odpovedať zákazníkovi",
+        "replyPlaceholder": "Napíšte sem svoju odpoveď...",
+        "replyMessageHint": "Táto správa bude odoslaná na {guestEmail}",
+        "toastWarningReply": "Zadajte prosím správu odpovede",
+        "toastSuccessReply": "Odpoveď bola úspešne odoslaná na {sentTo}",
+        "toastErrorReply": "Odoslanie odpovede zlyhalo"
       },
       "deleteDialog": {
-        "header": "Delete Review",
-        "confirmTitle": "Are you sure you want to delete this review?",
-        "confirmMessage": "This action cannot be undone. The review will be permanently removed from your system.",
-        "reviewDetails": "Review Details:",
-        "guest": "Guest:",
-        "rating": "Rating:",
-        "submitted": "Submitted:",
+        "header": "Zmazať recenziu",
+        "confirmTitle": "Naozaj chcete zmazať túto recenziu?",
+        "confirmMessage": "Túto akciu nemožno vrátiť späť. Recenzia bude trvalo odstránená zo systému.",
+        "reviewDetails": "Detail recenzie:",
+        "guest": "Host:",
+        "rating": "Hodnotenie:",
+        "submitted": "Odoslané:",
         "buttons": {
-          "cancel": "Cancel",
-          "delete": "Delete"
+          "cancel": "Zrušiť",
+          "delete": "Zmazať"
         },
         "toasts": {
-          "success": "Review deleted successfully",
-          "error": "Failed to delete review"
+          "success": "Recenzia bola úspešne zmazaná",
+          "error": "Zmazanie recenzie zlyhalo"
         }
       },
       "toasts": {
-        "loadError": "Failed to load reviews",
-        "detailsLoadError": "Failed to load review details",
+        "loadError": "Načítanie recenzií zlyhalo",
+        "detailsLoadError": "Načítanie detailu recenzie zlyhalo",
         "statusUpdate": {
-          "checked": "Review marked as checked",
-          "unchecked": "Review unmarked as checked",
-          "urgent": "Review marked as urgent",
-          "notUrgent": "Review unmarked as urgent",
-          "replied": "Review marked as replied"
+          "checked": "Recenzia označená ako skontrolovaná",
+          "unchecked": "Recenzia odznačená ako skontrolovaná",
+          "urgent": "Recenzia označená ako naliehavá",
+          "notUrgent": "Recenzia odznačená ako naliehavá",
+          "replied": "Recenzia označená ako zodpovedaná"
         },
-        "statusUpdateError": "Failed to update review status",
-        "replyMissing": "Please enter a reply message",
-        "replySuccess": "Reply sent successfully to {sentTo}",
-        "replyError": "Failed to send reply",
-        "translationError": "Failed to translate review content",
-        "deleteSuccess": "Review deleted successfully",
-        "deleteError": "Failed to delete review"
+        "statusUpdateError": "Aktualizácia stavu recenzie zlyhala",
+        "replyMissing": "Zadajte prosím správu odpovede",
+        "replySuccess": "Odpoveď bola úspešne odoslaná na {sentTo}",
+        "replyError": "Odoslanie odpovede zlyhalo",
+        "translationError": "Preklad obsahu recenzie zlyhal",
+        "deleteSuccess": "Recenzia bola úspešne zmazaná",
+        "deleteError": "Zmazanie recenzie zlyhalo"
       }
     },
     "menu": {
       "dashboard": "Dashboard",
-      "feedbackForm": "Feedback Form",
-      "qrCodes": "QR Codes",
-      "allReviews": "All Reviews",
-      "notifications": "Notifications",
-      "contactAdmin": "Contact Admin",
-      "settings": "Settings",
+      "feedbackForm": "Formulár spätnej väzby",
+      "qrCodes": "QR kódy",
+      "allReviews": "Všetky recenzie",
+      "notifications": "Oznámenia",
+      "contactAdmin": "Kontakt na správcu",
+      "settings": "Nastavenia",
       "settingsItems": {
-        "userProfile": "User Profile",
-        "hotelProfile": "Hotel Profile",
-        "changePassword": "Change Password",
-        "subscriptions": "Subscriptions",
-        "paymentMethods": "Payment Methods"
+        "userProfile": "Profil používateľa",
+        "hotelProfile": "Profil hotela",
+        "changePassword": "Zmeniť heslo",
+        "subscriptions": "Predplatné",
+        "paymentMethods": "Platobné metódy"
       }
     },
     "paymentMethods": {
-      "pageTitle": "Add Payment Method",
+      "pageTitle": "Pridať spôsob platby",
       "buttons": {
-        "add": "Add",
-        "addMethod": "Add Method",
-        "updateMethod": "Update Method",
-        "cancel": "Cancel",
-        "setPrimary": "Set as Primary",
-        "delete": "Delete"
+        "add": "Pridať",
+        "addMethod": "Pridať spôsob",
+        "updateMethod": "Aktualizovať spôsob",
+        "cancel": "Zrušiť",
+        "setPrimary": "Nastaviť ako predvolený",
+        "delete": "Vymazať"
       },
       "badges": {
-        "primary": "Primary",
-        "expired": "Expired"
+        "primary": "Predvolený",
+        "expired": "Expirovaný"
       },
       "states": {
-        "loading": "Loading payment methods...",
-        "emptyTitle": "No Payment Methods",
-        "emptyDescription": "Add a payment method to manage your subscriptions."
+        "loading": "Načítavanie spôsobov platby...",
+        "emptyTitle": "Žiadne spôsoby platby",
+        "emptyDescription": "Pridajte spôsob platby na správu predplatného."
       },
       "form": {
-        "paymentType": "Payment Type",
+        "paymentType": "Typ platby",
         "paymentTypeOptions": {
-          "card": "Credit/Debit Card",
-          "bank": "Bank Account"
+          "card": "Kreditná/debetná karta",
+          "bank": "Bankový účet"
         },
         "card": {
-          "number": "Card Number",
+          "number": "Číslo karty",
           "numberPlaceholder": "1234 5678 9012 3456",
-          "expiryMonth": "Expiry Month",
-          "expiryYear": "Expiry Year",
+          "expiryMonth": "Mesiac expirácie",
+          "expiryYear": "Rok expirácie",
           "monthPlaceholder": "MM",
-          "yearPlaceholder": "YYYY",
+          "yearPlaceholder": "RRRR",
           "cvv": "CVV",
           "cvvPlaceholder": "123",
-          "holder": "Cardholder Name",
-          "holderPlaceholder": "John Doe",
-          "brand": "Card Brand",
-          "brandPlaceholder": "Select card brand"
+          "holder": "Meno držiteľa karty",
+          "holderPlaceholder": "Ján Novák",
+          "brand": "Značka karty",
+          "brandPlaceholder": "Vyberte značku karty"
         },
         "cardBrands": {
           "visa": "Visa",
           "mastercard": "Mastercard",
           "amex": "American Express",
           "discover": "Discover",
-          "unknown": "Card"
+          "unknown": "Karta"
         },
         "bank": {
-          "name": "Bank Name",
-          "namePlaceholder": "Bank of America",
-          "accountNumber": "Account Number",
-          "accountPlaceholder": "Account number",
-          "routingNumber": "Routing Number",
+          "name": "Názov banky",
+          "namePlaceholder": "Názov banky",
+          "accountNumber": "Číslo účtu",
+          "accountPlaceholder": "Číslo účtu",
+          "routingNumber": "Kód banky",
           "routingPlaceholder": "123456789",
-          "accountType": "Account Type",
-          "accountTypePlaceholder": "Select account type"
+          "accountType": "Typ účtu",
+          "accountTypePlaceholder": "Vyberte typ účtu"
         },
         "accountTypes": {
-          "checking": "Checking",
-          "savings": "Savings",
-          "unknown": "Account"
+          "checking": "Bežný",
+          "savings": "Sporiaci",
+          "unknown": "Účet"
         }
       },
       "list": {
-        "endingIn": "ending in",
-        "expiryLabel": "Exp. date",
-        "accountTypeSuffix": "Account",
-        "accountTypeUnknown": "Account",
-        "unknownBank": "Bank",
-        "edit": "Edit",
-        "delete": "Delete"
+        "endingIn": "končiace na",
+        "expiryLabel": "Exp.",
+        "accountTypeSuffix": "Účet",
+        "accountTypeUnknown": "Účet",
+        "unknownBank": "Banka",
+        "edit": "Upraviť",
+        "delete": "Vymazať"
       },
       "dialogs": {
         "add": {
-          "title": "Add Payment Method"
+          "title": "Pridať spôsob platby"
         },
         "edit": {
-          "title": "Edit Payment Method",
-          "cardLocked": "Card number cannot be changed for security reasons",
-          "bankLocked": "Account number cannot be changed for security reasons"
+          "title": "Upraviť spôsob platby",
+          "cardLocked": "Číslo karty nie je možné z bezpečnostných dôvodov zmeniť",
+          "bankLocked": "Číslo účtu nie je možné z bezpečnostných dôvodov zmeniť"
         },
         "delete": {
-          "title": "Delete Payment Method",
-          "message": "Are you sure you want to delete this payment method? This action cannot be undone."
+          "title": "Vymazať spôsob platby",
+          "message": "Naozaj chcete vymazať tento spôsob platby? Túto akciu nie je možné vrátiť späť."
         }
       },
       "toasts": {
         "load": {
-          "error": "Failed to load payment methods"
+          "error": "Nepodarilo sa načítať spôsoby platby"
         },
         "add": {
-          "success": "Payment method added successfully",
-          "error": "Failed to add payment method"
+          "success": "Spôsob platby bol úspešne pridaný",
+          "error": "Nepodarilo sa pridať spôsob platby"
         },
         "delete": {
-          "success": "Payment method deleted successfully",
-          "error": "Failed to delete payment method"
+          "success": "Spôsob platby bol úspešne vymazaný",
+          "error": "Nepodarilo sa vymazať spôsob platby"
         },
         "default": {
-          "success": "Default payment method updated",
-          "error": "Failed to update default payment method"
+          "success": "Predvolený spôsob platby bol aktualizovaný",
+          "error": "Nepodarilo sa aktualizovať predvolený spôsob platby"
         },
         "update": {
-          "success": "Payment method updated successfully",
-          "error": "Failed to update payment method"
+          "success": "Spôsob platby bol úspešne aktualizovaný",
+          "error": "Nepodarilo sa aktualizovať spôsob platby"
         }
       }
     },
     "subscription": {
       "header": {
-        "title": "Subscription Management",
-        "subtitle": "Manage your hotel's subscription and billing."
+        "title": "Správa predplatného",
+        "subtitle": "Spravujte predplatné a fakturáciu vášho hotela."
       },
       "buttons": {
-        "refresh": "Refresh",
-        "processing": "Processing...",
-        "upgradeNow": "Upgrade Now",
-        "currentPlan": "Current Plan",
-        "reactivate": "Reactivate",
-        "cancelSubscription": "Cancel Subscription",
-        "contactSupport": "Contact Support",
-        "cancel": "Cancel",
-        "confirm": "Confirm"
+        "refresh": "Obnoviť",
+        "processing": "Spracovanie...",
+        "upgradeNow": "Upgradovať teraz",
+        "currentPlan": "Aktuálny plán",
+        "reactivate": "Znova aktivovať",
+        "cancelSubscription": "Zrušiť predplatné",
+        "contactSupport": "Kontaktovať podporu",
+        "cancel": "Zrušiť",
+        "confirm": "Potvrdiť"
       },
       "statuses": {
-        "trial": "Trial",
-        "active": "Active",
-        "cancelled": "Cancelled",
-        "expired": "Expired"
+        "trial": "Skúšobné",
+        "active": "Aktívne",
+        "cancelled": "Zrušené",
+        "expired": "Expirované"
       },
       "states": {
-        "loading": "Loading subscription data...",
-        "notFoundTitle": "Subscription Not Found",
-        "notFoundDescription": "Unable to load subscription information."
+        "loading": "Načítavanie údajov predplatného...",
+        "notFoundTitle": "Predplatné nenájdené",
+        "notFoundDescription": "Nepodarilo sa načítať informácie o predplatnom."
       },
       "labels": {
         "notAvailable": "N/A"
       },
       "trial": {
-        "name": "Trial Plan",
-        "description": "Free Trial",
-        "label": "Trial Period:",
-        "remaining": "{count} days remaining"
+        "name": "Skúšobný plán",
+        "description": "Bezplatná skúška",
+        "label": "Skúšobné obdobie:",
+        "remaining": "Zostáva {count} dní"
       },
       "sections": {
         "status": {
-          "title": "Current Subscription Status",
-          "statusLabel": "Status",
-          "totalReviews": "Total Reviews",
-          "averageRating": "Average Rating"
+          "title": "Aktuálny stav predplatného",
+          "statusLabel": "Stav",
+          "totalReviews": "Celkom recenzií",
+          "averageRating": "Priemerné hodnotenie"
         },
         "plans": {
-          "title": "Available Plans",
-          "currentPlanHint": "You are currently on this plan"
+          "title": "Dostupné plány",
+          "currentPlanHint": "Aktuálne máte tento plán"
         },
         "actions": {
-          "title": "Subscription Actions"
+          "title": "Akcie predplatného"
         },
         "billing": {
-          "title": "Billing Information",
-          "subscriptionId": "Subscription ID:",
-          "created": "Created:",
-          "nextBilling": "Next Billing:",
-          "trialEnds": "Trial Ends:"
+          "title": "Fakturačné údaje",
+          "subscriptionId": "ID predplatného:",
+          "created": "Vytvorené:",
+          "nextBilling": "Ďalšia fakturácia:",
+          "trialEnds": "Koniec skúšobnej doby:"
         }
       },
-      "perInterval": "per {interval}",
+      "perInterval": "za {interval}",
       "priceLabel": "{price}/{interval}",
       "dialog": {
-        "title": "Confirm Subscription Change",
-        "upgradeTitle": "Upgrade to {plan}",
-        "description": "You are about to upgrade your subscription plan.",
-        "planLabel": "Plan:",
-        "priceLabel": "Price:",
-        "billingLabel": "Billing:",
-        "noteLabel": "Note:",
-        "noteDescription": "This is a demo environment. No actual payment will be processed."
+        "title": "Potvrdiť zmenu predplatného",
+        "upgradeTitle": "Upgrade na {plan}",
+        "description": "Chystáte sa upgradovať váš plán predplatného.",
+        "planLabel": "Plán:",
+        "priceLabel": "Cena:",
+        "billingLabel": "Fakturácia:",
+        "noteLabel": "Poznámka:",
+        "noteDescription": "Toto je demo prostredie. Žiadna skutočná platba nebude vykonaná."
       },
       "toasts": {
         "load": {
-          "error": "Failed to load subscription data"
+          "error": "Nepodarilo sa načítať údaje predplatného"
         },
         "update": {
-          "success": "Subscription updated successfully",
-          "error": "Failed to update subscription"
+          "success": "Predplatné bolo úspešne aktualizované",
+          "error": "Nepodarilo sa aktualizovať predplatné"
         }
       },
       "errors": {
-        "unauthorized": "Unauthorized",
-        "hotelNotFound": "Hotel not found",
-        "planRequired": "Plan ID and action are required",
-        "unknownPlan": "Unknown Plan",
-        "fetchFailed": "Failed to fetch subscription details",
-        "updateFailed": "Failed to update subscription"
+        "unauthorized": "Neoprávnený prístup",
+        "hotelNotFound": "Hotel nenájdený",
+        "planRequired": "Vyžaduje sa ID plánu a akcia",
+        "unknownPlan": "Neznámy plán",
+        "fetchFailed": "Nepodarilo sa načítať údaje o predplatnom",
+        "updateFailed": "Nepodarilo sa aktualizovať predplatné"
       },
       "messages": {
-        "upgraded": "Successfully upgraded to {plan}",
-        "cancelled": "Successfully cancelled subscription"
+        "upgraded": "Úspešný upgrade na {plan}",
+        "cancelled": "Predplatné bolo úspešne zrušené"
       },
       "plans": {
         "basic": {
-          "name": "Basic Plan",
+          "name": "Základný plán",
           "features": [
-            "Up to 100 reviews per month",
-            "Basic analytics",
-            "QR code generation",
-            "Basic Feedback Form"
+            "Až 100 recenzií mesačne",
+            "Základná analytika",
+            "Generovanie QR kódov",
+            "Základný formulár spätnej väzby"
           ]
         },
         "professional": {
-          "name": "Professional Plan",
+          "name": "Profesionálny plán",
           "features": [
-            "Up to 500 reviews per month",
-            "Advanced analytics",
-            "QR code generation",
-            "Customized Star Rating Questions"
+            "Až 500 recenzií mesačne",
+            "Pokročilá analytika",
+            "Generovanie QR kódov",
+            "Vlastné otázky hodnotenia hviezdičkami"
           ]
         },
         "enterprise": {
-          "name": "Enterprise Plan",
+          "name": "Firemný plán",
           "features": [
-            "Unlimited reviews per month",
-            "Enterprise analytics",
-            "Priority support",
-            "Multi-property management"
+            "Neobmedzený počet recenzií mesačne",
+            "Firemná analytika",
+            "Prioritná podpora",
+            "Správa viacerých objektov"
           ]
         }
       },
       "intervals": {
-        "month": "month",
-        "monthly": "monthly",
-        "year": "year",
-        "yearly": "yearly",
-        "quarter": "quarter",
-        "quarterly": "quarterly"
+        "month": "mesiac",
+        "monthly": "mesačne",
+        "year": "rok",
+        "yearly": "ročne",
+        "quarter": "štvrťrok",
+        "quarterly": "štvrťročne"
       }
     },
     "profile": {
       "user": {
-        "title": "Personal Information",
-        "subtitle": "Manage your personal account details.",
+        "title": "Osobné údaje",
+        "subtitle": "Spravujte svoje osobné údaje účtu.",
         "buttons": {
-          "save": "Save Changes",
-          "changePassword": "Change Password",
-          "twoFactor": "Two-Factor Authentication",
-          "changePhoto": "Change Photo",
-          "uploading": "Uploading..."
+          "save": "Uložiť zmeny",
+          "changePassword": "Zmeniť heslo",
+          "twoFactor": "Dvojfaktorové overenie",
+          "changePhoto": "Zmeniť fotku",
+          "uploading": "Nahrávam..."
         },
         "images": {
-          "cardTitle": "Profile Image",
-          "hint": "JPG, PNG or GIF. Max size 5MB."
+          "cardTitle": "Profilový obrázok",
+          "hint": "JPG, PNG alebo GIF. Max. 5MB."
         },
         "fields": {
-          "firstName": "First Name *",
-          "lastName": "Last Name *",
-          "email": "Email Address *",
-          "phone": "Phone Number"
+          "firstName": "Meno *",
+          "lastName": "Priezvisko *",
+          "email": "E-mail *",
+          "phone": "Telefónne číslo"
         },
         "placeholders": {
-          "firstName": "Enter your first name",
-          "lastName": "Enter your last name",
+          "firstName": "Zadajte svoje meno",
+          "lastName": "Zadajte svoje priezvisko",
           "email": "your.email@example.com",
           "phone": "+1 (555) 123-4567"
         },
         "cards": {
-          "personalInfo": "Personal Information",
-          "accountInfo": "Account Information",
-          "security": "Security"
+          "personalInfo": "Osobné údaje",
+          "accountInfo": "Informácie o účte",
+          "security": "Zabezpečenie"
         },
         "account": {
-          "type": "Account Type:",
-          "status": "Status:",
-          "memberSince": "Member Since:",
-          "lastLogin": "Last Login:",
-          "typeValue": "Hotel Owner",
-          "statusActive": "Active",
+          "type": "Typ účtu:",
+          "status": "Stav:",
+          "memberSince": "Člen od:",
+          "lastLogin": "Posledné prihlásenie:",
+          "typeValue": "Vlastník hotela",
+          "statusActive": "Aktívny",
           "notAvailable": "N/A"
         },
         "toasts": {
-          "saveSuccess": "Profile updated successfully",
-          "saveError": "Failed to update profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Profile image updated successfully",
-          "imageError": "Failed to upload image",
-          "twoFactorInfo": "Two-factor authentication will be available soon"
+          "saveSuccess": "Profil bol úspešne aktualizovaný",
+          "saveError": "Nepodarilo sa aktualizovať profil",
+          "imageTypeError": "Vyberte platný obrázok (JPG, PNG, GIF alebo WebP)",
+          "imageSizeError": "Veľkosť obrázka musí byť menšia ako 5MB",
+          "imageSuccess": "Profilový obrázok bol úspešne aktualizovaný",
+          "imageError": "Nepodarilo sa nahrať obrázok",
+          "twoFactorInfo": "Dvojfaktorové overenie bude čoskoro k dispozícii"
         }
       },
       "hotel": {
-        "title": "Hotel Profile",
-        "subtitle": "Manage your hotel information and settings.",
+        "title": "Profil hotela",
+        "subtitle": "Spravujte informácie a nastavenia vášho hotela.",
         "buttons": {
-          "save": "Save Changes",
-          "uploadLogo": "Upload Logo",
-          "uploading": "Uploading...",
-          "viewPublic": "View Public Page",
-          "contactSupport": "Contact Support"
+          "save": "Uložiť zmeny",
+          "uploadLogo": "Nahrať logo",
+          "uploading": "Nahrávam...",
+          "viewPublic": "Zobraziť verejnú stránku",
+          "contactSupport": "Kontaktovať podporu"
         },
         "images": {
-          "cardTitle": "Hotel Logo",
-          "alt": "Hotel Logo",
-          "hint": "JPG, PNG or GIF. Max size 5MB. Recommended: 300x300px"
+          "cardTitle": "Logo hotela",
+          "alt": "Logo hotela",
+          "hint": "JPG, PNG alebo GIF. Max. 5MB. Odporúčané: 300x300px"
         },
         "cards": {
-          "actions": "Actions",
-          "hotelInfo": "Hotel Information"
+          "actions": "Akcie",
+          "hotelInfo": "Informácie o hoteli"
         },
         "fields": {
-          "name": "Hotel Name *",
-          "description": "Description",
-          "address": "Address",
-          "city": "City",
-          "country": "Country",
-          "phone": "Phone",
-          "email": "Email",
-          "website": "Website"
+          "name": "Názov hotela *",
+          "description": "Popis",
+          "address": "Adresa",
+          "city": "Mesto",
+          "country": "Krajina",
+          "phone": "Telefón",
+          "email": "E-mail",
+          "website": "Web"
         },
         "placeholders": {
-          "name": "Enter hotel name",
-          "description": "Brief description of your hotel",
-          "address": "Street address",
-          "city": "City",
-          "country": "Select country",
+          "name": "Zadajte názov hotela",
+          "description": "Stručný popis vášho hotela",
+          "address": "Ulica a číslo",
+          "city": "Mesto",
+          "country": "Vyberte krajinu",
           "phone": "+1 (555) 123-4567",
           "email": "hotel@example.com",
           "website": "https://www.yourhotel.com"
         },
         "externalLinks": {
-          "title": "External Review Links",
-          "subtitle": "Add links to your TripAdvisor and Google Reviews pages to help guests share positive feedback.",
+          "title": "Odkazy na recenzie",
+          "subtitle": "Pridajte odkazy na TripAdvisor a Google Reviews.",
           "tripAdvisor": {
-            "label": "TripAdvisor Link",
+            "label": "Odkaz TripAdvisor",
             "placeholder": "https://www.tripadvisor.com/...",
-            "hint": "Optional: Link to your TripAdvisor page"
+            "hint": "Voliteľne: odkaz na vašu stránku TripAdvisor"
           },
           "google": {
-            "label": "Google Reviews Link",
+            "label": "Odkaz Google Reviews",
             "placeholder": "https://g.page/...",
-            "hint": "Optional: Link to your Google Reviews page"
+            "hint": "Voliteľne: odkaz na vašu stránku Google Reviews"
           }
         },
         "account": {
           "notAvailable": "N/A"
         },
         "toasts": {
-          "loadError": "Failed to load hotel profile",
-          "saveSuccess": "Hotel profile updated successfully",
-          "saveError": "Failed to update hotel profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Hotel logo updated successfully",
-          "imageError": "Failed to upload logo"
+          "loadError": "Nepodarilo sa načítať profil hotela",
+          "saveSuccess": "Profil hotela bol úspešne aktualizovaný",
+          "saveError": "Nepodarilo sa aktualizovať profil hotela",
+          "imageTypeError": "Vyberte platný obrázok (JPG, PNG, GIF alebo WebP)",
+          "imageSizeError": "Veľkosť obrázka musí byť menšia ako 5MB",
+          "imageSuccess": "Logo hotela bolo úspešne aktualizované",
+          "imageError": "Nepodarilo sa nahrať logo"
         }
       },
       "password": {
-        "title": "Change Password",
-        "subtitle": "Update your account password for better security.",
-        "cardTitle": "Password Change",
+        "title": "Zmeniť heslo",
+        "subtitle": "Aktualizujte heslo účtu pre lepšie zabezpečenie.",
+        "cardTitle": "Zmena hesla",
         "buttons": {
-          "change": "Change Password",
-          "cancel": "Cancel",
-          "confirmChange": "Change Password"
+          "change": "Zmeniť heslo",
+          "cancel": "Zrušiť",
+          "confirmChange": "Zmeniť heslo"
         },
         "fields": {
-          "current": "Current Password *",
-          "new": "New Password *",
-          "confirm": "Confirm New Password *"
+          "current": "Aktuálne heslo *",
+          "new": "Nové heslo *",
+          "confirm": "Potvrdiť nové heslo *"
         },
         "placeholders": {
-          "current": "Enter your current password",
-          "new": "Enter your new password",
-          "confirm": "Confirm your new password"
+          "current": "Zadajte aktuálne heslo",
+          "new": "Zadajte nové heslo",
+          "confirm": "Potvrdíte nové heslo"
         },
         "strength": {
-          "label": "Password Strength:",
-          "weak": "Weak",
-          "medium": "Medium",
-          "strong": "Strong"
+          "label": "Sila hesla:",
+          "weak": "Slabé",
+          "medium": "Stredné",
+          "strong": "Silné"
         },
         "requirements": {
-          "title": "Password Requirements",
-          "minLength": "At least 8 characters long",
-          "uppercase": "Contains uppercase letters",
-          "lowercase": "Contains lowercase letters",
-          "numbers": "Contains numbers",
-          "special": "Contains special characters"
+          "title": "Požiadavky na heslo",
+          "minLength": "Minimálne 8 znakov",
+          "uppercase": "Obsahuje veľké písmená",
+          "lowercase": "Obsahuje malé písmená",
+          "numbers": "Obsahuje číslice",
+          "special": "Obsahuje špeciálne znaky"
         },
         "tips": {
-          "title": "Security Tips",
-          "tip": "Tip: Use a unique password that you don't use elsewhere.",
-          "warning": "Warning: Never share your password with anyone."
+          "title": "Tipy pre zabezpečenie",
+          "tip": "Tip: Používajte jedinečné heslo, ktoré inde nepoužívate.",
+          "warning": "Varovanie: Nikdy nezdieľajte svoje heslo."
         },
         "validation": {
-          "currentRequired": "Current password is required",
-          "newRequired": "New password is required",
-          "minLength": "New password must be at least 8 characters long",
-          "complexity": "New password must contain uppercase, lowercase, numbers, and special characters",
-          "confirmMismatch": "New password and confirmation do not match",
-          "sameAsCurrent": "New password must be different from current password"
+          "currentRequired": "Aktuálne heslo je povinné",
+          "newRequired": "Nové heslo je povinné",
+          "minLength": "Nové heslo musí mať aspoň 8 znakov",
+          "complexity": "Nové heslo musí obsahovať veľké a malé písmená, číslice a špeciálne znaky",
+          "confirmMismatch": "Nové heslo a potvrdenie sa nezhodujú",
+          "sameAsCurrent": "Nové heslo musí byť iné ako aktuálne"
         },
         "toasts": {
-          "changeSuccess": "Password changed successfully",
-          "changeError": "Failed to change password"
+          "changeSuccess": "Heslo bolo úspešne zmenené",
+          "changeError": "Nepodarilo sa zmeniť heslo"
         },
         "confirm": {
-          "title": "Confirm Password Change",
-          "message": "Are you sure you want to change your password?",
-          "warning": "This action will log you out of all devices and you'll need to log in again."
+          "title": "Potvrdiť zmenu hesla",
+          "message": "Naozaj chcete zmeniť svoje heslo?",
+          "warning": "Budete odhlásení zo všetkých zariadení a budete sa musieť znova prihlásiť."
         },
         "accessibility": {
-          "show": "Show password",
-          "hide": "Hide password"
+          "show": "Zobraziť heslo",
+          "hide": "Skryť heslo"
         }
       },
       "subscription": {
         "errors": {
-          "unauthorized": "Unauthorized",
-          "hotelNotFound": "Hotel not found",
-          "planRequired": "Plan ID and action are required",
-          "unknownPlan": "Unknown Plan",
-          "fetchFailed": "Failed to fetch subscription details",
-          "updateFailed": "Failed to update subscription"
+          "unauthorized": "Neoprávnený prístup",
+          "hotelNotFound": "Hotel nenájdený",
+          "planRequired": "Vyžaduje sa ID plánu a akcia",
+          "unknownPlan": "Neznámy plán",
+          "fetchFailed": "Nepodarilo sa načítať údaje o predplatnom",
+          "updateFailed": "Nepodarilo sa aktualizovať predplatné"
         },
         "messages": {
-          "upgraded": "Successfully upgraded to {plan}",
-          "cancelled": "Successfully cancelled subscription"
+          "upgraded": "Úspešný upgrade na {plan}",
+          "cancelled": "Predplatné bolo úspešne zrušené"
         },
         "plans": {
           "basic": {
-            "name": "Basic Plan",
+            "name": "Základný plán",
             "features": [
-              "Up to 100 reviews per month",
-              "Basic analytics",
-              "QR code generation",
-              "Basic Feedback Form"
+              "Až 100 recenzií mesačne",
+              "Základná analytika",
+              "Generovanie QR kódov",
+              "Základný formulár spätnej väzby"
             ]
           },
           "professional": {
-            "name": "Professional Plan",
+            "name": "Profesionálny plán",
             "features": [
-              "Up to 500 reviews per month",
-              "Advanced analytics",
-              "QR code generation",
-              "Customized Star Rating Questions"
+              "Až 500 recenzií mesačne",
+              "Pokročilá analytika",
+              "Generovanie QR kódov",
+              "Vlastné otázky hodnotenia hviezdičkami"
             ]
           },
           "enterprise": {
-            "name": "Enterprise Plan",
+            "name": "Firemný plán",
             "features": [
-              "Unlimited reviews",
-              "Full analytics suite",
-              "QR code generation",
-              "All type of questions"
+              "Neobmedzený počet recenzií",
+              "Kompletná analytika",
+              "Generovanie QR kódov",
+              "Všetky typy otázok"
             ]
           }
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Oznámenia",
+        "ariaLabel": "Oznámenia",
+        "iconAlt": "Ikona oznámenia",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Označiť všetko ako prečítané",
+          "refresh": "Obnoviť"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Zatiaľ žiadne oznámenia"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "newFormCreated": "New Form Created",
-          "success": "Success",
-          "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "newReview": "Nová recenzia",
+          "reviewApproved": "Recenzia schválená",
+          "reviewRejected": "Recenzia zamietnutá",
+          "subscriptionExpiring": "Predplatné končí",
+          "subscriptionCancelled": "Predplatné zrušené",
+          "escalationReceived": "Eskalácia prijatá",
+          "escalationResponded": "Eskalácii zodpovedané",
+          "systemAlert": "Systémové upozornenie",
+          "newHotelRegistration": "Nová registrácia hotela",
+          "newFormCreated": "Vytvorený nový formulár",
+          "success": "Úspech",
+          "info": "Informácia",
+          "warning": "Varovanie",
+          "error": "Chyba",
+          "generic": "Oznámenie"
         }
       },
       "profileSidebar": {
         "greeting": {
-          "title": "Welcome",
-          "fallbackName": "Admin User"
+          "title": "Vitajte",
+          "fallbackName": "Administrátor"
         },
         "actions": {
           "profile": {
-            "title": "Profile",
-            "description": "Manage your account settings"
+            "title": "Profil",
+            "description": "Spravovať nastavenia účtu"
           },
           "signOut": {
-            "title": "Sign Out",
-            "description": "Logout from your account"
+            "title": "Odhlásiť sa",
+            "description": "Odhlásenie z účtu"
           }
         },
         "notifications": {
-          "title": "Recent Notifications",
-          "loading": "Loading notifications...",
-          "summary": "You have {count} unread notifications",
-          "empty": "No new notifications"
+          "title": "Nedávne oznámenia",
+          "loading": "Načítavanie oznámení...",
+          "summary": "Máte {count} neprečítaných oznámení",
+          "empty": "Žiadne nové oznámenia"
         },
         "time": {
-          "justNow": "Just now"
+          "justNow": "Práve teraz"
         }
       }
     },
     "communications": {
       "notifications": {
-        "title": "Notifications",
-        "subtitle": "Manage system notifications and alerts",
+        "title": "Oznámenia",
+        "subtitle": "Spravujte systémové oznámenia a upozornenia",
         "buttons": {
-          "deleteSelected": "Delete Selected ({count})",
-          "markAllAsRead": "Mark All as Read",
-          "refresh": "Refresh"
+          "deleteSelected": "Zmazať vybrané ({count})",
+          "markAllAsRead": "Označiť všetko ako prečítané",
+          "refresh": "Obnoviť"
         },
         "filters": {
-          "title": "Filters",
-          "searchLabel": "Search Notifications",
-          "searchPlaceholder": "Search by title, message, or user...",
-          "type": "Type",
-          "allTypes": "All Types",
+          "title": "Filtre",
+          "searchLabel": "Hľadať oznámenia",
+          "searchPlaceholder": "Hľadať podľa názvu, správy alebo používateľa...",
+          "type": "Typ",
+          "allTypes": "Všetky typy",
           "status": {
-            "label": "Status",
-            "all": "All Status",
-            "unread": "Unread",
-            "read": "Read"
+            "label": "Stav",
+            "all": "Všetky stavy",
+            "unread": "Neprečítané",
+            "read": "Prečítané"
           },
           "types": {
-            "newReview": "New Review",
-            "reviewApproved": "Review Approved",
-            "reviewRejected": "Review Rejected",
-            "subscriptionExpiring": "Subscription Expiring",
-            "subscriptionCancelled": "Subscription Cancelled",
-            "escalationReceived": "Escalation Received",
-            "escalationResponded": "Escalation Responded",
-            "systemAlert": "System Alert",
-            "newHotelRegistration": "New Hotel Registration",
-            "newFormCreated": "New Form Created",
-            "success": "Success",
-            "info": "Info",
-            "warning": "Warning",
-            "error": "Error"
+            "newReview": "Nová recenzia",
+            "reviewApproved": "Recenzia schválená",
+            "reviewRejected": "Recenzia zamietnutá",
+            "subscriptionExpiring": "Predplatné končí",
+            "subscriptionCancelled": "Predplatné zrušené",
+            "escalationReceived": "Eskalácia prijatá",
+            "escalationResponded": "Eskalácii zodpovedané",
+            "systemAlert": "Systémové upozornenie",
+            "newHotelRegistration": "Nová registrácia hotela",
+            "newFormCreated": "Vytvorený nový formulár",
+            "success": "Úspech",
+            "info": "Informácia",
+            "warning": "Varovanie",
+            "error": "Chyba"
           }
         },
         "states": {
-          "loading": "Loading notifications...",
-          "empty": "No notifications found"
+          "loading": "Načítavanie oznámení...",
+          "empty": "Žiadne oznámenia nenájdené"
         },
         "table": {
-          "type": "Type",
-          "message": "Message",
-          "date": "Date",
-          "actions": "Actions",
+          "type": "Typ",
+          "message": "Správa",
+          "date": "Dátum",
+          "actions": "Akcie",
           "status": {
-            "label": "Status",
-            "read": "Read",
-            "new": "New"
+            "label": "Stav",
+            "read": "Prečítané",
+            "new": "Nové"
           }
         },
         "tooltips": {
-          "markAsRead": "Mark as Read",
-          "view": "View",
-          "delete": "Delete"
+          "markAsRead": "Označiť ako prečítané",
+          "view": "Zobraziť",
+          "delete": "Zmazať"
         },
         "dates": {
-          "justNow": "Just now",
-          "hoursAgo": "{hours}h ago",
-          "yesterday": "Yesterday"
+          "justNow": "Práve teraz",
+          "hoursAgo": "pred {hours}h",
+          "yesterday": "Včera"
         },
         "types": {
-          "NEW_REVIEW": "New Review",
-          "REVIEW_APPROVED": "Review Approved",
-          "REVIEW_REJECTED": "Review Rejected",
-          "SUBSCRIPTION_EXPIRING": "Subscription Expiring",
-          "SUBSCRIPTION_CANCELLED": "Subscription Cancelled",
-          "ESCALATION_RECEIVED": "Escalation Received",
-          "ESCALATION_RESPONDED": "Escalation Responded",
-          "SYSTEM_ALERT": "System Alert",
-          "NEW_HOTEL_REGISTRATION": "New Hotel Registration",
-          "NEW_FORM_CREATED": "New Form Created",
-          "SUCCESS": "Success",
-          "INFO": "Info",
-          "WARNING": "Warning",
-          "ERROR": "Error"
+          "NEW_REVIEW": "Nová recenzia",
+          "REVIEW_APPROVED": "Recenzia schválená",
+          "REVIEW_REJECTED": "Recenzia zamietnutá",
+          "SUBSCRIPTION_EXPIRING": "Predplatné končí",
+          "SUBSCRIPTION_CANCELLED": "Predplatné zrušené",
+          "ESCALATION_RECEIVED": "Eskalácia prijatá",
+          "ESCALATION_RESPONDED": "Eskalácii zodpovedané",
+          "SYSTEM_ALERT": "Systémové upozornenie",
+          "NEW_HOTEL_REGISTRATION": "Nová registrácia hotela",
+          "NEW_FORM_CREATED": "Vytvorený nový formulár",
+          "SUCCESS": "Úspech",
+          "INFO": "Informácia",
+          "WARNING": "Varovanie",
+          "ERROR": "Chyba"
         },
         "toasts": {
-          "loadError": "Failed to load notifications",
-          "markReadSuccess": "Notification marked as read",
-          "markReadError": "Failed to mark notification as read",
-          "markAllReadSuccess": "All notifications marked as read",
-          "markAllReadError": "Failed to mark all notifications as read",
-          "deleteSuccess": "Notification deleted successfully",
-          "deleteError": "Failed to delete notification",
-          "bulkDeleteSuccess": "{count} notification(s) deleted successfully",
-          "bulkDeleteError": "Failed to delete some notifications"
+          "loadError": "Nepodarilo sa načítať oznámenia",
+          "markReadSuccess": "Oznámenie označené ako prečítané",
+          "markReadError": "Nepodarilo sa označiť oznámenie ako prečítané",
+          "markAllReadSuccess": "Všetky oznámenia označené ako prečítané",
+          "markAllReadError": "Nepodarilo sa označiť všetky ako prečítané",
+          "deleteSuccess": "Oznámenie úspešne zmazané",
+          "deleteError": "Nepodarilo sa zmazať oznámenie",
+          "bulkDeleteSuccess": "{count} oznámení úspešne zmazaných",
+          "bulkDeleteError": "Nepodarilo sa zmazať niektoré oznámenia"
         },
         "confirm": {
-          "deleteMessage": "Are you sure you want to delete this notification?",
-          "deleteHeader": "Delete Confirmation",
-          "bulkDeleteMessage": "Are you sure you want to delete {count} selected notification(s)?",
-          "bulkDeleteHeader": "Bulk Delete Confirmation"
+          "deleteMessage": "Naozaj chcete zmazať toto oznámenie?",
+          "deleteHeader": "Potvrdenie zmazania",
+          "bulkDeleteMessage": "Naozaj chcete zmazať {count} vybraných oznámení?",
+          "bulkDeleteHeader": "Potvrdenie hromadného zmazania"
         }
       }
     }
   },
   "auth": {
     "register": {
-      "title": "Register",
-      "subtitle": "Let's get started",
+      "title": "Registrácia",
+      "subtitle": "Začnime",
       "placeholders": {
-        "firstName": "First Name",
-        "lastName": "Last Name",
-        "email": "Email",
-        "phone": "Phone (Optional)",
-        "password": "Password"
+        "firstName": "Meno",
+        "lastName": "Priezvisko",
+        "email": "E-mail",
+        "phone": "Telefón (voliteľné)",
+        "password": "Heslo"
       },
       "buttons": {
-        "signUp": "Sign Up",
-        "signingUp": "Signing Up..."
+        "signUp": "Registrovať sa",
+        "signingUp": "Registrácia..."
       },
-      "agreementPrefix": "I have read the",
+      "agreementPrefix": "Prečítal(a) som si",
       "toasts": {
-        "acceptTerms": "Please accept the terms and conditions",
-        "missingFields": "Please fill in all required fields",
-        "success": "Registration successful! Please check your email.",
-        "error": "Registration failed. Please try again."
+        "acceptTerms": "Prosím, prijmite obchodné podmienky",
+        "missingFields": "Prosím, vyplňte všetky povinné polia",
+        "success": "Registrácia prebehla úspešne! Skontrolujte svoj e-mail.",
+        "error": "Registrácia zlyhala. Skúste to znova."
       }
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter the email address associated with your account and we'll send an email with instructions to reset your password.",
+      "title": "Zabudnuté heslo?",
+      "description": "Zadajte e-mailovú adresu spojenú s vaším účtom a pošleme vám inštrukcie na obnovenie hesla.",
       "messages": {
-        "instructions": "Check your email for password reset instructions"
+        "instructions": "Skontrolujte e-mail pre inštrukcie na obnovenie hesla"
       },
       "submitted": {
-        "title": "Check your email!",
-        "description": "We have sent an email with a password reset link to {email}.",
-        "hint": "Didn't receive the email? Please check your spam folder."
+        "title": "Skontrolujte svoj e-mail!",
+        "description": "Odoslali sme e-mail s odkazom na obnovenie hesla na {email}.",
+        "hint": "E-mail ste nedostali? Skontrolujte priečinok so spamom."
       },
       "fields": {
-        "email": "Email Address",
-        "emailPlaceholder": "Enter your email address"
+        "email": "E-mailová adresa",
+        "emailPlaceholder": "Zadajte svoju e-mailovú adresu"
       },
       "buttons": {
-        "send": "Send Instructions",
-        "sending": "Sending...",
-        "resend": "Resend Email",
-        "backToLogin": "Back to Login"
+        "send": "Odoslať inštrukcie",
+        "sending": "Odosielanie...",
+        "resend": "Znova odoslať e-mail",
+        "backToLogin": "Späť na prihlásenie"
       },
       "validation": {
-        "required": "Email is required",
-        "invalid": "Please enter a valid email address"
+        "required": "E-mail je povinný",
+        "invalid": "Prosím, zadajte platnú e-mailovú adresu"
       },
       "toasts": {
-        "success": "Password reset email sent successfully",
-        "error": "Failed to send reset email",
-        "unexpected": "An unexpected error occurred. Please try again."
+        "success": "E-mail na obnovenie hesla bol úspešne odoslaný",
+        "error": "Nepodarilo sa odoslať e-mail",
+        "unexpected": "Došlo k neočakávanej chybe. Skúste to znova."
       }
     },
     "resetPassword": {
-      "title": "Create New Password!",
-      "subtitle": "Enter a new password below to update your account credentials.",
+      "title": "Vytvorte nové heslo!",
+      "subtitle": "Zadajte nižšie nové heslo na aktualizáciu prihlasovacích údajov.",
       "fields": {
-        "newPassword": "New Password",
-        "confirmPassword": "Confirm Password"
+        "newPassword": "Nové heslo",
+        "confirmPassword": "Potvrdiť heslo"
       },
       "placeholders": {
-        "password": "Enter your password",
-        "confirmPassword": "Confirm your password"
+        "password": "Zadajte svoje heslo",
+        "confirmPassword": "Potvrďte svoje heslo"
       },
       "buttons": {
-        "reset": "Reset Password",
-        "resetting": "Resetting..."
+        "reset": "Obnoviť heslo",
+        "resetting": "Obnovovanie..."
       },
       "link": {
-        "backToLogin": "Back to Login"
+        "backToLogin": "Späť na prihlásenie"
       },
       "states": {
-        "validating": "Validating reset link...",
-        "loading": "Loading..."
+        "validating": "Overovanie odkazu...",
+        "loading": "Načítavanie..."
       },
       "errors": {
-        "passwordMin": "Password must be at least 6 characters long",
-        "passwordMax": "Password must be less than 128 characters",
-        "confirmRequired": "Please confirm your password",
-        "mismatch": "Passwords do not match"
+        "passwordMin": "Heslo musí mať aspoň 6 znakov",
+        "passwordMax": "Heslo musí mať menej ako 128 znakov",
+        "confirmRequired": "Prosím, potvrďte svoje heslo",
+        "mismatch": "Heslá sa nezhodujú"
       },
       "toasts": {
-        "invalidLink": "Invalid reset link",
-        "invalidOrExpired": "Invalid or expired reset link",
-        "failedValidation": "Failed to validate reset link",
-        "success": "Password reset successfully. You can now log in with your new password.",
-        "failure": "Failed to reset password",
-        "unexpected": "An unexpected error occurred"
+        "invalidLink": "Neplatný odkaz na obnovenie",
+        "invalidOrExpired": "Neplatný alebo vypršaný odkaz",
+        "failedValidation": "Nepodarilo sa overiť odkaz",
+        "success": "Heslo bolo úspešne obnovené. Teraz sa môžete prihlásiť novým heslom.",
+        "failure": "Nepodarilo sa obnoviť heslo",
+        "unexpected": "Došlo k neočakávanej chybe"
       },
       "accessibility": {
-        "showPassword": "Show password",
-        "hidePassword": "Hide password"
+        "showPassword": "Zobraziť heslo",
+        "hidePassword": "Skryť heslo"
       }
     }
   },
   "authFooter": {
     "brand": {
       "title": "C-Reviews",
-      "description": "We help hotels connect with their guests through seamless feedback solutions. Our platform makes it easy to create forms, gather insights, and elevate the guest experience with integrity and professionalism at the core of everything we do.",
-      "footerImageAlt": "C-Reviews decorative footer"
+      "description": "Pomáhame hotelom spájať sa s hosťmi cez bezproblémové riešenia spätnej väzby. Naša platforma uľahčuje vytváranie formulárov, zber poznatkov a zlepšovanie hostiteľskej skúsenosti s integritou a profesionalitou v jadre všetkého, čo robíme.",
+      "footerImageAlt": "C-Reviews dekoratívna pätka"
     },
     "quickLinks": {
-      "title": "Quick Links",
+      "title": "Rýchle odkazy",
       "items": {
-        "home": "Home",
-        "about": "About Us",
-        "features": "Features",
-        "contact": "Contact Us"
+        "home": "Domov",
+        "about": "O nás",
+        "features": "Funkcie",
+        "contact": "Kontakt"
       }
     },
     "resources": {
-      "title": "Resources",
+      "title": "Zdroje",
       "items": {
         "dashboard": "Dashboard",
-        "feedbacks": "Feedbacks",
-        "hotelProfile": "Hotel Profile",
-        "support": "Support",
-        "ownerProfile": "Owner Profile"
+        "feedbacks": "Spätné väzby",
+        "hotelProfile": "Profil hotela",
+        "support": "Podpora",
+        "ownerProfile": "Profil majiteľa"
       }
     },
     "legal": {
-      "title": "Legal",
+      "title": "Právne informácie",
       "items": {
-        "privacyPolicy": "Privacy Policy",
-        "companyPolicy": "Company Policy",
-        "terms": "Terms & Conditions"
+        "privacyPolicy": "Zásady ochrany osobných údajov",
+        "companyPolicy": "Firemné zásady",
+        "terms": "Obchodné podmienky"
       }
     },
     "connect": {
-      "title": "Connect with Us",
-      "emailPlaceholder": "Email Address",
-      "submitLabel": "Subscribe",
+      "title": "Spojte sa s nami",
+      "emailPlaceholder": "E-mailová adresa",
+      "submitLabel": "Prihlásiť sa k odberu",
       "social": {
-        "facebook": "Follow us on Facebook",
-        "instagram": "Follow us on Instagram",
-        "linkedin": "Connect with us on LinkedIn"
+        "facebook": "Sledujte nás na Facebooku",
+        "instagram": "Sledujte nás na Instagrame",
+        "linkedin": "Spojte sa s nami na LinkedIn"
       }
     },
-    "copyright": "© 2024 C-Reviews LLC. All Rights Reserved!"
+    "copyright": "© 2024 C-Reviews LLC. Všetky práva vyhradené!"
   }
 }
 

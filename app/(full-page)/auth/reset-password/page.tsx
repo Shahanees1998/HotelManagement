@@ -7,6 +7,7 @@ import { useState, useRef, useEffect, useCallback, Suspense } from "react";
 import { Toast } from "primereact/toast";
 import AuthFooter from "@/components/AuthFooter";
 import { useI18n } from "@/i18n/TranslationProvider";
+import Image from "next/image";
 
 const ResetPasswordContent = () => {
     const [password, setPassword] = useState("");
@@ -224,9 +225,8 @@ const ResetPasswordContent = () => {
                 <div style={{ 
                     fontSize: "1.5rem", 
                     fontWeight: "600",
-                    color: "#1e3a5f"
                 }}>
-                    C-Reviews
+                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={100} />
                 </div>
                 <div style={{ display: "flex", gap: "1rem" }}>
                     <Button

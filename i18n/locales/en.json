@@ -141,6 +141,13 @@
         "noData": "No comparison data available",
         "positiveReviews": "Positive Reviews",
         "negativeReviews": "Negative Reviews"
+      },
+      "stats": {
+        "totalReviews": "Total Reviews",
+        "averageRating": "Average Rating",
+        "positiveReviews": "Positive Reviews",
+        "negativeReviews": "Negative Reviews",
+        "responseRate": "Response Rate"
       }
     },
     "forms": {

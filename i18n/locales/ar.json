@@ -122,6 +122,23 @@
         "table": {
           "date": "التاريخ"
         }
+      },
+      "comparisonChart": {
+        "title": "مقارنة المراجعات",
+        "period": "الفترة",
+        "weekly": "أسبوعي",
+        "monthly": "شهري",
+        "loading": "جاري تحميل بيانات المقارنة...",
+        "noData": "لا توجد بيانات للمقارنة",
+        "positiveReviews": "مراجعات إيجابية",
+        "negativeReviews": "مراجعات سلبية"
+      },
+      "stats": {
+        "totalReviews": "إجمالي المراجعات",
+        "averageRating": "متوسط التقييم",
+        "positiveReviews": "مراجعات إيجابية",
+        "negativeReviews": "مراجعات سلبية",
+        "responseRate": "معدل الرد"
       }
     },
     "forms": {

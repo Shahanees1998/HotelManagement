@@ -25,27 +25,27 @@
     "lv": "Latvian"
   },
   "common": {
-    "warning": "Warning",
-    "success": "Success",
-    "error": "Error",
-    "info": "Info",
-    "agreeTo": "I agree to the",
-    "and": "and",
-    "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy",
-    "alreadyHaveAccount": "Already have an account?",
-    "login": "Login",
-    "logout": "Logout",
-    "orRegisterVia": "or register via",
-    "selectLanguage": "Select language",
-    "getStarted": "Get Started"
+    "warning": "Brīdinājums",
+    "success": "Veiksmīgi",
+    "error": "Kļūda",
+    "info": "Informācija",
+    "agreeTo": "Es piekrītu",
+    "and": "un",
+    "terms": "lietošanas noteikumiem",
+    "privacy": "privātuma politikai",
+    "alreadyHaveAccount": "Jau ir konts?",
+    "login": "Pieslēgties",
+    "logout": "Iziet",
+    "orRegisterVia": "vai reģistrējieties caur",
+    "selectLanguage": "Izvēlieties valodu",
+    "getStarted": "Sākt"
   },
   "components": {
     "customPaginator": {
-      "itemsPerPage": "Items per page",
-      "rangeInfo": "{start}-{end} of {total} entries",
-      "previousPage": "Previous page",
-      "nextPage": "Next page"
+      "itemsPerPage": "Ieraksti lapā",
+      "rangeInfo": "{start}-{end} no {total} ierakstiem",
+      "previousPage": "Iepriekšējā lapa",
+      "nextPage": "Nākamā lapa"
     }
   },
   "countries": {
@@ -66,1293 +66,1302 @@
   },
   "registerHotel": {
     "step1": {
-      "title": "Owner Information!",
+      "title": "Īpašnieka informācija!",
       "fields": {
-        "fullName": "Name",
-        "email": "Email Address",
-        "phone": "Phone Number",
-        "password": "Password"
+        "fullName": "Vārds",
+        "email": "E-pasta adrese",
+        "phone": "Tālruņa numurs",
+        "password": "Parole"
       },
       "placeholders": {
-        "fullName": "Enter your name",
-        "email": "Enter your email address",
-        "phone": "Enter your phone number",
-        "password": "Enter your password"
+        "fullName": "Ievadiet savu vārdu",
+        "email": "Ievadiet savu e-pastu",
+        "phone": "Ievadiet savu tālruņa numuru",
+        "password": "Ievadiet paroli"
       },
-      "cta": "Let's Keep Going!"
+      "cta": "Turpināsim!"
     },
     "step2": {
-      "title": "Hotel Information!",
-      "subtitle": "Is my data safe?",
+      "title": "Viesnīcas informācija!",
+      "subtitle": "Vai mani dati ir droši?",
       "fields": {
-        "hotelName": "Hotel Name",
-        "hotelWebsite": "Hotel Website",
-        "hotelAddress": "Hotel Address",
-        "city": "City",
-        "country": "Country",
-        "hotelDescription": "Hotel Description"
+        "hotelName": "Viesnīcas nosaukums",
+        "hotelWebsite": "Viesnīcas vietne",
+        "hotelAddress": "Viesnīcas adrese",
+        "city": "Pilsēta",
+        "country": "Valsts",
+        "hotelDescription": "Viesnīcas apraksts"
       },
       "placeholders": {
-        "hotelName": "Enter hotel name",
-        "hotelWebsite": "Enter hotel website url",
-        "hotelAddress": "Enter hotel street address",
-        "city": "Enter hotel city",
-        "country": "Select Country",
-        "hotelDescription": "Enter brief description of your hotel"
+        "hotelName": "Ievadiet viesnīcas nosaukumu",
+        "hotelWebsite": "Ievadiet viesnīcas vietnes URL",
+        "hotelAddress": "Ievadiet viesnīcas adresi",
+        "city": "Ievadiet pilsētu",
+        "country": "Izvēlieties valsti",
+        "hotelDescription": "Īss jūsu viesnīcas apraksts"
       }
     },
     "buttons": {
-      "back": "Back",
-      "register": "Register Now",
-      "registering": "Registering..."
+      "back": "Atpakaļ",
+      "register": "Reģistrēties",
+      "registering": "Reģistrēšana..."
     },
     "toasts": {
-      "missingRequired": "Please fill in all required fields",
-      "passwordLength": "Password must be at least 6 characters long",
-      "acceptTerms": "Please accept the terms and conditions",
-      "acceptTermsPrivacy": "Please accept the terms and conditions and privacy policy",
-      "success": "Hotel registration successful! Please check your email for verification.",
-      "error": "Registration failed",
-      "errorGeneric": "Registration failed. Please try again."
+      "missingRequired": "Aizpildiet visus obligātos laukus",
+      "passwordLength": "Parolei jābūt vismaz 6 rakstzīmēm",
+      "acceptTerms": "Lūdzu, pieņemiet lietošanas noteikumus",
+      "acceptTermsPrivacy": "Lūdzu, pieņemiet lietošanas noteikumus un privātuma politiku",
+      "success": "Viesnīcas reģistrācija veiksmīga! Pārbaudiet e-pastu apstiprināšanai.",
+      "error": "Reģistrācija neizdevās",
+      "errorGeneric": "Reģistrācija neizdevās. Lūdzu, mēģiniet vēlreiz."
     },
     "images": {
-      "ownerAlt": "Register Hotel - Owner Information",
-      "hotelAlt": "Register Hotel - Hotel Information"
+      "ownerAlt": "Viesnīcas reģistrācija - Īpašnieka informācija",
+      "hotelAlt": "Viesnīcas reģistrācija - Viesnīcas informācija"
     }
   },
   "hotel": {
     "dashboard": {
       "recentReviews": {
-        "title": "Recent Reviews",
-        "description": "View and manage your recent reviews.",
+        "title": "Pēdējās atsauksmes",
+        "description": "Skatiet un pārvaldiet savas pēdējās atsauksmes.",
         "states": {
-          "loading": "Loading recent reviews..."
+          "loading": "Pēdējo atsauksmju ielāde..."
         },
         "table": {
-          "date": "Date"
+          "date": "Datums"
         }
       },
       "comparisonChart": {
-        "title": "Review Comparison",
-        "period": "Period",
-        "weekly": "Weekly",
-        "monthly": "Monthly",
-        "loading": "Loading comparison data...",
-        "noData": "No comparison data available"
+        "title": "Atsauksmju salīdzinājums",
+        "period": "Periods",
+        "weekly": "Ik nedēļu",
+        "monthly": "Ik mēnesi",
+        "loading": "Ielādē atsauksmju salīdzinājuma datus...",
+        "noData": "Nav pieejami salīdzinājuma dati",
+        "positiveReviews": "Pozitīvas atsauksmes",
+        "negativeReviews": "Negatīvas atsauksmes"
+      },
+      "stats": {
+        "totalReviews": "Kopā atsauksmes",
+        "averageRating": "Vidējais vērtējums",
+        "positiveReviews": "Pozitīvas atsauksmes",
+        "negativeReviews": "Negatīvas atsauksmes",
+        "responseRate": "Atbildes procents"
       }
     },
     "forms": {
       "header": {
-        "title": "Feedback Form",
-        "subtitle": "Manage your guest feedback form. You can update this form at any time."
+        "title": "Atsauksmju forma",
+        "subtitle": "Pārvaldiet viesu atsauksmju formu. Formu varat atjaunot jebkurā laikā."
       },
       "states": {
-        "loading": "Loading form..."
+        "loading": "Formas ielāde..."
       },
       "fields": {
-        "title": "Form Title",
-        "status": "Status",
-        "active": "Active",
-        "inactive": "Inactive",
-        "description": "Description",
-        "noDescription": "No description provided",
-        "totalResponses": "Total Responses"
+        "title": "Formas nosaukums",
+        "status": "Statuss",
+        "active": "Aktīva",
+        "inactive": "Neaktīva",
+        "description": "Apraksts",
+        "noDescription": "Apraksta nav",
+        "totalResponses": "Kopā atbilžu"
       },
       "buttons": {
-        "edit": "Edit Form",
-        "preview": "Preview Form",
-        "showQr": "Show QR Code",
-        "create": "Create Form",
-        "downloadQr": "Download QR Code",
-        "copyUrl": "Copy URL"
+        "edit": "Rediģēt formu",
+        "preview": "Formas priekšskatījums",
+        "showQr": "Rādīt QR kodu",
+        "create": "Izveidot formu",
+        "downloadQr": "Lejupielādēt QR kodu",
+        "copyUrl": "Kopēt URL"
       },
       "empty": {
-        "title": "No Form Created Yet",
-        "description": "Create your feedback form to start collecting guest reviews."
+        "title": "Forma vēl nav izveidota",
+        "description": "Izveidojiet atsauksmju formu, lai sāktu vākt viesu atsauksmes."
       },
       "preview": {
-        "title": "Form Preview",
-        "tooltipBack": "Back to Forms",
-        "tag": "Preview Mode - Interactions Disabled"
+        "title": "Formas priekšskatījums",
+        "tooltipBack": "Atpakaļ pie formām",
+        "tag": "Priekšskatījuma režīms – mijiedarbība izslēgta"
       },
       "qrDialog": {
-        "title": "QR Code - {title}"
+        "title": "QR kods - {title}"
       },
       "toasts": {
-        "loadError": "Failed to load form",
-        "slugMissing": "Hotel slug not found. Cannot preview form.",
-        "createSuccess": "Form created successfully",
-        "updateSuccess": "Form updated successfully",
-        "saveError": "Failed to save form",
-        "qrGenerated": "QR code generated successfully",
-        "qrExists": "QR code already exists for this form",
-        "qrError": "Failed to handle QR code",
-        "noUrl": "No URL to copy",
-        "copiedDetail": "URL copied to clipboard",
-        "copyError": "Failed to copy URL to clipboard"
+        "loadError": "Neizdevās ielādēt formu",
+        "slugMissing": "Viesnīcas identifikators nav atrasts. Priekšskatījums nav iespējams.",
+        "createSuccess": "Forma veiksmīgi izveidota",
+        "updateSuccess": "Forma veiksmīgi atjaunināta",
+        "saveError": "Neizdevās saglabāt formu",
+        "qrGenerated": "QR kods veiksmīgi ģenerēts",
+        "qrExists": "Šai formai QR kods jau pastāv",
+        "qrError": "Neizdevās apstrādāt QR kodu",
+        "noUrl": "Nav URL kopēšanai",
+        "copiedDetail": "URL nokopēts starpliktuvē",
+        "copyError": "Neizdevās nokopēt URL"
       },
       "builder": {
         "header": {
-          "edit": "Edit Form",
-          "create": "Create New Form",
-          "preview": "Preview Form",
-          "livePreview": "Live Preview",
-          "formBuilderToggle": "Form Builder",
-          "livePreviewToggle": "Live Preview",
-          "backTooltip": "Back to Forms"
+          "edit": "Rediģēt formu",
+          "create": "Izveidot jaunu formu",
+          "preview": "Formas priekšskatījums",
+          "livePreview": "Tiešraides priekšskatījums",
+          "formBuilderToggle": "Formu veidotājs",
+          "livePreviewToggle": "Tiešraides priekšskatījums",
+          "backTooltip": "Atpakaļ pie formām"
         },
         "buttons": {
-          "save": "Save Form",
-          "saveTooltip": "Save the form",
-          "addNew": "Add New",
-          "addOption": "Add",
-          "cancel": "Cancel",
-          "update": "Update",
-          "add": "Add"
+          "save": "Saglabāt formu",
+          "saveTooltip": "Saglabāt formu",
+          "addNew": "Pievienot jaunu",
+          "addOption": "Pievienot",
+          "cancel": "Atcelt",
+          "update": "Atjaunināt",
+          "add": "Pievienot"
         },
         "sections": {
-          "settings": "Form Settings",
-          "questions": "Questions",
-          "predefined": "Predefined Questions",
-          "custom": "Custom Questions"
+          "settings": "Formas iestatījumi",
+          "questions": "Jautājumi",
+          "predefined": "Iepriekš definēti jautājumi",
+          "custom": "Pielāgoti jautājumi"
         },
         "fields": {
-          "titleLabel": "Form Title*",
-          "titlePlaceholder": "Enter form title",
-          "descriptionLabel": "Form Description*",
-          "descriptionPlaceholder": "Enter brief description of your form"
+          "titleLabel": "Formas nosaukums*",
+          "titlePlaceholder": "Ievadiet formas nosaukumu",
+          "descriptionLabel": "Formas apraksts*",
+          "descriptionPlaceholder": "Ievadiet īsu formas aprakstu"
         },
         "predefined": {
-          "rateUs": "Rate Us* (Always included)",
-          "rateUsTitle": "Rate Us",
-          "customRating": "Custom Rating*",
-          "customRatingTitle": "Custom Rating",
-          "customRatingPlaceholder": "Enter rating item label",
-          "customRatingEditTitle": "Click to edit",
-          "feedback": "Please give us your honest feedback?*",
-          "feedbackTitle": "Please give us your honest feedback?",
-          "feedbackPlaceholder": "Enter your detailed feedback"
+          "rateUs": "Vērtējiet mūs* (vienmēr iekļauts)",
+          "rateUsTitle": "Vērtējiet mūs",
+          "customRating": "Pielāgota vērtējuma*",
+          "customRatingTitle": "Pielāgota vērtējums",
+          "customRatingPlaceholder": "Ievadiet vērtējuma elementa etiķeti",
+          "customRatingEditTitle": "Noklikšķiniet, lai rediģētu",
+          "feedback": "Lūdzu, sniedziet godīgu atsauksmi?*",
+          "feedbackTitle": "Lūdzu, sniedziet godīgu atsauksmi?",
+          "feedbackPlaceholder": "Ievadiet detalizētu atsauksmi"
         },
         "tooltips": {
-          "previewDisabled": "Preview mode - editing disabled",
-          "addQuestion": "Add custom question",
-          "save": "Save",
-          "cancel": "Cancel",
-          "edit": "Edit",
-          "delete": "Delete",
-          "moveUp": "Move Up",
-          "moveDown": "Move Down"
+          "previewDisabled": "Priekšskatījuma režīms – rediģēšana izslēgta",
+          "addQuestion": "Pievienot pielāgotu jautājumu",
+          "save": "Saglabāt",
+          "cancel": "Atcelt",
+          "edit": "Rediģēt",
+          "delete": "Dzēst",
+          "moveUp": "Augšu",
+          "moveDown": "Lejup"
         },
         "questionTypes": {
-          "shortText": "Short Text",
-          "longText": "Long Text",
-          "starRating": "Star Rating",
-          "singleChoice": "Single Choice",
-          "multipleChoice": "Multiple Choice",
-          "yesNo": "Yes/No"
+          "shortText": "Īss teksts",
+          "longText": "Garš teksts",
+          "starRating": "Zvaigžņu vērtējums",
+          "singleChoice": "Viena izvēle",
+          "multipleChoice": "Vairākas izvēles",
+          "yesNo": "Jā/Nē"
         },
         "placeholders": {
-          "answer": "Enter your answer"
+          "answer": "Ievadiet atbildi"
         },
         "answers": {
-          "yes": "Yes",
-          "no": "No"
+          "yes": "Jā",
+          "no": "Nē"
         },
         "badges": {
-          "default": "Default",
-          "defaultHelper": "Cannot be edited, deleted, or moved"
+          "default": "Noklusējums",
+          "defaultHelper": "Nevar rediģēt, dzēst vai pārvietot"
         },
         "states": {
-          "loading": "Loading form data...",
-          "noQuestionsTitle": "No questions added yet",
-          "noQuestionsDescription": "Use the predefined questions above or add custom questions to get started"
+          "loading": "Formas datu ielāde...",
+          "noQuestionsTitle": "Jautājumi vēl nav pievienoti",
+          "noQuestionsDescription": "Izmantojiet iepriekš definētos jautājumus vai pievienojiet pielāgotus"
         },
         "alerts": {
-          "ratingRequiredTitle": "Rating Required",
-          "ratingRequiredDescription": "Either \"Rate Us\" or \"Custom Rating\" must be selected to save the form."
+          "ratingRequiredTitle": "Vērtējums obligāts",
+          "ratingRequiredDescription": "Lai saglabātu formu, jāizvēlas „Vērtējiet mūs” vai „Pielāgota vērtējums”."
         },
         "layoutInfo": {
           "basic": {
-            "title": "Basic Layout Features",
-            "description": "All questions are available including custom questions. This layout provides a simple, clean design."
+            "title": "Pamata izkārtojums",
+            "description": "Visi jautājumi, ieskaitot pielāgotos. Vienkāršs, tīrs dizains."
           },
           "good": {
-            "title": "Good Layout Features",
-            "description": "Choose either \"Rate Us\" OR \"Custom Rating\" (mutually exclusive). All questions including custom questions are available."
+            "title": "Paplašināts izkārtojums",
+            "description": "Izvēlieties „Vērtējiet mūs” VAI „Pielāgota vērtējums” (savstarpēji izslēdzoši). Visi jautājumi ar pielāgotiem pieejami."
           },
           "excellent": {
-            "title": "Excellent Layout Features",
-            "description": "All predefined questions available plus custom questions. Premium design with animations for comprehensive feedback forms."
+            "title": "Premium izkārtojums",
+            "description": "Visi iepriekš definēti jautājumi plus pielāgoti. Premium dizains ar animācijām visaptverošām atsauksmju formām."
           }
         },
         "subscription": {
-          "title": "Subscription Required",
-          "message": "Your subscription has been {status}. Please reactivate your subscription to create or edit forms.",
-          "manageButton": "Manage Subscription",
+          "title": "Nepieciešama abonēšana",
+          "message": "Jūsu abonements ir {status}. Lai izveidotu vai rediģētu formas, vēlreiz aktivizējiet abonementu.",
+          "manageButton": "Pārvaldīt abonementu",
           "status": {
-            "cancelled": "cancelled",
-            "expired": "expired"
+            "cancelled": "atcelts",
+            "expired": "beidzies"
           },
-          "toastTitle": "Subscription Required",
-          "toastMessage": "Your subscription has been cancelled or expired. Please reactivate your subscription to create forms."
+          "toastTitle": "Nepieciešama abonēšana",
+          "toastMessage": "Jūsu abonements ir atcelts vai beidzies. Aktivizējiet abonementu formu izveidei."
         },
         "preview": {
-          "descriptionFallback": "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance.",
-          "fullNameLabel": "Name*",
-          "fullNamePlaceholder": "Enter your name",
-          "emailLabel": "Email*",
-          "emailPlaceholder": "Enter your email address",
-          "submit": "Submit Now"
+          "descriptionFallback": "Aizpildiet šo formu atbalsta pieprasījumam vai problēmas ziņošanai. Mūsu komanda pārskatīs jūsu pieprasījumu un sazināsies pēc iespējas ātrāk.",
+          "fullNameLabel": "Vārds*",
+          "fullNamePlaceholder": "Ievadiet savu vārdu",
+          "emailLabel": "E-pasts*",
+          "emailPlaceholder": "Ievadiet savu e-pasta adresi",
+          "submit": "Iesniegt"
         },
         "dialog": {
-          "addTitle": "Add Question",
-          "editTitle": "Edit Question",
-          "questionLabel": "Question Text *",
-          "questionPlaceholder": "Enter your question",
-          "typeLabel": "Question Type",
-          "optionsLabel": "Options",
-          "optionPlaceholder": "Enter option"
+          "addTitle": "Pievienot jautājumu",
+          "editTitle": "Rediģēt jautājumu",
+          "questionLabel": "Jautājuma teksts *",
+          "questionPlaceholder": "Ievadiet jautājumu",
+          "typeLabel": "Jautājuma tips",
+          "optionsLabel": "Opcijas",
+          "optionPlaceholder": "Ievadiet opciju"
         },
         "toasts": {
-          "formLoadSuccess": "Form data loaded successfully",
-          "formLoadError": "Failed to load form data",
-          "questionRequired": "Question text is required",
-          "optionsRequired": "Multiple choice questions must have at least 2 options",
-          "questionUpdated": "Question updated",
-          "questionAdded": "Question added",
-          "questionDeleted": "Question deleted",
-          "ratingLabelRequired": "Please enter a label for the rating item",
-          "ratingItemUpdated": "Rating item updated",
-          "ratingItemDeleted": "Rating item deleted",
-          "ratingItemAdded": "New rating item added",
-          "titleRequired": "Form title is required",
-          "questionCountRequired": "At least one question is required"
+          "formLoadSuccess": "Formas dati veiksmīgi ielādēti",
+          "formLoadError": "Neizdevās ielādēt formas datus",
+          "questionRequired": "Jautājuma teksts ir obligāts",
+          "optionsRequired": "Vairāku izvēļu jautājumiem jābūt vismaz 2 opcijām",
+          "questionUpdated": "Jautājums atjaunināts",
+          "questionAdded": "Jautājums pievienots",
+          "questionDeleted": "Jautājums dzēsts",
+          "ratingLabelRequired": "Ievadiet vērtējuma elementa etiķeti",
+          "ratingItemUpdated": "Vērtējuma elements atjaunināts",
+          "ratingItemDeleted": "Vērtējuma elements dzēsts",
+          "ratingItemAdded": "Pievienots jauns vērtējuma elements",
+          "titleRequired": "Formas nosaukums ir obligāts",
+          "questionCountRequired": "Nepieciešams vismaz viens jautājums"
         }
       }
     },
     "analytics": {
       "customRatings": {
-        "title": "Custom Rating Analytics",
-        "description": "Track detailed rating trends for your \"Good\" layout form.",
+        "title": "Pielāgotā vērtējuma analītika",
+        "description": "Sekojiet vērtējumu tendencēm paplašinātā izkārtojuma formā.",
         "buttons": {
-          "exportCsv": "Export CSV",
-          "exportPdf": "Export PDF",
-          "refresh": "Refresh"
+          "exportCsv": "Eksportēt CSV",
+          "exportPdf": "Eksportēt PDF",
+          "refresh": "Atjaunot"
         },
         "filters": {
-          "title": "Date Range Filters",
-          "startDate": "Start Date",
-          "startDatePlaceholder": "Select start date",
-          "endDate": "End Date",
-          "endDatePlaceholder": "Select end date",
-          "clear": "Clear Filters"
+          "title": "Datumu filtri",
+          "startDate": "Sākuma datums",
+          "startDatePlaceholder": "Izvēlieties sākuma datumu",
+          "endDate": "Beigu datums",
+          "endDatePlaceholder": "Izvēlieties beigu datumu",
+          "clear": "Notīrīt filtrus"
         },
         "states": {
-          "loading": "Loading analytics data...",
-          "noDataTitle": "No Data Available",
-          "noDataDescription": "No \"Good\" layout forms with custom rating data found for your hotel."
+          "loading": "Analītikas datu ielāde...",
+          "noDataTitle": "Dati nav pieejami",
+          "noDataDescription": "Jūsu viesnīcai nav atrastas paplašināta izkārtojuma formas ar pielāgotā vērtējuma datiem."
         },
         "toasts": {
-          "loadError": "Failed to load custom rating analytics",
-          "exportSuccess": "Data exported successfully as {format}",
-          "exportError": "Failed to export data"
+          "loadError": "Neizdevās ielādēt vērtējuma analītiku",
+          "exportSuccess": "Dati veiksmīgi eksportēti kā {format}",
+          "exportError": "Datu eksports neizdevās"
         },
         "chart": {
-          "trendPrefix": "Trend Analysis - ",
-          "summaryTitle": "Rating Summary",
-          "ratingsCount": "({count} ratings)",
-          "averageRating": "Average Rating",
+          "trendPrefix": "Tendenču analīze - ",
+          "summaryTitle": "Vērtējumu kopsavilkums",
+          "ratingsCount": "({count} vērtējumi)",
+          "averageRating": "Vidējais vērtējums",
           "tooltipSuffix": "/5"
         }
       },
       "overview": {
-        "title": "Analytics",
-        "description": "Track your hotel's performance and guest satisfaction.",
-        "dropdownPlaceholder": "Select time range",
+        "title": "Analītika",
+        "description": "Sekojiet viesnīcas sniegumam un viesu apmierinātībai.",
+        "dropdownPlaceholder": "Izvēlieties laika periodu",
         "buttons": {
-          "refresh": "Refresh"
+          "refresh": "Atjaunot"
         },
         "timeRanges": {
-          "7": "Last 7 days",
-          "30": "Last 30 days",
-          "90": "Last 90 days",
-          "180": "Last 6 months",
-          "365": "Last year"
+          "7": "Pēdējās 7 dienas",
+          "30": "Pēdējās 30 dienas",
+          "90": "Pēdējās 90 dienas",
+          "180": "Pēdējie 6 mēneši",
+          "365": "Pagājušais gads"
         },
         "states": {
-          "loadingSkeleton": "Loading...",
-          "noData": "No analytics data available",
-          "chartLoading": "Loading chart data...",
-          "chartEmpty": "No chart data available"
+          "loadingSkeleton": "Ielāde...",
+          "noData": "Analītikas dati nav pieejami",
+          "chartLoading": "Diagrammas datu ielāde...",
+          "chartEmpty": "Diagrammas dati nav pieejami"
         },
         "cards": {
-          "change": "{change} from last period"
+          "change": "{change} salīdzinot ar iepriekšējo periodu"
         },
         "charts": {
-          "satisfaction": "Satisfaction Trends",
-          "ratingDistribution": "Rating Distribution",
-          "reviewVolume": "Review Volume"
+          "satisfaction": "Apmierinātības tendences",
+          "ratingDistribution": "Vērtējumu sadalījums",
+          "reviewVolume": "Atsauksmju skaits"
         },
         "reviews": {
-          "title": "Recent Reviews"
+          "title": "Pēdējās atsauksmes"
         },
         "toasts": {
-          "loadError": "Failed to load analytics"
+          "loadError": "Neizdevās ielādēt analītiku"
         }
       },
       "responseRates": {
-        "title": "Response Rates Analytics",
-        "description": "Track your hotel's response rates and engagement metrics.",
+        "title": "Atbilžu īpatsvara analītika",
+        "description": "Sekojiet viesnīcas atbilžu īpatsvaram un iesaistes rādītājiem.",
         "charts": {
-          "reviewVolume": "Review Volume Trends",
-          "satisfaction": "Satisfaction Trends Over Time"
+          "reviewVolume": "Atsauksmju skaita tendences",
+          "satisfaction": "Apmierinātības tendences laika gaitā"
         }
       },
       "satisfaction": {
-        "title": "Satisfaction Analytics",
-        "description": "Track your hotel's guest satisfaction trends and ratings.",
+        "title": "Apmierinātības analītika",
+        "description": "Sekojiet viesu apmierinātības tendencēm un vērtējumiem.",
         "charts": {
-          "reviewVolume": "Review Volume & Positive Reviews"
+          "reviewVolume": "Atsauksmju skaits un pozitīvās atsauksmes"
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Paziņojumi",
+        "ariaLabel": "Paziņojumi",
+        "iconAlt": "Paziņojuma ikona",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Atzīmēt visus kā izlasītus",
+          "refresh": "Atjaunot"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Vēl nav paziņojumu"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "success": "Success",
+          "newReview": "Jauna atsauksme",
+          "reviewApproved": "Atsauksme apstiprināta",
+          "reviewRejected": "Atsauksme noraidīta",
+          "subscriptionExpiring": "Abonements beidzas",
+          "subscriptionCancelled": "Abonements atcelts",
+          "escalationReceived": "Eskalācija saņemta",
+          "escalationResponded": "Atbilde uz eskalāciju",
+          "systemAlert": "Sistēmas brīdinājums",
+          "newHotelRegistration": "Jauna viesnīcas reģistrācija",
+          "success": "Veiksmīgi",
           "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "warning": "Brīdinājums",
+          "error": "Kļūda",
+          "generic": "Paziņojums"
         }
       }
     },
     "reviews": {
-      "title": "Guest Reviews",
-      "subtitle": "Manage and review guest feedback submissions.",
+      "title": "Viesu atsauksmes",
+      "subtitle": "Pārvaldiet un pārskatiet viesu atsauksmes.",
       "buttons": {
-        "refresh": "Refresh",
-        "clearFilters": "Clear Filters",
-        "view": "View",
-        "reply": "Reply",
-        "delete": "Delete",
-        "close": "Close",
-        "markAsChecked": "Mark as Checked",
-        "checked": "Checked",
-        "uncheck": "Uncheck",
-        "markAsUrgent": "Mark as Urgent",
-        "urgent": "Urgent",
-        "removeUrgent": "Remove Urgent",
-        "replyToCustomer": "Reply to Customer",
-        "cancel": "Cancel",
-        "sendReply": "Send Reply"
+        "refresh": "Atjaunot",
+        "clearFilters": "Notīrīt filtrus",
+        "view": "Skatīt",
+        "reply": "Atbildēt",
+        "delete": "Dzēst",
+        "close": "Aizvērt",
+        "markAsChecked": "Atzīmēt kā pārskatītu",
+        "checked": "Pārskatīts",
+        "uncheck": "Noņemt atzīmi",
+        "markAsUrgent": "Atzīmēt kā steidzamu",
+        "urgent": "Steidzami",
+        "removeUrgent": "Noņemt steidzamību",
+        "replyToCustomer": "Atbildēt viesim",
+        "cancel": "Atcelt",
+        "sendReply": "Nosūtīt atbildi"
       },
       "filters": {
-        "title": "Filters",
-        "searchReviews": "Search Reviews",
-        "searchPlaceholder": "Search by guest name or feedback text...",
-        "roomNumber": "Room Number",
-        "roomNumberPlaceholder": "Filter by room number...",
-        "filter": "Filter",
-        "allReviews": "All Reviews",
-        "replied": "Replied",
-        "notReplied": "Not Replied",
-        "checked": "Checked",
-        "notChecked": "Not Checked",
-        "urgent": "Urgent",
-        "notUrgent": "Not Urgent",
-        "starRatings": "Star Ratings",
-        "allRatings": "All Ratings",
-        "5Stars": "5 Stars",
-        "4Stars": "4 Stars",
-        "3Stars": "3 Stars",
-        "2Stars": "2 Stars",
-        "1Star": "1 Star",
-        "dateRange": "Date Range",
-        "startDate": "Start Date",
-        "endDate": "End Date",
-        "fromDate": "From date",
-        "toDate": "To date"
+        "title": "Filtri",
+        "searchReviews": "Meklēt atsauksmēs",
+        "searchPlaceholder": "Meklēt pēc viesa vārda vai teksta...",
+        "roomNumber": "Istabas numurs",
+        "roomNumberPlaceholder": "Filtrēt pēc istabas numura...",
+        "filter": "Filts",
+        "allReviews": "Visas atsauksmes",
+        "replied": "Atbildēts",
+        "notReplied": "Neatbildēts",
+        "checked": "Pārskatīts",
+        "notChecked": "Nepārskatīts",
+        "urgent": "Steidzami",
+        "notUrgent": "Nesteidzami",
+        "starRatings": "Zvaigžņu vērtējums",
+        "allRatings": "Visi vērtējumi",
+        "5Stars": "5 zvaigznes",
+        "4Stars": "4 zvaigznes",
+        "3Stars": "3 zvaigznes",
+        "2Stars": "2 zvaigznes",
+        "1Star": "1 zvaigzne",
+        "dateRange": "Datumu diapazons",
+        "startDate": "Sākuma datums",
+        "endDate": "Beigu datums",
+        "fromDate": "No datuma",
+        "toDate": "Līdz datumam"
       },
       "states": {
-        "loadingReviews": "Loading reviews...",
-        "noReviewsFound": "No Reviews Found",
-        "noReviewsYet": "No reviews have been submitted yet.",
-        "noReviewsMatchFilters": "No reviews match your current filters."
+        "loadingReviews": "Atsauksmju ielāde...",
+        "noReviewsFound": "Atsauksmes nav atrastas",
+        "noReviewsYet": "Vēl nav iesniegtas atsauksmes.",
+        "noReviewsMatchFilters": "Nav atsauksmju, kas atbilst jūsu filtriem."
       },
       "table": {
-        "guest": "Guest",
-        "email": "Email",
-        "room": "Room",
-        "rating": "Rating",
-        "status": "Status",
-        "submitted": "Submitted",
-        "actions": "Actions",
-        "checkedStatus": "Checked",
-        "notCheckedStatus": "Not Checked",
-        "repliedStatus": "Replied",
-        "notRepliedStatus": "Not Replied",
-        "urgentStatus": "Urgent",
-        "notUrgentStatus": "Not Urgent",
-        "public": "Public",
-        "private": "Private",
-        "shared": "Shared",
-        "noEmailAvailable": "No email available for this review"
+        "guest": "Viesis",
+        "email": "E-pasts",
+        "room": "Istaba",
+        "rating": "Vērtējums",
+        "status": "Statuss",
+        "submitted": "Iesniegts",
+        "actions": "Darbības",
+        "checkedStatus": "Pārskatīts",
+        "notCheckedStatus": "Nepārskatīts",
+        "repliedStatus": "Atbildēts",
+        "notRepliedStatus": "Neatbildēts",
+        "urgentStatus": "Steidzami",
+        "notUrgentStatus": "Nesteidzami",
+        "public": "Publisks",
+        "private": "Privāts",
+        "shared": "Kopīgots",
+        "noEmailAvailable": "Šai atsauksmei nav e-pasta"
       },
       "detailsDialog": {
-        "header": "Guest Feedback Details",
-        "guestInfo": "Guest Information",
-        "name": "Name:",
-        "anonymous": "Anonymous",
-        "email": "Email:",
-        "notProvided": "Not provided",
-        "phone": "Phone:",
-        "roomNumber": "Room Number:",
-        "submitted": "Submitted:",
-        "overallRating": "Overall Rating",
-        "quickFeedback": "Quick Feedback",
-        "howDoYouRateUs": "How do you rate us?",
-        "honestFeedback": "Please give us your honest feedback?",
-        "noSpecificFeedback": "No specific feedback provided",
-        "customRatingItem": "Custom Rating Item ({itemId})",
-        "formInfo": "Form Information",
-        "formTitle": "Form Title:",
-        "description": "Description:",
-        "layout": "Layout:",
-        "feedbackResponses": "Feedback Responses",
-        "reviewReplies": "Review Replies",
-        "languageSelectorLabel": "View content in",
-        "languageSelectorPlaceholder": "Select language",
-        "translating": "Translating...",
-        "noDetailedResponses": "No detailed responses available for this review.",
-        "question": "Question:",
-        "noAnswer": "No answer provided",
-        "replyToCustomer": "Reply to Customer",
-        "replyPlaceholder": "Type your reply message here...",
-        "replyMessageHint": "This message will be sent to {guestEmail}",
-        "toastWarningReply": "Please enter a reply message",
-        "toastSuccessReply": "Reply sent successfully to {sentTo}",
-        "toastErrorReply": "Failed to send reply"
+        "header": "Viesa atsauksmes detaļas",
+        "guestInfo": "Viesa informācija",
+        "name": "Vārds:",
+        "anonymous": "Anonīms",
+        "email": "E-pasts:",
+        "notProvided": "Nav norādīts",
+        "phone": "Tālrunis:",
+        "roomNumber": "Istabas numurs:",
+        "submitted": "Iesniegts:",
+        "overallRating": "Kopējais vērtējums",
+        "quickFeedback": "Ātra atsauksme",
+        "howDoYouRateUs": "Kā jūs mūs vērtējat?",
+        "honestFeedback": "Lūdzu, sniedziet godīgu atsauksmi?",
+        "noSpecificFeedback": "Konkrēta atsauksme nav norādīta",
+        "customRatingItem": "Pielāgots vērtējums ({itemId})",
+        "formInfo": "Formas informācija",
+        "formTitle": "Formas nosaukums:",
+        "description": "Apraksts:",
+        "layout": "Izkārtojums:",
+        "feedbackResponses": "Atsauksmju atbildes",
+        "reviewReplies": "Atsauksmju atbildes",
+        "languageSelectorLabel": "Skatīt saturu",
+        "languageSelectorPlaceholder": "Izvēlieties valodu",
+        "translating": "Tulkots...",
+        "noDetailedResponses": "Šai atsauksmei nav detalizētu atbilžu.",
+        "question": "Jautājums:",
+        "noAnswer": "Atbilde nav norādīta",
+        "replyToCustomer": "Atbildēt viesim",
+        "replyPlaceholder": "Ierakstiet atbildi šeit...",
+        "replyMessageHint": "Šī ziņa tiks nosūtīta uz {guestEmail}",
+        "toastWarningReply": "Lūdzu, ievadiet atbildes ziņojumu",
+        "toastSuccessReply": "Atbilde veiksmīgi nosūtīta uz {sentTo}",
+        "toastErrorReply": "Neizdevās nosūtīt atbildi"
       },
       "deleteDialog": {
-        "header": "Delete Review",
-        "confirmTitle": "Are you sure you want to delete this review?",
-        "confirmMessage": "This action cannot be undone. The review will be permanently removed from your system.",
-        "reviewDetails": "Review Details:",
-        "guest": "Guest:",
-        "rating": "Rating:",
-        "submitted": "Submitted:",
+        "header": "Dzēst atsauksmi",
+        "confirmTitle": "Vai tiešām vēlaties dzēst šo atsauksmi?",
+        "confirmMessage": "Šo darbību nevar atsaukt. Atsauksme tiks pastāvīgi noņemta.",
+        "reviewDetails": "Atsauksmes detaļas:",
+        "guest": "Viesis:",
+        "rating": "Vērtējums:",
+        "submitted": "Iesniegts:",
         "buttons": {
-          "cancel": "Cancel",
-          "delete": "Delete"
+          "cancel": "Atcelt",
+          "delete": "Dzēst"
         },
         "toasts": {
-          "success": "Review deleted successfully",
-          "error": "Failed to delete review"
+          "success": "Atsauksme veiksmīgi dzēsta",
+          "error": "Neizdevās dzēst atsauksmi"
         }
       },
       "toasts": {
-        "loadError": "Failed to load reviews",
-        "detailsLoadError": "Failed to load review details",
+        "loadError": "Neizdevās ielādēt atsauksmes",
+        "detailsLoadError": "Neizdevās ielādēt atsauksmes detaļas",
         "statusUpdate": {
-          "checked": "Review marked as checked",
-          "unchecked": "Review unmarked as checked",
-          "urgent": "Review marked as urgent",
-          "notUrgent": "Review unmarked as urgent",
-          "replied": "Review marked as replied"
+          "checked": "Atsauksme atzīmēta kā pārskatīta",
+          "unchecked": "Atsauksmes pārskatīta atzīme noņemta",
+          "urgent": "Atsauksme atzīmēta kā steidzama",
+          "notUrgent": "Atsauksmes steidzamības atzīme noņemta",
+          "replied": "Atsauksme atzīmēta kā atbildēta"
         },
-        "statusUpdateError": "Failed to update review status",
-        "replyMissing": "Please enter a reply message",
-        "replySuccess": "Reply sent successfully to {sentTo}",
-        "replyError": "Failed to send reply",
-        "translationError": "Failed to translate review content",
-        "deleteSuccess": "Review deleted successfully",
-        "deleteError": "Failed to delete review"
+        "statusUpdateError": "Neizdevās atjaunināt atsauksmes statusu",
+        "replyMissing": "Lūdzu, ievadiet atbildes ziņojumu",
+        "replySuccess": "Atbilde veiksmīgi nosūtīta uz {sentTo}",
+        "replyError": "Neizdevās nosūtīt atbildi",
+        "translationError": "Neizdevās tulkot atsauksmes saturu",
+        "deleteSuccess": "Atsauksme veiksmīgi dzēsta",
+        "deleteError": "Neizdevās dzēst atsauksmi"
       }
     },
     "menu": {
-      "dashboard": "Dashboard",
-      "feedbackForm": "Feedback Form",
-      "qrCodes": "QR Codes",
-      "allReviews": "All Reviews",
-      "notifications": "Notifications",
-      "contactAdmin": "Contact Admin",
-      "settings": "Settings",
+      "dashboard": "Vadības panelis",
+      "feedbackForm": "Atsauksmju forma",
+      "qrCodes": "QR kodi",
+      "allReviews": "Visas atsauksmes",
+      "notifications": "Paziņojumi",
+      "contactAdmin": "Sazināties ar administratoru",
+      "settings": "Iestatījumi",
       "settingsItems": {
-        "userProfile": "User Profile",
-        "hotelProfile": "Hotel Profile",
-        "changePassword": "Change Password",
-        "subscriptions": "Subscriptions",
-        "paymentMethods": "Payment Methods"
+        "userProfile": "Lietotāja profils",
+        "hotelProfile": "Viesnīcas profils",
+        "changePassword": "Mainīt paroli",
+        "subscriptions": "Abonementi",
+        "paymentMethods": "Maksājumu metodes"
       }
     },
     "paymentMethods": {
-      "pageTitle": "Add Payment Method",
+      "pageTitle": "Pievienot maksājuma metodi",
       "buttons": {
-        "add": "Add",
-        "addMethod": "Add Method",
-        "updateMethod": "Update Method",
-        "cancel": "Cancel",
-        "setPrimary": "Set as Primary",
-        "delete": "Delete"
+        "add": "Pievienot",
+        "addMethod": "Pievienot metodi",
+        "updateMethod": "Atjaunināt metodi",
+        "cancel": "Atcelt",
+        "setPrimary": "Iestatīt kā galveno",
+        "delete": "Dzēst"
       },
       "badges": {
-        "primary": "Primary",
-        "expired": "Expired"
+        "primary": "Galvenā",
+        "expired": "Beidzies"
       },
       "states": {
-        "loading": "Loading payment methods...",
-        "emptyTitle": "No Payment Methods",
-        "emptyDescription": "Add a payment method to manage your subscriptions."
+        "loading": "Maksājumu metožu ielāde...",
+        "emptyTitle": "Nav maksājumu metožu",
+        "emptyDescription": "Pievienojiet maksājuma metodi abonementu pārvaldībai."
       },
       "form": {
-        "paymentType": "Payment Type",
+        "paymentType": "Maksājuma veids",
         "paymentTypeOptions": {
-          "card": "Credit/Debit Card",
-          "bank": "Bank Account"
+          "card": "Kredītkarte/Debetkarte",
+          "bank": "Bankas konts"
         },
         "card": {
-          "number": "Card Number",
+          "number": "Kartes numurs",
           "numberPlaceholder": "1234 5678 9012 3456",
-          "expiryMonth": "Expiry Month",
-          "expiryYear": "Expiry Year",
+          "expiryMonth": "Derīguma mēnesis",
+          "expiryYear": "Derīguma gads",
           "monthPlaceholder": "MM",
-          "yearPlaceholder": "YYYY",
+          "yearPlaceholder": "GGGG",
           "cvv": "CVV",
           "cvvPlaceholder": "123",
-          "holder": "Cardholder Name",
-          "holderPlaceholder": "John Doe",
-          "brand": "Card Brand",
-          "brandPlaceholder": "Select card brand"
+          "holder": "Kartes īpašnieka vārds",
+          "holderPlaceholder": "Jānis Bērziņš",
+          "brand": "Kartes zīmols",
+          "brandPlaceholder": "Izvēlieties kartes zīmolu"
         },
         "cardBrands": {
           "visa": "Visa",
           "mastercard": "Mastercard",
           "amex": "American Express",
           "discover": "Discover",
-          "unknown": "Card"
+          "unknown": "Karte"
         },
         "bank": {
-          "name": "Bank Name",
-          "namePlaceholder": "Bank of America",
-          "accountNumber": "Account Number",
-          "accountPlaceholder": "Account number",
-          "routingNumber": "Routing Number",
+          "name": "Bankas nosaukums",
+          "namePlaceholder": "Bankas nosaukums",
+          "accountNumber": "Konta numurs",
+          "accountPlaceholder": "Konta numurs",
+          "routingNumber": "Bankas kods",
           "routingPlaceholder": "123456789",
-          "accountType": "Account Type",
-          "accountTypePlaceholder": "Select account type"
+          "accountType": "Konta tips",
+          "accountTypePlaceholder": "Izvēlieties konta tipu"
         },
         "accountTypes": {
-          "checking": "Checking",
-          "savings": "Savings",
-          "unknown": "Account"
+          "checking": "Norēķinu",
+          "savings": "Uzkrājumu",
+          "unknown": "Konts"
         }
       },
       "list": {
-        "endingIn": "ending in",
-        "expiryLabel": "Exp. date",
-        "accountTypeSuffix": "Account",
-        "accountTypeUnknown": "Account",
-        "unknownBank": "Bank",
-        "edit": "Edit",
-        "delete": "Delete"
+        "endingIn": "beidzas ar",
+        "expiryLabel": "Derīga līdz",
+        "accountTypeSuffix": "Konts",
+        "accountTypeUnknown": "Konts",
+        "unknownBank": "Banka",
+        "edit": "Rediģēt",
+        "delete": "Dzēst"
       },
       "dialogs": {
         "add": {
-          "title": "Add Payment Method"
+          "title": "Pievienot maksājuma metodi"
         },
         "edit": {
-          "title": "Edit Payment Method",
-          "cardLocked": "Card number cannot be changed for security reasons",
-          "bankLocked": "Account number cannot be changed for security reasons"
+          "title": "Rediģēt maksājuma metodi",
+          "cardLocked": "Kartes numuru nevar mainīt drošības apsvērumu dēļ",
+          "bankLocked": "Konta numuru nevar mainīt drošības apsvērumu dēļ"
         },
         "delete": {
-          "title": "Delete Payment Method",
-          "message": "Are you sure you want to delete this payment method? This action cannot be undone."
+          "title": "Dzēst maksājuma metodi",
+          "message": "Vai tiešām vēlaties dzēst šo maksājuma metodi? Šo darbību nevar atsaukt."
         }
       },
       "toasts": {
         "load": {
-          "error": "Failed to load payment methods"
+          "error": "Neizdevās ielādēt maksājumu metodes"
         },
         "add": {
-          "success": "Payment method added successfully",
-          "error": "Failed to add payment method"
+          "success": "Maksājuma metode veiksmīgi pievienota",
+          "error": "Neizdevās pievienot maksājuma metodi"
         },
         "delete": {
-          "success": "Payment method deleted successfully",
-          "error": "Failed to delete payment method"
+          "success": "Maksājuma metode veiksmīgi dzēsta",
+          "error": "Neizdevās dzēst maksājuma metodi"
         },
         "default": {
-          "success": "Default payment method updated",
-          "error": "Failed to update default payment method"
+          "success": "Noklusētā maksājuma metode atjaunināta",
+          "error": "Neizdevās atjaunināt noklusēto maksājuma metodi"
         },
         "update": {
-          "success": "Payment method updated successfully",
-          "error": "Failed to update payment method"
+          "success": "Maksājuma metode veiksmīgi atjaunināta",
+          "error": "Neizdevās atjaunināt maksājuma metodi"
         }
       }
     },
     "subscription": {
       "header": {
-        "title": "Subscription Management",
-        "subtitle": "Manage your hotel's subscription and billing."
+        "title": "Abonementa pārvaldība",
+        "subtitle": "Pārvaldiet sava viesnīcas abonementu un norēķinus."
       },
       "buttons": {
-        "refresh": "Refresh",
-        "processing": "Processing...",
-        "upgradeNow": "Upgrade Now",
-        "currentPlan": "Current Plan",
-        "reactivate": "Reactivate",
-        "cancelSubscription": "Cancel Subscription",
-        "contactSupport": "Contact Support",
-        "cancel": "Cancel",
-        "confirm": "Confirm"
+        "refresh": "Atjaunot",
+        "processing": "Apstrāde...",
+        "upgradeNow": "Jaunināt tagad",
+        "currentPlan": "Pašreizējais plāns",
+        "reactivate": "Atkārtoti aktivizēt",
+        "cancelSubscription": "Atcelt abonementu",
+        "contactSupport": "Sazināties ar atbalstu",
+        "cancel": "Atcelt",
+        "confirm": "Apstiprināt"
       },
       "statuses": {
-        "trial": "Trial",
-        "active": "Active",
-        "cancelled": "Cancelled",
-        "expired": "Expired"
+        "trial": "Izmēģinājums",
+        "active": "Aktīvs",
+        "cancelled": "Atcelts",
+        "expired": "Beidzies"
       },
       "states": {
-        "loading": "Loading subscription data...",
-        "notFoundTitle": "Subscription Not Found",
-        "notFoundDescription": "Unable to load subscription information."
+        "loading": "Abonementa datu ielāde...",
+        "notFoundTitle": "Abonements nav atrasts",
+        "notFoundDescription": "Neizdevās ielādēt abonementa informāciju."
       },
       "labels": {
         "notAvailable": "N/A"
       },
       "trial": {
-        "name": "Trial Plan",
-        "description": "Free Trial",
-        "label": "Trial Period:",
-        "remaining": "{count} days remaining"
+        "name": "Izmēģinājuma plāns",
+        "description": "Bezmaksas izmēģinājums",
+        "label": "Izmēģinājuma periods:",
+        "remaining": "Atlicis {count} dienas"
       },
       "sections": {
         "status": {
-          "title": "Current Subscription Status",
-          "statusLabel": "Status",
-          "totalReviews": "Total Reviews",
-          "averageRating": "Average Rating"
+          "title": "Pašreizējais abonementa statuss",
+          "statusLabel": "Statuss",
+          "totalReviews": "Kopā atsauksmes",
+          "averageRating": "Vidējais vērtējums"
         },
         "plans": {
-          "title": "Available Plans",
-          "currentPlanHint": "You are currently on this plan"
+          "title": "Pieejamie plāni",
+          "currentPlanHint": "Pašlaik izmantojat šo plānu"
         },
         "actions": {
-          "title": "Subscription Actions"
+          "title": "Abonementa darbības"
         },
         "billing": {
-          "title": "Billing Information",
-          "subscriptionId": "Subscription ID:",
-          "created": "Created:",
-          "nextBilling": "Next Billing:",
-          "trialEnds": "Trial Ends:"
+          "title": "Norēķinu informācija",
+          "subscriptionId": "Abonementa ID:",
+          "created": "Izveidots:",
+          "nextBilling": "Nākamais norēķins:",
+          "trialEnds": "Izmēģinājuma beigas:"
         }
       },
-      "perInterval": "per {interval}",
+      "perInterval": "par {interval}",
       "priceLabel": "{price}/{interval}",
       "dialog": {
-        "title": "Confirm Subscription Change",
-        "upgradeTitle": "Upgrade to {plan}",
-        "description": "You are about to upgrade your subscription plan.",
-        "planLabel": "Plan:",
-        "priceLabel": "Price:",
-        "billingLabel": "Billing:",
-        "noteLabel": "Note:",
-        "noteDescription": "This is a demo environment. No actual payment will be processed."
+        "title": "Apstiprināt abonementa maiņu",
+        "upgradeTitle": "Jaunināt uz {plan}",
+        "description": "Tūlīt jaunināsiet savu abonementa plānu.",
+        "planLabel": "Plāns:",
+        "priceLabel": "Cena:",
+        "billingLabel": "Norēķins:",
+        "noteLabel": "Piezīme:",
+        "noteDescription": "Šī ir demo vide. Reāls maksājums netiks apstrādāts."
       },
       "toasts": {
         "load": {
-          "error": "Failed to load subscription data"
+          "error": "Neizdevās ielādēt abonementa datus"
         },
         "update": {
-          "success": "Subscription updated successfully",
-          "error": "Failed to update subscription"
+          "success": "Abonements veiksmīgi atjaunināts",
+          "error": "Neizdevās atjaunināt abonementu"
         }
       },
       "errors": {
-        "unauthorized": "Unauthorized",
-        "hotelNotFound": "Hotel not found",
-        "planRequired": "Plan ID and action are required",
-        "unknownPlan": "Unknown Plan",
-        "fetchFailed": "Failed to fetch subscription details",
-        "updateFailed": "Failed to update subscription"
+        "unauthorized": "Neautorizēta piekļuve",
+        "hotelNotFound": "Viesnīca nav atrasta",
+        "planRequired": "Nepieciešams plāna ID un darbība",
+        "unknownPlan": "Nezināms plāns",
+        "fetchFailed": "Neizdevās iegūt abonementa datus",
+        "updateFailed": "Neizdevās atjaunināt abonementu"
       },
       "messages": {
-        "upgraded": "Successfully upgraded to {plan}",
-        "cancelled": "Successfully cancelled subscription"
+        "upgraded": "Veiksmīgi jaunināts uz {plan}",
+        "cancelled": "Abonements veiksmīgi atcelts"
       },
       "plans": {
         "basic": {
-          "name": "Basic Plan",
+          "name": "Pamata plāns",
           "features": [
-            "Up to 100 reviews per month",
-            "Basic analytics",
-            "QR code generation",
-            "Basic Feedback Form"
+            "Līdz 100 atsauksmēm mēnesī",
+            "Pamata analītika",
+            "QR kodu ģenerēšana",
+            "Pamata atsauksmju forma"
           ]
         },
         "professional": {
-          "name": "Professional Plan",
+          "name": "Profesionāla plāns",
           "features": [
-            "Up to 500 reviews per month",
-            "Advanced analytics",
-            "QR code generation",
-            "Customized Star Rating Questions"
+            "Līdz 500 atsauksmēm mēnesī",
+            "Paplašināta analītika",
+            "QR kodu ģenerēšana",
+            "Pielāgoti zvaigžņu vērtējuma jautājumi"
           ]
         },
         "enterprise": {
-          "name": "Enterprise Plan",
+          "name": "Uzņēmuma plāns",
           "features": [
-            "Unlimited reviews per month",
-            "Enterprise analytics",
-            "Priority support",
-            "Multi-property management"
+            "Neierobežots atsauksmju skaits mēnesī",
+            "Uzņēmuma analītika",
+            "Prioritātes atbalsts",
+            "Vairāku īpašumu pārvaldība"
           ]
         }
       },
       "intervals": {
-        "month": "month",
-        "monthly": "monthly",
-        "year": "year",
-        "yearly": "yearly",
-        "quarter": "quarter",
-        "quarterly": "quarterly"
+        "month": "mēnesis",
+        "monthly": "ik mēnesi",
+        "year": "gads",
+        "yearly": "ik gadu",
+        "quarter": "ceturksnis",
+        "quarterly": "ik ceturksni"
       }
     },
     "profile": {
       "user": {
-        "title": "Personal Information",
-        "subtitle": "Manage your personal account details.",
+        "title": "Personīgā informācija",
+        "subtitle": "Pārvaldiet sava konta personīgos datus.",
         "buttons": {
-          "save": "Save Changes",
-          "changePassword": "Change Password",
-          "twoFactor": "Two-Factor Authentication",
-          "changePhoto": "Change Photo",
-          "uploading": "Uploading..."
+          "save": "Saglabāt izmaiņas",
+          "changePassword": "Mainīt paroli",
+          "twoFactor": "Divfaktoru autentifikācija",
+          "changePhoto": "Mainīt foto",
+          "uploading": "Augšupielāde..."
         },
         "images": {
-          "cardTitle": "Profile Image",
-          "hint": "JPG, PNG or GIF. Max size 5MB."
+          "cardTitle": "Profila attēls",
+          "hint": "JPG, PNG vai GIF. Maks. 5MB."
         },
         "fields": {
-          "firstName": "First Name *",
-          "lastName": "Last Name *",
-          "email": "Email Address *",
-          "phone": "Phone Number"
+          "firstName": "Vārds *",
+          "lastName": "Uzvārds *",
+          "email": "E-pasta adrese *",
+          "phone": "Tālruņa numurs"
         },
         "placeholders": {
-          "firstName": "Enter your first name",
-          "lastName": "Enter your last name",
+          "firstName": "Ievadiet savu vārdu",
+          "lastName": "Ievadiet savu uzvārdu",
           "email": "your.email@example.com",
           "phone": "+1 (555) 123-4567"
         },
         "cards": {
-          "personalInfo": "Personal Information",
-          "accountInfo": "Account Information",
-          "security": "Security"
+          "personalInfo": "Personīgā informācija",
+          "accountInfo": "Konta informācija",
+          "security": "Drošība"
         },
         "account": {
-          "type": "Account Type:",
-          "status": "Status:",
-          "memberSince": "Member Since:",
-          "lastLogin": "Last Login:",
-          "typeValue": "Hotel Owner",
-          "statusActive": "Active",
+          "type": "Konta tips:",
+          "status": "Statuss:",
+          "memberSince": "Dalībnieks kopš:",
+          "lastLogin": "Pēdējā pieteikšanās:",
+          "typeValue": "Viesnīcas īpašnieks",
+          "statusActive": "Aktīvs",
           "notAvailable": "N/A"
         },
         "toasts": {
-          "saveSuccess": "Profile updated successfully",
-          "saveError": "Failed to update profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Profile image updated successfully",
-          "imageError": "Failed to upload image",
-          "twoFactorInfo": "Two-factor authentication will be available soon"
+          "saveSuccess": "Profils veiksmīgi atjaunināts",
+          "saveError": "Neizdevās atjaunināt profilu",
+          "imageTypeError": "Izvēlieties derīgu attēlu (JPG, PNG, GIF vai WebP)",
+          "imageSizeError": "Attēla izmēram jābūt mazākam par 5MB",
+          "imageSuccess": "Profila attēls veiksmīgi atjaunināts",
+          "imageError": "Neizdevās augšupielādēt attēlu",
+          "twoFactorInfo": "Divfaktoru autentifikācija drīz būs pieejama"
         }
       },
       "hotel": {
-        "title": "Hotel Profile",
-        "subtitle": "Manage your hotel information and settings.",
+        "title": "Viesnīcas profils",
+        "subtitle": "Pārvaldiet savas viesnīcas informāciju un iestatījumus.",
         "buttons": {
-          "save": "Save Changes",
-          "uploadLogo": "Upload Logo",
-          "uploading": "Uploading...",
-          "viewPublic": "View Public Page",
-          "contactSupport": "Contact Support"
+          "save": "Saglabāt izmaiņas",
+          "uploadLogo": "Augšupielādēt logo",
+          "uploading": "Augšupielāde...",
+          "viewPublic": "Skatīt publisko lapu",
+          "contactSupport": "Sazināties ar atbalstu"
         },
         "images": {
-          "cardTitle": "Hotel Logo",
-          "alt": "Hotel Logo",
-          "hint": "JPG, PNG or GIF. Max size 5MB. Recommended: 300x300px"
+          "cardTitle": "Viesnīcas logo",
+          "alt": "Viesnīcas logo",
+          "hint": "JPG, PNG vai GIF. Maks. 5MB. Ieteicams: 300x300px"
         },
         "cards": {
-          "actions": "Actions",
-          "hotelInfo": "Hotel Information"
+          "actions": "Darbības",
+          "hotelInfo": "Viesnīcas informācija"
         },
         "fields": {
-          "name": "Hotel Name *",
-          "description": "Description",
-          "address": "Address",
-          "city": "City",
-          "country": "Country",
-          "phone": "Phone",
-          "email": "Email",
-          "website": "Website"
+          "name": "Viesnīcas nosaukums *",
+          "description": "Apraksts",
+          "address": "Adrese",
+          "city": "Pilsēta",
+          "country": "Valsts",
+          "phone": "Tālrunis",
+          "email": "E-pasts",
+          "website": "Tīmekļa vietne"
         },
         "placeholders": {
-          "name": "Enter hotel name",
-          "description": "Brief description of your hotel",
-          "address": "Street address",
-          "city": "City",
-          "country": "Select country",
+          "name": "Ievadiet viesnīcas nosaukumu",
+          "description": "Īss jūsu viesnīcas apraksts",
+          "address": "Ielas adrese",
+          "city": "Pilsēta",
+          "country": "Izvēlieties valsti",
           "phone": "+1 (555) 123-4567",
           "email": "hotel@example.com",
           "website": "https://www.yourhotel.com"
         },
         "externalLinks": {
-          "title": "External Review Links",
-          "subtitle": "Add links to your TripAdvisor and Google Reviews pages to help guests share positive feedback.",
+          "title": "Ārējās atsauksmju saites",
+          "subtitle": "Pievienojiet saites uz TripAdvisor un Google Reviews lapām.",
           "tripAdvisor": {
-            "label": "TripAdvisor Link",
+            "label": "TripAdvisor saite",
             "placeholder": "https://www.tripadvisor.com/...",
-            "hint": "Optional: Link to your TripAdvisor page"
+            "hint": "Neobligāti: saite uz jūsu TripAdvisor lapu"
           },
           "google": {
-            "label": "Google Reviews Link",
+            "label": "Google Reviews saite",
             "placeholder": "https://g.page/...",
-            "hint": "Optional: Link to your Google Reviews page"
+            "hint": "Neobligāti: saite uz jūsu Google Reviews lapu"
           }
         },
         "account": {
           "notAvailable": "N/A"
         },
         "toasts": {
-          "loadError": "Failed to load hotel profile",
-          "saveSuccess": "Hotel profile updated successfully",
-          "saveError": "Failed to update hotel profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Hotel logo updated successfully",
-          "imageError": "Failed to upload logo"
+          "loadError": "Neizdevās ielādēt viesnīcas profilu",
+          "saveSuccess": "Viesnīcas profils veiksmīgi atjaunināts",
+          "saveError": "Neizdevās atjaunināt viesnīcas profilu",
+          "imageTypeError": "Izvēlieties derīgu attēlu (JPG, PNG, GIF vai WebP)",
+          "imageSizeError": "Attēla izmēram jābūt mazākam par 5MB",
+          "imageSuccess": "Viesnīcas logo veiksmīgi atjaunināts",
+          "imageError": "Neizdevās augšupielādēt logo"
         }
       },
       "password": {
-        "title": "Change Password",
-        "subtitle": "Update your account password for better security.",
-        "cardTitle": "Password Change",
+        "title": "Mainīt paroli",
+        "subtitle": "Atjauniniet konta paroli drošākai lietošanai.",
+        "cardTitle": "Paroles maiņa",
         "buttons": {
-          "change": "Change Password",
-          "cancel": "Cancel",
-          "confirmChange": "Change Password"
+          "change": "Mainīt paroli",
+          "cancel": "Atcelt",
+          "confirmChange": "Mainīt paroli"
         },
         "fields": {
-          "current": "Current Password *",
-          "new": "New Password *",
-          "confirm": "Confirm New Password *"
+          "current": "Pašreizējā parole *",
+          "new": "Jaunā parole *",
+          "confirm": "Apstiprināt jauno paroli *"
         },
         "placeholders": {
-          "current": "Enter your current password",
-          "new": "Enter your new password",
-          "confirm": "Confirm your new password"
+          "current": "Ievadiet pašreizējo paroli",
+          "new": "Ievadiet jauno paroli",
+          "confirm": "Apstipriniet jauno paroli"
         },
         "strength": {
-          "label": "Password Strength:",
-          "weak": "Weak",
-          "medium": "Medium",
-          "strong": "Strong"
+          "label": "Paroles stiprums:",
+          "weak": "Vāja",
+          "medium": "Vidēja",
+          "strong": "Stipra"
         },
         "requirements": {
-          "title": "Password Requirements",
-          "minLength": "At least 8 characters long",
-          "uppercase": "Contains uppercase letters",
-          "lowercase": "Contains lowercase letters",
-          "numbers": "Contains numbers",
-          "special": "Contains special characters"
+          "title": "Paroles prasījumi",
+          "minLength": "Vismaz 8 rakstzīmes",
+          "uppercase": "Satur lielos burtus",
+          "lowercase": "Satur mazos burtus",
+          "numbers": "Satur ciparus",
+          "special": "Satur īpašās rakstzīmes"
         },
         "tips": {
-          "title": "Security Tips",
-          "tip": "Tip: Use a unique password that you don't use elsewhere.",
-          "warning": "Warning: Never share your password with anyone."
+          "title": "Drošības padomi",
+          "tip": "Padoms: Izmantojiet unikālu paroli, ko neizmantojat citur.",
+          "warning": "Brīdinājums: Nekad nedalieties ar paroli."
         },
         "validation": {
-          "currentRequired": "Current password is required",
-          "newRequired": "New password is required",
-          "minLength": "New password must be at least 8 characters long",
-          "complexity": "New password must contain uppercase, lowercase, numbers, and special characters",
-          "confirmMismatch": "New password and confirmation do not match",
-          "sameAsCurrent": "New password must be different from current password"
+          "currentRequired": "Pašreizējā parole ir obligāta",
+          "newRequired": "Jaunā parole ir obligāta",
+          "minLength": "Jaunajai parolei jābūt vismaz 8 rakstzīmēm",
+          "complexity": "Jaunajai parolei jāsatur lieli un mazi burti, cipari un īpašās rakstzīmes",
+          "confirmMismatch": "Jaunā parole un apstiprinājums nesakrīt",
+          "sameAsCurrent": "Jaunajai parolei jāatšķiras no pašreizējās"
         },
         "toasts": {
-          "changeSuccess": "Password changed successfully",
-          "changeError": "Failed to change password"
+          "changeSuccess": "Parole veiksmīgi mainīta",
+          "changeError": "Neizdevās mainīt paroli"
         },
         "confirm": {
-          "title": "Confirm Password Change",
-          "message": "Are you sure you want to change your password?",
-          "warning": "This action will log you out of all devices and you'll need to log in again."
+          "title": "Apstiprināt paroles maiņu",
+          "message": "Vai tiešām vēlaties mainīt paroli?",
+          "warning": "Jūs tiksiet izrakstīts no visām ierīcēm un būsiet jāpieteicas vēlreiz."
         },
         "accessibility": {
-          "show": "Show password",
-          "hide": "Hide password"
+          "show": "Rādīt paroli",
+          "hide": "Slēpt paroli"
         }
       },
       "subscription": {
         "errors": {
-          "unauthorized": "Unauthorized",
-          "hotelNotFound": "Hotel not found",
-          "planRequired": "Plan ID and action are required",
-          "unknownPlan": "Unknown Plan",
-          "fetchFailed": "Failed to fetch subscription details",
-          "updateFailed": "Failed to update subscription"
+          "unauthorized": "Neautorizēta piekļuve",
+          "hotelNotFound": "Viesnīca nav atrasta",
+          "planRequired": "Nepieciešams plāna ID un darbība",
+          "unknownPlan": "Nezināms plāns",
+          "fetchFailed": "Neizdevās iegūt abonementa datus",
+          "updateFailed": "Neizdevās atjaunināt abonementu"
         },
         "messages": {
-          "upgraded": "Successfully upgraded to {plan}",
-          "cancelled": "Successfully cancelled subscription"
+          "upgraded": "Veiksmīgi jaunināts uz {plan}",
+          "cancelled": "Abonements veiksmīgi atcelts"
         },
         "plans": {
           "basic": {
-            "name": "Basic Plan",
+            "name": "Pamata plāns",
             "features": [
-              "Up to 100 reviews per month",
-              "Basic analytics",
-              "QR code generation",
-              "Basic Feedback Form"
+              "Līdz 100 atsauksmēm mēnesī",
+              "Pamata analītika",
+              "QR kodu ģenerēšana",
+              "Pamata atsauksmju forma"
             ]
           },
           "professional": {
-            "name": "Professional Plan",
+            "name": "Profesionāla plāns",
             "features": [
-              "Up to 500 reviews per month",
-              "Advanced analytics",
-              "QR code generation",
-              "Customized Star Rating Questions"
+              "Līdz 500 atsauksmēm mēnesī",
+              "Paplašināta analītika",
+              "QR kodu ģenerēšana",
+              "Pielāgoti zvaigžņu vērtējuma jautājumi"
             ]
           },
           "enterprise": {
-            "name": "Enterprise Plan",
+            "name": "Uzņēmuma plāns",
             "features": [
-              "Unlimited reviews",
-              "Full analytics suite",
-              "QR code generation",
-              "All type of questions"
+              "Neierobežots atsauksmju skaits",
+              "Pilna analītikas komplekts",
+              "QR kodu ģenerēšana",
+              "Visi jautājumu tipi"
             ]
           }
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Paziņojumi",
+        "ariaLabel": "Paziņojumi",
+        "iconAlt": "Paziņojuma ikona",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Atzīmēt visus kā izlasītus",
+          "refresh": "Atjaunot"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Vēl nav paziņojumu"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "newFormCreated": "New Form Created",
-          "success": "Success",
-          "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "newReview": "Jauna atsauksme",
+          "reviewApproved": "Atsauksme apstiprināta",
+          "reviewRejected": "Atsauksme noraidīta",
+          "subscriptionExpiring": "Abonements beidzas",
+          "subscriptionCancelled": "Abonements atcelts",
+          "escalationReceived": "Eskalācija saņemta",
+          "escalationResponded": "Eskalācijai atbildēts",
+          "systemAlert": "Sistēmas brīdinājums",
+          "newHotelRegistration": "Jauna viesnīcas reģistrācija",
+          "newFormCreated": "Izveidota jauna veidlapa",
+          "success": "Veiksme",
+          "info": "Informācija",
+          "warning": "Brīdinājums",
+          "error": "Kļūda",
+          "generic": "Paziņojums"
         }
       },
       "profileSidebar": {
         "greeting": {
-          "title": "Welcome",
-          "fallbackName": "Admin User"
+          "title": "Laipni lūdzam",
+          "fallbackName": "Administrators"
         },
         "actions": {
           "profile": {
-            "title": "Profile",
-            "description": "Manage your account settings"
+            "title": "Profils",
+            "description": "Pārvaldīt konta iestatījumus"
           },
           "signOut": {
-            "title": "Sign Out",
-            "description": "Logout from your account"
+            "title": "Iziet",
+            "description": "Izrakstīties no konta"
           }
         },
         "notifications": {
-          "title": "Recent Notifications",
-          "loading": "Loading notifications...",
-          "summary": "You have {count} unread notifications",
-          "empty": "No new notifications"
+          "title": "Pēdējie paziņojumi",
+          "loading": "Tiek ielādēti paziņojumi...",
+          "summary": "Jums ir {count} neizlasīti paziņojumi",
+          "empty": "Nav jaunu paziņojumu"
         },
         "time": {
-          "justNow": "Just now"
+          "justNow": "Tikko"
         }
       }
     },
     "communications": {
       "notifications": {
-        "title": "Notifications",
-        "subtitle": "Manage system notifications and alerts",
+        "title": "Paziņojumi",
+        "subtitle": "Pārvaldiet sistēmas paziņojumus un brīdinājumus",
         "buttons": {
-          "deleteSelected": "Delete Selected ({count})",
-          "markAllAsRead": "Mark All as Read",
-          "refresh": "Refresh"
+          "deleteSelected": "Dzēst izvēlētos ({count})",
+          "markAllAsRead": "Atzīmēt visus kā izlasītus",
+          "refresh": "Atjaunot"
         },
         "filters": {
-          "title": "Filters",
-          "searchLabel": "Search Notifications",
-          "searchPlaceholder": "Search by title, message, or user...",
-          "type": "Type",
-          "allTypes": "All Types",
+          "title": "Filtri",
+          "searchLabel": "Meklēt paziņojumus",
+          "searchPlaceholder": "Meklēt pēc virsraksta, ziņojuma vai lietotāja...",
+          "type": "Tips",
+          "allTypes": "Visi tipi",
           "status": {
-            "label": "Status",
-            "all": "All Status",
-            "unread": "Unread",
-            "read": "Read"
+            "label": "Statuss",
+            "all": "Visi statusi",
+            "unread": "Neizlasīts",
+            "read": "Izlasīts"
           },
           "types": {
-            "newReview": "New Review",
-            "reviewApproved": "Review Approved",
-            "reviewRejected": "Review Rejected",
-            "subscriptionExpiring": "Subscription Expiring",
-            "subscriptionCancelled": "Subscription Cancelled",
-            "escalationReceived": "Escalation Received",
-            "escalationResponded": "Escalation Responded",
-            "systemAlert": "System Alert",
-            "newHotelRegistration": "New Hotel Registration",
-            "newFormCreated": "New Form Created",
-            "success": "Success",
-            "info": "Info",
-            "warning": "Warning",
-            "error": "Error"
+            "newReview": "Jauna atsauksme",
+            "reviewApproved": "Atsauksme apstiprināta",
+            "reviewRejected": "Atsauksme noraidīta",
+            "subscriptionExpiring": "Abonements beidzas",
+            "subscriptionCancelled": "Abonements atcelts",
+            "escalationReceived": "Eskalācija saņemta",
+            "escalationResponded": "Eskalācijai atbildēts",
+            "systemAlert": "Sistēmas brīdinājums",
+            "newHotelRegistration": "Jauna viesnīcas reģistrācija",
+            "newFormCreated": "Izveidota jauna veidlapa",
+            "success": "Veiksme",
+            "info": "Informācija",
+            "warning": "Brīdinājums",
+            "error": "Kļūda"
           }
         },
         "states": {
-          "loading": "Loading notifications...",
-          "empty": "No notifications found"
+          "loading": "Tiek ielādēti paziņojumi...",
+          "empty": "Paziņojumi nav atrasti"
         },
         "table": {
-          "type": "Type",
-          "message": "Message",
-          "date": "Date",
-          "actions": "Actions",
+          "type": "Tips",
+          "message": "Ziņojums",
+          "date": "Datums",
+          "actions": "Darbības",
           "status": {
-            "label": "Status",
-            "read": "Read",
-            "new": "New"
+            "label": "Statuss",
+            "read": "Izlasīts",
+            "new": "Jauns"
           }
         },
         "tooltips": {
-          "markAsRead": "Mark as Read",
-          "view": "View",
-          "delete": "Delete"
+          "markAsRead": "Atzīmēt kā izlasītu",
+          "view": "Skatīt",
+          "delete": "Dzēst"
         },
         "dates": {
-          "justNow": "Just now",
-          "hoursAgo": "{hours}h ago",
-          "yesterday": "Yesterday"
+          "justNow": "Tikko",
+          "hoursAgo": "pirms {hours}h",
+          "yesterday": "Vakar"
         },
         "types": {
-          "NEW_REVIEW": "New Review",
-          "REVIEW_APPROVED": "Review Approved",
-          "REVIEW_REJECTED": "Review Rejected",
-          "SUBSCRIPTION_EXPIRING": "Subscription Expiring",
-          "SUBSCRIPTION_CANCELLED": "Subscription Cancelled",
-          "ESCALATION_RECEIVED": "Escalation Received",
-          "ESCALATION_RESPONDED": "Escalation Responded",
-          "SYSTEM_ALERT": "System Alert",
-          "NEW_HOTEL_REGISTRATION": "New Hotel Registration",
-          "NEW_FORM_CREATED": "New Form Created",
-          "SUCCESS": "Success",
-          "INFO": "Info",
-          "WARNING": "Warning",
-          "ERROR": "Error"
+          "NEW_REVIEW": "Jauna atsauksme",
+          "REVIEW_APPROVED": "Atsauksme apstiprināta",
+          "REVIEW_REJECTED": "Atsauksme noraidīta",
+          "SUBSCRIPTION_EXPIRING": "Abonements beidzas",
+          "SUBSCRIPTION_CANCELLED": "Abonements atcelts",
+          "ESCALATION_RECEIVED": "Eskalācija saņemta",
+          "ESCALATION_RESPONDED": "Eskalācijai atbildēts",
+          "SYSTEM_ALERT": "Sistēmas brīdinājums",
+          "NEW_HOTEL_REGISTRATION": "Jauna viesnīcas reģistrācija",
+          "NEW_FORM_CREATED": "Izveidota jauna veidlapa",
+          "SUCCESS": "Veiksme",
+          "INFO": "Informācija",
+          "WARNING": "Brīdinājums",
+          "ERROR": "Kļūda"
         },
         "toasts": {
-          "loadError": "Failed to load notifications",
-          "markReadSuccess": "Notification marked as read",
-          "markReadError": "Failed to mark notification as read",
-          "markAllReadSuccess": "All notifications marked as read",
-          "markAllReadError": "Failed to mark all notifications as read",
-          "deleteSuccess": "Notification deleted successfully",
-          "deleteError": "Failed to delete notification",
-          "bulkDeleteSuccess": "{count} notification(s) deleted successfully",
-          "bulkDeleteError": "Failed to delete some notifications"
+          "loadError": "Neizdevās ielādēt paziņojumus",
+          "markReadSuccess": "Paziņojums atzīmēts kā izlasīts",
+          "markReadError": "Neizdevās atzīmēt kā izlasītu",
+          "markAllReadSuccess": "Visi paziņojumi atzīmēti kā izlasīti",
+          "markAllReadError": "Neizdevās atzīmēt visus kā izlasītus",
+          "deleteSuccess": "Paziņojums veiksmīgi dzēsts",
+          "deleteError": "Neizdevās dzēst paziņojumu",
+          "bulkDeleteSuccess": "{count} paziņojumi veiksmīgi dzēsti",
+          "bulkDeleteError": "Neizdevās dzēst dažus paziņojumus"
         },
         "confirm": {
-          "deleteMessage": "Are you sure you want to delete this notification?",
-          "deleteHeader": "Delete Confirmation",
-          "bulkDeleteMessage": "Are you sure you want to delete {count} selected notification(s)?",
-          "bulkDeleteHeader": "Bulk Delete Confirmation"
+          "deleteMessage": "Vai tiešām vēlaties dzēst šo paziņojumu?",
+          "deleteHeader": "Dzēšanas apstiprinājums",
+          "bulkDeleteMessage": "Vai tiešām vēlaties dzēst {count} izvēlētos paziņojumus?",
+          "bulkDeleteHeader": "Masveida dzēšanas apstiprinājums"
         }
       }
     }
   },
   "auth": {
     "register": {
-      "title": "Register",
-      "subtitle": "Let's get started",
+      "title": "Reģistrācija",
+      "subtitle": "Sāksim",
       "placeholders": {
-        "firstName": "First Name",
-        "lastName": "Last Name",
-        "email": "Email",
-        "phone": "Phone (Optional)",
-        "password": "Password"
+        "firstName": "Vārds",
+        "lastName": "Uzvārds",
+        "email": "E-pasts",
+        "phone": "Tālrunis (pēc izvēles)",
+        "password": "Parole"
       },
       "buttons": {
-        "signUp": "Sign Up",
-        "signingUp": "Signing Up..."
+        "signUp": "Reģistrēties",
+        "signingUp": "Reģistrēšanās..."
       },
-      "agreementPrefix": "I have read the",
+      "agreementPrefix": "Esmu izlasījis(usi)",
       "toasts": {
-        "acceptTerms": "Please accept the terms and conditions",
-        "missingFields": "Please fill in all required fields",
-        "success": "Registration successful! Please check your email.",
-        "error": "Registration failed. Please try again."
+        "acceptTerms": "Lūdzu, piekrītiet lietošanas noteikumiem",
+        "missingFields": "Lūdzu, aizpildiet visus obligātos laukus",
+        "success": "Reģistrācija veiksmīga! Lūdzu, pārbaudiet e-pastu.",
+        "error": "Reģistrācija neizdevās. Mēģiniet vēlreiz."
       }
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter the email address associated with your account and we'll send an email with instructions to reset your password.",
+      "title": "Aizmirsāt paroli?",
+      "description": "Ievadiet e-pasta adresi, kas saistīta ar jūsu kontu, un mēs nosūtīsim instrukcijas paroles atjaunošanai.",
       "messages": {
-        "instructions": "Check your email for password reset instructions"
+        "instructions": "Pārbaudiet e-pastu paroles atjaunošanas instrukcijām"
       },
       "submitted": {
-        "title": "Check your email!",
-        "description": "We have sent an email with a password reset link to {email}.",
-        "hint": "Didn't receive the email? Please check your spam folder."
+        "title": "Pārbaudiet e-pastu!",
+        "description": "Mēs nosūtījām e-pastu ar paroles atjaunošanas saiti uz {email}.",
+        "hint": "Nesaņēmāt e-pastu? Pārbaudiet surogātpasta mapi."
       },
       "fields": {
-        "email": "Email Address",
-        "emailPlaceholder": "Enter your email address"
+        "email": "E-pasta adrese",
+        "emailPlaceholder": "Ievadiet savu e-pasta adresi"
       },
       "buttons": {
-        "send": "Send Instructions",
-        "sending": "Sending...",
-        "resend": "Resend Email",
-        "backToLogin": "Back to Login"
+        "send": "Nosūtīt instrukcijas",
+        "sending": "Nosūta...",
+        "resend": "Nosūtīt e-pastu vēlreiz",
+        "backToLogin": "Atpakaļ pie pierakstīšanās"
       },
       "validation": {
-        "required": "Email is required",
-        "invalid": "Please enter a valid email address"
+        "required": "E-pasts ir obligāts",
+        "invalid": "Lūdzu, ievadiet derīgu e-pasta adresi"
       },
       "toasts": {
-        "success": "Password reset email sent successfully",
-        "error": "Failed to send reset email",
-        "unexpected": "An unexpected error occurred. Please try again."
+        "success": "Paroles atjaunošanas e-pasts veiksmīgi nosūtīts",
+        "error": "Neizdevās nosūtīt e-pastu",
+        "unexpected": "Radās negaidīta kļūda. Mēģiniet vēlreiz."
       }
     },
     "resetPassword": {
-      "title": "Create New Password!",
-      "subtitle": "Enter a new password below to update your account credentials.",
+      "title": "Izveidojiet jaunu paroli!",
+      "subtitle": "Ievadiet jaunu paroli zemāk, lai atjauninātu konta datus.",
       "fields": {
-        "newPassword": "New Password",
-        "confirmPassword": "Confirm Password"
+        "newPassword": "Jaunā parole",
+        "confirmPassword": "Apstiprināt paroli"
       },
       "placeholders": {
-        "password": "Enter your password",
-        "confirmPassword": "Confirm your password"
+        "password": "Ievadiet paroli",
+        "confirmPassword": "Apstipriniet paroli"
       },
       "buttons": {
-        "reset": "Reset Password",
-        "resetting": "Resetting..."
+        "reset": "Atjaunot paroli",
+        "resetting": "Atjaunina..."
       },
       "link": {
-        "backToLogin": "Back to Login"
+        "backToLogin": "Atpakaļ pie pierakstīšanās"
       },
       "states": {
-        "validating": "Validating reset link...",
-        "loading": "Loading..."
+        "validating": "Pārbauda saiti...",
+        "loading": "Ielādē..."
       },
       "errors": {
-        "passwordMin": "Password must be at least 6 characters long",
-        "passwordMax": "Password must be less than 128 characters",
-        "confirmRequired": "Please confirm your password",
-        "mismatch": "Passwords do not match"
+        "passwordMin": "Parolei jābūt vismaz 6 rakstzīmēm",
+        "passwordMax": "Parolei jābūt mazāk nekā 128 rakstzīmēm",
+        "confirmRequired": "Lūdzu, apstipriniet paroli",
+        "mismatch": "Paroles nesakrīt"
       },
       "toasts": {
-        "invalidLink": "Invalid reset link",
-        "invalidOrExpired": "Invalid or expired reset link",
-        "failedValidation": "Failed to validate reset link",
-        "success": "Password reset successfully. You can now log in with your new password.",
-        "failure": "Failed to reset password",
-        "unexpected": "An unexpected error occurred"
+        "invalidLink": "Nederīga atjaunošanas saite",
+        "invalidOrExpired": "Nederīga vai beidzies termiņa saite",
+        "failedValidation": "Neizdevās pārbaudīt saiti",
+        "success": "Parole veiksmīgi atjaunināta. Tagad varat pierakstīties ar jauno paroli.",
+        "failure": "Neizdevās atjaunot paroli",
+        "unexpected": "Radās negaidīta kļūda"
       },
       "accessibility": {
-        "showPassword": "Show password",
-        "hidePassword": "Hide password"
+        "showPassword": "Rādīt paroli",
+        "hidePassword": "Slēpt paroli"
       }
     }
   },
   "authFooter": {
     "brand": {
       "title": "C-Reviews",
-      "description": "We help hotels connect with their guests through seamless feedback solutions. Our platform makes it easy to create forms, gather insights, and elevate the guest experience with integrity and professionalism at the core of everything we do.",
-      "footerImageAlt": "C-Reviews decorative footer"
+      "description": "Mēs palīdzam viesnīcām sazināties ar viesiem ar vienkāršu atsauksmju risinājumu palīdzību. Mūsu platforma atvieglo formu izveidi, ieskatu vākšanu un viesu pieredzes celšanu ar godīgumu un profesionalismu visā, ko darām.",
+      "footerImageAlt": "C-Reviews dekoratīvā kājene"
     },
     "quickLinks": {
-      "title": "Quick Links",
+      "title": "Ātrās saites",
       "items": {
-        "home": "Home",
-        "about": "About Us",
-        "features": "Features",
-        "contact": "Contact Us"
+        "home": "Sākums",
+        "about": "Par mums",
+        "features": "Funkcijas",
+        "contact": "Kontakti"
       }
     },
     "resources": {
-      "title": "Resources",
+      "title": "Resursi",
       "items": {
-        "dashboard": "Dashboard",
-        "feedbacks": "Feedbacks",
-        "hotelProfile": "Hotel Profile",
-        "support": "Support",
-        "ownerProfile": "Owner Profile"
+        "dashboard": "Vadības panelis",
+        "feedbacks": "Atsauksmes",
+        "hotelProfile": "Viesnīcas profils",
+        "support": "Atbalsts",
+        "ownerProfile": "Īpašnieka profils"
       }
     },
     "legal": {
-      "title": "Legal",
+      "title": "Juridiski",
       "items": {
-        "privacyPolicy": "Privacy Policy",
-        "companyPolicy": "Company Policy",
-        "terms": "Terms & Conditions"
+        "privacyPolicy": "Privātuma politika",
+        "companyPolicy": "Uzņēmuma politika",
+        "terms": "Lietošanas noteikumi"
       }
     },
     "connect": {
-      "title": "Connect with Us",
-      "emailPlaceholder": "Email Address",
-      "submitLabel": "Subscribe",
+      "title": "Sazinieties ar mums",
+      "emailPlaceholder": "E-pasta adrese",
+      "submitLabel": "Abonēt",
       "social": {
-        "facebook": "Follow us on Facebook",
-        "instagram": "Follow us on Instagram",
-        "linkedin": "Connect with us on LinkedIn"
+        "facebook": "Sekojiet mums Facebook",
+        "instagram": "Sekojiet mums Instagram",
+        "linkedin": "Sazinieties ar mums LinkedIn"
       }
     },
-    "copyright": "© 2024 C-Reviews LLC. All Rights Reserved!"
+    "copyright": "© 2024 C-Reviews LLC. Visas tiesības aizsargātas!"
   }
 }
 

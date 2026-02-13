@@ -122,6 +122,23 @@
         "table": {
           "date": "Data"
         }
+      },
+      "comparisonChart": {
+        "title": "Comparação de avaliações",
+        "period": "Período",
+        "weekly": "Semanal",
+        "monthly": "Mensal",
+        "loading": "Carregando dados de comparação...",
+        "noData": "Nenhum dado de comparação disponível",
+        "positiveReviews": "Avaliações positivas",
+        "negativeReviews": "Avaliações negativas"
+      },
+      "stats": {
+        "totalReviews": "Total de avaliações",
+        "averageRating": "Avaliação média",
+        "positiveReviews": "Avaliações positivas",
+        "negativeReviews": "Avaliações negativas",
+        "responseRate": "Taxa de resposta"
       }
     },
     "forms": {

@@ -122,6 +122,23 @@
         "table": {
           "date": "日期"
         }
+      },
+      "comparisonChart": {
+        "title": "评价对比",
+        "period": "周期",
+        "weekly": "每周",
+        "monthly": "每月",
+        "loading": "正在加载对比数据...",
+        "noData": "暂无对比数据",
+        "positiveReviews": "正面评价",
+        "negativeReviews": "负面评价"
+      },
+      "stats": {
+        "totalReviews": "总评价数",
+        "averageRating": "平均评分",
+        "positiveReviews": "正面评价",
+        "negativeReviews": "负面评价",
+        "responseRate": "答复率"
       }
     },
     "forms": {

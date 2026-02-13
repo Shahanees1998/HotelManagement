@@ -122,6 +122,23 @@
         "table": {
           "date": "Data"
         }
+      },
+      "comparisonChart": {
+        "title": "Comparație recenzii",
+        "period": "Perioadă",
+        "weekly": "Săptămânal",
+        "monthly": "Lunar",
+        "loading": "Se încarcă datele de comparație...",
+        "noData": "Nu există date de comparație disponibile",
+        "positiveReviews": "Recenzii pozitive",
+        "negativeReviews": "Recenzii negative"
+      },
+      "stats": {
+        "totalReviews": "Total recenzii",
+        "averageRating": "Rating mediu",
+        "positiveReviews": "Recenzii pozitive",
+        "negativeReviews": "Recenzii negative",
+        "responseRate": "Rata de răspuns"
       }
     },
     "forms": {

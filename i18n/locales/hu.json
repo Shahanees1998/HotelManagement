@@ -25,27 +25,27 @@
     "lv": "Latvian"
   },
   "common": {
-    "warning": "Warning",
-    "success": "Success",
-    "error": "Error",
-    "info": "Info",
-    "agreeTo": "I agree to the",
-    "and": "and",
-    "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy",
-    "alreadyHaveAccount": "Already have an account?",
-    "login": "Login",
-    "logout": "Logout",
-    "orRegisterVia": "or register via",
-    "selectLanguage": "Select language",
-    "getStarted": "Get Started"
+    "warning": "Figyelmeztetés",
+    "success": "Siker",
+    "error": "Hiba",
+    "info": "Információ",
+    "agreeTo": "Elfogadom a",
+    "and": "és a",
+    "terms": "felhasználási feltételeket",
+    "privacy": "adatvédelmi irányelveket",
+    "alreadyHaveAccount": "Már van fiókja?",
+    "login": "Bejelentkezés",
+    "logout": "Kijelentkezés",
+    "orRegisterVia": "vagy regisztráljon",
+    "selectLanguage": "Válasszon nyelvet",
+    "getStarted": "Kezdés"
   },
   "components": {
     "customPaginator": {
-      "itemsPerPage": "Items per page",
-      "rangeInfo": "{start}-{end} of {total} entries",
-      "previousPage": "Previous page",
-      "nextPage": "Next page"
+      "itemsPerPage": "Elemek oldalanként",
+      "rangeInfo": "{start}-{end} / {total} bejegyzés",
+      "previousPage": "Előző oldal",
+      "nextPage": "Következő oldal"
     }
   },
   "countries": {
@@ -66,1293 +66,1302 @@
   },
   "registerHotel": {
     "step1": {
-      "title": "Owner Information!",
+      "title": "Tulajdonos adatai!",
       "fields": {
-        "fullName": "Name",
-        "email": "Email Address",
-        "phone": "Phone Number",
-        "password": "Password"
+        "fullName": "Név",
+        "email": "E-mail cím",
+        "phone": "Telefonszám",
+        "password": "Jelszó"
       },
       "placeholders": {
-        "fullName": "Enter your name",
-        "email": "Enter your email address",
-        "phone": "Enter your phone number",
-        "password": "Enter your password"
+        "fullName": "Adja meg a nevét",
+        "email": "Adja meg az e-mail címét",
+        "phone": "Adja meg a telefonszámát",
+        "password": "Adja meg a jelszavát"
       },
-      "cta": "Let's Keep Going!"
+      "cta": "Folytassuk!"
     },
     "step2": {
-      "title": "Hotel Information!",
-      "subtitle": "Is my data safe?",
+      "title": "Szálloda adatai!",
+      "subtitle": "Biztonságban vannak az adataim?",
       "fields": {
-        "hotelName": "Hotel Name",
-        "hotelWebsite": "Hotel Website",
-        "hotelAddress": "Hotel Address",
-        "city": "City",
-        "country": "Country",
-        "hotelDescription": "Hotel Description"
+        "hotelName": "Szálloda neve",
+        "hotelWebsite": "Szálloda weboldala",
+        "hotelAddress": "Szálloda címe",
+        "city": "Város",
+        "country": "Ország",
+        "hotelDescription": "Szálloda leírása"
       },
       "placeholders": {
-        "hotelName": "Enter hotel name",
-        "hotelWebsite": "Enter hotel website url",
-        "hotelAddress": "Enter hotel street address",
-        "city": "Enter hotel city",
-        "country": "Select Country",
-        "hotelDescription": "Enter brief description of your hotel"
+        "hotelName": "Adja meg a szálloda nevét",
+        "hotelWebsite": "Adja meg a szálloda weboldal URL-jét",
+        "hotelAddress": "Adja meg a szálloda címét",
+        "city": "Adja meg a várost",
+        "country": "Válasszon országot",
+        "hotelDescription": "Rövid leírás a szállodáról"
       }
     },
     "buttons": {
-      "back": "Back",
-      "register": "Register Now",
-      "registering": "Registering..."
+      "back": "Vissza",
+      "register": "Regisztráció",
+      "registering": "Regisztrálás..."
     },
     "toasts": {
-      "missingRequired": "Please fill in all required fields",
-      "passwordLength": "Password must be at least 6 characters long",
-      "acceptTerms": "Please accept the terms and conditions",
-      "acceptTermsPrivacy": "Please accept the terms and conditions and privacy policy",
-      "success": "Hotel registration successful! Please check your email for verification.",
-      "error": "Registration failed",
-      "errorGeneric": "Registration failed. Please try again."
+      "missingRequired": "Töltse ki az összes kötelező mezőt",
+      "passwordLength": "A jelszónak legalább 6 karakter hosszúnak kell lennie",
+      "acceptTerms": "Fogadja el a felhasználási feltételeket",
+      "acceptTermsPrivacy": "Fogadja el a felhasználási feltételeket és az adatvédelmi irányelveket",
+      "success": "Szálloda regisztráció sikeres! Ellenőrizze e-mailjét a megerősítéshez.",
+      "error": "A regisztráció sikertelen",
+      "errorGeneric": "A regisztráció sikertelen. Kérjük, próbálja újra."
     },
     "images": {
-      "ownerAlt": "Register Hotel - Owner Information",
-      "hotelAlt": "Register Hotel - Hotel Information"
+      "ownerAlt": "Szálloda regisztráció - Tulajdonos adatai",
+      "hotelAlt": "Szálloda regisztráció - Szálloda adatai"
     }
   },
   "hotel": {
     "dashboard": {
       "recentReviews": {
-        "title": "Recent Reviews",
-        "description": "View and manage your recent reviews.",
+        "title": "Legutóbbi értékelések",
+        "description": "Tekintse meg és kezelje legutóbbi értékeléseit.",
         "states": {
-          "loading": "Loading recent reviews..."
+          "loading": "Legutóbbi értékelések betöltése..."
         },
         "table": {
-          "date": "Date"
+          "date": "Dátum"
         }
       },
       "comparisonChart": {
-        "title": "Review Comparison",
-        "period": "Period",
-        "weekly": "Weekly",
-        "monthly": "Monthly",
-        "loading": "Loading comparison data...",
-        "noData": "No comparison data available"
+        "title": "Értékelések összehasonlítása",
+        "period": "Időszak",
+        "weekly": "Heti",
+        "monthly": "Havi",
+        "loading": "Összehasonlító adatok betöltése...",
+        "noData": "Nincs összehasonlító adat",
+        "positiveReviews": "Pozitív értékelések",
+        "negativeReviews": "Negatív értékelések"
+      },
+      "stats": {
+        "totalReviews": "Összes értékelés",
+        "averageRating": "Átlagos értékelés",
+        "positiveReviews": "Pozitív értékelések",
+        "negativeReviews": "Negatív értékelések",
+        "responseRate": "Válaszadási arány"
       }
     },
     "forms": {
       "header": {
-        "title": "Feedback Form",
-        "subtitle": "Manage your guest feedback form. You can update this form at any time."
+        "title": "Visszajelzési űrlap",
+        "subtitle": "Kezelje vendégvisszajelzési űrlapját. Bármikor frissítheti."
       },
       "states": {
-        "loading": "Loading form..."
+        "loading": "Űrlap betöltése..."
       },
       "fields": {
-        "title": "Form Title",
-        "status": "Status",
-        "active": "Active",
-        "inactive": "Inactive",
-        "description": "Description",
-        "noDescription": "No description provided",
-        "totalResponses": "Total Responses"
+        "title": "Űrlap címe",
+        "status": "Állapot",
+        "active": "Aktív",
+        "inactive": "Inaktív",
+        "description": "Leírás",
+        "noDescription": "Nincs leírás",
+        "totalResponses": "Összes válasz"
       },
       "buttons": {
-        "edit": "Edit Form",
-        "preview": "Preview Form",
-        "showQr": "Show QR Code",
-        "create": "Create Form",
-        "downloadQr": "Download QR Code",
-        "copyUrl": "Copy URL"
+        "edit": "Űrlap szerkesztése",
+        "preview": "Űrlap előnézete",
+        "showQr": "QR kód megjelenítése",
+        "create": "Űrlap létrehozása",
+        "downloadQr": "QR kód letöltése",
+        "copyUrl": "URL másolása"
       },
       "empty": {
-        "title": "No Form Created Yet",
-        "description": "Create your feedback form to start collecting guest reviews."
+        "title": "Még nincs űrlap",
+        "description": "Hozza létre visszajelzési űrlapját a vendégvélemények gyűjtéséhez."
       },
       "preview": {
-        "title": "Form Preview",
-        "tooltipBack": "Back to Forms",
-        "tag": "Preview Mode - Interactions Disabled"
+        "title": "Űrlap előnézete",
+        "tooltipBack": "Vissza az űrlapokhoz",
+        "tag": "Előnézet – interakciók letiltva"
       },
       "qrDialog": {
-        "title": "QR Code - {title}"
+        "title": "QR kód - {title}"
       },
       "toasts": {
-        "loadError": "Failed to load form",
-        "slugMissing": "Hotel slug not found. Cannot preview form.",
-        "createSuccess": "Form created successfully",
-        "updateSuccess": "Form updated successfully",
-        "saveError": "Failed to save form",
-        "qrGenerated": "QR code generated successfully",
-        "qrExists": "QR code already exists for this form",
-        "qrError": "Failed to handle QR code",
-        "noUrl": "No URL to copy",
-        "copiedDetail": "URL copied to clipboard",
-        "copyError": "Failed to copy URL to clipboard"
+        "loadError": "Űrlap betöltése sikertelen",
+        "slugMissing": "Szálloda azonosító nem található. Előnézet nem elérhető.",
+        "createSuccess": "Űrlap sikeresen létrehozva",
+        "updateSuccess": "Űrlap sikeresen frissítve",
+        "saveError": "Űrlap mentése sikertelen",
+        "qrGenerated": "QR kód sikeresen generálva",
+        "qrExists": "Ehhez az űrlaphoz már létezik QR kód",
+        "qrError": "QR kód feldolgozása sikertelen",
+        "noUrl": "Nincs másolandó URL",
+        "copiedDetail": "URL a vágólapra másolva",
+        "copyError": "URL másolása sikertelen"
       },
       "builder": {
         "header": {
-          "edit": "Edit Form",
-          "create": "Create New Form",
-          "preview": "Preview Form",
-          "livePreview": "Live Preview",
-          "formBuilderToggle": "Form Builder",
-          "livePreviewToggle": "Live Preview",
-          "backTooltip": "Back to Forms"
+          "edit": "Űrlap szerkesztése",
+          "create": "Új űrlap létrehozása",
+          "preview": "Űrlap előnézete",
+          "livePreview": "Élő előnézet",
+          "formBuilderToggle": "Űrlapkészítő",
+          "livePreviewToggle": "Élő előnézet",
+          "backTooltip": "Vissza az űrlapokhoz"
         },
         "buttons": {
-          "save": "Save Form",
-          "saveTooltip": "Save the form",
-          "addNew": "Add New",
-          "addOption": "Add",
-          "cancel": "Cancel",
-          "update": "Update",
-          "add": "Add"
+          "save": "Űrlap mentése",
+          "saveTooltip": "Űrlap mentése",
+          "addNew": "Új hozzáadása",
+          "addOption": "Hozzáadás",
+          "cancel": "Mégse",
+          "update": "Frissítés",
+          "add": "Hozzáadás"
         },
         "sections": {
-          "settings": "Form Settings",
-          "questions": "Questions",
-          "predefined": "Predefined Questions",
-          "custom": "Custom Questions"
+          "settings": "Űrlap beállítások",
+          "questions": "Kérdések",
+          "predefined": "Előre meghatározott kérdések",
+          "custom": "Egyéni kérdések"
         },
         "fields": {
-          "titleLabel": "Form Title*",
-          "titlePlaceholder": "Enter form title",
-          "descriptionLabel": "Form Description*",
-          "descriptionPlaceholder": "Enter brief description of your form"
+          "titleLabel": "Űrlap címe*",
+          "titlePlaceholder": "Adja meg az űrlap címét",
+          "descriptionLabel": "Űrlap leírása*",
+          "descriptionPlaceholder": "Rövid leírás az űrlapról"
         },
         "predefined": {
-          "rateUs": "Rate Us* (Always included)",
-          "rateUsTitle": "Rate Us",
-          "customRating": "Custom Rating*",
-          "customRatingTitle": "Custom Rating",
-          "customRatingPlaceholder": "Enter rating item label",
-          "customRatingEditTitle": "Click to edit",
-          "feedback": "Please give us your honest feedback?*",
-          "feedbackTitle": "Please give us your honest feedback?",
-          "feedbackPlaceholder": "Enter your detailed feedback"
+          "rateUs": "Értékeljen minket* (mindig szerepel)",
+          "rateUsTitle": "Értékeljen minket",
+          "customRating": "Egyéni értékelés*",
+          "customRatingTitle": "Egyéni értékelés",
+          "customRatingPlaceholder": "Értékelési elem címkéje",
+          "customRatingEditTitle": "Kattintson a szerkesztéshez",
+          "feedback": "Adjon őszinte visszajelzést?*",
+          "feedbackTitle": "Adjon őszinte visszajelzést?",
+          "feedbackPlaceholder": "Részletes visszajelzés"
         },
         "tooltips": {
-          "previewDisabled": "Preview mode - editing disabled",
-          "addQuestion": "Add custom question",
-          "save": "Save",
-          "cancel": "Cancel",
-          "edit": "Edit",
-          "delete": "Delete",
-          "moveUp": "Move Up",
-          "moveDown": "Move Down"
+          "previewDisabled": "Előnézet – szerkesztés letiltva",
+          "addQuestion": "Egyéni kérdés hozzáadása",
+          "save": "Mentés",
+          "cancel": "Mégse",
+          "edit": "Szerkesztés",
+          "delete": "Törlés",
+          "moveUp": "Fel",
+          "moveDown": "Le"
         },
         "questionTypes": {
-          "shortText": "Short Text",
-          "longText": "Long Text",
-          "starRating": "Star Rating",
-          "singleChoice": "Single Choice",
-          "multipleChoice": "Multiple Choice",
-          "yesNo": "Yes/No"
+          "shortText": "Rövid szöveg",
+          "longText": "Hosszú szöveg",
+          "starRating": "Csillagos értékelés",
+          "singleChoice": "Egy választás",
+          "multipleChoice": "Több választás",
+          "yesNo": "Igen/Nem"
         },
         "placeholders": {
-          "answer": "Enter your answer"
+          "answer": "Adja meg válaszát"
         },
         "answers": {
-          "yes": "Yes",
-          "no": "No"
+          "yes": "Igen",
+          "no": "Nem"
         },
         "badges": {
-          "default": "Default",
-          "defaultHelper": "Cannot be edited, deleted, or moved"
+          "default": "Alapértelmezett",
+          "defaultHelper": "Nem szerkeszthető, törölhető vagy áthelyezhető"
         },
         "states": {
-          "loading": "Loading form data...",
-          "noQuestionsTitle": "No questions added yet",
-          "noQuestionsDescription": "Use the predefined questions above or add custom questions to get started"
+          "loading": "Űrlap adatok betöltése...",
+          "noQuestionsTitle": "Még nincsenek kérdések",
+          "noQuestionsDescription": "Használja a fenti előre meghatározott kérdéseket vagy adjon hozzá egyéni kérdéseket"
         },
         "alerts": {
-          "ratingRequiredTitle": "Rating Required",
-          "ratingRequiredDescription": "Either \"Rate Us\" or \"Custom Rating\" must be selected to save the form."
+          "ratingRequiredTitle": "Értékelés szükséges",
+          "ratingRequiredDescription": "A mentéshez válassza az „Értékeljen minket” vagy az „Egyéni értékelés” egyikét."
         },
         "layoutInfo": {
           "basic": {
-            "title": "Basic Layout Features",
-            "description": "All questions are available including custom questions. This layout provides a simple, clean design."
+            "title": "Alap elrendezés",
+            "description": "Minden kérdés elérhető egyéni kérdésekkel. Egyszerű, áttekinthető design."
           },
           "good": {
-            "title": "Good Layout Features",
-            "description": "Choose either \"Rate Us\" OR \"Custom Rating\" (mutually exclusive). All questions including custom questions are available."
+            "title": "Bővített elrendezés",
+            "description": "Válassza az „Értékeljen minket” VAGY az „Egyéni értékelés” egyikét (kölcsönösen kizáró). Minden kérdés egyéni kérdésekkel együtt elérhető."
           },
           "excellent": {
-            "title": "Excellent Layout Features",
-            "description": "All predefined questions available plus custom questions. Premium design with animations for comprehensive feedback forms."
+            "title": "Prémium elrendezés",
+            "description": "Minden előre meghatározott kérdés plusz egyéni. Prémium design animációkkal átfogó visszajelzési űrlapokhoz."
           }
         },
         "subscription": {
-          "title": "Subscription Required",
-          "message": "Your subscription has been {status}. Please reactivate your subscription to create or edit forms.",
-          "manageButton": "Manage Subscription",
+          "title": "Előfizetés szükséges",
+          "message": "Előfizetése {status}. Az űrlapok létrehozásához vagy szerkesztéséhez aktiválja újra előfizetését.",
+          "manageButton": "Előfizetés kezelése",
           "status": {
-            "cancelled": "cancelled",
-            "expired": "expired"
+            "cancelled": "megszakítva",
+            "expired": "lejárt"
           },
-          "toastTitle": "Subscription Required",
-          "toastMessage": "Your subscription has been cancelled or expired. Please reactivate your subscription to create forms."
+          "toastTitle": "Előfizetés szükséges",
+          "toastMessage": "Előfizetése megszakítva vagy lejárt. Aktiválja újra előfizetését az űrlapok létrehozásához."
         },
         "preview": {
-          "descriptionFallback": "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance.",
-          "fullNameLabel": "Name*",
-          "fullNamePlaceholder": "Enter your name",
-          "emailLabel": "Email*",
-          "emailPlaceholder": "Enter your email address",
-          "submit": "Submit Now"
+          "descriptionFallback": "Töltse ki az űrlapot támogatás kéréséhez vagy probléma bejelentéséhez. Csapatunk megvizsgálja kérését és mielőbb válaszol.",
+          "fullNameLabel": "Név*",
+          "fullNamePlaceholder": "Adja meg nevét",
+          "emailLabel": "E-mail*",
+          "emailPlaceholder": "Adja meg e-mail címét",
+          "submit": "Küldés"
         },
         "dialog": {
-          "addTitle": "Add Question",
-          "editTitle": "Edit Question",
-          "questionLabel": "Question Text *",
-          "questionPlaceholder": "Enter your question",
-          "typeLabel": "Question Type",
-          "optionsLabel": "Options",
-          "optionPlaceholder": "Enter option"
+          "addTitle": "Kérdés hozzáadása",
+          "editTitle": "Kérdés szerkesztése",
+          "questionLabel": "Kérdés szövege *",
+          "questionPlaceholder": "Adja meg a kérdést",
+          "typeLabel": "Kérdés típusa",
+          "optionsLabel": "Opciók",
+          "optionPlaceholder": "Opció megadása"
         },
         "toasts": {
-          "formLoadSuccess": "Form data loaded successfully",
-          "formLoadError": "Failed to load form data",
-          "questionRequired": "Question text is required",
-          "optionsRequired": "Multiple choice questions must have at least 2 options",
-          "questionUpdated": "Question updated",
-          "questionAdded": "Question added",
-          "questionDeleted": "Question deleted",
-          "ratingLabelRequired": "Please enter a label for the rating item",
-          "ratingItemUpdated": "Rating item updated",
-          "ratingItemDeleted": "Rating item deleted",
-          "ratingItemAdded": "New rating item added",
-          "titleRequired": "Form title is required",
-          "questionCountRequired": "At least one question is required"
+          "formLoadSuccess": "Űrlap adatok sikeresen betöltve",
+          "formLoadError": "Űrlap adatok betöltése sikertelen",
+          "questionRequired": "A kérdés szövege kötelező",
+          "optionsRequired": "A többszörös választású kérdéseknek legalább 2 opcióval kell rendelkezniük",
+          "questionUpdated": "Kérdés frissítve",
+          "questionAdded": "Kérdés hozzáadva",
+          "questionDeleted": "Kérdés törölve",
+          "ratingLabelRequired": "Adjon meg címkét az értékelési elemhez",
+          "ratingItemUpdated": "Értékelési elem frissítve",
+          "ratingItemDeleted": "Értékelési elem törölve",
+          "ratingItemAdded": "Új értékelési elem hozzáadva",
+          "titleRequired": "Az űrlap címe kötelező",
+          "questionCountRequired": "Legalább egy kérdés szükséges"
         }
       }
     },
     "analytics": {
       "customRatings": {
-        "title": "Custom Rating Analytics",
-        "description": "Track detailed rating trends for your \"Good\" layout form.",
+        "title": "Egyéni értékelés elemzés",
+        "description": "Kövesse az értékelési trendeket a bővített elrendezésű űrlaphoz.",
         "buttons": {
           "exportCsv": "Export CSV",
           "exportPdf": "Export PDF",
-          "refresh": "Refresh"
+          "refresh": "Frissítés"
         },
         "filters": {
-          "title": "Date Range Filters",
-          "startDate": "Start Date",
-          "startDatePlaceholder": "Select start date",
-          "endDate": "End Date",
-          "endDatePlaceholder": "Select end date",
-          "clear": "Clear Filters"
+          "title": "Dátumszűrők",
+          "startDate": "Kezdő dátum",
+          "startDatePlaceholder": "Válassza ki a kezdő dátumot",
+          "endDate": "Záró dátum",
+          "endDatePlaceholder": "Válassza ki a záró dátumot",
+          "clear": "Szűrők törlése"
         },
         "states": {
-          "loading": "Loading analytics data...",
-          "noDataTitle": "No Data Available",
-          "noDataDescription": "No \"Good\" layout forms with custom rating data found for your hotel."
+          "loading": "Elemzési adatok betöltése...",
+          "noDataTitle": "Nincs elérhető adat",
+          "noDataDescription": "A szállodához nem található bővített elrendezésű űrlap egyéni értékelési adatokkal."
         },
         "toasts": {
-          "loadError": "Failed to load custom rating analytics",
-          "exportSuccess": "Data exported successfully as {format}",
-          "exportError": "Failed to export data"
+          "loadError": "Az értékelés elemzés betöltése sikertelen",
+          "exportSuccess": "Az adatok sikeresen exportálva {format} formátumban",
+          "exportError": "Az adatexport sikertelen"
         },
         "chart": {
-          "trendPrefix": "Trend Analysis - ",
-          "summaryTitle": "Rating Summary",
-          "ratingsCount": "({count} ratings)",
-          "averageRating": "Average Rating",
+          "trendPrefix": "Trendelemzés - ",
+          "summaryTitle": "Értékelés összesítő",
+          "ratingsCount": "({count} értékelés)",
+          "averageRating": "Átlagos értékelés",
           "tooltipSuffix": "/5"
         }
       },
       "overview": {
-        "title": "Analytics",
-        "description": "Track your hotel's performance and guest satisfaction.",
-        "dropdownPlaceholder": "Select time range",
+        "title": "Elemzés",
+        "description": "Kövesse a szálloda teljesítményét és a vendégelégedettséget.",
+        "dropdownPlaceholder": "Válasszon időtartományt",
         "buttons": {
-          "refresh": "Refresh"
+          "refresh": "Frissítés"
         },
         "timeRanges": {
-          "7": "Last 7 days",
-          "30": "Last 30 days",
-          "90": "Last 90 days",
-          "180": "Last 6 months",
-          "365": "Last year"
+          "7": "Elmúlt 7 nap",
+          "30": "Elmúlt 30 nap",
+          "90": "Elmúlt 90 nap",
+          "180": "Elmúlt 6 hónap",
+          "365": "Múlt év"
         },
         "states": {
-          "loadingSkeleton": "Loading...",
-          "noData": "No analytics data available",
-          "chartLoading": "Loading chart data...",
-          "chartEmpty": "No chart data available"
+          "loadingSkeleton": "Betöltés...",
+          "noData": "Nincs elemzési adat",
+          "chartLoading": "Diagramadatok betöltése...",
+          "chartEmpty": "Nincs diagramadat"
         },
         "cards": {
-          "change": "{change} from last period"
+          "change": "{change} az előző időszakhoz képest"
         },
         "charts": {
-          "satisfaction": "Satisfaction Trends",
-          "ratingDistribution": "Rating Distribution",
-          "reviewVolume": "Review Volume"
+          "satisfaction": "Elégedettség trendek",
+          "ratingDistribution": "Értékelés eloszlás",
+          "reviewVolume": "Vélemény mennyiség"
         },
         "reviews": {
-          "title": "Recent Reviews"
+          "title": "Legutóbbi vélemények"
         },
         "toasts": {
-          "loadError": "Failed to load analytics"
+          "loadError": "Az elemzés betöltése sikertelen"
         }
       },
       "responseRates": {
-        "title": "Response Rates Analytics",
-        "description": "Track your hotel's response rates and engagement metrics.",
+        "title": "Válaszadási arány elemzés",
+        "description": "Kövesse a szálloda válaszadási arányát és részvételi mutatóit.",
         "charts": {
-          "reviewVolume": "Review Volume Trends",
-          "satisfaction": "Satisfaction Trends Over Time"
+          "reviewVolume": "Vélemény mennyiség trendek",
+          "satisfaction": "Elégedettség trendek időben"
         }
       },
       "satisfaction": {
-        "title": "Satisfaction Analytics",
-        "description": "Track your hotel's guest satisfaction trends and ratings.",
+        "title": "Elégedettség elemzés",
+        "description": "Kövesse a vendégelégedettség trendjeit és értékeléseit.",
         "charts": {
-          "reviewVolume": "Review Volume & Positive Reviews"
+          "reviewVolume": "Vélemény mennyiség és pozitív vélemények"
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Értesítések",
+        "ariaLabel": "Értesítések",
+        "iconAlt": "Értesítés ikon",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Összes olvasottként",
+          "refresh": "Frissítés"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Még nincs értesítés"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "success": "Success",
+          "newReview": "Új vélemény",
+          "reviewApproved": "Vélemény jóváhagyva",
+          "reviewRejected": "Vélemény elutasítva",
+          "subscriptionExpiring": "Előfizetés lejár",
+          "subscriptionCancelled": "Előfizetés megszakítva",
+          "escalationReceived": "Eskaláció érkezett",
+          "escalationResponded": "Eskalációra válaszolva",
+          "systemAlert": "Rendszerfigyelmeztetés",
+          "newHotelRegistration": "Új szálloda regisztráció",
+          "success": "Siker",
           "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "warning": "Figyelmeztetés",
+          "error": "Hiba",
+          "generic": "Értesítés"
         }
       }
     },
     "reviews": {
-      "title": "Guest Reviews",
-      "subtitle": "Manage and review guest feedback submissions.",
+      "title": "Vendégvélemények",
+      "subtitle": "Kezelje és tekintse át a vendégvisszajelzéseket.",
       "buttons": {
-        "refresh": "Refresh",
-        "clearFilters": "Clear Filters",
-        "view": "View",
-        "reply": "Reply",
-        "delete": "Delete",
-        "close": "Close",
-        "markAsChecked": "Mark as Checked",
-        "checked": "Checked",
-        "uncheck": "Uncheck",
-        "markAsUrgent": "Mark as Urgent",
-        "urgent": "Urgent",
-        "removeUrgent": "Remove Urgent",
-        "replyToCustomer": "Reply to Customer",
-        "cancel": "Cancel",
-        "sendReply": "Send Reply"
+        "refresh": "Frissítés",
+        "clearFilters": "Szűrők törlése",
+        "view": "Megtekintés",
+        "reply": "Válasz",
+        "delete": "Törlés",
+        "close": "Bezárás",
+        "markAsChecked": "Jelölje ellenőrzöttnek",
+        "checked": "Ellenőrizve",
+        "uncheck": "Jelölés törlése",
+        "markAsUrgent": "Jelölje sürgősnek",
+        "urgent": "Sürgős",
+        "removeUrgent": "Sürgős eltávolítása",
+        "replyToCustomer": "Válasz a vendégnek",
+        "cancel": "Mégse",
+        "sendReply": "Válasz küldése"
       },
       "filters": {
-        "title": "Filters",
-        "searchReviews": "Search Reviews",
-        "searchPlaceholder": "Search by guest name or feedback text...",
-        "roomNumber": "Room Number",
-        "roomNumberPlaceholder": "Filter by room number...",
-        "filter": "Filter",
-        "allReviews": "All Reviews",
-        "replied": "Replied",
-        "notReplied": "Not Replied",
-        "checked": "Checked",
-        "notChecked": "Not Checked",
-        "urgent": "Urgent",
-        "notUrgent": "Not Urgent",
-        "starRatings": "Star Ratings",
-        "allRatings": "All Ratings",
-        "5Stars": "5 Stars",
-        "4Stars": "4 Stars",
-        "3Stars": "3 Stars",
-        "2Stars": "2 Stars",
-        "1Star": "1 Star",
-        "dateRange": "Date Range",
-        "startDate": "Start Date",
-        "endDate": "End Date",
-        "fromDate": "From date",
-        "toDate": "To date"
+        "title": "Szűrők",
+        "searchReviews": "Vélemények keresése",
+        "searchPlaceholder": "Keresés vendég neve vagy szöveg alapján...",
+        "roomNumber": "Szobaszám",
+        "roomNumberPlaceholder": "Szűrés szobaszám szerint...",
+        "filter": "Szűrő",
+        "allReviews": "Minden vélemény",
+        "replied": "Megválaszolva",
+        "notReplied": "Nem megválaszolva",
+        "checked": "Ellenőrizve",
+        "notChecked": "Nem ellenőrizve",
+        "urgent": "Sürgős",
+        "notUrgent": "Nem sürgős",
+        "starRatings": "Csillagos értékelés",
+        "allRatings": "Minden értékelés",
+        "5Stars": "5 csillag",
+        "4Stars": "4 csillag",
+        "3Stars": "3 csillag",
+        "2Stars": "2 csillag",
+        "1Star": "1 csillag",
+        "dateRange": "Dátumtartomány",
+        "startDate": "Kezdő dátum",
+        "endDate": "Záró dátum",
+        "fromDate": "Kezdő dátum",
+        "toDate": "Záró dátum"
       },
       "states": {
-        "loadingReviews": "Loading reviews...",
-        "noReviewsFound": "No Reviews Found",
-        "noReviewsYet": "No reviews have been submitted yet.",
-        "noReviewsMatchFilters": "No reviews match your current filters."
+        "loadingReviews": "Vélemények betöltése...",
+        "noReviewsFound": "Nem található vélemény",
+        "noReviewsYet": "Még nem érkezett vélemény.",
+        "noReviewsMatchFilters": "Nincs vélemény a jelenlegi szűrőkhöz."
       },
       "table": {
-        "guest": "Guest",
-        "email": "Email",
-        "room": "Room",
-        "rating": "Rating",
-        "status": "Status",
-        "submitted": "Submitted",
-        "actions": "Actions",
-        "checkedStatus": "Checked",
-        "notCheckedStatus": "Not Checked",
-        "repliedStatus": "Replied",
-        "notRepliedStatus": "Not Replied",
-        "urgentStatus": "Urgent",
-        "notUrgentStatus": "Not Urgent",
-        "public": "Public",
-        "private": "Private",
-        "shared": "Shared",
-        "noEmailAvailable": "No email available for this review"
+        "guest": "Vendég",
+        "email": "E-mail",
+        "room": "Szoba",
+        "rating": "Értékelés",
+        "status": "Állapot",
+        "submitted": "Beküldve",
+        "actions": "Műveletek",
+        "checkedStatus": "Ellenőrizve",
+        "notCheckedStatus": "Nem ellenőrizve",
+        "repliedStatus": "Megválaszolva",
+        "notRepliedStatus": "Nem megválaszolva",
+        "urgentStatus": "Sürgős",
+        "notUrgentStatus": "Nem sürgős",
+        "public": "Nyilvános",
+        "private": "Privát",
+        "shared": "Megosztott",
+        "noEmailAvailable": "Ehhez a véleményhez nincs e-mail"
       },
       "detailsDialog": {
-        "header": "Guest Feedback Details",
-        "guestInfo": "Guest Information",
-        "name": "Name:",
-        "anonymous": "Anonymous",
-        "email": "Email:",
-        "notProvided": "Not provided",
-        "phone": "Phone:",
-        "roomNumber": "Room Number:",
-        "submitted": "Submitted:",
-        "overallRating": "Overall Rating",
-        "quickFeedback": "Quick Feedback",
-        "howDoYouRateUs": "How do you rate us?",
-        "honestFeedback": "Please give us your honest feedback?",
-        "noSpecificFeedback": "No specific feedback provided",
-        "customRatingItem": "Custom Rating Item ({itemId})",
-        "formInfo": "Form Information",
-        "formTitle": "Form Title:",
-        "description": "Description:",
-        "layout": "Layout:",
-        "feedbackResponses": "Feedback Responses",
-        "reviewReplies": "Review Replies",
-        "languageSelectorLabel": "View content in",
-        "languageSelectorPlaceholder": "Select language",
-        "translating": "Translating...",
-        "noDetailedResponses": "No detailed responses available for this review.",
-        "question": "Question:",
-        "noAnswer": "No answer provided",
-        "replyToCustomer": "Reply to Customer",
-        "replyPlaceholder": "Type your reply message here...",
-        "replyMessageHint": "This message will be sent to {guestEmail}",
-        "toastWarningReply": "Please enter a reply message",
-        "toastSuccessReply": "Reply sent successfully to {sentTo}",
-        "toastErrorReply": "Failed to send reply"
+        "header": "Vendégvisszajelzés részletei",
+        "guestInfo": "Vendég adatai",
+        "name": "Név:",
+        "anonymous": "Anonim",
+        "email": "E-mail:",
+        "notProvided": "Nincs megadva",
+        "phone": "Telefon:",
+        "roomNumber": "Szobaszám:",
+        "submitted": "Beküldve:",
+        "overallRating": "Összesített értékelés",
+        "quickFeedback": "Gyors visszajelzés",
+        "howDoYouRateUs": "Hogyan értékel minket?",
+        "honestFeedback": "Adjon őszinte visszajelzést?",
+        "noSpecificFeedback": "Nincs konkrét visszajelzés",
+        "customRatingItem": "Egyéni értékelés ({itemId})",
+        "formInfo": "Űrlap adatai",
+        "formTitle": "Űrlap címe:",
+        "description": "Leírás:",
+        "layout": "Elrendezés:",
+        "feedbackResponses": "Visszajelzési válaszok",
+        "reviewReplies": "Vélemény válaszok",
+        "languageSelectorLabel": "Tartalom megtekintése",
+        "languageSelectorPlaceholder": "Válasszon nyelvet",
+        "translating": "Fordítás...",
+        "noDetailedResponses": "Ehhez a véleményhez nincs részletes válasz.",
+        "question": "Kérdés:",
+        "noAnswer": "Nincs válasz",
+        "replyToCustomer": "Válasz a vendégnek",
+        "replyPlaceholder": "Írja be válaszát ide...",
+        "replyMessageHint": "Ez az üzenet a következőnek lesz elküldve: {guestEmail}",
+        "toastWarningReply": "Adja meg a válasz üzenetet",
+        "toastSuccessReply": "Válasz sikeresen elküldve: {sentTo}",
+        "toastErrorReply": "Válasz küldése sikertelen"
       },
       "deleteDialog": {
-        "header": "Delete Review",
-        "confirmTitle": "Are you sure you want to delete this review?",
-        "confirmMessage": "This action cannot be undone. The review will be permanently removed from your system.",
-        "reviewDetails": "Review Details:",
-        "guest": "Guest:",
-        "rating": "Rating:",
-        "submitted": "Submitted:",
+        "header": "Vélemény törlése",
+        "confirmTitle": "Biztosan törli ezt a véleményt?",
+        "confirmMessage": "Ez a művelet nem vonható vissza. A vélemény végleg törlődik.",
+        "reviewDetails": "Vélemény részletei:",
+        "guest": "Vendég:",
+        "rating": "Értékelés:",
+        "submitted": "Beküldve:",
         "buttons": {
-          "cancel": "Cancel",
-          "delete": "Delete"
+          "cancel": "Mégse",
+          "delete": "Törlés"
         },
         "toasts": {
-          "success": "Review deleted successfully",
-          "error": "Failed to delete review"
+          "success": "Vélemény sikeresen törölve",
+          "error": "Vélemény törlése sikertelen"
         }
       },
       "toasts": {
-        "loadError": "Failed to load reviews",
-        "detailsLoadError": "Failed to load review details",
+        "loadError": "Vélemények betöltése sikertelen",
+        "detailsLoadError": "Vélemény részletek betöltése sikertelen",
         "statusUpdate": {
-          "checked": "Review marked as checked",
-          "unchecked": "Review unmarked as checked",
-          "urgent": "Review marked as urgent",
-          "notUrgent": "Review unmarked as urgent",
-          "replied": "Review marked as replied"
+          "checked": "Vélemény ellenőrzöttnek jelölve",
+          "unchecked": "Vélemény ellenőrzött jelölés törölve",
+          "urgent": "Vélemény sürgősnek jelölve",
+          "notUrgent": "Vélemény sürgős jelölés törölve",
+          "replied": "Vélemény megválaszoltnak jelölve"
         },
-        "statusUpdateError": "Failed to update review status",
-        "replyMissing": "Please enter a reply message",
-        "replySuccess": "Reply sent successfully to {sentTo}",
-        "replyError": "Failed to send reply",
-        "translationError": "Failed to translate review content",
-        "deleteSuccess": "Review deleted successfully",
-        "deleteError": "Failed to delete review"
+        "statusUpdateError": "Vélemény státusz frissítése sikertelen",
+        "replyMissing": "Adja meg a válasz üzenetet",
+        "replySuccess": "Válasz sikeresen elküldve: {sentTo}",
+        "replyError": "Válasz küldése sikertelen",
+        "translationError": "Vélemény fordítása sikertelen",
+        "deleteSuccess": "Vélemény sikeresen törölve",
+        "deleteError": "Vélemény törlése sikertelen"
       }
     },
     "menu": {
-      "dashboard": "Dashboard",
-      "feedbackForm": "Feedback Form",
-      "qrCodes": "QR Codes",
-      "allReviews": "All Reviews",
-      "notifications": "Notifications",
-      "contactAdmin": "Contact Admin",
-      "settings": "Settings",
+      "dashboard": "Vezérlőpult",
+      "feedbackForm": "Visszajelzési űrlap",
+      "qrCodes": "QR kódok",
+      "allReviews": "Minden vélemény",
+      "notifications": "Értesítések",
+      "contactAdmin": "Admin kapcsolat",
+      "settings": "Beállítások",
       "settingsItems": {
-        "userProfile": "User Profile",
-        "hotelProfile": "Hotel Profile",
-        "changePassword": "Change Password",
-        "subscriptions": "Subscriptions",
-        "paymentMethods": "Payment Methods"
+        "userProfile": "Felhasználói profil",
+        "hotelProfile": "Szálloda profil",
+        "changePassword": "Jelszó módosítása",
+        "subscriptions": "Előfizetések",
+        "paymentMethods": "Fizetési módok"
       }
     },
     "paymentMethods": {
-      "pageTitle": "Add Payment Method",
+      "pageTitle": "Fizetési mód hozzáadása",
       "buttons": {
-        "add": "Add",
-        "addMethod": "Add Method",
-        "updateMethod": "Update Method",
-        "cancel": "Cancel",
-        "setPrimary": "Set as Primary",
-        "delete": "Delete"
+        "add": "Hozzáadás",
+        "addMethod": "Mód hozzáadása",
+        "updateMethod": "Mód frissítése",
+        "cancel": "Mégse",
+        "setPrimary": "Alapértelmezettként",
+        "delete": "Törlés"
       },
       "badges": {
-        "primary": "Primary",
-        "expired": "Expired"
+        "primary": "Alapértelmezett",
+        "expired": "Lejárt"
       },
       "states": {
-        "loading": "Loading payment methods...",
-        "emptyTitle": "No Payment Methods",
-        "emptyDescription": "Add a payment method to manage your subscriptions."
+        "loading": "Fizetési módok betöltése...",
+        "emptyTitle": "Nincs fizetési mód",
+        "emptyDescription": "Adjon hozzá fizetési módot az előfizetések kezeléséhez."
       },
       "form": {
-        "paymentType": "Payment Type",
+        "paymentType": "Fizetés típusa",
         "paymentTypeOptions": {
-          "card": "Credit/Debit Card",
-          "bank": "Bank Account"
+          "card": "Hitel-/bankkártya",
+          "bank": "Bankszámla"
         },
         "card": {
-          "number": "Card Number",
+          "number": "Kártyaszám",
           "numberPlaceholder": "1234 5678 9012 3456",
-          "expiryMonth": "Expiry Month",
-          "expiryYear": "Expiry Year",
-          "monthPlaceholder": "MM",
-          "yearPlaceholder": "YYYY",
+          "expiryMonth": "Lejárati hónap",
+          "expiryYear": "Lejárati év",
+          "monthPlaceholder": "HH",
+          "yearPlaceholder": "ÉÉÉÉ",
           "cvv": "CVV",
           "cvvPlaceholder": "123",
-          "holder": "Cardholder Name",
-          "holderPlaceholder": "John Doe",
-          "brand": "Card Brand",
-          "brandPlaceholder": "Select card brand"
+          "holder": "Kártyabirtokos neve",
+          "holderPlaceholder": "Kovács János",
+          "brand": "Kártyamárka",
+          "brandPlaceholder": "Válasszon kártyamárkát"
         },
         "cardBrands": {
           "visa": "Visa",
           "mastercard": "Mastercard",
           "amex": "American Express",
           "discover": "Discover",
-          "unknown": "Card"
+          "unknown": "Kártya"
         },
         "bank": {
-          "name": "Bank Name",
-          "namePlaceholder": "Bank of America",
-          "accountNumber": "Account Number",
-          "accountPlaceholder": "Account number",
-          "routingNumber": "Routing Number",
+          "name": "Bank neve",
+          "namePlaceholder": "Bank neve",
+          "accountNumber": "Számlaszám",
+          "accountPlaceholder": "Számlaszám",
+          "routingNumber": "Bankkód",
           "routingPlaceholder": "123456789",
-          "accountType": "Account Type",
-          "accountTypePlaceholder": "Select account type"
+          "accountType": "Számla típusa",
+          "accountTypePlaceholder": "Válasszon számlatípust"
         },
         "accountTypes": {
-          "checking": "Checking",
-          "savings": "Savings",
-          "unknown": "Account"
+          "checking": "Folyószámla",
+          "savings": "Takarékszámla",
+          "unknown": "Számla"
         }
       },
       "list": {
-        "endingIn": "ending in",
-        "expiryLabel": "Exp. date",
-        "accountTypeSuffix": "Account",
-        "accountTypeUnknown": "Account",
+        "endingIn": "végződik",
+        "expiryLabel": "Lejárat",
+        "accountTypeSuffix": "Számla",
+        "accountTypeUnknown": "Számla",
         "unknownBank": "Bank",
-        "edit": "Edit",
-        "delete": "Delete"
+        "edit": "Szerkesztés",
+        "delete": "Törlés"
       },
       "dialogs": {
         "add": {
-          "title": "Add Payment Method"
+          "title": "Fizetési mód hozzáadása"
         },
         "edit": {
-          "title": "Edit Payment Method",
-          "cardLocked": "Card number cannot be changed for security reasons",
-          "bankLocked": "Account number cannot be changed for security reasons"
+          "title": "Fizetési mód szerkesztése",
+          "cardLocked": "A kártyaszám biztonsági okokból nem módosítható",
+          "bankLocked": "A számlaszám biztonsági okokból nem módosítható"
         },
         "delete": {
-          "title": "Delete Payment Method",
-          "message": "Are you sure you want to delete this payment method? This action cannot be undone."
+          "title": "Fizetési mód törlése",
+          "message": "Biztosan törli ezt a fizetési módot? A művelet nem vonható vissza."
         }
       },
       "toasts": {
         "load": {
-          "error": "Failed to load payment methods"
+          "error": "Fizetési módok betöltése sikertelen"
         },
         "add": {
-          "success": "Payment method added successfully",
-          "error": "Failed to add payment method"
+          "success": "Fizetési mód sikeresen hozzáadva",
+          "error": "Fizetési mód hozzáadása sikertelen"
         },
         "delete": {
-          "success": "Payment method deleted successfully",
-          "error": "Failed to delete payment method"
+          "success": "Fizetési mód sikeresen törölve",
+          "error": "Fizetési mód törlése sikertelen"
         },
         "default": {
-          "success": "Default payment method updated",
-          "error": "Failed to update default payment method"
+          "success": "Alapértelmezett fizetési mód frissítve",
+          "error": "Alapértelmezett fizetési mód frissítése sikertelen"
         },
         "update": {
-          "success": "Payment method updated successfully",
-          "error": "Failed to update payment method"
+          "success": "Fizetési mód sikeresen frissítve",
+          "error": "Fizetési mód frissítése sikertelen"
         }
       }
     },
     "subscription": {
       "header": {
-        "title": "Subscription Management",
-        "subtitle": "Manage your hotel's subscription and billing."
+        "title": "Előfizetés kezelése",
+        "subtitle": "Kezelje a szálloda előfizetését és számlázását."
       },
       "buttons": {
-        "refresh": "Refresh",
-        "processing": "Processing...",
-        "upgradeNow": "Upgrade Now",
-        "currentPlan": "Current Plan",
-        "reactivate": "Reactivate",
-        "cancelSubscription": "Cancel Subscription",
-        "contactSupport": "Contact Support",
-        "cancel": "Cancel",
-        "confirm": "Confirm"
+        "refresh": "Frissítés",
+        "processing": "Feldolgozás...",
+        "upgradeNow": "Frissítés most",
+        "currentPlan": "Jelenlegi csomag",
+        "reactivate": "Újraaktiválás",
+        "cancelSubscription": "Előfizetés lemondása",
+        "contactSupport": "Kapcsolat a támogatással",
+        "cancel": "Mégse",
+        "confirm": "Megerősítés"
       },
       "statuses": {
-        "trial": "Trial",
-        "active": "Active",
-        "cancelled": "Cancelled",
-        "expired": "Expired"
+        "trial": "Próba",
+        "active": "Aktív",
+        "cancelled": "Lemondva",
+        "expired": "Lejárt"
       },
       "states": {
-        "loading": "Loading subscription data...",
-        "notFoundTitle": "Subscription Not Found",
-        "notFoundDescription": "Unable to load subscription information."
+        "loading": "Előfizetési adatok betöltése...",
+        "notFoundTitle": "Előfizetés nem található",
+        "notFoundDescription": "Nem sikerült betölteni az előfizetési adatokat."
       },
       "labels": {
         "notAvailable": "N/A"
       },
       "trial": {
-        "name": "Trial Plan",
-        "description": "Free Trial",
-        "label": "Trial Period:",
-        "remaining": "{count} days remaining"
+        "name": "Próba csomag",
+        "description": "Ingyenes próba",
+        "label": "Próbaidő:",
+        "remaining": "{count} nap van hátra"
       },
       "sections": {
         "status": {
-          "title": "Current Subscription Status",
-          "statusLabel": "Status",
-          "totalReviews": "Total Reviews",
-          "averageRating": "Average Rating"
+          "title": "Jelenlegi előfizetési állapot",
+          "statusLabel": "Állapot",
+          "totalReviews": "Összes értékelés",
+          "averageRating": "Átlagos értékelés"
         },
         "plans": {
-          "title": "Available Plans",
-          "currentPlanHint": "You are currently on this plan"
+          "title": "Elérhető csomagok",
+          "currentPlanHint": "Jelenleg ezen a csomagon van"
         },
         "actions": {
-          "title": "Subscription Actions"
+          "title": "Előfizetési műveletek"
         },
         "billing": {
-          "title": "Billing Information",
-          "subscriptionId": "Subscription ID:",
-          "created": "Created:",
-          "nextBilling": "Next Billing:",
-          "trialEnds": "Trial Ends:"
+          "title": "Számítási adatok",
+          "subscriptionId": "Előfizetés azonosító:",
+          "created": "Létrehozva:",
+          "nextBilling": "Következő számlázás:",
+          "trialEnds": "Próbaidő vége:"
         }
       },
-      "perInterval": "per {interval}",
+      "perInterval": "{interval}enként",
       "priceLabel": "{price}/{interval}",
       "dialog": {
-        "title": "Confirm Subscription Change",
-        "upgradeTitle": "Upgrade to {plan}",
-        "description": "You are about to upgrade your subscription plan.",
-        "planLabel": "Plan:",
-        "priceLabel": "Price:",
-        "billingLabel": "Billing:",
-        "noteLabel": "Note:",
-        "noteDescription": "This is a demo environment. No actual payment will be processed."
+        "title": "Előfizetés módosításának megerősítése",
+        "upgradeTitle": "Frissítés erre: {plan}",
+        "description": "Éppen frissíti előfizetési csomagját.",
+        "planLabel": "Csomag:",
+        "priceLabel": "Ár:",
+        "billingLabel": "Számítás:",
+        "noteLabel": "Megjegyzés:",
+        "noteDescription": "Ez egy demo környezet. Tényleges fizetés nem történik."
       },
       "toasts": {
         "load": {
-          "error": "Failed to load subscription data"
+          "error": "Előfizetési adatok betöltése sikertelen"
         },
         "update": {
-          "success": "Subscription updated successfully",
-          "error": "Failed to update subscription"
+          "success": "Előfizetés sikeresen frissítve",
+          "error": "Előfizetés frissítése sikertelen"
         }
       },
       "errors": {
-        "unauthorized": "Unauthorized",
-        "hotelNotFound": "Hotel not found",
-        "planRequired": "Plan ID and action are required",
-        "unknownPlan": "Unknown Plan",
-        "fetchFailed": "Failed to fetch subscription details",
-        "updateFailed": "Failed to update subscription"
+        "unauthorized": "Jogosulatlan hozzáférés",
+        "hotelNotFound": "Szálloda nem található",
+        "planRequired": "Csomag azonosító és művelet szükséges",
+        "unknownPlan": "Ismeretlen csomag",
+        "fetchFailed": "Előfizetési adatok betöltése sikertelen",
+        "updateFailed": "Előfizetés frissítése sikertelen"
       },
       "messages": {
-        "upgraded": "Successfully upgraded to {plan}",
-        "cancelled": "Successfully cancelled subscription"
+        "upgraded": "Sikeres frissítés erre: {plan}",
+        "cancelled": "Előfizetés sikeresen lemondva"
       },
       "plans": {
         "basic": {
-          "name": "Basic Plan",
+          "name": "Alap csomag",
           "features": [
-            "Up to 100 reviews per month",
-            "Basic analytics",
-            "QR code generation",
-            "Basic Feedback Form"
+            "Legfeljebb 100 értékelés havonta",
+            "Alap analitika",
+            "QR kód generálás",
+            "Alap visszajelzési űrlap"
           ]
         },
         "professional": {
-          "name": "Professional Plan",
+          "name": "Professzionális csomag",
           "features": [
-            "Up to 500 reviews per month",
-            "Advanced analytics",
-            "QR code generation",
-            "Customized Star Rating Questions"
+            "Legfeljebb 500 értékelés havonta",
+            "Részletes analitika",
+            "QR kód generálás",
+            "Egyedi csillagos értékelő kérdések"
           ]
         },
         "enterprise": {
-          "name": "Enterprise Plan",
+          "name": "Vállalati csomag",
           "features": [
-            "Unlimited reviews per month",
-            "Enterprise analytics",
-            "Priority support",
-            "Multi-property management"
+            "Korlátlan értékelés havonta",
+            "Vállalati analitika",
+            "Prioritásos támogatás",
+            "Több ingatlan kezelése"
           ]
         }
       },
       "intervals": {
-        "month": "month",
-        "monthly": "monthly",
-        "year": "year",
-        "yearly": "yearly",
-        "quarter": "quarter",
-        "quarterly": "quarterly"
+        "month": "hónap",
+        "monthly": "havi",
+        "year": "év",
+        "yearly": "éves",
+        "quarter": "negyedév",
+        "quarterly": "negyedéves"
       }
     },
     "profile": {
       "user": {
-        "title": "Personal Information",
-        "subtitle": "Manage your personal account details.",
+        "title": "Személyes adatok",
+        "subtitle": "Kezelje fiókja személyes adatait.",
         "buttons": {
-          "save": "Save Changes",
-          "changePassword": "Change Password",
-          "twoFactor": "Two-Factor Authentication",
-          "changePhoto": "Change Photo",
-          "uploading": "Uploading..."
+          "save": "Változások mentése",
+          "changePassword": "Jelszó megváltoztatása",
+          "twoFactor": "Kétfaktoros hitelesítés",
+          "changePhoto": "Fénykép cseréje",
+          "uploading": "Feltöltés..."
         },
         "images": {
-          "cardTitle": "Profile Image",
-          "hint": "JPG, PNG or GIF. Max size 5MB."
+          "cardTitle": "Profilkép",
+          "hint": "JPG, PNG vagy GIF. Max. 5MB."
         },
         "fields": {
-          "firstName": "First Name *",
-          "lastName": "Last Name *",
-          "email": "Email Address *",
-          "phone": "Phone Number"
+          "firstName": "Keresztnév *",
+          "lastName": "Vezetéknév *",
+          "email": "E-mail cím *",
+          "phone": "Telefonszám"
         },
         "placeholders": {
-          "firstName": "Enter your first name",
-          "lastName": "Enter your last name",
+          "firstName": "Adja meg a keresztnevét",
+          "lastName": "Adja meg a vezetéknevét",
           "email": "your.email@example.com",
           "phone": "+1 (555) 123-4567"
         },
         "cards": {
-          "personalInfo": "Personal Information",
-          "accountInfo": "Account Information",
-          "security": "Security"
+          "personalInfo": "Személyes adatok",
+          "accountInfo": "Fiók adatai",
+          "security": "Biztonság"
         },
         "account": {
-          "type": "Account Type:",
-          "status": "Status:",
-          "memberSince": "Member Since:",
-          "lastLogin": "Last Login:",
-          "typeValue": "Hotel Owner",
-          "statusActive": "Active",
+          "type": "Fiók típusa:",
+          "status": "Állapot:",
+          "memberSince": "Tag óta:",
+          "lastLogin": "Utolsó bejelentkezés:",
+          "typeValue": "Szálloda tulajdonos",
+          "statusActive": "Aktív",
           "notAvailable": "N/A"
         },
         "toasts": {
-          "saveSuccess": "Profile updated successfully",
-          "saveError": "Failed to update profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Profile image updated successfully",
-          "imageError": "Failed to upload image",
-          "twoFactorInfo": "Two-factor authentication will be available soon"
+          "saveSuccess": "Profil sikeresen frissítve",
+          "saveError": "Profil frissítése sikertelen",
+          "imageTypeError": "Válasszon érvényes képet (JPG, PNG, GIF vagy WebP)",
+          "imageSizeError": "A kép mérete legfeljebb 5MB lehet",
+          "imageSuccess": "Profilkép sikeresen frissítve",
+          "imageError": "Kép feltöltése sikertelen",
+          "twoFactorInfo": "A kétfaktoros hitelesítés hamarosan elérhető lesz"
         }
       },
       "hotel": {
-        "title": "Hotel Profile",
-        "subtitle": "Manage your hotel information and settings.",
+        "title": "Szálloda profil",
+        "subtitle": "Kezelje a szálloda adatait és beállításait.",
         "buttons": {
-          "save": "Save Changes",
-          "uploadLogo": "Upload Logo",
-          "uploading": "Uploading...",
-          "viewPublic": "View Public Page",
-          "contactSupport": "Contact Support"
+          "save": "Változások mentése",
+          "uploadLogo": "Logo feltöltése",
+          "uploading": "Feltöltés...",
+          "viewPublic": "Nyilvános oldal megtekintése",
+          "contactSupport": "Kapcsolat a támogatással"
         },
         "images": {
-          "cardTitle": "Hotel Logo",
-          "alt": "Hotel Logo",
-          "hint": "JPG, PNG or GIF. Max size 5MB. Recommended: 300x300px"
+          "cardTitle": "Szálloda logó",
+          "alt": "Szálloda logó",
+          "hint": "JPG, PNG vagy GIF. Max. 5MB. Ajánlott: 300x300px"
         },
         "cards": {
-          "actions": "Actions",
-          "hotelInfo": "Hotel Information"
+          "actions": "Műveletek",
+          "hotelInfo": "Szálloda adatai"
         },
         "fields": {
-          "name": "Hotel Name *",
-          "description": "Description",
-          "address": "Address",
-          "city": "City",
-          "country": "Country",
-          "phone": "Phone",
-          "email": "Email",
-          "website": "Website"
+          "name": "Szálloda neve *",
+          "description": "Leírás",
+          "address": "Cím",
+          "city": "Város",
+          "country": "Ország",
+          "phone": "Telefon",
+          "email": "E-mail",
+          "website": "Weboldal"
         },
         "placeholders": {
-          "name": "Enter hotel name",
-          "description": "Brief description of your hotel",
-          "address": "Street address",
-          "city": "City",
-          "country": "Select country",
+          "name": "Adja meg a szálloda nevét",
+          "description": "Rövid leírás a szállodáról",
+          "address": "Utca, házszám",
+          "city": "Város",
+          "country": "Válasszon országot",
           "phone": "+1 (555) 123-4567",
           "email": "hotel@example.com",
           "website": "https://www.yourhotel.com"
         },
         "externalLinks": {
-          "title": "External Review Links",
-          "subtitle": "Add links to your TripAdvisor and Google Reviews pages to help guests share positive feedback.",
+          "title": "Külső értékelési linkek",
+          "subtitle": "Adjon hozzá linkeket a TripAdvisor és Google Reviews oldalakhoz.",
           "tripAdvisor": {
-            "label": "TripAdvisor Link",
+            "label": "TripAdvisor link",
             "placeholder": "https://www.tripadvisor.com/...",
-            "hint": "Optional: Link to your TripAdvisor page"
+            "hint": "Opcionális: link a TripAdvisor oldalhoz"
           },
           "google": {
-            "label": "Google Reviews Link",
+            "label": "Google Reviews link",
             "placeholder": "https://g.page/...",
-            "hint": "Optional: Link to your Google Reviews page"
+            "hint": "Opcionális: link a Google Reviews oldalhoz"
           }
         },
         "account": {
           "notAvailable": "N/A"
         },
         "toasts": {
-          "loadError": "Failed to load hotel profile",
-          "saveSuccess": "Hotel profile updated successfully",
-          "saveError": "Failed to update hotel profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Hotel logo updated successfully",
-          "imageError": "Failed to upload logo"
+          "loadError": "Szálloda profil betöltése sikertelen",
+          "saveSuccess": "Szálloda profil sikeresen frissítve",
+          "saveError": "Szálloda profil frissítése sikertelen",
+          "imageTypeError": "Válasszon érvényes képet (JPG, PNG, GIF vagy WebP)",
+          "imageSizeError": "A kép mérete legfeljebb 5MB lehet",
+          "imageSuccess": "Szálloda logó sikeresen frissítve",
+          "imageError": "Logo feltöltése sikertelen"
         }
       },
       "password": {
-        "title": "Change Password",
-        "subtitle": "Update your account password for better security.",
-        "cardTitle": "Password Change",
+        "title": "Jelszó megváltoztatása",
+        "subtitle": "Frissítse fiókja jelszavát a jobb biztonság érdekében.",
+        "cardTitle": "Jelszó megváltoztatása",
         "buttons": {
-          "change": "Change Password",
-          "cancel": "Cancel",
-          "confirmChange": "Change Password"
+          "change": "Jelszó megváltoztatása",
+          "cancel": "Mégse",
+          "confirmChange": "Jelszó megváltoztatása"
         },
         "fields": {
-          "current": "Current Password *",
-          "new": "New Password *",
-          "confirm": "Confirm New Password *"
+          "current": "Jelenlegi jelszó *",
+          "new": "Új jelszó *",
+          "confirm": "Új jelszó megerősítése *"
         },
         "placeholders": {
-          "current": "Enter your current password",
-          "new": "Enter your new password",
-          "confirm": "Confirm your new password"
+          "current": "Adja meg a jelenlegi jelszavát",
+          "new": "Adja meg az új jelszavát",
+          "confirm": "Erősítse meg az új jelszavát"
         },
         "strength": {
-          "label": "Password Strength:",
-          "weak": "Weak",
-          "medium": "Medium",
-          "strong": "Strong"
+          "label": "Jelszó erőssége:",
+          "weak": "Gyenge",
+          "medium": "Közepes",
+          "strong": "Erős"
         },
         "requirements": {
-          "title": "Password Requirements",
-          "minLength": "At least 8 characters long",
-          "uppercase": "Contains uppercase letters",
-          "lowercase": "Contains lowercase letters",
-          "numbers": "Contains numbers",
-          "special": "Contains special characters"
+          "title": "Jelszókövetelmények",
+          "minLength": "Legalább 8 karakter",
+          "uppercase": "Tartalmaz nagybetűket",
+          "lowercase": "Tartalmaz kisbetűket",
+          "numbers": "Tartalmaz számokat",
+          "special": "Tartalmaz speciális karaktereket"
         },
         "tips": {
-          "title": "Security Tips",
-          "tip": "Tip: Use a unique password that you don't use elsewhere.",
-          "warning": "Warning: Never share your password with anyone."
+          "title": "Biztonsági tippek",
+          "tip": "Tipp: Használjon egyedi jelszót, amit máshol nem használ.",
+          "warning": "Figyelem: Soha ne ossza meg jelszavát senkivel."
         },
         "validation": {
-          "currentRequired": "Current password is required",
-          "newRequired": "New password is required",
-          "minLength": "New password must be at least 8 characters long",
-          "complexity": "New password must contain uppercase, lowercase, numbers, and special characters",
-          "confirmMismatch": "New password and confirmation do not match",
-          "sameAsCurrent": "New password must be different from current password"
+          "currentRequired": "A jelenlegi jelszó megadása kötelező",
+          "newRequired": "Az új jelszó megadása kötelező",
+          "minLength": "Az új jelszónak legalább 8 karakterből kell állnia",
+          "complexity": "Az új jelszónak tartalmaznia kell nagy- és kisbetűket, számokat és speciális karaktereket",
+          "confirmMismatch": "Az új jelszó és a megerősítés nem egyezik",
+          "sameAsCurrent": "Az új jelszónak különböznie kell a jelenlegitől"
         },
         "toasts": {
-          "changeSuccess": "Password changed successfully",
-          "changeError": "Failed to change password"
+          "changeSuccess": "Jelszó sikeresen megváltoztatva",
+          "changeError": "Jelszó megváltoztatása sikertelen"
         },
         "confirm": {
-          "title": "Confirm Password Change",
-          "message": "Are you sure you want to change your password?",
-          "warning": "This action will log you out of all devices and you'll need to log in again."
+          "title": "Jelszó megváltoztatásának megerősítése",
+          "message": "Biztosan meg akarja változtatni a jelszavát?",
+          "warning": "Ez a művelet kijelentkezteti az összes eszközről, és újra be kell jelentkeznie."
         },
         "accessibility": {
-          "show": "Show password",
-          "hide": "Hide password"
+          "show": "Jelszó megjelenítése",
+          "hide": "Jelszó elrejtése"
         }
       },
       "subscription": {
         "errors": {
-          "unauthorized": "Unauthorized",
-          "hotelNotFound": "Hotel not found",
-          "planRequired": "Plan ID and action are required",
-          "unknownPlan": "Unknown Plan",
-          "fetchFailed": "Failed to fetch subscription details",
-          "updateFailed": "Failed to update subscription"
+          "unauthorized": "Jogosulatlan hozzáférés",
+          "hotelNotFound": "Szálloda nem található",
+          "planRequired": "Csomag azonosító és művelet szükséges",
+          "unknownPlan": "Ismeretlen csomag",
+          "fetchFailed": "Előfizetési adatok betöltése sikertelen",
+          "updateFailed": "Előfizetés frissítése sikertelen"
         },
         "messages": {
-          "upgraded": "Successfully upgraded to {plan}",
-          "cancelled": "Successfully cancelled subscription"
+          "upgraded": "Sikeres frissítés erre: {plan}",
+          "cancelled": "Előfizetés sikeresen lemondva"
         },
         "plans": {
           "basic": {
-            "name": "Basic Plan",
+            "name": "Alap csomag",
             "features": [
-              "Up to 100 reviews per month",
-              "Basic analytics",
-              "QR code generation",
-              "Basic Feedback Form"
+              "Legfeljebb 100 értékelés havonta",
+              "Alap analitika",
+              "QR kód generálás",
+              "Alap visszajelzési űrlap"
             ]
           },
           "professional": {
-            "name": "Professional Plan",
+            "name": "Professzionális csomag",
             "features": [
-              "Up to 500 reviews per month",
-              "Advanced analytics",
-              "QR code generation",
-              "Customized Star Rating Questions"
+              "Legfeljebb 500 értékelés havonta",
+              "Részletes analitika",
+              "QR kód generálás",
+              "Egyedi csillagos értékelő kérdések"
             ]
           },
           "enterprise": {
-            "name": "Enterprise Plan",
+            "name": "Vállalati csomag",
             "features": [
-              "Unlimited reviews",
-              "Full analytics suite",
-              "QR code generation",
-              "All type of questions"
+              "Korlátlan értékelés",
+              "Teljes analitikai csomag",
+              "QR kód generálás",
+              "Minden típusú kérdés"
             ]
           }
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Értesítések",
+        "ariaLabel": "Értesítések",
+        "iconAlt": "Értesítés ikon",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Összes megjelölése olvasottként",
+          "refresh": "Frissítés"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Még nincsenek értesítések"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "newFormCreated": "New Form Created",
-          "success": "Success",
-          "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "newReview": "Új értékelés",
+          "reviewApproved": "Értékelés jóváhagyva",
+          "reviewRejected": "Értékelés elutasítva",
+          "subscriptionExpiring": "Előfizetés lejár",
+          "subscriptionCancelled": "Előfizetés lemondva",
+          "escalationReceived": "Eskaláció érkezett",
+          "escalationResponded": "Eskalációra válaszolva",
+          "systemAlert": "Rendszerfigyelmeztetés",
+          "newHotelRegistration": "Új szálloda regisztráció",
+          "newFormCreated": "Új űrlap létrehozva",
+          "success": "Siker",
+          "info": "Információ",
+          "warning": "Figyelmeztetés",
+          "error": "Hiba",
+          "generic": "Értesítés"
         }
       },
       "profileSidebar": {
         "greeting": {
-          "title": "Welcome",
-          "fallbackName": "Admin User"
+          "title": "Üdvözöljük",
+          "fallbackName": "Admin felhasználó"
         },
         "actions": {
           "profile": {
-            "title": "Profile",
-            "description": "Manage your account settings"
+            "title": "Profil",
+            "description": "Fiókbeállítások kezelése"
           },
           "signOut": {
-            "title": "Sign Out",
-            "description": "Logout from your account"
+            "title": "Kijelentkezés",
+            "description": "Kijelentkezés a fiókból"
           }
         },
         "notifications": {
-          "title": "Recent Notifications",
-          "loading": "Loading notifications...",
-          "summary": "You have {count} unread notifications",
-          "empty": "No new notifications"
+          "title": "Legutóbbi értesítések",
+          "loading": "Értesítések betöltése...",
+          "summary": "{count} olvasatlan értesítése van",
+          "empty": "Nincsenek új értesítések"
         },
         "time": {
-          "justNow": "Just now"
+          "justNow": "Épp most"
         }
       }
     },
     "communications": {
       "notifications": {
-        "title": "Notifications",
-        "subtitle": "Manage system notifications and alerts",
+        "title": "Értesítések",
+        "subtitle": "Rendszerértesítések és figyelmeztetések kezelése",
         "buttons": {
-          "deleteSelected": "Delete Selected ({count})",
-          "markAllAsRead": "Mark All as Read",
-          "refresh": "Refresh"
+          "deleteSelected": "Kijelöltek törlése ({count})",
+          "markAllAsRead": "Összes megjelölése olvasottként",
+          "refresh": "Frissítés"
         },
         "filters": {
-          "title": "Filters",
-          "searchLabel": "Search Notifications",
-          "searchPlaceholder": "Search by title, message, or user...",
-          "type": "Type",
-          "allTypes": "All Types",
+          "title": "Szűrők",
+          "searchLabel": "Értesítések keresése",
+          "searchPlaceholder": "Keresés cím, üzenet vagy felhasználó alapján...",
+          "type": "Típus",
+          "allTypes": "Minden típus",
           "status": {
-            "label": "Status",
-            "all": "All Status",
-            "unread": "Unread",
-            "read": "Read"
+            "label": "Állapot",
+            "all": "Minden állapot",
+            "unread": "Olvasatlan",
+            "read": "Olvasott"
           },
           "types": {
-            "newReview": "New Review",
-            "reviewApproved": "Review Approved",
-            "reviewRejected": "Review Rejected",
-            "subscriptionExpiring": "Subscription Expiring",
-            "subscriptionCancelled": "Subscription Cancelled",
-            "escalationReceived": "Escalation Received",
-            "escalationResponded": "Escalation Responded",
-            "systemAlert": "System Alert",
-            "newHotelRegistration": "New Hotel Registration",
-            "newFormCreated": "New Form Created",
-            "success": "Success",
-            "info": "Info",
-            "warning": "Warning",
-            "error": "Error"
+            "newReview": "Új értékelés",
+            "reviewApproved": "Értékelés jóváhagyva",
+            "reviewRejected": "Értékelés elutasítva",
+            "subscriptionExpiring": "Előfizetés lejár",
+            "subscriptionCancelled": "Előfizetés lemondva",
+            "escalationReceived": "Eskaláció érkezett",
+            "escalationResponded": "Eskalációra válaszolva",
+            "systemAlert": "Rendszerfigyelmeztetés",
+            "newHotelRegistration": "Új szálloda regisztráció",
+            "newFormCreated": "Új űrlap létrehozva",
+            "success": "Siker",
+            "info": "Információ",
+            "warning": "Figyelmeztetés",
+            "error": "Hiba"
           }
         },
         "states": {
-          "loading": "Loading notifications...",
-          "empty": "No notifications found"
+          "loading": "Értesítések betöltése...",
+          "empty": "Nem találhatók értesítések"
         },
         "table": {
-          "type": "Type",
-          "message": "Message",
-          "date": "Date",
-          "actions": "Actions",
+          "type": "Típus",
+          "message": "Üzenet",
+          "date": "Dátum",
+          "actions": "Műveletek",
           "status": {
-            "label": "Status",
-            "read": "Read",
-            "new": "New"
+            "label": "Állapot",
+            "read": "Olvasott",
+            "new": "Új"
           }
         },
         "tooltips": {
-          "markAsRead": "Mark as Read",
-          "view": "View",
-          "delete": "Delete"
+          "markAsRead": "Megjelölés olvasottként",
+          "view": "Megtekintés",
+          "delete": "Törlés"
         },
         "dates": {
-          "justNow": "Just now",
-          "hoursAgo": "{hours}h ago",
-          "yesterday": "Yesterday"
+          "justNow": "Épp most",
+          "hoursAgo": "{hours} órája",
+          "yesterday": "Tegnap"
         },
         "types": {
-          "NEW_REVIEW": "New Review",
-          "REVIEW_APPROVED": "Review Approved",
-          "REVIEW_REJECTED": "Review Rejected",
-          "SUBSCRIPTION_EXPIRING": "Subscription Expiring",
-          "SUBSCRIPTION_CANCELLED": "Subscription Cancelled",
-          "ESCALATION_RECEIVED": "Escalation Received",
-          "ESCALATION_RESPONDED": "Escalation Responded",
-          "SYSTEM_ALERT": "System Alert",
-          "NEW_HOTEL_REGISTRATION": "New Hotel Registration",
-          "NEW_FORM_CREATED": "New Form Created",
-          "SUCCESS": "Success",
-          "INFO": "Info",
-          "WARNING": "Warning",
-          "ERROR": "Error"
+          "NEW_REVIEW": "Új értékelés",
+          "REVIEW_APPROVED": "Értékelés jóváhagyva",
+          "REVIEW_REJECTED": "Értékelés elutasítva",
+          "SUBSCRIPTION_EXPIRING": "Előfizetés lejár",
+          "SUBSCRIPTION_CANCELLED": "Előfizetés lemondva",
+          "ESCALATION_RECEIVED": "Eskaláció érkezett",
+          "ESCALATION_RESPONDED": "Eskalációra válaszolva",
+          "SYSTEM_ALERT": "Rendszerfigyelmeztetés",
+          "NEW_HOTEL_REGISTRATION": "Új szálloda regisztráció",
+          "NEW_FORM_CREATED": "Új űrlap létrehozva",
+          "SUCCESS": "Siker",
+          "INFO": "Információ",
+          "WARNING": "Figyelmeztetés",
+          "ERROR": "Hiba"
         },
         "toasts": {
-          "loadError": "Failed to load notifications",
-          "markReadSuccess": "Notification marked as read",
-          "markReadError": "Failed to mark notification as read",
-          "markAllReadSuccess": "All notifications marked as read",
-          "markAllReadError": "Failed to mark all notifications as read",
-          "deleteSuccess": "Notification deleted successfully",
-          "deleteError": "Failed to delete notification",
-          "bulkDeleteSuccess": "{count} notification(s) deleted successfully",
-          "bulkDeleteError": "Failed to delete some notifications"
+          "loadError": "Értesítések betöltése sikertelen",
+          "markReadSuccess": "Értesítés olvasottként megjelölve",
+          "markReadError": "Olvasottként jelölés sikertelen",
+          "markAllReadSuccess": "Minden értesítés olvasottként megjelölve",
+          "markAllReadError": "Összes megjelölése sikertelen",
+          "deleteSuccess": "Értesítés sikeresen törölve",
+          "deleteError": "Értesítés törlése sikertelen",
+          "bulkDeleteSuccess": "{count} értesítés sikeresen törölve",
+          "bulkDeleteError": "Egyes értesítések törlése sikertelen"
         },
         "confirm": {
-          "deleteMessage": "Are you sure you want to delete this notification?",
-          "deleteHeader": "Delete Confirmation",
-          "bulkDeleteMessage": "Are you sure you want to delete {count} selected notification(s)?",
-          "bulkDeleteHeader": "Bulk Delete Confirmation"
+          "deleteMessage": "Biztosan törli ezt az értesítést?",
+          "deleteHeader": "Törlés megerősítése",
+          "bulkDeleteMessage": "Biztosan törli a {count} kijelölt értesítést?",
+          "bulkDeleteHeader": "Tömeges törlés megerősítése"
         }
       }
     }
   },
   "auth": {
     "register": {
-      "title": "Register",
-      "subtitle": "Let's get started",
+      "title": "Regisztráció",
+      "subtitle": "Kezdjük el",
       "placeholders": {
-        "firstName": "First Name",
-        "lastName": "Last Name",
-        "email": "Email",
-        "phone": "Phone (Optional)",
-        "password": "Password"
+        "firstName": "Keresztnév",
+        "lastName": "Vezetéknév",
+        "email": "E-mail",
+        "phone": "Telefon (opcionális)",
+        "password": "Jelszó"
       },
       "buttons": {
-        "signUp": "Sign Up",
-        "signingUp": "Signing Up..."
+        "signUp": "Regisztráció",
+        "signingUp": "Regisztrálás..."
       },
-      "agreementPrefix": "I have read the",
+      "agreementPrefix": "Elolvastam a",
       "toasts": {
-        "acceptTerms": "Please accept the terms and conditions",
-        "missingFields": "Please fill in all required fields",
-        "success": "Registration successful! Please check your email.",
-        "error": "Registration failed. Please try again."
+        "acceptTerms": "Fogadja el a felhasználási feltételeket",
+        "missingFields": "Töltse ki az összes kötelező mezőt",
+        "success": "Sikeres regisztráció! Ellenőrizze e-mailjét.",
+        "error": "A regisztráció sikertelen. Próbálja újra."
       }
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter the email address associated with your account and we'll send an email with instructions to reset your password.",
+      "title": "Elfelejtett jelszó?",
+      "description": "Adja meg a fiókjához tartozó e-mail címet, és küldünk instrukciót a jelszó visszaállításához.",
       "messages": {
-        "instructions": "Check your email for password reset instructions"
+        "instructions": "Ellenőrizze e-mailjét a jelszó-visszaállítási instrukciókért"
       },
       "submitted": {
-        "title": "Check your email!",
-        "description": "We have sent an email with a password reset link to {email}.",
-        "hint": "Didn't receive the email? Please check your spam folder."
+        "title": "Ellenőrizze e-mailjét!",
+        "description": "Küldtünk egy e-mailt jelszó-visszaállítási linkkel a(z) {email} címre.",
+        "hint": "Nem kapta meg az e-mailt? Nézze meg a spam mappát."
       },
       "fields": {
-        "email": "Email Address",
-        "emailPlaceholder": "Enter your email address"
+        "email": "E-mail cím",
+        "emailPlaceholder": "Adja meg e-mail címét"
       },
       "buttons": {
-        "send": "Send Instructions",
-        "sending": "Sending...",
-        "resend": "Resend Email",
-        "backToLogin": "Back to Login"
+        "send": "Instrukciók küldése",
+        "sending": "Küldés...",
+        "resend": "E-mail újraküldése",
+        "backToLogin": "Vissza a bejelentkezéshez"
       },
       "validation": {
-        "required": "Email is required",
-        "invalid": "Please enter a valid email address"
+        "required": "Az e-mail kötelező",
+        "invalid": "Adjon meg érvényes e-mail címet"
       },
       "toasts": {
-        "success": "Password reset email sent successfully",
-        "error": "Failed to send reset email",
-        "unexpected": "An unexpected error occurred. Please try again."
+        "success": "A jelszó-visszaállítási e-mail sikeresen elküldve",
+        "error": "Nem sikerült elküldeni az e-mailt",
+        "unexpected": "Váratlan hiba történt. Próbálja újra."
       }
     },
     "resetPassword": {
-      "title": "Create New Password!",
-      "subtitle": "Enter a new password below to update your account credentials.",
+      "title": "Új jelszó létrehozása!",
+      "subtitle": "Adjon meg új jelszót alább a fiók adatai frissítéséhez.",
       "fields": {
-        "newPassword": "New Password",
-        "confirmPassword": "Confirm Password"
+        "newPassword": "Új jelszó",
+        "confirmPassword": "Jelszó megerősítése"
       },
       "placeholders": {
-        "password": "Enter your password",
-        "confirmPassword": "Confirm your password"
+        "password": "Adja meg jelszavát",
+        "confirmPassword": "Erősítse meg jelszavát"
       },
       "buttons": {
-        "reset": "Reset Password",
-        "resetting": "Resetting..."
+        "reset": "Jelszó visszaállítása",
+        "resetting": "Visszaállítás..."
       },
       "link": {
-        "backToLogin": "Back to Login"
+        "backToLogin": "Vissza a bejelentkezéshez"
       },
       "states": {
-        "validating": "Validating reset link...",
-        "loading": "Loading..."
+        "validating": "Link ellenőrzése...",
+        "loading": "Betöltés..."
       },
       "errors": {
-        "passwordMin": "Password must be at least 6 characters long",
-        "passwordMax": "Password must be less than 128 characters",
-        "confirmRequired": "Please confirm your password",
-        "mismatch": "Passwords do not match"
+        "passwordMin": "A jelszónak legalább 6 karakter hosszúnak kell lennie",
+        "passwordMax": "A jelszónak 128 karakternél rövidebbnek kell lennie",
+        "confirmRequired": "Erősítse meg jelszavát",
+        "mismatch": "A jelszavak nem egyeznek"
       },
       "toasts": {
-        "invalidLink": "Invalid reset link",
-        "invalidOrExpired": "Invalid or expired reset link",
-        "failedValidation": "Failed to validate reset link",
-        "success": "Password reset successfully. You can now log in with your new password.",
-        "failure": "Failed to reset password",
-        "unexpected": "An unexpected error occurred"
+        "invalidLink": "Érvénytelen visszaállítási link",
+        "invalidOrExpired": "Érvénytelen vagy lejárt link",
+        "failedValidation": "A link ellenőrzése sikertelen",
+        "success": "A jelszó sikeresen visszaállítva. Bejelentkezhet az új jelszavával.",
+        "failure": "A jelszó visszaállítása sikertelen",
+        "unexpected": "Váratlan hiba történt"
       },
       "accessibility": {
-        "showPassword": "Show password",
-        "hidePassword": "Hide password"
+        "showPassword": "Jelszó megjelenítése",
+        "hidePassword": "Jelszó elrejtése"
       }
     }
   },
   "authFooter": {
     "brand": {
       "title": "C-Reviews",
-      "description": "We help hotels connect with their guests through seamless feedback solutions. Our platform makes it easy to create forms, gather insights, and elevate the guest experience with integrity and professionalism at the core of everything we do.",
-      "footerImageAlt": "C-Reviews decorative footer"
+      "description": "Segítünk a szállodáknak kapcsolatba lépni vendégeikkel zökkenőmentes visszajelzési megoldásokkal. Platformunk megkönnyíti az űrlapok létrehozását, az elemzések gyűjtését és a vendégélmény fejlesztését integritás és professzionalizmus középpontjában.",
+      "footerImageAlt": "C-Reviews dekoratív lábléc"
     },
     "quickLinks": {
-      "title": "Quick Links",
+      "title": "Gyors linkek",
       "items": {
-        "home": "Home",
-        "about": "About Us",
-        "features": "Features",
-        "contact": "Contact Us"
+        "home": "Főoldal",
+        "about": "Rólunk",
+        "features": "Funkciók",
+        "contact": "Kapcsolat"
       }
     },
     "resources": {
-      "title": "Resources",
+      "title": "Erőforrások",
       "items": {
-        "dashboard": "Dashboard",
-        "feedbacks": "Feedbacks",
-        "hotelProfile": "Hotel Profile",
-        "support": "Support",
-        "ownerProfile": "Owner Profile"
+        "dashboard": "Vezérlőpult",
+        "feedbacks": "Visszajelzések",
+        "hotelProfile": "Szálloda profil",
+        "support": "Támogatás",
+        "ownerProfile": "Tulajdonos profil"
       }
     },
     "legal": {
-      "title": "Legal",
+      "title": "Jogi",
       "items": {
-        "privacyPolicy": "Privacy Policy",
-        "companyPolicy": "Company Policy",
-        "terms": "Terms & Conditions"
+        "privacyPolicy": "Adatvédelmi irányelvek",
+        "companyPolicy": "Céges irányelvek",
+        "terms": "Felhasználási feltételek"
       }
     },
     "connect": {
-      "title": "Connect with Us",
-      "emailPlaceholder": "Email Address",
-      "submitLabel": "Subscribe",
+      "title": "Kapcsolat",
+      "emailPlaceholder": "E-mail cím",
+      "submitLabel": "Feliratkozás",
       "social": {
-        "facebook": "Follow us on Facebook",
-        "instagram": "Follow us on Instagram",
-        "linkedin": "Connect with us on LinkedIn"
+        "facebook": "Kövessen minket a Facebookon",
+        "instagram": "Kövessen minket az Instagramon",
+        "linkedin": "Kapcsolódjon hozzánk a LinkedInen"
       }
     },
-    "copyright": "© 2024 C-Reviews LLC. All Rights Reserved!"
+    "copyright": "© 2024 C-Reviews LLC. Minden jog fenntartva!"
   }
 }
 

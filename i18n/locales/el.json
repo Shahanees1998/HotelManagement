@@ -122,6 +122,23 @@
         "table": {
           "date": "Ημερομηνία"
         }
+      },
+      "comparisonChart": {
+        "title": "Σύγκριση αξιολογήσεων",
+        "period": "Περίοδος",
+        "weekly": "Εβδομαδιαία",
+        "monthly": "Μηνιαία",
+        "loading": "Φόρτωση δεδομένων σύγκρισης...",
+        "noData": "Δεν υπάρχουν διαθέσιμα δεδομένα σύγκρισης",
+        "positiveReviews": "Θετικές αξιολογήσεις",
+        "negativeReviews": "Αρνητικές αξιολογήσεις"
+      },
+      "stats": {
+        "totalReviews": "Σύνολο αξιολογήσεων",
+        "averageRating": "Μέση αξιολόγηση",
+        "positiveReviews": "Θετικές αξιολογήσεις",
+        "negativeReviews": "Αρνητικές αξιολογήσεις",
+        "responseRate": "Ποσοστό απάντησης"
       }
     },
     "forms": {

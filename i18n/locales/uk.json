@@ -122,6 +122,23 @@
         "table": {
           "date": "Дата"
         }
+      },
+      "comparisonChart": {
+        "title": "Порівняння відгуків",
+        "period": "Період",
+        "weekly": "Щотижня",
+        "monthly": "Щомісяця",
+        "loading": "Завантаження даних для порівняння...",
+        "noData": "Немає даних для порівняння",
+        "positiveReviews": "Позитивні відгуки",
+        "negativeReviews": "Негативні відгуки"
+      },
+      "stats": {
+        "totalReviews": "Всього відгуків",
+        "averageRating": "Середня оцінка",
+        "positiveReviews": "Позитивні відгуки",
+        "negativeReviews": "Негативні відгуки",
+        "responseRate": "Частота відповідей"
       }
     },
     "forms": {

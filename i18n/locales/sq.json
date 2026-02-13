@@ -25,27 +25,27 @@
     "lv": "Latvian"
   },
   "common": {
-    "warning": "Warning",
-    "success": "Success",
-    "error": "Error",
-    "info": "Info",
-    "agreeTo": "I agree to the",
-    "and": "and",
-    "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy",
-    "alreadyHaveAccount": "Already have an account?",
-    "login": "Login",
-    "logout": "Logout",
-    "orRegisterVia": "or register via",
-    "selectLanguage": "Select language",
-    "getStarted": "Get Started"
+    "warning": "Paralajmërim",
+    "success": "Sukses",
+    "error": "Gabim",
+    "info": "Informacion",
+    "agreeTo": "Pajtohem me",
+    "and": "dhe",
+    "terms": "kushtet dhe kushtet",
+    "privacy": "politikën e privatësisë",
+    "alreadyHaveAccount": "Keni tashmë një llogari?",
+    "login": "Hyrje",
+    "logout": "Dilni",
+    "orRegisterVia": "ose regjistrohuni përmes",
+    "selectLanguage": "Zgjidhni gjuhën",
+    "getStarted": "Filloni"
   },
   "components": {
     "customPaginator": {
-      "itemsPerPage": "Items per page",
-      "rangeInfo": "{start}-{end} of {total} entries",
-      "previousPage": "Previous page",
-      "nextPage": "Next page"
+      "itemsPerPage": "Artikuj për faqe",
+      "rangeInfo": "{start}-{end} nga {total} hyrje",
+      "previousPage": "Faqja e mëparshme",
+      "nextPage": "Faqja tjetër"
     }
   },
   "countries": {
@@ -66,1293 +66,1302 @@
   },
   "registerHotel": {
     "step1": {
-      "title": "Owner Information!",
+      "title": "Informacioni i pronarit!",
       "fields": {
-        "fullName": "Name",
-        "email": "Email Address",
-        "phone": "Phone Number",
-        "password": "Password"
+        "fullName": "Emri",
+        "email": "Adresa e emailit",
+        "phone": "Numri i telefonit",
+        "password": "Fjalëkalimi"
       },
       "placeholders": {
-        "fullName": "Enter your name",
-        "email": "Enter your email address",
-        "phone": "Enter your phone number",
-        "password": "Enter your password"
+        "fullName": "Vendosni emrin tuaj",
+        "email": "Vendosni adresën tuaj të emailit",
+        "phone": "Vendosni numrin tuaj të telefonit",
+        "password": "Vendosni fjalëkalimin tuaj"
       },
-      "cta": "Let's Keep Going!"
+      "cta": "Le të vazhdojmë!"
     },
     "step2": {
-      "title": "Hotel Information!",
-      "subtitle": "Is my data safe?",
+      "title": "Informacioni i hotelit!",
+      "subtitle": "A janë të sigurta të dhënat e mia?",
       "fields": {
-        "hotelName": "Hotel Name",
-        "hotelWebsite": "Hotel Website",
-        "hotelAddress": "Hotel Address",
-        "city": "City",
-        "country": "Country",
-        "hotelDescription": "Hotel Description"
+        "hotelName": "Emri i hotelit",
+        "hotelWebsite": "Faqja e internetit e hotelit",
+        "hotelAddress": "Adresa e hotelit",
+        "city": "Qyteti",
+        "country": "Shteti",
+        "hotelDescription": "Përshkrimi i hotelit"
       },
       "placeholders": {
-        "hotelName": "Enter hotel name",
-        "hotelWebsite": "Enter hotel website url",
-        "hotelAddress": "Enter hotel street address",
-        "city": "Enter hotel city",
-        "country": "Select Country",
-        "hotelDescription": "Enter brief description of your hotel"
+        "hotelName": "Vendosni emrin e hotelit",
+        "hotelWebsite": "Vendosni URL e faqes së internetit të hotelit",
+        "hotelAddress": "Vendosni adresën e hotelit",
+        "city": "Vendosni qytetin",
+        "country": "Zgjidhni shtetin",
+        "hotelDescription": "Përshkrim i shkurtër i hotelit tuaj"
       }
     },
     "buttons": {
-      "back": "Back",
-      "register": "Register Now",
-      "registering": "Registering..."
+      "back": "Mbrapa",
+      "register": "Regjistrohu",
+      "registering": "Duke u regjistruar..."
     },
     "toasts": {
-      "missingRequired": "Please fill in all required fields",
-      "passwordLength": "Password must be at least 6 characters long",
-      "acceptTerms": "Please accept the terms and conditions",
-      "acceptTermsPrivacy": "Please accept the terms and conditions and privacy policy",
-      "success": "Hotel registration successful! Please check your email for verification.",
-      "error": "Registration failed",
-      "errorGeneric": "Registration failed. Please try again."
+      "missingRequired": "Ju lutemi plotësoni të gjitha fushat e kërkuara",
+      "passwordLength": "Fjalëkalimi duhet të jetë të paktën 6 karaktere",
+      "acceptTerms": "Ju lutemi pranoni kushtet dhe kushtet",
+      "acceptTermsPrivacy": "Ju lutemi pranoni kushtet dhe politikën e privatësisë",
+      "success": "Regjistrimi i hotelit u krye me sukses! Kontrolloni emailin tuaj për verifikim.",
+      "error": "Regjistrimi dështoi",
+      "errorGeneric": "Regjistrimi dështoi. Ju lutemi provoni përsëri."
     },
     "images": {
-      "ownerAlt": "Register Hotel - Owner Information",
-      "hotelAlt": "Register Hotel - Hotel Information"
+      "ownerAlt": "Regjistrimi i hotelit - Informacioni i pronarit",
+      "hotelAlt": "Regjistrimi i hotelit - Informacioni i hotelit"
     }
   },
   "hotel": {
     "dashboard": {
       "recentReviews": {
-        "title": "Recent Reviews",
-        "description": "View and manage your recent reviews.",
+        "title": "Vlerësimet e fundit",
+        "description": "Shikoni dhe menaxhoni vlerësimet tuaja të fundit.",
         "states": {
-          "loading": "Loading recent reviews..."
+          "loading": "Duke ngarkuar vlerësimet e fundit..."
         },
         "table": {
-          "date": "Date"
+          "date": "Data"
         }
       },
       "comparisonChart": {
-        "title": "Review Comparison",
-        "period": "Period",
-        "weekly": "Weekly",
-        "monthly": "Monthly",
-        "loading": "Loading comparison data...",
-        "noData": "No comparison data available"
+        "title": "Krahasimi i vlerësimeve",
+        "period": "Periudha",
+        "weekly": "Javore",
+        "monthly": "Mujore",
+        "loading": "Duke ngarkuar të dhënat e krahasimit...",
+        "noData": "Nuk ka të dhëna krahasimi",
+        "positiveReviews": "Vlerësime pozitive",
+        "negativeReviews": "Vlerësime negative"
+      },
+      "stats": {
+        "totalReviews": "Totali i vlerësimeve",
+        "averageRating": "Vlerësimi mesatar",
+        "positiveReviews": "Vlerësime pozitive",
+        "negativeReviews": "Vlerësime negative",
+        "responseRate": "Shkalla e përgjigjes"
       }
     },
     "forms": {
       "header": {
-        "title": "Feedback Form",
-        "subtitle": "Manage your guest feedback form. You can update this form at any time."
+        "title": "Formulari i reagimeve",
+        "subtitle": "Menaxhoni formularin e reagimeve të mysafirëve. Mund ta përditësoni këtë formulari në çdo kohë."
       },
       "states": {
-        "loading": "Loading form..."
+        "loading": "Duke ngarkuar formularin..."
       },
       "fields": {
-        "title": "Form Title",
-        "status": "Status",
-        "active": "Active",
-        "inactive": "Inactive",
-        "description": "Description",
-        "noDescription": "No description provided",
-        "totalResponses": "Total Responses"
+        "title": "Titulli i formularit",
+        "status": "Statusi",
+        "active": "Aktiv",
+        "inactive": "Joaktiv",
+        "description": "Përshkrimi",
+        "noDescription": "Nuk ka përshkrim",
+        "totalResponses": "Totali i përgjigjeve"
       },
       "buttons": {
-        "edit": "Edit Form",
-        "preview": "Preview Form",
-        "showQr": "Show QR Code",
-        "create": "Create Form",
-        "downloadQr": "Download QR Code",
-        "copyUrl": "Copy URL"
+        "edit": "Ndrysho formularin",
+        "preview": "Parashiko formularin",
+        "showQr": "Shfaq kodin QR",
+        "create": "Krijo formular",
+        "downloadQr": "Shkarko kodin QR",
+        "copyUrl": "Kopjo URL"
       },
       "empty": {
-        "title": "No Form Created Yet",
-        "description": "Create your feedback form to start collecting guest reviews."
+        "title": "Formulari ende nuk është krijuar",
+        "description": "Krijoni formularin e reagimeve për të filluar mbledhjen e vlerësimeve nga mysafirët."
       },
       "preview": {
-        "title": "Form Preview",
-        "tooltipBack": "Back to Forms",
-        "tag": "Preview Mode - Interactions Disabled"
+        "title": "Parashikimi i formularit",
+        "tooltipBack": "Mbrapsht te format",
+        "tag": "Modalitet parashikimi – ndërveprimet çaktivizuar"
       },
       "qrDialog": {
-        "title": "QR Code - {title}"
+        "title": "Kodi QR - {title}"
       },
       "toasts": {
-        "loadError": "Failed to load form",
-        "slugMissing": "Hotel slug not found. Cannot preview form.",
-        "createSuccess": "Form created successfully",
-        "updateSuccess": "Form updated successfully",
-        "saveError": "Failed to save form",
-        "qrGenerated": "QR code generated successfully",
-        "qrExists": "QR code already exists for this form",
-        "qrError": "Failed to handle QR code",
-        "noUrl": "No URL to copy",
-        "copiedDetail": "URL copied to clipboard",
-        "copyError": "Failed to copy URL to clipboard"
+        "loadError": "Dështoi ngarkimi i formularit",
+        "slugMissing": "Identifikuesi i hotelit nuk u gjet. Parashikimi nuk është i mundur.",
+        "createSuccess": "Formulari u krijua me sukses",
+        "updateSuccess": "Formulari u përditësua me sukses",
+        "saveError": "Dështoi ruajtja e formularit",
+        "qrGenerated": "Kodi QR u gjenerua me sukses",
+        "qrExists": "Ky formulari tashmë ka kod QR",
+        "qrError": "Dështoi përpunimi i kodit QR",
+        "noUrl": "Nuk ka URL për të kopjuar",
+        "copiedDetail": "URL u kopjua në clipboard",
+        "copyError": "Dështoi kopjimi i URL"
       },
       "builder": {
         "header": {
-          "edit": "Edit Form",
-          "create": "Create New Form",
-          "preview": "Preview Form",
-          "livePreview": "Live Preview",
-          "formBuilderToggle": "Form Builder",
-          "livePreviewToggle": "Live Preview",
-          "backTooltip": "Back to Forms"
+          "edit": "Ndrysho formularin",
+          "create": "Krijo formular të ri",
+          "preview": "Parashiko formularin",
+          "livePreview": "Parashikim i drejtpërdrejtë",
+          "formBuilderToggle": "Ndërtues formularësh",
+          "livePreviewToggle": "Parashikim i drejtpërdrejtë",
+          "backTooltip": "Mbrapsht te format"
         },
         "buttons": {
-          "save": "Save Form",
-          "saveTooltip": "Save the form",
-          "addNew": "Add New",
-          "addOption": "Add",
-          "cancel": "Cancel",
-          "update": "Update",
-          "add": "Add"
+          "save": "Ruaj formularin",
+          "saveTooltip": "Ruaj formularin",
+          "addNew": "Shto të re",
+          "addOption": "Shto",
+          "cancel": "Anulo",
+          "update": "Përditëso",
+          "add": "Shto"
         },
         "sections": {
-          "settings": "Form Settings",
-          "questions": "Questions",
-          "predefined": "Predefined Questions",
-          "custom": "Custom Questions"
+          "settings": "Cilësimet e formularit",
+          "questions": "Pyetjet",
+          "predefined": "Pyetje të paracaktuara",
+          "custom": "Pyetje të personalizuara"
         },
         "fields": {
-          "titleLabel": "Form Title*",
-          "titlePlaceholder": "Enter form title",
-          "descriptionLabel": "Form Description*",
-          "descriptionPlaceholder": "Enter brief description of your form"
+          "titleLabel": "Titulli i formularit*",
+          "titlePlaceholder": "Vendosni titullin e formularit",
+          "descriptionLabel": "Përshkrimi i formularit*",
+          "descriptionPlaceholder": "Vendosni një përshkrim të shkurtër të formularit"
         },
         "predefined": {
-          "rateUs": "Rate Us* (Always included)",
-          "rateUsTitle": "Rate Us",
-          "customRating": "Custom Rating*",
-          "customRatingTitle": "Custom Rating",
-          "customRatingPlaceholder": "Enter rating item label",
-          "customRatingEditTitle": "Click to edit",
-          "feedback": "Please give us your honest feedback?*",
-          "feedbackTitle": "Please give us your honest feedback?",
-          "feedbackPlaceholder": "Enter your detailed feedback"
+          "rateUs": "Na vlerësoni* (përfshihet gjithmonë)",
+          "rateUsTitle": "Na vlerësoni",
+          "customRating": "Vlerësim i personalizuar*",
+          "customRatingTitle": "Vlerësim i personalizuar",
+          "customRatingPlaceholder": "Vendosni etiketën e artikullit të vlerësimit",
+          "customRatingEditTitle": "Klikoni për të redaktuar",
+          "feedback": "Ju lutemi na jepni reagimin tuaj të sinqertë?*",
+          "feedbackTitle": "Ju lutemi na jepni reagimin tuaj të sinqertë?",
+          "feedbackPlaceholder": "Vendosni reagimin tuaj të detajuar"
         },
         "tooltips": {
-          "previewDisabled": "Preview mode - editing disabled",
-          "addQuestion": "Add custom question",
-          "save": "Save",
-          "cancel": "Cancel",
-          "edit": "Edit",
-          "delete": "Delete",
-          "moveUp": "Move Up",
-          "moveDown": "Move Down"
+          "previewDisabled": "Modalitet parashikimi – redaktimi çaktivizuar",
+          "addQuestion": "Shto pyetje të personalizuar",
+          "save": "Ruaj",
+          "cancel": "Anulo",
+          "edit": "Redakto",
+          "delete": "Fshi",
+          "moveUp": "Lart",
+          "moveDown": "Poshtë"
         },
         "questionTypes": {
-          "shortText": "Short Text",
-          "longText": "Long Text",
-          "starRating": "Star Rating",
-          "singleChoice": "Single Choice",
-          "multipleChoice": "Multiple Choice",
-          "yesNo": "Yes/No"
+          "shortText": "Tekst i shkurtër",
+          "longText": "Tekst i gjatë",
+          "starRating": "Vlerësim me yje",
+          "singleChoice": "Zgjedhje e vetme",
+          "multipleChoice": "Zgjedhje të shumëfishta",
+          "yesNo": "Po/Jo"
         },
         "placeholders": {
-          "answer": "Enter your answer"
+          "answer": "Vendosni përgjigjen tuaj"
         },
         "answers": {
-          "yes": "Yes",
-          "no": "No"
+          "yes": "Po",
+          "no": "Jo"
         },
         "badges": {
-          "default": "Default",
-          "defaultHelper": "Cannot be edited, deleted, or moved"
+          "default": "Parazgjedhje",
+          "defaultHelper": "Nuk mund të redaktohet, fshihet ose lëvizet"
         },
         "states": {
-          "loading": "Loading form data...",
-          "noQuestionsTitle": "No questions added yet",
-          "noQuestionsDescription": "Use the predefined questions above or add custom questions to get started"
+          "loading": "Duke ngarkuar të dhënat e formularit...",
+          "noQuestionsTitle": "Pyetjet ende nuk janë shtuar",
+          "noQuestionsDescription": "Përdorni pyetjet e paracaktuara më sipër ose shtoni pyetje të personalizuara"
         },
         "alerts": {
-          "ratingRequiredTitle": "Rating Required",
-          "ratingRequiredDescription": "Either \"Rate Us\" or \"Custom Rating\" must be selected to save the form."
+          "ratingRequiredTitle": "Kërkohet vlerësimi",
+          "ratingRequiredDescription": "Për të ruajtur formularin duhet zgjedhur „Na vlerësoni” ose „Vlerësim i personalizuar”."
         },
         "layoutInfo": {
           "basic": {
-            "title": "Basic Layout Features",
-            "description": "All questions are available including custom questions. This layout provides a simple, clean design."
+            "title": "Veçoritë e paraqitjes bazë",
+            "description": "Të gjitha pyetjet janë të disponueshme duke përfshirë ato të personalizuara. Kjo paraqitje ofron një dizajn të thjeshtë dhe të qartë."
           },
           "good": {
-            "title": "Good Layout Features",
-            "description": "Choose either \"Rate Us\" OR \"Custom Rating\" (mutually exclusive). All questions including custom questions are available."
+            "title": "Veçoritë e paraqitjes së mirë",
+            "description": "Zgjidhni ose „Na vlerësoni” OSE „Vlerësim i personalizuar” (të përjashtuara reciprokisht). Të gjitha pyetjet duke përfshirë ato të personalizuara janë të disponueshme."
           },
           "excellent": {
-            "title": "Excellent Layout Features",
-            "description": "All predefined questions available plus custom questions. Premium design with animations for comprehensive feedback forms."
+            "title": "Veçoritë e paraqitjes së shkëlqyer",
+            "description": "Të gjitha pyetjet e paracaktuara plus ato të personalizuara. Dizajn premium me animacione për format e plotë të reagimeve."
           }
         },
         "subscription": {
-          "title": "Subscription Required",
-          "message": "Your subscription has been {status}. Please reactivate your subscription to create or edit forms.",
-          "manageButton": "Manage Subscription",
+          "title": "Kërkohet abonimi",
+          "message": "Abonimi juaj është {status}. Ju lutemi riaktivizoni abonimin për të krijuar ose redaktuar formula.",
+          "manageButton": "Menaxho abonimin",
           "status": {
-            "cancelled": "cancelled",
-            "expired": "expired"
+            "cancelled": "anuluar",
+            "expired": "skaduar"
           },
-          "toastTitle": "Subscription Required",
-          "toastMessage": "Your subscription has been cancelled or expired. Please reactivate your subscription to create forms."
+          "toastTitle": "Kërkohet abonimi",
+          "toastMessage": "Abonimi juaj është anuluar ose skaduar. Riaktivizoni abonimin për të krijuar formula."
         },
         "preview": {
-          "descriptionFallback": "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance.",
-          "fullNameLabel": "Name*",
-          "fullNamePlaceholder": "Enter your name",
+          "descriptionFallback": "Plotësoni këtë formulari për të kërkuar mbështetje ose raportuar një problem. Ekipi ynë do të shqyrtojë kërkesën tuaj dhe do të ju kontaktojë sa më shpejt të jetë e mundur.",
+          "fullNameLabel": "Emri*",
+          "fullNamePlaceholder": "Vendosni emrin tuaj",
           "emailLabel": "Email*",
-          "emailPlaceholder": "Enter your email address",
-          "submit": "Submit Now"
+          "emailPlaceholder": "Vendosni adresën tuaj të emailit",
+          "submit": "Dërgo tani"
         },
         "dialog": {
-          "addTitle": "Add Question",
-          "editTitle": "Edit Question",
-          "questionLabel": "Question Text *",
-          "questionPlaceholder": "Enter your question",
-          "typeLabel": "Question Type",
-          "optionsLabel": "Options",
-          "optionPlaceholder": "Enter option"
+          "addTitle": "Shto pyetje",
+          "editTitle": "Redakto pyetjen",
+          "questionLabel": "Teksti i pyetjes *",
+          "questionPlaceholder": "Vendosni pyetjen tuaj",
+          "typeLabel": "Lloji i pyetjes",
+          "optionsLabel": "Opsionet",
+          "optionPlaceholder": "Vendosni opsion"
         },
         "toasts": {
-          "formLoadSuccess": "Form data loaded successfully",
-          "formLoadError": "Failed to load form data",
-          "questionRequired": "Question text is required",
-          "optionsRequired": "Multiple choice questions must have at least 2 options",
-          "questionUpdated": "Question updated",
-          "questionAdded": "Question added",
-          "questionDeleted": "Question deleted",
-          "ratingLabelRequired": "Please enter a label for the rating item",
-          "ratingItemUpdated": "Rating item updated",
-          "ratingItemDeleted": "Rating item deleted",
-          "ratingItemAdded": "New rating item added",
-          "titleRequired": "Form title is required",
-          "questionCountRequired": "At least one question is required"
+          "formLoadSuccess": "Të dhënat e formularit u ngarkuan me sukses",
+          "formLoadError": "Dështoi ngarkimi i të dhënave të formularit",
+          "questionRequired": "Teksti i pyetjes është i detyrueshëm",
+          "optionsRequired": "Pyetjet me zgjedhje të shumëfishta duhet të kenë të paktën 2 opsione",
+          "questionUpdated": "Pyetja u përditësua",
+          "questionAdded": "Pyetja u shtua",
+          "questionDeleted": "Pyetja u fshi",
+          "ratingLabelRequired": "Ju lutemi vendosni një etiketë për artikullin e vlerësimit",
+          "ratingItemUpdated": "Artikulli i vlerësimit u përditësua",
+          "ratingItemDeleted": "Artikulli i vlerësimit u fshi",
+          "ratingItemAdded": "U shtua artikull i ri vlerësimi",
+          "titleRequired": "Titulli i formularit është i detyrueshëm",
+          "questionCountRequired": "Kërkohet të paktën një pyetje"
         }
       }
     },
     "analytics": {
       "customRatings": {
-        "title": "Custom Rating Analytics",
-        "description": "Track detailed rating trends for your \"Good\" layout form.",
+        "title": "Analitika e vlerësimit të personalizuar",
+        "description": "Ndjekni trendet e vlerësimit për formularin me paraqitje të zgjeruar.",
         "buttons": {
-          "exportCsv": "Export CSV",
-          "exportPdf": "Export PDF",
-          "refresh": "Refresh"
+          "exportCsv": "Eksporto CSV",
+          "exportPdf": "Eksporto PDF",
+          "refresh": "Rifresko"
         },
         "filters": {
-          "title": "Date Range Filters",
-          "startDate": "Start Date",
-          "startDatePlaceholder": "Select start date",
-          "endDate": "End Date",
-          "endDatePlaceholder": "Select end date",
-          "clear": "Clear Filters"
+          "title": "Filtrat sipas datës",
+          "startDate": "Data e fillimit",
+          "startDatePlaceholder": "Zgjidhni datën e fillimit",
+          "endDate": "Data e mbarimit",
+          "endDatePlaceholder": "Zgjidhni datën e mbarimit",
+          "clear": "Pastro filtrat"
         },
         "states": {
-          "loading": "Loading analytics data...",
-          "noDataTitle": "No Data Available",
-          "noDataDescription": "No \"Good\" layout forms with custom rating data found for your hotel."
+          "loading": "Duke ngarkuar të dhënat e analitikës...",
+          "noDataTitle": "Nuk ka të dhëna të disponueshme",
+          "noDataDescription": "Nuk u gjetën formula me paraqitje të zgjeruar dhe të dhëna vlerësimi për hotelin tuaj."
         },
         "toasts": {
-          "loadError": "Failed to load custom rating analytics",
-          "exportSuccess": "Data exported successfully as {format}",
-          "exportError": "Failed to export data"
+          "loadError": "Dështoi ngarkimi i analitikës së vlerësimit",
+          "exportSuccess": "Të dhënat u eksportuan me sukses si {format}",
+          "exportError": "Dështoi eksportimi i të dhënave"
         },
         "chart": {
-          "trendPrefix": "Trend Analysis - ",
-          "summaryTitle": "Rating Summary",
-          "ratingsCount": "({count} ratings)",
-          "averageRating": "Average Rating",
+          "trendPrefix": "Analiza e trendit - ",
+          "summaryTitle": "Përmbledhje e vlerësimit",
+          "ratingsCount": "({count} vlerësime)",
+          "averageRating": "Vlerësimi mesatar",
           "tooltipSuffix": "/5"
         }
       },
       "overview": {
-        "title": "Analytics",
-        "description": "Track your hotel's performance and guest satisfaction.",
-        "dropdownPlaceholder": "Select time range",
+        "title": "Analitika",
+        "description": "Ndjekni performancën e hotelit dhe kënaqësinë e mysafirëve.",
+        "dropdownPlaceholder": "Zgjidhni intervalin kohor",
         "buttons": {
-          "refresh": "Refresh"
+          "refresh": "Rifresko"
         },
         "timeRanges": {
-          "7": "Last 7 days",
-          "30": "Last 30 days",
-          "90": "Last 90 days",
-          "180": "Last 6 months",
-          "365": "Last year"
+          "7": "7 ditët e fundit",
+          "30": "30 ditët e fundit",
+          "90": "90 ditët e fundit",
+          "180": "6 muajt e fundit",
+          "365": "Viti i kaluar"
         },
         "states": {
-          "loadingSkeleton": "Loading...",
-          "noData": "No analytics data available",
-          "chartLoading": "Loading chart data...",
-          "chartEmpty": "No chart data available"
+          "loadingSkeleton": "Duke ngarkuar...",
+          "noData": "Nuk ka të dhëna analitike të disponueshme",
+          "chartLoading": "Duke ngarkuar të dhënat e grafikut...",
+          "chartEmpty": "Nuk ka të dhëna grafiku të disponueshme"
         },
         "cards": {
-          "change": "{change} from last period"
+          "change": "{change} krahasuar me periudhën e kaluar"
         },
         "charts": {
-          "satisfaction": "Satisfaction Trends",
-          "ratingDistribution": "Rating Distribution",
-          "reviewVolume": "Review Volume"
+          "satisfaction": "Trendet e kënaqësisë",
+          "ratingDistribution": "Shpërndarja e vlerësimit",
+          "reviewVolume": "Vëllimi i vlerësimeve"
         },
         "reviews": {
-          "title": "Recent Reviews"
+          "title": "Vlerësimet e fundit"
         },
         "toasts": {
-          "loadError": "Failed to load analytics"
+          "loadError": "Dështoi ngarkimi i analitikës"
         }
       },
       "responseRates": {
-        "title": "Response Rates Analytics",
-        "description": "Track your hotel's response rates and engagement metrics.",
+        "title": "Analitika e shkallës së përgjigjeve",
+        "description": "Ndjekni shkallën e përgjigjeve dhe metrikat e angazhimit të hotelit.",
         "charts": {
-          "reviewVolume": "Review Volume Trends",
-          "satisfaction": "Satisfaction Trends Over Time"
+          "reviewVolume": "Trendet e vëllimit të vlerësimeve",
+          "satisfaction": "Trendet e kënaqësisë me kalimin e kohës"
         }
       },
       "satisfaction": {
-        "title": "Satisfaction Analytics",
-        "description": "Track your hotel's guest satisfaction trends and ratings.",
+        "title": "Analitika e kënaqësisë",
+        "description": "Ndjekni trendet e kënaqësisë së mysafirëve dhe vlerësimet.",
         "charts": {
-          "reviewVolume": "Review Volume & Positive Reviews"
+          "reviewVolume": "Vëllimi i vlerësimeve dhe vlerësimet pozitive"
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Njoftimet",
+        "ariaLabel": "Njoftimet",
+        "iconAlt": "Ikona e njoftimit",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Shëno të gjitha si të lexuara",
+          "refresh": "Rifresko"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Ende nuk ka njoftime"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "success": "Success",
-          "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "newReview": "Vlerësim i ri",
+          "reviewApproved": "Vlerësimi u miratua",
+          "reviewRejected": "Vlerësimi u refuzua",
+          "subscriptionExpiring": "Abonimi po skadon",
+          "subscriptionCancelled": "Abonimi u anulua",
+          "escalationReceived": "Eskalimi u mor",
+          "escalationResponded": "Përgjigje ndaj eskalimit",
+          "systemAlert": "Njoftim sistemi",
+          "newHotelRegistration": "Regjistrim i ri i hotelit",
+          "success": "Sukses",
+          "info": "Informacion",
+          "warning": "Paralajmërim",
+          "error": "Gabim",
+          "generic": "Njoftim"
         }
       }
     },
     "reviews": {
-      "title": "Guest Reviews",
-      "subtitle": "Manage and review guest feedback submissions.",
+      "title": "Vlerësimet e mysafirëve",
+      "subtitle": "Menaxhoni dhe shikoni vlerësimet dhe reagimet e mysafirëve.",
       "buttons": {
-        "refresh": "Refresh",
-        "clearFilters": "Clear Filters",
-        "view": "View",
-        "reply": "Reply",
-        "delete": "Delete",
-        "close": "Close",
-        "markAsChecked": "Mark as Checked",
-        "checked": "Checked",
-        "uncheck": "Uncheck",
-        "markAsUrgent": "Mark as Urgent",
-        "urgent": "Urgent",
-        "removeUrgent": "Remove Urgent",
-        "replyToCustomer": "Reply to Customer",
-        "cancel": "Cancel",
-        "sendReply": "Send Reply"
+        "refresh": "Rifresko",
+        "clearFilters": "Pastro filtrat",
+        "view": "Shiko",
+        "reply": "Përgjigju",
+        "delete": "Fshi",
+        "close": "Mbyll",
+        "markAsChecked": "Shëno si të kontrolluar",
+        "checked": "Kontrolluar",
+        "uncheck": "Hiq shënimin",
+        "markAsUrgent": "Shëno si urgjent",
+        "urgent": "Urgjent",
+        "removeUrgent": "Hiq urgjencën",
+        "replyToCustomer": "Përgjigju mysafirit",
+        "cancel": "Anulo",
+        "sendReply": "Dërgo përgjigjen"
       },
       "filters": {
-        "title": "Filters",
-        "searchReviews": "Search Reviews",
-        "searchPlaceholder": "Search by guest name or feedback text...",
-        "roomNumber": "Room Number",
-        "roomNumberPlaceholder": "Filter by room number...",
-        "filter": "Filter",
-        "allReviews": "All Reviews",
-        "replied": "Replied",
-        "notReplied": "Not Replied",
-        "checked": "Checked",
-        "notChecked": "Not Checked",
-        "urgent": "Urgent",
-        "notUrgent": "Not Urgent",
-        "starRatings": "Star Ratings",
-        "allRatings": "All Ratings",
-        "5Stars": "5 Stars",
-        "4Stars": "4 Stars",
-        "3Stars": "3 Stars",
-        "2Stars": "2 Stars",
-        "1Star": "1 Star",
-        "dateRange": "Date Range",
-        "startDate": "Start Date",
-        "endDate": "End Date",
-        "fromDate": "From date",
-        "toDate": "To date"
+        "title": "Filtrat",
+        "searchReviews": "Kërko në vlerësime",
+        "searchPlaceholder": "Kërko sipas emrit ose tekstit...",
+        "roomNumber": "Numri i dhomës",
+        "roomNumberPlaceholder": "Filtro sipas numrit të dhomës...",
+        "filter": "Filtër",
+        "allReviews": "Të gjitha vlerësimet",
+        "replied": "Me përgjigje",
+        "notReplied": "Pa përgjigje",
+        "checked": "Kontrolluar",
+        "notChecked": "Jo i kontrolluar",
+        "urgent": "Urgjent",
+        "notUrgent": "Jo urgjent",
+        "starRatings": "Vlerësim me yje",
+        "allRatings": "Të gjitha vlerësimet",
+        "5Stars": "5 yje",
+        "4Stars": "4 yje",
+        "3Stars": "3 yje",
+        "2Stars": "2 yje",
+        "1Star": "1 yll",
+        "dateRange": "Intervali i datave",
+        "startDate": "Data e fillimit",
+        "endDate": "Data e mbarimit",
+        "fromDate": "Nga data",
+        "toDate": "Deri më"
       },
       "states": {
-        "loadingReviews": "Loading reviews...",
-        "noReviewsFound": "No Reviews Found",
-        "noReviewsYet": "No reviews have been submitted yet.",
-        "noReviewsMatchFilters": "No reviews match your current filters."
+        "loadingReviews": "Duke ngarkuar vlerësimet...",
+        "noReviewsFound": "Nuk u gjetën vlerësime",
+        "noReviewsYet": "Ende nuk janë dërguar vlerësime.",
+        "noReviewsMatchFilters": "Asnjë vlerësim nuk përputhet me filtrat aktual."
       },
       "table": {
-        "guest": "Guest",
+        "guest": "Mysafir",
         "email": "Email",
-        "room": "Room",
-        "rating": "Rating",
-        "status": "Status",
-        "submitted": "Submitted",
-        "actions": "Actions",
-        "checkedStatus": "Checked",
-        "notCheckedStatus": "Not Checked",
-        "repliedStatus": "Replied",
-        "notRepliedStatus": "Not Replied",
-        "urgentStatus": "Urgent",
-        "notUrgentStatus": "Not Urgent",
-        "public": "Public",
-        "private": "Private",
-        "shared": "Shared",
-        "noEmailAvailable": "No email available for this review"
+        "room": "Dhomë",
+        "rating": "Vlerësim",
+        "status": "Statusi",
+        "submitted": "Dërguar",
+        "actions": "Veprimet",
+        "checkedStatus": "Kontrolluar",
+        "notCheckedStatus": "Jo i kontrolluar",
+        "repliedStatus": "Me përgjigje",
+        "notRepliedStatus": "Pa përgjigje",
+        "urgentStatus": "Urgjent",
+        "notUrgentStatus": "Jo urgjent",
+        "public": "Publik",
+        "private": "Privat",
+        "shared": "Ndarë",
+        "noEmailAvailable": "Nuk ka email për këtë vlerësim"
       },
       "detailsDialog": {
-        "header": "Guest Feedback Details",
-        "guestInfo": "Guest Information",
-        "name": "Name:",
-        "anonymous": "Anonymous",
+        "header": "Detajet e reagimit të mysafirit",
+        "guestInfo": "Informacioni i mysafirit",
+        "name": "Emri:",
+        "anonymous": "Anonim",
         "email": "Email:",
-        "notProvided": "Not provided",
-        "phone": "Phone:",
-        "roomNumber": "Room Number:",
-        "submitted": "Submitted:",
-        "overallRating": "Overall Rating",
-        "quickFeedback": "Quick Feedback",
-        "howDoYouRateUs": "How do you rate us?",
-        "honestFeedback": "Please give us your honest feedback?",
-        "noSpecificFeedback": "No specific feedback provided",
-        "customRatingItem": "Custom Rating Item ({itemId})",
-        "formInfo": "Form Information",
-        "formTitle": "Form Title:",
-        "description": "Description:",
-        "layout": "Layout:",
-        "feedbackResponses": "Feedback Responses",
-        "reviewReplies": "Review Replies",
-        "languageSelectorLabel": "View content in",
-        "languageSelectorPlaceholder": "Select language",
-        "translating": "Translating...",
-        "noDetailedResponses": "No detailed responses available for this review.",
-        "question": "Question:",
-        "noAnswer": "No answer provided",
-        "replyToCustomer": "Reply to Customer",
-        "replyPlaceholder": "Type your reply message here...",
-        "replyMessageHint": "This message will be sent to {guestEmail}",
-        "toastWarningReply": "Please enter a reply message",
-        "toastSuccessReply": "Reply sent successfully to {sentTo}",
-        "toastErrorReply": "Failed to send reply"
+        "notProvided": "Nuk është dhënë",
+        "phone": "Telefoni:",
+        "roomNumber": "Numri i dhomës:",
+        "submitted": "Dërguar:",
+        "overallRating": "Vlerësimi i përgjithshëm",
+        "quickFeedback": "Reagim i shpejtë",
+        "howDoYouRateUs": "Si na vlerësoni?",
+        "honestFeedback": "Ju lutemi na jepni reagimin tuaj të sinqertë?",
+        "noSpecificFeedback": "Nuk është dhënë reagim specifik",
+        "customRatingItem": "Vlerësim i personalizuar ({itemId})",
+        "formInfo": "Informacioni i formularit",
+        "formTitle": "Titulli i formularit:",
+        "description": "Përshkrimi:",
+        "layout": "Paraqitja:",
+        "feedbackResponses": "Përgjigjet e reagimeve",
+        "reviewReplies": "Përgjigjet e vlerësimeve",
+        "languageSelectorLabel": "Shiko përmbajtjen në",
+        "languageSelectorPlaceholder": "Zgjidhni gjuhën",
+        "translating": "Duke përkthyer...",
+        "noDetailedResponses": "Nuk ka përgjigje të detajuara për këtë vlerësim.",
+        "question": "Pyetja:",
+        "noAnswer": "Nuk është dhënë përgjigje",
+        "replyToCustomer": "Përgjigju mysafirit",
+        "replyPlaceholder": "Shkruani përgjigjen tuaj këtu...",
+        "replyMessageHint": "Ky mesazh do të dërgohet te {guestEmail}",
+        "toastWarningReply": "Ju lutemi vendosni mesazhin e përgjigjes",
+        "toastSuccessReply": "Përgjigja u dërgua me sukses te {sentTo}",
+        "toastErrorReply": "Dështoi dërgimi i përgjigjes"
       },
       "deleteDialog": {
-        "header": "Delete Review",
-        "confirmTitle": "Are you sure you want to delete this review?",
-        "confirmMessage": "This action cannot be undone. The review will be permanently removed from your system.",
-        "reviewDetails": "Review Details:",
-        "guest": "Guest:",
-        "rating": "Rating:",
-        "submitted": "Submitted:",
+        "header": "Fshi vlerësimin",
+        "confirmTitle": "A jeni të sigurt që dëshironi të fshini këtë vlerësim?",
+        "confirmMessage": "Ky veprim nuk mund të zhbëhet. Vlerësimi do të hiqet përgjithmonë nga sistemi.",
+        "reviewDetails": "Detajet e vlerësimit:",
+        "guest": "Mysafir:",
+        "rating": "Vlerësim:",
+        "submitted": "Dërguar:",
         "buttons": {
-          "cancel": "Cancel",
-          "delete": "Delete"
+          "cancel": "Anulo",
+          "delete": "Fshi"
         },
         "toasts": {
-          "success": "Review deleted successfully",
-          "error": "Failed to delete review"
+          "success": "Vlerësimi u fshi me sukses",
+          "error": "Dështoi fshirja e vlerësimit"
         }
       },
       "toasts": {
-        "loadError": "Failed to load reviews",
-        "detailsLoadError": "Failed to load review details",
+        "loadError": "Dështoi ngarkimi i vlerësimeve",
+        "detailsLoadError": "Dështoi ngarkimi i detajeve të vlerësimit",
         "statusUpdate": {
-          "checked": "Review marked as checked",
-          "unchecked": "Review unmarked as checked",
-          "urgent": "Review marked as urgent",
-          "notUrgent": "Review unmarked as urgent",
-          "replied": "Review marked as replied"
+          "checked": "Vlerësimi u shënua si i kontrolluar",
+          "unchecked": "Vlerësimit i u hoq shënimi i kontrolluar",
+          "urgent": "Vlerësimi u shënua si urgjent",
+          "notUrgent": "Vlerësimit i u hoq shënimi urgjent",
+          "replied": "Vlerësimi u shënua si i përgjigjur"
         },
-        "statusUpdateError": "Failed to update review status",
-        "replyMissing": "Please enter a reply message",
-        "replySuccess": "Reply sent successfully to {sentTo}",
-        "replyError": "Failed to send reply",
-        "translationError": "Failed to translate review content",
-        "deleteSuccess": "Review deleted successfully",
-        "deleteError": "Failed to delete review"
+        "statusUpdateError": "Dështoi përditësimi i statusit të vlerësimit",
+        "replyMissing": "Ju lutemi vendosni mesazhin e përgjigjes",
+        "replySuccess": "Përgjigja u dërgua me sukses te {sentTo}",
+        "replyError": "Dështoi dërgimi i përgjigjes",
+        "translationError": "Dështoi përkthimi i përmbajtjes së vlerësimit",
+        "deleteSuccess": "Vlerësimi u fshi me sukses",
+        "deleteError": "Dështoi fshirja e vlerësimit"
       }
     },
     "menu": {
-      "dashboard": "Dashboard",
-      "feedbackForm": "Feedback Form",
-      "qrCodes": "QR Codes",
-      "allReviews": "All Reviews",
-      "notifications": "Notifications",
-      "contactAdmin": "Contact Admin",
-      "settings": "Settings",
+      "dashboard": "Paneli",
+      "feedbackForm": "Formulari i reagimeve",
+      "qrCodes": "Kodet QR",
+      "allReviews": "Të gjitha vlerësimet",
+      "notifications": "Njoftimet",
+      "contactAdmin": "Kontakto administratorin",
+      "settings": "Cilësimet",
       "settingsItems": {
-        "userProfile": "User Profile",
-        "hotelProfile": "Hotel Profile",
-        "changePassword": "Change Password",
-        "subscriptions": "Subscriptions",
-        "paymentMethods": "Payment Methods"
+        "userProfile": "Profili i përdoruesit",
+        "hotelProfile": "Profili i hotelit",
+        "changePassword": "Ndrysho fjalëkalimin",
+        "subscriptions": "Abonimet",
+        "paymentMethods": "Metodat e pagesës"
       }
     },
     "paymentMethods": {
-      "pageTitle": "Add Payment Method",
+      "pageTitle": "Shto metodë pagese",
       "buttons": {
-        "add": "Add",
-        "addMethod": "Add Method",
-        "updateMethod": "Update Method",
-        "cancel": "Cancel",
-        "setPrimary": "Set as Primary",
-        "delete": "Delete"
+        "add": "Shto",
+        "addMethod": "Shto metodë",
+        "updateMethod": "Përditëso metodën",
+        "cancel": "Anulo",
+        "setPrimary": "Vendos si kryesore",
+        "delete": "Fshi"
       },
       "badges": {
-        "primary": "Primary",
-        "expired": "Expired"
+        "primary": "Kryesore",
+        "expired": "Skaduar"
       },
       "states": {
-        "loading": "Loading payment methods...",
-        "emptyTitle": "No Payment Methods",
-        "emptyDescription": "Add a payment method to manage your subscriptions."
+        "loading": "Duke ngarkuar metodat e pagesës...",
+        "emptyTitle": "Nuk ka metoda pagese",
+        "emptyDescription": "Shtoni një metodë pagese për të menaxhuar abonimet."
       },
       "form": {
-        "paymentType": "Payment Type",
+        "paymentType": "Lloji i pagesës",
         "paymentTypeOptions": {
-          "card": "Credit/Debit Card",
-          "bank": "Bank Account"
+          "card": "Kartë krediti/debiti",
+          "bank": "Llogari bankare"
         },
         "card": {
-          "number": "Card Number",
+          "number": "Numri i kartës",
           "numberPlaceholder": "1234 5678 9012 3456",
-          "expiryMonth": "Expiry Month",
-          "expiryYear": "Expiry Year",
+          "expiryMonth": "Muaji i skadimit",
+          "expiryYear": "Viti i skadimit",
           "monthPlaceholder": "MM",
-          "yearPlaceholder": "YYYY",
+          "yearPlaceholder": "VVVV",
           "cvv": "CVV",
           "cvvPlaceholder": "123",
-          "holder": "Cardholder Name",
-          "holderPlaceholder": "John Doe",
-          "brand": "Card Brand",
-          "brandPlaceholder": "Select card brand"
+          "holder": "Emri i mbajtësit të kartës",
+          "holderPlaceholder": "Emri Mbiemri",
+          "brand": "Marka e kartës",
+          "brandPlaceholder": "Zgjidhni markën e kartës"
         },
         "cardBrands": {
           "visa": "Visa",
           "mastercard": "Mastercard",
           "amex": "American Express",
           "discover": "Discover",
-          "unknown": "Card"
+          "unknown": "Kartë"
         },
         "bank": {
-          "name": "Bank Name",
-          "namePlaceholder": "Bank of America",
-          "accountNumber": "Account Number",
-          "accountPlaceholder": "Account number",
-          "routingNumber": "Routing Number",
+          "name": "Emri i bankës",
+          "namePlaceholder": "Emri i bankës",
+          "accountNumber": "Numri i llogarisë",
+          "accountPlaceholder": "Numri i llogarisë",
+          "routingNumber": "Kodi i bankës",
           "routingPlaceholder": "123456789",
-          "accountType": "Account Type",
-          "accountTypePlaceholder": "Select account type"
+          "accountType": "Lloji i llogarisë",
+          "accountTypePlaceholder": "Zgjidhni llojin e llogarisë"
         },
         "accountTypes": {
-          "checking": "Checking",
-          "savings": "Savings",
-          "unknown": "Account"
+          "checking": "Rryma",
+          "savings": "Kursime",
+          "unknown": "Llogari"
         }
       },
       "list": {
-        "endingIn": "ending in",
-        "expiryLabel": "Exp. date",
-        "accountTypeSuffix": "Account",
-        "accountTypeUnknown": "Account",
-        "unknownBank": "Bank",
-        "edit": "Edit",
-        "delete": "Delete"
+        "endingIn": "që mbaron me",
+        "expiryLabel": "Skadon",
+        "accountTypeSuffix": "Llogari",
+        "accountTypeUnknown": "Llogari",
+        "unknownBank": "Banka",
+        "edit": "Ndrysho",
+        "delete": "Fshi"
       },
       "dialogs": {
         "add": {
-          "title": "Add Payment Method"
+          "title": "Shto metodë pagese"
         },
         "edit": {
-          "title": "Edit Payment Method",
-          "cardLocked": "Card number cannot be changed for security reasons",
-          "bankLocked": "Account number cannot be changed for security reasons"
+          "title": "Ndrysho metodën e pagesës",
+          "cardLocked": "Numri i kartës nuk mund të ndryshohet për arsye sigurie",
+          "bankLocked": "Numri i llogarisë nuk mund të ndryshohet për arsye sigurie"
         },
         "delete": {
-          "title": "Delete Payment Method",
-          "message": "Are you sure you want to delete this payment method? This action cannot be undone."
+          "title": "Fshi metodën e pagesës",
+          "message": "A jeni të sigurt që dëshironi të fshini këtë metodë pagese? Ky veprim nuk mund të kthehet."
         }
       },
       "toasts": {
         "load": {
-          "error": "Failed to load payment methods"
+          "error": "Dështoi ngarkimi i metodave të pagesës"
         },
         "add": {
-          "success": "Payment method added successfully",
-          "error": "Failed to add payment method"
+          "success": "Metoda e pagesës u shtua me sukses",
+          "error": "Dështoi shtimi i metodës së pagesës"
         },
         "delete": {
-          "success": "Payment method deleted successfully",
-          "error": "Failed to delete payment method"
+          "success": "Metoda e pagesës u fshi me sukses",
+          "error": "Dështoi fshirja e metodës së pagesës"
         },
         "default": {
-          "success": "Default payment method updated",
-          "error": "Failed to update default payment method"
+          "success": "Metoda e pagesës kryesore u përditësua",
+          "error": "Dështoi përditësimi i metodës së pagesës kryesore"
         },
         "update": {
-          "success": "Payment method updated successfully",
-          "error": "Failed to update payment method"
+          "success": "Metoda e pagesës u përditësua me sukses",
+          "error": "Dështoi përditësimi i metodës së pagesës"
         }
       }
     },
     "subscription": {
       "header": {
-        "title": "Subscription Management",
-        "subtitle": "Manage your hotel's subscription and billing."
+        "title": "Menaxhimi i abonimit",
+        "subtitle": "Menaxhoni abonimin dhe faturimin e hotelit tuaj."
       },
       "buttons": {
-        "refresh": "Refresh",
-        "processing": "Processing...",
-        "upgradeNow": "Upgrade Now",
-        "currentPlan": "Current Plan",
-        "reactivate": "Reactivate",
-        "cancelSubscription": "Cancel Subscription",
-        "contactSupport": "Contact Support",
-        "cancel": "Cancel",
-        "confirm": "Confirm"
+        "refresh": "Rifresko",
+        "processing": "Duke përpunuar...",
+        "upgradeNow": "Përmirëso tani",
+        "currentPlan": "Plani aktual",
+        "reactivate": "Riaktivizo",
+        "cancelSubscription": "Anulo abonimin",
+        "contactSupport": "Kontakto mbështetjen",
+        "cancel": "Anulo",
+        "confirm": "Konfirmo"
       },
       "statuses": {
-        "trial": "Trial",
-        "active": "Active",
-        "cancelled": "Cancelled",
-        "expired": "Expired"
+        "trial": "Provë",
+        "active": "Aktiv",
+        "cancelled": "Anuluar",
+        "expired": "Skaduar"
       },
       "states": {
-        "loading": "Loading subscription data...",
-        "notFoundTitle": "Subscription Not Found",
-        "notFoundDescription": "Unable to load subscription information."
+        "loading": "Duke ngarkuar të dhënat e abonimit...",
+        "notFoundTitle": "Abonimi nuk u gjet",
+        "notFoundDescription": "Nuk mund të ngarkohen të dhënat e abonimit."
       },
       "labels": {
         "notAvailable": "N/A"
       },
       "trial": {
-        "name": "Trial Plan",
-        "description": "Free Trial",
-        "label": "Trial Period:",
-        "remaining": "{count} days remaining"
+        "name": "Plani provë",
+        "description": "Provë falas",
+        "label": "Periudha e provës:",
+        "remaining": "Kanë mbetur {count} ditë"
       },
       "sections": {
         "status": {
-          "title": "Current Subscription Status",
-          "statusLabel": "Status",
-          "totalReviews": "Total Reviews",
-          "averageRating": "Average Rating"
+          "title": "Statusi aktual i abonimit",
+          "statusLabel": "Statusi",
+          "totalReviews": "Totali i vlerësimeve",
+          "averageRating": "Vlerësimi mesatar"
         },
         "plans": {
-          "title": "Available Plans",
-          "currentPlanHint": "You are currently on this plan"
+          "title": "Planet e disponueshme",
+          "currentPlanHint": "Aktualisht jeni në këtë plan"
         },
         "actions": {
-          "title": "Subscription Actions"
+          "title": "Veprimet e abonimit"
         },
         "billing": {
-          "title": "Billing Information",
-          "subscriptionId": "Subscription ID:",
-          "created": "Created:",
-          "nextBilling": "Next Billing:",
-          "trialEnds": "Trial Ends:"
+          "title": "Të dhënat e faturimit",
+          "subscriptionId": "ID e abonimit:",
+          "created": "Krijuar:",
+          "nextBilling": "Faturimi i ardhshëm:",
+          "trialEnds": "Mbaron provën:"
         }
       },
-      "perInterval": "per {interval}",
+      "perInterval": "për {interval}",
       "priceLabel": "{price}/{interval}",
       "dialog": {
-        "title": "Confirm Subscription Change",
-        "upgradeTitle": "Upgrade to {plan}",
-        "description": "You are about to upgrade your subscription plan.",
-        "planLabel": "Plan:",
-        "priceLabel": "Price:",
-        "billingLabel": "Billing:",
-        "noteLabel": "Note:",
-        "noteDescription": "This is a demo environment. No actual payment will be processed."
+        "title": "Konfirmo ndryshimin e abonimit",
+        "upgradeTitle": "Përmirëso në {plan}",
+        "description": "Gati të përmirësoni planin e abonimit.",
+        "planLabel": "Plani:",
+        "priceLabel": "Çmimi:",
+        "billingLabel": "Faturimi:",
+        "noteLabel": "Shënim:",
+        "noteDescription": "Ky është një mjedis demo. Asnjë pagesë e vërtetë nuk do të përpunohet."
       },
       "toasts": {
         "load": {
-          "error": "Failed to load subscription data"
+          "error": "Dështoi ngarkimi i të dhënave të abonimit"
         },
         "update": {
-          "success": "Subscription updated successfully",
-          "error": "Failed to update subscription"
+          "success": "Abonimi u përditësua me sukses",
+          "error": "Dështoi përditësimi i abonimit"
         }
       },
       "errors": {
-        "unauthorized": "Unauthorized",
-        "hotelNotFound": "Hotel not found",
-        "planRequired": "Plan ID and action are required",
-        "unknownPlan": "Unknown Plan",
-        "fetchFailed": "Failed to fetch subscription details",
-        "updateFailed": "Failed to update subscription"
+        "unauthorized": "Akses i paautorizuar",
+        "hotelNotFound": "Hoteli nuk u gjet",
+        "planRequired": "Kërkohet ID e planit dhe veprimi",
+        "unknownPlan": "Plan i panjohur",
+        "fetchFailed": "Dështoi marrja e detajeve të abonimit",
+        "updateFailed": "Dështoi përditësimi i abonimit"
       },
       "messages": {
-        "upgraded": "Successfully upgraded to {plan}",
-        "cancelled": "Successfully cancelled subscription"
+        "upgraded": "U përmirësua me sukses në {plan}",
+        "cancelled": "Abonimi u anulua me sukses"
       },
       "plans": {
         "basic": {
-          "name": "Basic Plan",
+          "name": "Plani bazë",
           "features": [
-            "Up to 100 reviews per month",
-            "Basic analytics",
-            "QR code generation",
-            "Basic Feedback Form"
+            "Deri në 100 vlerësime në muaj",
+            "Analitikë bazë",
+            "Gjenerimi i kodave QR",
+            "Formulari bazë i reagimeve"
           ]
         },
         "professional": {
-          "name": "Professional Plan",
+          "name": "Plani profesional",
           "features": [
-            "Up to 500 reviews per month",
-            "Advanced analytics",
-            "QR code generation",
-            "Customized Star Rating Questions"
+            "Deri në 500 vlerësime në muaj",
+            "Analitikë e avancuar",
+            "Gjenerimi i kodave QR",
+            "Pyetje të personalizuara me yje"
           ]
         },
         "enterprise": {
-          "name": "Enterprise Plan",
+          "name": "Plani ndërmarrës",
           "features": [
-            "Unlimited reviews per month",
-            "Enterprise analytics",
-            "Priority support",
-            "Multi-property management"
+            "Vlerësime të pakufizuara në muaj",
+            "Analitikë ndërmarrëse",
+            "Mbështetje me prioritet",
+            "Menaxhimi i shumë pronave"
           ]
         }
       },
       "intervals": {
-        "month": "month",
-        "monthly": "monthly",
-        "year": "year",
-        "yearly": "yearly",
-        "quarter": "quarter",
-        "quarterly": "quarterly"
+        "month": "muaj",
+        "monthly": "çdo muaj",
+        "year": "vit",
+        "yearly": "çdo vit",
+        "quarter": "tremujor",
+        "quarterly": "çdo tremujor"
       }
     },
     "profile": {
       "user": {
-        "title": "Personal Information",
-        "subtitle": "Manage your personal account details.",
+        "title": "Të dhënat personale",
+        "subtitle": "Menaxhoni të dhënat personale të llogarisë tuaj.",
         "buttons": {
-          "save": "Save Changes",
-          "changePassword": "Change Password",
-          "twoFactor": "Two-Factor Authentication",
-          "changePhoto": "Change Photo",
-          "uploading": "Uploading..."
+          "save": "Ruaj ndryshimet",
+          "changePassword": "Ndrysho fjalëkalimin",
+          "twoFactor": "Autentifikim dyfaktorësh",
+          "changePhoto": "Ndrysho foton",
+          "uploading": "Duke ngarkuar..."
         },
         "images": {
-          "cardTitle": "Profile Image",
-          "hint": "JPG, PNG or GIF. Max size 5MB."
+          "cardTitle": "Foto e profilit",
+          "hint": "JPG, PNG ose GIF. Madhësi max 5MB."
         },
         "fields": {
-          "firstName": "First Name *",
-          "lastName": "Last Name *",
-          "email": "Email Address *",
-          "phone": "Phone Number"
+          "firstName": "Emri *",
+          "lastName": "Mbiemri *",
+          "email": "Adresa e emailit *",
+          "phone": "Numri i telefonit"
         },
         "placeholders": {
-          "firstName": "Enter your first name",
-          "lastName": "Enter your last name",
+          "firstName": "Vendosni emrin tuaj",
+          "lastName": "Vendosni mbiemrin tuaj",
           "email": "your.email@example.com",
           "phone": "+1 (555) 123-4567"
         },
         "cards": {
-          "personalInfo": "Personal Information",
-          "accountInfo": "Account Information",
-          "security": "Security"
+          "personalInfo": "Të dhënat personale",
+          "accountInfo": "Të dhënat e llogarisë",
+          "security": "Siguria"
         },
         "account": {
-          "type": "Account Type:",
-          "status": "Status:",
-          "memberSince": "Member Since:",
-          "lastLogin": "Last Login:",
-          "typeValue": "Hotel Owner",
-          "statusActive": "Active",
+          "type": "Lloji i llogarisë:",
+          "status": "Statusi:",
+          "memberSince": "Anëtar që nga:",
+          "lastLogin": "Hyrja e fundit:",
+          "typeValue": "Pronar hoteli",
+          "statusActive": "Aktiv",
           "notAvailable": "N/A"
         },
         "toasts": {
-          "saveSuccess": "Profile updated successfully",
-          "saveError": "Failed to update profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Profile image updated successfully",
-          "imageError": "Failed to upload image",
-          "twoFactorInfo": "Two-factor authentication will be available soon"
+          "saveSuccess": "Profili u përditësua me sukses",
+          "saveError": "Përditësimi i profilit dështoi",
+          "imageTypeError": "Zgjidhni një skedar imazhi të vlefshëm (JPG, PNG, GIF ose WebP)",
+          "imageSizeError": "Madhësia e imazhit duhet të jetë më pak se 5MB",
+          "imageSuccess": "Foto e profilit u përditësua me sukses",
+          "imageError": "Ngarkimi i imazhit dështoi",
+          "twoFactorInfo": "Autentifikimi dyfaktorësh do të jetë i disponueshëm së shpejti"
         }
       },
       "hotel": {
-        "title": "Hotel Profile",
-        "subtitle": "Manage your hotel information and settings.",
+        "title": "Profili i hotelit",
+        "subtitle": "Menaxhoni informacionin dhe cilësimet e hotelit tuaj.",
         "buttons": {
-          "save": "Save Changes",
-          "uploadLogo": "Upload Logo",
-          "uploading": "Uploading...",
-          "viewPublic": "View Public Page",
-          "contactSupport": "Contact Support"
+          "save": "Ruaj ndryshimet",
+          "uploadLogo": "Ngarko logon",
+          "uploading": "Duke ngarkuar...",
+          "viewPublic": "Shiko faqen publike",
+          "contactSupport": "Kontakto mbështetjen"
         },
         "images": {
-          "cardTitle": "Hotel Logo",
-          "alt": "Hotel Logo",
-          "hint": "JPG, PNG or GIF. Max size 5MB. Recommended: 300x300px"
+          "cardTitle": "Logo e hotelit",
+          "alt": "Logo e hotelit",
+          "hint": "JPG, PNG ose GIF. Max 5MB. E rekomanduar: 300x300px"
         },
         "cards": {
-          "actions": "Actions",
-          "hotelInfo": "Hotel Information"
+          "actions": "Veprimet",
+          "hotelInfo": "Informacioni i hotelit"
         },
         "fields": {
-          "name": "Hotel Name *",
-          "description": "Description",
-          "address": "Address",
-          "city": "City",
-          "country": "Country",
-          "phone": "Phone",
+          "name": "Emri i hotelit *",
+          "description": "Përshkrimi",
+          "address": "Adresa",
+          "city": "Qyteti",
+          "country": "Shteti",
+          "phone": "Telefoni",
           "email": "Email",
-          "website": "Website"
+          "website": "Faqja e internetit"
         },
         "placeholders": {
-          "name": "Enter hotel name",
-          "description": "Brief description of your hotel",
-          "address": "Street address",
-          "city": "City",
-          "country": "Select country",
+          "name": "Vendosni emrin e hotelit",
+          "description": "Përshkrim i shkurtër i hotelit tuaj",
+          "address": "Adresa e rrugës",
+          "city": "Qyteti",
+          "country": "Zgjidhni shtetin",
           "phone": "+1 (555) 123-4567",
           "email": "hotel@example.com",
           "website": "https://www.yourhotel.com"
         },
         "externalLinks": {
-          "title": "External Review Links",
-          "subtitle": "Add links to your TripAdvisor and Google Reviews pages to help guests share positive feedback.",
+          "title": "Lidhjet e vlerësimeve të jashtme",
+          "subtitle": "Shtoni lidhje me faqet TripAdvisor dhe Google Reviews.",
           "tripAdvisor": {
-            "label": "TripAdvisor Link",
+            "label": "Lidhja TripAdvisor",
             "placeholder": "https://www.tripadvisor.com/...",
-            "hint": "Optional: Link to your TripAdvisor page"
+            "hint": "Opsional: Lidhje me faqen tuaj TripAdvisor"
           },
           "google": {
-            "label": "Google Reviews Link",
+            "label": "Lidhja Google Reviews",
             "placeholder": "https://g.page/...",
-            "hint": "Optional: Link to your Google Reviews page"
+            "hint": "Opsional: Lidhje me faqen tuaj Google Reviews"
           }
         },
         "account": {
           "notAvailable": "N/A"
         },
         "toasts": {
-          "loadError": "Failed to load hotel profile",
-          "saveSuccess": "Hotel profile updated successfully",
-          "saveError": "Failed to update hotel profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Hotel logo updated successfully",
-          "imageError": "Failed to upload logo"
+          "loadError": "Ngarkimi i profilit të hotelit dështoi",
+          "saveSuccess": "Profili i hotelit u përditësua me sukses",
+          "saveError": "Përditësimi i profilit të hotelit dështoi",
+          "imageTypeError": "Zgjidhni një skedar imazhi të vlefshëm (JPG, PNG, GIF ose WebP)",
+          "imageSizeError": "Madhësia e imazhit duhet të jetë më pak se 5MB",
+          "imageSuccess": "Logo e hotelit u përditësua me sukses",
+          "imageError": "Ngarkimi i logos dështoi"
         }
       },
       "password": {
-        "title": "Change Password",
-        "subtitle": "Update your account password for better security.",
-        "cardTitle": "Password Change",
+        "title": "Ndrysho fjalëkalimin",
+        "subtitle": "Përditësoni fjalëkalimin e llogarisë për siguri më të mirë.",
+        "cardTitle": "Ndryshimi i fjalëkalimit",
         "buttons": {
-          "change": "Change Password",
-          "cancel": "Cancel",
-          "confirmChange": "Change Password"
+          "change": "Ndrysho fjalëkalimin",
+          "cancel": "Anulo",
+          "confirmChange": "Ndrysho fjalëkalimin"
         },
         "fields": {
-          "current": "Current Password *",
-          "new": "New Password *",
-          "confirm": "Confirm New Password *"
+          "current": "Fjalëkalimi aktual *",
+          "new": "Fjalëkalimi i ri *",
+          "confirm": "Konfirmo fjalëkalimin e ri *"
         },
         "placeholders": {
-          "current": "Enter your current password",
-          "new": "Enter your new password",
-          "confirm": "Confirm your new password"
+          "current": "Vendosni fjalëkalimin aktual",
+          "new": "Vendosni fjalëkalimin e ri",
+          "confirm": "Konfirmoni fjalëkalimin e ri"
         },
         "strength": {
-          "label": "Password Strength:",
-          "weak": "Weak",
-          "medium": "Medium",
-          "strong": "Strong"
+          "label": "Forca e fjalëkalimit:",
+          "weak": "I dobët",
+          "medium": "Mesatar",
+          "strong": "I fortë"
         },
         "requirements": {
-          "title": "Password Requirements",
-          "minLength": "At least 8 characters long",
-          "uppercase": "Contains uppercase letters",
-          "lowercase": "Contains lowercase letters",
-          "numbers": "Contains numbers",
-          "special": "Contains special characters"
+          "title": "Kërkesat për fjalëkalimin",
+          "minLength": "Të paktën 8 karaktere",
+          "uppercase": "Përmban shkronja të mëdha",
+          "lowercase": "Përmban shkronja të vogla",
+          "numbers": "Përmban numra",
+          "special": "Përmban karaktere të veçanta"
         },
         "tips": {
-          "title": "Security Tips",
-          "tip": "Tip: Use a unique password that you don't use elsewhere.",
-          "warning": "Warning: Never share your password with anyone."
+          "title": "Këshilla sigurie",
+          "tip": "Këshillë: Përdorni një fjalëkalim unik që nuk e përdorni gjetkund.",
+          "warning": "Paralajmërim: Asnjëherë mos e ndani fjalëkalimin me askënd."
         },
         "validation": {
-          "currentRequired": "Current password is required",
-          "newRequired": "New password is required",
-          "minLength": "New password must be at least 8 characters long",
-          "complexity": "New password must contain uppercase, lowercase, numbers, and special characters",
-          "confirmMismatch": "New password and confirmation do not match",
-          "sameAsCurrent": "New password must be different from current password"
+          "currentRequired": "Fjalëkalimi aktual kërkohet",
+          "newRequired": "Fjalëkalimi i ri kërkohet",
+          "minLength": "Fjalëkalimi i ri duhet të jetë të paktën 8 karaktere",
+          "complexity": "Fjalëkalimi i ri duhet të përmbajë shkronja të mëdha, të vogla, numra dhe karaktere të veçanta",
+          "confirmMismatch": "Fjalëkalimi i ri dhe konfirmimi nuk përputhen",
+          "sameAsCurrent": "Fjalëkalimi i ri duhet të jetë i ndryshëm nga ai aktual"
         },
         "toasts": {
-          "changeSuccess": "Password changed successfully",
-          "changeError": "Failed to change password"
+          "changeSuccess": "Fjalëkalimi u ndryshua me sukses",
+          "changeError": "Ndryshimi i fjalëkalimit dështoi"
         },
         "confirm": {
-          "title": "Confirm Password Change",
-          "message": "Are you sure you want to change your password?",
-          "warning": "This action will log you out of all devices and you'll need to log in again."
+          "title": "Konfirmo ndryshimin e fjalëkalimit",
+          "message": "A jeni të sigurt që dëshironi të ndryshoni fjalëkalimin?",
+          "warning": "Ky veprim do t'ju çojë jashtë nga të gjitha pajisjet dhe do të duhet të identifikoheni përsëri."
         },
         "accessibility": {
-          "show": "Show password",
-          "hide": "Hide password"
+          "show": "Shfaq fjalëkalimin",
+          "hide": "Fshih fjalëkalimin"
         }
       },
       "subscription": {
         "errors": {
-          "unauthorized": "Unauthorized",
-          "hotelNotFound": "Hotel not found",
-          "planRequired": "Plan ID and action are required",
-          "unknownPlan": "Unknown Plan",
-          "fetchFailed": "Failed to fetch subscription details",
-          "updateFailed": "Failed to update subscription"
+          "unauthorized": "Akses i paautorizuar",
+          "hotelNotFound": "Hoteli nuk u gjet",
+          "planRequired": "Kërkohet ID e planit dhe veprimi",
+          "unknownPlan": "Plan i panjohur",
+          "fetchFailed": "Dështoi marrja e detajeve të abonimit",
+          "updateFailed": "Dështoi përditësimi i abonimit"
         },
         "messages": {
-          "upgraded": "Successfully upgraded to {plan}",
-          "cancelled": "Successfully cancelled subscription"
+          "upgraded": "U përmirësua me sukses në {plan}",
+          "cancelled": "Abonimi u anulua me sukses"
         },
         "plans": {
           "basic": {
-            "name": "Basic Plan",
+            "name": "Plani bazë",
             "features": [
-              "Up to 100 reviews per month",
-              "Basic analytics",
-              "QR code generation",
-              "Basic Feedback Form"
+              "Deri në 100 vlerësime në muaj",
+              "Analitikë bazë",
+              "Gjenerimi i kodave QR",
+              "Formulari bazë i reagimeve"
             ]
           },
           "professional": {
-            "name": "Professional Plan",
+            "name": "Plani profesional",
             "features": [
-              "Up to 500 reviews per month",
-              "Advanced analytics",
-              "QR code generation",
-              "Customized Star Rating Questions"
+              "Deri në 500 vlerësime në muaj",
+              "Analitikë e avancuar",
+              "Gjenerimi i kodave QR",
+              "Pyetje të personalizuara me yje"
             ]
           },
           "enterprise": {
-            "name": "Enterprise Plan",
+            "name": "Plani ndërmarrës",
             "features": [
-              "Unlimited reviews",
-              "Full analytics suite",
-              "QR code generation",
-              "All type of questions"
+              "Vlerësime të pakufizuara",
+              "Komplet i plotë analitike",
+              "Gjenerimi i kodave QR",
+              "Të gjitha llojet e pyetjeve"
             ]
           }
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Njoftimet",
+        "ariaLabel": "Njoftimet",
+        "iconAlt": "Ikona e njoftimit",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Shëno të gjitha si të lexuara",
+          "refresh": "Rifresko"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Ende nuk ka njoftime"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "newFormCreated": "New Form Created",
-          "success": "Success",
-          "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "newReview": "Vlerësim i ri",
+          "reviewApproved": "Vlerësimi u miratua",
+          "reviewRejected": "Vlerësimi u refuzua",
+          "subscriptionExpiring": "Abonimi po skadon",
+          "subscriptionCancelled": "Abonimi u anulua",
+          "escalationReceived": "Eskalimi u mor",
+          "escalationResponded": "Iu përgjigj eskalimit",
+          "systemAlert": "Njoftim sistemi",
+          "newHotelRegistration": "Regjistrim i ri hoteli",
+          "newFormCreated": "Formular i ri i krijuar",
+          "success": "Sukses",
+          "info": "Informacion",
+          "warning": "Paralajmërim",
+          "error": "Gabim",
+          "generic": "Njoftim"
         }
       },
       "profileSidebar": {
         "greeting": {
-          "title": "Welcome",
-          "fallbackName": "Admin User"
+          "title": "Mirë se vini",
+          "fallbackName": "Përdorues administrues"
         },
         "actions": {
           "profile": {
-            "title": "Profile",
-            "description": "Manage your account settings"
+            "title": "Profili",
+            "description": "Menaxho cilësimet e llogarisë"
           },
           "signOut": {
-            "title": "Sign Out",
-            "description": "Logout from your account"
+            "title": "Dilni",
+            "description": "Dilni nga llogaria"
           }
         },
         "notifications": {
-          "title": "Recent Notifications",
-          "loading": "Loading notifications...",
-          "summary": "You have {count} unread notifications",
-          "empty": "No new notifications"
+          "title": "Njoftimet e fundit",
+          "loading": "Duke ngarkuar njoftimet...",
+          "summary": "Keni {count} njoftime të palexuara",
+          "empty": "Nuk ka njoftime të reja"
         },
         "time": {
-          "justNow": "Just now"
+          "justNow": "Vetëm tani"
         }
       }
     },
     "communications": {
       "notifications": {
-        "title": "Notifications",
-        "subtitle": "Manage system notifications and alerts",
+        "title": "Njoftimet",
+        "subtitle": "Menaxhoni njoftimet dhe paralajmërimet e sistemit",
         "buttons": {
-          "deleteSelected": "Delete Selected ({count})",
-          "markAllAsRead": "Mark All as Read",
-          "refresh": "Refresh"
+          "deleteSelected": "Fshi të zgjedhurat ({count})",
+          "markAllAsRead": "Shëno të gjitha si të lexuara",
+          "refresh": "Rifresko"
         },
         "filters": {
-          "title": "Filters",
-          "searchLabel": "Search Notifications",
-          "searchPlaceholder": "Search by title, message, or user...",
-          "type": "Type",
-          "allTypes": "All Types",
+          "title": "Filtrat",
+          "searchLabel": "Kërko njoftime",
+          "searchPlaceholder": "Kërko sipas titullit, mesazhit ose përdoruesit...",
+          "type": "Lloji",
+          "allTypes": "Të gjitha llojet",
           "status": {
-            "label": "Status",
-            "all": "All Status",
-            "unread": "Unread",
-            "read": "Read"
+            "label": "Statusi",
+            "all": "Të gjitha statuset",
+            "unread": "Të palexuara",
+            "read": "Të lexuara"
           },
           "types": {
-            "newReview": "New Review",
-            "reviewApproved": "Review Approved",
-            "reviewRejected": "Review Rejected",
-            "subscriptionExpiring": "Subscription Expiring",
-            "subscriptionCancelled": "Subscription Cancelled",
-            "escalationReceived": "Escalation Received",
-            "escalationResponded": "Escalation Responded",
-            "systemAlert": "System Alert",
-            "newHotelRegistration": "New Hotel Registration",
-            "newFormCreated": "New Form Created",
-            "success": "Success",
-            "info": "Info",
-            "warning": "Warning",
-            "error": "Error"
+            "newReview": "Vlerësim i ri",
+            "reviewApproved": "Vlerësimi u miratua",
+            "reviewRejected": "Vlerësimi u refuzua",
+            "subscriptionExpiring": "Abonimi po skadon",
+            "subscriptionCancelled": "Abonimi u anulua",
+            "escalationReceived": "Eskalimi u mor",
+            "escalationResponded": "Iu përgjigj eskalimit",
+            "systemAlert": "Njoftim sistemi",
+            "newHotelRegistration": "Regjistrim i ri hoteli",
+            "newFormCreated": "Formular i ri i krijuar",
+            "success": "Sukses",
+            "info": "Informacion",
+            "warning": "Paralajmërim",
+            "error": "Gabim"
           }
         },
         "states": {
-          "loading": "Loading notifications...",
-          "empty": "No notifications found"
+          "loading": "Duke ngarkuar njoftimet...",
+          "empty": "Nuk u gjetën njoftime"
         },
         "table": {
-          "type": "Type",
-          "message": "Message",
-          "date": "Date",
-          "actions": "Actions",
+          "type": "Lloji",
+          "message": "Mesazhi",
+          "date": "Data",
+          "actions": "Veprimet",
           "status": {
-            "label": "Status",
-            "read": "Read",
-            "new": "New"
+            "label": "Statusi",
+            "read": "Të lexuar",
+            "new": "Të reja"
           }
         },
         "tooltips": {
-          "markAsRead": "Mark as Read",
-          "view": "View",
-          "delete": "Delete"
+          "markAsRead": "Shëno si të lexuar",
+          "view": "Shiko",
+          "delete": "Fshi"
         },
         "dates": {
-          "justNow": "Just now",
-          "hoursAgo": "{hours}h ago",
-          "yesterday": "Yesterday"
+          "justNow": "Vetëm tani",
+          "hoursAgo": "para {hours}h",
+          "yesterday": "Dje"
         },
         "types": {
-          "NEW_REVIEW": "New Review",
-          "REVIEW_APPROVED": "Review Approved",
-          "REVIEW_REJECTED": "Review Rejected",
-          "SUBSCRIPTION_EXPIRING": "Subscription Expiring",
-          "SUBSCRIPTION_CANCELLED": "Subscription Cancelled",
-          "ESCALATION_RECEIVED": "Escalation Received",
-          "ESCALATION_RESPONDED": "Escalation Responded",
-          "SYSTEM_ALERT": "System Alert",
-          "NEW_HOTEL_REGISTRATION": "New Hotel Registration",
-          "NEW_FORM_CREATED": "New Form Created",
-          "SUCCESS": "Success",
-          "INFO": "Info",
-          "WARNING": "Warning",
-          "ERROR": "Error"
+          "NEW_REVIEW": "Vlerësim i ri",
+          "REVIEW_APPROVED": "Vlerësimi u miratua",
+          "REVIEW_REJECTED": "Vlerësimi u refuzua",
+          "SUBSCRIPTION_EXPIRING": "Abonimi po skadon",
+          "SUBSCRIPTION_CANCELLED": "Abonimi u anulua",
+          "ESCALATION_RECEIVED": "Eskalimi u mor",
+          "ESCALATION_RESPONDED": "Iu përgjigj eskalimit",
+          "SYSTEM_ALERT": "Njoftim sistemi",
+          "NEW_HOTEL_REGISTRATION": "Regjistrim i ri hoteli",
+          "NEW_FORM_CREATED": "Formular i ri i krijuar",
+          "SUCCESS": "Sukses",
+          "INFO": "Informacion",
+          "WARNING": "Paralajmërim",
+          "ERROR": "Gabim"
         },
         "toasts": {
-          "loadError": "Failed to load notifications",
-          "markReadSuccess": "Notification marked as read",
-          "markReadError": "Failed to mark notification as read",
-          "markAllReadSuccess": "All notifications marked as read",
-          "markAllReadError": "Failed to mark all notifications as read",
-          "deleteSuccess": "Notification deleted successfully",
-          "deleteError": "Failed to delete notification",
-          "bulkDeleteSuccess": "{count} notification(s) deleted successfully",
-          "bulkDeleteError": "Failed to delete some notifications"
+          "loadError": "Dështoi ngarkimi i njoftimeve",
+          "markReadSuccess": "Njoftimi u shënua si i lexuar",
+          "markReadError": "Shënimi si i lexuar dështoi",
+          "markAllReadSuccess": "Të gjitha njoftimet u shënuan si të lexuara",
+          "markAllReadError": "Shënimi i të gjithave si të lexuar dështoi",
+          "deleteSuccess": "Njoftimi u fshi me sukses",
+          "deleteError": "Fshirja e njoftimit dështoi",
+          "bulkDeleteSuccess": "{count} njoftime u fshinë me sukses",
+          "bulkDeleteError": "Fshirja e disa njoftimeve dështoi"
         },
         "confirm": {
-          "deleteMessage": "Are you sure you want to delete this notification?",
-          "deleteHeader": "Delete Confirmation",
-          "bulkDeleteMessage": "Are you sure you want to delete {count} selected notification(s)?",
-          "bulkDeleteHeader": "Bulk Delete Confirmation"
+          "deleteMessage": "A jeni të sigurt që dëshironi të fshini këtë njoftim?",
+          "deleteHeader": "Konfirmimi i fshirjes",
+          "bulkDeleteMessage": "A jeni të sigurt që dëshironi të fshini {count} njoftimet e zgjedhura?",
+          "bulkDeleteHeader": "Konfirmimi i fshirjes në masë"
         }
       }
     }
   },
   "auth": {
     "register": {
-      "title": "Register",
-      "subtitle": "Let's get started",
+      "title": "Regjistrimi",
+      "subtitle": "Le të fillojmë",
       "placeholders": {
-        "firstName": "First Name",
-        "lastName": "Last Name",
+        "firstName": "Emri",
+        "lastName": "Mbiemri",
         "email": "Email",
-        "phone": "Phone (Optional)",
-        "password": "Password"
+        "phone": "Telefoni (opsional)",
+        "password": "Fjalëkalimi"
       },
       "buttons": {
-        "signUp": "Sign Up",
-        "signingUp": "Signing Up..."
+        "signUp": "Regjistrohu",
+        "signingUp": "Duke u regjistruar..."
       },
-      "agreementPrefix": "I have read the",
+      "agreementPrefix": "Kam lexuar",
       "toasts": {
-        "acceptTerms": "Please accept the terms and conditions",
-        "missingFields": "Please fill in all required fields",
-        "success": "Registration successful! Please check your email.",
-        "error": "Registration failed. Please try again."
+        "acceptTerms": "Ju lutemi pranoni kushtet dhe kushtet",
+        "missingFields": "Ju lutemi plotësoni të gjitha fushat e kërkuara",
+        "success": "Regjistrimi u krye me sukses! Ju lutemi kontrolloni emailin tuaj.",
+        "error": "Regjistrimi dështoi. Ju lutemi provoni përsëri."
       }
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter the email address associated with your account and we'll send an email with instructions to reset your password.",
+      "title": "Keni harruar fjalëkalimin?",
+      "description": "Vendosni adresën e emailit të lidhur me llogarinë tuaj dhe do t'ju dërgojmë udhëzime për rivendosjen e fjalëkalimit.",
       "messages": {
-        "instructions": "Check your email for password reset instructions"
+        "instructions": "Kontrolloni emailin për udhëzime për rivendosjen e fjalëkalimit"
       },
       "submitted": {
-        "title": "Check your email!",
-        "description": "We have sent an email with a password reset link to {email}.",
-        "hint": "Didn't receive the email? Please check your spam folder."
+        "title": "Kontrolloni emailin tuaj!",
+        "description": "Kemi dërguar një email me një lidhje për rivendosjen e fjalëkalimit në {email}.",
+        "hint": "Nuk e morët emailin? Ju lutemi kontrolloni dosjen e të padëshiruarave."
       },
       "fields": {
-        "email": "Email Address",
-        "emailPlaceholder": "Enter your email address"
+        "email": "Adresa e emailit",
+        "emailPlaceholder": "Vendosni adresën tuaj të emailit"
       },
       "buttons": {
-        "send": "Send Instructions",
-        "sending": "Sending...",
-        "resend": "Resend Email",
-        "backToLogin": "Back to Login"
+        "send": "Dërgo udhëzimet",
+        "sending": "Duke dërguar...",
+        "resend": "Dërgo përsëri emailin",
+        "backToLogin": "Kthehu te hyrja"
       },
       "validation": {
-        "required": "Email is required",
-        "invalid": "Please enter a valid email address"
+        "required": "Emaili është i detyrueshëm",
+        "invalid": "Ju lutemi vendosni një adresë emaili të vlefshme"
       },
       "toasts": {
-        "success": "Password reset email sent successfully",
-        "error": "Failed to send reset email",
-        "unexpected": "An unexpected error occurred. Please try again."
+        "success": "Emaili për rivendosjen e fjalëkalimit u dërgua me sukses",
+        "error": "Dërgimi i emailit dështoi",
+        "unexpected": "Ndodhi një gabim i papritur. Ju lutemi provoni përsëri."
       }
     },
     "resetPassword": {
-      "title": "Create New Password!",
-      "subtitle": "Enter a new password below to update your account credentials.",
+      "title": "Krijoni fjalëkalim të ri!",
+      "subtitle": "Vendosni një fjalëkalim të ri më poshtë për të përditësuar kredencialet e llogarisë.",
       "fields": {
-        "newPassword": "New Password",
-        "confirmPassword": "Confirm Password"
+        "newPassword": "Fjalëkalimi i ri",
+        "confirmPassword": "Konfirmo fjalëkalimin"
       },
       "placeholders": {
-        "password": "Enter your password",
-        "confirmPassword": "Confirm your password"
+        "password": "Vendosni fjalëkalimin tuaj",
+        "confirmPassword": "Konfirmoni fjalëkalimin tuaj"
       },
       "buttons": {
-        "reset": "Reset Password",
-        "resetting": "Resetting..."
+        "reset": "Rivendos fjalëkalimin",
+        "resetting": "Duke rivendosur..."
       },
       "link": {
-        "backToLogin": "Back to Login"
+        "backToLogin": "Kthehu te hyrja"
       },
       "states": {
-        "validating": "Validating reset link...",
-        "loading": "Loading..."
+        "validating": "Duke vlerësuar lidhjen...",
+        "loading": "Duke u ngarkuar..."
       },
       "errors": {
-        "passwordMin": "Password must be at least 6 characters long",
-        "passwordMax": "Password must be less than 128 characters",
-        "confirmRequired": "Please confirm your password",
-        "mismatch": "Passwords do not match"
+        "passwordMin": "Fjalëkalimi duhet të jetë të paktën 6 karaktere",
+        "passwordMax": "Fjalëkalimi duhet të jetë më pak se 128 karaktere",
+        "confirmRequired": "Ju lutemi konfirmoni fjalëkalimin tuaj",
+        "mismatch": "Fjalëkalimet nuk përputhen"
       },
       "toasts": {
-        "invalidLink": "Invalid reset link",
-        "invalidOrExpired": "Invalid or expired reset link",
-        "failedValidation": "Failed to validate reset link",
-        "success": "Password reset successfully. You can now log in with your new password.",
-        "failure": "Failed to reset password",
-        "unexpected": "An unexpected error occurred"
+        "invalidLink": "Lidhje e pavlefshme për rivendosje",
+        "invalidOrExpired": "Lidhje e pavlefshme ose e skaduar",
+        "failedValidation": "Vlerësimi i lidhjes dështoi",
+        "success": "Fjalëkalimi u rivendos me sukses. Tani mund të hyni me fjalëkalimin tuaj të ri.",
+        "failure": "Rivendosja e fjalëkalimit dështoi",
+        "unexpected": "Ndodhi një gabim i papritur"
       },
       "accessibility": {
-        "showPassword": "Show password",
-        "hidePassword": "Hide password"
+        "showPassword": "Shfaq fjalëkalimin",
+        "hidePassword": "Fshih fjalëkalimin"
       }
     }
   },
   "authFooter": {
     "brand": {
       "title": "C-Reviews",
-      "description": "We help hotels connect with their guests through seamless feedback solutions. Our platform makes it easy to create forms, gather insights, and elevate the guest experience with integrity and professionalism at the core of everything we do.",
-      "footerImageAlt": "C-Reviews decorative footer"
+      "description": "Ne ndihmojmë hotelet të lidhen me mysafirët e tyre përmes zgjidhjeve të qetë për reagime. Platforma jonë e bën të lehtë krijimin e formularëve, mbledhjen e të dhënave dhe ngritjen e përvojës së mysafirit me integritet dhe profesionalizëm në thelb të gjithë asaj që bëjmë.",
+      "footerImageAlt": "C-Reviews fund dekorativ"
     },
     "quickLinks": {
-      "title": "Quick Links",
+      "title": "Lidhje të shpejta",
       "items": {
-        "home": "Home",
-        "about": "About Us",
-        "features": "Features",
-        "contact": "Contact Us"
+        "home": "Kryefaqja",
+        "about": "Rreth nesh",
+        "features": "Veçoritë",
+        "contact": "Kontaktoni"
       }
     },
     "resources": {
-      "title": "Resources",
+      "title": "Burime",
       "items": {
-        "dashboard": "Dashboard",
-        "feedbacks": "Feedbacks",
-        "hotelProfile": "Hotel Profile",
-        "support": "Support",
-        "ownerProfile": "Owner Profile"
+        "dashboard": "Paneli",
+        "feedbacks": "Reagimet",
+        "hotelProfile": "Profili i hotelit",
+        "support": "Mbështetje",
+        "ownerProfile": "Profili i pronarit"
       }
     },
     "legal": {
-      "title": "Legal",
+      "title": "Juridik",
       "items": {
-        "privacyPolicy": "Privacy Policy",
-        "companyPolicy": "Company Policy",
-        "terms": "Terms & Conditions"
+        "privacyPolicy": "Politika e privatësisë",
+        "companyPolicy": "Politika e kompanisë",
+        "terms": "Kushtet dhe kushtet"
       }
     },
     "connect": {
-      "title": "Connect with Us",
-      "emailPlaceholder": "Email Address",
-      "submitLabel": "Subscribe",
+      "title": "Lidhuni me ne",
+      "emailPlaceholder": "Adresa e emailit",
+      "submitLabel": "Abonohu",
       "social": {
-        "facebook": "Follow us on Facebook",
-        "instagram": "Follow us on Instagram",
-        "linkedin": "Connect with us on LinkedIn"
+        "facebook": "Na ndiqni në Facebook",
+        "instagram": "Na ndiqni në Instagram",
+        "linkedin": "Lidhuni me ne në LinkedIn"
       }
     },
-    "copyright": "© 2024 C-Reviews LLC. All Rights Reserved!"
+    "copyright": "© 2024 C-Reviews LLC. Të gjitha të drejtat e rezervuara!"
   }
 }
 

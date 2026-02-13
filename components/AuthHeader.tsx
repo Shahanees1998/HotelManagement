@@ -3,13 +3,14 @@ import React from "react";
 import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
 import { LanguageSelector } from "./LanguageSelector";
+import Image from "next/image";
 
 const AuthHeader = () => {
     const router = useRouter();
 
     return (
         <div style={{ 
-            padding: "1.5rem 2rem", 
+            padding: "0rem 2rem", 
             display: "flex", 
             justifyContent: "space-between", 
             alignItems: "center",
@@ -27,7 +28,7 @@ const AuthHeader = () => {
                 }}
                 onClick={() => router.push('/')}
             >
-                C-Reviews
+                <Image src="/images/logo-blue.png" alt="logo" width={100} height={100} />
             </div>
             <div style={{ display: "flex", gap: "1rem" }}>
                      {/* Language Selector */}

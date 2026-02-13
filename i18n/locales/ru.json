@@ -122,6 +122,23 @@
         "table": {
           "date": "Дата"
         }
+      },
+      "comparisonChart": {
+        "title": "Сравнение отзывов",
+        "period": "Период",
+        "weekly": "Еженедельно",
+        "monthly": "Ежемесячно",
+        "loading": "Загрузка данных для сравнения...",
+        "noData": "Нет данных для сравнения",
+        "positiveReviews": "Положительные отзывы",
+        "negativeReviews": "Отрицательные отзывы"
+      },
+      "stats": {
+        "totalReviews": "Всего отзывов",
+        "averageRating": "Средний рейтинг",
+        "positiveReviews": "Положительные отзывы",
+        "negativeReviews": "Отрицательные отзывы",
+        "responseRate": "Процент ответов"
       }
     },
     "forms": {

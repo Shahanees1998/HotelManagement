@@ -25,27 +25,27 @@
     "lv": "Latvian"
   },
   "common": {
-    "warning": "Warning",
-    "success": "Success",
-    "error": "Error",
-    "info": "Info",
-    "agreeTo": "I agree to the",
-    "and": "and",
-    "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy",
-    "alreadyHaveAccount": "Already have an account?",
-    "login": "Login",
-    "logout": "Logout",
-    "orRegisterVia": "or register via",
-    "selectLanguage": "Select language",
-    "getStarted": "Get Started"
+    "warning": "Upozorenje",
+    "success": "Uspjeh",
+    "error": "Greška",
+    "info": "Informacija",
+    "agreeTo": "Slažem se s",
+    "and": "i",
+    "terms": "Uvjetima korištenja",
+    "privacy": "Pravilima o privatnosti",
+    "alreadyHaveAccount": "Već imate račun?",
+    "login": "Prijava",
+    "logout": "Odjava",
+    "orRegisterVia": "ili se registrirajte putem",
+    "selectLanguage": "Odaberite jezik",
+    "getStarted": "Započni"
   },
   "components": {
     "customPaginator": {
-      "itemsPerPage": "Items per page",
-      "rangeInfo": "{start}-{end} of {total} entries",
-      "previousPage": "Previous page",
-      "nextPage": "Next page"
+      "itemsPerPage": "Stavki po stranici",
+      "rangeInfo": "{start}-{end} od {total} unosa",
+      "previousPage": "Prethodna stranica",
+      "nextPage": "Sljedeća stranica"
     }
   },
   "countries": {
@@ -66,1293 +66,1302 @@
   },
   "registerHotel": {
     "step1": {
-      "title": "Owner Information!",
+      "title": "Podaci o vlasniku!",
       "fields": {
-        "fullName": "Name",
-        "email": "Email Address",
-        "phone": "Phone Number",
-        "password": "Password"
+        "fullName": "Ime",
+        "email": "E-mail adresa",
+        "phone": "Broj telefona",
+        "password": "Lozinka"
       },
       "placeholders": {
-        "fullName": "Enter your name",
-        "email": "Enter your email address",
-        "phone": "Enter your phone number",
-        "password": "Enter your password"
+        "fullName": "Unesite svoje ime",
+        "email": "Unesite svoju e-mail adresu",
+        "phone": "Unesite svoj broj telefona",
+        "password": "Unesite svoju lozinku"
       },
-      "cta": "Let's Keep Going!"
+      "cta": "Nastavimo!"
     },
     "step2": {
-      "title": "Hotel Information!",
-      "subtitle": "Is my data safe?",
+      "title": "Podaci o hotelu!",
+      "subtitle": "Jesu li moji podaci sigurni?",
       "fields": {
-        "hotelName": "Hotel Name",
-        "hotelWebsite": "Hotel Website",
-        "hotelAddress": "Hotel Address",
-        "city": "City",
-        "country": "Country",
-        "hotelDescription": "Hotel Description"
+        "hotelName": "Naziv hotela",
+        "hotelWebsite": "Web stranica hotela",
+        "hotelAddress": "Adresa hotela",
+        "city": "Grad",
+        "country": "Država",
+        "hotelDescription": "Opis hotela"
       },
       "placeholders": {
-        "hotelName": "Enter hotel name",
-        "hotelWebsite": "Enter hotel website url",
-        "hotelAddress": "Enter hotel street address",
-        "city": "Enter hotel city",
-        "country": "Select Country",
-        "hotelDescription": "Enter brief description of your hotel"
+        "hotelName": "Unesite naziv hotela",
+        "hotelWebsite": "Unesite URL web stranice hotela",
+        "hotelAddress": "Unesite adresu hotela",
+        "city": "Unesite grad",
+        "country": "Odaberite državu",
+        "hotelDescription": "Kratak opis vašeg hotela"
       }
     },
     "buttons": {
-      "back": "Back",
-      "register": "Register Now",
-      "registering": "Registering..."
+      "back": "Natrag",
+      "register": "Registriraj se",
+      "registering": "Registracija..."
     },
     "toasts": {
-      "missingRequired": "Please fill in all required fields",
-      "passwordLength": "Password must be at least 6 characters long",
-      "acceptTerms": "Please accept the terms and conditions",
-      "acceptTermsPrivacy": "Please accept the terms and conditions and privacy policy",
-      "success": "Hotel registration successful! Please check your email for verification.",
-      "error": "Registration failed",
-      "errorGeneric": "Registration failed. Please try again."
+      "missingRequired": "Ispunite sva obavezna polja",
+      "passwordLength": "Lozinka mora imati najmanje 6 znakova",
+      "acceptTerms": "Prihvatite uvjete korištenja",
+      "acceptTermsPrivacy": "Prihvatite uvjete korištenja i politiku privatnosti",
+      "success": "Registracija hotela uspješna! Provjerite e-mail za potvrdu.",
+      "error": "Registracija nije uspjela",
+      "errorGeneric": "Registracija nije uspjela. Pokušajte ponovno."
     },
     "images": {
-      "ownerAlt": "Register Hotel - Owner Information",
-      "hotelAlt": "Register Hotel - Hotel Information"
+      "ownerAlt": "Registracija hotela - Podaci o vlasniku",
+      "hotelAlt": "Registracija hotela - Podaci o hotelu"
     }
   },
   "hotel": {
     "dashboard": {
       "recentReviews": {
-        "title": "Recent Reviews",
-        "description": "View and manage your recent reviews.",
+        "title": "Nedavne recenzije",
+        "description": "Pregledajte i upravljajte svojim nedavnim recenzijama.",
         "states": {
-          "loading": "Loading recent reviews..."
+          "loading": "Učitavanje nedavnih recenzija..."
         },
         "table": {
-          "date": "Date"
+          "date": "Datum"
         }
       },
       "comparisonChart": {
-        "title": "Review Comparison",
-        "period": "Period",
-        "weekly": "Weekly",
-        "monthly": "Monthly",
-        "loading": "Loading comparison data...",
-        "noData": "No comparison data available"
+        "title": "Usporedba recenzija",
+        "period": "Razdoblje",
+        "weekly": "Tjedno",
+        "monthly": "Mjesečno",
+        "loading": "Učitavanje podataka za usporedbu...",
+        "noData": "Nema dostupnih podataka za usporedbu",
+        "positiveReviews": "Pozitivne recenzije",
+        "negativeReviews": "Negativne recenzije"
+      },
+      "stats": {
+        "totalReviews": "Ukupno recenzija",
+        "averageRating": "Prosječna ocjena",
+        "positiveReviews": "Pozitivne recenzije",
+        "negativeReviews": "Negativne recenzije",
+        "responseRate": "Stopa odgovora"
       }
     },
     "forms": {
       "header": {
-        "title": "Feedback Form",
-        "subtitle": "Manage your guest feedback form. You can update this form at any time."
+        "title": "Obrazac za povratne informacije",
+        "subtitle": "Upravljajte obrazcem za povratne informacije gostiju. Obrazac možete ažurirati u bilo kojem trenutku."
       },
       "states": {
-        "loading": "Loading form..."
+        "loading": "Učitavanje obrasca..."
       },
       "fields": {
-        "title": "Form Title",
+        "title": "Naslov obrasca",
         "status": "Status",
-        "active": "Active",
-        "inactive": "Inactive",
-        "description": "Description",
-        "noDescription": "No description provided",
-        "totalResponses": "Total Responses"
+        "active": "Aktivan",
+        "inactive": "Neaktivan",
+        "description": "Opis",
+        "noDescription": "Nema opisa",
+        "totalResponses": "Ukupno odgovora"
       },
       "buttons": {
-        "edit": "Edit Form",
-        "preview": "Preview Form",
-        "showQr": "Show QR Code",
-        "create": "Create Form",
-        "downloadQr": "Download QR Code",
-        "copyUrl": "Copy URL"
+        "edit": "Uredi obrazac",
+        "preview": "Pregled obrasca",
+        "showQr": "Prikaži QR kod",
+        "create": "Stvori obrazac",
+        "downloadQr": "Preuzmi QR kod",
+        "copyUrl": "Kopiraj URL"
       },
       "empty": {
-        "title": "No Form Created Yet",
-        "description": "Create your feedback form to start collecting guest reviews."
+        "title": "Obrazac još nije stvoren",
+        "description": "Stvorite obrazac za povratne informacije kako biste počeli prikupljati recenzije gostiju."
       },
       "preview": {
-        "title": "Form Preview",
-        "tooltipBack": "Back to Forms",
-        "tag": "Preview Mode - Interactions Disabled"
+        "title": "Pregled obrasca",
+        "tooltipBack": "Natrag na obrasce",
+        "tag": "Način pregleda – interakcije onemogućene"
       },
       "qrDialog": {
-        "title": "QR Code - {title}"
+        "title": "QR kod - {title}"
       },
       "toasts": {
-        "loadError": "Failed to load form",
-        "slugMissing": "Hotel slug not found. Cannot preview form.",
-        "createSuccess": "Form created successfully",
-        "updateSuccess": "Form updated successfully",
-        "saveError": "Failed to save form",
-        "qrGenerated": "QR code generated successfully",
-        "qrExists": "QR code already exists for this form",
-        "qrError": "Failed to handle QR code",
-        "noUrl": "No URL to copy",
-        "copiedDetail": "URL copied to clipboard",
-        "copyError": "Failed to copy URL to clipboard"
+        "loadError": "Učitavanje obrasca nije uspjelo",
+        "slugMissing": "Identifikator hotela nije pronađen. Pregled nije moguć.",
+        "createSuccess": "Obrazac je uspješno stvoren",
+        "updateSuccess": "Obrazac je uspješno ažuriran",
+        "saveError": "Spremanje obrasca nije uspjelo",
+        "qrGenerated": "QR kod je uspješno generiran",
+        "qrExists": "QR kod za ovaj obrazac već postoji",
+        "qrError": "Obrada QR koda nije uspjela",
+        "noUrl": "Nema URL-a za kopiranje",
+        "copiedDetail": "URL je kopiran u međuspremnik",
+        "copyError": "Kopiranje URL-a nije uspjelo"
       },
       "builder": {
         "header": {
-          "edit": "Edit Form",
-          "create": "Create New Form",
-          "preview": "Preview Form",
-          "livePreview": "Live Preview",
-          "formBuilderToggle": "Form Builder",
-          "livePreviewToggle": "Live Preview",
-          "backTooltip": "Back to Forms"
+          "edit": "Uredi obrazac",
+          "create": "Stvori novi obrazac",
+          "preview": "Pregled obrasca",
+          "livePreview": "Pregled uživo",
+          "formBuilderToggle": "Graditelj obrazaca",
+          "livePreviewToggle": "Pregled uživo",
+          "backTooltip": "Natrag na obrasce"
         },
         "buttons": {
-          "save": "Save Form",
-          "saveTooltip": "Save the form",
-          "addNew": "Add New",
-          "addOption": "Add",
-          "cancel": "Cancel",
-          "update": "Update",
-          "add": "Add"
+          "save": "Spremi obrazac",
+          "saveTooltip": "Spremi obrazac",
+          "addNew": "Dodaj novo",
+          "addOption": "Dodaj",
+          "cancel": "Odustani",
+          "update": "Ažuriraj",
+          "add": "Dodaj"
         },
         "sections": {
-          "settings": "Form Settings",
-          "questions": "Questions",
-          "predefined": "Predefined Questions",
-          "custom": "Custom Questions"
+          "settings": "Postavke obrasca",
+          "questions": "Pitanja",
+          "predefined": "Unaprijed definirana pitanja",
+          "custom": "Prilagođena pitanja"
         },
         "fields": {
-          "titleLabel": "Form Title*",
-          "titlePlaceholder": "Enter form title",
-          "descriptionLabel": "Form Description*",
-          "descriptionPlaceholder": "Enter brief description of your form"
+          "titleLabel": "Naslov obrasca*",
+          "titlePlaceholder": "Unesite naslov obrasca",
+          "descriptionLabel": "Opis obrasca*",
+          "descriptionPlaceholder": "Unesite kratak opis obrasca"
         },
         "predefined": {
-          "rateUs": "Rate Us* (Always included)",
-          "rateUsTitle": "Rate Us",
-          "customRating": "Custom Rating*",
-          "customRatingTitle": "Custom Rating",
-          "customRatingPlaceholder": "Enter rating item label",
-          "customRatingEditTitle": "Click to edit",
-          "feedback": "Please give us your honest feedback?*",
-          "feedbackTitle": "Please give us your honest feedback?",
-          "feedbackPlaceholder": "Enter your detailed feedback"
+          "rateUs": "Ocijenite nas* (uvijek uključeno)",
+          "rateUsTitle": "Ocijenite nas",
+          "customRating": "Prilagođena ocjena*",
+          "customRatingTitle": "Prilagođena ocjena",
+          "customRatingPlaceholder": "Unesite oznaku stavke ocjene",
+          "customRatingEditTitle": "Kliknite za uređivanje",
+          "feedback": "Dajte nam iskrenu povratnu informaciju?*",
+          "feedbackTitle": "Dajte nam iskrenu povratnu informaciju?",
+          "feedbackPlaceholder": "Unesite detaljnu povratnu informaciju"
         },
         "tooltips": {
-          "previewDisabled": "Preview mode - editing disabled",
-          "addQuestion": "Add custom question",
-          "save": "Save",
-          "cancel": "Cancel",
-          "edit": "Edit",
-          "delete": "Delete",
-          "moveUp": "Move Up",
-          "moveDown": "Move Down"
+          "previewDisabled": "Način pregleda – uređivanje onemogućeno",
+          "addQuestion": "Dodaj prilagođeno pitanje",
+          "save": "Spremi",
+          "cancel": "Odustani",
+          "edit": "Uredi",
+          "delete": "Izbriši",
+          "moveUp": "Gore",
+          "moveDown": "Dolje"
         },
         "questionTypes": {
-          "shortText": "Short Text",
-          "longText": "Long Text",
-          "starRating": "Star Rating",
-          "singleChoice": "Single Choice",
-          "multipleChoice": "Multiple Choice",
-          "yesNo": "Yes/No"
+          "shortText": "Kratki tekst",
+          "longText": "Dugi tekst",
+          "starRating": "Ocjena zvjezdicama",
+          "singleChoice": "Jedan izbor",
+          "multipleChoice": "Više izbora",
+          "yesNo": "Da/Ne"
         },
         "placeholders": {
-          "answer": "Enter your answer"
+          "answer": "Unesite odgovor"
         },
         "answers": {
-          "yes": "Yes",
-          "no": "No"
+          "yes": "Da",
+          "no": "Ne"
         },
         "badges": {
-          "default": "Default",
-          "defaultHelper": "Cannot be edited, deleted, or moved"
+          "default": "Zadano",
+          "defaultHelper": "Nije moguće uređivati, brisati ili premještati"
         },
         "states": {
-          "loading": "Loading form data...",
-          "noQuestionsTitle": "No questions added yet",
-          "noQuestionsDescription": "Use the predefined questions above or add custom questions to get started"
+          "loading": "Učitavanje podataka obrasca...",
+          "noQuestionsTitle": "Pitanja još nisu dodana",
+          "noQuestionsDescription": "Koristite unaprijed definirana pitanja ili dodajte prilagođena pitanja"
         },
         "alerts": {
-          "ratingRequiredTitle": "Rating Required",
-          "ratingRequiredDescription": "Either \"Rate Us\" or \"Custom Rating\" must be selected to save the form."
+          "ratingRequiredTitle": "Potrebna ocjena",
+          "ratingRequiredDescription": "Za spremanje obrasca mora biti odabrano „Ocijenite nas“ ili „Prilagođena ocjena“."
         },
         "layoutInfo": {
           "basic": {
-            "title": "Basic Layout Features",
-            "description": "All questions are available including custom questions. This layout provides a simple, clean design."
+            "title": "Osnovno raspored",
+            "description": "Sva pitanja uključujući prilagođena. Jednostavan i pregledan dizajn."
           },
           "good": {
-            "title": "Good Layout Features",
-            "description": "Choose either \"Rate Us\" OR \"Custom Rating\" (mutually exclusive). All questions including custom questions are available."
+            "title": "Prošireni raspored",
+            "description": "Odaberite „Ocijenite nas“ ILI „Prilagođena ocjena“ (međusobno isključivo). Sva pitanja uključujući prilagođena su dostupna."
           },
           "excellent": {
-            "title": "Excellent Layout Features",
-            "description": "All predefined questions available plus custom questions. Premium design with animations for comprehensive feedback forms."
+            "title": "Premium raspored",
+            "description": "Sva unaprijed definirana pitanja plus prilagođena. Premium dizajn s animacijama za sveobuhvatne obrasce povratnih informacija."
           }
         },
         "subscription": {
-          "title": "Subscription Required",
-          "message": "Your subscription has been {status}. Please reactivate your subscription to create or edit forms.",
-          "manageButton": "Manage Subscription",
+          "title": "Potrebna pretplata",
+          "message": "Vaša pretplata je {status}. Reaktivirajte pretplatu za stvaranje ili uređivanje obrazaca.",
+          "manageButton": "Upravljanje pretplatom",
           "status": {
-            "cancelled": "cancelled",
-            "expired": "expired"
+            "cancelled": "otkazana",
+            "expired": "istekla"
           },
-          "toastTitle": "Subscription Required",
-          "toastMessage": "Your subscription has been cancelled or expired. Please reactivate your subscription to create forms."
+          "toastTitle": "Potrebna pretplata",
+          "toastMessage": "Vaša pretplata je otkazana ili istekla. Reaktivirajte pretplatu za stvaranje obrazaca."
         },
         "preview": {
-          "descriptionFallback": "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance.",
-          "fullNameLabel": "Name*",
-          "fullNamePlaceholder": "Enter your name",
-          "emailLabel": "Email*",
-          "emailPlaceholder": "Enter your email address",
-          "submit": "Submit Now"
+          "descriptionFallback": "Ispunite ovaj obrazac za zahtjev za podršku ili prijavu problema. Naš tim će pregledati vaš zahtjev i javiti vam se što je prije moguće.",
+          "fullNameLabel": "Ime*",
+          "fullNamePlaceholder": "Unesite svoje ime",
+          "emailLabel": "E-mail*",
+          "emailPlaceholder": "Unesite svoju e-mail adresu",
+          "submit": "Pošalji"
         },
         "dialog": {
-          "addTitle": "Add Question",
-          "editTitle": "Edit Question",
-          "questionLabel": "Question Text *",
-          "questionPlaceholder": "Enter your question",
-          "typeLabel": "Question Type",
-          "optionsLabel": "Options",
-          "optionPlaceholder": "Enter option"
+          "addTitle": "Dodaj pitanje",
+          "editTitle": "Uredi pitanje",
+          "questionLabel": "Tekst pitanja *",
+          "questionPlaceholder": "Unesite pitanje",
+          "typeLabel": "Vrsta pitanja",
+          "optionsLabel": "Opcije",
+          "optionPlaceholder": "Unesite opciju"
         },
         "toasts": {
-          "formLoadSuccess": "Form data loaded successfully",
-          "formLoadError": "Failed to load form data",
-          "questionRequired": "Question text is required",
-          "optionsRequired": "Multiple choice questions must have at least 2 options",
-          "questionUpdated": "Question updated",
-          "questionAdded": "Question added",
-          "questionDeleted": "Question deleted",
-          "ratingLabelRequired": "Please enter a label for the rating item",
-          "ratingItemUpdated": "Rating item updated",
-          "ratingItemDeleted": "Rating item deleted",
-          "ratingItemAdded": "New rating item added",
-          "titleRequired": "Form title is required",
-          "questionCountRequired": "At least one question is required"
+          "formLoadSuccess": "Podaci obrasca su uspješno učitani",
+          "formLoadError": "Učitavanje podataka obrasca nije uspjelo",
+          "questionRequired": "Tekst pitanja je obavezan",
+          "optionsRequired": "Pitanja s više izbora moraju imati najmanje 2 opcije",
+          "questionUpdated": "Pitanje je ažurirano",
+          "questionAdded": "Pitanje je dodano",
+          "questionDeleted": "Pitanje je izbrisano",
+          "ratingLabelRequired": "Unesite oznaku za stavku ocjene",
+          "ratingItemUpdated": "Stavka ocjene je ažurirana",
+          "ratingItemDeleted": "Stavka ocjene je izbrisana",
+          "ratingItemAdded": "Dodana je nova stavka ocjene",
+          "titleRequired": "Naslov obrasca je obavezan",
+          "questionCountRequired": "Potrebno je najmanje jedno pitanje"
         }
       }
     },
     "analytics": {
       "customRatings": {
-        "title": "Custom Rating Analytics",
-        "description": "Track detailed rating trends for your \"Good\" layout form.",
+        "title": "Analitika prilagođenih ocjena",
+        "description": "Pratite trendove ocjena za obrazac s proširenim rasporedom.",
         "buttons": {
-          "exportCsv": "Export CSV",
-          "exportPdf": "Export PDF",
-          "refresh": "Refresh"
+          "exportCsv": "Izvezi CSV",
+          "exportPdf": "Izvezi PDF",
+          "refresh": "Osvježi"
         },
         "filters": {
-          "title": "Date Range Filters",
-          "startDate": "Start Date",
-          "startDatePlaceholder": "Select start date",
-          "endDate": "End Date",
-          "endDatePlaceholder": "Select end date",
-          "clear": "Clear Filters"
+          "title": "Filtri po datumu",
+          "startDate": "Početni datum",
+          "startDatePlaceholder": "Odaberite početni datum",
+          "endDate": "Završni datum",
+          "endDatePlaceholder": "Odaberite završni datum",
+          "clear": "Očisti filtre"
         },
         "states": {
-          "loading": "Loading analytics data...",
-          "noDataTitle": "No Data Available",
-          "noDataDescription": "No \"Good\" layout forms with custom rating data found for your hotel."
+          "loading": "Učitavanje analitičkih podataka...",
+          "noDataTitle": "Nema dostupnih podataka",
+          "noDataDescription": "Nema obrazaca s proširenim rasporedom i podacima ocjena za vaš hotel."
         },
         "toasts": {
-          "loadError": "Failed to load custom rating analytics",
-          "exportSuccess": "Data exported successfully as {format}",
-          "exportError": "Failed to export data"
+          "loadError": "Učitavanje analitike ocjena nije uspjelo",
+          "exportSuccess": "Podaci uspješno izvezeni kao {format}",
+          "exportError": "Izvoz podataka nije uspio"
         },
         "chart": {
-          "trendPrefix": "Trend Analysis - ",
-          "summaryTitle": "Rating Summary",
-          "ratingsCount": "({count} ratings)",
-          "averageRating": "Average Rating",
+          "trendPrefix": "Analiza trenda - ",
+          "summaryTitle": "Sažetak ocjena",
+          "ratingsCount": "({count} ocjena)",
+          "averageRating": "Prosječna ocjena",
           "tooltipSuffix": "/5"
         }
       },
       "overview": {
-        "title": "Analytics",
-        "description": "Track your hotel's performance and guest satisfaction.",
-        "dropdownPlaceholder": "Select time range",
+        "title": "Analitika",
+        "description": "Pratite performanse hotela i zadovoljstvo gostiju.",
+        "dropdownPlaceholder": "Odaberite vremenski raspon",
         "buttons": {
-          "refresh": "Refresh"
+          "refresh": "Osvježi"
         },
         "timeRanges": {
-          "7": "Last 7 days",
-          "30": "Last 30 days",
-          "90": "Last 90 days",
-          "180": "Last 6 months",
-          "365": "Last year"
+          "7": "Zadnjih 7 dana",
+          "30": "Zadnjih 30 dana",
+          "90": "Zadnjih 90 dana",
+          "180": "Zadnjih 6 mjeseci",
+          "365": "Prošla godina"
         },
         "states": {
-          "loadingSkeleton": "Loading...",
-          "noData": "No analytics data available",
-          "chartLoading": "Loading chart data...",
-          "chartEmpty": "No chart data available"
+          "loadingSkeleton": "Učitavanje...",
+          "noData": "Nema dostupnih analitičkih podataka",
+          "chartLoading": "Učitavanje podataka grafikona...",
+          "chartEmpty": "Nema podataka za grafikon"
         },
         "cards": {
-          "change": "{change} from last period"
+          "change": "{change} u odnosu na prethodno razdoblje"
         },
         "charts": {
-          "satisfaction": "Satisfaction Trends",
-          "ratingDistribution": "Rating Distribution",
-          "reviewVolume": "Review Volume"
+          "satisfaction": "Trendovi zadovoljstva",
+          "ratingDistribution": "Raspodjela ocjena",
+          "reviewVolume": "Broj recenzija"
         },
         "reviews": {
-          "title": "Recent Reviews"
+          "title": "Nedavne recenzije"
         },
         "toasts": {
-          "loadError": "Failed to load analytics"
+          "loadError": "Učitavanje analitike nije uspjelo"
         }
       },
       "responseRates": {
-        "title": "Response Rates Analytics",
-        "description": "Track your hotel's response rates and engagement metrics.",
+        "title": "Analitika stope odgovora",
+        "description": "Pratite stopu odgovora i metrike angažmana hotela.",
         "charts": {
-          "reviewVolume": "Review Volume Trends",
-          "satisfaction": "Satisfaction Trends Over Time"
+          "reviewVolume": "Trendovi broja recenzija",
+          "satisfaction": "Trendovi zadovoljstva kroz vrijeme"
         }
       },
       "satisfaction": {
-        "title": "Satisfaction Analytics",
-        "description": "Track your hotel's guest satisfaction trends and ratings.",
+        "title": "Analitika zadovoljstva",
+        "description": "Pratite trendove zadovoljstva gostiju i ocjene.",
         "charts": {
-          "reviewVolume": "Review Volume & Positive Reviews"
+          "reviewVolume": "Broj recenzija i pozitivne recenzije"
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Obavijesti",
+        "ariaLabel": "Obavijesti",
+        "iconAlt": "Ikona obavijesti",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Označi sve kao pročitano",
+          "refresh": "Osvježi"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Još nema obavijesti"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "success": "Success",
-          "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "newReview": "Nova recenzija",
+          "reviewApproved": "Recenzija odobrena",
+          "reviewRejected": "Recenzija odbijena",
+          "subscriptionExpiring": "Pretplata ističe",
+          "subscriptionCancelled": "Pretplata otkazana",
+          "escalationReceived": "Eskalacija primljena",
+          "escalationResponded": "Odgovor na eskalaciju",
+          "systemAlert": "Sustavno upozorenje",
+          "newHotelRegistration": "Nova registracija hotela",
+          "success": "Uspjeh",
+          "info": "Informacija",
+          "warning": "Upozorenje",
+          "error": "Greška",
+          "generic": "Obavijest"
         }
       }
     },
     "reviews": {
-      "title": "Guest Reviews",
-      "subtitle": "Manage and review guest feedback submissions.",
+      "title": "Recenzije gostiju",
+      "subtitle": "Upravljajte i pregledavajte recenzije i povratne informacije gostiju.",
       "buttons": {
-        "refresh": "Refresh",
-        "clearFilters": "Clear Filters",
-        "view": "View",
-        "reply": "Reply",
-        "delete": "Delete",
-        "close": "Close",
-        "markAsChecked": "Mark as Checked",
-        "checked": "Checked",
-        "uncheck": "Uncheck",
-        "markAsUrgent": "Mark as Urgent",
-        "urgent": "Urgent",
-        "removeUrgent": "Remove Urgent",
-        "replyToCustomer": "Reply to Customer",
-        "cancel": "Cancel",
-        "sendReply": "Send Reply"
+        "refresh": "Osvježi",
+        "clearFilters": "Očisti filtre",
+        "view": "Pregled",
+        "reply": "Odgovori",
+        "delete": "Izbriši",
+        "close": "Zatvori",
+        "markAsChecked": "Označi kao pregledano",
+        "checked": "Pregledano",
+        "uncheck": "Ukloni oznaku",
+        "markAsUrgent": "Označi kao hitno",
+        "urgent": "Hitno",
+        "removeUrgent": "Ukloni hitno",
+        "replyToCustomer": "Odgovori kupcu",
+        "cancel": "Odustani",
+        "sendReply": "Pošalji odgovor"
       },
       "filters": {
-        "title": "Filters",
-        "searchReviews": "Search Reviews",
-        "searchPlaceholder": "Search by guest name or feedback text...",
-        "roomNumber": "Room Number",
-        "roomNumberPlaceholder": "Filter by room number...",
-        "filter": "Filter",
-        "allReviews": "All Reviews",
-        "replied": "Replied",
-        "notReplied": "Not Replied",
-        "checked": "Checked",
-        "notChecked": "Not Checked",
-        "urgent": "Urgent",
-        "notUrgent": "Not Urgent",
-        "starRatings": "Star Ratings",
-        "allRatings": "All Ratings",
-        "5Stars": "5 Stars",
-        "4Stars": "4 Stars",
-        "3Stars": "3 Stars",
-        "2Stars": "2 Stars",
-        "1Star": "1 Star",
-        "dateRange": "Date Range",
-        "startDate": "Start Date",
-        "endDate": "End Date",
-        "fromDate": "From date",
-        "toDate": "To date"
+        "title": "Filtri",
+        "searchReviews": "Pretraži recenzije",
+        "searchPlaceholder": "Pretražujte po imenu gosta ili tekstu...",
+        "roomNumber": "Broj sobe",
+        "roomNumberPlaceholder": "Filtriraj po broju sobe...",
+        "filter": "Filtar",
+        "allReviews": "Sve recenzije",
+        "replied": "S odgovorom",
+        "notReplied": "Bez odgovora",
+        "checked": "Pregledano",
+        "notChecked": "Nepregledano",
+        "urgent": "Hitno",
+        "notUrgent": "Nije hitno",
+        "starRatings": "Ocjena zvjezdicama",
+        "allRatings": "Sve ocjene",
+        "5Stars": "5 zvjezdica",
+        "4Stars": "4 zvjezdice",
+        "3Stars": "3 zvjezdice",
+        "2Stars": "2 zvjezdice",
+        "1Star": "1 zvjezdica",
+        "dateRange": "Vremenski raspon",
+        "startDate": "Početni datum",
+        "endDate": "Završni datum",
+        "fromDate": "Od datuma",
+        "toDate": "Do datuma"
       },
       "states": {
-        "loadingReviews": "Loading reviews...",
-        "noReviewsFound": "No Reviews Found",
-        "noReviewsYet": "No reviews have been submitted yet.",
-        "noReviewsMatchFilters": "No reviews match your current filters."
+        "loadingReviews": "Učitavanje recenzija...",
+        "noReviewsFound": "Recenzije nisu pronađene",
+        "noReviewsYet": "Još nema poslanih recenzija.",
+        "noReviewsMatchFilters": "Nema recenzija koje odgovaraju trenutnim filterima."
       },
       "table": {
-        "guest": "Guest",
-        "email": "Email",
-        "room": "Room",
-        "rating": "Rating",
+        "guest": "Gost",
+        "email": "E-mail",
+        "room": "Soba",
+        "rating": "Ocjena",
         "status": "Status",
-        "submitted": "Submitted",
-        "actions": "Actions",
-        "checkedStatus": "Checked",
-        "notCheckedStatus": "Not Checked",
-        "repliedStatus": "Replied",
-        "notRepliedStatus": "Not Replied",
-        "urgentStatus": "Urgent",
-        "notUrgentStatus": "Not Urgent",
-        "public": "Public",
-        "private": "Private",
-        "shared": "Shared",
-        "noEmailAvailable": "No email available for this review"
+        "submitted": "Poslano",
+        "actions": "Radnje",
+        "checkedStatus": "Pregledano",
+        "notCheckedStatus": "Nepregledano",
+        "repliedStatus": "S odgovorom",
+        "notRepliedStatus": "Bez odgovora",
+        "urgentStatus": "Hitno",
+        "notUrgentStatus": "Nije hitno",
+        "public": "Javno",
+        "private": "Privatno",
+        "shared": "Dijeljeno",
+        "noEmailAvailable": "Nema dostupnog e-maila za ovu recenziju"
       },
       "detailsDialog": {
-        "header": "Guest Feedback Details",
-        "guestInfo": "Guest Information",
-        "name": "Name:",
-        "anonymous": "Anonymous",
-        "email": "Email:",
-        "notProvided": "Not provided",
-        "phone": "Phone:",
-        "roomNumber": "Room Number:",
-        "submitted": "Submitted:",
-        "overallRating": "Overall Rating",
-        "quickFeedback": "Quick Feedback",
-        "howDoYouRateUs": "How do you rate us?",
-        "honestFeedback": "Please give us your honest feedback?",
-        "noSpecificFeedback": "No specific feedback provided",
-        "customRatingItem": "Custom Rating Item ({itemId})",
-        "formInfo": "Form Information",
-        "formTitle": "Form Title:",
-        "description": "Description:",
-        "layout": "Layout:",
-        "feedbackResponses": "Feedback Responses",
-        "reviewReplies": "Review Replies",
-        "languageSelectorLabel": "View content in",
-        "languageSelectorPlaceholder": "Select language",
-        "translating": "Translating...",
-        "noDetailedResponses": "No detailed responses available for this review.",
-        "question": "Question:",
-        "noAnswer": "No answer provided",
-        "replyToCustomer": "Reply to Customer",
-        "replyPlaceholder": "Type your reply message here...",
-        "replyMessageHint": "This message will be sent to {guestEmail}",
-        "toastWarningReply": "Please enter a reply message",
-        "toastSuccessReply": "Reply sent successfully to {sentTo}",
-        "toastErrorReply": "Failed to send reply"
+        "header": "Detalji povratnih informacija gosta",
+        "guestInfo": "Informacije o gostu",
+        "name": "Ime:",
+        "anonymous": "Anonimno",
+        "email": "E-mail:",
+        "notProvided": "Nije navedeno",
+        "phone": "Telefon:",
+        "roomNumber": "Broj sobe:",
+        "submitted": "Poslano:",
+        "overallRating": "Ukupna ocjena",
+        "quickFeedback": "Brza povratna informacija",
+        "howDoYouRateUs": "Kako nas ocjenjujete?",
+        "honestFeedback": "Dajte nam iskrenu povratnu informaciju?",
+        "noSpecificFeedback": "Nije navedena konkretna povratna informacija",
+        "customRatingItem": "Prilagođena stavka ocjene ({itemId})",
+        "formInfo": "Informacije o obrascu",
+        "formTitle": "Naslov obrasca:",
+        "description": "Opis:",
+        "layout": "Raspored:",
+        "feedbackResponses": "Odgovori na povratne informacije",
+        "reviewReplies": "Odgovori na recenzije",
+        "languageSelectorLabel": "Prikaži sadržaj na",
+        "languageSelectorPlaceholder": "Odaberite jezik",
+        "translating": "Prevođenje...",
+        "noDetailedResponses": "Nema dostupnih detaljnih odgovora za ovu recenziju.",
+        "question": "Pitanje:",
+        "noAnswer": "Nije naveden odgovor",
+        "replyToCustomer": "Odgovori kupcu",
+        "replyPlaceholder": "Upišite ovdje svoju poruku...",
+        "replyMessageHint": "Ova poruka bit će poslana na {guestEmail}",
+        "toastWarningReply": "Unesite poruku odgovora",
+        "toastSuccessReply": "Odgovor uspješno poslan na {sentTo}",
+        "toastErrorReply": "Slanje odgovora nije uspjelo"
       },
       "deleteDialog": {
-        "header": "Delete Review",
-        "confirmTitle": "Are you sure you want to delete this review?",
-        "confirmMessage": "This action cannot be undone. The review will be permanently removed from your system.",
-        "reviewDetails": "Review Details:",
-        "guest": "Guest:",
-        "rating": "Rating:",
-        "submitted": "Submitted:",
+        "header": "Izbriši recenziju",
+        "confirmTitle": "Jeste li sigurni da želite izbrisati ovu recenziju?",
+        "confirmMessage": "Ova radnja se ne može poništiti. Recenzija će trajno biti uklonjena iz sustava.",
+        "reviewDetails": "Detalji recenzije:",
+        "guest": "Gost:",
+        "rating": "Ocjena:",
+        "submitted": "Poslano:",
         "buttons": {
-          "cancel": "Cancel",
-          "delete": "Delete"
+          "cancel": "Odustani",
+          "delete": "Izbriši"
         },
         "toasts": {
-          "success": "Review deleted successfully",
-          "error": "Failed to delete review"
+          "success": "Recenzija je uspješno izbrisana",
+          "error": "Brisanje recenzije nije uspjelo"
         }
       },
       "toasts": {
-        "loadError": "Failed to load reviews",
-        "detailsLoadError": "Failed to load review details",
+        "loadError": "Učitavanje recenzija nije uspjelo",
+        "detailsLoadError": "Učitavanje detalja recenzije nije uspjelo",
         "statusUpdate": {
-          "checked": "Review marked as checked",
-          "unchecked": "Review unmarked as checked",
-          "urgent": "Review marked as urgent",
-          "notUrgent": "Review unmarked as urgent",
-          "replied": "Review marked as replied"
+          "checked": "Recenzija označena kao pregledana",
+          "unchecked": "Recenzija odznačena kao pregledana",
+          "urgent": "Recenzija označena kao hitna",
+          "notUrgent": "Recenzija odznačena kao hitna",
+          "replied": "Recenzija označena kao odgovorena"
         },
-        "statusUpdateError": "Failed to update review status",
-        "replyMissing": "Please enter a reply message",
-        "replySuccess": "Reply sent successfully to {sentTo}",
-        "replyError": "Failed to send reply",
-        "translationError": "Failed to translate review content",
-        "deleteSuccess": "Review deleted successfully",
-        "deleteError": "Failed to delete review"
+        "statusUpdateError": "Ažuriranje statusa recenzije nije uspjelo",
+        "replyMissing": "Unesite poruku odgovora",
+        "replySuccess": "Odgovor uspješno poslan na {sentTo}",
+        "replyError": "Slanje odgovora nije uspjelo",
+        "translationError": "Prevođenje sadržaja recenzije nije uspjelo",
+        "deleteSuccess": "Recenzija je uspješno izbrisana",
+        "deleteError": "Brisanje recenzije nije uspjelo"
       }
     },
     "menu": {
-      "dashboard": "Dashboard",
-      "feedbackForm": "Feedback Form",
-      "qrCodes": "QR Codes",
-      "allReviews": "All Reviews",
-      "notifications": "Notifications",
-      "contactAdmin": "Contact Admin",
-      "settings": "Settings",
+      "dashboard": "Nadzorna ploča",
+      "feedbackForm": "Obrazac za povratne informacije",
+      "qrCodes": "QR kodovi",
+      "allReviews": "Sve recenzije",
+      "notifications": "Obavijesti",
+      "contactAdmin": "Kontakt administratora",
+      "settings": "Postavke",
       "settingsItems": {
-        "userProfile": "User Profile",
-        "hotelProfile": "Hotel Profile",
-        "changePassword": "Change Password",
-        "subscriptions": "Subscriptions",
-        "paymentMethods": "Payment Methods"
+        "userProfile": "Korisnički profil",
+        "hotelProfile": "Profil hotela",
+        "changePassword": "Promijeni lozinku",
+        "subscriptions": "Pretplate",
+        "paymentMethods": "Načini plaćanja"
       }
     },
     "paymentMethods": {
-      "pageTitle": "Add Payment Method",
+      "pageTitle": "Dodaj način plaćanja",
       "buttons": {
-        "add": "Add",
-        "addMethod": "Add Method",
-        "updateMethod": "Update Method",
-        "cancel": "Cancel",
-        "setPrimary": "Set as Primary",
-        "delete": "Delete"
+        "add": "Dodaj",
+        "addMethod": "Dodaj metodu",
+        "updateMethod": "Ažuriraj metodu",
+        "cancel": "Odustani",
+        "setPrimary": "Postavi kao primarnu",
+        "delete": "Izbriši"
       },
       "badges": {
-        "primary": "Primary",
-        "expired": "Expired"
+        "primary": "Primarna",
+        "expired": "Istekla"
       },
       "states": {
-        "loading": "Loading payment methods...",
-        "emptyTitle": "No Payment Methods",
-        "emptyDescription": "Add a payment method to manage your subscriptions."
+        "loading": "Učitavanje načina plaćanja...",
+        "emptyTitle": "Nema načina plaćanja",
+        "emptyDescription": "Dodajte način plaćanja za upravljanje pretplatama."
       },
       "form": {
-        "paymentType": "Payment Type",
+        "paymentType": "Vrsta plaćanja",
         "paymentTypeOptions": {
-          "card": "Credit/Debit Card",
-          "bank": "Bank Account"
+          "card": "Kreditna/debitna kartica",
+          "bank": "Bankovni račun"
         },
         "card": {
-          "number": "Card Number",
+          "number": "Broj kartice",
           "numberPlaceholder": "1234 5678 9012 3456",
-          "expiryMonth": "Expiry Month",
-          "expiryYear": "Expiry Year",
+          "expiryMonth": "Mjesec isteka",
+          "expiryYear": "Godina isteka",
           "monthPlaceholder": "MM",
-          "yearPlaceholder": "YYYY",
+          "yearPlaceholder": "GGGG",
           "cvv": "CVV",
           "cvvPlaceholder": "123",
-          "holder": "Cardholder Name",
-          "holderPlaceholder": "John Doe",
-          "brand": "Card Brand",
-          "brandPlaceholder": "Select card brand"
+          "holder": "Ime vlasnika kartice",
+          "holderPlaceholder": "Ivan Horvat",
+          "brand": "Marka kartice",
+          "brandPlaceholder": "Odaberite marku kartice"
         },
         "cardBrands": {
           "visa": "Visa",
           "mastercard": "Mastercard",
           "amex": "American Express",
           "discover": "Discover",
-          "unknown": "Card"
+          "unknown": "Kartica"
         },
         "bank": {
-          "name": "Bank Name",
-          "namePlaceholder": "Bank of America",
-          "accountNumber": "Account Number",
-          "accountPlaceholder": "Account number",
-          "routingNumber": "Routing Number",
+          "name": "Naziv banke",
+          "namePlaceholder": "Naziv banke",
+          "accountNumber": "Broj računa",
+          "accountPlaceholder": "Broj računa",
+          "routingNumber": "Šifra banke",
           "routingPlaceholder": "123456789",
-          "accountType": "Account Type",
-          "accountTypePlaceholder": "Select account type"
+          "accountType": "Vrsta računa",
+          "accountTypePlaceholder": "Odaberite vrstu računa"
         },
         "accountTypes": {
-          "checking": "Checking",
-          "savings": "Savings",
-          "unknown": "Account"
+          "checking": "Tekući",
+          "savings": "Štedni",
+          "unknown": "Račun"
         }
       },
       "list": {
-        "endingIn": "ending in",
-        "expiryLabel": "Exp. date",
-        "accountTypeSuffix": "Account",
-        "accountTypeUnknown": "Account",
-        "unknownBank": "Bank",
-        "edit": "Edit",
-        "delete": "Delete"
+        "endingIn": "završava s",
+        "expiryLabel": "Valj. do",
+        "accountTypeSuffix": "Račun",
+        "accountTypeUnknown": "Račun",
+        "unknownBank": "Banka",
+        "edit": "Uredi",
+        "delete": "Izbriši"
       },
       "dialogs": {
         "add": {
-          "title": "Add Payment Method"
+          "title": "Dodaj način plaćanja"
         },
         "edit": {
-          "title": "Edit Payment Method",
-          "cardLocked": "Card number cannot be changed for security reasons",
-          "bankLocked": "Account number cannot be changed for security reasons"
+          "title": "Uredi način plaćanja",
+          "cardLocked": "Broj kartice nije moguće promijeniti iz sigurnosnih razloga",
+          "bankLocked": "Broj računa nije moguće promijeniti iz sigurnosnih razloga"
         },
         "delete": {
-          "title": "Delete Payment Method",
-          "message": "Are you sure you want to delete this payment method? This action cannot be undone."
+          "title": "Izbriši način plaćanja",
+          "message": "Jeste li sigurni da želite izbrisati ovaj način plaćanja? Ova radnja se ne može poništiti."
         }
       },
       "toasts": {
         "load": {
-          "error": "Failed to load payment methods"
+          "error": "Učitavanje načina plaćanja nije uspjelo"
         },
         "add": {
-          "success": "Payment method added successfully",
-          "error": "Failed to add payment method"
+          "success": "Način plaćanja uspješno dodan",
+          "error": "Dodavanje načina plaćanja nije uspjelo"
         },
         "delete": {
-          "success": "Payment method deleted successfully",
-          "error": "Failed to delete payment method"
+          "success": "Način plaćanja uspješno izbrisan",
+          "error": "Brisanje načina plaćanja nije uspjelo"
         },
         "default": {
-          "success": "Default payment method updated",
-          "error": "Failed to update default payment method"
+          "success": "Zadani način plaćanja ažuriran",
+          "error": "Ažuriranje zadanog načina plaćanja nije uspjelo"
         },
         "update": {
-          "success": "Payment method updated successfully",
-          "error": "Failed to update payment method"
+          "success": "Način plaćanja uspješno ažuriran",
+          "error": "Ažuriranje načina plaćanja nije uspjelo"
         }
       }
     },
     "subscription": {
       "header": {
-        "title": "Subscription Management",
-        "subtitle": "Manage your hotel's subscription and billing."
+        "title": "Upravljanje pretplatom",
+        "subtitle": "Upravljajte pretplatom i naplatom vašeg hotela."
       },
       "buttons": {
-        "refresh": "Refresh",
-        "processing": "Processing...",
-        "upgradeNow": "Upgrade Now",
-        "currentPlan": "Current Plan",
-        "reactivate": "Reactivate",
-        "cancelSubscription": "Cancel Subscription",
-        "contactSupport": "Contact Support",
-        "cancel": "Cancel",
-        "confirm": "Confirm"
+        "refresh": "Osvježi",
+        "processing": "Obrada...",
+        "upgradeNow": "Nadogradi sada",
+        "currentPlan": "Trenutni plan",
+        "reactivate": "Ponovno aktiviraj",
+        "cancelSubscription": "Otkaži pretplatu",
+        "contactSupport": "Kontaktiraj podršku",
+        "cancel": "Odustani",
+        "confirm": "Potvrdi"
       },
       "statuses": {
-        "trial": "Trial",
-        "active": "Active",
-        "cancelled": "Cancelled",
-        "expired": "Expired"
+        "trial": "Probno",
+        "active": "Aktivno",
+        "cancelled": "Otkazano",
+        "expired": "Isteklo"
       },
       "states": {
-        "loading": "Loading subscription data...",
-        "notFoundTitle": "Subscription Not Found",
-        "notFoundDescription": "Unable to load subscription information."
+        "loading": "Učitavanje podataka o pretplati...",
+        "notFoundTitle": "Pretplata nije pronađena",
+        "notFoundDescription": "Nije moguće učitati podatke o pretplati."
       },
       "labels": {
         "notAvailable": "N/A"
       },
       "trial": {
-        "name": "Trial Plan",
-        "description": "Free Trial",
-        "label": "Trial Period:",
-        "remaining": "{count} days remaining"
+        "name": "Probni plan",
+        "description": "Besplatno probno razdoblje",
+        "label": "Probno razdoblje:",
+        "remaining": "Preostalo {count} dana"
       },
       "sections": {
         "status": {
-          "title": "Current Subscription Status",
+          "title": "Trenutni status pretplate",
           "statusLabel": "Status",
-          "totalReviews": "Total Reviews",
-          "averageRating": "Average Rating"
+          "totalReviews": "Ukupno recenzija",
+          "averageRating": "Prosječna ocjena"
         },
         "plans": {
-          "title": "Available Plans",
-          "currentPlanHint": "You are currently on this plan"
+          "title": "Dostupni planovi",
+          "currentPlanHint": "Trenutno imate ovaj plan"
         },
         "actions": {
-          "title": "Subscription Actions"
+          "title": "Radnje pretplate"
         },
         "billing": {
-          "title": "Billing Information",
-          "subscriptionId": "Subscription ID:",
-          "created": "Created:",
-          "nextBilling": "Next Billing:",
-          "trialEnds": "Trial Ends:"
+          "title": "Podaci o naplati",
+          "subscriptionId": "ID pretplate:",
+          "created": "Kreirano:",
+          "nextBilling": "Sljedeća naplata:",
+          "trialEnds": "Kraj probnog razdoblja:"
         }
       },
-      "perInterval": "per {interval}",
+      "perInterval": "po {interval}",
       "priceLabel": "{price}/{interval}",
       "dialog": {
-        "title": "Confirm Subscription Change",
-        "upgradeTitle": "Upgrade to {plan}",
-        "description": "You are about to upgrade your subscription plan.",
+        "title": "Potvrdi promjenu pretplate",
+        "upgradeTitle": "Nadogradnja na {plan}",
+        "description": "Upravo ćete nadograditi plan pretplate.",
         "planLabel": "Plan:",
-        "priceLabel": "Price:",
-        "billingLabel": "Billing:",
-        "noteLabel": "Note:",
-        "noteDescription": "This is a demo environment. No actual payment will be processed."
+        "priceLabel": "Cijena:",
+        "billingLabel": "Naplata:",
+        "noteLabel": "Napomena:",
+        "noteDescription": "Ovo je demo okruženje. Stvarna naplata neće biti obavljena."
       },
       "toasts": {
         "load": {
-          "error": "Failed to load subscription data"
+          "error": "Učitavanje podataka o pretplati nije uspjelo"
         },
         "update": {
-          "success": "Subscription updated successfully",
-          "error": "Failed to update subscription"
+          "success": "Pretplata je uspješno ažurirana",
+          "error": "Ažuriranje pretplate nije uspjelo"
         }
       },
       "errors": {
-        "unauthorized": "Unauthorized",
-        "hotelNotFound": "Hotel not found",
-        "planRequired": "Plan ID and action are required",
-        "unknownPlan": "Unknown Plan",
-        "fetchFailed": "Failed to fetch subscription details",
-        "updateFailed": "Failed to update subscription"
+        "unauthorized": "Neovlašten pristup",
+        "hotelNotFound": "Hotel nije pronađen",
+        "planRequired": "Potrebni su ID plana i radnja",
+        "unknownPlan": "Nepoznati plan",
+        "fetchFailed": "Učitavanje pojedinosti pretplate nije uspjelo",
+        "updateFailed": "Ažuriranje pretplate nije uspjelo"
       },
       "messages": {
-        "upgraded": "Successfully upgraded to {plan}",
-        "cancelled": "Successfully cancelled subscription"
+        "upgraded": "Uspješna nadogradnja na {plan}",
+        "cancelled": "Pretplata je uspješno otkazana"
       },
       "plans": {
         "basic": {
-          "name": "Basic Plan",
+          "name": "Osnovni plan",
           "features": [
-            "Up to 100 reviews per month",
-            "Basic analytics",
-            "QR code generation",
-            "Basic Feedback Form"
+            "Do 100 recenzija mjesečno",
+            "Osnovna analitika",
+            "Generiranje QR kodova",
+            "Osnovni obrazac za povratne informacije"
           ]
         },
         "professional": {
-          "name": "Professional Plan",
+          "name": "Profesionalni plan",
           "features": [
-            "Up to 500 reviews per month",
-            "Advanced analytics",
-            "QR code generation",
-            "Customized Star Rating Questions"
+            "Do 500 recenzija mjesečno",
+            "Napredna analitika",
+            "Generiranje QR kodova",
+            "Prilagođena pitanja ocjene zvjezdicama"
           ]
         },
         "enterprise": {
-          "name": "Enterprise Plan",
+          "name": "Poslovni plan",
           "features": [
-            "Unlimited reviews per month",
-            "Enterprise analytics",
-            "Priority support",
-            "Multi-property management"
+            "Neograničen broj recenzija mjesečno",
+            "Poslovna analitika",
+            "Prioritetna podrška",
+            "Upravljanje više objekata"
           ]
         }
       },
       "intervals": {
-        "month": "month",
-        "monthly": "monthly",
-        "year": "year",
-        "yearly": "yearly",
-        "quarter": "quarter",
-        "quarterly": "quarterly"
+        "month": "mjesec",
+        "monthly": "mjesečno",
+        "year": "godina",
+        "yearly": "godišnje",
+        "quarter": "kvartal",
+        "quarterly": "kvartalno"
       }
     },
     "profile": {
       "user": {
-        "title": "Personal Information",
-        "subtitle": "Manage your personal account details.",
+        "title": "Osobni podaci",
+        "subtitle": "Upravljajte osobnim podacima svog računa.",
         "buttons": {
-          "save": "Save Changes",
-          "changePassword": "Change Password",
-          "twoFactor": "Two-Factor Authentication",
-          "changePhoto": "Change Photo",
-          "uploading": "Uploading..."
+          "save": "Spremi promjene",
+          "changePassword": "Promijeni lozinku",
+          "twoFactor": "Dvofaktorska autentifikacija",
+          "changePhoto": "Promijeni fotografiju",
+          "uploading": "Učitavanje..."
         },
         "images": {
-          "cardTitle": "Profile Image",
-          "hint": "JPG, PNG or GIF. Max size 5MB."
+          "cardTitle": "Profilna slika",
+          "hint": "JPG, PNG ili GIF. Maks. veličina 5MB."
         },
         "fields": {
-          "firstName": "First Name *",
-          "lastName": "Last Name *",
-          "email": "Email Address *",
-          "phone": "Phone Number"
+          "firstName": "Ime *",
+          "lastName": "Prezime *",
+          "email": "E-mail adresa *",
+          "phone": "Broj telefona"
         },
         "placeholders": {
-          "firstName": "Enter your first name",
-          "lastName": "Enter your last name",
+          "firstName": "Unesite svoje ime",
+          "lastName": "Unesite svoje prezime",
           "email": "your.email@example.com",
           "phone": "+1 (555) 123-4567"
         },
         "cards": {
-          "personalInfo": "Personal Information",
-          "accountInfo": "Account Information",
-          "security": "Security"
+          "personalInfo": "Osobni podaci",
+          "accountInfo": "Podaci o računu",
+          "security": "Sigurnost"
         },
         "account": {
-          "type": "Account Type:",
+          "type": "Vrsta računa:",
           "status": "Status:",
-          "memberSince": "Member Since:",
-          "lastLogin": "Last Login:",
-          "typeValue": "Hotel Owner",
-          "statusActive": "Active",
+          "memberSince": "Član od:",
+          "lastLogin": "Zadnja prijava:",
+          "typeValue": "Vlasnik hotela",
+          "statusActive": "Aktivan",
           "notAvailable": "N/A"
         },
         "toasts": {
-          "saveSuccess": "Profile updated successfully",
-          "saveError": "Failed to update profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Profile image updated successfully",
-          "imageError": "Failed to upload image",
-          "twoFactorInfo": "Two-factor authentication will be available soon"
+          "saveSuccess": "Profil je uspješno ažuriran",
+          "saveError": "Ažuriranje profila nije uspjelo",
+          "imageTypeError": "Odaberite valjanu sliku (JPG, PNG, GIF ili WebP)",
+          "imageSizeError": "Veličina slike mora biti manja od 5MB",
+          "imageSuccess": "Profilna slika je uspješno ažurirana",
+          "imageError": "Učitavanje slike nije uspjelo",
+          "twoFactorInfo": "Dvofaktorska autentifikacija uskoro će biti dostupna"
         }
       },
       "hotel": {
-        "title": "Hotel Profile",
-        "subtitle": "Manage your hotel information and settings.",
+        "title": "Profil hotela",
+        "subtitle": "Upravljajte informacijama i postavkama vašeg hotela.",
         "buttons": {
-          "save": "Save Changes",
-          "uploadLogo": "Upload Logo",
-          "uploading": "Uploading...",
-          "viewPublic": "View Public Page",
-          "contactSupport": "Contact Support"
+          "save": "Spremi promjene",
+          "uploadLogo": "Učitaj logo",
+          "uploading": "Učitavanje...",
+          "viewPublic": "Pogledaj javnu stranicu",
+          "contactSupport": "Kontaktiraj podršku"
         },
         "images": {
-          "cardTitle": "Hotel Logo",
-          "alt": "Hotel Logo",
-          "hint": "JPG, PNG or GIF. Max size 5MB. Recommended: 300x300px"
+          "cardTitle": "Logo hotela",
+          "alt": "Logo hotela",
+          "hint": "JPG, PNG ili GIF. Maks. 5MB. Preporučeno: 300x300px"
         },
         "cards": {
-          "actions": "Actions",
-          "hotelInfo": "Hotel Information"
+          "actions": "Radnje",
+          "hotelInfo": "Informacije o hotelu"
         },
         "fields": {
-          "name": "Hotel Name *",
-          "description": "Description",
-          "address": "Address",
-          "city": "City",
-          "country": "Country",
-          "phone": "Phone",
-          "email": "Email",
-          "website": "Website"
+          "name": "Naziv hotela *",
+          "description": "Opis",
+          "address": "Adresa",
+          "city": "Grad",
+          "country": "Država",
+          "phone": "Telefon",
+          "email": "E-mail",
+          "website": "Web stranica"
         },
         "placeholders": {
-          "name": "Enter hotel name",
-          "description": "Brief description of your hotel",
-          "address": "Street address",
-          "city": "City",
-          "country": "Select country",
+          "name": "Unesite naziv hotela",
+          "description": "Kratak opis vašeg hotela",
+          "address": "Ulična adresa",
+          "city": "Grad",
+          "country": "Odaberite državu",
           "phone": "+1 (555) 123-4567",
           "email": "hotel@example.com",
           "website": "https://www.yourhotel.com"
         },
         "externalLinks": {
-          "title": "External Review Links",
-          "subtitle": "Add links to your TripAdvisor and Google Reviews pages to help guests share positive feedback.",
+          "title": "Vanjski linkovi recenzija",
+          "subtitle": "Dodajte linkove na TripAdvisor i Google Reviews stranice.",
           "tripAdvisor": {
-            "label": "TripAdvisor Link",
+            "label": "TripAdvisor link",
             "placeholder": "https://www.tripadvisor.com/...",
-            "hint": "Optional: Link to your TripAdvisor page"
+            "hint": "Opcionalno: link na vašu TripAdvisor stranicu"
           },
           "google": {
-            "label": "Google Reviews Link",
+            "label": "Google Reviews link",
             "placeholder": "https://g.page/...",
-            "hint": "Optional: Link to your Google Reviews page"
+            "hint": "Opcionalno: link na vašu Google Reviews stranicu"
           }
         },
         "account": {
           "notAvailable": "N/A"
         },
         "toasts": {
-          "loadError": "Failed to load hotel profile",
-          "saveSuccess": "Hotel profile updated successfully",
-          "saveError": "Failed to update hotel profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Hotel logo updated successfully",
-          "imageError": "Failed to upload logo"
+          "loadError": "Učitavanje profila hotela nije uspjelo",
+          "saveSuccess": "Profil hotela je uspješno ažuriran",
+          "saveError": "Ažuriranje profila hotela nije uspjelo",
+          "imageTypeError": "Odaberite valjanu sliku (JPG, PNG, GIF ili WebP)",
+          "imageSizeError": "Veličina slike mora biti manja od 5MB",
+          "imageSuccess": "Logo hotela je uspješno ažuriran",
+          "imageError": "Učitavanje loga nije uspjelo"
         }
       },
       "password": {
-        "title": "Change Password",
-        "subtitle": "Update your account password for better security.",
-        "cardTitle": "Password Change",
+        "title": "Promijeni lozinku",
+        "subtitle": "Ažurirajte lozinku računa radi bolje sigurnosti.",
+        "cardTitle": "Promjena lozinke",
         "buttons": {
-          "change": "Change Password",
-          "cancel": "Cancel",
-          "confirmChange": "Change Password"
+          "change": "Promijeni lozinku",
+          "cancel": "Odustani",
+          "confirmChange": "Promijeni lozinku"
         },
         "fields": {
-          "current": "Current Password *",
-          "new": "New Password *",
-          "confirm": "Confirm New Password *"
+          "current": "Trenutna lozinka *",
+          "new": "Nova lozinka *",
+          "confirm": "Potvrdi novu lozinku *"
         },
         "placeholders": {
-          "current": "Enter your current password",
-          "new": "Enter your new password",
-          "confirm": "Confirm your new password"
+          "current": "Unesite trenutnu lozinku",
+          "new": "Unesite novu lozinku",
+          "confirm": "Potvrdite novu lozinku"
         },
         "strength": {
-          "label": "Password Strength:",
-          "weak": "Weak",
-          "medium": "Medium",
-          "strong": "Strong"
+          "label": "Jačina lozinke:",
+          "weak": "Slaba",
+          "medium": "Srednja",
+          "strong": "Jaka"
         },
         "requirements": {
-          "title": "Password Requirements",
-          "minLength": "At least 8 characters long",
-          "uppercase": "Contains uppercase letters",
-          "lowercase": "Contains lowercase letters",
-          "numbers": "Contains numbers",
-          "special": "Contains special characters"
+          "title": "Zahtjevi za lozinku",
+          "minLength": "Najmanje 8 znakova",
+          "uppercase": "Sadrži velika slova",
+          "lowercase": "Sadrži mala slova",
+          "numbers": "Sadrži brojeve",
+          "special": "Sadrži posebne znakove"
         },
         "tips": {
-          "title": "Security Tips",
-          "tip": "Tip: Use a unique password that you don't use elsewhere.",
-          "warning": "Warning: Never share your password with anyone."
+          "title": "Savjeti za sigurnost",
+          "tip": "Savjet: Koristite jedinstvenu lozinku koju ne koristite drugdje.",
+          "warning": "Upozorenje: Nikada ne dijelite lozinku s drugima."
         },
         "validation": {
-          "currentRequired": "Current password is required",
-          "newRequired": "New password is required",
-          "minLength": "New password must be at least 8 characters long",
-          "complexity": "New password must contain uppercase, lowercase, numbers, and special characters",
-          "confirmMismatch": "New password and confirmation do not match",
-          "sameAsCurrent": "New password must be different from current password"
+          "currentRequired": "Trenutna lozinka je obavezna",
+          "newRequired": "Nova lozinka je obavezna",
+          "minLength": "Nova lozinka mora imati najmanje 8 znakova",
+          "complexity": "Nova lozinka mora sadržavati velika i mala slova, brojeve i posebne znakove",
+          "confirmMismatch": "Nova lozinka i potvrda se ne podudaraju",
+          "sameAsCurrent": "Nova lozinka mora biti drugačija od trenutne"
         },
         "toasts": {
-          "changeSuccess": "Password changed successfully",
-          "changeError": "Failed to change password"
+          "changeSuccess": "Lozinka je uspješno promijenjena",
+          "changeError": "Promjena lozinke nije uspjela"
         },
         "confirm": {
-          "title": "Confirm Password Change",
-          "message": "Are you sure you want to change your password?",
-          "warning": "This action will log you out of all devices and you'll need to log in again."
+          "title": "Potvrdi promjenu lozinke",
+          "message": "Jeste li sigurni da želite promijeniti lozinku?",
+          "warning": "Bit ćete odjavljeni sa svih uređaja i morat ćete se ponovno prijaviti."
         },
         "accessibility": {
-          "show": "Show password",
-          "hide": "Hide password"
+          "show": "Prikaži lozinku",
+          "hide": "Sakrij lozinku"
         }
       },
       "subscription": {
         "errors": {
-          "unauthorized": "Unauthorized",
-          "hotelNotFound": "Hotel not found",
-          "planRequired": "Plan ID and action are required",
-          "unknownPlan": "Unknown Plan",
-          "fetchFailed": "Failed to fetch subscription details",
-          "updateFailed": "Failed to update subscription"
+          "unauthorized": "Neovlašten pristup",
+          "hotelNotFound": "Hotel nije pronađen",
+          "planRequired": "Potrebni su ID plana i radnja",
+          "unknownPlan": "Nepoznati plan",
+          "fetchFailed": "Učitavanje pojedinosti pretplate nije uspjelo",
+          "updateFailed": "Ažuriranje pretplate nije uspjelo"
         },
         "messages": {
-          "upgraded": "Successfully upgraded to {plan}",
-          "cancelled": "Successfully cancelled subscription"
+          "upgraded": "Uspješna nadogradnja na {plan}",
+          "cancelled": "Pretplata je uspješno otkazana"
         },
         "plans": {
           "basic": {
-            "name": "Basic Plan",
+            "name": "Osnovni plan",
             "features": [
-              "Up to 100 reviews per month",
-              "Basic analytics",
-              "QR code generation",
-              "Basic Feedback Form"
+              "Do 100 recenzija mjesečno",
+              "Osnovna analitika",
+              "Generiranje QR kodova",
+              "Osnovni obrazac za povratne informacije"
             ]
           },
           "professional": {
-            "name": "Professional Plan",
+            "name": "Profesionalni plan",
             "features": [
-              "Up to 500 reviews per month",
-              "Advanced analytics",
-              "QR code generation",
-              "Customized Star Rating Questions"
+              "Do 500 recenzija mjesečno",
+              "Napredna analitika",
+              "Generiranje QR kodova",
+              "Prilagođena pitanja ocjene zvjezdicama"
             ]
           },
           "enterprise": {
-            "name": "Enterprise Plan",
+            "name": "Poslovni plan",
             "features": [
-              "Unlimited reviews",
-              "Full analytics suite",
-              "QR code generation",
-              "All type of questions"
+              "Neograničen broj recenzija",
+              "Kompletna analitika",
+              "Generiranje QR kodova",
+              "Sve vrste pitanja"
             ]
           }
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Obavijesti",
+        "ariaLabel": "Obavijesti",
+        "iconAlt": "Ikona obavijesti",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Označi sve kao pročitano",
+          "refresh": "Osvježi"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Još nema obavijesti"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "newFormCreated": "New Form Created",
-          "success": "Success",
-          "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "newReview": "Nova recenzija",
+          "reviewApproved": "Recenzija odobrena",
+          "reviewRejected": "Recenzija odbijena",
+          "subscriptionExpiring": "Pretplata ističe",
+          "subscriptionCancelled": "Pretplata otkazana",
+          "escalationReceived": "Eskalacija primljena",
+          "escalationResponded": "Eskalacija odgovorena",
+          "systemAlert": "Sustavno upozorenje",
+          "newHotelRegistration": "Nova registracija hotela",
+          "newFormCreated": "Novi obrazac kreiran",
+          "success": "Uspjeh",
+          "info": "Informacija",
+          "warning": "Upozorenje",
+          "error": "Greška",
+          "generic": "Obavijest"
         }
       },
       "profileSidebar": {
         "greeting": {
-          "title": "Welcome",
-          "fallbackName": "Admin User"
+          "title": "Dobrodošli",
+          "fallbackName": "Administrator"
         },
         "actions": {
           "profile": {
-            "title": "Profile",
-            "description": "Manage your account settings"
+            "title": "Profil",
+            "description": "Upravljajte postavkama računa"
           },
           "signOut": {
-            "title": "Sign Out",
-            "description": "Logout from your account"
+            "title": "Odjava",
+            "description": "Odjava s računa"
           }
         },
         "notifications": {
-          "title": "Recent Notifications",
-          "loading": "Loading notifications...",
-          "summary": "You have {count} unread notifications",
-          "empty": "No new notifications"
+          "title": "Nedavne obavijesti",
+          "loading": "Učitavanje obavijesti...",
+          "summary": "Imate {count} nepročitanih obavijesti",
+          "empty": "Nema novih obavijesti"
         },
         "time": {
-          "justNow": "Just now"
+          "justNow": "Upravo sada"
         }
       }
     },
     "communications": {
       "notifications": {
-        "title": "Notifications",
-        "subtitle": "Manage system notifications and alerts",
+        "title": "Obavijesti",
+        "subtitle": "Upravljajte sustavnim obavijestima i upozorenjima",
         "buttons": {
-          "deleteSelected": "Delete Selected ({count})",
-          "markAllAsRead": "Mark All as Read",
-          "refresh": "Refresh"
+          "deleteSelected": "Izbriši odabrano ({count})",
+          "markAllAsRead": "Označi sve kao pročitano",
+          "refresh": "Osvježi"
         },
         "filters": {
-          "title": "Filters",
-          "searchLabel": "Search Notifications",
-          "searchPlaceholder": "Search by title, message, or user...",
-          "type": "Type",
-          "allTypes": "All Types",
+          "title": "Filteri",
+          "searchLabel": "Pretraži obavijesti",
+          "searchPlaceholder": "Pretraži po naslovu, poruci ili korisniku...",
+          "type": "Vrsta",
+          "allTypes": "Sve vrste",
           "status": {
             "label": "Status",
-            "all": "All Status",
-            "unread": "Unread",
-            "read": "Read"
+            "all": "Svi statusi",
+            "unread": "Nepročitano",
+            "read": "Pročitano"
           },
           "types": {
-            "newReview": "New Review",
-            "reviewApproved": "Review Approved",
-            "reviewRejected": "Review Rejected",
-            "subscriptionExpiring": "Subscription Expiring",
-            "subscriptionCancelled": "Subscription Cancelled",
-            "escalationReceived": "Escalation Received",
-            "escalationResponded": "Escalation Responded",
-            "systemAlert": "System Alert",
-            "newHotelRegistration": "New Hotel Registration",
-            "newFormCreated": "New Form Created",
-            "success": "Success",
-            "info": "Info",
-            "warning": "Warning",
-            "error": "Error"
+            "newReview": "Nova recenzija",
+            "reviewApproved": "Recenzija odobrena",
+            "reviewRejected": "Recenzija odbijena",
+            "subscriptionExpiring": "Pretplata ističe",
+            "subscriptionCancelled": "Pretplata otkazana",
+            "escalationReceived": "Eskalacija primljena",
+            "escalationResponded": "Eskalacija odgovorena",
+            "systemAlert": "Sustavno upozorenje",
+            "newHotelRegistration": "Nova registracija hotela",
+            "newFormCreated": "Novi obrazac kreiran",
+            "success": "Uspjeh",
+            "info": "Informacija",
+            "warning": "Upozorenje",
+            "error": "Greška"
           }
         },
         "states": {
-          "loading": "Loading notifications...",
-          "empty": "No notifications found"
+          "loading": "Učitavanje obavijesti...",
+          "empty": "Nema pronađenih obavijesti"
         },
         "table": {
-          "type": "Type",
-          "message": "Message",
-          "date": "Date",
-          "actions": "Actions",
+          "type": "Vrsta",
+          "message": "Poruka",
+          "date": "Datum",
+          "actions": "Radnje",
           "status": {
             "label": "Status",
-            "read": "Read",
-            "new": "New"
+            "read": "Pročitano",
+            "new": "Novo"
           }
         },
         "tooltips": {
-          "markAsRead": "Mark as Read",
-          "view": "View",
-          "delete": "Delete"
+          "markAsRead": "Označi kao pročitano",
+          "view": "Pogledaj",
+          "delete": "Izbriši"
         },
         "dates": {
-          "justNow": "Just now",
-          "hoursAgo": "{hours}h ago",
-          "yesterday": "Yesterday"
+          "justNow": "Upravo sada",
+          "hoursAgo": "prije {hours}h",
+          "yesterday": "Jučer"
         },
         "types": {
-          "NEW_REVIEW": "New Review",
-          "REVIEW_APPROVED": "Review Approved",
-          "REVIEW_REJECTED": "Review Rejected",
-          "SUBSCRIPTION_EXPIRING": "Subscription Expiring",
-          "SUBSCRIPTION_CANCELLED": "Subscription Cancelled",
-          "ESCALATION_RECEIVED": "Escalation Received",
-          "ESCALATION_RESPONDED": "Escalation Responded",
-          "SYSTEM_ALERT": "System Alert",
-          "NEW_HOTEL_REGISTRATION": "New Hotel Registration",
-          "NEW_FORM_CREATED": "New Form Created",
-          "SUCCESS": "Success",
-          "INFO": "Info",
-          "WARNING": "Warning",
-          "ERROR": "Error"
+          "NEW_REVIEW": "Nova recenzija",
+          "REVIEW_APPROVED": "Recenzija odobrena",
+          "REVIEW_REJECTED": "Recenzija odbijena",
+          "SUBSCRIPTION_EXPIRING": "Pretplata ističe",
+          "SUBSCRIPTION_CANCELLED": "Pretplata otkazana",
+          "ESCALATION_RECEIVED": "Eskalacija primljena",
+          "ESCALATION_RESPONDED": "Eskalacija odgovorena",
+          "SYSTEM_ALERT": "Sustavno upozorenje",
+          "NEW_HOTEL_REGISTRATION": "Nova registracija hotela",
+          "NEW_FORM_CREATED": "Novi obrazac kreiran",
+          "SUCCESS": "Uspjeh",
+          "INFO": "Informacija",
+          "WARNING": "Upozorenje",
+          "ERROR": "Greška"
         },
         "toasts": {
-          "loadError": "Failed to load notifications",
-          "markReadSuccess": "Notification marked as read",
-          "markReadError": "Failed to mark notification as read",
-          "markAllReadSuccess": "All notifications marked as read",
-          "markAllReadError": "Failed to mark all notifications as read",
-          "deleteSuccess": "Notification deleted successfully",
-          "deleteError": "Failed to delete notification",
-          "bulkDeleteSuccess": "{count} notification(s) deleted successfully",
-          "bulkDeleteError": "Failed to delete some notifications"
+          "loadError": "Učitavanje obavijesti nije uspjelo",
+          "markReadSuccess": "Obavijest označena kao pročitana",
+          "markReadError": "Označavanje obavijesti kao pročitane nije uspjelo",
+          "markAllReadSuccess": "Sve obavijesti označene kao pročitane",
+          "markAllReadError": "Označavanje svih kao pročitanih nije uspjelo",
+          "deleteSuccess": "Obavijest uspješno izbrisana",
+          "deleteError": "Brisanje obavijesti nije uspjelo",
+          "bulkDeleteSuccess": "{count} obavijesti uspješno izbrisano",
+          "bulkDeleteError": "Brisanje nekih obavijesti nije uspjelo"
         },
         "confirm": {
-          "deleteMessage": "Are you sure you want to delete this notification?",
-          "deleteHeader": "Delete Confirmation",
-          "bulkDeleteMessage": "Are you sure you want to delete {count} selected notification(s)?",
-          "bulkDeleteHeader": "Bulk Delete Confirmation"
+          "deleteMessage": "Jeste li sigurni da želite izbrisati ovu obavijest?",
+          "deleteHeader": "Potvrda brisanja",
+          "bulkDeleteMessage": "Jeste li sigurni da želite izbrisati {count} odabranih obavijesti?",
+          "bulkDeleteHeader": "Potvrda masovnog brisanja"
         }
       }
     }
   },
   "auth": {
     "register": {
-      "title": "Register",
-      "subtitle": "Let's get started",
+      "title": "Registracija",
+      "subtitle": "Krenimo",
       "placeholders": {
-        "firstName": "First Name",
-        "lastName": "Last Name",
-        "email": "Email",
-        "phone": "Phone (Optional)",
-        "password": "Password"
+        "firstName": "Ime",
+        "lastName": "Prezime",
+        "email": "E-mail",
+        "phone": "Telefon (opcionalno)",
+        "password": "Lozinka"
       },
       "buttons": {
-        "signUp": "Sign Up",
-        "signingUp": "Signing Up..."
+        "signUp": "Registriraj se",
+        "signingUp": "Registracija..."
       },
-      "agreementPrefix": "I have read the",
+      "agreementPrefix": "Pročitao/la sam",
       "toasts": {
-        "acceptTerms": "Please accept the terms and conditions",
-        "missingFields": "Please fill in all required fields",
-        "success": "Registration successful! Please check your email.",
-        "error": "Registration failed. Please try again."
+        "acceptTerms": "Prihvatite uvjete korištenja",
+        "missingFields": "Ispunite sva obavezna polja",
+        "success": "Registracija uspješna! Provjerite e-mail.",
+        "error": "Registracija nije uspjela. Pokušajte ponovno."
       }
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter the email address associated with your account and we'll send an email with instructions to reset your password.",
+      "title": "Zaboravljena lozinka?",
+      "description": "Unesite e-mail povezan s vašim računom i poslat ćemo vam upute za reset lozinke.",
       "messages": {
-        "instructions": "Check your email for password reset instructions"
+        "instructions": "Provjerite e-mail za upute za reset lozinke"
       },
       "submitted": {
-        "title": "Check your email!",
-        "description": "We have sent an email with a password reset link to {email}.",
-        "hint": "Didn't receive the email? Please check your spam folder."
+        "title": "Provjerite e-mail!",
+        "description": "Poslali smo e-mail s poveznicom za reset lozinke na {email}.",
+        "hint": "Niste primili e-mail? Provjerite mapu neželjene pošte."
       },
       "fields": {
-        "email": "Email Address",
-        "emailPlaceholder": "Enter your email address"
+        "email": "E-mail adresa",
+        "emailPlaceholder": "Unesite svoju e-mail adresu"
       },
       "buttons": {
-        "send": "Send Instructions",
-        "sending": "Sending...",
-        "resend": "Resend Email",
-        "backToLogin": "Back to Login"
+        "send": "Pošalji upute",
+        "sending": "Slanje...",
+        "resend": "Ponovno pošalji e-mail",
+        "backToLogin": "Natrag na prijavu"
       },
       "validation": {
-        "required": "Email is required",
-        "invalid": "Please enter a valid email address"
+        "required": "E-mail je obavezan",
+        "invalid": "Unesite valjanu e-mail adresu"
       },
       "toasts": {
-        "success": "Password reset email sent successfully",
-        "error": "Failed to send reset email",
-        "unexpected": "An unexpected error occurred. Please try again."
+        "success": "E-mail za reset lozinke uspješno poslan",
+        "error": "Slanje e-maila nije uspjelo",
+        "unexpected": "Došlo je do neočekivane greške. Pokušajte ponovno."
       }
     },
     "resetPassword": {
-      "title": "Create New Password!",
-      "subtitle": "Enter a new password below to update your account credentials.",
+      "title": "Nova lozinka!",
+      "subtitle": "Unesite novu lozinku ispod za ažuriranje pristupnih podataka.",
       "fields": {
-        "newPassword": "New Password",
-        "confirmPassword": "Confirm Password"
+        "newPassword": "Nova lozinka",
+        "confirmPassword": "Potvrdi lozinku"
       },
       "placeholders": {
-        "password": "Enter your password",
-        "confirmPassword": "Confirm your password"
+        "password": "Unesite lozinku",
+        "confirmPassword": "Potvrdite lozinku"
       },
       "buttons": {
-        "reset": "Reset Password",
-        "resetting": "Resetting..."
+        "reset": "Resetiraj lozinku",
+        "resetting": "Resetiranje..."
       },
       "link": {
-        "backToLogin": "Back to Login"
+        "backToLogin": "Natrag na prijavu"
       },
       "states": {
-        "validating": "Validating reset link...",
-        "loading": "Loading..."
+        "validating": "Provjera poveznice...",
+        "loading": "Učitavanje..."
       },
       "errors": {
-        "passwordMin": "Password must be at least 6 characters long",
-        "passwordMax": "Password must be less than 128 characters",
-        "confirmRequired": "Please confirm your password",
-        "mismatch": "Passwords do not match"
+        "passwordMin": "Lozinka mora imati najmanje 6 znakova",
+        "passwordMax": "Lozinka mora imati manje od 128 znakova",
+        "confirmRequired": "Potvrdite lozinku",
+        "mismatch": "Lozinke se ne podudaraju"
       },
       "toasts": {
-        "invalidLink": "Invalid reset link",
-        "invalidOrExpired": "Invalid or expired reset link",
-        "failedValidation": "Failed to validate reset link",
-        "success": "Password reset successfully. You can now log in with your new password.",
-        "failure": "Failed to reset password",
-        "unexpected": "An unexpected error occurred"
+        "invalidLink": "Nevaljana poveznica za reset",
+        "invalidOrExpired": "Nevaljana ili istekla poveznica",
+        "failedValidation": "Provjera poveznice nije uspjela",
+        "success": "Lozinka uspješno resetirana. Prijavite se novom lozinkom.",
+        "failure": "Reset lozinke nije uspio",
+        "unexpected": "Došlo je do neočekivane greške"
       },
       "accessibility": {
-        "showPassword": "Show password",
-        "hidePassword": "Hide password"
+        "showPassword": "Prikaži lozinku",
+        "hidePassword": "Sakrij lozinku"
       }
     }
   },
   "authFooter": {
     "brand": {
       "title": "C-Reviews",
-      "description": "We help hotels connect with their guests through seamless feedback solutions. Our platform makes it easy to create forms, gather insights, and elevate the guest experience with integrity and professionalism at the core of everything we do.",
-      "footerImageAlt": "C-Reviews decorative footer"
+      "description": "Pomažemo hotelima da se povežu s gostima kroz rješenja za povratne informacije. Naša platforma olakšava izradu obrazaca, prikupljanje uvida i unapređenje gostujućeg iskustva s integritetom i profesionalnošću u središtu svega što radimo.",
+      "footerImageAlt": "C-Reviews dekorativno podnožje"
     },
     "quickLinks": {
-      "title": "Quick Links",
+      "title": "Brzi linkovi",
       "items": {
-        "home": "Home",
-        "about": "About Us",
-        "features": "Features",
-        "contact": "Contact Us"
+        "home": "Početna",
+        "about": "O nama",
+        "features": "Značajke",
+        "contact": "Kontakt"
       }
     },
     "resources": {
-      "title": "Resources",
+      "title": "Resursi",
       "items": {
-        "dashboard": "Dashboard",
-        "feedbacks": "Feedbacks",
-        "hotelProfile": "Hotel Profile",
-        "support": "Support",
-        "ownerProfile": "Owner Profile"
+        "dashboard": "Nadzorna ploča",
+        "feedbacks": "Povratne informacije",
+        "hotelProfile": "Profil hotela",
+        "support": "Podrška",
+        "ownerProfile": "Profil vlasnika"
       }
     },
     "legal": {
-      "title": "Legal",
+      "title": "Pravne informacije",
       "items": {
-        "privacyPolicy": "Privacy Policy",
-        "companyPolicy": "Company Policy",
-        "terms": "Terms & Conditions"
+        "privacyPolicy": "Pravila o privatnosti",
+        "companyPolicy": "Pravila tvrtke",
+        "terms": "Uvjeti korištenja"
       }
     },
     "connect": {
-      "title": "Connect with Us",
-      "emailPlaceholder": "Email Address",
-      "submitLabel": "Subscribe",
+      "title": "Povežite se s nama",
+      "emailPlaceholder": "E-mail adresa",
+      "submitLabel": "Pretplati se",
       "social": {
-        "facebook": "Follow us on Facebook",
-        "instagram": "Follow us on Instagram",
-        "linkedin": "Connect with us on LinkedIn"
+        "facebook": "Pratite nas na Facebooku",
+        "instagram": "Pratite nas na Instagramu",
+        "linkedin": "Povežite se s nama na LinkedInu"
       }
     },
-    "copyright": "© 2024 C-Reviews LLC. All Rights Reserved!"
+    "copyright": "© 2024 C-Reviews LLC. Sva prava pridržana!"
   }
 }
 

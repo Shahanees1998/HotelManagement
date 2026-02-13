@@ -10,6 +10,7 @@ import { useContext, useState, useRef } from "react";
 import { LayoutContext } from "../../../../layout/context/layoutcontext";
 import AuthFooter from "@/components/AuthFooter";
 import { useI18n } from "@/i18n/TranslationProvider";
+import Image from "next/image";
 
 const Register: Page = () => {
     const [confirmed, setConfirmed] = useState(false);
@@ -94,9 +95,8 @@ const Register: Page = () => {
                 <div style={{ 
                     fontSize: "1.5rem", 
                     fontWeight: "600",
-                    color: "#1e3a5f"
                 }}>
-                    C-Reviews
+                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={100} />
                 </div>
                 <div style={{ display: "flex", gap: "1rem" }}>
                     <Button

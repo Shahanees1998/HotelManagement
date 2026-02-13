@@ -189,7 +189,7 @@ export default function HotelDashboard() {
       
       // For main dashboard, export the chart data directly
       if (type === 'main') {
-        const csvHeader = [t("Date"), t("Total Reviews"), t("Average Rating")].join(",");
+        const csvHeader = [t("Date"), t("hotel.dashboard.stats.totalReviews"), t("hotel.dashboard.stats.averageRating")].join(",");
         let csvContent = `${csvHeader}\n`;
         let htmlContent = '';
         
@@ -238,8 +238,8 @@ export default function HotelDashboard() {
                 <thead>
                   <tr>
                     <th>${t("Date")}</th>
-                    <th>${t("Total Reviews")}</th>
-                    <th>${t("Average Rating")}</th>
+                    <th>${t("hotel.dashboard.stats.totalReviews")}</th>
+                    <th>${t("hotel.dashboard.stats.averageRating")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -266,23 +266,23 @@ export default function HotelDashboard() {
                     <th>${t("Value")}</th>
                   </tr>
                   <tr>
-                    <td>${t("Total Reviews")}</td>
+                    <td>${t("hotel.dashboard.stats.totalReviews")}</td>
                     <td>${stats.totalReviews}</td>
                   </tr>
                   <tr>
-                    <td>${t("Average Rating")}</td>
+                    <td>${t("hotel.dashboard.stats.averageRating")}</td>
                     <td>${stats.averageRating.toFixed(2)}/5</td>
                   </tr>
                   <tr>
-                    <td>${t("Positive Reviews")}</td>
+                    <td>${t("hotel.dashboard.stats.positiveReviews")}</td>
                     <td>${stats.positiveReviews}</td>
                   </tr>
                   <tr>
-                    <td>${t("Negative Reviews")}</td>
+                    <td>${t("hotel.dashboard.stats.negativeReviews")}</td>
                     <td>${stats.negativeReviews}</td>
                   </tr>
                   <tr>
-                    <td>${t("Response Rate")}</td>
+                    <td>${t("hotel.dashboard.stats.responseRate")}</td>
                     <td>${stats.responseRate}%</td>
                   </tr>
                 </table>
@@ -460,7 +460,7 @@ export default function HotelDashboard() {
         tension: 0.4,
       },
       {
-        label: t("Average Rating"),
+        label: t("hotel.dashboard.stats.averageRating"),
         data: [0],
         borderColor: '#2196F3',
         backgroundColor: 'rgba(33, 150, 243, 0.1)',
@@ -475,8 +475,8 @@ export default function HotelDashboard() {
 
     const labelMap: Record<string, string> = {
       Reviews: t("Reviews"),
-      "Average Rating": t("Average Rating"),
-      "Total Reviews": t("Total Reviews"),
+      "Average Rating": t("hotel.dashboard.stats.averageRating"),
+      "Total Reviews": t("hotel.dashboard.stats.totalReviews"),
     };
 
     const translateLabel = (label: string) => {
@@ -835,7 +835,7 @@ export default function HotelDashboard() {
 
     return [
       {
-        title: t("Total Reviews"),
+        title: t("hotel.dashboard.stats.totalReviews"),
         value: stats.totalReviews.toString(),
         icon: "pi pi-comments",
         color: "text-blue-500",
@@ -843,7 +843,7 @@ export default function HotelDashboard() {
         percentageChange: totalReviewsChange,
       },
       {
-        title: t("Average Rating"),
+        title: t("hotel.dashboard.stats.averageRating"),
         value: stats.averageRating.toFixed(1),
         icon: "pi pi-star",
         color: "text-yellow-500",
@@ -851,7 +851,7 @@ export default function HotelDashboard() {
         percentageChange: averageRatingChange,
       },
       {
-        title: t("Positive Reviews"),
+        title: t("hotel.dashboard.stats.positiveReviews"),
         value: stats.positiveReviews.toString(),
         icon: "pi pi-thumbs-up",
         color: "text-green-500",
@@ -859,7 +859,7 @@ export default function HotelDashboard() {
         percentageChange: positiveReviewsChange,
       },
       {
-        title: t("Negative Reviews"),
+        title: t("hotel.dashboard.stats.negativeReviews"),
         value: stats.negativeReviews.toString(),
         icon: "pi pi-thumbs-down",
         color: "text-red-500",
@@ -871,7 +871,7 @@ export default function HotelDashboard() {
         } : null,
       },
       {
-        title: t("Response Rate"),
+        title: t("hotel.dashboard.stats.responseRate"),
         value: `${Math.round(stats.responseRate)}%`,
         icon: "pi pi-percentage",
         color: "text-purple-500",
@@ -1240,7 +1240,7 @@ export default function HotelDashboard() {
                             {item.averageRating.toFixed(2)}/5
                           </div>
                           <div className="text-sm text-600">
-                            {t("Average Rating")}
+                            {t("hotel.dashboard.stats.averageRating")}
                           </div>
                         </div>
                       </div>

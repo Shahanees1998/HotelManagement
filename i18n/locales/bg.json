@@ -25,27 +25,27 @@
     "lv": "Latvian"
   },
   "common": {
-    "warning": "Warning",
-    "success": "Success",
-    "error": "Error",
-    "info": "Info",
-    "agreeTo": "I agree to the",
-    "and": "and",
-    "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy",
-    "alreadyHaveAccount": "Already have an account?",
-    "login": "Login",
-    "logout": "Logout",
-    "orRegisterVia": "or register via",
-    "selectLanguage": "Select language",
-    "getStarted": "Get Started"
+    "warning": "Предупреждение",
+    "success": "Успех",
+    "error": "Грешка",
+    "info": "Информация",
+    "agreeTo": "Съгласен/а съм с",
+    "and": "и",
+    "terms": "Общите условия",
+    "privacy": "Политика за поверителност",
+    "alreadyHaveAccount": "Вече имате акаунт?",
+    "login": "Вход",
+    "logout": "Изход",
+    "orRegisterVia": "или регистрирайте се чрез",
+    "selectLanguage": "Изберете език",
+    "getStarted": "Започнете"
   },
   "components": {
     "customPaginator": {
-      "itemsPerPage": "Items per page",
-      "rangeInfo": "{start}-{end} of {total} entries",
-      "previousPage": "Previous page",
-      "nextPage": "Next page"
+      "itemsPerPage": "Елементи на страница",
+      "rangeInfo": "{start}-{end} от {total} записа",
+      "previousPage": "Предишна страница",
+      "nextPage": "Следваща страница"
     }
   },
   "countries": {
@@ -66,1293 +66,1302 @@
   },
   "registerHotel": {
     "step1": {
-      "title": "Owner Information!",
+      "title": "Данни за собственика!",
       "fields": {
-        "fullName": "Name",
-        "email": "Email Address",
-        "phone": "Phone Number",
-        "password": "Password"
+        "fullName": "Име",
+        "email": "Имейл адрес",
+        "phone": "Телефонен номер",
+        "password": "Парола"
       },
       "placeholders": {
-        "fullName": "Enter your name",
-        "email": "Enter your email address",
-        "phone": "Enter your phone number",
-        "password": "Enter your password"
+        "fullName": "Въведете името си",
+        "email": "Въведете имейл адреса си",
+        "phone": "Въведете телефонния си номер",
+        "password": "Въведете паролата си"
       },
-      "cta": "Let's Keep Going!"
+      "cta": "Да продължим!"
     },
     "step2": {
-      "title": "Hotel Information!",
-      "subtitle": "Is my data safe?",
+      "title": "Данни за хотела!",
+      "subtitle": "Данните ми в безопасност ли са?",
       "fields": {
-        "hotelName": "Hotel Name",
-        "hotelWebsite": "Hotel Website",
-        "hotelAddress": "Hotel Address",
-        "city": "City",
-        "country": "Country",
-        "hotelDescription": "Hotel Description"
+        "hotelName": "Име на хотела",
+        "hotelWebsite": "Уебсайт на хотела",
+        "hotelAddress": "Адрес на хотела",
+        "city": "Град",
+        "country": "Държава",
+        "hotelDescription": "Описание на хотела"
       },
       "placeholders": {
-        "hotelName": "Enter hotel name",
-        "hotelWebsite": "Enter hotel website url",
-        "hotelAddress": "Enter hotel street address",
-        "city": "Enter hotel city",
-        "country": "Select Country",
-        "hotelDescription": "Enter brief description of your hotel"
+        "hotelName": "Въведете името на хотела",
+        "hotelWebsite": "Въведете URL на уебсайта",
+        "hotelAddress": "Въведете адреса на хотела",
+        "city": "Въведете града",
+        "country": "Изберете държава",
+        "hotelDescription": "Кратко описание на хотела"
       }
     },
     "buttons": {
-      "back": "Back",
-      "register": "Register Now",
-      "registering": "Registering..."
+      "back": "Назад",
+      "register": "Регистрирай се",
+      "registering": "Регистрация..."
     },
     "toasts": {
-      "missingRequired": "Please fill in all required fields",
-      "passwordLength": "Password must be at least 6 characters long",
-      "acceptTerms": "Please accept the terms and conditions",
-      "acceptTermsPrivacy": "Please accept the terms and conditions and privacy policy",
-      "success": "Hotel registration successful! Please check your email for verification.",
-      "error": "Registration failed",
-      "errorGeneric": "Registration failed. Please try again."
+      "missingRequired": "Моля, попълнете всички задължителни полета",
+      "passwordLength": "Паролата трябва да е поне 6 символа",
+      "acceptTerms": "Моля, приемете общите условия",
+      "acceptTermsPrivacy": "Моля, приемете общите условия и политиката за поверителност",
+      "success": "Регистрацията е успешна! Проверете имейла си за потвърждение.",
+      "error": "Регистрацията не успя",
+      "errorGeneric": "Регистрацията не успя. Моля, опитайте отново."
     },
     "images": {
-      "ownerAlt": "Register Hotel - Owner Information",
-      "hotelAlt": "Register Hotel - Hotel Information"
+      "ownerAlt": "Регистрация на хотел - Данни за собственика",
+      "hotelAlt": "Регистрация на хотел - Данни за хотела"
     }
   },
   "hotel": {
     "dashboard": {
       "recentReviews": {
-        "title": "Recent Reviews",
-        "description": "View and manage your recent reviews.",
+        "title": "Последни отзиви",
+        "description": "Прегледайте и управлявайте последните си отзиви.",
         "states": {
-          "loading": "Loading recent reviews..."
+          "loading": "Зареждане на последни отзиви..."
         },
         "table": {
-          "date": "Date"
+          "date": "Дата"
         }
       },
       "comparisonChart": {
-        "title": "Review Comparison",
-        "period": "Period",
-        "weekly": "Weekly",
-        "monthly": "Monthly",
-        "loading": "Loading comparison data...",
-        "noData": "No comparison data available"
+        "title": "Сравнение на отзиви",
+        "period": "Период",
+        "weekly": "Седмично",
+        "monthly": "Месечно",
+        "loading": "Зареждане на данни за сравнение...",
+        "noData": "Няма налични данни за сравнение",
+        "positiveReviews": "Положителни отзиви",
+        "negativeReviews": "Негативни отзиви"
+      },
+      "stats": {
+        "totalReviews": "Общо отзиви",
+        "averageRating": "Средна оценка",
+        "positiveReviews": "Положителни отзиви",
+        "negativeReviews": "Негативни отзиви",
+        "responseRate": "Процент отговори"
       }
     },
     "forms": {
       "header": {
-        "title": "Feedback Form",
-        "subtitle": "Manage your guest feedback form. You can update this form at any time."
+        "title": "Формуляр за обратна връзка",
+        "subtitle": "Управлявайте формуляра за обратна връзка от гости. Можете да го актуализирате по всяко време."
       },
       "states": {
-        "loading": "Loading form..."
+        "loading": "Зареждане на формуляр..."
       },
       "fields": {
-        "title": "Form Title",
-        "status": "Status",
-        "active": "Active",
-        "inactive": "Inactive",
-        "description": "Description",
-        "noDescription": "No description provided",
-        "totalResponses": "Total Responses"
+        "title": "Заглавие на формуляр",
+        "status": "Статус",
+        "active": "Активен",
+        "inactive": "Неактивен",
+        "description": "Описание",
+        "noDescription": "Няма предоставено описание",
+        "totalResponses": "Общо отговори"
       },
       "buttons": {
-        "edit": "Edit Form",
-        "preview": "Preview Form",
-        "showQr": "Show QR Code",
-        "create": "Create Form",
-        "downloadQr": "Download QR Code",
-        "copyUrl": "Copy URL"
+        "edit": "Редактиране на формуляр",
+        "preview": "Преглед на формуляр",
+        "showQr": "Покажи QR код",
+        "create": "Създай формуляр",
+        "downloadQr": "Изтегли QR код",
+        "copyUrl": "Копирай URL"
       },
       "empty": {
-        "title": "No Form Created Yet",
-        "description": "Create your feedback form to start collecting guest reviews."
+        "title": "Все още няма създаден формуляр",
+        "description": "Създайте формуляр за обратна връзка, за да започнете да събирате отзиви от гости."
       },
       "preview": {
-        "title": "Form Preview",
-        "tooltipBack": "Back to Forms",
-        "tag": "Preview Mode - Interactions Disabled"
+        "title": "Преглед на формуляр",
+        "tooltipBack": "Обратно към формулярите",
+        "tag": "Режим преглед - взаимодействията са изключени"
       },
       "qrDialog": {
-        "title": "QR Code - {title}"
+        "title": "QR код - {title}"
       },
       "toasts": {
-        "loadError": "Failed to load form",
-        "slugMissing": "Hotel slug not found. Cannot preview form.",
-        "createSuccess": "Form created successfully",
-        "updateSuccess": "Form updated successfully",
-        "saveError": "Failed to save form",
-        "qrGenerated": "QR code generated successfully",
-        "qrExists": "QR code already exists for this form",
-        "qrError": "Failed to handle QR code",
-        "noUrl": "No URL to copy",
-        "copiedDetail": "URL copied to clipboard",
-        "copyError": "Failed to copy URL to clipboard"
+        "loadError": "Неуспешно зареждане на формуляр",
+        "slugMissing": "Идентификаторът на хотела не е намерен. Прегледът е невъзможен.",
+        "createSuccess": "Формулярът е създаден успешно",
+        "updateSuccess": "Формулярът е актуализиран успешно",
+        "saveError": "Неуспешно запазване на формуляр",
+        "qrGenerated": "QR кодът е генериран успешно",
+        "qrExists": "Вече съществува QR код за този формуляр",
+        "qrError": "Грешка при обработка на QR кода",
+        "noUrl": "Няма URL за копиране",
+        "copiedDetail": "URL е копиран в клипборда",
+        "copyError": "Неуспешно копиране на URL"
       },
       "builder": {
         "header": {
-          "edit": "Edit Form",
-          "create": "Create New Form",
-          "preview": "Preview Form",
-          "livePreview": "Live Preview",
-          "formBuilderToggle": "Form Builder",
-          "livePreviewToggle": "Live Preview",
-          "backTooltip": "Back to Forms"
+          "edit": "Редактиране на формуляр",
+          "create": "Създай нов формуляр",
+          "preview": "Преглед на формуляр",
+          "livePreview": "Преглед на живо",
+          "formBuilderToggle": "Конструктор на формуляри",
+          "livePreviewToggle": "Преглед на живо",
+          "backTooltip": "Обратно към формулярите"
         },
         "buttons": {
-          "save": "Save Form",
-          "saveTooltip": "Save the form",
-          "addNew": "Add New",
-          "addOption": "Add",
-          "cancel": "Cancel",
-          "update": "Update",
-          "add": "Add"
+          "save": "Запази формуляр",
+          "saveTooltip": "Запази формуляра",
+          "addNew": "Добави нов",
+          "addOption": "Добави",
+          "cancel": "Отказ",
+          "update": "Актуализирай",
+          "add": "Добави"
         },
         "sections": {
-          "settings": "Form Settings",
-          "questions": "Questions",
-          "predefined": "Predefined Questions",
-          "custom": "Custom Questions"
+          "settings": "Настройки на формуляр",
+          "questions": "Въпроси",
+          "predefined": "Предварително зададени въпроси",
+          "custom": "Персонализирани въпроси"
         },
         "fields": {
-          "titleLabel": "Form Title*",
-          "titlePlaceholder": "Enter form title",
-          "descriptionLabel": "Form Description*",
-          "descriptionPlaceholder": "Enter brief description of your form"
+          "titleLabel": "Заглавие на формуляр*",
+          "titlePlaceholder": "Въведете заглавие на формуляр",
+          "descriptionLabel": "Описание на формуляр*",
+          "descriptionPlaceholder": "Въведете кратко описание на формуляра"
         },
         "predefined": {
-          "rateUs": "Rate Us* (Always included)",
-          "rateUsTitle": "Rate Us",
-          "customRating": "Custom Rating*",
-          "customRatingTitle": "Custom Rating",
-          "customRatingPlaceholder": "Enter rating item label",
-          "customRatingEditTitle": "Click to edit",
-          "feedback": "Please give us your honest feedback?*",
-          "feedbackTitle": "Please give us your honest feedback?",
-          "feedbackPlaceholder": "Enter your detailed feedback"
+          "rateUs": "Оцени ни* (Винаги включено)",
+          "rateUsTitle": "Оцени ни",
+          "customRating": "Персонализирано оценяване*",
+          "customRatingTitle": "Персонализирано оценяване",
+          "customRatingPlaceholder": "Въведете етикет за елемента за оценка",
+          "customRatingEditTitle": "Кликнете за редакция",
+          "feedback": "Моля, дайте ни честна обратна връзка?*",
+          "feedbackTitle": "Моля, дайте ни честна обратна връзка?",
+          "feedbackPlaceholder": "Въведете подробна обратна връзка"
         },
         "tooltips": {
-          "previewDisabled": "Preview mode - editing disabled",
-          "addQuestion": "Add custom question",
-          "save": "Save",
-          "cancel": "Cancel",
-          "edit": "Edit",
-          "delete": "Delete",
-          "moveUp": "Move Up",
-          "moveDown": "Move Down"
+          "previewDisabled": "Режим преглед - редакцията е изключена",
+          "addQuestion": "Добави персонализиран въпрос",
+          "save": "Запази",
+          "cancel": "Отказ",
+          "edit": "Редактирай",
+          "delete": "Изтрий",
+          "moveUp": "Нагоре",
+          "moveDown": "Надолу"
         },
         "questionTypes": {
-          "shortText": "Short Text",
-          "longText": "Long Text",
-          "starRating": "Star Rating",
-          "singleChoice": "Single Choice",
-          "multipleChoice": "Multiple Choice",
-          "yesNo": "Yes/No"
+          "shortText": "Кратък текст",
+          "longText": "Дълъг текст",
+          "starRating": "Звездно оценяване",
+          "singleChoice": "Един избор",
+          "multipleChoice": "Няколко избора",
+          "yesNo": "Да/Не"
         },
         "placeholders": {
-          "answer": "Enter your answer"
+          "answer": "Въведете отговора си"
         },
         "answers": {
-          "yes": "Yes",
-          "no": "No"
+          "yes": "Да",
+          "no": "Не"
         },
         "badges": {
-          "default": "Default",
-          "defaultHelper": "Cannot be edited, deleted, or moved"
+          "default": "По подразбиране",
+          "defaultHelper": "Не може да се редактира, изтрива или премества"
         },
         "states": {
-          "loading": "Loading form data...",
-          "noQuestionsTitle": "No questions added yet",
-          "noQuestionsDescription": "Use the predefined questions above or add custom questions to get started"
+          "loading": "Зареждане на данни от формуляр...",
+          "noQuestionsTitle": "Все още няма добавени въпроси",
+          "noQuestionsDescription": "Използвайте предварително зададените въпроси по-горе или добавете персонализирани въпроси"
         },
         "alerts": {
-          "ratingRequiredTitle": "Rating Required",
-          "ratingRequiredDescription": "Either \"Rate Us\" or \"Custom Rating\" must be selected to save the form."
+          "ratingRequiredTitle": "Изисква се оценка",
+          "ratingRequiredDescription": "Трябва да е избрано „Оцени ни” или „Персонализирано оценяване”, за да запазите формуляра."
         },
         "layoutInfo": {
           "basic": {
-            "title": "Basic Layout Features",
-            "description": "All questions are available including custom questions. This layout provides a simple, clean design."
+            "title": "Основни функции на оформлението",
+            "description": "Всички въпроси са налични, включително персонализирани. Това оформление предлага прост и ясен дизайн."
           },
           "good": {
-            "title": "Good Layout Features",
-            "description": "Choose either \"Rate Us\" OR \"Custom Rating\" (mutually exclusive). All questions including custom questions are available."
+            "title": "Подобрени функции на оформлението",
+            "description": "Изберете „Оцени ни“ ИЛИ „Персонализирано оценяване“ (взаимоизключващи се). Всички въпроси включително персонализирани са налични."
           },
           "excellent": {
-            "title": "Excellent Layout Features",
-            "description": "All predefined questions available plus custom questions. Premium design with animations for comprehensive feedback forms."
+            "title": "Разширени функции на оформлението",
+            "description": "Всички предварително зададени въпроси плюс персонализирани. Премиум дизайн с анимации за пълноценни формуляри за обратна връзка."
           }
         },
         "subscription": {
-          "title": "Subscription Required",
-          "message": "Your subscription has been {status}. Please reactivate your subscription to create or edit forms.",
-          "manageButton": "Manage Subscription",
+          "title": "Изисква се абонамент",
+          "message": "Вашият абонамент е {status}. Моля, реактивирайте абонамента си, за да създавате или редактирате формуляри.",
+          "manageButton": "Управление на абонамент",
           "status": {
-            "cancelled": "cancelled",
-            "expired": "expired"
+            "cancelled": "прекратен",
+            "expired": "изтекъл"
           },
-          "toastTitle": "Subscription Required",
-          "toastMessage": "Your subscription has been cancelled or expired. Please reactivate your subscription to create forms."
+          "toastTitle": "Изисква се абонамент",
+          "toastMessage": "Вашият абонамент е прекратен или изтекъл. Моля, реактивирайте абонамента си, за да създавате формуляри."
         },
         "preview": {
-          "descriptionFallback": "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance.",
-          "fullNameLabel": "Name*",
-          "fullNamePlaceholder": "Enter your name",
-          "emailLabel": "Email*",
-          "emailPlaceholder": "Enter your email address",
-          "submit": "Submit Now"
+          "descriptionFallback": "Попълнете този формуляр за заявка за поддръжка или сигнал за проблем. Екипът ни ще прегледа заявката и ще се свърже с вас възможно най-скоро.",
+          "fullNameLabel": "Име*",
+          "fullNamePlaceholder": "Въведете името си",
+          "emailLabel": "Имейл*",
+          "emailPlaceholder": "Въведете имейл адреса си",
+          "submit": "Изпрати сега"
         },
         "dialog": {
-          "addTitle": "Add Question",
-          "editTitle": "Edit Question",
-          "questionLabel": "Question Text *",
-          "questionPlaceholder": "Enter your question",
-          "typeLabel": "Question Type",
-          "optionsLabel": "Options",
-          "optionPlaceholder": "Enter option"
+          "addTitle": "Добави въпрос",
+          "editTitle": "Редактирай въпрос",
+          "questionLabel": "Текст на въпрос *",
+          "questionPlaceholder": "Въведете въпроса си",
+          "typeLabel": "Тип въпрос",
+          "optionsLabel": "Опции",
+          "optionPlaceholder": "Въведете опция"
         },
         "toasts": {
-          "formLoadSuccess": "Form data loaded successfully",
-          "formLoadError": "Failed to load form data",
-          "questionRequired": "Question text is required",
-          "optionsRequired": "Multiple choice questions must have at least 2 options",
-          "questionUpdated": "Question updated",
-          "questionAdded": "Question added",
-          "questionDeleted": "Question deleted",
-          "ratingLabelRequired": "Please enter a label for the rating item",
-          "ratingItemUpdated": "Rating item updated",
-          "ratingItemDeleted": "Rating item deleted",
-          "ratingItemAdded": "New rating item added",
-          "titleRequired": "Form title is required",
-          "questionCountRequired": "At least one question is required"
+          "formLoadSuccess": "Данните от формуляра са заредени успешно",
+          "formLoadError": "Неуспешно зареждане на данни от формуляр",
+          "questionRequired": "Текстът на въпроса е задължителен",
+          "optionsRequired": "Въпросите с няколко избора трябва да имат поне 2 опции",
+          "questionUpdated": "Въпросът е актуализиран",
+          "questionAdded": "Въпросът е добавен",
+          "questionDeleted": "Въпросът е изтрит",
+          "ratingLabelRequired": "Моля, въведете етикет за елемента за оценка",
+          "ratingItemUpdated": "Елементът за оценка е актуализиран",
+          "ratingItemDeleted": "Елементът за оценка е изтрит",
+          "ratingItemAdded": "Добавен е нов елемент за оценка",
+          "titleRequired": "Заглавието на формуляра е задължително",
+          "questionCountRequired": "Изисква се поне един въпрос"
         }
       }
     },
     "analytics": {
       "customRatings": {
-        "title": "Custom Rating Analytics",
-        "description": "Track detailed rating trends for your \"Good\" layout form.",
+        "title": "Анализ на персонализирани оценки",
+        "description": "Проследявайте тенденциите в оценките за формуляра с „Подобрено“ оформление.",
         "buttons": {
-          "exportCsv": "Export CSV",
-          "exportPdf": "Export PDF",
-          "refresh": "Refresh"
+          "exportCsv": "Експорт CSV",
+          "exportPdf": "Експорт PDF",
+          "refresh": "Обнови"
         },
         "filters": {
-          "title": "Date Range Filters",
-          "startDate": "Start Date",
-          "startDatePlaceholder": "Select start date",
-          "endDate": "End Date",
-          "endDatePlaceholder": "Select end date",
-          "clear": "Clear Filters"
+          "title": "Филтри по период",
+          "startDate": "Начална дата",
+          "startDatePlaceholder": "Изберете начална дата",
+          "endDate": "Крайна дата",
+          "endDatePlaceholder": "Изберете крайна дата",
+          "clear": "Изчисти филтрите"
         },
         "states": {
-          "loading": "Loading analytics data...",
-          "noDataTitle": "No Data Available",
-          "noDataDescription": "No \"Good\" layout forms with custom rating data found for your hotel."
+          "loading": "Зареждане на анализи...",
+          "noDataTitle": "Няма налични данни",
+          "noDataDescription": "Няма формуляри с „Подобрено“ оформление и данни за оценки за вашия хотел."
         },
         "toasts": {
-          "loadError": "Failed to load custom rating analytics",
-          "exportSuccess": "Data exported successfully as {format}",
-          "exportError": "Failed to export data"
+          "loadError": "Неуспешно зареждане на анализите за оценки",
+          "exportSuccess": "Данните са експортирани успешно като {format}",
+          "exportError": "Неуспешен експорт на данни"
         },
         "chart": {
-          "trendPrefix": "Trend Analysis - ",
-          "summaryTitle": "Rating Summary",
-          "ratingsCount": "({count} ratings)",
-          "averageRating": "Average Rating",
+          "trendPrefix": "Тренд анализ - ",
+          "summaryTitle": "Обобщение на оценките",
+          "ratingsCount": "({count} оценки)",
+          "averageRating": "Средна оценка",
           "tooltipSuffix": "/5"
         }
       },
       "overview": {
-        "title": "Analytics",
-        "description": "Track your hotel's performance and guest satisfaction.",
-        "dropdownPlaceholder": "Select time range",
+        "title": "Аналитика",
+        "description": "Проследявайте представянето на хотела и удовлетвореността на гостите.",
+        "dropdownPlaceholder": "Изберете период",
         "buttons": {
-          "refresh": "Refresh"
+          "refresh": "Обнови"
         },
         "timeRanges": {
-          "7": "Last 7 days",
-          "30": "Last 30 days",
-          "90": "Last 90 days",
-          "180": "Last 6 months",
-          "365": "Last year"
+          "7": "Последните 7 дни",
+          "30": "Последните 30 дни",
+          "90": "Последните 90 дни",
+          "180": "Последните 6 месеца",
+          "365": "Миналата година"
         },
         "states": {
-          "loadingSkeleton": "Loading...",
-          "noData": "No analytics data available",
-          "chartLoading": "Loading chart data...",
-          "chartEmpty": "No chart data available"
+          "loadingSkeleton": "Зареждане...",
+          "noData": "Няма налични данни за аналитика",
+          "chartLoading": "Зареждане на данни за графиката...",
+          "chartEmpty": "Няма данни за графиката"
         },
         "cards": {
-          "change": "{change} from last period"
+          "change": "{change} спрямо предходния период"
         },
         "charts": {
-          "satisfaction": "Satisfaction Trends",
-          "ratingDistribution": "Rating Distribution",
-          "reviewVolume": "Review Volume"
+          "satisfaction": "Тенденции на удовлетвореността",
+          "ratingDistribution": "Разпределение на оценките",
+          "reviewVolume": "Брой отзиви"
         },
         "reviews": {
-          "title": "Recent Reviews"
+          "title": "Последни отзиви"
         },
         "toasts": {
-          "loadError": "Failed to load analytics"
+          "loadError": "Неуспешно зареждане на аналитиката"
         }
       },
       "responseRates": {
-        "title": "Response Rates Analytics",
-        "description": "Track your hotel's response rates and engagement metrics.",
+        "title": "Анализ на процент отговори",
+        "description": "Проследявайте процента отговори и ангажираност на хотела.",
         "charts": {
-          "reviewVolume": "Review Volume Trends",
-          "satisfaction": "Satisfaction Trends Over Time"
+          "reviewVolume": "Тенденции в броя отзиви",
+          "satisfaction": "Тенденции на удовлетвореността във времето"
         }
       },
       "satisfaction": {
-        "title": "Satisfaction Analytics",
-        "description": "Track your hotel's guest satisfaction trends and ratings.",
+        "title": "Анализ на удовлетвореността",
+        "description": "Проследявайте тенденциите в удовлетвореността и оценките на гостите.",
         "charts": {
-          "reviewVolume": "Review Volume & Positive Reviews"
+          "reviewVolume": "Брой отзиви и положителни отзиви"
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Известия",
+        "ariaLabel": "Известия",
+        "iconAlt": "Икона за известие",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Маркирай всички като прочетени",
+          "refresh": "Обнови"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Все още няма известия"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "success": "Success",
-          "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "newReview": "Нов отзив",
+          "reviewApproved": "Отзив одобрен",
+          "reviewRejected": "Отзив отхвърлен",
+          "subscriptionExpiring": "Абонаментът изтича",
+          "subscriptionCancelled": "Абонаментът е прекратен",
+          "escalationReceived": "Получена ескалация",
+          "escalationResponded": "Отговор на ескалация",
+          "systemAlert": "Системно предупреждение",
+          "newHotelRegistration": "Нова регистрация на хотел",
+          "success": "Успех",
+          "info": "Информация",
+          "warning": "Предупреждение",
+          "error": "Грешка",
+          "generic": "Известие"
         }
       }
     },
     "reviews": {
-      "title": "Guest Reviews",
-      "subtitle": "Manage and review guest feedback submissions.",
+      "title": "Отзиви от гости",
+      "subtitle": "Управлявайте и преглеждайте подадените отзиви от гости.",
       "buttons": {
-        "refresh": "Refresh",
-        "clearFilters": "Clear Filters",
-        "view": "View",
-        "reply": "Reply",
-        "delete": "Delete",
-        "close": "Close",
-        "markAsChecked": "Mark as Checked",
-        "checked": "Checked",
-        "uncheck": "Uncheck",
-        "markAsUrgent": "Mark as Urgent",
-        "urgent": "Urgent",
-        "removeUrgent": "Remove Urgent",
-        "replyToCustomer": "Reply to Customer",
-        "cancel": "Cancel",
-        "sendReply": "Send Reply"
+        "refresh": "Обнови",
+        "clearFilters": "Изчисти филтрите",
+        "view": "Преглед",
+        "reply": "Отговор",
+        "delete": "Изтрий",
+        "close": "Затвори",
+        "markAsChecked": "Маркирай като прегледан",
+        "checked": "Прегледан",
+        "uncheck": "Премахни отметката",
+        "markAsUrgent": "Маркирай като спешно",
+        "urgent": "Спешно",
+        "removeUrgent": "Премахни спешно",
+        "replyToCustomer": "Отговор на клиента",
+        "cancel": "Отказ",
+        "sendReply": "Изпрати отговор"
       },
       "filters": {
-        "title": "Filters",
-        "searchReviews": "Search Reviews",
-        "searchPlaceholder": "Search by guest name or feedback text...",
-        "roomNumber": "Room Number",
-        "roomNumberPlaceholder": "Filter by room number...",
-        "filter": "Filter",
-        "allReviews": "All Reviews",
-        "replied": "Replied",
-        "notReplied": "Not Replied",
-        "checked": "Checked",
-        "notChecked": "Not Checked",
-        "urgent": "Urgent",
-        "notUrgent": "Not Urgent",
-        "starRatings": "Star Ratings",
-        "allRatings": "All Ratings",
-        "5Stars": "5 Stars",
-        "4Stars": "4 Stars",
-        "3Stars": "3 Stars",
-        "2Stars": "2 Stars",
-        "1Star": "1 Star",
-        "dateRange": "Date Range",
-        "startDate": "Start Date",
-        "endDate": "End Date",
-        "fromDate": "From date",
-        "toDate": "To date"
+        "title": "Филтри",
+        "searchReviews": "Търсене в отзиви",
+        "searchPlaceholder": "Търсете по име на гост или текст на отзив...",
+        "roomNumber": "Номер на стая",
+        "roomNumberPlaceholder": "Филтрирайте по номер на стая...",
+        "filter": "Филтър",
+        "allReviews": "Всички отзиви",
+        "replied": "С отговор",
+        "notReplied": "Без отговор",
+        "checked": "Прегледан",
+        "notChecked": "Непрегледан",
+        "urgent": "Спешно",
+        "notUrgent": "Не е спешно",
+        "starRatings": "Звездно оценяване",
+        "allRatings": "Всички оценки",
+        "5Stars": "5 звезди",
+        "4Stars": "4 звезди",
+        "3Stars": "3 звезди",
+        "2Stars": "2 звезди",
+        "1Star": "1 звезда",
+        "dateRange": "Период",
+        "startDate": "Начална дата",
+        "endDate": "Крайна дата",
+        "fromDate": "От дата",
+        "toDate": "До дата"
       },
       "states": {
-        "loadingReviews": "Loading reviews...",
-        "noReviewsFound": "No Reviews Found",
-        "noReviewsYet": "No reviews have been submitted yet.",
-        "noReviewsMatchFilters": "No reviews match your current filters."
+        "loadingReviews": "Зареждане на отзиви...",
+        "noReviewsFound": "Няма намерени отзиви",
+        "noReviewsYet": "Все още няма подадени отзиви.",
+        "noReviewsMatchFilters": "Няма отзиви, съответстващи на текущите филтри."
       },
       "table": {
-        "guest": "Guest",
-        "email": "Email",
-        "room": "Room",
-        "rating": "Rating",
-        "status": "Status",
-        "submitted": "Submitted",
-        "actions": "Actions",
-        "checkedStatus": "Checked",
-        "notCheckedStatus": "Not Checked",
-        "repliedStatus": "Replied",
-        "notRepliedStatus": "Not Replied",
-        "urgentStatus": "Urgent",
-        "notUrgentStatus": "Not Urgent",
-        "public": "Public",
-        "private": "Private",
-        "shared": "Shared",
-        "noEmailAvailable": "No email available for this review"
+        "guest": "Гост",
+        "email": "Имейл",
+        "room": "Стая",
+        "rating": "Оценка",
+        "status": "Статус",
+        "submitted": "Подаден",
+        "actions": "Действия",
+        "checkedStatus": "Прегледан",
+        "notCheckedStatus": "Непрегледан",
+        "repliedStatus": "С отговор",
+        "notRepliedStatus": "Без отговор",
+        "urgentStatus": "Спешно",
+        "notUrgentStatus": "Не е спешно",
+        "public": "Публичен",
+        "private": "Частен",
+        "shared": "Споделен",
+        "noEmailAvailable": "Няма имейл за този отзив"
       },
       "detailsDialog": {
-        "header": "Guest Feedback Details",
-        "guestInfo": "Guest Information",
-        "name": "Name:",
-        "anonymous": "Anonymous",
-        "email": "Email:",
-        "notProvided": "Not provided",
-        "phone": "Phone:",
-        "roomNumber": "Room Number:",
-        "submitted": "Submitted:",
-        "overallRating": "Overall Rating",
-        "quickFeedback": "Quick Feedback",
-        "howDoYouRateUs": "How do you rate us?",
-        "honestFeedback": "Please give us your honest feedback?",
-        "noSpecificFeedback": "No specific feedback provided",
-        "customRatingItem": "Custom Rating Item ({itemId})",
-        "formInfo": "Form Information",
-        "formTitle": "Form Title:",
-        "description": "Description:",
-        "layout": "Layout:",
-        "feedbackResponses": "Feedback Responses",
-        "reviewReplies": "Review Replies",
-        "languageSelectorLabel": "View content in",
-        "languageSelectorPlaceholder": "Select language",
-        "translating": "Translating...",
-        "noDetailedResponses": "No detailed responses available for this review.",
-        "question": "Question:",
-        "noAnswer": "No answer provided",
-        "replyToCustomer": "Reply to Customer",
-        "replyPlaceholder": "Type your reply message here...",
-        "replyMessageHint": "This message will be sent to {guestEmail}",
-        "toastWarningReply": "Please enter a reply message",
-        "toastSuccessReply": "Reply sent successfully to {sentTo}",
-        "toastErrorReply": "Failed to send reply"
+        "header": "Подробности за отзива от гост",
+        "guestInfo": "Информация за гостта",
+        "name": "Име:",
+        "anonymous": "Анонимен",
+        "email": "Имейл:",
+        "notProvided": "Не е предоставен",
+        "phone": "Телефон:",
+        "roomNumber": "Номер на стая:",
+        "submitted": "Подаден:",
+        "overallRating": "Обща оценка",
+        "quickFeedback": "Бърза обратна връзка",
+        "howDoYouRateUs": "Как ни оценявате?",
+        "honestFeedback": "Моля, дайте ни честна обратна връзка?",
+        "noSpecificFeedback": "Няма предоставена конкретна обратна връзка",
+        "customRatingItem": "Персонализирана оценка ({itemId})",
+        "formInfo": "Информация за формуляр",
+        "formTitle": "Заглавие на формуляр:",
+        "description": "Описание:",
+        "layout": "Оформление:",
+        "feedbackResponses": "Отговори на обратната връзка",
+        "reviewReplies": "Отговори на отзиви",
+        "languageSelectorLabel": "Преглед на съдържанието на",
+        "languageSelectorPlaceholder": "Изберете език",
+        "translating": "Превеждане...",
+        "noDetailedResponses": "Няма подробни отговори за този отзив.",
+        "question": "Въпрос:",
+        "noAnswer": "Няма предоставен отговор",
+        "replyToCustomer": "Отговор на клиента",
+        "replyPlaceholder": "Въведете съобщението си тук...",
+        "replyMessageHint": "Това съобщение ще бъде изпратено до {guestEmail}",
+        "toastWarningReply": "Моля, въведете съобщение за отговор",
+        "toastSuccessReply": "Отговорът е изпратен успешно до {sentTo}",
+        "toastErrorReply": "Неуспешно изпращане на отговор"
       },
       "deleteDialog": {
-        "header": "Delete Review",
-        "confirmTitle": "Are you sure you want to delete this review?",
-        "confirmMessage": "This action cannot be undone. The review will be permanently removed from your system.",
-        "reviewDetails": "Review Details:",
-        "guest": "Guest:",
-        "rating": "Rating:",
-        "submitted": "Submitted:",
+        "header": "Изтриване на отзив",
+        "confirmTitle": "Сигурни ли сте, че искате да изтриете този отзив?",
+        "confirmMessage": "Това действие не може да бъде отменено. Отзивът ще бъде премахнат завинаги от системата.",
+        "reviewDetails": "Подробности за отзива:",
+        "guest": "Гост:",
+        "rating": "Оценка:",
+        "submitted": "Подаден:",
         "buttons": {
-          "cancel": "Cancel",
-          "delete": "Delete"
+          "cancel": "Отказ",
+          "delete": "Изтрий"
         },
         "toasts": {
-          "success": "Review deleted successfully",
-          "error": "Failed to delete review"
+          "success": "Отзивът е изтрит успешно",
+          "error": "Неуспешно изтриване на отзив"
         }
       },
       "toasts": {
-        "loadError": "Failed to load reviews",
-        "detailsLoadError": "Failed to load review details",
+        "loadError": "Неуспешно зареждане на отзиви",
+        "detailsLoadError": "Неуспешно зареждане на подробности за отзива",
         "statusUpdate": {
-          "checked": "Review marked as checked",
-          "unchecked": "Review unmarked as checked",
-          "urgent": "Review marked as urgent",
-          "notUrgent": "Review unmarked as urgent",
-          "replied": "Review marked as replied"
+          "checked": "Отзивът е маркиран като прегледан",
+          "unchecked": "Премахната е отметката „прегледан“",
+          "urgent": "Отзивът е маркиран като спешен",
+          "notUrgent": "Премахната е отметката „спешно“",
+          "replied": "Отзивът е маркиран като отговорен"
         },
-        "statusUpdateError": "Failed to update review status",
-        "replyMissing": "Please enter a reply message",
-        "replySuccess": "Reply sent successfully to {sentTo}",
-        "replyError": "Failed to send reply",
-        "translationError": "Failed to translate review content",
-        "deleteSuccess": "Review deleted successfully",
-        "deleteError": "Failed to delete review"
+        "statusUpdateError": "Неуспешна актуализация на статуса на отзива",
+        "replyMissing": "Моля, въведете съобщение за отговор",
+        "replySuccess": "Отговорът е изпратен успешно до {sentTo}",
+        "replyError": "Неуспешно изпращане на отговор",
+        "translationError": "Неуспешен превод на съдържанието на отзива",
+        "deleteSuccess": "Отзивът е изтрит успешно",
+        "deleteError": "Неуспешно изтриване на отзив"
       }
     },
     "menu": {
-      "dashboard": "Dashboard",
-      "feedbackForm": "Feedback Form",
-      "qrCodes": "QR Codes",
-      "allReviews": "All Reviews",
-      "notifications": "Notifications",
-      "contactAdmin": "Contact Admin",
-      "settings": "Settings",
+      "dashboard": "Табло",
+      "feedbackForm": "Формуляр за обратна връзка",
+      "qrCodes": "QR кодове",
+      "allReviews": "Всички отзиви",
+      "notifications": "Известия",
+      "contactAdmin": "Контакт с администратор",
+      "settings": "Настройки",
       "settingsItems": {
-        "userProfile": "User Profile",
-        "hotelProfile": "Hotel Profile",
-        "changePassword": "Change Password",
-        "subscriptions": "Subscriptions",
-        "paymentMethods": "Payment Methods"
+        "userProfile": "Потребителски профил",
+        "hotelProfile": "Профил на хотела",
+        "changePassword": "Смяна на парола",
+        "subscriptions": "Абонаменти",
+        "paymentMethods": "Методи на плащане"
       }
     },
     "paymentMethods": {
-      "pageTitle": "Add Payment Method",
+      "pageTitle": "Добавяне на метод на плащане",
       "buttons": {
-        "add": "Add",
-        "addMethod": "Add Method",
-        "updateMethod": "Update Method",
-        "cancel": "Cancel",
-        "setPrimary": "Set as Primary",
-        "delete": "Delete"
+        "add": "Добави",
+        "addMethod": "Добави метод",
+        "updateMethod": "Актуализирай метод",
+        "cancel": "Отказ",
+        "setPrimary": "Направи по подразбиране",
+        "delete": "Изтрий"
       },
       "badges": {
-        "primary": "Primary",
-        "expired": "Expired"
+        "primary": "По подразбиране",
+        "expired": "Изтекъл"
       },
       "states": {
-        "loading": "Loading payment methods...",
-        "emptyTitle": "No Payment Methods",
-        "emptyDescription": "Add a payment method to manage your subscriptions."
+        "loading": "Зареждане на методи на плащане...",
+        "emptyTitle": "Няма методи на плащане",
+        "emptyDescription": "Добавете метод на плащане за управление на абонаментите."
       },
       "form": {
-        "paymentType": "Payment Type",
+        "paymentType": "Тип плащане",
         "paymentTypeOptions": {
-          "card": "Credit/Debit Card",
-          "bank": "Bank Account"
+          "card": "Кредитна/дебитна карта",
+          "bank": "Банкова сметка"
         },
         "card": {
-          "number": "Card Number",
+          "number": "Номер на карта",
           "numberPlaceholder": "1234 5678 9012 3456",
-          "expiryMonth": "Expiry Month",
-          "expiryYear": "Expiry Year",
-          "monthPlaceholder": "MM",
-          "yearPlaceholder": "YYYY",
+          "expiryMonth": "Месец на изтичане",
+          "expiryYear": "Година на изтичане",
+          "monthPlaceholder": "ММ",
+          "yearPlaceholder": "ГГГГ",
           "cvv": "CVV",
           "cvvPlaceholder": "123",
-          "holder": "Cardholder Name",
-          "holderPlaceholder": "John Doe",
-          "brand": "Card Brand",
-          "brandPlaceholder": "Select card brand"
+          "holder": "Име на картодържателя",
+          "holderPlaceholder": "Иван Иванов",
+          "brand": "Марка карта",
+          "brandPlaceholder": "Изберете марка карта"
         },
         "cardBrands": {
           "visa": "Visa",
           "mastercard": "Mastercard",
           "amex": "American Express",
           "discover": "Discover",
-          "unknown": "Card"
+          "unknown": "Карта"
         },
         "bank": {
-          "name": "Bank Name",
-          "namePlaceholder": "Bank of America",
-          "accountNumber": "Account Number",
-          "accountPlaceholder": "Account number",
-          "routingNumber": "Routing Number",
+          "name": "Име на банка",
+          "namePlaceholder": "Име на банка",
+          "accountNumber": "Номер на сметка",
+          "accountPlaceholder": "Номер на сметка",
+          "routingNumber": "Роутинг номер",
           "routingPlaceholder": "123456789",
-          "accountType": "Account Type",
-          "accountTypePlaceholder": "Select account type"
+          "accountType": "Тип сметка",
+          "accountTypePlaceholder": "Изберете тип сметка"
         },
         "accountTypes": {
-          "checking": "Checking",
-          "savings": "Savings",
-          "unknown": "Account"
+          "checking": "Разплащателна",
+          "savings": "Спестовна",
+          "unknown": "Сметка"
         }
       },
       "list": {
-        "endingIn": "ending in",
-        "expiryLabel": "Exp. date",
-        "accountTypeSuffix": "Account",
-        "accountTypeUnknown": "Account",
-        "unknownBank": "Bank",
-        "edit": "Edit",
-        "delete": "Delete"
+        "endingIn": "завършва с",
+        "expiryLabel": "Валидна до",
+        "accountTypeSuffix": "Сметка",
+        "accountTypeUnknown": "Сметка",
+        "unknownBank": "Банка",
+        "edit": "Редактирай",
+        "delete": "Изтрий"
       },
       "dialogs": {
         "add": {
-          "title": "Add Payment Method"
+          "title": "Добавяне на метод на плащане"
         },
         "edit": {
-          "title": "Edit Payment Method",
-          "cardLocked": "Card number cannot be changed for security reasons",
-          "bankLocked": "Account number cannot be changed for security reasons"
+          "title": "Редактиране на метод на плащане",
+          "cardLocked": "Номерът на картата не може да се променя от съображения за сигурност",
+          "bankLocked": "Номерът на сметката не може да се променя от съображения за сигурност"
         },
         "delete": {
-          "title": "Delete Payment Method",
-          "message": "Are you sure you want to delete this payment method? This action cannot be undone."
+          "title": "Изтриване на метод на плащане",
+          "message": "Сигурни ли сте, че искате да изтриете този метод на плащане? Действието не може да бъде отменено."
         }
       },
       "toasts": {
         "load": {
-          "error": "Failed to load payment methods"
+          "error": "Неуспешно зареждане на методи на плащане"
         },
         "add": {
-          "success": "Payment method added successfully",
-          "error": "Failed to add payment method"
+          "success": "Методът на плащане е добавен успешно",
+          "error": "Неуспешно добавяне на метод на плащане"
         },
         "delete": {
-          "success": "Payment method deleted successfully",
-          "error": "Failed to delete payment method"
+          "success": "Методът на плащане е изтрит успешно",
+          "error": "Неуспешно изтриване на метод на плащане"
         },
         "default": {
-          "success": "Default payment method updated",
-          "error": "Failed to update default payment method"
+          "success": "Методът по подразбиране е актуализиран",
+          "error": "Неуспешна актуализация на метода по подразбиране"
         },
         "update": {
-          "success": "Payment method updated successfully",
-          "error": "Failed to update payment method"
+          "success": "Методът на плащане е актуализиран успешно",
+          "error": "Неуспешна актуализация на метод на плащане"
         }
       }
     },
     "subscription": {
       "header": {
-        "title": "Subscription Management",
-        "subtitle": "Manage your hotel's subscription and billing."
+        "title": "Управление на абонамента",
+        "subtitle": "Управлявайте абонамента и фактурирането на хотела си."
       },
       "buttons": {
-        "refresh": "Refresh",
-        "processing": "Processing...",
-        "upgradeNow": "Upgrade Now",
-        "currentPlan": "Current Plan",
-        "reactivate": "Reactivate",
-        "cancelSubscription": "Cancel Subscription",
-        "contactSupport": "Contact Support",
-        "cancel": "Cancel",
-        "confirm": "Confirm"
+        "refresh": "Опресняване",
+        "processing": "Обработка...",
+        "upgradeNow": "Надградете сега",
+        "currentPlan": "Текущ план",
+        "reactivate": "Реактивиране",
+        "cancelSubscription": "Отказ от абонамент",
+        "contactSupport": "Свържете се с поддръжката",
+        "cancel": "Отказ",
+        "confirm": "Потвърди"
       },
       "statuses": {
-        "trial": "Trial",
-        "active": "Active",
-        "cancelled": "Cancelled",
-        "expired": "Expired"
+        "trial": "Пробен",
+        "active": "Активен",
+        "cancelled": "Прекратен",
+        "expired": "Изтекъл"
       },
       "states": {
-        "loading": "Loading subscription data...",
-        "notFoundTitle": "Subscription Not Found",
-        "notFoundDescription": "Unable to load subscription information."
+        "loading": "Зареждане на данни за абонамента...",
+        "notFoundTitle": "Абонаментът не е намерен",
+        "notFoundDescription": "Неуспешно зареждане на информация за абонамента."
       },
       "labels": {
-        "notAvailable": "N/A"
+        "notAvailable": "Н/Д"
       },
       "trial": {
-        "name": "Trial Plan",
-        "description": "Free Trial",
-        "label": "Trial Period:",
-        "remaining": "{count} days remaining"
+        "name": "Пробен план",
+        "description": "Безплатен пробен период",
+        "label": "Пробен период:",
+        "remaining": "Остават {count} дни"
       },
       "sections": {
         "status": {
-          "title": "Current Subscription Status",
-          "statusLabel": "Status",
-          "totalReviews": "Total Reviews",
-          "averageRating": "Average Rating"
+          "title": "Текущ статус на абонамента",
+          "statusLabel": "Статус",
+          "totalReviews": "Общо отзиви",
+          "averageRating": "Средна оценка"
         },
         "plans": {
-          "title": "Available Plans",
-          "currentPlanHint": "You are currently on this plan"
+          "title": "Налични планове",
+          "currentPlanHint": "В момента сте на този план"
         },
         "actions": {
-          "title": "Subscription Actions"
+          "title": "Действия с абонамента"
         },
         "billing": {
-          "title": "Billing Information",
-          "subscriptionId": "Subscription ID:",
-          "created": "Created:",
-          "nextBilling": "Next Billing:",
-          "trialEnds": "Trial Ends:"
+          "title": "Данни за фактуриране",
+          "subscriptionId": "ID на абонамент:",
+          "created": "Създаден:",
+          "nextBilling": "Следващо фактуриране:",
+          "trialEnds": "Край на пробния период:"
         }
       },
-      "perInterval": "per {interval}",
+      "perInterval": "на {interval}",
       "priceLabel": "{price}/{interval}",
       "dialog": {
-        "title": "Confirm Subscription Change",
-        "upgradeTitle": "Upgrade to {plan}",
-        "description": "You are about to upgrade your subscription plan.",
-        "planLabel": "Plan:",
-        "priceLabel": "Price:",
-        "billingLabel": "Billing:",
-        "noteLabel": "Note:",
-        "noteDescription": "This is a demo environment. No actual payment will be processed."
+        "title": "Потвърдете промяната на абонамента",
+        "upgradeTitle": "Надграждане към {plan}",
+        "description": "На път сте да надградите плана си за абонамент.",
+        "planLabel": "План:",
+        "priceLabel": "Цена:",
+        "billingLabel": "Фактуриране:",
+        "noteLabel": "Забележка:",
+        "noteDescription": "Това е демо среда. Реално плащане няма да бъде обработено."
       },
       "toasts": {
         "load": {
-          "error": "Failed to load subscription data"
+          "error": "Неуспешно зареждане на данни за абонамента"
         },
         "update": {
-          "success": "Subscription updated successfully",
-          "error": "Failed to update subscription"
+          "success": "Абонаментът е актуализиран успешно",
+          "error": "Неуспешна актуализация на абонамента"
         }
       },
       "errors": {
-        "unauthorized": "Unauthorized",
-        "hotelNotFound": "Hotel not found",
-        "planRequired": "Plan ID and action are required",
-        "unknownPlan": "Unknown Plan",
-        "fetchFailed": "Failed to fetch subscription details",
-        "updateFailed": "Failed to update subscription"
+        "unauthorized": "Неоторизиран достъп",
+        "hotelNotFound": "Хотелът не е намерен",
+        "planRequired": "Изискват се ID на план и действие",
+        "unknownPlan": "Неизвестен план",
+        "fetchFailed": "Неуспешно зареждане на данни за абонамента",
+        "updateFailed": "Неуспешна актуализация на абонамента"
       },
       "messages": {
-        "upgraded": "Successfully upgraded to {plan}",
-        "cancelled": "Successfully cancelled subscription"
+        "upgraded": "Успешно надграждане към {plan}",
+        "cancelled": "Абонаментът е прекратен успешно"
       },
       "plans": {
         "basic": {
-          "name": "Basic Plan",
+          "name": "Базов план",
           "features": [
-            "Up to 100 reviews per month",
-            "Basic analytics",
-            "QR code generation",
-            "Basic Feedback Form"
+            "До 100 отзива месечно",
+            "Базови анализи",
+            "Генериране на QR кодове",
+            "Базова форма за обратна връзка"
           ]
         },
         "professional": {
-          "name": "Professional Plan",
+          "name": "Професионален план",
           "features": [
-            "Up to 500 reviews per month",
-            "Advanced analytics",
-            "QR code generation",
-            "Customized Star Rating Questions"
+            "До 500 отзива месечно",
+            "Разширени анализи",
+            "Генериране на QR кодове",
+            "Персонализирани въпроси със звезди"
           ]
         },
         "enterprise": {
-          "name": "Enterprise Plan",
+          "name": "Корпоративен план",
           "features": [
-            "Unlimited reviews per month",
-            "Enterprise analytics",
-            "Priority support",
-            "Multi-property management"
+            "Неограничени отзиви месечно",
+            "Корпоративни анализи",
+            "Приоритетна поддръжка",
+            "Управление на множество обекти"
           ]
         }
       },
       "intervals": {
-        "month": "month",
-        "monthly": "monthly",
-        "year": "year",
-        "yearly": "yearly",
-        "quarter": "quarter",
-        "quarterly": "quarterly"
+        "month": "месец",
+        "monthly": "месечно",
+        "year": "година",
+        "yearly": "годишно",
+        "quarter": "тримесечие",
+        "quarterly": "тримесечно"
       }
     },
     "profile": {
       "user": {
-        "title": "Personal Information",
-        "subtitle": "Manage your personal account details.",
+        "title": "Лична информация",
+        "subtitle": "Управлявайте личните си данни в акаунта.",
         "buttons": {
-          "save": "Save Changes",
-          "changePassword": "Change Password",
-          "twoFactor": "Two-Factor Authentication",
-          "changePhoto": "Change Photo",
-          "uploading": "Uploading..."
+          "save": "Запазване на промените",
+          "changePassword": "Смяна на парола",
+          "twoFactor": "Двуфакторно удостоверяване",
+          "changePhoto": "Смяна на снимка",
+          "uploading": "Качване..."
         },
         "images": {
-          "cardTitle": "Profile Image",
-          "hint": "JPG, PNG or GIF. Max size 5MB."
+          "cardTitle": "Профилна снимка",
+          "hint": "JPG, PNG или GIF. Макс. размер 5MB."
         },
         "fields": {
-          "firstName": "First Name *",
-          "lastName": "Last Name *",
-          "email": "Email Address *",
-          "phone": "Phone Number"
+          "firstName": "Име *",
+          "lastName": "Фамилия *",
+          "email": "Имейл адрес *",
+          "phone": "Телефонен номер"
         },
         "placeholders": {
-          "firstName": "Enter your first name",
-          "lastName": "Enter your last name",
+          "firstName": "Въведете името си",
+          "lastName": "Въведете фамилията си",
           "email": "your.email@example.com",
           "phone": "+1 (555) 123-4567"
         },
         "cards": {
-          "personalInfo": "Personal Information",
-          "accountInfo": "Account Information",
-          "security": "Security"
+          "personalInfo": "Лична информация",
+          "accountInfo": "Информация за акаунта",
+          "security": "Сигурност"
         },
         "account": {
-          "type": "Account Type:",
-          "status": "Status:",
-          "memberSince": "Member Since:",
-          "lastLogin": "Last Login:",
-          "typeValue": "Hotel Owner",
-          "statusActive": "Active",
-          "notAvailable": "N/A"
+          "type": "Тип акаунт:",
+          "status": "Статус:",
+          "memberSince": "Член от:",
+          "lastLogin": "Последен вход:",
+          "typeValue": "Собственик на хотел",
+          "statusActive": "Активен",
+          "notAvailable": "Н/Д"
         },
         "toasts": {
-          "saveSuccess": "Profile updated successfully",
-          "saveError": "Failed to update profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Profile image updated successfully",
-          "imageError": "Failed to upload image",
-          "twoFactorInfo": "Two-factor authentication will be available soon"
+          "saveSuccess": "Профилът е актуализиран успешно",
+          "saveError": "Неуспешна актуализация на профила",
+          "imageTypeError": "Моля, изберете валиден файл (JPG, PNG, GIF или WebP)",
+          "imageSizeError": "Размерът на снимката трябва да е под 5MB",
+          "imageSuccess": "Профилната снимка е актуализирана успешно",
+          "imageError": "Неуспешно качване на снимка",
+          "twoFactorInfo": "Двуфакторното удостоверяване ще бъде налично скоро"
         }
       },
       "hotel": {
-        "title": "Hotel Profile",
-        "subtitle": "Manage your hotel information and settings.",
+        "title": "Профил на хотела",
+        "subtitle": "Управлявайте информацията и настройките на хотела си.",
         "buttons": {
-          "save": "Save Changes",
-          "uploadLogo": "Upload Logo",
-          "uploading": "Uploading...",
-          "viewPublic": "View Public Page",
-          "contactSupport": "Contact Support"
+          "save": "Запазване на промените",
+          "uploadLogo": "Качване на лого",
+          "uploading": "Качване...",
+          "viewPublic": "Преглед на публичната страница",
+          "contactSupport": "Свържете се с поддръжката"
         },
         "images": {
-          "cardTitle": "Hotel Logo",
-          "alt": "Hotel Logo",
-          "hint": "JPG, PNG or GIF. Max size 5MB. Recommended: 300x300px"
+          "cardTitle": "Лого на хотела",
+          "alt": "Лого на хотела",
+          "hint": "JPG, PNG или GIF. Макс. 5MB. Препоръчително: 300x300px"
         },
         "cards": {
-          "actions": "Actions",
-          "hotelInfo": "Hotel Information"
+          "actions": "Действия",
+          "hotelInfo": "Информация за хотела"
         },
         "fields": {
-          "name": "Hotel Name *",
-          "description": "Description",
-          "address": "Address",
-          "city": "City",
-          "country": "Country",
-          "phone": "Phone",
-          "email": "Email",
-          "website": "Website"
+          "name": "Име на хотела *",
+          "description": "Описание",
+          "address": "Адрес",
+          "city": "Град",
+          "country": "Държава",
+          "phone": "Телефон",
+          "email": "Имейл",
+          "website": "Уебсайт"
         },
         "placeholders": {
-          "name": "Enter hotel name",
-          "description": "Brief description of your hotel",
-          "address": "Street address",
-          "city": "City",
-          "country": "Select country",
+          "name": "Въведете името на хотела",
+          "description": "Кратко описание на хотела ви",
+          "address": "Адрес",
+          "city": "Град",
+          "country": "Изберете държава",
           "phone": "+1 (555) 123-4567",
           "email": "hotel@example.com",
           "website": "https://www.yourhotel.com"
         },
         "externalLinks": {
-          "title": "External Review Links",
-          "subtitle": "Add links to your TripAdvisor and Google Reviews pages to help guests share positive feedback.",
+          "title": "Външни връзки за отзиви",
+          "subtitle": "Добавете връзки към страниците ви в TripAdvisor и Google Reviews.",
           "tripAdvisor": {
-            "label": "TripAdvisor Link",
+            "label": "Връзка TripAdvisor",
             "placeholder": "https://www.tripadvisor.com/...",
-            "hint": "Optional: Link to your TripAdvisor page"
+            "hint": "По избор: връзка към страницата ви в TripAdvisor"
           },
           "google": {
-            "label": "Google Reviews Link",
+            "label": "Връзка Google Reviews",
             "placeholder": "https://g.page/...",
-            "hint": "Optional: Link to your Google Reviews page"
+            "hint": "По избор: връзка към страницата ви в Google Reviews"
           }
         },
         "account": {
-          "notAvailable": "N/A"
+          "notAvailable": "Н/Д"
         },
         "toasts": {
-          "loadError": "Failed to load hotel profile",
-          "saveSuccess": "Hotel profile updated successfully",
-          "saveError": "Failed to update hotel profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Hotel logo updated successfully",
-          "imageError": "Failed to upload logo"
+          "loadError": "Неуспешно зареждане на профила на хотела",
+          "saveSuccess": "Профилът на хотела е актуализиран успешно",
+          "saveError": "Неуспешна актуализация на профила на хотела",
+          "imageTypeError": "Моля, изберете валиден файл (JPG, PNG, GIF или WebP)",
+          "imageSizeError": "Размерът на снимката трябва да е под 5MB",
+          "imageSuccess": "Логото на хотела е актуализирано успешно",
+          "imageError": "Неуспешно качване на лого"
         }
       },
       "password": {
-        "title": "Change Password",
-        "subtitle": "Update your account password for better security.",
-        "cardTitle": "Password Change",
+        "title": "Смяна на парола",
+        "subtitle": "Актуализирайте паролата си за по-добра сигурност.",
+        "cardTitle": "Смяна на парола",
         "buttons": {
-          "change": "Change Password",
-          "cancel": "Cancel",
-          "confirmChange": "Change Password"
+          "change": "Смяна на парола",
+          "cancel": "Отказ",
+          "confirmChange": "Смяна на парола"
         },
         "fields": {
-          "current": "Current Password *",
-          "new": "New Password *",
-          "confirm": "Confirm New Password *"
+          "current": "Текуща парола *",
+          "new": "Нова парола *",
+          "confirm": "Потвърдете новата парола *"
         },
         "placeholders": {
-          "current": "Enter your current password",
-          "new": "Enter your new password",
-          "confirm": "Confirm your new password"
+          "current": "Въведете текущата си парола",
+          "new": "Въведете новата си парола",
+          "confirm": "Потвърдете новата парола"
         },
         "strength": {
-          "label": "Password Strength:",
-          "weak": "Weak",
-          "medium": "Medium",
-          "strong": "Strong"
+          "label": "Сила на паролата:",
+          "weak": "Слаба",
+          "medium": "Средна",
+          "strong": "Силна"
         },
         "requirements": {
-          "title": "Password Requirements",
-          "minLength": "At least 8 characters long",
-          "uppercase": "Contains uppercase letters",
-          "lowercase": "Contains lowercase letters",
-          "numbers": "Contains numbers",
-          "special": "Contains special characters"
+          "title": "Изисквания за паролата",
+          "minLength": "Минимум 8 символа",
+          "uppercase": "Съдържа главни букви",
+          "lowercase": "Съдържа малки букви",
+          "numbers": "Съдържа цифри",
+          "special": "Съдържа специални символи"
         },
         "tips": {
-          "title": "Security Tips",
-          "tip": "Tip: Use a unique password that you don't use elsewhere.",
-          "warning": "Warning: Never share your password with anyone."
+          "title": "Съвети за сигурност",
+          "tip": "Съвет: Използвайте уникална парола, която не ползвате другаде.",
+          "warning": "Внимание: Никога не споделяйте паролата си."
         },
         "validation": {
-          "currentRequired": "Current password is required",
-          "newRequired": "New password is required",
-          "minLength": "New password must be at least 8 characters long",
-          "complexity": "New password must contain uppercase, lowercase, numbers, and special characters",
-          "confirmMismatch": "New password and confirmation do not match",
-          "sameAsCurrent": "New password must be different from current password"
+          "currentRequired": "Текущата парола е задължителна",
+          "newRequired": "Новата парола е задължителна",
+          "minLength": "Новата парола трябва да е поне 8 символа",
+          "complexity": "Новата парола трябва да съдържа главни и малки букви, цифри и специални символи",
+          "confirmMismatch": "Новата парола и потвърждението не съвпадат",
+          "sameAsCurrent": "Новата парола трябва да е различна от текущата"
         },
         "toasts": {
-          "changeSuccess": "Password changed successfully",
-          "changeError": "Failed to change password"
+          "changeSuccess": "Паролата е сменена успешно",
+          "changeError": "Неуспешна смяна на парола"
         },
         "confirm": {
-          "title": "Confirm Password Change",
-          "message": "Are you sure you want to change your password?",
-          "warning": "This action will log you out of all devices and you'll need to log in again."
+          "title": "Потвърдете смяната на парола",
+          "message": "Сигурни ли сте, че искате да смените паролата си?",
+          "warning": "Ще бъдете изведени от всички устройства и ще трябва да влезете отново."
         },
         "accessibility": {
-          "show": "Show password",
-          "hide": "Hide password"
+          "show": "Показване на парола",
+          "hide": "Скриване на парола"
         }
       },
       "subscription": {
         "errors": {
-          "unauthorized": "Unauthorized",
-          "hotelNotFound": "Hotel not found",
-          "planRequired": "Plan ID and action are required",
-          "unknownPlan": "Unknown Plan",
-          "fetchFailed": "Failed to fetch subscription details",
-          "updateFailed": "Failed to update subscription"
+          "unauthorized": "Неоторизиран достъп",
+          "hotelNotFound": "Хотелът не е намерен",
+          "planRequired": "Изискват се ID на план и действие",
+          "unknownPlan": "Неизвестен план",
+          "fetchFailed": "Неуспешно зареждане на данни за абонамента",
+          "updateFailed": "Неуспешна актуализация на абонамента"
         },
         "messages": {
-          "upgraded": "Successfully upgraded to {plan}",
-          "cancelled": "Successfully cancelled subscription"
+          "upgraded": "Успешно надграждане към {plan}",
+          "cancelled": "Абонаментът е прекратен успешно"
         },
         "plans": {
           "basic": {
-            "name": "Basic Plan",
+            "name": "Базов план",
             "features": [
-              "Up to 100 reviews per month",
-              "Basic analytics",
-              "QR code generation",
-              "Basic Feedback Form"
+              "До 100 отзива месечно",
+              "Базови анализи",
+              "Генериране на QR кодове",
+              "Базова форма за обратна връзка"
             ]
           },
           "professional": {
-            "name": "Professional Plan",
+            "name": "Професионален план",
             "features": [
-              "Up to 500 reviews per month",
-              "Advanced analytics",
-              "QR code generation",
-              "Customized Star Rating Questions"
+              "До 500 отзива месечно",
+              "Разширени анализи",
+              "Генериране на QR кодове",
+              "Персонализирани въпроси със звезди"
             ]
           },
           "enterprise": {
-            "name": "Enterprise Plan",
+            "name": "Корпоративен план",
             "features": [
-              "Unlimited reviews",
-              "Full analytics suite",
-              "QR code generation",
-              "All type of questions"
+              "Неограничени отзиви",
+              "Пълен пакет анализи",
+              "Генериране на QR кодове",
+              "Всички типове въпроси"
             ]
           }
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Известия",
+        "ariaLabel": "Известия",
+        "iconAlt": "Икона за известия",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Маркирай всички като прочетени",
+          "refresh": "Опресняване"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Все още няма известия"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "newFormCreated": "New Form Created",
-          "success": "Success",
-          "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "newReview": "Нов отзив",
+          "reviewApproved": "Одобрен отзив",
+          "reviewRejected": "Отхвърлен отзив",
+          "subscriptionExpiring": "Изтичащ абонамент",
+          "subscriptionCancelled": "Прекратен абонамент",
+          "escalationReceived": "Получена ескалация",
+          "escalationResponded": "Отговорена ескалация",
+          "systemAlert": "Системно известие",
+          "newHotelRegistration": "Нова регистрация на хотел",
+          "newFormCreated": "Създаден нов формуляр",
+          "success": "Успех",
+          "info": "Информация",
+          "warning": "Внимание",
+          "error": "Грешка",
+          "generic": "Известие"
         }
       },
       "profileSidebar": {
         "greeting": {
-          "title": "Welcome",
-          "fallbackName": "Admin User"
+          "title": "Добре дошли",
+          "fallbackName": "Администратор"
         },
         "actions": {
           "profile": {
-            "title": "Profile",
-            "description": "Manage your account settings"
+            "title": "Профил",
+            "description": "Управление на настройките на акаунта"
           },
           "signOut": {
-            "title": "Sign Out",
-            "description": "Logout from your account"
+            "title": "Изход",
+            "description": "Изход от акаунта"
           }
         },
         "notifications": {
-          "title": "Recent Notifications",
-          "loading": "Loading notifications...",
-          "summary": "You have {count} unread notifications",
-          "empty": "No new notifications"
+          "title": "Последни известия",
+          "loading": "Зареждане на известия...",
+          "summary": "Имате {count} непрочетени известия",
+          "empty": "Няма нови известия"
         },
         "time": {
-          "justNow": "Just now"
+          "justNow": "Току-що"
         }
       }
     },
     "communications": {
       "notifications": {
-        "title": "Notifications",
-        "subtitle": "Manage system notifications and alerts",
+        "title": "Известия",
+        "subtitle": "Управление на системни известия и предупреждения",
         "buttons": {
-          "deleteSelected": "Delete Selected ({count})",
-          "markAllAsRead": "Mark All as Read",
-          "refresh": "Refresh"
+          "deleteSelected": "Изтрий избраните ({count})",
+          "markAllAsRead": "Маркирай всички като прочетени",
+          "refresh": "Опресняване"
         },
         "filters": {
-          "title": "Filters",
-          "searchLabel": "Search Notifications",
-          "searchPlaceholder": "Search by title, message, or user...",
-          "type": "Type",
-          "allTypes": "All Types",
+          "title": "Филтри",
+          "searchLabel": "Търсене на известия",
+          "searchPlaceholder": "Търсене по заглавие, съобщение или потребител...",
+          "type": "Тип",
+          "allTypes": "Всички типове",
           "status": {
-            "label": "Status",
-            "all": "All Status",
-            "unread": "Unread",
-            "read": "Read"
+            "label": "Статус",
+            "all": "Всички статуси",
+            "unread": "Непрочетени",
+            "read": "Прочетени"
           },
           "types": {
-            "newReview": "New Review",
-            "reviewApproved": "Review Approved",
-            "reviewRejected": "Review Rejected",
-            "subscriptionExpiring": "Subscription Expiring",
-            "subscriptionCancelled": "Subscription Cancelled",
-            "escalationReceived": "Escalation Received",
-            "escalationResponded": "Escalation Responded",
-            "systemAlert": "System Alert",
-            "newHotelRegistration": "New Hotel Registration",
-            "newFormCreated": "New Form Created",
-            "success": "Success",
-            "info": "Info",
-            "warning": "Warning",
-            "error": "Error"
+            "newReview": "Нов отзив",
+            "reviewApproved": "Одобрен отзив",
+            "reviewRejected": "Отхвърлен отзив",
+            "subscriptionExpiring": "Изтичащ абонамент",
+            "subscriptionCancelled": "Прекратен абонамент",
+            "escalationReceived": "Получена ескалация",
+            "escalationResponded": "Отговорена ескалация",
+            "systemAlert": "Системно известие",
+            "newHotelRegistration": "Нова регистрация на хотел",
+            "newFormCreated": "Създаден нов формуляр",
+            "success": "Успех",
+            "info": "Информация",
+            "warning": "Внимание",
+            "error": "Грешка"
           }
         },
         "states": {
-          "loading": "Loading notifications...",
-          "empty": "No notifications found"
+          "loading": "Зареждане на известия...",
+          "empty": "Няма намерени известия"
         },
         "table": {
-          "type": "Type",
-          "message": "Message",
-          "date": "Date",
-          "actions": "Actions",
+          "type": "Тип",
+          "message": "Съобщение",
+          "date": "Дата",
+          "actions": "Действия",
           "status": {
-            "label": "Status",
-            "read": "Read",
-            "new": "New"
+            "label": "Статус",
+            "read": "Прочетено",
+            "new": "Ново"
           }
         },
         "tooltips": {
-          "markAsRead": "Mark as Read",
-          "view": "View",
-          "delete": "Delete"
+          "markAsRead": "Маркирай като прочетено",
+          "view": "Преглед",
+          "delete": "Изтриване"
         },
         "dates": {
-          "justNow": "Just now",
-          "hoursAgo": "{hours}h ago",
-          "yesterday": "Yesterday"
+          "justNow": "Току-що",
+          "hoursAgo": "преди {hours}ч",
+          "yesterday": "Вчера"
         },
         "types": {
-          "NEW_REVIEW": "New Review",
-          "REVIEW_APPROVED": "Review Approved",
-          "REVIEW_REJECTED": "Review Rejected",
-          "SUBSCRIPTION_EXPIRING": "Subscription Expiring",
-          "SUBSCRIPTION_CANCELLED": "Subscription Cancelled",
-          "ESCALATION_RECEIVED": "Escalation Received",
-          "ESCALATION_RESPONDED": "Escalation Responded",
-          "SYSTEM_ALERT": "System Alert",
-          "NEW_HOTEL_REGISTRATION": "New Hotel Registration",
-          "NEW_FORM_CREATED": "New Form Created",
-          "SUCCESS": "Success",
-          "INFO": "Info",
-          "WARNING": "Warning",
-          "ERROR": "Error"
+          "NEW_REVIEW": "Нов отзив",
+          "REVIEW_APPROVED": "Одобрен отзив",
+          "REVIEW_REJECTED": "Отхвърлен отзив",
+          "SUBSCRIPTION_EXPIRING": "Изтичащ абонамент",
+          "SUBSCRIPTION_CANCELLED": "Прекратен абонамент",
+          "ESCALATION_RECEIVED": "Получена ескалация",
+          "ESCALATION_RESPONDED": "Отговорена ескалация",
+          "SYSTEM_ALERT": "Системно известие",
+          "NEW_HOTEL_REGISTRATION": "Нова регистрация на хотел",
+          "NEW_FORM_CREATED": "Създаден нов формуляр",
+          "SUCCESS": "Успех",
+          "INFO": "Информация",
+          "WARNING": "Внимание",
+          "ERROR": "Грешка"
         },
         "toasts": {
-          "loadError": "Failed to load notifications",
-          "markReadSuccess": "Notification marked as read",
-          "markReadError": "Failed to mark notification as read",
-          "markAllReadSuccess": "All notifications marked as read",
-          "markAllReadError": "Failed to mark all notifications as read",
-          "deleteSuccess": "Notification deleted successfully",
-          "deleteError": "Failed to delete notification",
-          "bulkDeleteSuccess": "{count} notification(s) deleted successfully",
-          "bulkDeleteError": "Failed to delete some notifications"
+          "loadError": "Неуспешно зареждане на известия",
+          "markReadSuccess": "Известието е маркирано като прочетено",
+          "markReadError": "Неуспешно маркиране като прочетено",
+          "markAllReadSuccess": "Всички известия са маркирани като прочетени",
+          "markAllReadError": "Неуспешно маркиране на всички като прочетени",
+          "deleteSuccess": "Известието е изтрито успешно",
+          "deleteError": "Неуспешно изтриване на известие",
+          "bulkDeleteSuccess": "{count} известия изтрити успешно",
+          "bulkDeleteError": "Неуспешно изтриване на някои известия"
         },
         "confirm": {
-          "deleteMessage": "Are you sure you want to delete this notification?",
-          "deleteHeader": "Delete Confirmation",
-          "bulkDeleteMessage": "Are you sure you want to delete {count} selected notification(s)?",
-          "bulkDeleteHeader": "Bulk Delete Confirmation"
+          "deleteMessage": "Сигурни ли сте, че искате да изтриете това известие?",
+          "deleteHeader": "Потвърждение за изтриване",
+          "bulkDeleteMessage": "Сигурни ли сте, че искате да изтриете {count} избрани известия?",
+          "bulkDeleteHeader": "Потвърждение за масово изтриване"
         }
       }
     }
   },
   "auth": {
     "register": {
-      "title": "Register",
-      "subtitle": "Let's get started",
+      "title": "Регистрация",
+      "subtitle": "Нека започнем",
       "placeholders": {
-        "firstName": "First Name",
-        "lastName": "Last Name",
-        "email": "Email",
-        "phone": "Phone (Optional)",
-        "password": "Password"
+        "firstName": "Име",
+        "lastName": "Фамилия",
+        "email": "Имейл",
+        "phone": "Телефон (по избор)",
+        "password": "Парола"
       },
       "buttons": {
-        "signUp": "Sign Up",
-        "signingUp": "Signing Up..."
+        "signUp": "Регистрация",
+        "signingUp": "Регистриране..."
       },
-      "agreementPrefix": "I have read the",
+      "agreementPrefix": "Прочетох",
       "toasts": {
-        "acceptTerms": "Please accept the terms and conditions",
-        "missingFields": "Please fill in all required fields",
-        "success": "Registration successful! Please check your email.",
-        "error": "Registration failed. Please try again."
+        "acceptTerms": "Моля, приемете общите условия",
+        "missingFields": "Моля, попълнете всички задължителни полета",
+        "success": "Регистрацията е успешна! Моля, проверете имейла си.",
+        "error": "Регистрацията не успя. Моля, опитайте отново."
       }
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter the email address associated with your account and we'll send an email with instructions to reset your password.",
+      "title": "Забравена парола?",
+      "description": "Въведете имейл адреса, свързан с акаунта ви, и ще ви изпратим инструкции за възстановяване на паролата.",
       "messages": {
-        "instructions": "Check your email for password reset instructions"
+        "instructions": "Проверете имейла си за инструкции за възстановяване"
       },
       "submitted": {
-        "title": "Check your email!",
-        "description": "We have sent an email with a password reset link to {email}.",
-        "hint": "Didn't receive the email? Please check your spam folder."
+        "title": "Проверете имейла си!",
+        "description": "Изпратихме имейл с връзка за възстановяване на парола на {email}.",
+        "hint": "Не получихте имейла? Проверете папката „Спам“."
       },
       "fields": {
-        "email": "Email Address",
-        "emailPlaceholder": "Enter your email address"
+        "email": "Имейл адрес",
+        "emailPlaceholder": "Въведете имейл адреса си"
       },
       "buttons": {
-        "send": "Send Instructions",
-        "sending": "Sending...",
-        "resend": "Resend Email",
-        "backToLogin": "Back to Login"
+        "send": "Изпрати инструкции",
+        "sending": "Изпращане...",
+        "resend": "Изпрати отново",
+        "backToLogin": "Обратно към входа"
       },
       "validation": {
-        "required": "Email is required",
-        "invalid": "Please enter a valid email address"
+        "required": "Имейлът е задължителен",
+        "invalid": "Моля, въведете валиден имейл адрес"
       },
       "toasts": {
-        "success": "Password reset email sent successfully",
-        "error": "Failed to send reset email",
-        "unexpected": "An unexpected error occurred. Please try again."
+        "success": "Имейлът за възстановяване е изпратен успешно",
+        "error": "Неуспешно изпращане на имейла",
+        "unexpected": "Възникна неочаквана грешка. Моля, опитайте отново."
       }
     },
     "resetPassword": {
-      "title": "Create New Password!",
-      "subtitle": "Enter a new password below to update your account credentials.",
+      "title": "Създайте нова парола!",
+      "subtitle": "Въведете нова парола по-долу, за да актуализирате данните си за достъп.",
       "fields": {
-        "newPassword": "New Password",
-        "confirmPassword": "Confirm Password"
+        "newPassword": "Нова парола",
+        "confirmPassword": "Потвърдете паролата"
       },
       "placeholders": {
-        "password": "Enter your password",
-        "confirmPassword": "Confirm your password"
+        "password": "Въведете паролата си",
+        "confirmPassword": "Потвърдете паролата си"
       },
       "buttons": {
-        "reset": "Reset Password",
-        "resetting": "Resetting..."
+        "reset": "Възстанови парола",
+        "resetting": "Възстановяване..."
       },
       "link": {
-        "backToLogin": "Back to Login"
+        "backToLogin": "Обратно към входа"
       },
       "states": {
-        "validating": "Validating reset link...",
-        "loading": "Loading..."
+        "validating": "Проверка на връзката...",
+        "loading": "Зареждане..."
       },
       "errors": {
-        "passwordMin": "Password must be at least 6 characters long",
-        "passwordMax": "Password must be less than 128 characters",
-        "confirmRequired": "Please confirm your password",
-        "mismatch": "Passwords do not match"
+        "passwordMin": "Паролата трябва да е поне 6 символа",
+        "passwordMax": "Паролата трябва да е по-малко от 128 символа",
+        "confirmRequired": "Моля, потвърдете паролата си",
+        "mismatch": "Паролите не съвпадат"
       },
       "toasts": {
-        "invalidLink": "Invalid reset link",
-        "invalidOrExpired": "Invalid or expired reset link",
-        "failedValidation": "Failed to validate reset link",
-        "success": "Password reset successfully. You can now log in with your new password.",
-        "failure": "Failed to reset password",
-        "unexpected": "An unexpected error occurred"
+        "invalidLink": "Невалидна връзка за възстановяване",
+        "invalidOrExpired": "Невалидна или изтекла връзка",
+        "failedValidation": "Неуспешна проверка на връзката",
+        "success": "Паролата е възстановена успешно. Влезте с новата си парола.",
+        "failure": "Неуспешно възстановяване на парола",
+        "unexpected": "Възникна неочаквана грешка"
       },
       "accessibility": {
-        "showPassword": "Show password",
-        "hidePassword": "Hide password"
+        "showPassword": "Покажи парола",
+        "hidePassword": "Скрий парола"
       }
     }
   },
   "authFooter": {
     "brand": {
       "title": "C-Reviews",
-      "description": "We help hotels connect with their guests through seamless feedback solutions. Our platform makes it easy to create forms, gather insights, and elevate the guest experience with integrity and professionalism at the core of everything we do.",
-      "footerImageAlt": "C-Reviews decorative footer"
+      "description": "Помагаме на хотелите да се свързват с гостите чрез безпроблемни решения за обратна връзка. Нашата платформа улеснява създаването на формуляри, събирането на обратна връзка и подобряването на гостското изживяване с честност и професионализъм.",
+      "footerImageAlt": "C-Reviews декоративен футър"
     },
     "quickLinks": {
-      "title": "Quick Links",
+      "title": "Бързи връзки",
       "items": {
-        "home": "Home",
-        "about": "About Us",
-        "features": "Features",
-        "contact": "Contact Us"
+        "home": "Начало",
+        "about": "За нас",
+        "features": "Функции",
+        "contact": "Контакти"
       }
     },
     "resources": {
-      "title": "Resources",
+      "title": "Ресурси",
       "items": {
-        "dashboard": "Dashboard",
-        "feedbacks": "Feedbacks",
-        "hotelProfile": "Hotel Profile",
-        "support": "Support",
-        "ownerProfile": "Owner Profile"
+        "dashboard": "Табло",
+        "feedbacks": "Обратни връзки",
+        "hotelProfile": "Профил на хотела",
+        "support": "Поддръжка",
+        "ownerProfile": "Профил на собственика"
       }
     },
     "legal": {
-      "title": "Legal",
+      "title": "Правна информация",
       "items": {
-        "privacyPolicy": "Privacy Policy",
-        "companyPolicy": "Company Policy",
-        "terms": "Terms & Conditions"
+        "privacyPolicy": "Политика за поверителност",
+        "companyPolicy": "Политика на компанията",
+        "terms": "Общи условия"
       }
     },
     "connect": {
-      "title": "Connect with Us",
-      "emailPlaceholder": "Email Address",
-      "submitLabel": "Subscribe",
+      "title": "Свържете се с нас",
+      "emailPlaceholder": "Имейл адрес",
+      "submitLabel": "Абониране",
       "social": {
-        "facebook": "Follow us on Facebook",
-        "instagram": "Follow us on Instagram",
-        "linkedin": "Connect with us on LinkedIn"
+        "facebook": "Последвайте ни във Facebook",
+        "instagram": "Последвайте ни в Instagram",
+        "linkedin": "Свържете се с нас в LinkedIn"
       }
     },
-    "copyright": "© 2024 C-Reviews LLC. All Rights Reserved!"
+    "copyright": "© 2024 C-Reviews LLC. Всички права запазени!"
   }
 }
 

@@ -25,27 +25,27 @@
     "lv": "Latvian"
   },
   "common": {
-    "warning": "Warning",
-    "success": "Success",
-    "error": "Error",
+    "warning": "Varning",
+    "success": "Framgång",
+    "error": "Fel",
     "info": "Info",
-    "agreeTo": "I agree to the",
-    "and": "and",
-    "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy",
-    "alreadyHaveAccount": "Already have an account?",
-    "login": "Login",
-    "logout": "Logout",
-    "orRegisterVia": "or register via",
-    "selectLanguage": "Select language",
-    "getStarted": "Get Started"
+    "agreeTo": "Jag godkänner",
+    "and": "och",
+    "terms": "användarvillkoren",
+    "privacy": "integritetspolicyn",
+    "alreadyHaveAccount": "Har du redan ett konto?",
+    "login": "Logga in",
+    "logout": "Logga ut",
+    "orRegisterVia": "eller registrera dig via",
+    "selectLanguage": "Välj språk",
+    "getStarted": "Kom igång"
   },
   "components": {
     "customPaginator": {
-      "itemsPerPage": "Items per page",
-      "rangeInfo": "{start}-{end} of {total} entries",
-      "previousPage": "Previous page",
-      "nextPage": "Next page"
+      "itemsPerPage": "Objekt per sida",
+      "rangeInfo": "{start}-{end} av {total} poster",
+      "previousPage": "Föregående sida",
+      "nextPage": "Nästa sida"
     }
   },
   "countries": {
@@ -66,1293 +66,1302 @@
   },
   "registerHotel": {
     "step1": {
-      "title": "Owner Information!",
+      "title": "Ägarinformation!",
       "fields": {
-        "fullName": "Name",
-        "email": "Email Address",
-        "phone": "Phone Number",
-        "password": "Password"
+        "fullName": "Namn",
+        "email": "E-postadress",
+        "phone": "Telefonnummer",
+        "password": "Lösenord"
       },
       "placeholders": {
-        "fullName": "Enter your name",
-        "email": "Enter your email address",
-        "phone": "Enter your phone number",
-        "password": "Enter your password"
+        "fullName": "Ange ditt namn",
+        "email": "Ange din e-postadress",
+        "phone": "Ange ditt telefonnummer",
+        "password": "Ange ditt lösenord"
       },
-      "cta": "Let's Keep Going!"
+      "cta": "Låt oss fortsätta!"
     },
     "step2": {
-      "title": "Hotel Information!",
-      "subtitle": "Is my data safe?",
+      "title": "Hotellinformation!",
+      "subtitle": "Är mina data säkra?",
       "fields": {
-        "hotelName": "Hotel Name",
-        "hotelWebsite": "Hotel Website",
-        "hotelAddress": "Hotel Address",
-        "city": "City",
-        "country": "Country",
-        "hotelDescription": "Hotel Description"
+        "hotelName": "Hotellets namn",
+        "hotelWebsite": "Hotellets webbplats",
+        "hotelAddress": "Hotellets adress",
+        "city": "Stad",
+        "country": "Land",
+        "hotelDescription": "Hotellets beskrivning"
       },
       "placeholders": {
-        "hotelName": "Enter hotel name",
-        "hotelWebsite": "Enter hotel website url",
-        "hotelAddress": "Enter hotel street address",
-        "city": "Enter hotel city",
-        "country": "Select Country",
-        "hotelDescription": "Enter brief description of your hotel"
+        "hotelName": "Ange hotellets namn",
+        "hotelWebsite": "Ange hotellets webbadress",
+        "hotelAddress": "Ange hotellets adress",
+        "city": "Ange staden",
+        "country": "Välj land",
+        "hotelDescription": "Kort beskrivning av ditt hotell"
       }
     },
     "buttons": {
-      "back": "Back",
-      "register": "Register Now",
-      "registering": "Registering..."
+      "back": "Tillbaka",
+      "register": "Registrera",
+      "registering": "Registrerar..."
     },
     "toasts": {
-      "missingRequired": "Please fill in all required fields",
-      "passwordLength": "Password must be at least 6 characters long",
-      "acceptTerms": "Please accept the terms and conditions",
-      "acceptTermsPrivacy": "Please accept the terms and conditions and privacy policy",
-      "success": "Hotel registration successful! Please check your email for verification.",
-      "error": "Registration failed",
-      "errorGeneric": "Registration failed. Please try again."
+      "missingRequired": "Fyll i alla obligatoriska fält",
+      "passwordLength": "Lösenordet måste vara minst 6 tecken",
+      "acceptTerms": "Acceptera användarvillkoren",
+      "acceptTermsPrivacy": "Acceptera användarvillkoren och integritetspolicyn",
+      "success": "Hotellregistrering lyckades! Kontrollera din e-post för verifiering.",
+      "error": "Registrering misslyckades",
+      "errorGeneric": "Registrering misslyckades. Försök igen."
     },
     "images": {
-      "ownerAlt": "Register Hotel - Owner Information",
-      "hotelAlt": "Register Hotel - Hotel Information"
+      "ownerAlt": "Hotellregistrering - Ägarinformation",
+      "hotelAlt": "Hotellregistrering - Hotellinformation"
     }
   },
   "hotel": {
     "dashboard": {
       "recentReviews": {
-        "title": "Recent Reviews",
-        "description": "View and manage your recent reviews.",
+        "title": "Senaste recensioner",
+        "description": "Visa och hantera dina senaste recensioner.",
         "states": {
-          "loading": "Loading recent reviews..."
+          "loading": "Laddar senaste recensioner..."
         },
         "table": {
-          "date": "Date"
+          "date": "Datum"
         }
       },
       "comparisonChart": {
-        "title": "Review Comparison",
+        "title": "Recensionsjämförelse",
         "period": "Period",
-        "weekly": "Weekly",
-        "monthly": "Monthly",
-        "loading": "Loading comparison data...",
-        "noData": "No comparison data available"
+        "weekly": "Veckovis",
+        "monthly": "Månadsvis",
+        "loading": "Laddar jämförelsedata...",
+        "noData": "Ingen jämförelsedata tillgänglig",
+        "positiveReviews": "Positiva recensioner",
+        "negativeReviews": "Negativa recensioner"
+      },
+      "stats": {
+        "totalReviews": "Totalt antal recensioner",
+        "averageRating": "Genomsnittligt betyg",
+        "positiveReviews": "Positiva recensioner",
+        "negativeReviews": "Negativa recensioner",
+        "responseRate": "Svarsfrekvens"
       }
     },
     "forms": {
       "header": {
-        "title": "Feedback Form",
-        "subtitle": "Manage your guest feedback form. You can update this form at any time."
+        "title": "Feedbackformulär",
+        "subtitle": "Hantera ditt gästfeedbackformulär. Du kan uppdatera formuläret när som helst."
       },
       "states": {
-        "loading": "Loading form..."
+        "loading": "Laddar formulär..."
       },
       "fields": {
-        "title": "Form Title",
+        "title": "Formulärtitel",
         "status": "Status",
-        "active": "Active",
-        "inactive": "Inactive",
-        "description": "Description",
-        "noDescription": "No description provided",
-        "totalResponses": "Total Responses"
+        "active": "Aktiv",
+        "inactive": "Inaktiv",
+        "description": "Beskrivning",
+        "noDescription": "Ingen beskrivning",
+        "totalResponses": "Totalt svar"
       },
       "buttons": {
-        "edit": "Edit Form",
-        "preview": "Preview Form",
-        "showQr": "Show QR Code",
-        "create": "Create Form",
-        "downloadQr": "Download QR Code",
-        "copyUrl": "Copy URL"
+        "edit": "Redigera formulär",
+        "preview": "Förhandsgranska formulär",
+        "showQr": "Visa QR-kod",
+        "create": "Skapa formulär",
+        "downloadQr": "Ladda ner QR-kod",
+        "copyUrl": "Kopiera URL"
       },
       "empty": {
-        "title": "No Form Created Yet",
-        "description": "Create your feedback form to start collecting guest reviews."
+        "title": "Inget formulär skapat än",
+        "description": "Skapa ditt feedbackformulär för att börja samla gästrecensioner."
       },
       "preview": {
-        "title": "Form Preview",
-        "tooltipBack": "Back to Forms",
-        "tag": "Preview Mode - Interactions Disabled"
+        "title": "Förhandsgranska formulär",
+        "tooltipBack": "Tillbaka till formulär",
+        "tag": "Förhandsgranskningsläge – interaktioner inaktiverade"
       },
       "qrDialog": {
-        "title": "QR Code - {title}"
+        "title": "QR-kod - {title}"
       },
       "toasts": {
-        "loadError": "Failed to load form",
-        "slugMissing": "Hotel slug not found. Cannot preview form.",
-        "createSuccess": "Form created successfully",
-        "updateSuccess": "Form updated successfully",
-        "saveError": "Failed to save form",
-        "qrGenerated": "QR code generated successfully",
-        "qrExists": "QR code already exists for this form",
-        "qrError": "Failed to handle QR code",
-        "noUrl": "No URL to copy",
-        "copiedDetail": "URL copied to clipboard",
-        "copyError": "Failed to copy URL to clipboard"
+        "loadError": "Kunde inte ladda formulär",
+        "slugMissing": "Hotellets identifierare hittades inte. Förhandsgranskning inte möjlig.",
+        "createSuccess": "Formuläret skapades",
+        "updateSuccess": "Formuläret uppdaterades",
+        "saveError": "Kunde inte spara formulär",
+        "qrGenerated": "QR-kod genererad",
+        "qrExists": "QR-kod finns redan för detta formulär",
+        "qrError": "Kunde inte hantera QR-kod",
+        "noUrl": "Ingen URL att kopiera",
+        "copiedDetail": "URL kopierad till urklipp",
+        "copyError": "Kunde inte kopiera URL"
       },
       "builder": {
         "header": {
-          "edit": "Edit Form",
-          "create": "Create New Form",
-          "preview": "Preview Form",
-          "livePreview": "Live Preview",
-          "formBuilderToggle": "Form Builder",
-          "livePreviewToggle": "Live Preview",
-          "backTooltip": "Back to Forms"
+          "edit": "Redigera formulär",
+          "create": "Skapa nytt formulär",
+          "preview": "Förhandsgranska formulär",
+          "livePreview": "Live-förhandsgranskning",
+          "formBuilderToggle": "Formulärbyggare",
+          "livePreviewToggle": "Live-förhandsgranskning",
+          "backTooltip": "Tillbaka till formulär"
         },
         "buttons": {
-          "save": "Save Form",
-          "saveTooltip": "Save the form",
-          "addNew": "Add New",
-          "addOption": "Add",
-          "cancel": "Cancel",
-          "update": "Update",
-          "add": "Add"
+          "save": "Spara formulär",
+          "saveTooltip": "Spara formuläret",
+          "addNew": "Lägg till ny",
+          "addOption": "Lägg till",
+          "cancel": "Avbryt",
+          "update": "Uppdatera",
+          "add": "Lägg till"
         },
         "sections": {
-          "settings": "Form Settings",
-          "questions": "Questions",
-          "predefined": "Predefined Questions",
-          "custom": "Custom Questions"
+          "settings": "Formulärinställningar",
+          "questions": "Frågor",
+          "predefined": "Fördefinierade frågor",
+          "custom": "Anpassade frågor"
         },
         "fields": {
-          "titleLabel": "Form Title*",
-          "titlePlaceholder": "Enter form title",
-          "descriptionLabel": "Form Description*",
-          "descriptionPlaceholder": "Enter brief description of your form"
+          "titleLabel": "Formulärtitel*",
+          "titlePlaceholder": "Ange formulärtitel",
+          "descriptionLabel": "Formulärbeskrivning*",
+          "descriptionPlaceholder": "Ange kort beskrivning av formuläret"
         },
         "predefined": {
-          "rateUs": "Rate Us* (Always included)",
-          "rateUsTitle": "Rate Us",
-          "customRating": "Custom Rating*",
-          "customRatingTitle": "Custom Rating",
-          "customRatingPlaceholder": "Enter rating item label",
-          "customRatingEditTitle": "Click to edit",
-          "feedback": "Please give us your honest feedback?*",
-          "feedbackTitle": "Please give us your honest feedback?",
-          "feedbackPlaceholder": "Enter your detailed feedback"
+          "rateUs": "Betygsätt oss* (alltid inkluderat)",
+          "rateUsTitle": "Betygsätt oss",
+          "customRating": "Anpassat betyg*",
+          "customRatingTitle": "Anpassat betyg",
+          "customRatingPlaceholder": "Ange etikett för betygsposten",
+          "customRatingEditTitle": "Klicka för att redigera",
+          "feedback": "Ge oss ärlig feedback?*",
+          "feedbackTitle": "Ge oss ärlig feedback?",
+          "feedbackPlaceholder": "Ange din detaljerade feedback"
         },
         "tooltips": {
-          "previewDisabled": "Preview mode - editing disabled",
-          "addQuestion": "Add custom question",
-          "save": "Save",
-          "cancel": "Cancel",
-          "edit": "Edit",
-          "delete": "Delete",
-          "moveUp": "Move Up",
-          "moveDown": "Move Down"
+          "previewDisabled": "Förhandsgranskning – redigering inaktiverad",
+          "addQuestion": "Lägg till anpassad fråga",
+          "save": "Spara",
+          "cancel": "Avbryt",
+          "edit": "Redigera",
+          "delete": "Ta bort",
+          "moveUp": "Upp",
+          "moveDown": "Ner"
         },
         "questionTypes": {
-          "shortText": "Short Text",
-          "longText": "Long Text",
-          "starRating": "Star Rating",
-          "singleChoice": "Single Choice",
-          "multipleChoice": "Multiple Choice",
-          "yesNo": "Yes/No"
+          "shortText": "Kort text",
+          "longText": "Lång text",
+          "starRating": "Stjärnbetyg",
+          "singleChoice": "Enkelt val",
+          "multipleChoice": "Flera val",
+          "yesNo": "Ja/Nej"
         },
         "placeholders": {
-          "answer": "Enter your answer"
+          "answer": "Ange ditt svar"
         },
         "answers": {
-          "yes": "Yes",
-          "no": "No"
+          "yes": "Ja",
+          "no": "Nej"
         },
         "badges": {
-          "default": "Default",
-          "defaultHelper": "Cannot be edited, deleted, or moved"
+          "default": "Standard",
+          "defaultHelper": "Kan inte redigeras, tas bort eller flyttas"
         },
         "states": {
-          "loading": "Loading form data...",
-          "noQuestionsTitle": "No questions added yet",
-          "noQuestionsDescription": "Use the predefined questions above or add custom questions to get started"
+          "loading": "Laddar formulärdata...",
+          "noQuestionsTitle": "Inga frågor tillagda än",
+          "noQuestionsDescription": "Använd fördefinierade frågor ovan eller lägg till anpassade"
         },
         "alerts": {
-          "ratingRequiredTitle": "Rating Required",
-          "ratingRequiredDescription": "Either \"Rate Us\" or \"Custom Rating\" must be selected to save the form."
+          "ratingRequiredTitle": "Betyg krävs",
+          "ratingRequiredDescription": "Antingen \"Betygsätt oss\" eller \"Anpassat betyg\" måste väljas för att spara formuläret."
         },
         "layoutInfo": {
           "basic": {
-            "title": "Basic Layout Features",
-            "description": "All questions are available including custom questions. This layout provides a simple, clean design."
+            "title": "Grundlayout",
+            "description": "Alla frågor inklusive anpassade. Enkel och tydlig design."
           },
           "good": {
-            "title": "Good Layout Features",
-            "description": "Choose either \"Rate Us\" OR \"Custom Rating\" (mutually exclusive). All questions including custom questions are available."
+            "title": "Utökad layout",
+            "description": "Välj antingen \"Betygsätt oss\" ELLER \"Anpassat betyg\" (ömsesidigt uteslutande). Alla frågor inklusive anpassade är tillgängliga."
           },
           "excellent": {
-            "title": "Excellent Layout Features",
-            "description": "All predefined questions available plus custom questions. Premium design with animations for comprehensive feedback forms."
+            "title": "Premium-layout",
+            "description": "Alla fördefinierade frågor plus anpassade. Premium-design med animationer för omfattande feedbackformulär."
           }
         },
         "subscription": {
-          "title": "Subscription Required",
-          "message": "Your subscription has been {status}. Please reactivate your subscription to create or edit forms.",
-          "manageButton": "Manage Subscription",
+          "title": "Prenumeration krävs",
+          "message": "Din prenumeration har {status}. Återaktivera prenumerationen för att skapa eller redigera formulär.",
+          "manageButton": "Hantera prenumeration",
           "status": {
-            "cancelled": "cancelled",
-            "expired": "expired"
+            "cancelled": "avbruten",
+            "expired": "utgått"
           },
-          "toastTitle": "Subscription Required",
-          "toastMessage": "Your subscription has been cancelled or expired. Please reactivate your subscription to create forms."
+          "toastTitle": "Prenumeration krävs",
+          "toastMessage": "Din prenumeration har avbrutits eller utgått. Återaktivera prenumerationen för att skapa formulär."
         },
         "preview": {
-          "descriptionFallback": "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance.",
-          "fullNameLabel": "Name*",
-          "fullNamePlaceholder": "Enter your name",
-          "emailLabel": "Email*",
-          "emailPlaceholder": "Enter your email address",
-          "submit": "Submit Now"
+          "descriptionFallback": "Fyll i detta formulär för att begära support eller rapportera ett problem. Vårt team granskar din förfrågan och återkommer så snart som möjligt.",
+          "fullNameLabel": "Namn*",
+          "fullNamePlaceholder": "Ange ditt namn",
+          "emailLabel": "E-post*",
+          "emailPlaceholder": "Ange din e-postadress",
+          "submit": "Skicka"
         },
         "dialog": {
-          "addTitle": "Add Question",
-          "editTitle": "Edit Question",
-          "questionLabel": "Question Text *",
-          "questionPlaceholder": "Enter your question",
-          "typeLabel": "Question Type",
-          "optionsLabel": "Options",
-          "optionPlaceholder": "Enter option"
+          "addTitle": "Lägg till fråga",
+          "editTitle": "Redigera fråga",
+          "questionLabel": "Frågetext *",
+          "questionPlaceholder": "Ange din fråga",
+          "typeLabel": "Frågetyp",
+          "optionsLabel": "Alternativ",
+          "optionPlaceholder": "Ange alternativ"
         },
         "toasts": {
-          "formLoadSuccess": "Form data loaded successfully",
-          "formLoadError": "Failed to load form data",
-          "questionRequired": "Question text is required",
-          "optionsRequired": "Multiple choice questions must have at least 2 options",
-          "questionUpdated": "Question updated",
-          "questionAdded": "Question added",
-          "questionDeleted": "Question deleted",
-          "ratingLabelRequired": "Please enter a label for the rating item",
-          "ratingItemUpdated": "Rating item updated",
-          "ratingItemDeleted": "Rating item deleted",
-          "ratingItemAdded": "New rating item added",
-          "titleRequired": "Form title is required",
-          "questionCountRequired": "At least one question is required"
+          "formLoadSuccess": "Formulärdata laddades",
+          "formLoadError": "Kunde inte ladda formulärdata",
+          "questionRequired": "Frågetext krävs",
+          "optionsRequired": "Frågor med flera val måste ha minst 2 alternativ",
+          "questionUpdated": "Fråga uppdaterad",
+          "questionAdded": "Fråga tillagd",
+          "questionDeleted": "Fråga borttagen",
+          "ratingLabelRequired": "Ange en etikett för betygsposten",
+          "ratingItemUpdated": "Betygspost uppdaterad",
+          "ratingItemDeleted": "Betygspost borttagen",
+          "ratingItemAdded": "Ny betygspost tillagd",
+          "titleRequired": "Formulärtitel krävs",
+          "questionCountRequired": "Minst en fråga krävs"
         }
       }
     },
     "analytics": {
       "customRatings": {
-        "title": "Custom Rating Analytics",
-        "description": "Track detailed rating trends for your \"Good\" layout form.",
+        "title": "Anpassad betygsanalys",
+        "description": "Följ betygstrender för formuläret med utökad layout.",
         "buttons": {
-          "exportCsv": "Export CSV",
-          "exportPdf": "Export PDF",
-          "refresh": "Refresh"
+          "exportCsv": "Exportera CSV",
+          "exportPdf": "Exportera PDF",
+          "refresh": "Uppdatera"
         },
         "filters": {
-          "title": "Date Range Filters",
-          "startDate": "Start Date",
-          "startDatePlaceholder": "Select start date",
-          "endDate": "End Date",
-          "endDatePlaceholder": "Select end date",
-          "clear": "Clear Filters"
+          "title": "Datumfilter",
+          "startDate": "Startdatum",
+          "startDatePlaceholder": "Välj startdatum",
+          "endDate": "Slutdatum",
+          "endDatePlaceholder": "Välj slutdatum",
+          "clear": "Rensa filter"
         },
         "states": {
-          "loading": "Loading analytics data...",
-          "noDataTitle": "No Data Available",
-          "noDataDescription": "No \"Good\" layout forms with custom rating data found for your hotel."
+          "loading": "Laddar analytikdata...",
+          "noDataTitle": "Inga data tillgängliga",
+          "noDataDescription": "Inga formulär med utökad layout och anpassade betygsdata hittades för ditt hotell."
         },
         "toasts": {
-          "loadError": "Failed to load custom rating analytics",
-          "exportSuccess": "Data exported successfully as {format}",
-          "exportError": "Failed to export data"
+          "loadError": "Kunde inte ladda betygsanalys",
+          "exportSuccess": "Data exporterad som {format}",
+          "exportError": "Export av data misslyckades"
         },
         "chart": {
-          "trendPrefix": "Trend Analysis - ",
-          "summaryTitle": "Rating Summary",
-          "ratingsCount": "({count} ratings)",
-          "averageRating": "Average Rating",
+          "trendPrefix": "Trendanalys - ",
+          "summaryTitle": "Betygssammanfattning",
+          "ratingsCount": "({count} betyg)",
+          "averageRating": "Genomsnittligt betyg",
           "tooltipSuffix": "/5"
         }
       },
       "overview": {
-        "title": "Analytics",
-        "description": "Track your hotel's performance and guest satisfaction.",
-        "dropdownPlaceholder": "Select time range",
+        "title": "Analytik",
+        "description": "Följ hotellets prestanda och gästtillfredsställelse.",
+        "dropdownPlaceholder": "Välj tidsintervall",
         "buttons": {
-          "refresh": "Refresh"
+          "refresh": "Uppdatera"
         },
         "timeRanges": {
-          "7": "Last 7 days",
-          "30": "Last 30 days",
-          "90": "Last 90 days",
-          "180": "Last 6 months",
-          "365": "Last year"
+          "7": "Senaste 7 dagarna",
+          "30": "Senaste 30 dagarna",
+          "90": "Senaste 90 dagarna",
+          "180": "Senaste 6 månaderna",
+          "365": "Förra året"
         },
         "states": {
-          "loadingSkeleton": "Loading...",
-          "noData": "No analytics data available",
-          "chartLoading": "Loading chart data...",
-          "chartEmpty": "No chart data available"
+          "loadingSkeleton": "Laddar...",
+          "noData": "Ingen analytikdata tillgänglig",
+          "chartLoading": "Laddar diagramdata...",
+          "chartEmpty": "Ingen diagramdata tillgänglig"
         },
         "cards": {
-          "change": "{change} from last period"
+          "change": "{change} jämfört med föregående period"
         },
         "charts": {
-          "satisfaction": "Satisfaction Trends",
-          "ratingDistribution": "Rating Distribution",
-          "reviewVolume": "Review Volume"
+          "satisfaction": "Tillfredsställelsetrender",
+          "ratingDistribution": "Betygsfördelning",
+          "reviewVolume": "Recensionsvolym"
         },
         "reviews": {
-          "title": "Recent Reviews"
+          "title": "Senaste recensioner"
         },
         "toasts": {
-          "loadError": "Failed to load analytics"
+          "loadError": "Kunde inte ladda analytik"
         }
       },
       "responseRates": {
-        "title": "Response Rates Analytics",
-        "description": "Track your hotel's response rates and engagement metrics.",
+        "title": "Svarsfrekvensanalys",
+        "description": "Följ hotellets svarsfrekvens och engagemangsmått.",
         "charts": {
-          "reviewVolume": "Review Volume Trends",
-          "satisfaction": "Satisfaction Trends Over Time"
+          "reviewVolume": "Recensionsvolymtrender",
+          "satisfaction": "Tillfredsställelsetrender över tid"
         }
       },
       "satisfaction": {
-        "title": "Satisfaction Analytics",
-        "description": "Track your hotel's guest satisfaction trends and ratings.",
+        "title": "Tillfredsställelseanalys",
+        "description": "Följ gästers tillfredsställelsetrender och betyg.",
         "charts": {
-          "reviewVolume": "Review Volume & Positive Reviews"
+          "reviewVolume": "Recensionsvolym och positiva recensioner"
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Aviseringar",
+        "ariaLabel": "Aviseringar",
+        "iconAlt": "Aviseringsikon",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Märk alla som lästa",
+          "refresh": "Uppdatera"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Inga aviseringar än"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "success": "Success",
+          "newReview": "Ny recension",
+          "reviewApproved": "Recension godkänd",
+          "reviewRejected": "Recension avvisad",
+          "subscriptionExpiring": "Prenumeration löper ut",
+          "subscriptionCancelled": "Prenumeration avbruten",
+          "escalationReceived": "Eskalering mottagen",
+          "escalationResponded": "Svar på eskalering",
+          "systemAlert": "Systemavisering",
+          "newHotelRegistration": "Ny hotelregistrering",
+          "success": "Framgång",
           "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "warning": "Varning",
+          "error": "Fel",
+          "generic": "Avisering"
         }
       }
     },
     "reviews": {
-      "title": "Guest Reviews",
-      "subtitle": "Manage and review guest feedback submissions.",
+      "title": "Gästrecensioner",
+      "subtitle": "Hantera och granska gästers recensioner och feedback.",
       "buttons": {
-        "refresh": "Refresh",
-        "clearFilters": "Clear Filters",
-        "view": "View",
-        "reply": "Reply",
-        "delete": "Delete",
-        "close": "Close",
-        "markAsChecked": "Mark as Checked",
-        "checked": "Checked",
-        "uncheck": "Uncheck",
-        "markAsUrgent": "Mark as Urgent",
-        "urgent": "Urgent",
-        "removeUrgent": "Remove Urgent",
-        "replyToCustomer": "Reply to Customer",
-        "cancel": "Cancel",
-        "sendReply": "Send Reply"
+        "refresh": "Uppdatera",
+        "clearFilters": "Rensa filter",
+        "view": "Visa",
+        "reply": "Svara",
+        "delete": "Ta bort",
+        "close": "Stäng",
+        "markAsChecked": "Märk som granskad",
+        "checked": "Granskad",
+        "uncheck": "Ta bort markering",
+        "markAsUrgent": "Märk som brådskande",
+        "urgent": "Brådskande",
+        "removeUrgent": "Ta bort brådskande",
+        "replyToCustomer": "Svara gästen",
+        "cancel": "Avbryt",
+        "sendReply": "Skicka svar"
       },
       "filters": {
-        "title": "Filters",
-        "searchReviews": "Search Reviews",
-        "searchPlaceholder": "Search by guest name or feedback text...",
-        "roomNumber": "Room Number",
-        "roomNumberPlaceholder": "Filter by room number...",
+        "title": "Filter",
+        "searchReviews": "Sök i recensioner",
+        "searchPlaceholder": "Sök på gästens namn eller text...",
+        "roomNumber": "Rumsnummer",
+        "roomNumberPlaceholder": "Filtrera på rumsnummer...",
         "filter": "Filter",
-        "allReviews": "All Reviews",
-        "replied": "Replied",
-        "notReplied": "Not Replied",
-        "checked": "Checked",
-        "notChecked": "Not Checked",
-        "urgent": "Urgent",
-        "notUrgent": "Not Urgent",
-        "starRatings": "Star Ratings",
-        "allRatings": "All Ratings",
-        "5Stars": "5 Stars",
-        "4Stars": "4 Stars",
-        "3Stars": "3 Stars",
-        "2Stars": "2 Stars",
-        "1Star": "1 Star",
-        "dateRange": "Date Range",
-        "startDate": "Start Date",
-        "endDate": "End Date",
-        "fromDate": "From date",
-        "toDate": "To date"
+        "allReviews": "Alla recensioner",
+        "replied": "Besvarad",
+        "notReplied": "Obesvarad",
+        "checked": "Granskad",
+        "notChecked": "Ogranskad",
+        "urgent": "Brådskande",
+        "notUrgent": "Ej brådskande",
+        "starRatings": "Stjärnbetyg",
+        "allRatings": "Alla betyg",
+        "5Stars": "5 stjärnor",
+        "4Stars": "4 stjärnor",
+        "3Stars": "3 stjärnor",
+        "2Stars": "2 stjärnor",
+        "1Star": "1 stjärna",
+        "dateRange": "Datumintervall",
+        "startDate": "Startdatum",
+        "endDate": "Slutdatum",
+        "fromDate": "Från datum",
+        "toDate": "Till datum"
       },
       "states": {
-        "loadingReviews": "Loading reviews...",
-        "noReviewsFound": "No Reviews Found",
-        "noReviewsYet": "No reviews have been submitted yet.",
-        "noReviewsMatchFilters": "No reviews match your current filters."
+        "loadingReviews": "Laddar recensioner...",
+        "noReviewsFound": "Inga recensioner hittades",
+        "noReviewsYet": "Inga recensioner har skickats in än.",
+        "noReviewsMatchFilters": "Inga recensioner matchar dina filter."
       },
       "table": {
-        "guest": "Guest",
-        "email": "Email",
-        "room": "Room",
-        "rating": "Rating",
+        "guest": "Gäst",
+        "email": "E-post",
+        "room": "Rum",
+        "rating": "Betyg",
         "status": "Status",
-        "submitted": "Submitted",
-        "actions": "Actions",
-        "checkedStatus": "Checked",
-        "notCheckedStatus": "Not Checked",
-        "repliedStatus": "Replied",
-        "notRepliedStatus": "Not Replied",
-        "urgentStatus": "Urgent",
-        "notUrgentStatus": "Not Urgent",
-        "public": "Public",
-        "private": "Private",
-        "shared": "Shared",
-        "noEmailAvailable": "No email available for this review"
+        "submitted": "Inskickad",
+        "actions": "Åtgärder",
+        "checkedStatus": "Granskad",
+        "notCheckedStatus": "Ogranskad",
+        "repliedStatus": "Besvarad",
+        "notRepliedStatus": "Obesvarad",
+        "urgentStatus": "Brådskande",
+        "notUrgentStatus": "Ej brådskande",
+        "public": "Offentlig",
+        "private": "Privat",
+        "shared": "Delad",
+        "noEmailAvailable": "Ingen e-post tillgänglig för denna recension"
       },
       "detailsDialog": {
-        "header": "Guest Feedback Details",
-        "guestInfo": "Guest Information",
-        "name": "Name:",
-        "anonymous": "Anonymous",
-        "email": "Email:",
-        "notProvided": "Not provided",
-        "phone": "Phone:",
-        "roomNumber": "Room Number:",
-        "submitted": "Submitted:",
-        "overallRating": "Overall Rating",
-        "quickFeedback": "Quick Feedback",
-        "howDoYouRateUs": "How do you rate us?",
-        "honestFeedback": "Please give us your honest feedback?",
-        "noSpecificFeedback": "No specific feedback provided",
-        "customRatingItem": "Custom Rating Item ({itemId})",
-        "formInfo": "Form Information",
-        "formTitle": "Form Title:",
-        "description": "Description:",
+        "header": "Detaljer om gästens feedback",
+        "guestInfo": "Gästinformation",
+        "name": "Namn:",
+        "anonymous": "Anonym",
+        "email": "E-post:",
+        "notProvided": "Ej angiven",
+        "phone": "Telefon:",
+        "roomNumber": "Rumsnummer:",
+        "submitted": "Inskickad:",
+        "overallRating": "Sammanlagt betyg",
+        "quickFeedback": "Snabb feedback",
+        "howDoYouRateUs": "Hur betygsätter ni oss?",
+        "honestFeedback": "Ge oss ärlig feedback?",
+        "noSpecificFeedback": "Ingen specifik feedback angiven",
+        "customRatingItem": "Anpassat betyg ({itemId})",
+        "formInfo": "Formulärinformation",
+        "formTitle": "Formulärtitel:",
+        "description": "Beskrivning:",
         "layout": "Layout:",
-        "feedbackResponses": "Feedback Responses",
-        "reviewReplies": "Review Replies",
-        "languageSelectorLabel": "View content in",
-        "languageSelectorPlaceholder": "Select language",
-        "translating": "Translating...",
-        "noDetailedResponses": "No detailed responses available for this review.",
-        "question": "Question:",
-        "noAnswer": "No answer provided",
-        "replyToCustomer": "Reply to Customer",
-        "replyPlaceholder": "Type your reply message here...",
-        "replyMessageHint": "This message will be sent to {guestEmail}",
-        "toastWarningReply": "Please enter a reply message",
-        "toastSuccessReply": "Reply sent successfully to {sentTo}",
-        "toastErrorReply": "Failed to send reply"
+        "feedbackResponses": "Feedback-svar",
+        "reviewReplies": "Recensionssvar",
+        "languageSelectorLabel": "Visa innehåll på",
+        "languageSelectorPlaceholder": "Välj språk",
+        "translating": "Översätter...",
+        "noDetailedResponses": "Inga detaljerade svar tillgängliga för denna recension.",
+        "question": "Fråga:",
+        "noAnswer": "Inget svar angivet",
+        "replyToCustomer": "Svara gästen",
+        "replyPlaceholder": "Skriv ditt svar här...",
+        "replyMessageHint": "Detta meddelande skickas till {guestEmail}",
+        "toastWarningReply": "Ange ett svarsmeddelande",
+        "toastSuccessReply": "Svar skickat till {sentTo}",
+        "toastErrorReply": "Kunde inte skicka svar"
       },
       "deleteDialog": {
-        "header": "Delete Review",
-        "confirmTitle": "Are you sure you want to delete this review?",
-        "confirmMessage": "This action cannot be undone. The review will be permanently removed from your system.",
-        "reviewDetails": "Review Details:",
-        "guest": "Guest:",
-        "rating": "Rating:",
-        "submitted": "Submitted:",
+        "header": "Ta bort recension",
+        "confirmTitle": "Är du säker på att du vill ta bort denna recension?",
+        "confirmMessage": "Denna åtgärd kan inte ångras. Recensionen tas bort permanent.",
+        "reviewDetails": "Recensionsdetaljer:",
+        "guest": "Gäst:",
+        "rating": "Betyg:",
+        "submitted": "Inskickad:",
         "buttons": {
-          "cancel": "Cancel",
-          "delete": "Delete"
+          "cancel": "Avbryt",
+          "delete": "Ta bort"
         },
         "toasts": {
-          "success": "Review deleted successfully",
-          "error": "Failed to delete review"
+          "success": "Recension borttagen",
+          "error": "Kunde inte ta bort recension"
         }
       },
       "toasts": {
-        "loadError": "Failed to load reviews",
-        "detailsLoadError": "Failed to load review details",
+        "loadError": "Kunde inte ladda recensioner",
+        "detailsLoadError": "Kunde inte ladda recensionsdetaljer",
         "statusUpdate": {
-          "checked": "Review marked as checked",
-          "unchecked": "Review unmarked as checked",
-          "urgent": "Review marked as urgent",
-          "notUrgent": "Review unmarked as urgent",
-          "replied": "Review marked as replied"
+          "checked": "Recension märkt som granskad",
+          "unchecked": "Recension omarkerad som granskad",
+          "urgent": "Recension märkt som brådskande",
+          "notUrgent": "Recension omarkerad som brådskande",
+          "replied": "Recension märkt som besvarad"
         },
-        "statusUpdateError": "Failed to update review status",
-        "replyMissing": "Please enter a reply message",
-        "replySuccess": "Reply sent successfully to {sentTo}",
-        "replyError": "Failed to send reply",
-        "translationError": "Failed to translate review content",
-        "deleteSuccess": "Review deleted successfully",
-        "deleteError": "Failed to delete review"
+        "statusUpdateError": "Kunde inte uppdatera recensionsstatus",
+        "replyMissing": "Ange ett svarsmeddelande",
+        "replySuccess": "Svar skickat till {sentTo}",
+        "replyError": "Kunde inte skicka svar",
+        "translationError": "Kunde inte översätta recensionsinnehåll",
+        "deleteSuccess": "Recension borttagen",
+        "deleteError": "Kunde inte ta bort recension"
       }
     },
     "menu": {
-      "dashboard": "Dashboard",
-      "feedbackForm": "Feedback Form",
-      "qrCodes": "QR Codes",
-      "allReviews": "All Reviews",
-      "notifications": "Notifications",
-      "contactAdmin": "Contact Admin",
-      "settings": "Settings",
+      "dashboard": "Instrumentpanel",
+      "feedbackForm": "Feedbackformulär",
+      "qrCodes": "QR-koder",
+      "allReviews": "Alla recensioner",
+      "notifications": "Aviseringar",
+      "contactAdmin": "Kontakta admin",
+      "settings": "Inställningar",
       "settingsItems": {
-        "userProfile": "User Profile",
-        "hotelProfile": "Hotel Profile",
-        "changePassword": "Change Password",
-        "subscriptions": "Subscriptions",
-        "paymentMethods": "Payment Methods"
+        "userProfile": "Användarprofil",
+        "hotelProfile": "Hotelprofil",
+        "changePassword": "Byt lösenord",
+        "subscriptions": "Prenumerationer",
+        "paymentMethods": "Betalningsmetoder"
       }
     },
     "paymentMethods": {
-      "pageTitle": "Add Payment Method",
+      "pageTitle": "Lägg till betalningsmetod",
       "buttons": {
-        "add": "Add",
-        "addMethod": "Add Method",
-        "updateMethod": "Update Method",
-        "cancel": "Cancel",
-        "setPrimary": "Set as Primary",
-        "delete": "Delete"
+        "add": "Lägg till",
+        "addMethod": "Lägg till metod",
+        "updateMethod": "Uppdatera metod",
+        "cancel": "Avbryt",
+        "setPrimary": "Sätt som standard",
+        "delete": "Ta bort"
       },
       "badges": {
-        "primary": "Primary",
-        "expired": "Expired"
+        "primary": "Standard",
+        "expired": "Utgången"
       },
       "states": {
-        "loading": "Loading payment methods...",
-        "emptyTitle": "No Payment Methods",
-        "emptyDescription": "Add a payment method to manage your subscriptions."
+        "loading": "Laddar betalningsmetoder...",
+        "emptyTitle": "Inga betalningsmetoder",
+        "emptyDescription": "Lägg till en betalningsmetod för att hantera dina prenumerationer."
       },
       "form": {
-        "paymentType": "Payment Type",
+        "paymentType": "Betalningstyp",
         "paymentTypeOptions": {
-          "card": "Credit/Debit Card",
-          "bank": "Bank Account"
+          "card": "Kredit-/betalkort",
+          "bank": "Bankkonto"
         },
         "card": {
-          "number": "Card Number",
+          "number": "Kortnummer",
           "numberPlaceholder": "1234 5678 9012 3456",
-          "expiryMonth": "Expiry Month",
-          "expiryYear": "Expiry Year",
+          "expiryMonth": "Giltighetsmånad",
+          "expiryYear": "Giltighetsår",
           "monthPlaceholder": "MM",
-          "yearPlaceholder": "YYYY",
+          "yearPlaceholder": "ÅÅÅÅ",
           "cvv": "CVV",
           "cvvPlaceholder": "123",
-          "holder": "Cardholder Name",
-          "holderPlaceholder": "John Doe",
-          "brand": "Card Brand",
-          "brandPlaceholder": "Select card brand"
+          "holder": "Kortinnehavarens namn",
+          "holderPlaceholder": "Erik Andersson",
+          "brand": "Korttyp",
+          "brandPlaceholder": "Välj korttyp"
         },
         "cardBrands": {
           "visa": "Visa",
           "mastercard": "Mastercard",
           "amex": "American Express",
           "discover": "Discover",
-          "unknown": "Card"
+          "unknown": "Kort"
         },
         "bank": {
-          "name": "Bank Name",
-          "namePlaceholder": "Bank of America",
-          "accountNumber": "Account Number",
-          "accountPlaceholder": "Account number",
-          "routingNumber": "Routing Number",
+          "name": "Banknamn",
+          "namePlaceholder": "Banknamn",
+          "accountNumber": "Kontonummer",
+          "accountPlaceholder": "Kontonummer",
+          "routingNumber": "Clearingnummer",
           "routingPlaceholder": "123456789",
-          "accountType": "Account Type",
-          "accountTypePlaceholder": "Select account type"
+          "accountType": "Kontotyp",
+          "accountTypePlaceholder": "Välj kontotyp"
         },
         "accountTypes": {
-          "checking": "Checking",
-          "savings": "Savings",
-          "unknown": "Account"
+          "checking": "Löpande",
+          "savings": "Sparkonto",
+          "unknown": "Konto"
         }
       },
       "list": {
-        "endingIn": "ending in",
-        "expiryLabel": "Exp. date",
-        "accountTypeSuffix": "Account",
-        "accountTypeUnknown": "Account",
+        "endingIn": "slutar på",
+        "expiryLabel": "Giltig till",
+        "accountTypeSuffix": "Konto",
+        "accountTypeUnknown": "Konto",
         "unknownBank": "Bank",
-        "edit": "Edit",
-        "delete": "Delete"
+        "edit": "Redigera",
+        "delete": "Ta bort"
       },
       "dialogs": {
         "add": {
-          "title": "Add Payment Method"
+          "title": "Lägg till betalningsmetod"
         },
         "edit": {
-          "title": "Edit Payment Method",
-          "cardLocked": "Card number cannot be changed for security reasons",
-          "bankLocked": "Account number cannot be changed for security reasons"
+          "title": "Redigera betalningsmetod",
+          "cardLocked": "Kortnummer kan inte ändras av säkerhetsskäl",
+          "bankLocked": "Kontonummer kan inte ändras av säkerhetsskäl"
         },
         "delete": {
-          "title": "Delete Payment Method",
-          "message": "Are you sure you want to delete this payment method? This action cannot be undone."
+          "title": "Ta bort betalningsmetod",
+          "message": "Är du säker på att du vill ta bort denna betalningsmetod? Denna åtgärd kan inte ångras."
         }
       },
       "toasts": {
         "load": {
-          "error": "Failed to load payment methods"
+          "error": "Kunde inte ladda betalningsmetoder"
         },
         "add": {
-          "success": "Payment method added successfully",
-          "error": "Failed to add payment method"
+          "success": "Betalningsmetod tillagd",
+          "error": "Kunde inte lägga till betalningsmetod"
         },
         "delete": {
-          "success": "Payment method deleted successfully",
-          "error": "Failed to delete payment method"
+          "success": "Betalningsmetod borttagen",
+          "error": "Kunde inte ta bort betalningsmetod"
         },
         "default": {
-          "success": "Default payment method updated",
-          "error": "Failed to update default payment method"
+          "success": "Standard betalningsmetod uppdaterad",
+          "error": "Kunde inte uppdatera standard betalningsmetod"
         },
         "update": {
-          "success": "Payment method updated successfully",
-          "error": "Failed to update payment method"
+          "success": "Betalningsmetod uppdaterad",
+          "error": "Kunde inte uppdatera betalningsmetod"
         }
       }
     },
     "subscription": {
       "header": {
-        "title": "Subscription Management",
-        "subtitle": "Manage your hotel's subscription and billing."
+        "title": "Prenumerationshantering",
+        "subtitle": "Hantera din hotells prenumeration och fakturering."
       },
       "buttons": {
-        "refresh": "Refresh",
-        "processing": "Processing...",
-        "upgradeNow": "Upgrade Now",
-        "currentPlan": "Current Plan",
-        "reactivate": "Reactivate",
-        "cancelSubscription": "Cancel Subscription",
-        "contactSupport": "Contact Support",
-        "cancel": "Cancel",
-        "confirm": "Confirm"
+        "refresh": "Uppdatera",
+        "processing": "Bearbetar...",
+        "upgradeNow": "Uppgradera nu",
+        "currentPlan": "Nuvarande plan",
+        "reactivate": "Återaktivera",
+        "cancelSubscription": "Avsluta prenumeration",
+        "contactSupport": "Kontakta support",
+        "cancel": "Avbryt",
+        "confirm": "Bekräfta"
       },
       "statuses": {
-        "trial": "Trial",
-        "active": "Active",
-        "cancelled": "Cancelled",
-        "expired": "Expired"
+        "trial": "Prov",
+        "active": "Aktiv",
+        "cancelled": "Avslutad",
+        "expired": "Utgången"
       },
       "states": {
-        "loading": "Loading subscription data...",
-        "notFoundTitle": "Subscription Not Found",
-        "notFoundDescription": "Unable to load subscription information."
+        "loading": "Laddar prenumerationsdata...",
+        "notFoundTitle": "Prenumeration hittades inte",
+        "notFoundDescription": "Kunde inte ladda prenumerationsinformation."
       },
       "labels": {
         "notAvailable": "N/A"
       },
       "trial": {
-        "name": "Trial Plan",
-        "description": "Free Trial",
-        "label": "Trial Period:",
-        "remaining": "{count} days remaining"
+        "name": "Provplan",
+        "description": "Gratis provperiod",
+        "label": "Provperiod:",
+        "remaining": "{count} dagar kvar"
       },
       "sections": {
         "status": {
-          "title": "Current Subscription Status",
+          "title": "Nuvarande prenumerationsstatus",
           "statusLabel": "Status",
-          "totalReviews": "Total Reviews",
-          "averageRating": "Average Rating"
+          "totalReviews": "Totalt antal recensioner",
+          "averageRating": "Genomsnittligt betyg"
         },
         "plans": {
-          "title": "Available Plans",
-          "currentPlanHint": "You are currently on this plan"
+          "title": "Tillgängliga planer",
+          "currentPlanHint": "Du har för närvarande denna plan"
         },
         "actions": {
-          "title": "Subscription Actions"
+          "title": "Prenumerationsåtgärder"
         },
         "billing": {
-          "title": "Billing Information",
-          "subscriptionId": "Subscription ID:",
-          "created": "Created:",
-          "nextBilling": "Next Billing:",
-          "trialEnds": "Trial Ends:"
+          "title": "Faktureringsinformation",
+          "subscriptionId": "Prenumerations-ID:",
+          "created": "Skapad:",
+          "nextBilling": "Nästa fakturering:",
+          "trialEnds": "Provperioden slutar:"
         }
       },
       "perInterval": "per {interval}",
       "priceLabel": "{price}/{interval}",
       "dialog": {
-        "title": "Confirm Subscription Change",
-        "upgradeTitle": "Upgrade to {plan}",
-        "description": "You are about to upgrade your subscription plan.",
+        "title": "Bekräfta prenumerationsändring",
+        "upgradeTitle": "Uppgradera till {plan}",
+        "description": "Du håller på att uppgradera din prenumerationsplan.",
         "planLabel": "Plan:",
-        "priceLabel": "Price:",
-        "billingLabel": "Billing:",
-        "noteLabel": "Note:",
-        "noteDescription": "This is a demo environment. No actual payment will be processed."
+        "priceLabel": "Pris:",
+        "billingLabel": "Fakturering:",
+        "noteLabel": "Obs:",
+        "noteDescription": "Detta är en demomiljö. Ingen faktisk betalning kommer att behandlas."
       },
       "toasts": {
         "load": {
-          "error": "Failed to load subscription data"
+          "error": "Kunde inte ladda prenumerationsdata"
         },
         "update": {
-          "success": "Subscription updated successfully",
-          "error": "Failed to update subscription"
+          "success": "Prenumeration uppdaterad",
+          "error": "Kunde inte uppdatera prenumeration"
         }
       },
       "errors": {
-        "unauthorized": "Unauthorized",
-        "hotelNotFound": "Hotel not found",
-        "planRequired": "Plan ID and action are required",
-        "unknownPlan": "Unknown Plan",
-        "fetchFailed": "Failed to fetch subscription details",
-        "updateFailed": "Failed to update subscription"
+        "unauthorized": "Obehörig åtkomst",
+        "hotelNotFound": "Hotell hittades inte",
+        "planRequired": "Plan-ID och åtgärd krävs",
+        "unknownPlan": "Okänd plan",
+        "fetchFailed": "Kunde inte hämta prenumerationsdetaljer",
+        "updateFailed": "Kunde inte uppdatera prenumeration"
       },
       "messages": {
-        "upgraded": "Successfully upgraded to {plan}",
-        "cancelled": "Successfully cancelled subscription"
+        "upgraded": "Uppgraderad till {plan}",
+        "cancelled": "Prenumeration avslutad"
       },
       "plans": {
         "basic": {
-          "name": "Basic Plan",
+          "name": "Grundplan",
           "features": [
-            "Up to 100 reviews per month",
-            "Basic analytics",
-            "QR code generation",
-            "Basic Feedback Form"
+            "Upp till 100 recensioner per månad",
+            "Grundläggande analys",
+            "QR-kodgenerering",
+            "Grundläggande feedbackformulär"
           ]
         },
         "professional": {
-          "name": "Professional Plan",
+          "name": "Professionell plan",
           "features": [
-            "Up to 500 reviews per month",
-            "Advanced analytics",
-            "QR code generation",
-            "Customized Star Rating Questions"
+            "Upp till 500 recensioner per månad",
+            "Avancerad analys",
+            "QR-kodgenerering",
+            "Anpassade stjärnbedömningsfrågor"
           ]
         },
         "enterprise": {
-          "name": "Enterprise Plan",
+          "name": "Företagsplan",
           "features": [
-            "Unlimited reviews per month",
-            "Enterprise analytics",
-            "Priority support",
-            "Multi-property management"
+            "Obegränsat antal recensioner per månad",
+            "Företagsanalys",
+            "Prioriterad support",
+            "Hantering av flera fastigheter"
           ]
         }
       },
       "intervals": {
-        "month": "month",
-        "monthly": "monthly",
-        "year": "year",
-        "yearly": "yearly",
-        "quarter": "quarter",
-        "quarterly": "quarterly"
+        "month": "månad",
+        "monthly": "månadsvis",
+        "year": "år",
+        "yearly": "årligen",
+        "quarter": "kvartal",
+        "quarterly": "kvartalsvis"
       }
     },
     "profile": {
       "user": {
-        "title": "Personal Information",
-        "subtitle": "Manage your personal account details.",
+        "title": "Personlig information",
+        "subtitle": "Hantera dina personliga kontouppgifter.",
         "buttons": {
-          "save": "Save Changes",
-          "changePassword": "Change Password",
-          "twoFactor": "Two-Factor Authentication",
-          "changePhoto": "Change Photo",
-          "uploading": "Uploading..."
+          "save": "Spara ändringar",
+          "changePassword": "Byt lösenord",
+          "twoFactor": "Tvåfaktorsautentisering",
+          "changePhoto": "Byt foto",
+          "uploading": "Laddar upp..."
         },
         "images": {
-          "cardTitle": "Profile Image",
-          "hint": "JPG, PNG or GIF. Max size 5MB."
+          "cardTitle": "Profilbild",
+          "hint": "JPG, PNG eller GIF. Max 5MB."
         },
         "fields": {
-          "firstName": "First Name *",
-          "lastName": "Last Name *",
-          "email": "Email Address *",
-          "phone": "Phone Number"
+          "firstName": "Förnamn *",
+          "lastName": "Efternamn *",
+          "email": "E-postadress *",
+          "phone": "Telefonnummer"
         },
         "placeholders": {
-          "firstName": "Enter your first name",
-          "lastName": "Enter your last name",
+          "firstName": "Ange ditt förnamn",
+          "lastName": "Ange ditt efternamn",
           "email": "your.email@example.com",
           "phone": "+1 (555) 123-4567"
         },
         "cards": {
-          "personalInfo": "Personal Information",
-          "accountInfo": "Account Information",
-          "security": "Security"
+          "personalInfo": "Personlig information",
+          "accountInfo": "Kontoinformation",
+          "security": "Säkerhet"
         },
         "account": {
-          "type": "Account Type:",
+          "type": "Kontotyp:",
           "status": "Status:",
-          "memberSince": "Member Since:",
-          "lastLogin": "Last Login:",
-          "typeValue": "Hotel Owner",
-          "statusActive": "Active",
+          "memberSince": "Medlem sedan:",
+          "lastLogin": "Senaste inloggning:",
+          "typeValue": "Hotellägare",
+          "statusActive": "Aktiv",
           "notAvailable": "N/A"
         },
         "toasts": {
-          "saveSuccess": "Profile updated successfully",
-          "saveError": "Failed to update profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Profile image updated successfully",
-          "imageError": "Failed to upload image",
-          "twoFactorInfo": "Two-factor authentication will be available soon"
+          "saveSuccess": "Profil uppdaterad",
+          "saveError": "Kunde inte uppdatera profil",
+          "imageTypeError": "Välj en giltig bildfil (JPG, PNG, GIF eller WebP)",
+          "imageSizeError": "Bildstorleken måste vara mindre än 5MB",
+          "imageSuccess": "Profilbild uppdaterad",
+          "imageError": "Kunde inte ladda upp bild",
+          "twoFactorInfo": "Tvåfaktorsautentisering kommer snart att vara tillgänglig"
         }
       },
       "hotel": {
-        "title": "Hotel Profile",
-        "subtitle": "Manage your hotel information and settings.",
+        "title": "Hotellprofil",
+        "subtitle": "Hantera din hotellinformation och inställningar.",
         "buttons": {
-          "save": "Save Changes",
-          "uploadLogo": "Upload Logo",
-          "uploading": "Uploading...",
-          "viewPublic": "View Public Page",
-          "contactSupport": "Contact Support"
+          "save": "Spara ändringar",
+          "uploadLogo": "Ladda upp logotyp",
+          "uploading": "Laddar upp...",
+          "viewPublic": "Visa offentlig sida",
+          "contactSupport": "Kontakta support"
         },
         "images": {
-          "cardTitle": "Hotel Logo",
-          "alt": "Hotel Logo",
-          "hint": "JPG, PNG or GIF. Max size 5MB. Recommended: 300x300px"
+          "cardTitle": "Hotellets logotyp",
+          "alt": "Hotellets logotyp",
+          "hint": "JPG, PNG eller GIF. Max 5MB. Rekommenderat: 300x300px"
         },
         "cards": {
-          "actions": "Actions",
-          "hotelInfo": "Hotel Information"
+          "actions": "Åtgärder",
+          "hotelInfo": "Hotellinformation"
         },
         "fields": {
-          "name": "Hotel Name *",
-          "description": "Description",
-          "address": "Address",
-          "city": "City",
-          "country": "Country",
-          "phone": "Phone",
-          "email": "Email",
-          "website": "Website"
+          "name": "Hotellets namn *",
+          "description": "Beskrivning",
+          "address": "Adress",
+          "city": "Stad",
+          "country": "Land",
+          "phone": "Telefon",
+          "email": "E-post",
+          "website": "Webbplats"
         },
         "placeholders": {
-          "name": "Enter hotel name",
-          "description": "Brief description of your hotel",
-          "address": "Street address",
-          "city": "City",
-          "country": "Select country",
+          "name": "Ange hotellets namn",
+          "description": "Kort beskrivning av ditt hotell",
+          "address": "Gatuadress",
+          "city": "Stad",
+          "country": "Välj land",
           "phone": "+1 (555) 123-4567",
           "email": "hotel@example.com",
           "website": "https://www.yourhotel.com"
         },
         "externalLinks": {
-          "title": "External Review Links",
-          "subtitle": "Add links to your TripAdvisor and Google Reviews pages to help guests share positive feedback.",
+          "title": "Externa recensionslänkar",
+          "subtitle": "Lägg till länkar till dina TripAdvisor- och Google Reviews-sidor.",
           "tripAdvisor": {
-            "label": "TripAdvisor Link",
+            "label": "TripAdvisor-länk",
             "placeholder": "https://www.tripadvisor.com/...",
-            "hint": "Optional: Link to your TripAdvisor page"
+            "hint": "Valfritt: Länk till din TripAdvisor-sida"
           },
           "google": {
-            "label": "Google Reviews Link",
+            "label": "Google Reviews-länk",
             "placeholder": "https://g.page/...",
-            "hint": "Optional: Link to your Google Reviews page"
+            "hint": "Valfritt: Länk till din Google Reviews-sida"
           }
         },
         "account": {
           "notAvailable": "N/A"
         },
         "toasts": {
-          "loadError": "Failed to load hotel profile",
-          "saveSuccess": "Hotel profile updated successfully",
-          "saveError": "Failed to update hotel profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Hotel logo updated successfully",
-          "imageError": "Failed to upload logo"
+          "loadError": "Kunde inte ladda hotellprofil",
+          "saveSuccess": "Hotellprofil uppdaterad",
+          "saveError": "Kunde inte uppdatera hotellprofil",
+          "imageTypeError": "Välj en giltig bildfil (JPG, PNG, GIF eller WebP)",
+          "imageSizeError": "Bildstorleken måste vara mindre än 5MB",
+          "imageSuccess": "Hotellets logotyp uppdaterad",
+          "imageError": "Kunde inte ladda upp logotyp"
         }
       },
       "password": {
-        "title": "Change Password",
-        "subtitle": "Update your account password for better security.",
-        "cardTitle": "Password Change",
+        "title": "Byt lösenord",
+        "subtitle": "Uppdatera ditt kontolösenord för bättre säkerhet.",
+        "cardTitle": "Lösenordsändring",
         "buttons": {
-          "change": "Change Password",
-          "cancel": "Cancel",
-          "confirmChange": "Change Password"
+          "change": "Byt lösenord",
+          "cancel": "Avbryt",
+          "confirmChange": "Byt lösenord"
         },
         "fields": {
-          "current": "Current Password *",
-          "new": "New Password *",
-          "confirm": "Confirm New Password *"
+          "current": "Nuvarande lösenord *",
+          "new": "Nytt lösenord *",
+          "confirm": "Bekräfta nytt lösenord *"
         },
         "placeholders": {
-          "current": "Enter your current password",
-          "new": "Enter your new password",
-          "confirm": "Confirm your new password"
+          "current": "Ange ditt nuvarande lösenord",
+          "new": "Ange ditt nya lösenord",
+          "confirm": "Bekräfta ditt nya lösenord"
         },
         "strength": {
-          "label": "Password Strength:",
-          "weak": "Weak",
+          "label": "Lösenordsstyrka:",
+          "weak": "Svagt",
           "medium": "Medium",
-          "strong": "Strong"
+          "strong": "Starkt"
         },
         "requirements": {
-          "title": "Password Requirements",
-          "minLength": "At least 8 characters long",
-          "uppercase": "Contains uppercase letters",
-          "lowercase": "Contains lowercase letters",
-          "numbers": "Contains numbers",
-          "special": "Contains special characters"
+          "title": "Lösenordskrav",
+          "minLength": "Minst 8 tecken",
+          "uppercase": "Innehåller versaler",
+          "lowercase": "Innehåller gemener",
+          "numbers": "Innehåller siffror",
+          "special": "Innehåller specialtecken"
         },
         "tips": {
-          "title": "Security Tips",
-          "tip": "Tip: Use a unique password that you don't use elsewhere.",
-          "warning": "Warning: Never share your password with anyone."
+          "title": "Säkerhetstips",
+          "tip": "Tips: Använd ett unikt lösenord som du inte använder någon annanstans.",
+          "warning": "Varning: Dela aldrig ditt lösenord med någon."
         },
         "validation": {
-          "currentRequired": "Current password is required",
-          "newRequired": "New password is required",
-          "minLength": "New password must be at least 8 characters long",
-          "complexity": "New password must contain uppercase, lowercase, numbers, and special characters",
-          "confirmMismatch": "New password and confirmation do not match",
-          "sameAsCurrent": "New password must be different from current password"
+          "currentRequired": "Nuvarande lösenord krävs",
+          "newRequired": "Nytt lösenord krävs",
+          "minLength": "Nytt lösenord måste vara minst 8 tecken",
+          "complexity": "Nytt lösenord måste innehålla versaler, gemener, siffror och specialtecken",
+          "confirmMismatch": "Nytt lösenord och bekräftelse matchar inte",
+          "sameAsCurrent": "Nytt lösenord måste skilja sig från nuvarande"
         },
         "toasts": {
-          "changeSuccess": "Password changed successfully",
-          "changeError": "Failed to change password"
+          "changeSuccess": "Lösenord bytt",
+          "changeError": "Kunde inte byta lösenord"
         },
         "confirm": {
-          "title": "Confirm Password Change",
-          "message": "Are you sure you want to change your password?",
-          "warning": "This action will log you out of all devices and you'll need to log in again."
+          "title": "Bekräfta lösenordsändring",
+          "message": "Är du säker på att du vill byta lösenord?",
+          "warning": "Du kommer att loggas ut från alla enheter och måste logga in igen."
         },
         "accessibility": {
-          "show": "Show password",
-          "hide": "Hide password"
+          "show": "Visa lösenord",
+          "hide": "Dölj lösenord"
         }
       },
       "subscription": {
         "errors": {
-          "unauthorized": "Unauthorized",
-          "hotelNotFound": "Hotel not found",
-          "planRequired": "Plan ID and action are required",
-          "unknownPlan": "Unknown Plan",
-          "fetchFailed": "Failed to fetch subscription details",
-          "updateFailed": "Failed to update subscription"
+          "unauthorized": "Obehörig åtkomst",
+          "hotelNotFound": "Hotell hittades inte",
+          "planRequired": "Plan-ID och åtgärd krävs",
+          "unknownPlan": "Okänd plan",
+          "fetchFailed": "Kunde inte hämta prenumerationsdetaljer",
+          "updateFailed": "Kunde inte uppdatera prenumeration"
         },
         "messages": {
-          "upgraded": "Successfully upgraded to {plan}",
-          "cancelled": "Successfully cancelled subscription"
+          "upgraded": "Uppgraderad till {plan}",
+          "cancelled": "Prenumeration avslutad"
         },
         "plans": {
           "basic": {
-            "name": "Basic Plan",
+            "name": "Grundplan",
             "features": [
-              "Up to 100 reviews per month",
-              "Basic analytics",
-              "QR code generation",
-              "Basic Feedback Form"
+              "Upp till 100 recensioner per månad",
+              "Grundläggande analys",
+              "QR-kodgenerering",
+              "Grundläggande feedbackformulär"
             ]
           },
           "professional": {
-            "name": "Professional Plan",
+            "name": "Professionell plan",
             "features": [
-              "Up to 500 reviews per month",
-              "Advanced analytics",
-              "QR code generation",
-              "Customized Star Rating Questions"
+              "Upp till 500 recensioner per månad",
+              "Avancerad analys",
+              "QR-kodgenerering",
+              "Anpassade stjärnbedömningsfrågor"
             ]
           },
           "enterprise": {
-            "name": "Enterprise Plan",
+            "name": "Företagsplan",
             "features": [
-              "Unlimited reviews",
-              "Full analytics suite",
-              "QR code generation",
-              "All type of questions"
+              "Obegränsat antal recensioner",
+              "Komplett analyspaket",
+              "QR-kodgenerering",
+              "Alla typer av frågor"
             ]
           }
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Aviseringar",
+        "ariaLabel": "Aviseringar",
+        "iconAlt": "Aviseringsikon",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Markera alla som lästa",
+          "refresh": "Uppdatera"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Inga aviseringar än"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "newFormCreated": "New Form Created",
-          "success": "Success",
+          "newReview": "Ny recension",
+          "reviewApproved": "Recension godkänd",
+          "reviewRejected": "Recension avslagen",
+          "subscriptionExpiring": "Prenumeration löper ut",
+          "subscriptionCancelled": "Prenumeration avslutad",
+          "escalationReceived": "Eskalering mottagen",
+          "escalationResponded": "Eskalering besvarad",
+          "systemAlert": "Systemavisering",
+          "newHotelRegistration": "Ny hotellregistrering",
+          "newFormCreated": "Nytt formulär skapat",
+          "success": "Framgång",
           "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "warning": "Varning",
+          "error": "Fel",
+          "generic": "Avisering"
         }
       },
       "profileSidebar": {
         "greeting": {
-          "title": "Welcome",
-          "fallbackName": "Admin User"
+          "title": "Välkommen",
+          "fallbackName": "Administratör"
         },
         "actions": {
           "profile": {
-            "title": "Profile",
-            "description": "Manage your account settings"
+            "title": "Profil",
+            "description": "Hantera dina kontoinställningar"
           },
           "signOut": {
-            "title": "Sign Out",
-            "description": "Logout from your account"
+            "title": "Logga ut",
+            "description": "Logga ut från ditt konto"
           }
         },
         "notifications": {
-          "title": "Recent Notifications",
-          "loading": "Loading notifications...",
-          "summary": "You have {count} unread notifications",
-          "empty": "No new notifications"
+          "title": "Senaste aviseringar",
+          "loading": "Laddar aviseringar...",
+          "summary": "Du har {count} olästa aviseringar",
+          "empty": "Inga nya aviseringar"
         },
         "time": {
-          "justNow": "Just now"
+          "justNow": "Just nu"
         }
       }
     },
     "communications": {
       "notifications": {
-        "title": "Notifications",
-        "subtitle": "Manage system notifications and alerts",
+        "title": "Aviseringar",
+        "subtitle": "Hantera systemaviseringar och varningar",
         "buttons": {
-          "deleteSelected": "Delete Selected ({count})",
-          "markAllAsRead": "Mark All as Read",
-          "refresh": "Refresh"
+          "deleteSelected": "Ta bort valda ({count})",
+          "markAllAsRead": "Markera alla som lästa",
+          "refresh": "Uppdatera"
         },
         "filters": {
-          "title": "Filters",
-          "searchLabel": "Search Notifications",
-          "searchPlaceholder": "Search by title, message, or user...",
-          "type": "Type",
-          "allTypes": "All Types",
+          "title": "Filter",
+          "searchLabel": "Sök aviseringar",
+          "searchPlaceholder": "Sök på titel, meddelande eller användare...",
+          "type": "Typ",
+          "allTypes": "Alla typer",
           "status": {
             "label": "Status",
-            "all": "All Status",
-            "unread": "Unread",
-            "read": "Read"
+            "all": "Alla statusar",
+            "unread": "Oläst",
+            "read": "Läst"
           },
           "types": {
-            "newReview": "New Review",
-            "reviewApproved": "Review Approved",
-            "reviewRejected": "Review Rejected",
-            "subscriptionExpiring": "Subscription Expiring",
-            "subscriptionCancelled": "Subscription Cancelled",
-            "escalationReceived": "Escalation Received",
-            "escalationResponded": "Escalation Responded",
-            "systemAlert": "System Alert",
-            "newHotelRegistration": "New Hotel Registration",
-            "newFormCreated": "New Form Created",
-            "success": "Success",
+            "newReview": "Ny recension",
+            "reviewApproved": "Recension godkänd",
+            "reviewRejected": "Recension avslagen",
+            "subscriptionExpiring": "Prenumeration löper ut",
+            "subscriptionCancelled": "Prenumeration avslutad",
+            "escalationReceived": "Eskalering mottagen",
+            "escalationResponded": "Eskalering besvarad",
+            "systemAlert": "Systemavisering",
+            "newHotelRegistration": "Ny hotellregistrering",
+            "newFormCreated": "Nytt formulär skapat",
+            "success": "Framgång",
             "info": "Info",
-            "warning": "Warning",
-            "error": "Error"
+            "warning": "Varning",
+            "error": "Fel"
           }
         },
         "states": {
-          "loading": "Loading notifications...",
-          "empty": "No notifications found"
+          "loading": "Laddar aviseringar...",
+          "empty": "Inga aviseringar hittades"
         },
         "table": {
-          "type": "Type",
-          "message": "Message",
-          "date": "Date",
-          "actions": "Actions",
+          "type": "Typ",
+          "message": "Meddelande",
+          "date": "Datum",
+          "actions": "Åtgärder",
           "status": {
             "label": "Status",
-            "read": "Read",
-            "new": "New"
+            "read": "Läst",
+            "new": "Ny"
           }
         },
         "tooltips": {
-          "markAsRead": "Mark as Read",
-          "view": "View",
-          "delete": "Delete"
+          "markAsRead": "Markera som läst",
+          "view": "Visa",
+          "delete": "Ta bort"
         },
         "dates": {
-          "justNow": "Just now",
-          "hoursAgo": "{hours}h ago",
-          "yesterday": "Yesterday"
+          "justNow": "Just nu",
+          "hoursAgo": "för {hours}h sedan",
+          "yesterday": "Igår"
         },
         "types": {
-          "NEW_REVIEW": "New Review",
-          "REVIEW_APPROVED": "Review Approved",
-          "REVIEW_REJECTED": "Review Rejected",
-          "SUBSCRIPTION_EXPIRING": "Subscription Expiring",
-          "SUBSCRIPTION_CANCELLED": "Subscription Cancelled",
-          "ESCALATION_RECEIVED": "Escalation Received",
-          "ESCALATION_RESPONDED": "Escalation Responded",
-          "SYSTEM_ALERT": "System Alert",
-          "NEW_HOTEL_REGISTRATION": "New Hotel Registration",
-          "NEW_FORM_CREATED": "New Form Created",
-          "SUCCESS": "Success",
+          "NEW_REVIEW": "Ny recension",
+          "REVIEW_APPROVED": "Recension godkänd",
+          "REVIEW_REJECTED": "Recension avslagen",
+          "SUBSCRIPTION_EXPIRING": "Prenumeration löper ut",
+          "SUBSCRIPTION_CANCELLED": "Prenumeration avslutad",
+          "ESCALATION_RECEIVED": "Eskalering mottagen",
+          "ESCALATION_RESPONDED": "Eskalering besvarad",
+          "SYSTEM_ALERT": "Systemavisering",
+          "NEW_HOTEL_REGISTRATION": "Ny hotellregistrering",
+          "NEW_FORM_CREATED": "Nytt formulär skapat",
+          "SUCCESS": "Framgång",
           "INFO": "Info",
-          "WARNING": "Warning",
-          "ERROR": "Error"
+          "WARNING": "Varning",
+          "ERROR": "Fel"
         },
         "toasts": {
-          "loadError": "Failed to load notifications",
-          "markReadSuccess": "Notification marked as read",
-          "markReadError": "Failed to mark notification as read",
-          "markAllReadSuccess": "All notifications marked as read",
-          "markAllReadError": "Failed to mark all notifications as read",
-          "deleteSuccess": "Notification deleted successfully",
-          "deleteError": "Failed to delete notification",
-          "bulkDeleteSuccess": "{count} notification(s) deleted successfully",
-          "bulkDeleteError": "Failed to delete some notifications"
+          "loadError": "Kunde inte ladda aviseringar",
+          "markReadSuccess": "Avisering markerad som läst",
+          "markReadError": "Kunde inte markera avisering som läst",
+          "markAllReadSuccess": "Alla aviseringar markerade som lästa",
+          "markAllReadError": "Kunde inte markera alla som lästa",
+          "deleteSuccess": "Avisering borttagen",
+          "deleteError": "Kunde inte ta bort avisering",
+          "bulkDeleteSuccess": "{count} aviseringar borttagna",
+          "bulkDeleteError": "Kunde inte ta bort vissa aviseringar"
         },
         "confirm": {
-          "deleteMessage": "Are you sure you want to delete this notification?",
-          "deleteHeader": "Delete Confirmation",
-          "bulkDeleteMessage": "Are you sure you want to delete {count} selected notification(s)?",
-          "bulkDeleteHeader": "Bulk Delete Confirmation"
+          "deleteMessage": "Är du säker på att du vill ta bort denna avisering?",
+          "deleteHeader": "Bekräfta borttagning",
+          "bulkDeleteMessage": "Är du säker på att du vill ta bort {count} valda aviseringar?",
+          "bulkDeleteHeader": "Bekräfta massborttagning"
         }
       }
     }
   },
   "auth": {
     "register": {
-      "title": "Register",
-      "subtitle": "Let's get started",
+      "title": "Registrera",
+      "subtitle": "Låt oss komma igång",
       "placeholders": {
-        "firstName": "First Name",
-        "lastName": "Last Name",
-        "email": "Email",
-        "phone": "Phone (Optional)",
-        "password": "Password"
+        "firstName": "Förnamn",
+        "lastName": "Efternamn",
+        "email": "E-post",
+        "phone": "Telefon (valfritt)",
+        "password": "Lösenord"
       },
       "buttons": {
-        "signUp": "Sign Up",
-        "signingUp": "Signing Up..."
+        "signUp": "Registrera dig",
+        "signingUp": "Registrerar..."
       },
-      "agreementPrefix": "I have read the",
+      "agreementPrefix": "Jag har läst",
       "toasts": {
-        "acceptTerms": "Please accept the terms and conditions",
-        "missingFields": "Please fill in all required fields",
-        "success": "Registration successful! Please check your email.",
-        "error": "Registration failed. Please try again."
+        "acceptTerms": "Godkänn användarvillkoren",
+        "missingFields": "Fyll i alla obligatoriska fält",
+        "success": "Registreringen lyckades! Kontrollera din e-post.",
+        "error": "Registreringen misslyckades. Försök igen."
       }
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter the email address associated with your account and we'll send an email with instructions to reset your password.",
+      "title": "Glömt lösenord?",
+      "description": "Ange e-postadressen kopplad till ditt konto så skickar vi instruktioner för att återställa lösenordet.",
       "messages": {
-        "instructions": "Check your email for password reset instructions"
+        "instructions": "Kontrollera din e-post för instruktioner om lösenordsåterställning"
       },
       "submitted": {
-        "title": "Check your email!",
-        "description": "We have sent an email with a password reset link to {email}.",
-        "hint": "Didn't receive the email? Please check your spam folder."
+        "title": "Kontrollera din e-post!",
+        "description": "Vi har skickat ett e-postmeddelande med en länk för återställning av lösenord till {email}.",
+        "hint": "Fick du inte e-postmeddelandet? Kontrollera skräppostmappen."
       },
       "fields": {
-        "email": "Email Address",
-        "emailPlaceholder": "Enter your email address"
+        "email": "E-postadress",
+        "emailPlaceholder": "Ange din e-postadress"
       },
       "buttons": {
-        "send": "Send Instructions",
-        "sending": "Sending...",
-        "resend": "Resend Email",
-        "backToLogin": "Back to Login"
+        "send": "Skicka instruktioner",
+        "sending": "Skickar...",
+        "resend": "Skicka e-post igen",
+        "backToLogin": "Tillbaka till inloggning"
       },
       "validation": {
-        "required": "Email is required",
-        "invalid": "Please enter a valid email address"
+        "required": "E-post krävs",
+        "invalid": "Ange en giltig e-postadress"
       },
       "toasts": {
-        "success": "Password reset email sent successfully",
-        "error": "Failed to send reset email",
-        "unexpected": "An unexpected error occurred. Please try again."
+        "success": "E-post för lösenordsåterställning skickad",
+        "error": "Kunde inte skicka e-post",
+        "unexpected": "Ett oväntat fel uppstod. Försök igen."
       }
     },
     "resetPassword": {
-      "title": "Create New Password!",
-      "subtitle": "Enter a new password below to update your account credentials.",
+      "title": "Skapa nytt lösenord!",
+      "subtitle": "Ange ett nytt lösenord nedan för att uppdatera dina kontouppgifter.",
       "fields": {
-        "newPassword": "New Password",
-        "confirmPassword": "Confirm Password"
+        "newPassword": "Nytt lösenord",
+        "confirmPassword": "Bekräfta lösenord"
       },
       "placeholders": {
-        "password": "Enter your password",
-        "confirmPassword": "Confirm your password"
+        "password": "Ange ditt lösenord",
+        "confirmPassword": "Bekräfta ditt lösenord"
       },
       "buttons": {
-        "reset": "Reset Password",
-        "resetting": "Resetting..."
+        "reset": "Återställ lösenord",
+        "resetting": "Återställer..."
       },
       "link": {
-        "backToLogin": "Back to Login"
+        "backToLogin": "Tillbaka till inloggning"
       },
       "states": {
-        "validating": "Validating reset link...",
-        "loading": "Loading..."
+        "validating": "Verifierar återställningslänk...",
+        "loading": "Laddar..."
       },
       "errors": {
-        "passwordMin": "Password must be at least 6 characters long",
-        "passwordMax": "Password must be less than 128 characters",
-        "confirmRequired": "Please confirm your password",
-        "mismatch": "Passwords do not match"
+        "passwordMin": "Lösenordet måste vara minst 6 tecken",
+        "passwordMax": "Lösenordet måste vara mindre än 128 tecken",
+        "confirmRequired": "Bekräfta ditt lösenord",
+        "mismatch": "Lösenorden matchar inte"
       },
       "toasts": {
-        "invalidLink": "Invalid reset link",
-        "invalidOrExpired": "Invalid or expired reset link",
-        "failedValidation": "Failed to validate reset link",
-        "success": "Password reset successfully. You can now log in with your new password.",
-        "failure": "Failed to reset password",
-        "unexpected": "An unexpected error occurred"
+        "invalidLink": "Ogiltig återställningslänk",
+        "invalidOrExpired": "Ogiltig eller utgången länk",
+        "failedValidation": "Kunde inte verifiera länken",
+        "success": "Lösenordet återställdes. Du kan nu logga in med ditt nya lösenord.",
+        "failure": "Kunde inte återställa lösenordet",
+        "unexpected": "Ett oväntat fel uppstod"
       },
       "accessibility": {
-        "showPassword": "Show password",
-        "hidePassword": "Hide password"
+        "showPassword": "Visa lösenord",
+        "hidePassword": "Dölj lösenord"
       }
     }
   },
   "authFooter": {
     "brand": {
       "title": "C-Reviews",
-      "description": "We help hotels connect with their guests through seamless feedback solutions. Our platform makes it easy to create forms, gather insights, and elevate the guest experience with integrity and professionalism at the core of everything we do.",
-      "footerImageAlt": "C-Reviews decorative footer"
+      "description": "Vi hjälper hotell att koppla ihop med sina gäster genom sömlösa feedbacklösningar. Vår plattform gör det enkelt att skapa formulär, samla insikter och höja gästupplevelsen med integritet och professionalism i centrum för allt vi gör.",
+      "footerImageAlt": "C-Reviews dekorativ sidfot"
     },
     "quickLinks": {
-      "title": "Quick Links",
+      "title": "Snabblänkar",
       "items": {
-        "home": "Home",
-        "about": "About Us",
-        "features": "Features",
-        "contact": "Contact Us"
+        "home": "Hem",
+        "about": "Om oss",
+        "features": "Funktioner",
+        "contact": "Kontakta oss"
       }
     },
     "resources": {
-      "title": "Resources",
+      "title": "Resurser",
       "items": {
-        "dashboard": "Dashboard",
-        "feedbacks": "Feedbacks",
-        "hotelProfile": "Hotel Profile",
+        "dashboard": "Instrumentpanel",
+        "feedbacks": "Feedback",
+        "hotelProfile": "Hotelprofil",
         "support": "Support",
-        "ownerProfile": "Owner Profile"
+        "ownerProfile": "Ägarprofil"
       }
     },
     "legal": {
-      "title": "Legal",
+      "title": "Juridiskt",
       "items": {
-        "privacyPolicy": "Privacy Policy",
-        "companyPolicy": "Company Policy",
-        "terms": "Terms & Conditions"
+        "privacyPolicy": "Integritetspolicy",
+        "companyPolicy": "Företagspolicy",
+        "terms": "Användarvillkor"
       }
     },
     "connect": {
-      "title": "Connect with Us",
-      "emailPlaceholder": "Email Address",
-      "submitLabel": "Subscribe",
+      "title": "Kontakta oss",
+      "emailPlaceholder": "E-postadress",
+      "submitLabel": "Prenumerera",
       "social": {
-        "facebook": "Follow us on Facebook",
-        "instagram": "Follow us on Instagram",
-        "linkedin": "Connect with us on LinkedIn"
+        "facebook": "Följ oss på Facebook",
+        "instagram": "Följ oss på Instagram",
+        "linkedin": "Anslut till oss på LinkedIn"
       }
     },
-    "copyright": "© 2024 C-Reviews LLC. All Rights Reserved!"
+    "copyright": "© 2024 C-Reviews LLC. Alla rättigheter förbehållna!"
   }
 }
 

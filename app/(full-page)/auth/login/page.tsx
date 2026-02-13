@@ -222,7 +222,7 @@ const LoginContent = () => {
             
             {/* Header */}
             <div style={{ 
-                padding: "1.5rem 2rem", 
+                padding: "0rem 2rem", 
                 display: "flex", 
                 justifyContent: "space-between", 
                 alignItems: "center",
@@ -232,7 +232,7 @@ const LoginContent = () => {
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.15)"
             }}>
                 <div>
-                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={80} />
+                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={100} />
                 </div>
                 <div style={{ display: "flex", gap: "1rem" }}>
                 <li className="ml-3">

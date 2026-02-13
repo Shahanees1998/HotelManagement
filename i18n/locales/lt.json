@@ -25,27 +25,27 @@
     "lv": "Latvian"
   },
   "common": {
-    "warning": "Warning",
-    "success": "Success",
-    "error": "Error",
-    "info": "Info",
-    "agreeTo": "I agree to the",
-    "and": "and",
-    "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy",
-    "alreadyHaveAccount": "Already have an account?",
-    "login": "Login",
-    "logout": "Logout",
-    "orRegisterVia": "or register via",
-    "selectLanguage": "Select language",
-    "getStarted": "Get Started"
+    "warning": "Įspėjimas",
+    "success": "Sėkmė",
+    "error": "Klaida",
+    "info": "Informacija",
+    "agreeTo": "Sutinku su",
+    "and": "ir",
+    "terms": "naudojimo sąlygomis",
+    "privacy": "privatumo politika",
+    "alreadyHaveAccount": "Jau turite paskyrą?",
+    "login": "Prisijungti",
+    "logout": "Atsijungti",
+    "orRegisterVia": "arba registruokitės per",
+    "selectLanguage": "Pasirinkite kalbą",
+    "getStarted": "Pradėti"
   },
   "components": {
     "customPaginator": {
-      "itemsPerPage": "Items per page",
-      "rangeInfo": "{start}-{end} of {total} entries",
-      "previousPage": "Previous page",
-      "nextPage": "Next page"
+      "itemsPerPage": "Įrašų puslapyje",
+      "rangeInfo": "{start}-{end} iš {total} įrašų",
+      "previousPage": "Ankstesnis puslapis",
+      "nextPage": "Kitas puslapis"
     }
   },
   "countries": {
@@ -66,1293 +66,1302 @@
   },
   "registerHotel": {
     "step1": {
-      "title": "Owner Information!",
+      "title": "Savininko informacija!",
       "fields": {
-        "fullName": "Name",
-        "email": "Email Address",
-        "phone": "Phone Number",
-        "password": "Password"
+        "fullName": "Vardas",
+        "email": "El. pašto adresas",
+        "phone": "Telefono numeris",
+        "password": "Slaptažodis"
       },
       "placeholders": {
-        "fullName": "Enter your name",
-        "email": "Enter your email address",
-        "phone": "Enter your phone number",
-        "password": "Enter your password"
+        "fullName": "Įveskite savo vardą",
+        "email": "Įveskite savo el. paštą",
+        "phone": "Įveskite savo telefono numerį",
+        "password": "Įveskite slaptažodį"
       },
-      "cta": "Let's Keep Going!"
+      "cta": "Tęskime!"
     },
     "step2": {
-      "title": "Hotel Information!",
-      "subtitle": "Is my data safe?",
+      "title": "Viešbučio informacija!",
+      "subtitle": "Ar mano duomenys saugūs?",
       "fields": {
-        "hotelName": "Hotel Name",
-        "hotelWebsite": "Hotel Website",
-        "hotelAddress": "Hotel Address",
-        "city": "City",
-        "country": "Country",
-        "hotelDescription": "Hotel Description"
+        "hotelName": "Viešbučio pavadinimas",
+        "hotelWebsite": "Viešbučio svetainė",
+        "hotelAddress": "Viešbučio adresas",
+        "city": "Miestas",
+        "country": "Šalis",
+        "hotelDescription": "Viešbučio aprašymas"
       },
       "placeholders": {
-        "hotelName": "Enter hotel name",
-        "hotelWebsite": "Enter hotel website url",
-        "hotelAddress": "Enter hotel street address",
-        "city": "Enter hotel city",
-        "country": "Select Country",
-        "hotelDescription": "Enter brief description of your hotel"
+        "hotelName": "Įveskite viešbučio pavadinimą",
+        "hotelWebsite": "Įveskite viešbučio svetainės URL",
+        "hotelAddress": "Įveskite viešbučio adresą",
+        "city": "Įveskite miestą",
+        "country": "Pasirinkite šalį",
+        "hotelDescription": "Trumpas jūsų viešbučio aprašymas"
       }
     },
     "buttons": {
-      "back": "Back",
-      "register": "Register Now",
-      "registering": "Registering..."
+      "back": "Atgal",
+      "register": "Registruotis",
+      "registering": "Registruojama..."
     },
     "toasts": {
-      "missingRequired": "Please fill in all required fields",
-      "passwordLength": "Password must be at least 6 characters long",
-      "acceptTerms": "Please accept the terms and conditions",
-      "acceptTermsPrivacy": "Please accept the terms and conditions and privacy policy",
-      "success": "Hotel registration successful! Please check your email for verification.",
-      "error": "Registration failed",
-      "errorGeneric": "Registration failed. Please try again."
+      "missingRequired": "Užpildykite visus privalomus laukus",
+      "passwordLength": "Slaptažodis turi būti bent 6 simbolių",
+      "acceptTerms": "Priimkite naudojimo sąlygas",
+      "acceptTermsPrivacy": "Priimkite naudojimo sąlygas ir privatumo politiką",
+      "success": "Viešbučio registracija sėkminga! Patikrinkite el. paštą patvirtinimui.",
+      "error": "Registracija nepavyko",
+      "errorGeneric": "Registracija nepavyko. Bandykite dar kartą."
     },
     "images": {
-      "ownerAlt": "Register Hotel - Owner Information",
-      "hotelAlt": "Register Hotel - Hotel Information"
+      "ownerAlt": "Viešbučio registracija - Savininko informacija",
+      "hotelAlt": "Viešbučio registracija - Viešbučio informacija"
     }
   },
   "hotel": {
     "dashboard": {
       "recentReviews": {
-        "title": "Recent Reviews",
-        "description": "View and manage your recent reviews.",
+        "title": "Naujausi atsiliepimai",
+        "description": "Peržiūrėkite ir tvarkykite savo naujausius atsiliepimus.",
         "states": {
-          "loading": "Loading recent reviews..."
+          "loading": "Naujausių atsiliepimų įkėlimas..."
         },
         "table": {
-          "date": "Date"
+          "date": "Data"
         }
       },
       "comparisonChart": {
-        "title": "Review Comparison",
-        "period": "Period",
-        "weekly": "Weekly",
-        "monthly": "Monthly",
-        "loading": "Loading comparison data...",
-        "noData": "No comparison data available"
+        "title": "Atsiliepimų palyginimas",
+        "period": "Laikotarpis",
+        "weekly": "Kas savaitę",
+        "monthly": "Kas mėnesį",
+        "loading": "Kraunami palyginimo duomenys...",
+        "noData": "Nėra palyginimo duomenų",
+        "positiveReviews": "Teigiami atsiliepimai",
+        "negativeReviews": "Neigiami atsiliepimai"
+      },
+      "stats": {
+        "totalReviews": "Iš viso atsiliepimų",
+        "averageRating": "Vidutinis įvertinimas",
+        "positiveReviews": "Teigiami atsiliepimai",
+        "negativeReviews": "Neigiami atsiliepimai",
+        "responseRate": "Atsakymo dažnis"
       }
     },
     "forms": {
       "header": {
-        "title": "Feedback Form",
-        "subtitle": "Manage your guest feedback form. You can update this form at any time."
+        "title": "Atsiliepimų forma",
+        "subtitle": "Tvarkykite svečių atsiliepimų formą. Galite ją atnaujinti bet kada."
       },
       "states": {
-        "loading": "Loading form..."
+        "loading": "Formos įkėlimas..."
       },
       "fields": {
-        "title": "Form Title",
-        "status": "Status",
-        "active": "Active",
-        "inactive": "Inactive",
-        "description": "Description",
-        "noDescription": "No description provided",
-        "totalResponses": "Total Responses"
+        "title": "Formos pavadinimas",
+        "status": "Būsena",
+        "active": "Aktyvi",
+        "inactive": "Neaktyvi",
+        "description": "Aprašymas",
+        "noDescription": "Aprašymo nėra",
+        "totalResponses": "Iš viso atsakymų"
       },
       "buttons": {
-        "edit": "Edit Form",
-        "preview": "Preview Form",
-        "showQr": "Show QR Code",
-        "create": "Create Form",
-        "downloadQr": "Download QR Code",
-        "copyUrl": "Copy URL"
+        "edit": "Redaguoti formą",
+        "preview": "Peržiūrėti formą",
+        "showQr": "Rodyti QR kodą",
+        "create": "Sukurti formą",
+        "downloadQr": "Atsisiųsti QR kodą",
+        "copyUrl": "Kopijuoti URL"
       },
       "empty": {
-        "title": "No Form Created Yet",
-        "description": "Create your feedback form to start collecting guest reviews."
+        "title": "Forma dar nesukurta",
+        "description": "Sukurkite atsiliepimų formą, kad pradėtumėte rinkti svečių atsiliepimus."
       },
       "preview": {
-        "title": "Form Preview",
-        "tooltipBack": "Back to Forms",
-        "tag": "Preview Mode - Interactions Disabled"
+        "title": "Formos peržiūra",
+        "tooltipBack": "Atgal į formas",
+        "tag": "Peržiūros režimas – sąveika išjungta"
       },
       "qrDialog": {
-        "title": "QR Code - {title}"
+        "title": "QR kodas - {title}"
       },
       "toasts": {
-        "loadError": "Failed to load form",
-        "slugMissing": "Hotel slug not found. Cannot preview form.",
-        "createSuccess": "Form created successfully",
-        "updateSuccess": "Form updated successfully",
-        "saveError": "Failed to save form",
-        "qrGenerated": "QR code generated successfully",
-        "qrExists": "QR code already exists for this form",
-        "qrError": "Failed to handle QR code",
-        "noUrl": "No URL to copy",
-        "copiedDetail": "URL copied to clipboard",
-        "copyError": "Failed to copy URL to clipboard"
+        "loadError": "Nepavyko įkelti formos",
+        "slugMissing": "Viešbučio identifikatorius nerastas. Peržiūra neįmanoma.",
+        "createSuccess": "Forma sėkmingai sukurta",
+        "updateSuccess": "Forma sėkmingai atnaujinta",
+        "saveError": "Nepavyko išsaugoti formos",
+        "qrGenerated": "QR kodas sėkmingai sugeneruotas",
+        "qrExists": "Šiai formai QR kodas jau egzistuoja",
+        "qrError": "Nepavyko apdoroti QR kodo",
+        "noUrl": "Nėra URL kopijuoti",
+        "copiedDetail": "URL nukopijuotas į iškarpinę",
+        "copyError": "Nepavyko nukopijuoti URL"
       },
       "builder": {
         "header": {
-          "edit": "Edit Form",
-          "create": "Create New Form",
-          "preview": "Preview Form",
-          "livePreview": "Live Preview",
-          "formBuilderToggle": "Form Builder",
-          "livePreviewToggle": "Live Preview",
-          "backTooltip": "Back to Forms"
+          "edit": "Redaguoti formą",
+          "create": "Sukurti naują formą",
+          "preview": "Peržiūrėti formą",
+          "livePreview": "Tiesioginė peržiūra",
+          "formBuilderToggle": "Formų kūrėjas",
+          "livePreviewToggle": "Tiesioginė peržiūra",
+          "backTooltip": "Atgal į formas"
         },
         "buttons": {
-          "save": "Save Form",
-          "saveTooltip": "Save the form",
-          "addNew": "Add New",
-          "addOption": "Add",
-          "cancel": "Cancel",
-          "update": "Update",
-          "add": "Add"
+          "save": "Išsaugoti formą",
+          "saveTooltip": "Išsaugoti formą",
+          "addNew": "Pridėti naują",
+          "addOption": "Pridėti",
+          "cancel": "Atšaukti",
+          "update": "Atnaujinti",
+          "add": "Pridėti"
         },
         "sections": {
-          "settings": "Form Settings",
-          "questions": "Questions",
-          "predefined": "Predefined Questions",
-          "custom": "Custom Questions"
+          "settings": "Formos nustatymai",
+          "questions": "Klausimai",
+          "predefined": "Iš anksto nustatyti klausimai",
+          "custom": "Pasirinktiniai klausimai"
         },
         "fields": {
-          "titleLabel": "Form Title*",
-          "titlePlaceholder": "Enter form title",
-          "descriptionLabel": "Form Description*",
-          "descriptionPlaceholder": "Enter brief description of your form"
+          "titleLabel": "Formos pavadinimas*",
+          "titlePlaceholder": "Įveskite formos pavadinimą",
+          "descriptionLabel": "Formos aprašymas*",
+          "descriptionPlaceholder": "Įveskite trumpą formos aprašymą"
         },
         "predefined": {
-          "rateUs": "Rate Us* (Always included)",
-          "rateUsTitle": "Rate Us",
-          "customRating": "Custom Rating*",
-          "customRatingTitle": "Custom Rating",
-          "customRatingPlaceholder": "Enter rating item label",
-          "customRatingEditTitle": "Click to edit",
-          "feedback": "Please give us your honest feedback?*",
-          "feedbackTitle": "Please give us your honest feedback?",
-          "feedbackPlaceholder": "Enter your detailed feedback"
+          "rateUs": "Įvertinkite mus* (visada įtraukta)",
+          "rateUsTitle": "Įvertinkite mus",
+          "customRating": "Pasirinktinis įvertinimas*",
+          "customRatingTitle": "Pasirinktinis įvertinimas",
+          "customRatingPlaceholder": "Įveskite įvertinimo elemento etiketę",
+          "customRatingEditTitle": "Spustelėkite redaguoti",
+          "feedback": "Duokite nuoširdų atsiliepimą?*",
+          "feedbackTitle": "Duokite nuoširdų atsiliepimą?",
+          "feedbackPlaceholder": "Įveskite išsamų atsiliepimą"
         },
         "tooltips": {
-          "previewDisabled": "Preview mode - editing disabled",
-          "addQuestion": "Add custom question",
-          "save": "Save",
-          "cancel": "Cancel",
-          "edit": "Edit",
-          "delete": "Delete",
-          "moveUp": "Move Up",
-          "moveDown": "Move Down"
+          "previewDisabled": "Peržiūros režimas – redagavimas išjungtas",
+          "addQuestion": "Pridėti pasirinktinį klausimą",
+          "save": "Išsaugoti",
+          "cancel": "Atšaukti",
+          "edit": "Redaguoti",
+          "delete": "Ištrinti",
+          "moveUp": "Aukštyn",
+          "moveDown": "Žemyn"
         },
         "questionTypes": {
-          "shortText": "Short Text",
-          "longText": "Long Text",
-          "starRating": "Star Rating",
-          "singleChoice": "Single Choice",
-          "multipleChoice": "Multiple Choice",
-          "yesNo": "Yes/No"
+          "shortText": "Trumpas tekstas",
+          "longText": "Ilgas tekstas",
+          "starRating": "Žvaigždžių įvertinimas",
+          "singleChoice": "Vienas pasirinkimas",
+          "multipleChoice": "Keli pasirinkimai",
+          "yesNo": "Taip/Ne"
         },
         "placeholders": {
-          "answer": "Enter your answer"
+          "answer": "Įveskite atsakymą"
         },
         "answers": {
-          "yes": "Yes",
-          "no": "No"
+          "yes": "Taip",
+          "no": "Ne"
         },
         "badges": {
-          "default": "Default",
-          "defaultHelper": "Cannot be edited, deleted, or moved"
+          "default": "Numatytasis",
+          "defaultHelper": "Negalima redaguoti, trinti ar perkelti"
         },
         "states": {
-          "loading": "Loading form data...",
-          "noQuestionsTitle": "No questions added yet",
-          "noQuestionsDescription": "Use the predefined questions above or add custom questions to get started"
+          "loading": "Formos duomenų įkėlimas...",
+          "noQuestionsTitle": "Klausimų dar nepridėta",
+          "noQuestionsDescription": "Naudokite iš anksto nustatytus klausimus arba pridėkite pasirinktinius"
         },
         "alerts": {
-          "ratingRequiredTitle": "Rating Required",
-          "ratingRequiredDescription": "Either \"Rate Us\" or \"Custom Rating\" must be selected to save the form."
+          "ratingRequiredTitle": "Reikalingas įvertinimas",
+          "ratingRequiredDescription": "Norint išsaugoti formą, turi būti pasirinkta „Įvertinkite mus“ arba „Pasirinktinis įvertinimas“."
         },
         "layoutInfo": {
           "basic": {
-            "title": "Basic Layout Features",
-            "description": "All questions are available including custom questions. This layout provides a simple, clean design."
+            "title": "Pagrindinis išdėstymas",
+            "description": "Visi klausimai, įskaitant pasirinktinius. Paprastas, aiškus dizainas."
           },
           "good": {
-            "title": "Good Layout Features",
-            "description": "Choose either \"Rate Us\" OR \"Custom Rating\" (mutually exclusive). All questions including custom questions are available."
+            "title": "Išplėstinis išdėstymas",
+            "description": "Pasirinkite „Įvertinkite mus“ ARBA „Pasirinktinis įvertinimas“ (abipusiai išskiriantys). Visi klausimai su pasirinktiniais prieinami."
           },
           "excellent": {
-            "title": "Excellent Layout Features",
-            "description": "All predefined questions available plus custom questions. Premium design with animations for comprehensive feedback forms."
+            "title": "Premium išdėstymas",
+            "description": "Visi iš anksto nustatyti klausimai plius pasirinktiniai. Premium dizainas su animacijomis išsamioms atsiliepimų formoms."
           }
         },
         "subscription": {
-          "title": "Subscription Required",
-          "message": "Your subscription has been {status}. Please reactivate your subscription to create or edit forms.",
-          "manageButton": "Manage Subscription",
+          "title": "Reikalinga prenumerata",
+          "message": "Jūsų prenumerata {status}. Norėdami kurti ar redaguoti formas, vėl aktyvuokite prenumeratą.",
+          "manageButton": "Tvarkyti prenumeratą",
           "status": {
-            "cancelled": "cancelled",
-            "expired": "expired"
+            "cancelled": "atšaukta",
+            "expired": "pasibaigė"
           },
-          "toastTitle": "Subscription Required",
-          "toastMessage": "Your subscription has been cancelled or expired. Please reactivate your subscription to create forms."
+          "toastTitle": "Reikalinga prenumerata",
+          "toastMessage": "Jūsų prenumerata atšaukta arba pasibaigė. Aktyvuokite prenumeratą formoms kurti."
         },
         "preview": {
-          "descriptionFallback": "Fill out this form to request support or report an issue. Our team will review your request and get back to you as soon as possible with the right assistance.",
-          "fullNameLabel": "Name*",
-          "fullNamePlaceholder": "Enter your name",
-          "emailLabel": "Email*",
-          "emailPlaceholder": "Enter your email address",
-          "submit": "Submit Now"
+          "descriptionFallback": "Užpildykite šią formą pagalbos užklausimui ar problemos pranešimui. Mūsų komanda peržiūrės jūsų užklausą ir kuo greičiau susisieks.",
+          "fullNameLabel": "Vardas*",
+          "fullNamePlaceholder": "Įveskite savo vardą",
+          "emailLabel": "El. paštas*",
+          "emailPlaceholder": "Įveskite savo el. pašto adresą",
+          "submit": "Pateikti"
         },
         "dialog": {
-          "addTitle": "Add Question",
-          "editTitle": "Edit Question",
-          "questionLabel": "Question Text *",
-          "questionPlaceholder": "Enter your question",
-          "typeLabel": "Question Type",
-          "optionsLabel": "Options",
-          "optionPlaceholder": "Enter option"
+          "addTitle": "Pridėti klausimą",
+          "editTitle": "Redaguoti klausimą",
+          "questionLabel": "Klausimo tekstas *",
+          "questionPlaceholder": "Įveskite klausimą",
+          "typeLabel": "Klausimo tipas",
+          "optionsLabel": "Parinktys",
+          "optionPlaceholder": "Įveskite parinktį"
         },
         "toasts": {
-          "formLoadSuccess": "Form data loaded successfully",
-          "formLoadError": "Failed to load form data",
-          "questionRequired": "Question text is required",
-          "optionsRequired": "Multiple choice questions must have at least 2 options",
-          "questionUpdated": "Question updated",
-          "questionAdded": "Question added",
-          "questionDeleted": "Question deleted",
-          "ratingLabelRequired": "Please enter a label for the rating item",
-          "ratingItemUpdated": "Rating item updated",
-          "ratingItemDeleted": "Rating item deleted",
-          "ratingItemAdded": "New rating item added",
-          "titleRequired": "Form title is required",
-          "questionCountRequired": "At least one question is required"
+          "formLoadSuccess": "Formos duomenys sėkmingai įkelti",
+          "formLoadError": "Nepavyko įkelti formos duomenų",
+          "questionRequired": "Klausimo tekstas privalomas",
+          "optionsRequired": "Kelių pasirinkimų klausimai turi turėti bent 2 parinktis",
+          "questionUpdated": "Klausimas atnaujintas",
+          "questionAdded": "Klausimas pridėtas",
+          "questionDeleted": "Klausimas ištrintas",
+          "ratingLabelRequired": "Įveskite įvertinimo elemento etiketę",
+          "ratingItemUpdated": "Įvertinimo elementas atnaujintas",
+          "ratingItemDeleted": "Įvertinimo elementas ištrintas",
+          "ratingItemAdded": "Pridėtas naujas įvertinimo elementas",
+          "titleRequired": "Formos pavadinimas privalomas",
+          "questionCountRequired": "Reikalingas bent vienas klausimas"
         }
       }
     },
     "analytics": {
       "customRatings": {
-        "title": "Custom Rating Analytics",
-        "description": "Track detailed rating trends for your \"Good\" layout form.",
+        "title": "Pasirinktinių įvertinimų analitika",
+        "description": "Stebėkite įvertinimų tendencijas išplėstinio išdėstymo formoje.",
         "buttons": {
-          "exportCsv": "Export CSV",
-          "exportPdf": "Export PDF",
-          "refresh": "Refresh"
+          "exportCsv": "Eksportuoti CSV",
+          "exportPdf": "Eksportuoti PDF",
+          "refresh": "Atnaujinti"
         },
         "filters": {
-          "title": "Date Range Filters",
-          "startDate": "Start Date",
-          "startDatePlaceholder": "Select start date",
-          "endDate": "End Date",
-          "endDatePlaceholder": "Select end date",
-          "clear": "Clear Filters"
+          "title": "Datų filtrai",
+          "startDate": "Pradžios data",
+          "startDatePlaceholder": "Pasirinkite pradžios datą",
+          "endDate": "Pabaigos data",
+          "endDatePlaceholder": "Pasirinkite pabaigos datą",
+          "clear": "Išvalyti filtrus"
         },
         "states": {
-          "loading": "Loading analytics data...",
-          "noDataTitle": "No Data Available",
-          "noDataDescription": "No \"Good\" layout forms with custom rating data found for your hotel."
+          "loading": "Analitikos duomenų įkėlimas...",
+          "noDataTitle": "Nėra duomenų",
+          "noDataDescription": "Jūsų viešbučiui nerasta išplėstinio išdėstymo formų su pasirinktinių įvertinimų duomenimis."
         },
         "toasts": {
-          "loadError": "Failed to load custom rating analytics",
-          "exportSuccess": "Data exported successfully as {format}",
-          "exportError": "Failed to export data"
+          "loadError": "Nepavyko įkelti įvertinimų analitikos",
+          "exportSuccess": "Duomenys sėkmingai eksportuoti kaip {format}",
+          "exportError": "Nepavyko eksportuoti duomenų"
         },
         "chart": {
-          "trendPrefix": "Trend Analysis - ",
-          "summaryTitle": "Rating Summary",
-          "ratingsCount": "({count} ratings)",
-          "averageRating": "Average Rating",
+          "trendPrefix": "Tendencijų analizė - ",
+          "summaryTitle": "Įvertinimų santrauka",
+          "ratingsCount": "({count} įvertinimų)",
+          "averageRating": "Vidutinis įvertinimas",
           "tooltipSuffix": "/5"
         }
       },
       "overview": {
-        "title": "Analytics",
-        "description": "Track your hotel's performance and guest satisfaction.",
-        "dropdownPlaceholder": "Select time range",
+        "title": "Analitika",
+        "description": "Stebėkite viešbučio veiklos rodiklius ir svečių pasitenkinimą.",
+        "dropdownPlaceholder": "Pasirinkite laikotarpį",
         "buttons": {
-          "refresh": "Refresh"
+          "refresh": "Atnaujinti"
         },
         "timeRanges": {
-          "7": "Last 7 days",
-          "30": "Last 30 days",
-          "90": "Last 90 days",
-          "180": "Last 6 months",
-          "365": "Last year"
+          "7": "Paskutinės 7 dienos",
+          "30": "Paskutinės 30 dienų",
+          "90": "Paskutinės 90 dienų",
+          "180": "Paskutiniai 6 mėnesiai",
+          "365": "Praėjusiais metais"
         },
         "states": {
-          "loadingSkeleton": "Loading...",
-          "noData": "No analytics data available",
-          "chartLoading": "Loading chart data...",
-          "chartEmpty": "No chart data available"
+          "loadingSkeleton": "Kraunama...",
+          "noData": "Nėra analitikos duomenų",
+          "chartLoading": "Diagramos duomenų įkėlimas...",
+          "chartEmpty": "Nėra diagramos duomenų"
         },
         "cards": {
-          "change": "{change} from last period"
+          "change": "{change} lyginant su praeitu laikotarpiu"
         },
         "charts": {
-          "satisfaction": "Satisfaction Trends",
-          "ratingDistribution": "Rating Distribution",
-          "reviewVolume": "Review Volume"
+          "satisfaction": "Pasitenkinimo tendencijos",
+          "ratingDistribution": "Įvertinimų pasiskirstymas",
+          "reviewVolume": "Atsiliepimų skaičius"
         },
         "reviews": {
-          "title": "Recent Reviews"
+          "title": "Naujausi atsiliepimai"
         },
         "toasts": {
-          "loadError": "Failed to load analytics"
+          "loadError": "Nepavyko įkelti analitikos"
         }
       },
       "responseRates": {
-        "title": "Response Rates Analytics",
-        "description": "Track your hotel's response rates and engagement metrics.",
+        "title": "Atsakymų dažnio analitika",
+        "description": "Stebėkite viešbučio atsakymų dažnį ir dalyvavimo rodiklius.",
         "charts": {
-          "reviewVolume": "Review Volume Trends",
-          "satisfaction": "Satisfaction Trends Over Time"
+          "reviewVolume": "Atsiliepimų skaičiaus tendencijos",
+          "satisfaction": "Pasitenkinimo tendencijos laike"
         }
       },
       "satisfaction": {
-        "title": "Satisfaction Analytics",
-        "description": "Track your hotel's guest satisfaction trends and ratings.",
+        "title": "Pasitenkinimo analitika",
+        "description": "Stebėkite svečių pasitenkinimo tendencijas ir įvertinimus.",
         "charts": {
-          "reviewVolume": "Review Volume & Positive Reviews"
+          "reviewVolume": "Atsiliepimų skaičius ir teigiami atsiliepimai"
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Pranešimai",
+        "ariaLabel": "Pranešimai",
+        "iconAlt": "Pranešimo piktograma",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Pažymėti visus kaip perskaitytus",
+          "refresh": "Atnaujinti"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Dar nėra pranešimų"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "success": "Success",
-          "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "newReview": "Naujas atsiliepimas",
+          "reviewApproved": "Atsiliepimas patvirtintas",
+          "reviewRejected": "Atsiliepimas atmestas",
+          "subscriptionExpiring": "Prenumerata baigiasi",
+          "subscriptionCancelled": "Prenumerata atšaukta",
+          "escalationReceived": "Eskalacija gauta",
+          "escalationResponded": "Į eskalaciją atsakyta",
+          "systemAlert": "Sistemos įspėjimas",
+          "newHotelRegistration": "Nauja viešbučio registracija",
+          "success": "Sėkmė",
+          "info": "Informacija",
+          "warning": "Įspėjimas",
+          "error": "Klaida",
+          "generic": "Pranešimas"
         }
       }
     },
     "reviews": {
-      "title": "Guest Reviews",
-      "subtitle": "Manage and review guest feedback submissions.",
+      "title": "Svečių atsiliepimai",
+      "subtitle": "Tvarkykite ir peržiūrėkite svečių atsiliepimus.",
       "buttons": {
-        "refresh": "Refresh",
-        "clearFilters": "Clear Filters",
-        "view": "View",
-        "reply": "Reply",
-        "delete": "Delete",
-        "close": "Close",
-        "markAsChecked": "Mark as Checked",
-        "checked": "Checked",
-        "uncheck": "Uncheck",
-        "markAsUrgent": "Mark as Urgent",
-        "urgent": "Urgent",
-        "removeUrgent": "Remove Urgent",
-        "replyToCustomer": "Reply to Customer",
-        "cancel": "Cancel",
-        "sendReply": "Send Reply"
+        "refresh": "Atnaujinti",
+        "clearFilters": "Išvalyti filtrus",
+        "view": "Peržiūrėti",
+        "reply": "Atsakyti",
+        "delete": "Ištrinti",
+        "close": "Uždaryti",
+        "markAsChecked": "Pažymėti kaip peržiūrėtą",
+        "checked": "Peržiūrėta",
+        "uncheck": "Nuimti žymę",
+        "markAsUrgent": "Pažymėti kaip skubu",
+        "urgent": "Skubu",
+        "removeUrgent": "Nuimti skubumą",
+        "replyToCustomer": "Atsakyti svečiui",
+        "cancel": "Atšaukti",
+        "sendReply": "Siųsti atsakymą"
       },
       "filters": {
-        "title": "Filters",
-        "searchReviews": "Search Reviews",
-        "searchPlaceholder": "Search by guest name or feedback text...",
-        "roomNumber": "Room Number",
-        "roomNumberPlaceholder": "Filter by room number...",
-        "filter": "Filter",
-        "allReviews": "All Reviews",
-        "replied": "Replied",
-        "notReplied": "Not Replied",
-        "checked": "Checked",
-        "notChecked": "Not Checked",
-        "urgent": "Urgent",
-        "notUrgent": "Not Urgent",
-        "starRatings": "Star Ratings",
-        "allRatings": "All Ratings",
-        "5Stars": "5 Stars",
-        "4Stars": "4 Stars",
-        "3Stars": "3 Stars",
-        "2Stars": "2 Stars",
-        "1Star": "1 Star",
-        "dateRange": "Date Range",
-        "startDate": "Start Date",
-        "endDate": "End Date",
-        "fromDate": "From date",
-        "toDate": "To date"
+        "title": "Filtrai",
+        "searchReviews": "Ieškoti atsiliepimuose",
+        "searchPlaceholder": "Ieškoti pagal svečio vardą ar tekstą...",
+        "roomNumber": "Kambario numeris",
+        "roomNumberPlaceholder": "Filtruoti pagal kambario numerį...",
+        "filter": "Filtras",
+        "allReviews": "Visi atsiliepimai",
+        "replied": "Atsakyta",
+        "notReplied": "Neatsakyta",
+        "checked": "Peržiūrėta",
+        "notChecked": "Neperžiūrėta",
+        "urgent": "Skubu",
+        "notUrgent": "Neskubu",
+        "starRatings": "Žvaigždžių įvertinimas",
+        "allRatings": "Visi įvertinimai",
+        "5Stars": "5 žvaigždutės",
+        "4Stars": "4 žvaigždutės",
+        "3Stars": "3 žvaigždutės",
+        "2Stars": "2 žvaigždutės",
+        "1Star": "1 žvaigždutė",
+        "dateRange": "Datų intervalas",
+        "startDate": "Pradžios data",
+        "endDate": "Pabaigos data",
+        "fromDate": "Nuo datos",
+        "toDate": "Iki datos"
       },
       "states": {
-        "loadingReviews": "Loading reviews...",
-        "noReviewsFound": "No Reviews Found",
-        "noReviewsYet": "No reviews have been submitted yet.",
-        "noReviewsMatchFilters": "No reviews match your current filters."
+        "loadingReviews": "Atsiliepimų įkėlimas...",
+        "noReviewsFound": "Atsiliepimų nerasta",
+        "noReviewsYet": "Dar nebuvo pateikta atsiliepimų.",
+        "noReviewsMatchFilters": "Nėra atsiliepimų, atitinkančių filtrus."
       },
       "table": {
-        "guest": "Guest",
-        "email": "Email",
-        "room": "Room",
-        "rating": "Rating",
-        "status": "Status",
-        "submitted": "Submitted",
-        "actions": "Actions",
-        "checkedStatus": "Checked",
-        "notCheckedStatus": "Not Checked",
-        "repliedStatus": "Replied",
-        "notRepliedStatus": "Not Replied",
-        "urgentStatus": "Urgent",
-        "notUrgentStatus": "Not Urgent",
-        "public": "Public",
-        "private": "Private",
-        "shared": "Shared",
-        "noEmailAvailable": "No email available for this review"
+        "guest": "Svečias",
+        "email": "El. paštas",
+        "room": "Kambarys",
+        "rating": "Įvertinimas",
+        "status": "Būsena",
+        "submitted": "Pateikta",
+        "actions": "Veiksmai",
+        "checkedStatus": "Peržiūrėta",
+        "notCheckedStatus": "Neperžiūrėta",
+        "repliedStatus": "Atsakyta",
+        "notRepliedStatus": "Neatsakyta",
+        "urgentStatus": "Skubu",
+        "notUrgentStatus": "Neskubu",
+        "public": "Vieša",
+        "private": "Privati",
+        "shared": "Bendrinama",
+        "noEmailAvailable": "Šiam atsiliepimui nėra el. pašto"
       },
       "detailsDialog": {
-        "header": "Guest Feedback Details",
-        "guestInfo": "Guest Information",
-        "name": "Name:",
-        "anonymous": "Anonymous",
-        "email": "Email:",
-        "notProvided": "Not provided",
-        "phone": "Phone:",
-        "roomNumber": "Room Number:",
-        "submitted": "Submitted:",
-        "overallRating": "Overall Rating",
-        "quickFeedback": "Quick Feedback",
-        "howDoYouRateUs": "How do you rate us?",
-        "honestFeedback": "Please give us your honest feedback?",
-        "noSpecificFeedback": "No specific feedback provided",
-        "customRatingItem": "Custom Rating Item ({itemId})",
-        "formInfo": "Form Information",
-        "formTitle": "Form Title:",
-        "description": "Description:",
-        "layout": "Layout:",
-        "feedbackResponses": "Feedback Responses",
-        "reviewReplies": "Review Replies",
-        "languageSelectorLabel": "View content in",
-        "languageSelectorPlaceholder": "Select language",
-        "translating": "Translating...",
-        "noDetailedResponses": "No detailed responses available for this review.",
-        "question": "Question:",
-        "noAnswer": "No answer provided",
-        "replyToCustomer": "Reply to Customer",
-        "replyPlaceholder": "Type your reply message here...",
-        "replyMessageHint": "This message will be sent to {guestEmail}",
-        "toastWarningReply": "Please enter a reply message",
-        "toastSuccessReply": "Reply sent successfully to {sentTo}",
-        "toastErrorReply": "Failed to send reply"
+        "header": "Svečio atsiliepimo detalės",
+        "guestInfo": "Svečio informacija",
+        "name": "Vardas:",
+        "anonymous": "Anonimas",
+        "email": "El. paštas:",
+        "notProvided": "Nenurodyta",
+        "phone": "Telefonas:",
+        "roomNumber": "Kambario numeris:",
+        "submitted": "Pateikta:",
+        "overallRating": "Bendras įvertinimas",
+        "quickFeedback": "Greitas atsiliepimas",
+        "howDoYouRateUs": "Kaip mus vertinate?",
+        "honestFeedback": "Duokite nuoširdų atsiliepimą?",
+        "noSpecificFeedback": "Konkretus atsiliepimas nenurodytas",
+        "customRatingItem": "Pasirinktinis įvertinimas ({itemId})",
+        "formInfo": "Formos informacija",
+        "formTitle": "Formos pavadinimas:",
+        "description": "Aprašymas:",
+        "layout": "Išdėstymas:",
+        "feedbackResponses": "Atsiliepimų atsakymai",
+        "reviewReplies": "Atsiliepimų atsakymai",
+        "languageSelectorLabel": "Peržiūrėti turinį",
+        "languageSelectorPlaceholder": "Pasirinkite kalbą",
+        "translating": "Verčiama...",
+        "noDetailedResponses": "Šiam atsiliepimui nėra išsamių atsakymų.",
+        "question": "Klausimas:",
+        "noAnswer": "Atsakymas nenurodytas",
+        "replyToCustomer": "Atsakyti svečiui",
+        "replyPlaceholder": "Įrašykite atsakymą čia...",
+        "replyMessageHint": "Šis pranešimas bus išsiųstas į {guestEmail}",
+        "toastWarningReply": "Įveskite atsakymo pranešimą",
+        "toastSuccessReply": "Atsakymas sėkmingai išsiųstas į {sentTo}",
+        "toastErrorReply": "Nepavyko išsiųsti atsakymo"
       },
       "deleteDialog": {
-        "header": "Delete Review",
-        "confirmTitle": "Are you sure you want to delete this review?",
-        "confirmMessage": "This action cannot be undone. The review will be permanently removed from your system.",
-        "reviewDetails": "Review Details:",
-        "guest": "Guest:",
-        "rating": "Rating:",
-        "submitted": "Submitted:",
+        "header": "Ištrinti atsiliepimą",
+        "confirmTitle": "Ar tikrai norite ištrinti šį atsiliepimą?",
+        "confirmMessage": "Šio veiksmo negalima atšaukti. Atsiliepimas bus visam laikui pašalintas.",
+        "reviewDetails": "Atsiliepimo detalės:",
+        "guest": "Svečias:",
+        "rating": "Įvertinimas:",
+        "submitted": "Pateikta:",
         "buttons": {
-          "cancel": "Cancel",
-          "delete": "Delete"
+          "cancel": "Atšaukti",
+          "delete": "Ištrinti"
         },
         "toasts": {
-          "success": "Review deleted successfully",
-          "error": "Failed to delete review"
+          "success": "Atsiliepimas sėkmingai ištrintas",
+          "error": "Nepavyko ištrinti atsiliepimo"
         }
       },
       "toasts": {
-        "loadError": "Failed to load reviews",
-        "detailsLoadError": "Failed to load review details",
+        "loadError": "Nepavyko įkelti atsiliepimų",
+        "detailsLoadError": "Nepavyko įkelti atsiliepimo detalių",
         "statusUpdate": {
-          "checked": "Review marked as checked",
-          "unchecked": "Review unmarked as checked",
-          "urgent": "Review marked as urgent",
-          "notUrgent": "Review unmarked as urgent",
-          "replied": "Review marked as replied"
+          "checked": "Atsiliepimas pažymėtas kaip peržiūrėtas",
+          "unchecked": "Atsiliepimo peržiūrėta žyma nuimta",
+          "urgent": "Atsiliepimas pažymėtas kaip skubu",
+          "notUrgent": "Atsiliepimo skubumo žyma nuimta",
+          "replied": "Atsiliepimas pažymėtas kaip atsakytas"
         },
-        "statusUpdateError": "Failed to update review status",
-        "replyMissing": "Please enter a reply message",
-        "replySuccess": "Reply sent successfully to {sentTo}",
-        "replyError": "Failed to send reply",
-        "translationError": "Failed to translate review content",
-        "deleteSuccess": "Review deleted successfully",
-        "deleteError": "Failed to delete review"
+        "statusUpdateError": "Nepavyko atnaujinti atsiliepimo būsenos",
+        "replyMissing": "Įveskite atsakymo pranešimą",
+        "replySuccess": "Atsakymas sėkmingai išsiųstas į {sentTo}",
+        "replyError": "Nepavyko išsiųsti atsakymo",
+        "translationError": "Nepavyko išversti atsiliepimo turinio",
+        "deleteSuccess": "Atsiliepimas sėkmingai ištrintas",
+        "deleteError": "Nepavyko ištrinti atsiliepimo"
       }
     },
     "menu": {
-      "dashboard": "Dashboard",
-      "feedbackForm": "Feedback Form",
-      "qrCodes": "QR Codes",
-      "allReviews": "All Reviews",
-      "notifications": "Notifications",
-      "contactAdmin": "Contact Admin",
-      "settings": "Settings",
+      "dashboard": "Valdymo skydelis",
+      "feedbackForm": "Atsiliepimų forma",
+      "qrCodes": "QR kodai",
+      "allReviews": "Visi atsiliepimai",
+      "notifications": "Pranešimai",
+      "contactAdmin": "Susisiekti su administratoriumi",
+      "settings": "Nustatymai",
       "settingsItems": {
-        "userProfile": "User Profile",
-        "hotelProfile": "Hotel Profile",
-        "changePassword": "Change Password",
-        "subscriptions": "Subscriptions",
-        "paymentMethods": "Payment Methods"
+        "userProfile": "Vartotojo profilis",
+        "hotelProfile": "Viešbučio profilis",
+        "changePassword": "Keisti slaptažodį",
+        "subscriptions": "Prenumeratos",
+        "paymentMethods": "Mokėjimo būdai"
       }
     },
     "paymentMethods": {
-      "pageTitle": "Add Payment Method",
+      "pageTitle": "Pridėti mokėjimo būdą",
       "buttons": {
-        "add": "Add",
-        "addMethod": "Add Method",
-        "updateMethod": "Update Method",
-        "cancel": "Cancel",
-        "setPrimary": "Set as Primary",
-        "delete": "Delete"
+        "add": "Pridėti",
+        "addMethod": "Pridėti būdą",
+        "updateMethod": "Atnaujinti būdą",
+        "cancel": "Atšaukti",
+        "setPrimary": "Nustatyti kaip pagrindinį",
+        "delete": "Ištrinti"
       },
       "badges": {
-        "primary": "Primary",
-        "expired": "Expired"
+        "primary": "Pagrindinis",
+        "expired": "Pasibaigęs"
       },
       "states": {
-        "loading": "Loading payment methods...",
-        "emptyTitle": "No Payment Methods",
-        "emptyDescription": "Add a payment method to manage your subscriptions."
+        "loading": "Mokėjimo būdų įkėlimas...",
+        "emptyTitle": "Nėra mokėjimo būdų",
+        "emptyDescription": "Pridėkite mokėjimo būdą prenumeratoms valdyti."
       },
       "form": {
-        "paymentType": "Payment Type",
+        "paymentType": "Mokėjimo tipas",
         "paymentTypeOptions": {
-          "card": "Credit/Debit Card",
-          "bank": "Bank Account"
+          "card": "Kredito/debito kortelė",
+          "bank": "Banko sąskaita"
         },
         "card": {
-          "number": "Card Number",
+          "number": "Kortelės numeris",
           "numberPlaceholder": "1234 5678 9012 3456",
-          "expiryMonth": "Expiry Month",
-          "expiryYear": "Expiry Year",
+          "expiryMonth": "Galiojimo mėnuo",
+          "expiryYear": "Galiojimo metai",
           "monthPlaceholder": "MM",
           "yearPlaceholder": "YYYY",
           "cvv": "CVV",
           "cvvPlaceholder": "123",
-          "holder": "Cardholder Name",
-          "holderPlaceholder": "John Doe",
-          "brand": "Card Brand",
-          "brandPlaceholder": "Select card brand"
+          "holder": "Kortelės savininko vardas",
+          "holderPlaceholder": "Jonas Jonaitis",
+          "brand": "Kortelės prekės ženklas",
+          "brandPlaceholder": "Pasirinkite kortelės prekės ženklą"
         },
         "cardBrands": {
           "visa": "Visa",
           "mastercard": "Mastercard",
           "amex": "American Express",
           "discover": "Discover",
-          "unknown": "Card"
+          "unknown": "Kortelė"
         },
         "bank": {
-          "name": "Bank Name",
-          "namePlaceholder": "Bank of America",
-          "accountNumber": "Account Number",
-          "accountPlaceholder": "Account number",
-          "routingNumber": "Routing Number",
+          "name": "Banko pavadinimas",
+          "namePlaceholder": "Banko pavadinimas",
+          "accountNumber": "Sąskaitos numeris",
+          "accountPlaceholder": "Sąskaitos numeris",
+          "routingNumber": "Banko kodas",
           "routingPlaceholder": "123456789",
-          "accountType": "Account Type",
-          "accountTypePlaceholder": "Select account type"
+          "accountType": "Sąskaitos tipas",
+          "accountTypePlaceholder": "Pasirinkite sąskaitos tipą"
         },
         "accountTypes": {
-          "checking": "Checking",
-          "savings": "Savings",
-          "unknown": "Account"
+          "checking": "Einamoji",
+          "savings": "Taupomoji",
+          "unknown": "Sąskaita"
         }
       },
       "list": {
-        "endingIn": "ending in",
-        "expiryLabel": "Exp. date",
-        "accountTypeSuffix": "Account",
-        "accountTypeUnknown": "Account",
-        "unknownBank": "Bank",
-        "edit": "Edit",
-        "delete": "Delete"
+        "endingIn": "baigiasi",
+        "expiryLabel": "Galioja iki",
+        "accountTypeSuffix": "Sąskaita",
+        "accountTypeUnknown": "Sąskaita",
+        "unknownBank": "Bankas",
+        "edit": "Redaguoti",
+        "delete": "Ištrinti"
       },
       "dialogs": {
         "add": {
-          "title": "Add Payment Method"
+          "title": "Pridėti mokėjimo būdą"
         },
         "edit": {
-          "title": "Edit Payment Method",
-          "cardLocked": "Card number cannot be changed for security reasons",
-          "bankLocked": "Account number cannot be changed for security reasons"
+          "title": "Redaguoti mokėjimo būdą",
+          "cardLocked": "Kortelės numerio negalima keisti dėl saugumo",
+          "bankLocked": "Sąskaitos numerio negalima keisti dėl saugumo"
         },
         "delete": {
-          "title": "Delete Payment Method",
-          "message": "Are you sure you want to delete this payment method? This action cannot be undone."
+          "title": "Ištrinti mokėjimo būdą",
+          "message": "Ar tikrai norite ištrinti šį mokėjimo būdą? Šio veiksmo negalima atšaukti."
         }
       },
       "toasts": {
         "load": {
-          "error": "Failed to load payment methods"
+          "error": "Nepavyko įkelti mokėjimo būdų"
         },
         "add": {
-          "success": "Payment method added successfully",
-          "error": "Failed to add payment method"
+          "success": "Mokėjimo būdas sėkmingai pridėtas",
+          "error": "Nepavyko pridėti mokėjimo būdo"
         },
         "delete": {
-          "success": "Payment method deleted successfully",
-          "error": "Failed to delete payment method"
+          "success": "Mokėjimo būdas sėkmingai ištrintas",
+          "error": "Nepavyko ištrinti mokėjimo būdo"
         },
         "default": {
-          "success": "Default payment method updated",
-          "error": "Failed to update default payment method"
+          "success": "Numatytasis mokėjimo būdas atnaujintas",
+          "error": "Nepavyko atnaujinti numatytojo mokėjimo būdo"
         },
         "update": {
-          "success": "Payment method updated successfully",
-          "error": "Failed to update payment method"
+          "success": "Mokėjimo būdas sėkmingai atnaujintas",
+          "error": "Nepavyko atnaujinti mokėjimo būdo"
         }
       }
     },
     "subscription": {
       "header": {
-        "title": "Subscription Management",
-        "subtitle": "Manage your hotel's subscription and billing."
+        "title": "Prenumeratos valdymas",
+        "subtitle": "Tvarkykite savo viešbučio prenumeratą ir sąskaitų išrašymą."
       },
       "buttons": {
-        "refresh": "Refresh",
-        "processing": "Processing...",
-        "upgradeNow": "Upgrade Now",
-        "currentPlan": "Current Plan",
-        "reactivate": "Reactivate",
-        "cancelSubscription": "Cancel Subscription",
-        "contactSupport": "Contact Support",
-        "cancel": "Cancel",
-        "confirm": "Confirm"
+        "refresh": "Atnaujinti",
+        "processing": "Apdorojama...",
+        "upgradeNow": "Pagerinti dabar",
+        "currentPlan": "Dabartinis planas",
+        "reactivate": "Aktyvuoti iš naujo",
+        "cancelSubscription": "Atšaukti prenumeratą",
+        "contactSupport": "Susisiekti su palaikymu",
+        "cancel": "Atšaukti",
+        "confirm": "Patvirtinti"
       },
       "statuses": {
-        "trial": "Trial",
-        "active": "Active",
-        "cancelled": "Cancelled",
-        "expired": "Expired"
+        "trial": "Bandomasis",
+        "active": "Aktyvus",
+        "cancelled": "Atšauktas",
+        "expired": "Pasibaigęs"
       },
       "states": {
-        "loading": "Loading subscription data...",
-        "notFoundTitle": "Subscription Not Found",
-        "notFoundDescription": "Unable to load subscription information."
+        "loading": "Kraunami prenumeratos duomenys...",
+        "notFoundTitle": "Prenumerata nerasta",
+        "notFoundDescription": "Nepavyko įkelti prenumeratos informacijos."
       },
       "labels": {
         "notAvailable": "N/A"
       },
       "trial": {
-        "name": "Trial Plan",
-        "description": "Free Trial",
-        "label": "Trial Period:",
-        "remaining": "{count} days remaining"
+        "name": "Bandomasis planas",
+        "description": "Nemokamas bandomasis laikotarpis",
+        "label": "Bandomasis laikotarpis:",
+        "remaining": "Liko {count} dienų"
       },
       "sections": {
         "status": {
-          "title": "Current Subscription Status",
-          "statusLabel": "Status",
-          "totalReviews": "Total Reviews",
-          "averageRating": "Average Rating"
+          "title": "Dabartinė prenumeratos būsena",
+          "statusLabel": "Būsena",
+          "totalReviews": "Iš viso atsiliepimų",
+          "averageRating": "Vidutinis įvertinimas"
         },
         "plans": {
-          "title": "Available Plans",
-          "currentPlanHint": "You are currently on this plan"
+          "title": "Galimi planai",
+          "currentPlanHint": "Šiuo metu naudojate šį planą"
         },
         "actions": {
-          "title": "Subscription Actions"
+          "title": "Prenumeratos veiksmai"
         },
         "billing": {
-          "title": "Billing Information",
-          "subscriptionId": "Subscription ID:",
-          "created": "Created:",
-          "nextBilling": "Next Billing:",
-          "trialEnds": "Trial Ends:"
+          "title": "Atsiskaitymo informacija",
+          "subscriptionId": "Prenumeratos ID:",
+          "created": "Sukurtas:",
+          "nextBilling": "Kitas atsiskaitymas:",
+          "trialEnds": "Bandomojo laikotarpio pabaiga:"
         }
       },
-      "perInterval": "per {interval}",
+      "perInterval": "už {interval}",
       "priceLabel": "{price}/{interval}",
       "dialog": {
-        "title": "Confirm Subscription Change",
-        "upgradeTitle": "Upgrade to {plan}",
-        "description": "You are about to upgrade your subscription plan.",
-        "planLabel": "Plan:",
-        "priceLabel": "Price:",
-        "billingLabel": "Billing:",
-        "noteLabel": "Note:",
-        "noteDescription": "This is a demo environment. No actual payment will be processed."
+        "title": "Patvirtinti prenumeratos pakeitimą",
+        "upgradeTitle": "Pagerinti į {plan}",
+        "description": "Ketinate pagerinti savo prenumeratos planą.",
+        "planLabel": "Planas:",
+        "priceLabel": "Kaina:",
+        "billingLabel": "Atsiskaitymas:",
+        "noteLabel": "Pastaba:",
+        "noteDescription": "Tai demo aplinka. Joks tikras mokėjimas nebus apdorotas."
       },
       "toasts": {
         "load": {
-          "error": "Failed to load subscription data"
+          "error": "Nepavyko įkelti prenumeratos duomenų"
         },
         "update": {
-          "success": "Subscription updated successfully",
-          "error": "Failed to update subscription"
+          "success": "Prenumerata sėkmingai atnaujinta",
+          "error": "Nepavyko atnaujinti prenumeratos"
         }
       },
       "errors": {
-        "unauthorized": "Unauthorized",
-        "hotelNotFound": "Hotel not found",
-        "planRequired": "Plan ID and action are required",
-        "unknownPlan": "Unknown Plan",
-        "fetchFailed": "Failed to fetch subscription details",
-        "updateFailed": "Failed to update subscription"
+        "unauthorized": "Neleistina prieiga",
+        "hotelNotFound": "Viešbutis nerastas",
+        "planRequired": "Reikalingas plano ID ir veiksmas",
+        "unknownPlan": "Nežinomas planas",
+        "fetchFailed": "Nepavyko gauti prenumeratos duomenų",
+        "updateFailed": "Nepavyko atnaujinti prenumeratos"
       },
       "messages": {
-        "upgraded": "Successfully upgraded to {plan}",
-        "cancelled": "Successfully cancelled subscription"
+        "upgraded": "Sėkmingai pagerinta į {plan}",
+        "cancelled": "Prenumerata sėkmingai atšaukta"
       },
       "plans": {
         "basic": {
-          "name": "Basic Plan",
+          "name": "Pagrindinis planas",
           "features": [
-            "Up to 100 reviews per month",
-            "Basic analytics",
-            "QR code generation",
-            "Basic Feedback Form"
+            "Iki 100 atsiliepimų per mėnesį",
+            "Pagrindinė analitika",
+            "QR kodų generavimas",
+            "Pagrindinė atsiliepimų forma"
           ]
         },
         "professional": {
-          "name": "Professional Plan",
+          "name": "Profesionalus planas",
           "features": [
-            "Up to 500 reviews per month",
-            "Advanced analytics",
-            "QR code generation",
-            "Customized Star Rating Questions"
+            "Iki 500 atsiliepimų per mėnesį",
+            "Išplėstinė analitika",
+            "QR kodų generavimas",
+            "Pritaikyti žvaigždžių įvertinimo klausimai"
           ]
         },
         "enterprise": {
-          "name": "Enterprise Plan",
+          "name": "Įmonės planas",
           "features": [
-            "Unlimited reviews per month",
-            "Enterprise analytics",
-            "Priority support",
-            "Multi-property management"
+            "Neriboti atsiliepimai per mėnesį",
+            "Įmonės analitika",
+            "Prioritetinė palaikymas",
+            "Kelių objektų valdymas"
           ]
         }
       },
       "intervals": {
-        "month": "month",
-        "monthly": "monthly",
-        "year": "year",
-        "yearly": "yearly",
-        "quarter": "quarter",
-        "quarterly": "quarterly"
+        "month": "mėnuo",
+        "monthly": "kas mėnesį",
+        "year": "metai",
+        "yearly": "kas metus",
+        "quarter": "ketvirtis",
+        "quarterly": "kas ketvirtį"
       }
     },
     "profile": {
       "user": {
-        "title": "Personal Information",
-        "subtitle": "Manage your personal account details.",
+        "title": "Asmeninė informacija",
+        "subtitle": "Tvarkykite asmeninius paskyros duomenis.",
         "buttons": {
-          "save": "Save Changes",
-          "changePassword": "Change Password",
-          "twoFactor": "Two-Factor Authentication",
-          "changePhoto": "Change Photo",
-          "uploading": "Uploading..."
+          "save": "Išsaugoti pakeitimus",
+          "changePassword": "Keisti slaptažodį",
+          "twoFactor": "Dviejų faktorių autentifikacija",
+          "changePhoto": "Keisti nuotrauką",
+          "uploading": "Keliama..."
         },
         "images": {
-          "cardTitle": "Profile Image",
-          "hint": "JPG, PNG or GIF. Max size 5MB."
+          "cardTitle": "Profilio nuotrauka",
+          "hint": "JPG, PNG arba GIF. Maks. 5MB."
         },
         "fields": {
-          "firstName": "First Name *",
-          "lastName": "Last Name *",
-          "email": "Email Address *",
-          "phone": "Phone Number"
+          "firstName": "Vardas *",
+          "lastName": "Pavardė *",
+          "email": "El. paštas *",
+          "phone": "Telefono numeris"
         },
         "placeholders": {
-          "firstName": "Enter your first name",
-          "lastName": "Enter your last name",
+          "firstName": "Įveskite savo vardą",
+          "lastName": "Įveskite savo pavardę",
           "email": "your.email@example.com",
           "phone": "+1 (555) 123-4567"
         },
         "cards": {
-          "personalInfo": "Personal Information",
-          "accountInfo": "Account Information",
-          "security": "Security"
+          "personalInfo": "Asmeninė informacija",
+          "accountInfo": "Paskyros informacija",
+          "security": "Saugumas"
         },
         "account": {
-          "type": "Account Type:",
-          "status": "Status:",
-          "memberSince": "Member Since:",
-          "lastLogin": "Last Login:",
-          "typeValue": "Hotel Owner",
-          "statusActive": "Active",
+          "type": "Paskyros tipas:",
+          "status": "Būsena:",
+          "memberSince": "Narys nuo:",
+          "lastLogin": "Paskutinis prisijungimas:",
+          "typeValue": "Viešbučio savininkas",
+          "statusActive": "Aktyvus",
           "notAvailable": "N/A"
         },
         "toasts": {
-          "saveSuccess": "Profile updated successfully",
-          "saveError": "Failed to update profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Profile image updated successfully",
-          "imageError": "Failed to upload image",
-          "twoFactorInfo": "Two-factor authentication will be available soon"
+          "saveSuccess": "Profilis sėkmingai atnaujintas",
+          "saveError": "Nepavyko atnaujinti profilio",
+          "imageTypeError": "Pasirinkite tinkamą vaizdo failą (JPG, PNG, GIF arba WebP)",
+          "imageSizeError": "Vaizdo dydis turi būti mažesnis nei 5MB",
+          "imageSuccess": "Profilio nuotrauka sėkmingai atnaujinta",
+          "imageError": "Nepavyko įkelti nuotraukos",
+          "twoFactorInfo": "Dviejų faktorių autentifikacija netrukus bus prieinama"
         }
       },
       "hotel": {
-        "title": "Hotel Profile",
-        "subtitle": "Manage your hotel information and settings.",
+        "title": "Viešbučio profilis",
+        "subtitle": "Tvarkykite viešbučio informaciją ir nustatymus.",
         "buttons": {
-          "save": "Save Changes",
-          "uploadLogo": "Upload Logo",
-          "uploading": "Uploading...",
-          "viewPublic": "View Public Page",
-          "contactSupport": "Contact Support"
+          "save": "Išsaugoti pakeitimus",
+          "uploadLogo": "Įkelti logotipą",
+          "uploading": "Keliama...",
+          "viewPublic": "Peržiūrėti viešą puslapį",
+          "contactSupport": "Susisiekti su palaikymu"
         },
         "images": {
-          "cardTitle": "Hotel Logo",
-          "alt": "Hotel Logo",
-          "hint": "JPG, PNG or GIF. Max size 5MB. Recommended: 300x300px"
+          "cardTitle": "Viešbučio logotipas",
+          "alt": "Viešbučio logotipas",
+          "hint": "JPG, PNG arba GIF. Maks. 5MB. Rekomenduojama: 300x300px"
         },
         "cards": {
-          "actions": "Actions",
-          "hotelInfo": "Hotel Information"
+          "actions": "Veiksmai",
+          "hotelInfo": "Viešbučio informacija"
         },
         "fields": {
-          "name": "Hotel Name *",
-          "description": "Description",
-          "address": "Address",
-          "city": "City",
-          "country": "Country",
-          "phone": "Phone",
-          "email": "Email",
-          "website": "Website"
+          "name": "Viešbučio pavadinimas *",
+          "description": "Aprašymas",
+          "address": "Adresas",
+          "city": "Miestas",
+          "country": "Šalis",
+          "phone": "Telefonas",
+          "email": "El. paštas",
+          "website": "Svetainė"
         },
         "placeholders": {
-          "name": "Enter hotel name",
-          "description": "Brief description of your hotel",
-          "address": "Street address",
-          "city": "City",
-          "country": "Select country",
+          "name": "Įveskite viešbučio pavadinimą",
+          "description": "Trumpas viešbučio aprašymas",
+          "address": "Gatvė ir numeris",
+          "city": "Miestas",
+          "country": "Pasirinkite šalį",
           "phone": "+1 (555) 123-4567",
           "email": "hotel@example.com",
           "website": "https://www.yourhotel.com"
         },
         "externalLinks": {
-          "title": "External Review Links",
-          "subtitle": "Add links to your TripAdvisor and Google Reviews pages to help guests share positive feedback.",
+          "title": "Išorinės atsiliepimų nuorodos",
+          "subtitle": "Pridėkite nuorodas į TripAdvisor ir Google Reviews puslapius.",
           "tripAdvisor": {
-            "label": "TripAdvisor Link",
+            "label": "TripAdvisor nuoroda",
             "placeholder": "https://www.tripadvisor.com/...",
-            "hint": "Optional: Link to your TripAdvisor page"
+            "hint": "Neprivaloma: nuoroda į jūsų TripAdvisor puslapį"
           },
           "google": {
-            "label": "Google Reviews Link",
+            "label": "Google Reviews nuoroda",
             "placeholder": "https://g.page/...",
-            "hint": "Optional: Link to your Google Reviews page"
+            "hint": "Neprivaloma: nuoroda į jūsų Google Reviews puslapį"
           }
         },
         "account": {
           "notAvailable": "N/A"
         },
         "toasts": {
-          "loadError": "Failed to load hotel profile",
-          "saveSuccess": "Hotel profile updated successfully",
-          "saveError": "Failed to update hotel profile",
-          "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
-          "imageSizeError": "Image size must be less than 5MB",
-          "imageSuccess": "Hotel logo updated successfully",
-          "imageError": "Failed to upload logo"
+          "loadError": "Nepavyko įkelti viešbučio profilio",
+          "saveSuccess": "Viešbučio profilis sėkmingai atnaujintas",
+          "saveError": "Nepavyko atnaujinti viešbučio profilio",
+          "imageTypeError": "Pasirinkite tinkamą vaizdo failą (JPG, PNG, GIF arba WebP)",
+          "imageSizeError": "Vaizdo dydis turi būti mažesnis nei 5MB",
+          "imageSuccess": "Viešbučio logotipas sėkmingai atnaujintas",
+          "imageError": "Nepavyko įkelti logotipo"
         }
       },
       "password": {
-        "title": "Change Password",
-        "subtitle": "Update your account password for better security.",
-        "cardTitle": "Password Change",
+        "title": "Keisti slaptažodį",
+        "subtitle": "Atnaujinkite paskyros slaptažodį didesniam saugumui.",
+        "cardTitle": "Slaptažodžio keitimas",
         "buttons": {
-          "change": "Change Password",
-          "cancel": "Cancel",
-          "confirmChange": "Change Password"
+          "change": "Keisti slaptažodį",
+          "cancel": "Atšaukti",
+          "confirmChange": "Keisti slaptažodį"
         },
         "fields": {
-          "current": "Current Password *",
-          "new": "New Password *",
-          "confirm": "Confirm New Password *"
+          "current": "Dabartinis slaptažodis *",
+          "new": "Naujas slaptažodis *",
+          "confirm": "Patvirtinkite naują slaptažodį *"
         },
         "placeholders": {
-          "current": "Enter your current password",
-          "new": "Enter your new password",
-          "confirm": "Confirm your new password"
+          "current": "Įveskite dabartinį slaptažodį",
+          "new": "Įveskite naują slaptažodį",
+          "confirm": "Patvirtinkite naują slaptažodį"
         },
         "strength": {
-          "label": "Password Strength:",
-          "weak": "Weak",
-          "medium": "Medium",
-          "strong": "Strong"
+          "label": "Slaptažodžio stiprumas:",
+          "weak": "Silpnas",
+          "medium": "Vidutinis",
+          "strong": "Stiprus"
         },
         "requirements": {
-          "title": "Password Requirements",
-          "minLength": "At least 8 characters long",
-          "uppercase": "Contains uppercase letters",
-          "lowercase": "Contains lowercase letters",
-          "numbers": "Contains numbers",
-          "special": "Contains special characters"
+          "title": "Slaptažodžio reikalavimai",
+          "minLength": "Mažiausiai 8 simboliai",
+          "uppercase": "Turi didžiųjų raidžių",
+          "lowercase": "Turi mažųjų raidžių",
+          "numbers": "Turi skaičių",
+          "special": "Turi specialiųjų simbolių"
         },
         "tips": {
-          "title": "Security Tips",
-          "tip": "Tip: Use a unique password that you don't use elsewhere.",
-          "warning": "Warning: Never share your password with anyone."
+          "title": "Saugumo patarimai",
+          "tip": "Patarimas: Naudokite unikalų slaptažodį, kurio nenaudojate kitur.",
+          "warning": "Įspėjimas: Niekada nesidalinkite slaptažodžiu."
         },
         "validation": {
-          "currentRequired": "Current password is required",
-          "newRequired": "New password is required",
-          "minLength": "New password must be at least 8 characters long",
-          "complexity": "New password must contain uppercase, lowercase, numbers, and special characters",
-          "confirmMismatch": "New password and confirmation do not match",
-          "sameAsCurrent": "New password must be different from current password"
+          "currentRequired": "Dabartinis slaptažodis būtinas",
+          "newRequired": "Naujas slaptažodis būtinas",
+          "minLength": "Naujas slaptažodis turi būti bent 8 simbolių",
+          "complexity": "Naujas slaptažodis turi turėti didžiąsias, mažąsias raides, skaičius ir specialiuosius simbolius",
+          "confirmMismatch": "Naujas slaptažodis ir patvirtinimas nesutampa",
+          "sameAsCurrent": "Naujas slaptažodis turi skirtis nuo dabartinio"
         },
         "toasts": {
-          "changeSuccess": "Password changed successfully",
-          "changeError": "Failed to change password"
+          "changeSuccess": "Slaptažodis sėkmingai pakeistas",
+          "changeError": "Nepavyko pakeisti slaptažodžio"
         },
         "confirm": {
-          "title": "Confirm Password Change",
-          "message": "Are you sure you want to change your password?",
-          "warning": "This action will log you out of all devices and you'll need to log in again."
+          "title": "Patvirtinti slaptažodžio keitimą",
+          "message": "Ar tikrai norite pakeisti slaptažodį?",
+          "warning": "Būsite atjungti iš visų įrenginių ir turėsite vėl prisijungti."
         },
         "accessibility": {
-          "show": "Show password",
-          "hide": "Hide password"
+          "show": "Rodyti slaptažodį",
+          "hide": "Slėpti slaptažodį"
         }
       },
       "subscription": {
         "errors": {
-          "unauthorized": "Unauthorized",
-          "hotelNotFound": "Hotel not found",
-          "planRequired": "Plan ID and action are required",
-          "unknownPlan": "Unknown Plan",
-          "fetchFailed": "Failed to fetch subscription details",
-          "updateFailed": "Failed to update subscription"
+          "unauthorized": "Neleistina prieiga",
+          "hotelNotFound": "Viešbutis nerastas",
+          "planRequired": "Reikalingas plano ID ir veiksmas",
+          "unknownPlan": "Nežinomas planas",
+          "fetchFailed": "Nepavyko gauti prenumeratos duomenų",
+          "updateFailed": "Nepavyko atnaujinti prenumeratos"
         },
         "messages": {
-          "upgraded": "Successfully upgraded to {plan}",
-          "cancelled": "Successfully cancelled subscription"
+          "upgraded": "Sėkmingai pagerinta į {plan}",
+          "cancelled": "Prenumerata sėkmingai atšaukta"
         },
         "plans": {
           "basic": {
-            "name": "Basic Plan",
+            "name": "Pagrindinis planas",
             "features": [
-              "Up to 100 reviews per month",
-              "Basic analytics",
-              "QR code generation",
-              "Basic Feedback Form"
+              "Iki 100 atsiliepimų per mėnesį",
+              "Pagrindinė analitika",
+              "QR kodų generavimas",
+              "Pagrindinė atsiliepimų forma"
             ]
           },
           "professional": {
-            "name": "Professional Plan",
+            "name": "Profesionalus planas",
             "features": [
-              "Up to 500 reviews per month",
-              "Advanced analytics",
-              "QR code generation",
-              "Customized Star Rating Questions"
+              "Iki 500 atsiliepimų per mėnesį",
+              "Išplėstinė analitika",
+              "QR kodų generavimas",
+              "Pritaikyti žvaigždžių įvertinimo klausimai"
             ]
           },
           "enterprise": {
-            "name": "Enterprise Plan",
+            "name": "Įmonės planas",
             "features": [
-              "Unlimited reviews",
-              "Full analytics suite",
-              "QR code generation",
-              "All type of questions"
+              "Neriboti atsiliepimai",
+              "Pilna analitikos rinkinys",
+              "QR kodų generavimas",
+              "Visi klausimų tipai"
             ]
           }
         }
       },
       "notificationsCenter": {
-        "title": "Notifications",
-        "ariaLabel": "Notifications",
-        "iconAlt": "Notification icon",
+        "title": "Pranešimai",
+        "ariaLabel": "Pranešimai",
+        "iconAlt": "Pranešimo piktograma",
         "buttons": {
-          "markAllRead": "Mark All Read",
-          "refresh": "Refresh"
+          "markAllRead": "Pažymėti visus kaip perskaitytus",
+          "refresh": "Atnaujinti"
         },
         "states": {
-          "empty": "No notifications yet"
+          "empty": "Dar nėra pranešimų"
         },
         "types": {
-          "newReview": "New Review",
-          "reviewApproved": "Review Approved",
-          "reviewRejected": "Review Rejected",
-          "subscriptionExpiring": "Subscription Expiring",
-          "subscriptionCancelled": "Subscription Cancelled",
-          "escalationReceived": "Escalation Received",
-          "escalationResponded": "Escalation Responded",
-          "systemAlert": "System Alert",
-          "newHotelRegistration": "New Hotel Registration",
-          "newFormCreated": "New Form Created",
-          "success": "Success",
-          "info": "Info",
-          "warning": "Warning",
-          "error": "Error",
-          "generic": "Notification"
+          "newReview": "Naujas atsiliepimas",
+          "reviewApproved": "Atsiliepimas patvirtintas",
+          "reviewRejected": "Atsiliepimas atmestas",
+          "subscriptionExpiring": "Prenumerata baigiasi",
+          "subscriptionCancelled": "Prenumerata atšaukta",
+          "escalationReceived": "Eskalacija gauta",
+          "escalationResponded": "Eskalacijai atsakyta",
+          "systemAlert": "Sistemos įspėjimas",
+          "newHotelRegistration": "Nauja viešbučio registracija",
+          "newFormCreated": "Sukurtas naujas formos šablonas",
+          "success": "Sėkmė",
+          "info": "Informacija",
+          "warning": "Įspėjimas",
+          "error": "Klaida",
+          "generic": "Pranešimas"
         }
       },
       "profileSidebar": {
         "greeting": {
-          "title": "Welcome",
-          "fallbackName": "Admin User"
+          "title": "Sveiki",
+          "fallbackName": "Administratorius"
         },
         "actions": {
           "profile": {
-            "title": "Profile",
-            "description": "Manage your account settings"
+            "title": "Profilis",
+            "description": "Tvarkyti paskyros nustatymus"
           },
           "signOut": {
-            "title": "Sign Out",
-            "description": "Logout from your account"
+            "title": "Atsijungti",
+            "description": "Atsijungti nuo paskyros"
           }
         },
         "notifications": {
-          "title": "Recent Notifications",
-          "loading": "Loading notifications...",
-          "summary": "You have {count} unread notifications",
-          "empty": "No new notifications"
+          "title": "Paskutiniai pranešimai",
+          "loading": "Kraunami pranešimai...",
+          "summary": "Turite {count} neperskaitytų pranešimų",
+          "empty": "Nėra naujų pranešimų"
         },
         "time": {
-          "justNow": "Just now"
+          "justNow": "Ką tik"
         }
       }
     },
     "communications": {
       "notifications": {
-        "title": "Notifications",
-        "subtitle": "Manage system notifications and alerts",
+        "title": "Pranešimai",
+        "subtitle": "Tvarkykite sistemos pranešimus ir įspėjimus",
         "buttons": {
-          "deleteSelected": "Delete Selected ({count})",
-          "markAllAsRead": "Mark All as Read",
-          "refresh": "Refresh"
+          "deleteSelected": "Ištrinti pasirinktus ({count})",
+          "markAllAsRead": "Pažymėti visus kaip perskaitytus",
+          "refresh": "Atnaujinti"
         },
         "filters": {
-          "title": "Filters",
-          "searchLabel": "Search Notifications",
-          "searchPlaceholder": "Search by title, message, or user...",
-          "type": "Type",
-          "allTypes": "All Types",
+          "title": "Filtrai",
+          "searchLabel": "Ieškoti pranešimų",
+          "searchPlaceholder": "Ieškoti pagal pavadinimą, žinutę ar vartotoją...",
+          "type": "Tipas",
+          "allTypes": "Visi tipai",
           "status": {
-            "label": "Status",
-            "all": "All Status",
-            "unread": "Unread",
-            "read": "Read"
+            "label": "Būsena",
+            "all": "Visos būsenos",
+            "unread": "Neperskaityta",
+            "read": "Perskaityta"
           },
           "types": {
-            "newReview": "New Review",
-            "reviewApproved": "Review Approved",
-            "reviewRejected": "Review Rejected",
-            "subscriptionExpiring": "Subscription Expiring",
-            "subscriptionCancelled": "Subscription Cancelled",
-            "escalationReceived": "Escalation Received",
-            "escalationResponded": "Escalation Responded",
-            "systemAlert": "System Alert",
-            "newHotelRegistration": "New Hotel Registration",
-            "newFormCreated": "New Form Created",
-            "success": "Success",
-            "info": "Info",
-            "warning": "Warning",
-            "error": "Error"
+            "newReview": "Naujas atsiliepimas",
+            "reviewApproved": "Atsiliepimas patvirtintas",
+            "reviewRejected": "Atsiliepimas atmestas",
+            "subscriptionExpiring": "Prenumerata baigiasi",
+            "subscriptionCancelled": "Prenumerata atšaukta",
+            "escalationReceived": "Eskalacija gauta",
+            "escalationResponded": "Eskalacijai atsakyta",
+            "systemAlert": "Sistemos įspėjimas",
+            "newHotelRegistration": "Nauja viešbučio registracija",
+            "newFormCreated": "Sukurtas naujas formos šablonas",
+            "success": "Sėkmė",
+            "info": "Informacija",
+            "warning": "Įspėjimas",
+            "error": "Klaida"
           }
         },
         "states": {
-          "loading": "Loading notifications...",
-          "empty": "No notifications found"
+          "loading": "Kraunami pranešimai...",
+          "empty": "Pranešimų nerasta"
         },
         "table": {
-          "type": "Type",
-          "message": "Message",
-          "date": "Date",
-          "actions": "Actions",
+          "type": "Tipas",
+          "message": "Žinutė",
+          "date": "Data",
+          "actions": "Veiksmai",
           "status": {
-            "label": "Status",
-            "read": "Read",
-            "new": "New"
+            "label": "Būsena",
+            "read": "Perskaityta",
+            "new": "Nauja"
           }
         },
         "tooltips": {
-          "markAsRead": "Mark as Read",
-          "view": "View",
-          "delete": "Delete"
+          "markAsRead": "Pažymėti kaip perskaitytą",
+          "view": "Peržiūrėti",
+          "delete": "Ištrinti"
         },
         "dates": {
-          "justNow": "Just now",
-          "hoursAgo": "{hours}h ago",
-          "yesterday": "Yesterday"
+          "justNow": "Ką tik",
+          "hoursAgo": "prieš {hours} val.",
+          "yesterday": "Vakar"
         },
         "types": {
-          "NEW_REVIEW": "New Review",
-          "REVIEW_APPROVED": "Review Approved",
-          "REVIEW_REJECTED": "Review Rejected",
-          "SUBSCRIPTION_EXPIRING": "Subscription Expiring",
-          "SUBSCRIPTION_CANCELLED": "Subscription Cancelled",
-          "ESCALATION_RECEIVED": "Escalation Received",
-          "ESCALATION_RESPONDED": "Escalation Responded",
-          "SYSTEM_ALERT": "System Alert",
-          "NEW_HOTEL_REGISTRATION": "New Hotel Registration",
-          "NEW_FORM_CREATED": "New Form Created",
-          "SUCCESS": "Success",
-          "INFO": "Info",
-          "WARNING": "Warning",
-          "ERROR": "Error"
+          "NEW_REVIEW": "Naujas atsiliepimas",
+          "REVIEW_APPROVED": "Atsiliepimas patvirtintas",
+          "REVIEW_REJECTED": "Atsiliepimas atmestas",
+          "SUBSCRIPTION_EXPIRING": "Prenumerata baigiasi",
+          "SUBSCRIPTION_CANCELLED": "Prenumerata atšaukta",
+          "ESCALATION_RECEIVED": "Eskalacija gauta",
+          "ESCALATION_RESPONDED": "Eskalacijai atsakyta",
+          "SYSTEM_ALERT": "Sistemos įspėjimas",
+          "NEW_HOTEL_REGISTRATION": "Nauja viešbučio registracija",
+          "NEW_FORM_CREATED": "Sukurtas naujas formos šablonas",
+          "SUCCESS": "Sėkmė",
+          "INFO": "Informacija",
+          "WARNING": "Įspėjimas",
+          "ERROR": "Klaida"
         },
         "toasts": {
-          "loadError": "Failed to load notifications",
-          "markReadSuccess": "Notification marked as read",
-          "markReadError": "Failed to mark notification as read",
-          "markAllReadSuccess": "All notifications marked as read",
-          "markAllReadError": "Failed to mark all notifications as read",
-          "deleteSuccess": "Notification deleted successfully",
-          "deleteError": "Failed to delete notification",
-          "bulkDeleteSuccess": "{count} notification(s) deleted successfully",
-          "bulkDeleteError": "Failed to delete some notifications"
+          "loadError": "Nepavyko įkelti pranešimų",
+          "markReadSuccess": "Pranešimas pažymėtas kaip perskaitytas",
+          "markReadError": "Nepavyko pažymėti pranešimo kaip perskaityto",
+          "markAllReadSuccess": "Visi pranešimai pažymėti kaip perskaityti",
+          "markAllReadError": "Nepavyko pažymėti visų kaip perskaitytus",
+          "deleteSuccess": "Pranešimas sėkmingai ištrintas",
+          "deleteError": "Nepavyko ištrinti pranešimo",
+          "bulkDeleteSuccess": "{count} pranešimų sėkmingai ištrinta",
+          "bulkDeleteError": "Nepavyko ištrinti kai kurių pranešimų"
         },
         "confirm": {
-          "deleteMessage": "Are you sure you want to delete this notification?",
-          "deleteHeader": "Delete Confirmation",
-          "bulkDeleteMessage": "Are you sure you want to delete {count} selected notification(s)?",
-          "bulkDeleteHeader": "Bulk Delete Confirmation"
+          "deleteMessage": "Ar tikrai norite ištrinti šį pranešimą?",
+          "deleteHeader": "Ištrynimo patvirtinimas",
+          "bulkDeleteMessage": "Ar tikrai norite ištrinti {count} pasirinktus pranešimus?",
+          "bulkDeleteHeader": "Masinio ištrynimo patvirtinimas"
         }
       }
     }
   },
   "auth": {
     "register": {
-      "title": "Register",
-      "subtitle": "Let's get started",
+      "title": "Registracija",
+      "subtitle": "Pradėkime",
       "placeholders": {
-        "firstName": "First Name",
-        "lastName": "Last Name",
-        "email": "Email",
-        "phone": "Phone (Optional)",
-        "password": "Password"
+        "firstName": "Vardas",
+        "lastName": "Pavardė",
+        "email": "El. paštas",
+        "phone": "Telefonas (neprivaloma)",
+        "password": "Slaptažodis"
       },
       "buttons": {
-        "signUp": "Sign Up",
-        "signingUp": "Signing Up..."
+        "signUp": "Registruotis",
+        "signingUp": "Registruojama..."
       },
-      "agreementPrefix": "I have read the",
+      "agreementPrefix": "Perskaičiau",
       "toasts": {
-        "acceptTerms": "Please accept the terms and conditions",
-        "missingFields": "Please fill in all required fields",
-        "success": "Registration successful! Please check your email.",
-        "error": "Registration failed. Please try again."
+        "acceptTerms": "Priimkite naudojimo sąlygas",
+        "missingFields": "Užpildykite visus privalomus laukus",
+        "success": "Registracija sėkminga! Patikrinkite el. paštą.",
+        "error": "Registracija nepavyko. Bandykite dar kartą."
       }
     },
     "forgotPassword": {
-      "title": "Forgot password?",
-      "description": "Enter the email address associated with your account and we'll send an email with instructions to reset your password.",
+      "title": "Pamiršote slaptažodį?",
+      "description": "Įveskite el. pašto adresą, susietą su paskyra, ir atsiųsime instrukcijas slaptažodžio atkūrimui.",
       "messages": {
-        "instructions": "Check your email for password reset instructions"
+        "instructions": "Patikrinkite el. paštą dėl slaptažodžio atkūrimo instrukcijų"
       },
       "submitted": {
-        "title": "Check your email!",
-        "description": "We have sent an email with a password reset link to {email}.",
-        "hint": "Didn't receive the email? Please check your spam folder."
+        "title": "Patikrinkite el. paštą!",
+        "description": "Išsiuntėme el. laišką su slaptažodžio atkūrimo nuoroda į {email}.",
+        "hint": "Negavote laiško? Patikrinkite šiukšlių aplanką."
       },
       "fields": {
-        "email": "Email Address",
-        "emailPlaceholder": "Enter your email address"
+        "email": "El. pašto adresas",
+        "emailPlaceholder": "Įveskite savo el. pašto adresą"
       },
       "buttons": {
-        "send": "Send Instructions",
-        "sending": "Sending...",
-        "resend": "Resend Email",
-        "backToLogin": "Back to Login"
+        "send": "Siųsti instrukcijas",
+        "sending": "Siunčiama...",
+        "resend": "Siųsti el. laišką dar kartą",
+        "backToLogin": "Atgal į prisijungimą"
       },
       "validation": {
-        "required": "Email is required",
-        "invalid": "Please enter a valid email address"
+        "required": "El. paštas privalomas",
+        "invalid": "Įveskite tinkamą el. pašto adresą"
       },
       "toasts": {
-        "success": "Password reset email sent successfully",
-        "error": "Failed to send reset email",
-        "unexpected": "An unexpected error occurred. Please try again."
+        "success": "Slaptažodžio atkūrimo el. laiškas sėkmingai išsiųstas",
+        "error": "Nepavyko išsiųsti el. laiško",
+        "unexpected": "Įvyko netikėta klaida. Bandykite dar kartą."
       }
     },
     "resetPassword": {
-      "title": "Create New Password!",
-      "subtitle": "Enter a new password below to update your account credentials.",
+      "title": "Sukurkite naują slaptažodį!",
+      "subtitle": "Žemiau įveskite naują slaptažodį, kad atnaujintumėte paskyros duomenis.",
       "fields": {
-        "newPassword": "New Password",
-        "confirmPassword": "Confirm Password"
+        "newPassword": "Naujas slaptažodis",
+        "confirmPassword": "Patvirtinti slaptažodį"
       },
       "placeholders": {
-        "password": "Enter your password",
-        "confirmPassword": "Confirm your password"
+        "password": "Įveskite slaptažodį",
+        "confirmPassword": "Patvirtinkite slaptažodį"
       },
       "buttons": {
-        "reset": "Reset Password",
-        "resetting": "Resetting..."
+        "reset": "Atkurti slaptažodį",
+        "resetting": "Atkuriama..."
       },
       "link": {
-        "backToLogin": "Back to Login"
+        "backToLogin": "Atgal į prisijungimą"
       },
       "states": {
-        "validating": "Validating reset link...",
-        "loading": "Loading..."
+        "validating": "Tikrinama nuoroda...",
+        "loading": "Kraunama..."
       },
       "errors": {
-        "passwordMin": "Password must be at least 6 characters long",
-        "passwordMax": "Password must be less than 128 characters",
-        "confirmRequired": "Please confirm your password",
-        "mismatch": "Passwords do not match"
+        "passwordMin": "Slaptažodis turi būti bent 6 simbolių",
+        "passwordMax": "Slaptažodis turi būti trumpesnis nei 128 simboliai",
+        "confirmRequired": "Patvirtinkite slaptažodį",
+        "mismatch": "Slaptažodžiai nesutampa"
       },
       "toasts": {
-        "invalidLink": "Invalid reset link",
-        "invalidOrExpired": "Invalid or expired reset link",
-        "failedValidation": "Failed to validate reset link",
-        "success": "Password reset successfully. You can now log in with your new password.",
-        "failure": "Failed to reset password",
-        "unexpected": "An unexpected error occurred"
+        "invalidLink": "Neteisinga atkūrimo nuoroda",
+        "invalidOrExpired": "Neteisinga arba pasibaigusi nuoroda",
+        "failedValidation": "Nepavyko patikrinti nuorodos",
+        "success": "Slaptažodis sėkmingai atkurtas. Dabar galite prisijungti su nauju slaptažodžiu.",
+        "failure": "Nepavyko atkurti slaptažodžio",
+        "unexpected": "Įvyko netikėta klaida"
       },
       "accessibility": {
-        "showPassword": "Show password",
-        "hidePassword": "Hide password"
+        "showPassword": "Rodyti slaptažodį",
+        "hidePassword": "Slėpti slaptažodį"
       }
     }
   },
   "authFooter": {
     "brand": {
       "title": "C-Reviews",
-      "description": "We help hotels connect with their guests through seamless feedback solutions. Our platform makes it easy to create forms, gather insights, and elevate the guest experience with integrity and professionalism at the core of everything we do.",
-      "footerImageAlt": "C-Reviews decorative footer"
+      "description": "Padėdami viešbučiams susisiekti su svečiais per sklandžius atsiliepimų sprendimus. Mūsų platforma lengvai leidžia kurti formas, rinkti įžvalgas ir tobulinti svečių patirtį su sąžiningumu ir profesionalumu visko centre.",
+      "footerImageAlt": "C-Reviews dekoratyvinė poraštė"
     },
     "quickLinks": {
-      "title": "Quick Links",
+      "title": "Greitos nuorodos",
       "items": {
-        "home": "Home",
-        "about": "About Us",
-        "features": "Features",
-        "contact": "Contact Us"
+        "home": "Pradžia",
+        "about": "Apie mus",
+        "features": "Funkcijos",
+        "contact": "Kontaktai"
       }
     },
     "resources": {
-      "title": "Resources",
+      "title": "Ištekliai",
       "items": {
-        "dashboard": "Dashboard",
-        "feedbacks": "Feedbacks",
-        "hotelProfile": "Hotel Profile",
-        "support": "Support",
-        "ownerProfile": "Owner Profile"
+        "dashboard": "Valdymo skydelis",
+        "feedbacks": "Atsiliepimai",
+        "hotelProfile": "Viešbučio profilis",
+        "support": "Pagalba",
+        "ownerProfile": "Savininko profilis"
       }
     },
     "legal": {
-      "title": "Legal",
+      "title": "Teisinė informacija",
       "items": {
-        "privacyPolicy": "Privacy Policy",
-        "companyPolicy": "Company Policy",
-        "terms": "Terms & Conditions"
+        "privacyPolicy": "Privatumo politika",
+        "companyPolicy": "Įmonės politika",
+        "terms": "Naudojimo sąlygos"
       }
     },
     "connect": {
-      "title": "Connect with Us",
-      "emailPlaceholder": "Email Address",
-      "submitLabel": "Subscribe",
+      "title": "Susisiekite su mumis",
+      "emailPlaceholder": "El. pašto adresas",
+      "submitLabel": "Prenumeruoti",
       "social": {
-        "facebook": "Follow us on Facebook",
-        "instagram": "Follow us on Instagram",
-        "linkedin": "Connect with us on LinkedIn"
+        "facebook": "Sekite mus „Facebook“",
+        "instagram": "Sekite mus „Instagram“",
+        "linkedin": "Susisiekite su mumis „LinkedIn“"
       }
     },
-    "copyright": "© 2024 C-Reviews LLC. All Rights Reserved!"
+    "copyright": "© 2024 C-Reviews LLC. Visos teisės saugomos!"
   }
 }
 

@@ -122,6 +122,23 @@
         "table": {
           "date": "Datum"
         }
+      },
+      "comparisonChart": {
+        "title": "Beoordelingen vergelijken",
+        "period": "Periode",
+        "weekly": "Wekelijks",
+        "monthly": "Maandelijks",
+        "loading": "Vergelijkingsgegevens laden...",
+        "noData": "Geen vergelijkingsgegevens beschikbaar",
+        "positiveReviews": "Positieve beoordelingen",
+        "negativeReviews": "Negatieve beoordelingen"
+      },
+      "stats": {
+        "totalReviews": "Totaal beoordelingen",
+        "averageRating": "Gemiddelde beoordeling",
+        "positiveReviews": "Positieve beoordelingen",
+        "negativeReviews": "Negatieve beoordelingen",
+        "responseRate": "Reactiepercentage"
       }
     },
     "forms": {
