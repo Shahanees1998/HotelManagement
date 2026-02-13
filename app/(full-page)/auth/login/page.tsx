@@ -14,6 +14,7 @@ import Image from "next/image";
 import AuthFooter from "@/components/AuthFooter";
 import { useI18n } from "@/i18n/TranslationProvider";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { AUTH_LOGO_SRC } from "@/lib/constants";
 
 const LoginContent = () => {
     const [rememberMe, setRememberMe] = useState(false);
@@ -222,7 +223,7 @@ const LoginContent = () => {
             
             {/* Header */}
             <div style={{ 
-                padding: "0rem 2rem", 
+                padding: "1rem 2rem", 
                 display: "flex", 
                 justifyContent: "space-between", 
                 alignItems: "center",
@@ -232,30 +233,32 @@ const LoginContent = () => {
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.15)"
             }}>
                 <div>
-                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={100} />
+                    <Image src={AUTH_LOGO_SRC} alt="logo" width={100} height={90}/>
                 </div>
-                <div style={{ display: "flex", gap: "1rem" }}>
-                <li className="ml-3">
+                <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+                <div className="ml-3">
                         <LanguageSelector className="w-full" />
-                    </li>
-                    <Button
-                        label={t("Get Started")}
-                        outlined
-                        style={{
-                            borderColor: "#6F522F",
-                            color: "#6F522F"
-                        }}
-                        onClick={() => router.push('/register-hotel')}
-                    />
-                    <Button
-                        label={t("Login")}
-                        style={{
-                            backgroundColor: "#1e3a5f",
-                            border: "none",
-                            color: "white"
-                        }}
-                        onClick={() => router.push('/auth/login')}
-                    />
+                    </div>
+                    <div className="hidden md:flex" style={{ gap: "1rem" }}>
+                        <Button
+                            label={t("Get Started")}
+                            outlined
+                            style={{
+                                borderColor: "#6F522F",
+                                color: "#6F522F"
+                            }}
+                            onClick={() => router.push('/register-hotel')}
+                        />
+                        <Button
+                            label={t("Login")}
+                            style={{
+                                backgroundColor: "#1e3a5f",
+                                border: "none",
+                                color: "white"
+                            }}
+                            onClick={() => router.push('/auth/login')}
+                        />
+                    </div>
                 </div>
             </div>
 

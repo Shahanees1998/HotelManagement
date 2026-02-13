@@ -4,6 +4,7 @@ import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
 import { LanguageSelector } from "./LanguageSelector";
 import Image from "next/image";
+import { AUTH_LOGO_SRC } from "@/lib/constants";
 
 const AuthHeader = () => {
     const router = useRouter();
@@ -24,35 +25,39 @@ const AuthHeader = () => {
                     fontSize: "1.5rem", 
                     fontWeight: "600",
                     color: "#1e3a5f",
-                    cursor: "pointer"
+                    cursor: "pointer",
+                    border: "none",
+                    outline: "none"
                 }}
                 onClick={() => router.push('/')}
             >
-                <Image src="/images/logo-blue.png" alt="logo" width={100} height={100} />
+              <Image src={AUTH_LOGO_SRC} alt="logo" width={100} height={90} />
             </div>
-            <div style={{ display: "flex", gap: "1rem" }}>
+            <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
                      {/* Language Selector */}
-                     <li className="ml-3">
+                     <div className="ml-3">
                         <LanguageSelector className="w-full" />
-                    </li>
-                <Button
-                    label="Get Started"
-                    outlined
-                    style={{
-                        borderColor: "#6F522F",
-                        color: "#6F522F"
-                    }}
-                    onClick={() => router.push('/register-hotel')}
-                />
-                <Button
-                    label="Login"
-                    style={{
-                        backgroundColor: "#1e3a5f",
-                        border: "none",
-                        color: "white"
-                    }}
-                    onClick={() => router.push('/auth/login')}
-                />
+                    </div>
+                <div className="hidden md:flex" style={{ gap: "1rem" }}>
+                    <Button
+                        label="Get Started"
+                        outlined
+                        style={{
+                            borderColor: "#6F522F",
+                            color: "#6F522F"
+                        }}
+                        onClick={() => router.push('/register-hotel')}
+                    />
+                    <Button
+                        label="Login"
+                        style={{
+                            backgroundColor: "#1e3a5f",
+                            border: "none",
+                            color: "white"
+                        }}
+                        onClick={() => router.push('/auth/login')}
+                    />
+                </div>
             </div>
         </div>
     );

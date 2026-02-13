@@ -1057,10 +1057,17 @@
     protobufjs "^7.5.3"
     yargs "^17.7.2"
 
-"@img/sharp-win32-x64@0.34.3":
+"@img/sharp-darwin-x64@0.34.3":
   version "0.34.3"
-  resolved "https://registry.npmjs.org/@img/sharp-win32-x64/-/sharp-win32-x64-0.34.3.tgz"
-  integrity sha512-OWwz05d++TxzLEv4VnsTz5CmZ6mI6S05sfQGEMrNrQcOEERbX46332IvE7pO/EUiw7jUrrS40z/M7kPyjfl04g==
+  resolved "https://registry.npmjs.org/@img/sharp-darwin-x64/-/sharp-darwin-x64-0.34.3.tgz"
+  integrity sha512-yHpJYynROAj12TA6qil58hmPmAwxKKC7reUqtGLzsOHfP7/rniNGTL8tjWX6L3CTV4+5P4ypcS7Pp+7OB+8ihA==
+  optionalDependencies:
+    "@img/sharp-libvips-darwin-x64" "1.2.0"
+
+"@img/sharp-libvips-darwin-x64@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@img/sharp-libvips-darwin-x64/-/sharp-libvips-darwin-x64-1.2.0.tgz"
+  integrity sha512-M64XVuL94OgiNHa5/m2YvEQI5q2cl9d/wk0qFTDVXcYzi43lxuiFTftMR1tOnFQovVXNZJ5TURSDK2pNe9Yzqg==
 
 "@jridgewell/resolve-uri@^3.0.3":
   version "3.1.2"
@@ -1096,10 +1103,8 @@
 "@next/env@14.2.31":
   version "14.2.31"
 
-"@next/swc-win32-x64-msvc@14.2.31":
+"@next/swc-darwin-x64@14.2.31":
   version "14.2.31"
-  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-14.2.31.tgz"
-  integrity sha512-LwFZd4JFnMHGceItR9+jtlMm8lGLU/IPkgjBBgYmdYSfalbHCiDpjMYtgDQ2wtwiAOSJOCyFI4m8PikrsDyA6Q==
 
 "@next/third-parties@^14.1.4":
   version "14.2.31"
@@ -1165,6 +1170,11 @@
   integrity sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==
   dependencies:
     "@noble/hashes" "^1.1.5"
+
+"@parcel/watcher-darwin-x64@2.5.1":
+  version "2.5.1"
+  resolved "https://registry.npmjs.org/@parcel/watcher-darwin-x64/-/watcher-darwin-x64-2.5.1.tgz"
+  integrity sha512-1ZXDthrnNmwv10A0/3AJNZ9JGlzrF82i3gNQcWOzd7nJ8aj+ILyW1MTxVk35Db0u91oD5Nlk9MBiujMlwmeXZg==
 
 "@parcel/watcher@^2.4.1":
   version "2.5.1"

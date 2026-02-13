@@ -6,6 +6,7 @@ import { InputText } from "primereact/inputtext";
 import { useState, useRef, ChangeEvent, KeyboardEvent } from "react";
 import { Toast } from "primereact/toast";
 import AuthFooter from "@/components/AuthFooter";
+import { AUTH_LOGO_SRC } from "@/lib/constants";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { useI18n } from "@/i18n/TranslationProvider";
 import Image from "next/image";
@@ -113,7 +114,7 @@ const ForgotPassword: Page = () => {
             
             {/* Header */}
             <div style={{ 
-                padding: "1.5rem 2rem", 
+                padding: "1rem 2rem", 
                 display: "flex", 
                 justifyContent: "space-between", 
                 alignItems: "center",
@@ -123,30 +124,32 @@ const ForgotPassword: Page = () => {
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.15)"
             }}>
                 <div>
-                    <Image src="/images/logo-blue.png" alt="logo" width={100} height={100} />
+                    <Image src={AUTH_LOGO_SRC} alt="logo" width={100} height={90} />
                 </div>
-                <div style={{ display: "flex", gap: "1rem" }}>
+                <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
                     <div className="ml-3">
                         <LanguageSelector className="w-full" />
                     </div>
-                    <Button
-                        label={t("common.getStarted")}
-                        outlined
-                        style={{
-                            borderColor: "#1e3a5f",
-                            color: "#1e3a5f"
-                        }}
-                        onClick={() => router.push('/register-hotel')}
-                    />
-                    <Button
-                        label={t("common.login")}
-                        style={{
-                            backgroundColor: "#1e3a5f",
-                            border: "none",
-                            color: "white"
-                        }}
-                        onClick={() => router.push('/auth/login')}
-                    />
+                    <div className="hidden md:flex" style={{ gap: "1rem" }}>
+                        <Button
+                            label={t("common.getStarted")}
+                            outlined
+                            style={{
+                                borderColor: "#1e3a5f",
+                                color: "#1e3a5f"
+                            }}
+                            onClick={() => router.push('/register-hotel')}
+                        />
+                        <Button
+                            label={t("common.login")}
+                            style={{
+                                backgroundColor: "#1e3a5f",
+                                border: "none",
+                                color: "white"
+                            }}
+                            onClick={() => router.push('/auth/login')}
+                        />
+                    </div>
                 </div>
             </div>
 
