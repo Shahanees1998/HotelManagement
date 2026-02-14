@@ -51,6 +51,10 @@ interface CustomRatingData {
     label: string;
     averageRating: number;
     totalRatings: number;
+    previousAverage?: number;
+    change?: number;
+    changePercent?: number;
+    noPriorPeriod?: boolean;
   }>;
   totalReviews?: number;
 }
@@ -805,22 +809,18 @@ export default function HotelDashboard() {
     },
   ], [t]);
 
-  // Calculate percentage change helper
-  const calculatePercentageChange = useCallback((current: number, previous: number): { value: number; isPositive: boolean } | null => {
-    // If previous is 0, we can't calculate a meaningful percentage change
-    // Return null to hide the indicator when there's no previous data
+  // Calculate percentage change helper for trend arrows (up/down)
+  const calculatePercentageChange = useCallback((current: number, previous: number): { value: number; isPositive: boolean; noPriorPeriod?: boolean } | null => {
+    // Previous period had no data: show "up" with "New" label (not 100%) so it's clear there was nothing to compare
     if (previous === 0) {
+      if (current > 0) return { value: 100, isPositive: true, noPriorPeriod: true };
       return null;
     }
     const change = ((current - previous) / previous) * 100;
-    // Only show if change is significant (more than 0.1% to avoid showing 0.0%)
-    if (Math.abs(change) < 0.1) {
-      return null;
-    }
-    // Cap percentage at 100% maximum
-    const cappedValue = Math.min(Math.abs(change), 100);
+    // Show actual percentage (cap at 999% so huge spikes don't break layout)
+    const displayValue = Math.abs(change) < 0.1 ? 0 : Math.min(Math.abs(change), 999);
     return {
-      value: cappedValue,
+      value: displayValue,
       isPositive: change >= 0,
     };
   }, []);
@@ -864,11 +864,7 @@ export default function HotelDashboard() {
         icon: "pi pi-thumbs-down",
         color: "text-red-500",
         image: "/images/rating.png",
-        percentageChange: negativeReviewsChange ? {
-          value: negativeReviewsChange.value,
-          isPositive: !negativeReviewsChange.isPositive, // Inverted: decrease in negative reviews is good
-          isNegativeReviews: true, // Flag to reverse colors
-        } : null,
+        percentageChange: negativeReviewsChange,
       },
       {
         title: t("hotel.dashboard.stats.responseRate"),
@@ -1051,44 +1047,40 @@ export default function HotelDashboard() {
                     </div>
                     {card.percentageChange && (
                       <div
+                        className="flex align-items-center gap-1"
                         style={{
                           position: 'absolute',
                           top: '8px',
                           right: '8px',
+                          zIndex: 1,
                           display: 'inline-flex',
                           alignItems: 'center',
-                          gap: '3px',
+                          gap: '4px',
                           padding: '4px 8px',
                           borderRadius: '12px',
-                          fontSize: '0.7rem',
+                          fontSize: '0.75rem',
                           fontWeight: '600',
-                          // For negative reviews: red when up (bad), green when down (good)
-                          // For others: green when up (good), red when down (bad)
-                          backgroundColor: (card.percentageChange as any).isNegativeReviews
-                            ? (card.percentageChange.isPositive 
-                                ? 'rgba(239, 68, 68, 0.1)'  // Red when up (bad for negative reviews)
-                                : 'rgba(16, 185, 129, 0.1)') // Green when down (good for negative reviews)
-                            : (card.percentageChange.isPositive 
-                                ? 'rgba(16, 185, 129, 0.1)'  // Green when up (good)
-                                : 'rgba(239, 68, 68, 0.1)'), // Red when down (bad)
-                          color: (card.percentageChange as any).isNegativeReviews
-                            ? (card.percentageChange.isPositive ? '#ef4444' : '#10b981')
-                            : (card.percentageChange.isPositive ? '#10b981' : '#ef4444'),
-                          border: `1px solid ${(card.percentageChange as any).isNegativeReviews
-                            ? (card.percentageChange.isPositive 
-                                ? 'rgba(239, 68, 68, 0.2)' 
-                                : 'rgba(16, 185, 129, 0.2)')
-                            : (card.percentageChange.isPositive 
-                                ? 'rgba(16, 185, 129, 0.2)' 
-                                : 'rgba(239, 68, 68, 0.2)')}`,
+                          // Up = green, Down = red (consistent for all metrics)
+                          backgroundColor: card.percentageChange.isPositive
+                            ? 'rgba(16, 185, 129, 0.1)'
+                            : 'rgba(239, 68, 68, 0.1)',
+                          color: card.percentageChange.isPositive ? '#10b981' : '#ef4444',
+                          border: `1px solid ${card.percentageChange.isPositive ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)'}`,
                           lineHeight: '1',
                         }}
+                        aria-label={card.percentageChange.isPositive ? t("hotel.dashboard.stats.trendUp") : t("hotel.dashboard.stats.trendDown")}
                       >
                         <i
                           className={card.percentageChange.isPositive ? 'pi pi-arrow-up' : 'pi pi-arrow-down'}
-                          style={{ fontSize: '0.65rem' }}
+                          style={{ fontSize: '0.75rem', lineHeight: 1 }}
+                          aria-hidden
                         />
-                        <span>{Math.round(card.percentageChange.value)}%</span>
+                        <span>{(card.percentageChange as { noPriorPeriod?: boolean }).noPriorPeriod
+                          ? t("hotel.dashboard.stats.new")
+                          : card.percentageChange.value >= 999
+                            ? '999%'
+                            : `${Math.round(card.percentageChange.value)}%`}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -1216,37 +1208,66 @@ export default function HotelDashboard() {
           <div className="col-12">
             <Card title={t("Custom Rating Summary")}>
               <div className="grid">
-                {customRatingData.summary.map((item, index) => (
-                  <div key={item.label} className="col-12 md:col-6 lg:col-4">
-                    <div className="border-1 surface-border border-round p-3">
-                      <div className="flex align-items-center justify-content-between mb-2">
-                        <span className="text-900 font-medium">{item.label}</span>
-                        <span className="text-500 text-sm">
-                          {t("({count} ratings)").replace("{count}", item.totalRatings.toString())}
-                        </span>
-                      </div>
-                      <div className="flex align-items-center gap-2">
-                        <div 
-                          className="flex align-items-center" 
-                          style={{ 
-                            width: '20px', 
-                            height: '20px', 
-                            borderRadius: '4px',
-                            backgroundColor: getColorForIndex(index),
-                          }}
-                        />
-                        <div className="flex-1">
-                          <div className="text-2xl font-bold text-900">
-                            {item.averageRating.toFixed(2)}/5
+                {customRatingData.summary.map((item, index) => {
+                  const hasTrend = item.changePercent != null && (item.noPriorPeriod || item.previousAverage !== undefined);
+                  const isUp = item.change == null ? false : item.change >= 0;
+                  const trendLabel = item.noPriorPeriod ? t("hotel.dashboard.stats.new") : (item.changePercent != null ? `${Math.round(Math.min(Math.abs(item.changePercent), 999))}%` : null);
+                  return (
+                    <div key={item.label} className="col-12 md:col-6 lg:col-4">
+                      <div className="border-1 surface-border border-round p-3">
+                        <div className="flex align-items-center justify-content-between gap-2 mb-2 flex-wrap">
+                          <span className="text-900 font-medium">{item.label}</span>
+                          <div className="flex align-items-center gap-2 flex-shrink-0">
+                            <span className="text-500 text-sm">
+                              {t("({count} ratings)").replace("{count}", item.totalRatings.toString())}
+                            </span>
+                            {hasTrend && trendLabel != null && (
+                              <div
+                                className="flex align-items-center gap-1"
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '4px',
+                                  padding: '4px 8px',
+                                  borderRadius: '12px',
+                                  fontSize: '0.75rem',
+                                  fontWeight: 600,
+                                  backgroundColor: isUp ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+                                  color: isUp ? '#10b981' : '#ef4444',
+                                  border: `1px solid ${isUp ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)'}`,
+                                  lineHeight: 1,
+                                }}
+                                aria-label={isUp ? t("hotel.dashboard.stats.trendUp") : t("hotel.dashboard.stats.trendDown")}
+                              >
+                                <i className={isUp ? 'pi pi-arrow-up' : 'pi pi-arrow-down'} style={{ fontSize: '0.75rem', lineHeight: 1 }} aria-hidden />
+                                <span>{trendLabel}</span>
+                              </div>
+                            )}
                           </div>
-                          <div className="text-sm text-600">
-                            {t("hotel.dashboard.stats.averageRating")}
+                        </div>
+                        <div className="flex align-items-center gap-2">
+                          <div 
+                            className="flex align-items-center" 
+                            style={{ 
+                              width: '20px', 
+                              height: '20px', 
+                              borderRadius: '4px',
+                              backgroundColor: getColorForIndex(index),
+                            }}
+                          />
+                          <div className="flex-1">
+                            <div className="text-2xl font-bold text-900">
+                              {item.averageRating.toFixed(2)}/5
+                            </div>
+                            <div className="text-sm text-600">
+                              {t("hotel.dashboard.stats.averageRating")}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </Card>
           </div>

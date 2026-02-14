@@ -236,6 +236,52 @@ export async function GET(request: NextRequest) {
         previousStats.recentReviews = previousReviews.filter(review => 
           new Date(review.submittedAt) >= previousSevenDaysAgo
         ).length;
+      } else {
+        // No data in the main previous period: compare last 7 days vs the 7 days before that
+        const now = endDate ? new Date(endDate) : new Date();
+        const fallbackCurrentEnd = new Date(now);
+        const fallbackCurrentStart = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const fallbackPreviousEnd = new Date(fallbackCurrentStart.getTime() - 24 * 60 * 60 * 1000);
+        const fallbackPreviousStart = new Date(fallbackPreviousEnd.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+        const fallbackCurrentReviews = await prisma.review.findMany({
+          where: {
+            hotelId: hotel.id,
+            submittedAt: { gte: fallbackCurrentStart, lte: fallbackCurrentEnd },
+          },
+          select: { overallRating: true, predefinedAnswers: true, submittedAt: true, status: true },
+        });
+        const fallbackPreviousReviews = await prisma.review.findMany({
+          where: {
+            hotelId: hotel.id,
+            submittedAt: { gte: fallbackPreviousStart, lte: fallbackPreviousEnd },
+          },
+          select: { overallRating: true, predefinedAnswers: true, submittedAt: true, status: true },
+        });
+
+        if (fallbackPreviousReviews.length > 0 || fallbackCurrentReviews.length > 0) {
+          previousStats = {
+            totalReviews: fallbackPreviousReviews.length,
+            averageRating: fallbackPreviousReviews.length > 0
+              ? fallbackPreviousReviews.reduce((sum, r) => sum + getEffectiveRating(r), 0) / fallbackPreviousReviews.length
+              : 0,
+            positiveReviews: fallbackPreviousReviews.filter(r => getEffectiveRating(r) >= 3).length,
+            negativeReviews: fallbackPreviousReviews.filter(r => getEffectiveRating(r) <= 2).length,
+            responseRate: fallbackPreviousReviews.length > 0
+              ? (fallbackPreviousReviews.filter(r => r.status === 'APPROVED').length / fallbackPreviousReviews.length) * 100
+              : 0,
+            recentReviews: 0,
+          };
+          currentPeriodStats.totalReviews = fallbackCurrentReviews.length;
+          currentPeriodStats.averageRating = fallbackCurrentReviews.length > 0
+            ? fallbackCurrentReviews.reduce((sum, r) => sum + getEffectiveRating(r), 0) / fallbackCurrentReviews.length
+            : 0;
+          currentPeriodStats.positiveReviews = fallbackCurrentReviews.filter(r => getEffectiveRating(r) >= 3).length;
+          currentPeriodStats.negativeReviews = fallbackCurrentReviews.filter(r => getEffectiveRating(r) <= 2).length;
+          currentPeriodStats.responseRate = fallbackCurrentReviews.length > 0
+            ? (fallbackCurrentReviews.filter(r => r.status === 'APPROVED').length / fallbackCurrentReviews.length) * 100
+            : 0;
+        }
       }
 
       // Generate chart data (respecting filters)

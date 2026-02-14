@@ -115,6 +115,11 @@
       "error": "Registration failed",
       "errorGeneric": "Registration failed. Please try again."
     },
+    "successScreen": {
+      "title": "Registration successful",
+      "message": "Your hotel has been registered successfully. A verification email has been sent to your inbox. Please verify your email before signing in.",
+      "goToLogin": "Go to Login"
+    },
     "images": {
       "ownerAlt": "Register Hotel - Owner Information",
       "hotelAlt": "Register Hotel - Hotel Information"
@@ -147,7 +152,10 @@
         "averageRating": "Average Rating",
         "positiveReviews": "Positive Reviews",
         "negativeReviews": "Negative Reviews",
-        "responseRate": "Response Rate"
+        "responseRate": "Response Rate",
+        "trendUp": "Trend up",
+        "trendDown": "Trend down",
+        "new": "New"
       }
     },
     "forms": {

@@ -19,6 +19,10 @@ interface CustomRatingData {
     label: string;
     averageRating: number;
     totalRatings: number;
+    previousAverage?: number;
+    change?: number;
+    changePercent?: number;
+    noPriorPeriod?: boolean;
   }>;
   totalReviews?: number;
 }
@@ -270,50 +274,131 @@ export async function GET(request: NextRequest) {
       previousPeriodStart.setTime(startDate.getTime() - periodLength);
       previousPeriodEnd.setTime(startDate.getTime());
 
-      // Get previous period data for comparison
-      const previousPeriodReviews = await prisma.review.findMany({
+      // Get previous period data for comparison (same form)
+      let previousPeriodReviews = await prisma.review.findMany({
         where: {
           hotelId: hotel.id,
+          formId: hotelForm.id,
           submittedAt: {
             gte: previousPeriodStart,
             lte: previousPeriodEnd,
           },
-          status: { in: ['APPROVED', 'PENDING'] },
         },
-        include: {
-          answers: {
-            include: {
-              question: true,
-            },
-          },
+        select: {
+          submittedAt: true,
+          predefinedAnswers: true,
+          answers: true,
         },
       });
 
-      // Process previous period data
+      // Helper to extract ratings from a review (predefinedAnswers or answers)
+      const extractRatingsFromReview = (review: any): Map<string, number[]> => {
+        const out = new Map<string, number[]>();
+        const reviewDate = review.submittedAt instanceof Date
+          ? review.submittedAt.toISOString().split('T')[0]
+          : new Date(review.submittedAt).toISOString().split('T')[0];
+        try {
+          let data: any = null;
+          if (review.predefinedAnswers) {
+            data = typeof review.predefinedAnswers === 'string' ? JSON.parse(review.predefinedAnswers) : review.predefinedAnswers;
+          }
+          if (!data && review.answers?.length) {
+            const customAnswer = review.answers.find((a: any) => a.questionId === 'custom-rating' || a.question?.includes?.('custom-rating'));
+            if (customAnswer?.answer) data = typeof customAnswer.answer === 'string' ? JSON.parse(customAnswer.answer) : customAnswer.answer;
+          }
+          if (!data) return out;
+          if (Array.isArray(data)) {
+            for (const item of data) {
+              if (item.label && typeof item.rating === 'number') {
+                if (!out.has(item.label)) out.set(item.label, []);
+                out.get(item.label)!.push(item.rating);
+              }
+            }
+          } else if (typeof data === 'object') {
+            const ratingKeys = Object.entries(data)
+              .filter(([k, v]) => k.startsWith('custom-rating-') && typeof v === 'number')
+              .sort(([a], [b]) => a.localeCompare(b));
+            ratingKeys.forEach(([, value], i) => {
+              const item = customRatingItems[i];
+              if (item && typeof value === 'number' && value >= 1 && value <= 5) {
+                if (!out.has(item.label)) out.set(item.label, []);
+                out.get(item.label)!.push(value);
+              }
+            });
+          }
+        } catch (_) {}
+        return out;
+      };
+
       const previousRatingDataByDate = new Map<string, Map<string, number[]>>();
       for (const review of previousPeriodReviews) {
         const reviewDate = review.submittedAt.toISOString().split('T')[0];
-        for (const answer of review.answers) {
-          try {
-            const customRatingData = JSON.parse(answer.answer);
-            if (Array.isArray(customRatingData)) {
-              for (const item of customRatingData) {
-                if (item.label && typeof item.rating === 'number') {
-                  if (!previousRatingDataByDate.has(reviewDate)) {
-                    previousRatingDataByDate.set(reviewDate, new Map());
-                  }
-                  const dateRatings = previousRatingDataByDate.get(reviewDate)!;
-                  if (!dateRatings.has(item.label)) {
-                    dateRatings.set(item.label, []);
-                  }
-                  dateRatings.get(item.label)!.push(item.rating);
-                }
-              }
-            }
-          } catch (error) {
-            // Skip invalid data
+        const labelRatings = extractRatingsFromReview(review);
+        if (labelRatings.size > 0) {
+          if (!previousRatingDataByDate.has(reviewDate)) previousRatingDataByDate.set(reviewDate, new Map());
+          const dateMap = previousRatingDataByDate.get(reviewDate)!;
+          labelRatings.forEach((ratings, label) => {
+            if (!dateMap.has(label)) dateMap.set(label, []);
+            dateMap.get(label)!.push(...ratings);
+          });
+        }
+      }
+
+      // Fallback: when previous period has no data, compare last 7 days vs previous 7 days (for trend only; main data unchanged)
+      const hasPreviousData = previousRatingDataByDate.size > 0 || Array.from(previousRatingDataByDate.values()).some(m => m.size > 0);
+      let fallbackCurrentAverages = new Map<string, number>();
+      if (!hasPreviousData && previousPeriodReviews.length === 0) {
+        const now = new Date(endDate);
+        const fallbackCurrentEnd = new Date(now);
+        const fallbackCurrentStart = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const fallbackPreviousEnd = new Date(fallbackCurrentStart.getTime() - 24 * 60 * 60 * 1000);
+        const fallbackPreviousStart = new Date(fallbackPreviousEnd.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const [fallbackCurrentReviews, fallbackPreviousReviews] = await Promise.all([
+          prisma.review.findMany({
+            where: {
+              hotelId: hotel.id,
+              formId: hotelForm.id,
+              submittedAt: { gte: fallbackCurrentStart, lte: fallbackCurrentEnd },
+            },
+            select: { submittedAt: true, predefinedAnswers: true, answers: true },
+          }),
+          prisma.review.findMany({
+            where: {
+              hotelId: hotel.id,
+              formId: hotelForm.id,
+              submittedAt: { gte: fallbackPreviousStart, lte: fallbackPreviousEnd },
+            },
+            select: { submittedAt: true, predefinedAnswers: true, answers: true },
+          }),
+        ]);
+        for (const review of fallbackPreviousReviews) {
+          const reviewDate = review.submittedAt.toISOString().split('T')[0];
+          const labelRatings = extractRatingsFromReview({ ...review, submittedAt: review.submittedAt });
+          if (labelRatings.size > 0) {
+            if (!previousRatingDataByDate.has(reviewDate)) previousRatingDataByDate.set(reviewDate, new Map());
+            const dateMap = previousRatingDataByDate.get(reviewDate)!;
+            labelRatings.forEach((ratings, label) => {
+              if (!dateMap.has(label)) dateMap.set(label, []);
+              dateMap.get(label)!.push(...ratings);
+            });
           }
         }
+        // Compute fallback current average per label (aggregate from all fallback current reviews)
+        const fallbackCurrentSums = new Map<string, { sum: number; count: number }>();
+        for (const review of fallbackCurrentReviews) {
+          const labelRatings = extractRatingsFromReview({ ...review, submittedAt: review.submittedAt });
+          labelRatings.forEach((ratings, label) => {
+            const sum = ratings.reduce((a, b) => a + b, 0);
+            const count = ratings.length;
+            if (!fallbackCurrentSums.has(label)) fallbackCurrentSums.set(label, { sum: 0, count: 0 });
+            const o = fallbackCurrentSums.get(label)!;
+            o.sum += sum;
+            o.count += count;
+          });
+        }
+        fallbackCurrentSums.forEach((o, label) => {
+          if (o.count > 0) fallbackCurrentAverages.set(label, o.sum / o.count);
+        });
       }
 
       // Calculate previous period averages
@@ -332,7 +417,7 @@ export async function GET(request: NextRequest) {
         previousAverages.set(item.label, previousAvg);
       }
 
-      // Calculate summary (average ratings for each label)
+      // Calculate summary (average ratings for each label); use fallback current for trend when in fallback mode
       const summary = customRatingItems.map(item => {
         let totalRatings = 0;
         let sumRatings = 0;
@@ -347,8 +432,12 @@ export async function GET(request: NextRequest) {
 
         const currentAvg = totalRatings > 0 ? sumRatings / totalRatings : 0;
         const previousAvg = previousAverages.get(item.label) || 0;
-        const change = previousAvg > 0 ? ((currentAvg - previousAvg) / previousAvg) * 100 : 0;
-        const changeValue = currentAvg - previousAvg;
+        const currentForTrend = fallbackCurrentAverages.has(item.label) ? fallbackCurrentAverages.get(item.label)! : currentAvg;
+        const changeValue = currentForTrend - previousAvg;
+        const changePercent = previousAvg > 0
+          ? ((currentForTrend - previousAvg) / previousAvg) * 100
+          : (currentForTrend > 0 ? 100 : 0);
+        const noPriorPeriod = previousAvg === 0 && currentForTrend > 0;
 
         return {
           label: item.label,
@@ -356,7 +445,8 @@ export async function GET(request: NextRequest) {
           totalRatings,
           previousAverage: previousAvg,
           change: changeValue,
-          changePercent: change,
+          changePercent,
+          noPriorPeriod,
         };
       });
 

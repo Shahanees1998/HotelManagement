@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { canAccessSection, getDefaultRedirectPath, ROLE_PERMISSIONS, UserRole, type RolePermissions } from '@/lib/rolePermissions';
+
+/** True if the role has full admin access (allowed to hit /admin routes). */
+function isAdminAccess(role: string | null): boolean {
+  return role != null && canAccessSection(role, 'canAccessAll');
+}
 import { jwtVerify } from 'jose';
 
 // JWT Configuration for mobile clients
@@ -108,7 +113,7 @@ export async function middleware(req: NextRequest) {
         // Allow hotel users to access notifications API
         if (pathname.startsWith('/api/admin/notifications') && userRole === 'HOTEL') {
           // Allow hotel users to access their notifications
-        } else if (userRole !== 'ADMIN') {
+        } else if (!isAdminAccess(userRole)) {
           // For API routes, return 403
           if (pathname.startsWith('/api/')) {
             return NextResponse.json(

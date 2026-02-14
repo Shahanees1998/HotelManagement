@@ -147,7 +147,8 @@ const LoginContent = () => {
             }
 
             const callbackUrl = searchParams.get('callbackUrl') || getDefaultRedirectPath(loggedInUser.role);
-            router.push(callbackUrl);
+            // Full page redirect so the new session cookie is sent; avoids middleware seeing stale session
+            window.location.href = callbackUrl;
         } catch (error) {
             console.error('Login error:', error);
             let errorMessage = t('An unexpected error occurred. Please try again.');

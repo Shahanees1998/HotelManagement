@@ -73,6 +73,7 @@ export default function RegisterHotel() {
   const { t, direction } = useI18n();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [confirmedStep1, setConfirmedStep1] = useState(false);
   const [confirmedStep2, setConfirmedStep2] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -208,10 +209,7 @@ export default function RegisterHotel() {
       const data = await response.json();
 
       if (response.ok) {
-        showToast("success", t("common.success"), t("registerHotel.toasts.success"));
-        setTimeout(() => {
-          router.push('/auth/login');
-        }, 2000);
+        setRegistrationSuccess(true);
       } else {
         showToast("error", t("common.error"), data.error || t("registerHotel.toasts.error"));
       }
@@ -257,9 +255,44 @@ export default function RegisterHotel() {
               alignItems: "center",
             }}
           >
-          {/* Left Side - Form */}
+          {/* Left Side - Form or Success */}
           <div className="py-7 px-4 md:px-7">
-            {step === 1 ? (
+            {registrationSuccess ? (
+              <div className="animate-slide-in-left flex flex-column gap-4" style={{ maxWidth: "28rem" }}>
+                <div className="flex align-items-center gap-3 mb-2">
+                  <div
+                    className="flex align-items-center justify-content-center border-circle"
+                    style={{
+                      width: "3.5rem",
+                      height: "3.5rem",
+                      backgroundColor: "var(--green-100)",
+                      color: "var(--green-600)",
+                    }}
+                  >
+                    <i className="pi pi-check text-3xl" />
+                  </div>
+                  <span className="text-[#1B2A49] text-2xl font-bold">
+                    {t("registerHotel.successScreen.title")}
+                  </span>
+                </div>
+                <p className="text-900 mb-2" style={{ lineHeight: 1.6, fontSize: "1rem" }}>
+                  {t("registerHotel.successScreen.message")}
+                </p>
+                <Button
+                  label={t("registerHotel.successScreen.goToLogin")}
+                  icon="pi pi-sign-in"
+                  iconPos="right"
+                  className="w-full hover-lift"
+                  style={{
+                    backgroundColor: "#1e3a5f",
+                    border: "none",
+                    padding: "0.75rem",
+                    marginTop: "0.5rem",
+                  }}
+                  onClick={() => router.push("/auth/login")}
+                />
+              </div>
+            ) : step === 1 ? (
               <>
                 {/* Step 1: Owner Information */}
                 <div className="mb-4 animate-slide-in-left">
@@ -563,13 +596,15 @@ export default function RegisterHotel() {
 
           {/* Right Side - Illustration (hidden on mobile) */}
           <div className="hidden md:block">
-            {step === 1 ? (
+            {registrationSuccess ? (
+              <img src="/images/hotel-information.svg" alt={t("registerHotel.images.hotelAlt")}
+                style={{ width: "100%", height: "100%" }} />
+            ) : step === 1 ? (
               <img src="/images/owner-information.svg" alt={t("registerHotel.images.ownerAlt")}
                 style={{ width: "100%", height: "100%" }} />
             ) : (
               <img src="/images/hotel-information.svg" alt={t("registerHotel.images.hotelAlt")}
                 style={{ width: "100%", height: "100%" }} />
-
             )}
           </div>
           </div>
