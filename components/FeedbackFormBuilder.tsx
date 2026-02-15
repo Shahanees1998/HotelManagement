@@ -56,6 +56,15 @@ interface FeedbackForm {
   }>;
 }
 
+const DEFAULT_CUSTOM_RATING_ITEMS = [
+  { id: "room-experience", label: "Room Experience", isEditing: false },
+  { id: "staff-service", label: "Staff Service", isEditing: false },
+  { id: "amenities", label: "Amenities", isEditing: false },
+  { id: "ambiance", label: "Ambiance", isEditing: false },
+  { id: "food", label: "Food", isEditing: false },
+  { id: "value-for-money", label: "Value for Money", isEditing: false },
+];
+
 export default function FeedbackFormBuilder({
   formId,
   onSave,
@@ -150,7 +159,7 @@ export default function FeedbackFormBuilder({
     { id: "amenities", label: "Amenities", isEditing: false },
     { id: "ambiance", label: "Ambiance", isEditing: false },
     { id: "food", label: "Food", isEditing: false },
-    { id: "value-for-money", label: "Value for Money", isEditing: false }
+    { id: "value-for-money", label: "Value for Money", isEditing: false },
   ]);
   const [editingRatingItem, setEditingRatingItem] = useState<string | null>(null);
   const [newRatingItemLabel, setNewRatingItemLabel] = useState("");
@@ -225,13 +234,17 @@ export default function FeedbackFormBuilder({
         const hasCustomRating = predefinedSection.hasCustomRating || false;
         const hasFeedback = predefinedSection.hasFeedback || false;
 
-        // Load custom rating items
-        const customRatingItems = predefinedSection.customRatingItems || [];
-        setCustomRatingItems(customRatingItems.map((item: any, index: number) => ({
-          id: item.id || `custom-${Date.now()}-${index}`,
-          label: item.label,
-          isEditing: false
-        })));
+        // Load custom rating items; use defaults when custom rating is enabled but items are empty
+        const loadedItems = predefinedSection.customRatingItems || [];
+        const itemsToSet =
+          hasCustomRating && loadedItems.length === 0
+            ? [...DEFAULT_CUSTOM_RATING_ITEMS]
+            : loadedItems.map((item: any, index: number) => ({
+                id: item.id || `custom-${Date.now()}-${index}`,
+                label: item.label,
+                isEditing: false,
+              }));
+        setCustomRatingItems(itemsToSet);
 
         // Load custom questions
         const customQuestions = formData.customQuestions || [];
@@ -916,6 +929,10 @@ export default function FeedbackFormBuilder({
                             ...form,
                             questions: [...updatedQuestions, customRatingQuestion]
                           });
+                          // Ensure default custom rating items show when none exist
+                          setCustomRatingItems(prev =>
+                            prev.length === 0 ? [...DEFAULT_CUSTOM_RATING_ITEMS] : prev
+                          );
                         } else {
                           setForm({
                             ...form,
