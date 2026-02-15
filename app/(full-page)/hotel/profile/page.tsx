@@ -204,19 +204,8 @@ export default function HotelProfile() {
         
         showToast("success", t("common.success"), t("hotel.profile.hotel.toasts.imageSuccess"));
       } else {
-        // 413 = Request Entity Too Large (server/proxy body size limit, often on hosted envs e.g. DigitalOcean)
-        if (response.status === 413) {
-          showToast("error", t("common.error"), t("hotel.profile.hotel.toasts.imageError413"));
-          return;
-        }
-        let message = t("hotel.profile.hotel.toasts.imageError");
-        try {
-          const errorData = await response.json();
-          if (errorData?.error) message = errorData.error;
-        } catch (_) {
-          // Server may return HTML error page instead of JSON
-        }
-        showToast("error", t("common.error"), message);
+        const errorData = await response.json();
+        showToast("error", t("common.error"), errorData.error || t("hotel.profile.hotel.toasts.imageError"));
       }
     } catch (error) {
       console.error("Error uploading logo:", error);
