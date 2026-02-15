@@ -509,8 +509,8 @@ export default function CustomerFeedbackForm() {
 
             </div>
 
-            {/* Review platform buttons - Only show for good ratings (>=4) with feedback text */}
-            {finalRating >= 4 && submittedFeedback && submittedFeedback.trim() !== "" && (
+            {/* Review platform buttons - Show for positive ratings (>=4) when at least one link is set; show each button only if that link exists */}
+            {finalRating >= 4 && (hotelData.googleReviewsLink || hotelData.tripAdvisorLink) && (
               <div className="mb-6" style={{ padding: '0 12px', boxSizing: 'border-box', width: '100%' }}>
                 <p className="text-600 mb-4" style={{
                   padding: '0 4px',
