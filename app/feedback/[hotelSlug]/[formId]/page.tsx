@@ -927,7 +927,7 @@ export default function CustomerFeedbackForm() {
             style={{ height: "50px", marginBottom: "8px", objectFit: "contain" }}
             onError={(e) => {
               // Fallback to default logo if hotel logo fails to load
-              e.currentTarget.src = "/images/logo.png";
+              e.currentTarget.src = "/images/logo-blue.png";
             }}
           />
           <h5 style={{ margin: 0, fontWeight: 600, color: "#333" }}>{hotelData.name}</h5>

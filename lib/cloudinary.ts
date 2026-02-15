@@ -1,16 +1,16 @@
 import { v2 as cloudinary } from 'cloudinary';
 
-// Configure Cloudinary
-const cloudName = 'denwqkach';
-const apiKey = '555776591533351';
-const apiSecret = 'sRofrQD3SmHowqDI5Ghp7n1u0aM';
-const uploadPreset = 'ml_default';
-
-cloudinary.config({
-  cloud_name: cloudName,
-  api_key: apiKey,
-  api_secret: apiSecret,
-});
+// Configure Cloudinary from env (required in production e.g. DigitalOcean)
+const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+const apiKey = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
+const apiSecret = process.env.CLOUDINARY_API_SECRET;
+if (cloudName && apiKey && apiSecret) {
+  cloudinary.config({
+    cloud_name: cloudName,
+    api_key: apiKey,
+    api_secret: apiSecret,
+  });
+}
 
 export interface CloudinaryUploadResult {
   public_id: string;
@@ -55,11 +55,16 @@ export async function uploadToCloudinary(
       fileData = file.toString('base64');
     }
 
+    if (!cloudName || !apiKey || !apiSecret) {
+      console.error('Cloudinary upload skipped: missing CLOUDINARY_* env (cloud_name, api_key, api_secret)');
+      throw new Error('Upload not configured. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET on the server.');
+    }
+
     const uploadOptions: any = {
       folder,
       resource_type,
       transformation,
-      upload_preset: process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
+      upload_preset: process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || process.env.CLOUDINARY_UPLOAD_PRESET,
     };
 
     if (allowed_formats) {

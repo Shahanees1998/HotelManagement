@@ -51,24 +51,48 @@ export async function POST(request: NextRequest) {
       }
 
       // Upload image to Cloudinary with optimization
-      const cloudinaryResult = await uploadToCloudinary(file, {
-        folder: 'hotel-management/hotel-logos',
-        resource_type: 'image',
-        transformation: [
-          { width: 300, height: 300, crop: 'fill', gravity: 'center' },
-          { quality: 'auto', fetch_format: 'auto' }
-        ],
-        max_bytes: 5 * 1024 * 1024 // 5MB
-      });
+      let cloudinaryResult;
+      try {
+        cloudinaryResult = await uploadToCloudinary(file, {
+          folder: 'hotel-management/hotel-logos',
+          resource_type: 'image',
+          transformation: [
+            { width: 300, height: 300, crop: 'fill', gravity: 'center' },
+            { quality: 'auto', fetch_format: 'auto' }
+          ],
+          max_bytes: 5 * 1024 * 1024 // 5MB
+        });
+      } catch (uploadErr: any) {
+        console.error('Hotel logo Cloudinary upload error:', uploadErr);
+        const msg = uploadErr?.message || '';
+        if (msg.includes('not configured') || msg.includes('Upload not configured')) {
+          return NextResponse.json(
+            { error: 'Upload not configured. Server administrator must set CLOUDINARY_* environment variables.' },
+            { status: 503 }
+          );
+        }
+        return NextResponse.json(
+          { error: 'Failed to upload image to storage. Try a smaller image (under 1MB) or try again later.' },
+          { status: 500 }
+        );
+      }
 
       // Update hotel's logo in database
-      await prisma.hotels.update({
-        where: { id: hotel.id },
-        data: { 
-          logo: cloudinaryResult.secure_url,
-          logoPublicId: cloudinaryResult.public_id
-        },
-      });
+      try {
+        await prisma.hotels.update({
+          where: { id: hotel.id },
+          data: { 
+            logo: cloudinaryResult.secure_url,
+            logoPublicId: cloudinaryResult.public_id
+          },
+        });
+      } catch (dbErr) {
+        console.error('Hotel logo DB update error:', dbErr);
+        return NextResponse.json(
+          { error: 'Logo uploaded but failed to save. Please try again.' },
+          { status: 500 }
+        );
+      }
 
       return NextResponse.json({ 
         logoUrl: cloudinaryResult.secure_url,
