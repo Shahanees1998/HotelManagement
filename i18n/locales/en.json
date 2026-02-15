@@ -989,7 +989,8 @@
           "imageTypeError": "Please select a valid image file (JPG, PNG, GIF, or WebP)",
           "imageSizeError": "Image size must be less than 5MB",
           "imageSuccess": "Hotel logo updated successfully",
-          "imageError": "Failed to upload logo"
+          "imageError": "Failed to upload logo",
+          "imageError413": "Upload rejected: server request size limit. Use a smaller image (under 500 KB) or ask your host to increase the upload limit."
         }
       },
       "password": {

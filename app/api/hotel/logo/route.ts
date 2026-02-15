@@ -71,8 +71,14 @@ export async function POST(request: NextRequest) {
             { status: 503 }
           );
         }
+        if (msg.includes('Cloudinary:')) {
+          return NextResponse.json(
+            { error: msg.replace(/^Cloudinary:\s*/, '') },
+            { status: 500 }
+          );
+        }
         return NextResponse.json(
-          { error: 'Failed to upload image to storage. Try a smaller image (under 1MB) or try again later.' },
+          { error: 'Failed to upload image to storage. Please try again later.' },
           { status: 500 }
         );
       }

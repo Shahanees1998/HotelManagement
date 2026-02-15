@@ -85,9 +85,13 @@ export async function uploadToCloudinary(
       width: result.width,
       height: result.height,
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error('Cloudinary upload error:', error);
-    throw new Error('Failed to upload file to Cloudinary');
+    const raw = error?.error?.message || error?.message || '';
+    const safeHint = typeof raw === 'string' && raw.length < 120 && !/secret|password|api_key|api_secret/i.test(raw)
+      ? raw
+      : '';
+    throw new Error(safeHint ? `Cloudinary: ${safeHint}` : 'Failed to upload file to Cloudinary');
   }
 }
 
