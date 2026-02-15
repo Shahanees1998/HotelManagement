@@ -14,7 +14,19 @@ export async function PUT(
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
 
+      if (user.role !== 'HOTEL') {
+        return NextResponse.json({ error: 'Hotel access only' }, { status: 403 });
+      }
+
       const paymentMethodId = params.id;
+
+      // MongoDB ObjectID must be 24 hex characters
+      if (!/^[a-f0-9]{24}$/i.test(paymentMethodId)) {
+        return NextResponse.json(
+          { error: 'Invalid payment method id' },
+          { status: 400 }
+        );
+      }
 
       // Get user's hotel
       const hotel = await prisma.hotels.findFirst({

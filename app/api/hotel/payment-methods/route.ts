@@ -6,30 +6,28 @@ export async function GET(request: NextRequest) {
   return withAuth(request, async (authenticatedReq: AuthenticatedRequest) => {
     try {
       const user = authenticatedReq.user;
-      
+
       if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
 
-      // Get user's hotel
+      if (user.role !== 'HOTEL') {
+        return NextResponse.json({ error: 'Hotel access only' }, { status: 403 });
+      }
+
+      // Get this user's hotel only (ownerId is unique per hotel)
       const hotel = await prisma.hotels.findFirst({
-        where: {
-          ownerId: user.userId
-        }
+        where: { ownerId: user.userId },
       });
 
       if (!hotel) {
         return NextResponse.json({ error: 'Hotel not found' }, { status: 404 });
       }
 
-      // Get payment methods for the hotel
+      // Payment methods are scoped per hotel – only this hotel's methods
       const paymentMethods = await prisma.paymentMethod.findMany({
-        where: {
-          hotelId: hotel.id
-        },
-        orderBy: {
-          isDefault: 'desc'
-        }
+        where: { hotelId: hotel.id },
+        orderBy: { isDefault: 'desc' },
       });
 
       return NextResponse.json({
@@ -53,6 +51,10 @@ export async function POST(request: NextRequest) {
       
       if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+
+      if (user.role !== 'HOTEL') {
+        return NextResponse.json({ error: 'Hotel access only' }, { status: 403 });
       }
 
       const body = await request.json();

@@ -139,50 +139,7 @@ export default function PaymentMethodsPage() {
   ], [t]);
 
   useEffect(() => {
-    // For demo purposes, add some mock data
-    setPaymentMethods([
-      {
-        id: '1',
-        type: 'CARD',
-        last4: '7830',
-        brand: 'visa',
-        expiryMonth: 9,
-        expiryYear: 2024,
-        isDefault: true,
-        createdAt: '2024-01-01'
-      },
-      {
-        id: '2',
-        type: 'CARD',
-        last4: '7830',
-        brand: 'mastercard',
-        expiryMonth: 3,
-        expiryYear: 2024,
-        isDefault: false,
-        createdAt: '2024-01-01'
-      },
-      {
-        id: '3',
-        type: 'CARD',
-        last4: '7830',
-        brand: 'visa',
-        expiryMonth: 9,
-        expiryYear: 2024,
-        isDefault: false,
-        createdAt: '2024-01-01'
-      },
-      {
-        id: '4',
-        type: 'CARD',
-        last4: '7830',
-        brand: 'amex',
-        expiryMonth: 9,
-        expiryYear: 2024,
-        isDefault: false,
-        createdAt: '2024-01-01'
-      }
-    ]);
-    // loadPaymentMethods();
+    loadPaymentMethods();
   }, []);
 
   const loadPaymentMethods = async () => {
