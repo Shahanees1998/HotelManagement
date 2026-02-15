@@ -12,6 +12,7 @@ import { Toast } from "primereact/toast";
 import { Dropdown } from "primereact/dropdown";
 import { useRef } from "react";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 import { translationService, SUPPORTED_LANGUAGES, Language } from "@/lib/translationService";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -581,11 +582,12 @@ export default function CustomerFeedbackForm() {
                       e.currentTarget.style.borderColor = '#e8e8e8';
                     }}
                   >
-                    <img
+                    <Image
                       src="/images/google.png"
                       alt="Google"
+                      width={160}
+                      height={88}
                       style={{
-                        height: '88px',
                         marginBottom: '12px',
                         objectFit: 'contain'
                       }}
@@ -658,11 +660,12 @@ export default function CustomerFeedbackForm() {
                       e.currentTarget.style.borderColor = '#e8e8e8';
                     }}
                   >
-                    <img
+                    <Image
                       src="/images/trip.png"
                       alt="TripAdvisor"
+                      width={160}
+                      height={88}
                       style={{
-                        height: '88px',
                         marginBottom: '12px',
                         objectFit: 'contain'
                       }}
