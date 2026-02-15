@@ -1,20 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withAuth, AuthenticatedRequest } from '@/lib/authMiddleware';
 import { prisma } from '@/lib/prisma';
-import { uploadToCloudinary, validateFile } from '@/lib/cloudinary';
+import { validateFile } from '@/lib/cloudinary';
+import { fileToBase64DataUrl, MAX_IMAGE_SIZE_BYTES } from '@/lib/imageStorage';
 
 export async function POST(request: NextRequest) {
   return withAuth(request, async (authenticatedReq: AuthenticatedRequest) => {
     try {
       const user = authenticatedReq.user;
-      
+
       if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
 
       const formData = await request.formData();
-      const file = formData.get('file') as File;
-      
+      const file = formData.get('file') as File | null;
+
       if (!file) {
         return NextResponse.json(
           { error: 'File is required' },
@@ -22,11 +23,8 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Get user's hotel
       const hotel = await prisma.hotels.findFirst({
-        where: {
-          ownerId: user.userId
-        }
+        where: { ownerId: user.userId },
       });
 
       if (!hotel) {
@@ -36,70 +34,42 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Validate file type and size
       const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
       const validation = validateFile(file, {
         allowedTypes,
-        maxSize: 5 * 1024 * 1024 // 5MB
+        maxSize: MAX_IMAGE_SIZE_BYTES,
       });
 
       if (!validation.isValid) {
+        const message = (validation.error || '').includes('0MB')
+          ? 'Image must be under 500KB for database storage.'
+          : validation.error;
         return NextResponse.json(
-          { error: validation.error },
+          { error: message },
           { status: 400 }
         );
       }
 
-      // Upload image to Cloudinary with optimization
-      let cloudinaryResult;
-      try {
-        cloudinaryResult = await uploadToCloudinary(file, {
-          folder: 'hotel-management/hotel-logos',
-          resource_type: 'image',
-          transformation: [
-            { width: 300, height: 300, crop: 'fill', gravity: 'center' },
-            { quality: 'auto', fetch_format: 'auto' }
-          ],
-          max_bytes: 5 * 1024 * 1024 // 5MB
-        });
-      } catch (uploadErr: any) {
-        console.error('Hotel logo Cloudinary upload error:', uploadErr);
-        const msg = uploadErr?.message || '';
-        if (msg.includes('not configured') || msg.includes('Upload not configured')) {
-          return NextResponse.json(
-            { error: 'Upload not configured. Server administrator must set CLOUDINARY_* environment variables.' },
-            { status: 503 }
-          );
-        }
-        return NextResponse.json(
-          { error: 'Failed to upload image to storage. Try a smaller image (under 1MB) or try again later.' },
-          { status: 500 }
-        );
-      }
+      const dataUrl = await fileToBase64DataUrl(file);
 
-      // Update hotel's logo in database
-      try {
-        await prisma.hotels.update({
-          where: { id: hotel.id },
-          data: { 
-            logo: cloudinaryResult.secure_url,
-            logoPublicId: cloudinaryResult.public_id
-          },
-        });
-      } catch (dbErr) {
-        console.error('Hotel logo DB update error:', dbErr);
-        return NextResponse.json(
-          { error: 'Logo uploaded but failed to save. Please try again.' },
-          { status: 500 }
-        );
-      }
-
-      return NextResponse.json({ 
-        logoUrl: cloudinaryResult.secure_url,
-        publicId: cloudinaryResult.public_id
+      await prisma.hotels.update({
+        where: { id: hotel.id },
+        data: {
+          logo: dataUrl,
+          logoPublicId: null,
+        },
       });
-    } catch (error) {
+
+      return NextResponse.json({
+        logoUrl: dataUrl,
+        publicId: null,
+      });
+    } catch (error: any) {
       console.error('Hotel logo upload error:', error);
+      const msg = error?.message || '';
+      if (msg.includes('under') && msg.includes('KB')) {
+        return NextResponse.json({ error: msg }, { status: 400 });
+      }
       return NextResponse.json(
         { error: 'Failed to upload hotel logo' },
         { status: 500 }
